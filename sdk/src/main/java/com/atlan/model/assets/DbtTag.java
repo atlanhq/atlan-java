@@ -383,6 +383,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
                     .where(DbtTag.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -398,6 +399,7 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
                     .where(DbtTag.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

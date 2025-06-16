@@ -323,6 +323,7 @@ public class AnaplanWorkspace extends Asset
                     .where(AnaplanWorkspace.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AnaplanWorkspace extends Asset
                     .where(AnaplanWorkspace.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

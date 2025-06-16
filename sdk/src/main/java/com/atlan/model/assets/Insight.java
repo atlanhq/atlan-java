@@ -279,6 +279,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
                     .where(Insight.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -294,6 +295,7 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
                     .where(Insight.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

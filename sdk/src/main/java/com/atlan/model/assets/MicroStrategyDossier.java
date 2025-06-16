@@ -342,6 +342,7 @@ public class MicroStrategyDossier extends Asset
                     .where(MicroStrategyDossier.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -357,6 +358,7 @@ public class MicroStrategyDossier extends Asset
                     .where(MicroStrategyDossier.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

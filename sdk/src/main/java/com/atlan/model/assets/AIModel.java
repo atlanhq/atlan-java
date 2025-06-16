@@ -332,6 +332,7 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
                     .where(AIModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -347,6 +348,7 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
                     .where(AIModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

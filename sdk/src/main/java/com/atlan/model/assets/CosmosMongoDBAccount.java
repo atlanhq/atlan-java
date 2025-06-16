@@ -358,6 +358,7 @@ public class CosmosMongoDBAccount extends Asset
                     .where(CosmosMongoDBAccount.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -373,6 +374,7 @@ public class CosmosMongoDBAccount extends Asset
                     .where(CosmosMongoDBAccount.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

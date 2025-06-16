@@ -322,6 +322,7 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
                     .where(AnaplanList.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -337,6 +338,7 @@ public class AnaplanList extends Asset implements IAnaplanList, IAnaplan, IBI, I
                     .where(AnaplanList.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

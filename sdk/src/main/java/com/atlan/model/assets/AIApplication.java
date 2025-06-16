@@ -330,6 +330,7 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
                     .where(AIApplication.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -345,6 +346,7 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
                     .where(AIApplication.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

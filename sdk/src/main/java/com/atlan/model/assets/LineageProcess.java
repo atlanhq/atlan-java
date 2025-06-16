@@ -318,6 +318,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
                     .where(LineageProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -333,6 +334,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
                     .where(LineageProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

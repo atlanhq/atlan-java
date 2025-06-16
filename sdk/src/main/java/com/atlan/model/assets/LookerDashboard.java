@@ -334,6 +334,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
                     .where(LookerDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -349,6 +350,7 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
                     .where(LookerDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

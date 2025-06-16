@@ -282,6 +282,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                     .where(Glossary.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -297,6 +298,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                     .where(Glossary.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -323,6 +323,7 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
                     .where(AnaplanModule.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
                     .where(AnaplanModule.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

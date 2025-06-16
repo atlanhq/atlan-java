@@ -318,6 +318,7 @@ public class DataverseAttribute extends Asset
                     .where(DataverseAttribute.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -333,6 +334,7 @@ public class DataverseAttribute extends Asset
                     .where(DataverseAttribute.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -141,6 +141,7 @@ public class UserDefRelationship extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

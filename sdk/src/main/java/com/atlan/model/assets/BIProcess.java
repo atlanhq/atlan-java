@@ -313,6 +313,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
                     .where(BIProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -328,6 +329,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
                     .where(BIProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

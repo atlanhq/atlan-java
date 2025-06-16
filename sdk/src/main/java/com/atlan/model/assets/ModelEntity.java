@@ -401,6 +401,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                     .where(ModelEntity.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -416,6 +417,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                     .where(ModelEntity.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

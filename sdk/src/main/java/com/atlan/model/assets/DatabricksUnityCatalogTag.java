@@ -405,6 +405,7 @@ public class DatabricksUnityCatalogTag extends Asset
                     .where(DatabricksUnityCatalogTag.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -420,6 +421,7 @@ public class DatabricksUnityCatalogTag extends Asset
                     .where(DatabricksUnityCatalogTag.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

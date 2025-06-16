@@ -316,6 +316,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
                     .where(LookerQuery.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -331,6 +332,7 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
                     .where(LookerQuery.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -398,6 +398,7 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
                     .where(SnowflakeStage.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -413,6 +414,7 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
                     .where(SnowflakeStage.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

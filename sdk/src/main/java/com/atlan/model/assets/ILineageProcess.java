@@ -375,6 +375,9 @@ public interface ILineageProcess {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */

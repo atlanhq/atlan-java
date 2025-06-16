@@ -326,6 +326,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
                     .where(QlikSpace.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -341,6 +342,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
                     .where(QlikSpace.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

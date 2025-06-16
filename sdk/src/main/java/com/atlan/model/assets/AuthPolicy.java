@@ -326,6 +326,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
                     .where(AuthPolicy.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -341,6 +342,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
                     .where(AuthPolicy.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

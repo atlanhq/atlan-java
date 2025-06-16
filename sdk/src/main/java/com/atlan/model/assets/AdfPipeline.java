@@ -323,6 +323,7 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
                     .where(AdfPipeline.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
                     .where(AdfPipeline.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

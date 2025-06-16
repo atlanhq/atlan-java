@@ -90,9 +90,25 @@ public class FlowDataOperation extends Asset
     @Date
     Long flowFinishedAt;
 
+    /** Simple name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderName;
+
+    /** Unique name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderQualifiedName;
+
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     @Attribute
     IFlowProcessGrouping flowGrouping;
+
+    /** Simple name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectName;
+
+    /** Unique name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectQualifiedName;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
@@ -333,6 +349,7 @@ public class FlowDataOperation extends Asset
                     .where(FlowDataOperation.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -348,6 +365,7 @@ public class FlowDataOperation extends Asset
                     .where(FlowDataOperation.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

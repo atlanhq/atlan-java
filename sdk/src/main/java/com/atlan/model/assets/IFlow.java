@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -34,6 +35,20 @@ public interface IFlow {
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     NumericField FLOW_FINISHED_AT = new NumericField("flowFinishedAt", "flowFinishedAt");
+
+    /** Simple name of the folder in which this asset is contained. */
+    KeywordTextField FLOW_FOLDER_NAME =
+            new KeywordTextField("flowFolderName", "flowFolderName.keyword", "flowFolderName");
+
+    /** Unique name of the folder in which this asset is contained. */
+    KeywordField FLOW_FOLDER_QUALIFIED_NAME = new KeywordField("flowFolderQualifiedName", "flowFolderQualifiedName");
+
+    /** Simple name of the project in which this asset is contained. */
+    KeywordTextField FLOW_PROJECT_NAME =
+            new KeywordTextField("flowProjectName", "flowProjectName.keyword", "flowProjectName");
+
+    /** Unique name of the project in which this asset is contained. */
+    KeywordField FLOW_PROJECT_QUALIFIED_NAME = new KeywordField("flowProjectQualifiedName", "flowProjectQualifiedName");
 
     /** Schedule for this point in the data processing or orchestration. */
     KeywordField FLOW_SCHEDULE = new KeywordField("flowSchedule", "flowSchedule");
@@ -364,6 +379,18 @@ public interface IFlow {
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();

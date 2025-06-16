@@ -341,6 +341,7 @@ public class TableauCalculatedField extends Asset
                     .where(TableauCalculatedField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -356,6 +357,7 @@ public class TableauCalculatedField extends Asset
                     .where(TableauCalculatedField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

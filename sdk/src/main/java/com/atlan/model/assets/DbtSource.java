@@ -385,6 +385,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
                     .where(DbtSource.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -400,6 +401,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
                     .where(DbtSource.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

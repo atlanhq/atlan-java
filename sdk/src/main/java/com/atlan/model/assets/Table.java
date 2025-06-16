@@ -518,6 +518,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
                     .where(Table.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -533,6 +534,7 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
                     .where(Table.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

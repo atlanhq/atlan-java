@@ -444,6 +444,7 @@ public class DbtColumnProcess extends Asset
                     .where(DbtColumnProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -459,6 +460,7 @@ public class DbtColumnProcess extends Asset
                     .where(DbtColumnProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -313,6 +313,7 @@ public class QuickSightDataset extends Asset
                     .where(QuickSightDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -328,6 +329,7 @@ public class QuickSightDataset extends Asset
                     .where(QuickSightDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

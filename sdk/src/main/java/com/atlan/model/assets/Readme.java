@@ -302,6 +302,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
                     .where(Readme.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -317,6 +318,7 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
                     .where(Readme.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

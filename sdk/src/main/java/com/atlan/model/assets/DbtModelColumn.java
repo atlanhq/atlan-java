@@ -396,6 +396,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
                     .where(DbtModelColumn.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -411,6 +412,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
                     .where(DbtModelColumn.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

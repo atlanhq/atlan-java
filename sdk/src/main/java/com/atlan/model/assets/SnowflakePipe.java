@@ -396,6 +396,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
                     .where(SnowflakePipe.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -411,6 +412,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
                     .where(SnowflakePipe.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

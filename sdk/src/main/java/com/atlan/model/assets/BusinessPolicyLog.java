@@ -264,6 +264,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
                     .where(BusinessPolicyLog.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -279,6 +280,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
                     .where(BusinessPolicyLog.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

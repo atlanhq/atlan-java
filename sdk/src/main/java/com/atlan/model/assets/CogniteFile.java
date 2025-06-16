@@ -285,6 +285,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
                     .where(CogniteFile.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -300,6 +301,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
                     .where(CogniteFile.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

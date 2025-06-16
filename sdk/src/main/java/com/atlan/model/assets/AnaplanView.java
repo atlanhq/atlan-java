@@ -328,6 +328,7 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
                     .where(AnaplanView.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -343,6 +344,7 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
                     .where(AnaplanView.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

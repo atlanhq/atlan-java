@@ -313,6 +313,7 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
                     .where(AnaplanApp.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -328,6 +329,7 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
                     .where(AnaplanApp.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -113,15 +113,18 @@ public class GlossaryValidValue extends RelationshipAttributes {
          * Build the GlossaryValidValue relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm validValue(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm validValue(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryValidValue attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ValidValue._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ValidValue._internal()
@@ -129,6 +132,7 @@ public class GlossaryValidValue extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -137,15 +141,18 @@ public class GlossaryValidValue extends RelationshipAttributes {
          * Build the GlossaryValidValue relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm validValuesFor(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm validValuesFor(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryValidValue attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ValidValuesFor._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ValidValuesFor._internal()
@@ -153,6 +160,7 @@ public class GlossaryValidValue extends RelationshipAttributes {
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

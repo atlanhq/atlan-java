@@ -261,6 +261,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
                     .where(Folder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -276,6 +277,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
                     .where(Folder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

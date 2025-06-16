@@ -438,6 +438,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
                     .where(DbtProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -453,6 +454,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
                     .where(DbtProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

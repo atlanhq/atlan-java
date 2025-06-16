@@ -303,6 +303,7 @@ public class ThoughtspotLiveboard extends Asset
                     .where(ThoughtspotLiveboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -318,6 +319,7 @@ public class ThoughtspotLiveboard extends Asset
                     .where(ThoughtspotLiveboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

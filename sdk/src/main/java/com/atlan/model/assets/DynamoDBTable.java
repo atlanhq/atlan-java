@@ -564,6 +564,7 @@ public class DynamoDBTable extends Asset
                     .where(DynamoDBTable.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -579,6 +580,7 @@ public class DynamoDBTable extends Asset
                     .where(DynamoDBTable.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

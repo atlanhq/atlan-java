@@ -327,6 +327,7 @@ public class TableauWorksheet extends Asset
                     .where(TableauWorksheet.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -342,6 +343,7 @@ public class TableauWorksheet extends Asset
                     .where(TableauWorksheet.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

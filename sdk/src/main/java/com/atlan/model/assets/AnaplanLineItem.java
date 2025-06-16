@@ -328,6 +328,7 @@ public class AnaplanLineItem extends Asset
                     .where(AnaplanLineItem.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -343,6 +344,7 @@ public class AnaplanLineItem extends Asset
                     .where(AnaplanLineItem.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

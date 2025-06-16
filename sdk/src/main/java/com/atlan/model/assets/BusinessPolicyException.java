@@ -263,6 +263,7 @@ public class BusinessPolicyException extends Asset implements IBusinessPolicyExc
                     .where(BusinessPolicyException.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -278,6 +279,7 @@ public class BusinessPolicyException extends Asset implements IBusinessPolicyExc
                     .where(BusinessPolicyException.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

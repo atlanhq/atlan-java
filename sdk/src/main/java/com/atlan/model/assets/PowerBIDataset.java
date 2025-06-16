@@ -335,6 +335,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
                     .where(PowerBIDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -350,6 +351,7 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
                     .where(PowerBIDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

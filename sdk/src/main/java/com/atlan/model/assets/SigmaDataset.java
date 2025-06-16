@@ -314,6 +314,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
                     .where(SigmaDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -329,6 +330,7 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
                     .where(SigmaDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

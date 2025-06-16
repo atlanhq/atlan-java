@@ -349,6 +349,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
                     .where(APISpec.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -364,6 +365,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
                     .where(APISpec.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

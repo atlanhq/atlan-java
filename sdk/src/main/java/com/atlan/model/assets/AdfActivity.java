@@ -396,6 +396,7 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
                     .where(AdfActivity.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -411,6 +412,7 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
                     .where(AdfActivity.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

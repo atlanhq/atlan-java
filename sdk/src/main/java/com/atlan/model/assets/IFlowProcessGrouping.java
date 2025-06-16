@@ -37,6 +37,9 @@ public interface IFlowProcessGrouping {
     /** Individual data flows (processes) contained in this grouping. */
     RelationField FLOW_DATA_FLOWS = new RelationField("flowDataFlows");
 
+    /** Project, workspace or namespace in which this asset is contained. */
+    RelationField FLOW_PROJECT = new RelationField("flowProject");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -363,6 +366,21 @@ public interface IFlowProcessGrouping {
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    IFlowProject getFlowProject();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();

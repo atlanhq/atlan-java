@@ -286,6 +286,7 @@ public class Cognite3DModel extends Asset
                     .where(Cognite3DModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -301,6 +302,7 @@ public class Cognite3DModel extends Asset
                     .where(Cognite3DModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

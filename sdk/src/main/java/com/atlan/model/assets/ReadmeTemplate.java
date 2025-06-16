@@ -304,6 +304,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
                     .where(ReadmeTemplate.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -319,6 +320,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
                     .where(ReadmeTemplate.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -413,6 +413,7 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICat
                     .where(BigqueryTag.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -428,6 +429,7 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICat
                     .where(BigqueryTag.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

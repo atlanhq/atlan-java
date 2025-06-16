@@ -387,6 +387,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
                     .where(DataProduct.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -402,6 +403,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
                     .where(DataProduct.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

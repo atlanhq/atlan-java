@@ -53,6 +53,22 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     @Date
     Long flowFinishedAt;
 
+    /** Simple name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderName;
+
+    /** Unique name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderQualifiedName;
+
+    /** Simple name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectName;
+
+    /** Unique name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectQualifiedName;
+
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
     String flowSchedule;
@@ -299,6 +315,7 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
                     .where(FlowInterimField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -314,6 +331,7 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
                     .where(FlowInterimField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

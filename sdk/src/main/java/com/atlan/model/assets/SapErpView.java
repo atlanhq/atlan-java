@@ -325,6 +325,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
                     .where(SapErpView.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -340,6 +341,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
                     .where(SapErpView.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -298,6 +298,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                     .where(ApplicationField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -313,6 +314,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                     .where(ApplicationField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

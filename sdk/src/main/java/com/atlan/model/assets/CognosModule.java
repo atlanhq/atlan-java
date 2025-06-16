@@ -321,6 +321,7 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
                     .where(CognosModule.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -336,6 +337,7 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
                     .where(CognosModule.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

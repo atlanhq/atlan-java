@@ -330,6 +330,7 @@ public class ThoughtspotColumn extends Asset
                     .where(ThoughtspotColumn.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -345,6 +346,7 @@ public class ThoughtspotColumn extends Asset
                     .where(ThoughtspotColumn.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

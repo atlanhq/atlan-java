@@ -318,6 +318,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
                     .where(LookerExplore.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -333,6 +334,7 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
                     .where(LookerExplore.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

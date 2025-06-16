@@ -327,6 +327,7 @@ public class SigmaDataElement extends Asset
                     .where(SigmaDataElement.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -342,6 +343,7 @@ public class SigmaDataElement extends Asset
                     .where(SigmaDataElement.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

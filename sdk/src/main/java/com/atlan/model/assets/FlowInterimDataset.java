@@ -57,6 +57,22 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     @Date
     Long flowFinishedAt;
 
+    /** Simple name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderName;
+
+    /** Unique name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderQualifiedName;
+
+    /** Simple name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectName;
+
+    /** Unique name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectQualifiedName;
+
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
     String flowSchedule;
@@ -303,6 +319,7 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
                     .where(FlowInterimDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -318,6 +335,7 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
                     .where(FlowInterimDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

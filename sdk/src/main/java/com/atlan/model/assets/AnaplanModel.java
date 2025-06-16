@@ -333,6 +333,7 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
                     .where(AnaplanModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -348,6 +349,7 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
                     .where(AnaplanModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

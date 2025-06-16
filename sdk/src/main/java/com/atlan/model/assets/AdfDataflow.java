@@ -323,6 +323,7 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
                     .where(AdfDataflow.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
                     .where(AdfDataflow.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

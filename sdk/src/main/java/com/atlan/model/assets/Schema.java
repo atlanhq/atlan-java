@@ -454,6 +454,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
                     .where(Schema.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -469,6 +470,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
                     .where(Schema.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

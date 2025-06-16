@@ -325,6 +325,7 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
                     .where(QlikSheet.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -340,6 +341,7 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
                     .where(QlikSheet.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

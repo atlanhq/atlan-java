@@ -359,6 +359,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
                     .where(ModeReport.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -374,6 +375,7 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
                     .where(ModeReport.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

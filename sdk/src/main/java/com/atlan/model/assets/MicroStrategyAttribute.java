@@ -351,6 +351,7 @@ public class MicroStrategyAttribute extends Asset
                     .where(MicroStrategyAttribute.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -366,6 +367,7 @@ public class MicroStrategyAttribute extends Asset
                     .where(MicroStrategyAttribute.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

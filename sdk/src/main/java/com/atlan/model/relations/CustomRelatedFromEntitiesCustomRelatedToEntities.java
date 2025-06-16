@@ -95,15 +95,18 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
          * Build the CustomRelatedFromEntitiesCustomRelatedToEntities relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public ICustomEntity customRelatedFromEntity(ICustomEntity related) throws InvalidRequestException {
+        public ICustomEntity customRelatedFromEntity(ICustomEntity related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             CustomRelatedFromEntitiesCustomRelatedToEntities attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return CustomRelatedFromEntity._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return CustomRelatedFromEntity._internal()
@@ -111,6 +114,7 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -119,15 +123,18 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
          * Build the CustomRelatedFromEntitiesCustomRelatedToEntities relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public ICustomEntity customRelatedToEntity(ICustomEntity related) throws InvalidRequestException {
+        public ICustomEntity customRelatedToEntity(ICustomEntity related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             CustomRelatedFromEntitiesCustomRelatedToEntities attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return CustomRelatedToEntity._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return CustomRelatedToEntity._internal()
@@ -135,6 +142,7 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

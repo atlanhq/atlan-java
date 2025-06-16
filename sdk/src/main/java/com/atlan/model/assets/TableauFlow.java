@@ -317,6 +317,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
                     .where(TableauFlow.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -332,6 +333,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
                     .where(TableauFlow.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

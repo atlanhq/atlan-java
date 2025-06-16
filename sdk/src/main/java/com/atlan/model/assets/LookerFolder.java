@@ -320,6 +320,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
                     .where(LookerFolder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -335,6 +336,7 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
                     .where(LookerFolder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

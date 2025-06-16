@@ -363,6 +363,7 @@ public class TableauDatasourceField extends Asset
                     .where(TableauDatasourceField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -378,6 +379,7 @@ public class TableauDatasourceField extends Asset
                     .where(TableauDatasourceField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

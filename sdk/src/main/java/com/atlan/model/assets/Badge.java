@@ -246,6 +246,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
                     .where(Badge.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -261,6 +262,7 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
                     .where(Badge.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

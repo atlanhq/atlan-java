@@ -337,6 +337,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
                     .where(PowerBIReport.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -352,6 +353,7 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
                     .where(PowerBIReport.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

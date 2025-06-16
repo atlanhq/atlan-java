@@ -289,6 +289,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
                     .where(RedashDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -304,6 +305,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
                     .where(RedashDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

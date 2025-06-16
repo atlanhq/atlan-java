@@ -312,6 +312,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
                     .where(Cube.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -327,6 +328,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
                     .where(Cube.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

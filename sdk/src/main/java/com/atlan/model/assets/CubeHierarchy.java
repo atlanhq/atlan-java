@@ -319,6 +319,7 @@ public class CubeHierarchy extends Asset
                     .where(CubeHierarchy.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -334,6 +335,7 @@ public class CubeHierarchy extends Asset
                     .where(CubeHierarchy.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

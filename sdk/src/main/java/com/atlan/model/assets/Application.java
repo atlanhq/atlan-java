@@ -295,6 +295,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
                     .where(Application.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -310,6 +311,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
                     .where(Application.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

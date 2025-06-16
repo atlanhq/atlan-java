@@ -443,6 +443,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
                     .where(DbtModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -458,6 +459,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
                     .where(DbtModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

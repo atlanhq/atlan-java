@@ -567,6 +567,7 @@ public class DynamoDBLocalSecondaryIndex extends Asset
                     .where(DynamoDBLocalSecondaryIndex.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -582,6 +583,7 @@ public class DynamoDBLocalSecondaryIndex extends Asset
                     .where(DynamoDBLocalSecondaryIndex.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

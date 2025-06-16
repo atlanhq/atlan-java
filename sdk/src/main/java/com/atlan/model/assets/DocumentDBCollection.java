@@ -576,6 +576,7 @@ public class DocumentDBCollection extends Asset
                     .where(DocumentDBCollection.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -591,6 +592,7 @@ public class DocumentDBCollection extends Asset
                     .where(DocumentDBCollection.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

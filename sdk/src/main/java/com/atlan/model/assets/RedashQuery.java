@@ -316,6 +316,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
                     .where(RedashQuery.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -331,6 +332,7 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
                     .where(RedashQuery.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

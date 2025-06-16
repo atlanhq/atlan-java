@@ -309,6 +309,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
                     .where(File.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -324,6 +325,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
                     .where(File.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

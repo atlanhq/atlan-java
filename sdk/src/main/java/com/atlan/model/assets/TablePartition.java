@@ -457,6 +457,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
                     .where(TablePartition.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -472,6 +473,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
                     .where(TablePartition.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

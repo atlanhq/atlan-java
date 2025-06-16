@@ -326,6 +326,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
                     .where(TableauProject.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -341,6 +342,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
                     .where(TableauProject.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

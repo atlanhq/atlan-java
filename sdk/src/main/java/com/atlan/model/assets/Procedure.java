@@ -387,6 +387,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
                     .where(Procedure.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -402,6 +403,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
                     .where(Procedure.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

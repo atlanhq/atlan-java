@@ -366,6 +366,7 @@ public class TableauWorksheetField extends Asset
                     .where(TableauWorksheetField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -381,6 +382,7 @@ public class TableauWorksheetField extends Asset
                     .where(TableauWorksheetField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

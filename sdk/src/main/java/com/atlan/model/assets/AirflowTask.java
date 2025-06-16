@@ -383,6 +383,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
                     .where(AirflowTask.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -398,6 +399,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
                     .where(AirflowTask.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

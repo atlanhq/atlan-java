@@ -385,6 +385,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
                     .where(Database.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -400,6 +401,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
                     .where(Database.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

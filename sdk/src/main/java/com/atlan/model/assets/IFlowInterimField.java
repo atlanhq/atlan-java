@@ -351,6 +351,18 @@ public interface IFlowInterimField {
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
+
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
 

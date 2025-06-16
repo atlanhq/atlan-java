@@ -326,6 +326,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
                     .where(SapErpTable.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -341,6 +342,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
                     .where(SapErpTable.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

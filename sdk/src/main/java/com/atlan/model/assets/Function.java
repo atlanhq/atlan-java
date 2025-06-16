@@ -417,6 +417,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
                     .where(Function.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -432,6 +433,7 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
                     .where(Function.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

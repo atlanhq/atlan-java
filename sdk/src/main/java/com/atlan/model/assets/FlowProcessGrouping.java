@@ -63,6 +63,26 @@ public class FlowProcessGrouping extends Asset implements IFlowProcessGrouping, 
     @Date
     Long flowFinishedAt;
 
+    /** Simple name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderName;
+
+    /** Unique name of the folder in which this asset is contained. */
+    @Attribute
+    String flowFolderQualifiedName;
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    @Attribute
+    IFlowProject flowProject;
+
+    /** Simple name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectName;
+
+    /** Unique name of the project in which this asset is contained. */
+    @Attribute
+    String flowProjectQualifiedName;
+
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
     String flowSchedule;
@@ -269,6 +289,7 @@ public class FlowProcessGrouping extends Asset implements IFlowProcessGrouping, 
                     .where(FlowProcessGrouping.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -284,6 +305,7 @@ public class FlowProcessGrouping extends Asset implements IFlowProcessGrouping, 
                     .where(FlowProcessGrouping.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

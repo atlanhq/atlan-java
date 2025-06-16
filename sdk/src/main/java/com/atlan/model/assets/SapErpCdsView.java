@@ -330,6 +330,7 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
                     .where(SapErpCdsView.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -345,6 +346,7 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
                     .where(SapErpCdsView.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

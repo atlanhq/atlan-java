@@ -405,6 +405,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
                     .where(SnowflakeStream.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -420,6 +421,7 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
                     .where(SnowflakeStream.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -337,6 +337,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
                     .where(QlikDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -352,6 +353,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
                     .where(QlikDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

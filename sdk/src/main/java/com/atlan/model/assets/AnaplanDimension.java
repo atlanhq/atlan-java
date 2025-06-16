@@ -334,6 +334,7 @@ public class AnaplanDimension extends Asset
                     .where(AnaplanDimension.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -349,6 +350,7 @@ public class AnaplanDimension extends Asset
                     .where(AnaplanDimension.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

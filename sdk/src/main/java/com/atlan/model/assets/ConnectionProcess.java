@@ -251,6 +251,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
                     .where(ConnectionProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -266,6 +267,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
                     .where(ConnectionProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
