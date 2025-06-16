@@ -1,5 +1,5 @@
 [versions]
-jackson = "2.19.0"
+jackson = "2.19.1"
 slf4j = "2.0.17"
 elasticsearch = "8.17.4"
 freemarker = "2.3.34"
