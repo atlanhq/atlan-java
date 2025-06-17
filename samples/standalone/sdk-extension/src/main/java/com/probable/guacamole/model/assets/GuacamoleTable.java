@@ -21,15 +21,19 @@ import com.atlan.model.assets.IDbtSource;
 import com.atlan.model.assets.IDbtTest;
 import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
+import com.atlan.model.assets.IModelAttribute;
+import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISchema;
+import com.atlan.model.assets.ISparkJob;
 import com.atlan.model.assets.ITable;
 import com.atlan.model.assets.ITablePartition;
 import com.atlan.model.assets.Schema;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -73,6 +77,14 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** Alias for this table. */
     @Attribute
     String alias;
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
 
     /** Number of columns in this table. */
     @Attribute
@@ -145,10 +157,39 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     GuacamoleTemperature guacamoleTemperature;
 
+    /** Iceberg table catalog name (can be any user defined name) */
+    @Attribute
+    String icebergCatalogName;
+
+    /** Iceberg table catalog type (glue, polaris, snowflake) */
+    @Attribute
+    String icebergCatalogSource;
+
+    /** Catalog table name (actual table name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableName;
+
+    /** Catalog table namespace (actual database name on the catalog side). */
+    @Attribute
+    String icebergCatalogTableNamespace;
+
+    /** Iceberg table base location inside the external volume. */
+    @Attribute
+    String icebergTableBaseLocation;
+
+    /** Iceberg table type (managed vs unmanaged) */
+    @Attribute
+    String icebergTableType;
+
     /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
 
     /** Processes to which this asset provides input. */
     @Attribute
@@ -167,6 +208,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     Boolean isQueryPreview;
 
+    /** Whether this table is a sharded table (true) or not (false). */
+    @Attribute
+    Boolean isSharded;
+
     /** Whether this table is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
@@ -175,6 +220,16 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Date
     Long lastProfiledAt;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
 
     /** TBC */
     @Attribute
@@ -185,6 +240,11 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Number of partitions in this table. */
     @Attribute
@@ -262,6 +322,19 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Definition of the table. */
+    @Attribute
+    String tableDefinition;
+
+    /** External volume name for the table. */
+    @Attribute
+    String tableExternalVolumeName;
+
+    /** Extra attributes for Impala */
+    @Attribute
+    @Singular
+    Map<String, String> tableImpalaParameters;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
@@ -269,6 +342,14 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
+
+    /** Data retention time in days. */
+    @Attribute
+    Long tableRetentionTime;
+
+    /** Type of the table. */
+    @Attribute
+    TableType tableType;
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute

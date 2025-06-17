@@ -14,8 +14,10 @@ import com.atlan.model.assets.Date;
 import com.atlan.model.assets.IAirflowTask;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
+import com.atlan.model.assets.ICalculationView;
 import com.atlan.model.assets.ICatalog;
 import com.atlan.model.assets.IColumn;
+import com.atlan.model.assets.ICosmosMongoDBCollection;
 import com.atlan.model.assets.IDbtMetric;
 import com.atlan.model.assets.IDbtModel;
 import com.atlan.model.assets.IDbtModelColumn;
@@ -25,9 +27,12 @@ import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
 import com.atlan.model.assets.IMaterializedView;
 import com.atlan.model.assets.IMetric;
+import com.atlan.model.assets.IModelAttribute;
+import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISnowflakeDynamicTable;
+import com.atlan.model.assets.ISparkJob;
 import com.atlan.model.assets.ITable;
 import com.atlan.model.assets.ITablePartition;
 import com.atlan.model.assets.IView;
@@ -77,6 +82,18 @@ public class GuacamoleColumn extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Calculate view in which this column exists. */
+    @Attribute
+    ICalculationView calculationView;
+
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewName;
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    @Attribute
+    String calculationViewQualifiedName;
+
     /** Average value in this column. */
     @Attribute
     Double columnAverage;
@@ -84,6 +101,10 @@ public class GuacamoleColumn extends Asset
     /** Average length of values in a string column. */
     @Attribute
     Double columnAverageLength;
+
+    /** Compression type of this column. */
+    @Attribute
+    String columnCompression;
 
     /** TBC */
     @Attribute
@@ -109,6 +130,15 @@ public class GuacamoleColumn extends Asset
     /** Number of rows that contain duplicate values. */
     @Attribute
     Long columnDuplicateValuesCountLong;
+
+    /** Encoding type of this column. */
+    @Attribute
+    String columnEncoding;
+
+    /** List of top-level upstream nested columns. */
+    @Attribute
+    @Singular("putColumnHierarchy")
+    List<Map<String, String>> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
@@ -189,6 +219,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnVariance;
 
+    /** Cosmos collection in which this column exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
     /** TBC */
     @Attribute
     @Singular
@@ -267,6 +301,11 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** Whether this column is a clustered column (true) or not (false). */
     @Attribute
     Boolean isClustered;
@@ -326,14 +365,36 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IMetric> metricTimestamps;
 
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;
+
+    /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
+    @Attribute
+    String nestedColumnOrder;
 
     /** Nested columns that exist within this column. */
     @Attribute
     @Singular
     SortedSet<IColumn> nestedColumns;
+
+    /** Simple name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionName;
+
+    /** Unique name of the cosmos/mongo collection in which this SQL asset (column) exists, or empty if it does not exist within a cosmos/mongo collection. */
+    @Attribute
+    String nosqlCollectionQualifiedName;
 
     /** Number of digits allowed to the right of the decimal point. */
     @Attribute
@@ -352,6 +413,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
 
     /** Column in which this sub-column is nested. */
     @Attribute
