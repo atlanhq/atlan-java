@@ -73,9 +73,11 @@ import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.File
 import com.atlan.model.assets.FlowDataOperation
+import com.atlan.model.assets.FlowFolder
 import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowInterimField
 import com.atlan.model.assets.FlowProcessGrouping
+import com.atlan.model.assets.FlowProject
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
@@ -913,6 +915,8 @@ class AssetImporter(
                 TypeGrouping(
                     "Flows",
                     listOf(
+                        FlowProject.TYPE_NAME,
+                        FlowFolder.TYPE_NAME,
                         FlowProcessGrouping.TYPE_NAME,
                         FlowInterimDataset.TYPE_NAME,
                         FlowInterimField.TYPE_NAME,
@@ -1009,32 +1013,32 @@ class AssetImporter(
             val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
             if (typeName.isNotBlank()) {
                 typesInFile.add(row[typeIdx])
-            }
-            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-            if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
-                throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
-            }
-            if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
-                throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
-            }
-            val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
-            val deferredIdentity = getDeferredIdentity(qualifiedName)
-            if (connectionQNFromAsset != null) {
-                connectionQNs.add(connectionQNFromAsset)
-            } else if (typeName == Connection.TYPE_NAME) {
-                // If the qualifiedName comes back as null and the asset itself is a connection, add it
-                if (StringUtils.isValidConnectionQN(qualifiedName)) {
-                    connectionQNs.add(qualifiedName)
-                } else if (deferredIdentity == null) {
-                    throw IllegalStateException(
-                        "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
-                    )
+                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+                if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
+                    throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
                 }
-            } else if (deferredIdentity == null) {
-                throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
-            } else {
-                val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
-                connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
+                if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
+                    throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
+                }
+                val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+                val deferredIdentity = getDeferredIdentity(qualifiedName)
+                if (connectionQNFromAsset != null) {
+                    connectionQNs.add(connectionQNFromAsset)
+                } else if (typeName == Connection.TYPE_NAME) {
+                    // If the qualifiedName comes back as null and the asset itself is a connection, add it
+                    if (StringUtils.isValidConnectionQN(qualifiedName)) {
+                        connectionQNs.add(qualifiedName)
+                    } else if (deferredIdentity == null) {
+                        throw IllegalStateException(
+                            "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
+                        )
+                    }
+                } else if (deferredIdentity == null) {
+                    throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+                } else {
+                    val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
+                    connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
+                }
             }
             return row
         }
