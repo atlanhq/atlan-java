@@ -4,6 +4,7 @@ package com.probable.guacamole.model.relations;
 
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.RelationshipAttributes;
 import com.probable.guacamole.model.assets.GuacamoleColumn;
 import com.probable.guacamole.model.assets.GuacamoleTable;
 import com.probable.guacamole.model.assets.IGuacamoleColumn;
@@ -11,8 +12,6 @@ import com.probable.guacamole.model.assets.IGuacamoleTable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
-
-import com.atlan.model.relations.RelationshipAttributes;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
