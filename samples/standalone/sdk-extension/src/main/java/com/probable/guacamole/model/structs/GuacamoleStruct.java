@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuppressWarnings("serial")
 public class GuacamoleStruct extends AtlanStruct {
     private static final long serialVersionUID = 2L;
 
@@ -47,4 +48,8 @@ public class GuacamoleStruct extends AtlanStruct {
                 .guacamoleComplexTwo(guacamoleComplexTwo)
                 .build();
     }
+
+    public abstract static class GuacamoleStructBuilder<
+                    C extends GuacamoleStruct, B extends GuacamoleStructBuilder<C, B>>
+            extends AtlanStruct.AtlanStructBuilder<C, B> {}
 }
