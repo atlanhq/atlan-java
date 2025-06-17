@@ -67,199 +67,199 @@ public interface IGuacamoleTable {
     /** Rough measure of the IOPS allocated to the table's processing. */
     KeywordField GUACAMOLE_TEMPERATURE = new KeywordField("guacamoleTemperature", "guacamoleTemperature");
 
-    /** TBC */
+    /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
-    /** TBC */
+    /** List of roles who administer this asset. (This is only used for Connection assets.) */
     SortedSet<String> getAdminRoles();
 
-    /** TBC */
+    /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
-    /** TBC */
+    /** Alias for this table. */
     String getAlias();
 
-    /** TBC */
+    /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
 
-    /** TBC */
+    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
     String getAnnouncementTitle();
 
-    /** TBC */
+    /** Type of announcement on this asset. */
     AtlanAnnouncementType getAnnouncementType();
 
-    /** TBC */
+    /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     Long getAnnouncementUpdatedAt();
 
-    /** TBC */
+    /** Name of the user who last updated the announcement. */
     String getAnnouncementUpdatedBy();
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     String getAssetDbtAlias();
 
-    /** TBC */
+    /** Version of the environment in which this asset is materialized in dbt. */
     String getAssetDbtEnvironmentDbtVersion();
 
-    /** TBC */
+    /** Name of the environment in which this asset is materialized in dbt. */
     String getAssetDbtEnvironmentName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     Long getAssetDbtJobLastRun();
 
-    /** TBC */
+    /** Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunArtifactS3Path();
 
-    /** TBC */
+    /** Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false). */
     Boolean getAssetDbtJobLastRunArtifactsSaved();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
     Long getAssetDbtJobLastRunCreatedAt();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds. */
     Long getAssetDbtJobLastRunDequedAt();
 
-    /** TBC */
+    /** Thread ID of the user who executed the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunExecutedByThreadId();
 
-    /** TBC */
+    /** Branch in git from which the last run of the job that materialized this asset in dbt ran. */
     String getAssetDbtJobLastRunGitBranch();
 
-    /** TBC */
+    /** SHA hash in git for the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunGitSha();
 
-    /** TBC */
+    /** Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
     Boolean getAssetDbtJobLastRunHasDocsGenerated();
 
-    /** TBC */
+    /** Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
     Boolean getAssetDbtJobLastRunHasSourcesGenerated();
 
-    /** TBC */
+    /** Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false). */
     Boolean getAssetDbtJobLastRunNotificationsSent();
 
-    /** TBC */
+    /** Thread ID of the owner of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunOwnerThreadId();
 
-    /** TBC */
+    /** Total duration the job that materialized this asset in dbt spent being queued. */
     String getAssetDbtJobLastRunQueuedDuration();
 
-    /** TBC */
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued. */
     String getAssetDbtJobLastRunQueuedDurationHumanized();
 
-    /** TBC */
+    /** Run duration of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunRunDuration();
 
-    /** TBC */
+    /** Human-readable run duration of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunRunDurationHumanized();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds. */
     Long getAssetDbtJobLastRunStartedAt();
 
-    /** TBC */
+    /** Status message of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunStatusMessage();
 
-    /** TBC */
+    /** Total duration of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunTotalDuration();
 
-    /** TBC */
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunTotalDurationHumanized();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
     Long getAssetDbtJobLastRunUpdatedAt();
 
-    /** TBC */
+    /** URL of the last run of the job that materialized this asset in dbt. */
     String getAssetDbtJobLastRunUrl();
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     String getAssetDbtJobName();
 
-    /** TBC */
+    /** Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled. */
     Long getAssetDbtJobNextRun();
 
-    /** TBC */
+    /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
     String getAssetDbtJobNextRunHumanized();
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     String getAssetDbtJobSchedule();
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     String getAssetDbtJobScheduleCronHumanized();
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     String getAssetDbtJobStatus();
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     String getAssetDbtMeta();
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     String getAssetDbtPackageName();
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     String getAssetDbtProjectName();
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     String getAssetDbtSemanticLayerProxyUrl();
 
-    /** TBC */
+    /** Freshness criteria for the source of this asset in dbt. */
     String getAssetDbtSourceFreshnessCriteria();
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     SortedSet<String> getAssetDbtTags();
 
-    /** TBC */
+    /** All associated dbt test statuses. */
     String getAssetDbtTestStatus();
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     String getAssetDbtUniqueId();
 
-    /** TBC */
+    /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
-    /** TBC */
+    /** List of Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentNames();
 
-    /** TBC */
+    /** List of unique Monte Carlo incident names attached to this asset. */
     SortedSet<String> getAssetMcIncidentQualifiedNames();
 
-    /** TBC */
+    /** List of Monte Carlo incident severities associated with this asset. */
     SortedSet<String> getAssetMcIncidentSeverities();
 
-    /** TBC */
+    /** List of Monte Carlo incident states associated with this asset. */
     SortedSet<String> getAssetMcIncidentStates();
 
-    /** TBC */
+    /** List of Monte Carlo incident sub-types associated with this asset. */
     SortedSet<String> getAssetMcIncidentSubTypes();
 
-    /** TBC */
+    /** List of Monte Carlo incident types associated with this asset. */
     SortedSet<String> getAssetMcIncidentTypes();
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last synced from Monte Carlo. */
     Long getAssetMcLastSyncRunAt();
 
-    /** TBC */
+    /** List of Monte Carlo monitor names attached to this asset. */
     SortedSet<String> getAssetMcMonitorNames();
 
-    /** TBC */
+    /** List of unique Monte Carlo monitor names attached to this asset. */
     SortedSet<String> getAssetMcMonitorQualifiedNames();
 
-    /** TBC */
+    /** Schedules of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorScheduleTypes();
 
-    /** TBC */
+    /** Statuses of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorStatuses();
 
-    /** TBC */
+    /** Types of all associated Monte Carlo monitors. */
     SortedSet<String> getAssetMcMonitorTypes();
 
-    /** TBC */
+    /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
-    /** TBC */
+    /** All associated Soda check statuses. */
     String getAssetSodaCheckStatuses();
 
-    /** TBC */
+    /** Status of data quality from Soda. */
     String getAssetSodaDQStatus();
 
     /** TBC */
@@ -271,49 +271,49 @@ public interface IGuacamoleTable {
     /** TBC */
     String getAssetSodaSourceURL();
 
-    /** TBC */
+    /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** TBC */
+    /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
-    /** TBC */
+    /** Human-readable descriptive message used to provide further detail to certificateStatus. */
     String getCertificateStatusMessage();
 
-    /** TBC */
+    /** Time (epoch) at which the certification was last updated, in milliseconds. */
     Long getCertificateUpdatedAt();
 
-    /** TBC */
+    /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Number of columns in this table. */
     Long getColumnCount();
 
     /** Columns that exist within this table. */
     SortedSet<IColumn> getColumns();
 
-    /** TBC */
+    /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
-    /** TBC */
+    /** Unique name of the connection through which this asset is accessible. */
     String getConnectionQualifiedName();
 
-    /** TBC */
-    AtlanConnectorType getConnectorType();
+    /** Type of the connector through which this asset is accessible. */
+    String getConnectorName();
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseName();
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
     /** TBC */
     SortedSet<IDbtModel> getDbtModels();
 
-    /** TBC */
+    /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -322,22 +322,22 @@ public interface IGuacamoleTable {
     /** TBC */
     SortedSet<IDbtTest> getDbtTests();
 
-    /** TBC */
+    /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
 
     /** TBC */
     SortedSet<ITable> getDimensions();
 
-    /** TBC */
+    /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
 
-    /** TBC */
+    /** External location of this table, for example: an S3 object location. */
     String getExternalLocation();
 
-    /** TBC */
+    /** Format of the external location of this table, for example: JSON, CSV, PARQUET, etc. */
     String getExternalLocationFormat();
 
-    /** TBC */
+    /** Region of the external location of this table, for example: S3 region. */
     String getExternalLocationRegion();
 
     /** TBC */
@@ -358,7 +358,7 @@ public interface IGuacamoleTable {
     /** Rough measure of the IOPS allocated to the table's processing. */
     GuacamoleTemperature getGuacamoleTemperature();
 
-    /** TBC */
+    /** Whether this asset has lineage (true) or not (false). */
     Boolean getHasLineage();
 
     /** TBC */
@@ -370,37 +370,37 @@ public interface IGuacamoleTable {
     /** TBC */
     Boolean getIsAIGenerated();
 
-    /** TBC */
+    /** Whether this asset is discoverable through the UI (true) or not (false). */
     Boolean getIsDiscoverable();
 
-    /** TBC */
+    /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Whether this table is partitioned (true) or not (false). */
     Boolean getIsPartitioned();
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     Boolean getIsProfiled();
 
-    /** TBC */
+    /** Whether preview queries are allowed for this table (true) or not (false). */
     Boolean getIsQueryPreview();
 
-    /** TBC */
+    /** Whether this table is temporary (true) or not (false). */
     Boolean getIsTemporary();
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     Long getLastProfiledAt();
 
-    /** TBC */
+    /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
 
-    /** TBC */
+    /** Name of the last run of the crawler that last synchronized this asset. */
     String getLastSyncRun();
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last crawled, in milliseconds. */
     Long getLastSyncRunAt();
 
-    /** TBC */
+    /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
     /** Links that are attached to this asset. */
@@ -415,7 +415,7 @@ public interface IGuacamoleTable {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** TBC */
@@ -424,139 +424,139 @@ public interface IGuacamoleTable {
     /** Processes from which this asset is produced as output. */
     SortedSet<ILineageProcess> getOutputFromProcesses();
 
-    /** TBC */
+    /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
-    /** TBC */
+    /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
+    /** Number of partitions in this table. */
     Long getPartitionCount();
 
-    /** TBC */
+    /** List of partitions in this table. */
     String getPartitionList();
 
-    /** TBC */
+    /** Partition strategy for this table. */
     String getPartitionStrategy();
 
     /** Partitions that exist within this table. */
     SortedSet<ITablePartition> getPartitions();
 
-    /** TBC */
+    /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** Queries that access this table. */
     SortedSet<IAtlanQuery> getQueries();
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     Long getQueryCount();
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     Long getQueryCountUpdatedAt();
 
-    /** TBC */
+    /** Configuration for preview queries. */
     Map<String, String> getQueryPreviewConfig();
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     Long getQueryUserCount();
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     Map<String, Long> getQueryUserMap();
 
     /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** TBC */
+    /** Number of rows in this table. */
     Long getRowCount();
 
-    /** TBC */
+    /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** Schema in which this table exists. */
     ISchema getSchema();
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     String getSchemaName();
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     String getSchemaQualifiedName();
 
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
 
-    /** TBC */
+    /** Size of this table, in bytes. */
     Long getSizeBytes();
 
     /** TBC */
     SortedSet<ISodaCheck> getSodaChecks();
 
-    /** TBC */
+    /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
 
-    /** TBC */
+    /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
     Long getSourceCreatedAt();
 
-    /** TBC */
+    /** Name of the user who created this asset, in the source system. */
     String getSourceCreatedBy();
 
-    /** TBC */
+    /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
     String getSourceEmbedURL();
 
-    /** TBC */
+    /** Timestamp of most recent read operation. */
     Long getSourceLastReadAt();
 
-    /** TBC */
+    /** List of owners of this asset, in the source system. */
     String getSourceOwners();
 
-    /** TBC */
+    /** List of most expensive warehouses with extra insights. */
     List<PopularityInsights> getSourceQueryComputeCostRecords();
 
-    /** TBC */
+    /** List of most expensive warehouse names. */
     SortedSet<String> getSourceQueryComputeCosts();
 
-    /** TBC */
+    /** Total count of all read operations at source. */
     Long getSourceReadCount();
 
-    /** TBC */
+    /** List of the most expensive queries that accessed this asset. */
     List<PopularityInsights> getSourceReadExpensiveQueryRecords();
 
-    /** TBC */
+    /** List of the most popular queries that accessed this asset. */
     List<PopularityInsights> getSourceReadPopularQueryRecords();
 
-    /** TBC */
+    /** Total cost of read queries at source. */
     Double getSourceReadQueryCost();
 
-    /** TBC */
+    /** List of usernames with extra insights for the most recent users who read this asset. */
     List<PopularityInsights> getSourceReadRecentUserRecords();
 
-    /** TBC */
+    /** List of usernames of the most recent users who read this asset. */
     SortedSet<String> getSourceReadRecentUsers();
 
-    /** TBC */
+    /** List of the slowest queries that accessed this asset. */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
-    /** TBC */
+    /** List of usernames with extra insights for the users who read this asset the most. */
     List<PopularityInsights> getSourceReadTopUserRecords();
 
-    /** TBC */
+    /** List of usernames of the users who read this asset the most. */
     SortedSet<String> getSourceReadTopUsers();
 
-    /** TBC */
+    /** Total number of unique users that read data from asset. */
     Long getSourceReadUserCount();
 
-    /** TBC */
+    /** Total cost of all operations at source. */
     Double getSourceTotalCost();
 
-    /** TBC */
+    /** URL to the resource within the source application, used to create a button to view this asset in the source application. */
     String getSourceURL();
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last updated in the source system, in milliseconds. */
     Long getSourceUpdatedAt();
 
-    /** TBC */
+    /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
     /** TBC */
@@ -565,44 +565,53 @@ public interface IGuacamoleTable {
     /** TBC */
     SortedSet<IDbtModel> getSqlDbtModels();
 
-    /** TBC */
+    /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
-    /** TBC */
+    /** Number of users who have starred this asset. */
     Integer getStarredCount();
 
-    /** TBC */
+    /** List of usernames with extra information of the users who have starred an asset. */
     List<StarredDetails> getStarredDetails();
 
-    /** TBC */
+    /** Subtype of this asset. */
     String getSubType();
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();
 
-    /** TBC */
+    /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
 
-    /** TBC */
+    /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     String getViewName();
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     String getViewQualifiedName();
 
-    /** TBC */
+    /** View score for this asset. */
     Double getViewScore();
 
-    /** TBC */
+    /** List of groups who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerGroups();
 
-    /** TBC */
+    /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
     SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
 
     /** Name of the type that defines the asset. */
     String getTypeName();
