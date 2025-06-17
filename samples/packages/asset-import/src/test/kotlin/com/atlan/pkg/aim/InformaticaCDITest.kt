@@ -3,8 +3,10 @@
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.FlowDataOperation
+import com.atlan.model.assets.FlowFolder
 import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowProcessGrouping
+import com.atlan.model.assets.FlowProject
 import com.atlan.model.assets.ILineageProcess
 import com.atlan.model.assets.LineageProcess
 import com.atlan.model.assets.Table
@@ -66,6 +68,36 @@ class InformaticaCDITest : PackageTest("cdi") {
         assertNotNull(connection)
         assertFalse(connection.isEmpty())
         assertEquals(1, connection.size)
+    }
+
+    @Test
+    fun projectExists() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val projects =
+            FlowProject
+                .select(client)
+                .where(FlowProject.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowProject.FLOW_ASSETS)
+                .stream()
+                .map { it as FlowProject }
+                .toList()
+        assertEquals(1, projects.size)
+        assertEquals(20, projects[0].flowAssets.size)
+    }
+
+    @Test
+    fun folderExists() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val folders =
+            FlowFolder
+                .select(client)
+                .where(FlowFolder.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowFolder.FLOW_ASSETS)
+                .stream()
+                .map { it as FlowFolder }
+                .toList()
+        assertEquals(1, folders.size)
+        assertEquals(20, folders[0].flowAssets.size)
     }
 
     @Test
