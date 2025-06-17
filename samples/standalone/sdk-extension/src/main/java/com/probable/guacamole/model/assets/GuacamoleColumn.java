@@ -10,7 +10,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Connection;
-import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.Date;
 import com.atlan.model.assets.IAirflowTask;
 import com.atlan.model.assets.IAsset;
 import com.atlan.model.assets.IAtlanQuery;
@@ -40,6 +40,8 @@ import com.atlan.model.assets.Table;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.fields.AtlanField;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
@@ -48,8 +50,11 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -89,11 +94,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
-    /** TBC */
+    /** Average value in this column. */
     @Attribute
     Double columnAverage;
 
-    /** TBC */
+    /** Average length of values in a string column. */
     @Attribute
     Double columnAverageLength;
 
@@ -106,23 +111,23 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IDbtModelColumn> columnDbtModelColumns;
 
-    /** TBC */
+    /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     @Attribute
     Integer columnDepthLevel;
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     @Attribute
     Integer columnDistinctValuesCount;
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     @Attribute
     Long columnDistinctValuesCountLong;
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     @Attribute
     Integer columnDuplicateValuesCount;
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     @Attribute
     Long columnDuplicateValuesCountLong;
 
@@ -135,82 +140,82 @@ public class GuacamoleColumn extends Asset
     @Singular("putColumnHierarchy")
     List<Map<String, String>> columnHierarchy;
 
-    /** TBC */
+    /** List of values in a histogram that represents the contents of this column. */
     @Attribute
     Histogram columnHistogram;
 
-    /** TBC */
+    /** Greatest value in a numeric column. */
     @Attribute
     Double columnMax;
 
-    /** TBC */
+    /** Length of the longest value in a string column. */
     @Attribute
     Integer columnMaximumStringLength;
 
-    /** TBC */
+    /** List of the greatest values in a column. */
     @Attribute
     @Singular("addColumnMax")
     SortedSet<String> columnMaxs;
 
-    /** TBC */
+    /** Arithmetic mean of the values in a numeric column. */
     @Attribute
     Double columnMean;
 
-    /** TBC */
+    /** Calculated median of the values in a numeric column. */
     @Attribute
     Double columnMedian;
 
-    /** TBC */
+    /** Least value in a numeric column. */
     @Attribute
     Double columnMin;
 
-    /** TBC */
+    /** Length of the shortest value in a string column. */
     @Attribute
     Integer columnMinimumStringLength;
 
-    /** TBC */
+    /** List of the least values in a column. */
     @Attribute
     @Singular("addColumnMin")
     SortedSet<String> columnMins;
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     @Attribute
     Integer columnMissingValuesCount;
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     @Attribute
     Long columnMissingValuesCountLong;
 
-    /** TBC */
+    /** Percentage of rows in a column that do not contain content. */
     @Attribute
     Double columnMissingValuesPercentage;
 
-    /** TBC */
+    /** Calculated standard deviation of the values in a numeric column. */
     @Attribute
     Double columnStandardDeviation;
 
-    /** TBC */
+    /** Calculated sum of the values in a numeric column. */
     @Attribute
     Double columnSum;
 
-    /** TBC */
+    /** List of top values in this column. */
     @Attribute
     @Singular
     List<ColumnValueFrequencyMap> columnTopValues;
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     @Attribute
     Integer columnUniqueValuesCount;
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     @Attribute
     Long columnUniqueValuesCountLong;
 
-    /** TBC */
+    /** Ratio indicating how unique data in this column is: 0 indicates that all values are the same, 100 indicates that all values in this column are unique. */
     @Attribute
     Double columnUniquenessPercentage;
 
-    /** TBC */
+    /** Calculated variance of the values in a numeric column. */
     @Attribute
     Double columnVariance;
 
@@ -223,15 +228,15 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IMetric> dataQualityMetricDimensions;
 
-    /** TBC */
+    /** Data type of values in this column. */
     @Attribute
     String dataType;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
@@ -260,7 +265,7 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Default value for this column. */
     @Attribute
     String defaultValue;
 
@@ -275,6 +280,7 @@ public class GuacamoleColumn extends Asset
 
     /** Time (epoch) when this column was imagined, in milliseconds. */
     @Attribute
+    @Date
     Long guacamoleConceptualized;
 
     /** Specialized table that contains this specialized column. */
@@ -300,66 +306,57 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Whether this column is a clustered column (true) or not (false). */
     @Attribute
     Boolean isClustered;
 
-    /** TBC */
+    /** Whether this column is a distribution column (true) or not (false). */
     @Attribute
     Boolean isDist;
 
-    /** TBC */
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
     @Attribute
     Boolean isForeign;
 
-    /** TBC */
+    /** When true, this column is indexed in the database. */
     @Attribute
     Boolean isIndexed;
 
-    /** TBC */
+    /** When true, the values in this column can be null. */
     @Attribute
     Boolean isNullable;
 
-    /** TBC */
+    /** Whether this column is a partition column (true) or not (false). */
     @Attribute
     Boolean isPartition;
 
-    /** TBC */
+    /** Whether this column is pinned (true) or not (false). */
     @Attribute
     Boolean isPinned;
 
-    /** TBC */
+    /** When true, this column is the primary key for the table. */
     @Attribute
     Boolean isPrimary;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether this column is a sort column (true) or not (false). */
     @Attribute
     Boolean isSort;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
+    @Date
     Long lastProfiledAt;
-
-    /** Entities implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelEntity> modelImplementedEntities;
-
-    /** Attributes implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelAttribute> modelImplementedAttributes;
 
     /** Materialized view in which this column exists. */
     @Attribute
     @JsonProperty("materialisedView")
     IMaterializedView materializedView;
 
-    /** TBC */
+    /** Maximum length of a value in this column. */
     @Attribute
     Long maxLength;
 
@@ -368,7 +365,17 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IMetric> metricTimestamps;
 
-    /** TBC */
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;
 
@@ -389,11 +396,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     String nosqlCollectionQualifiedName;
 
-    /** TBC */
+    /** Number of digits allowed to the right of the decimal point. */
     @Attribute
     Double numericScale;
 
-    /** TBC */
+    /** Order (position) in which this column appears in the table (starting at 1). */
     @Attribute
     Integer order;
 
@@ -416,27 +423,28 @@ public class GuacamoleColumn extends Asset
     @Attribute
     IColumn parentColumn;
 
-    /** TBC */
+    /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnName;
 
-    /** TBC */
+    /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnQualifiedName;
 
-    /** TBC */
+    /** Order (position) of this partition column in the table. */
     @Attribute
     Integer partitionOrder;
 
-    /** TBC */
+    /** Time (epoch) at which this column was pinned, in milliseconds. */
     @Attribute
+    @Date
     Long pinnedAt;
 
-    /** TBC */
+    /** User who pinned this column. */
     @Attribute
     String pinnedBy;
 
-    /** TBC */
+    /** Total number of digits allowed, when the dataType is numeric. */
     @Attribute
     Integer precision;
 
@@ -445,19 +453,20 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IAtlanQuery> queries;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
+    @Date
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
@@ -466,11 +475,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     String rawDataTypeDefinition;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
@@ -488,7 +497,7 @@ public class GuacamoleColumn extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Sub-data type of this column. */
     @Attribute
     String subDataType;
 
@@ -496,7 +505,7 @@ public class GuacamoleColumn extends Asset
     @Attribute
     ITable table;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
@@ -504,11 +513,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     ITablePartition tablePartition;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Validations for this column. */
     @Attribute
     @Singular
     Map<String, String> validations;
@@ -517,11 +526,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     IView view;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 
@@ -582,25 +591,54 @@ public class GuacamoleColumn extends Asset
     }
 
     /**
-     * Reference to a GuacamoleColumn by GUID.
+     * Reference to a GuacamoleColumn by GUID. Use this to create a relationship to this GuacamoleColumn,
+     * where the relationship should be replaced.
      *
      * @param guid the GUID of the GuacamoleColumn to reference
      * @return reference to a GuacamoleColumn that can be used for defining a relationship to a GuacamoleColumn
      */
     public static GuacamoleColumn refByGuid(String guid) {
-        return GuacamoleColumn._internal().guid(guid).build();
+        return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a GuacamoleColumn by qualifiedName.
+     * Reference to a GuacamoleColumn by GUID. Use this to create a relationship to this GuacamoleColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param guid the GUID of the GuacamoleColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GuacamoleColumn that can be used for defining a relationship to a GuacamoleColumn
+     */
+    public static GuacamoleColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return GuacamoleColumn._internal().guid(guid).semantic(semantic).build();
+    }
+
+    /**
+     * Reference to a GuacamoleColumn by qualifiedName. Use this to create a relationship to this GuacamoleColumn,
+     * where the relationship should be replaced.
      *
      * @param qualifiedName the qualifiedName of the GuacamoleColumn to reference
      * @return reference to a GuacamoleColumn that can be used for defining a relationship to a GuacamoleColumn
      */
     public static GuacamoleColumn refByQualifiedName(String qualifiedName) {
+        return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
+    }
+
+    /**
+     * Reference to a GuacamoleColumn by qualifiedName. Use this to create a relationship to this GuacamoleColumn,
+     * where you want to further control how that relationship should be updated (i.e. replaced,
+     * appended, or removed).
+     *
+     * @param qualifiedName the qualifiedName of the GuacamoleColumn to reference
+     * @param semantic how to save this relationship (replace all with this, append it, or remove it)
+     * @return reference to a GuacamoleColumn that can be used for defining a relationship to a GuacamoleColumn
+     */
+    public static GuacamoleColumn refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return GuacamoleColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .semantic(semantic)
                 .build();
     }
 
@@ -622,17 +660,17 @@ public class GuacamoleColumn extends Asset
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
      * @param id of the GuacamoleColumn to retrieve, either its GUID or its full qualifiedName
-     * @param includeRelationships if true, all of the asset's relationships will also be retrieved; if false, no relationships will be retrieved
+     * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
      * @return the requested full GuacamoleColumn, optionally complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GuacamoleColumn does not exist or the provided GUID is not a GuacamoleColumn
      */
     @JsonIgnore
-    public static GuacamoleColumn get(AtlanClient client, String id, boolean includeRelationships)
+    public static GuacamoleColumn get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Asset asset = Asset.get(client, id, includeRelationships);
+            Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
             } else if (asset instanceof GuacamoleColumn) {
@@ -641,11 +679,80 @@ public class GuacamoleColumn extends Asset
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Asset asset = Asset.get(client, TYPE_NAME, id, includeRelationships);
+            Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
             if (asset instanceof GuacamoleColumn) {
                 return (GuacamoleColumn) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            }
+        }
+    }
+
+    /**
+     * Retrieves a GuacamoleColumn by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GuacamoleColumn to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the GuacamoleColumn, including any relationships
+     * @return the requested GuacamoleColumn, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GuacamoleColumn does not exist or the provided GUID is not a GuacamoleColumn
+     */
+    @JsonIgnore
+    public static GuacamoleColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
+        return get(client, id, attributes, Collections.emptyList());
+    }
+
+    /**
+     * Retrieves a GuacamoleColumn by one of its identifiers, with only the requested attributes (and relationships).
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param id of the GuacamoleColumn to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the GuacamoleColumn, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the GuacamoleColumn
+     * @return the requested GuacamoleColumn, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GuacamoleColumn does not exist or the provided GUID is not a GuacamoleColumn
+     */
+    @JsonIgnore
+    public static GuacamoleColumn get(
+            AtlanClient client,
+            String id,
+            Collection<AtlanField> attributes,
+            Collection<AtlanField> attributesOnRelated)
+            throws AtlanException {
+        if (id == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
+        } else if (StringUtils.isUUID(id)) {
+            Optional<Asset> asset = GuacamoleColumn.select(client)
+                    .where(GuacamoleColumn.GUID.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
+            } else if (asset.get() instanceof GuacamoleColumn) {
+                return (GuacamoleColumn) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
+            }
+        } else {
+            Optional<Asset> asset = GuacamoleColumn.select(client)
+                    .where(GuacamoleColumn.QUALIFIED_NAME.eq(id))
+                    .includesOnResults(attributes)
+                    .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
+                    .pageSize(1)
+                    .stream()
+                    .findFirst();
+            if (!asset.isPresent()) {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
+            } else if (asset.get() instanceof GuacamoleColumn) {
+                return (GuacamoleColumn) asset.get();
+            } else {
+                throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         }
     }
