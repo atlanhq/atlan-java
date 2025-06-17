@@ -31,11 +31,11 @@ public interface IFlowFolder {
 
     public static final String TYPE_NAME = "FlowFolder";
 
+    /** Flow assets contained in this folder. */
+    RelationField FLOW_ASSETS = new RelationField("flowAssets");
+
     /** Parent folder containing the sub-folders. */
     RelationField FLOW_PARENT_FOLDER = new RelationField("flowParentFolder");
-
-    /** Project, workspace or namespace in which this folder is contained. */
-    RelationField FLOW_PROJECT = new RelationField("flowProject");
 
     /** Child (sub) folders contained within the folder. */
     RelationField FLOW_SUB_FOLDERS = new RelationField("flowSubFolders");
@@ -358,8 +358,14 @@ public interface IFlowFolder {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Flow assets contained in this folder. */
+    SortedSet<IFlow> getFlowAssets();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
+
+    /** Folder in which this asset is contained. */
+    IFlowFolder getFlowFolder();
 
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
@@ -370,7 +376,7 @@ public interface IFlowFolder {
     /** Parent folder containing the sub-folders. */
     IFlowFolder getFlowParentFolder();
 
-    /** Project, workspace or namespace in which this folder is contained. */
+    /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
 
     /** Simple name of the project in which this asset is contained. */
@@ -463,7 +469,7 @@ public interface IFlowFolder {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -90,6 +90,10 @@ public class FlowDataOperation extends Asset
     @Date
     Long flowFinishedAt;
 
+    /** Folder in which this asset is contained. */
+    @Attribute
+    IFlowFolder flowFolder;
+
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderName;
@@ -101,6 +105,10 @@ public class FlowDataOperation extends Asset
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     @Attribute
     IFlowProcessGrouping flowGrouping;
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    @Attribute
+    IFlowProject flowProject;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute

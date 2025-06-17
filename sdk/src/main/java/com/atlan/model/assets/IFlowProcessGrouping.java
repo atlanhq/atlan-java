@@ -37,9 +37,6 @@ public interface IFlowProcessGrouping {
     /** Individual data flows (processes) contained in this grouping. */
     RelationField FLOW_DATA_FLOWS = new RelationField("flowDataFlows");
 
-    /** Project, workspace or namespace in which this asset is contained. */
-    RelationField FLOW_PROJECT = new RelationField("flowProject");
-
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -367,6 +364,9 @@ public interface IFlowProcessGrouping {
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
+    /** Folder in which this asset is contained. */
+    IFlowFolder getFlowFolder();
+
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
 
@@ -463,7 +463,7 @@ public interface IFlowProcessGrouping {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

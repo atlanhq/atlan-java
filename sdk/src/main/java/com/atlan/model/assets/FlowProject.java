@@ -48,10 +48,19 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Flow assets contained in this project. */
+    @Attribute
+    @Singular
+    SortedSet<IFlow> flowAssets;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
     Long flowFinishedAt;
+
+    /** Folder in which this asset is contained. */
+    @Attribute
+    IFlowFolder flowFolder;
 
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
@@ -61,15 +70,14 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     @Attribute
     String flowFolderQualifiedName;
 
-    /** Folders for further organizing assets within the project. */
-    @Attribute
-    @Singular
-    SortedSet<IFlowFolder> flowFolders;
-
     /** Grouping of data flows (processes) contained in this project. */
     @Attribute
     @Singular
     SortedSet<IFlowProcessGrouping> flowGroupings;
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    @Attribute
+    IFlowProject flowProject;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute

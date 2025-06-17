@@ -53,6 +53,10 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     @Date
     Long flowFinishedAt;
 
+    /** Folder in which this asset is contained. */
+    @Attribute
+    IFlowFolder flowFolder;
+
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderName;
@@ -60,6 +64,10 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     /** Unique name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderQualifiedName;
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    @Attribute
+    IFlowProject flowProject;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute

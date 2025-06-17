@@ -31,6 +31,9 @@ public interface IFlowProject {
 
     public static final String TYPE_NAME = "FlowProject";
 
+    /** Flow assets contained in this project. */
+    RelationField FLOW_ASSETS = new RelationField("flowAssets");
+
     /** Folders for further organizing assets within the project. */
     RelationField FLOW_FOLDERS = new RelationField("flowFolders");
 
@@ -355,8 +358,14 @@ public interface IFlowProject {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Flow assets contained in this project. */
+    SortedSet<IFlow> getFlowAssets();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
+
+    /** Folder in which this asset is contained. */
+    IFlowFolder getFlowFolder();
 
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
@@ -364,11 +373,11 @@ public interface IFlowProject {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
-    /** Folders for further organizing assets within the project. */
-    SortedSet<IFlowFolder> getFlowFolders();
-
     /** Grouping of data flows (processes) contained in this project. */
     SortedSet<IFlowProcessGrouping> getFlowGroupings();
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    IFlowProject getFlowProject();
 
     /** Simple name of the project in which this asset is contained. */
     String getFlowProjectName();
@@ -457,7 +466,7 @@ public interface IFlowProject {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

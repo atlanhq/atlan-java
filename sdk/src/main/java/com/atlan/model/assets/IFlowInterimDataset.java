@@ -358,11 +358,17 @@ public interface IFlowInterimDataset {
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
+    /** Folder in which this asset is contained. */
+    IFlowFolder getFlowFolder();
+
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    IFlowProject getFlowProject();
 
     /** Simple name of the project in which this asset is contained. */
     String getFlowProjectName();
@@ -475,7 +481,7 @@ public interface IFlowInterimDataset {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

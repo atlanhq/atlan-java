@@ -63,6 +63,10 @@ public class FlowProcessGrouping extends Asset implements IFlowProcessGrouping, 
     @Date
     Long flowFinishedAt;
 
+    /** Folder in which this asset is contained. */
+    @Attribute
+    IFlowFolder flowFolder;
+
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderName;

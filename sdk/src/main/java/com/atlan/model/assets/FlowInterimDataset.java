@@ -57,6 +57,10 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     @Date
     Long flowFinishedAt;
 
+    /** Folder in which this asset is contained. */
+    @Attribute
+    IFlowFolder flowFolder;
+
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderName;
@@ -64,6 +68,10 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     /** Unique name of the folder in which this asset is contained. */
     @Attribute
     String flowFolderQualifiedName;
+
+    /** Project, workspace or namespace in which this asset is contained. */
+    @Attribute
+    IFlowProject flowProject;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute
