@@ -3,10 +3,13 @@
 package com.probable.guacamole.model.relations;
 
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.assets.GuacamoleColumn;
-import com.atlan.model.assets.GuacamoleTable;
-import com.atlan.model.assets.IGuacamoleColumn;
-import com.atlan.model.assets.IGuacamoleTable;
+import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.RelationshipAttributes;
+import com.atlan.model.relations.UniqueAttributes;
+import com.probable.guacamole.model.assets.GuacamoleColumn;
+import com.probable.guacamole.model.assets.GuacamoleTable;
+import com.probable.guacamole.model.assets.IGuacamoleColumn;
+import com.probable.guacamole.model.assets.IGuacamoleTable;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.processing.Generated;
@@ -52,7 +55,7 @@ public class GuacamoleTableColumns extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class GuacamoleTable extends GuacamoleTable {
+    public static final class GuacamoleTableReln extends GuacamoleTable {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for GuacamoleTableColumns. */
@@ -70,7 +73,7 @@ public class GuacamoleTableColumns extends RelationshipAttributes {
     @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
     @EqualsAndHashCode(callSuper = true)
     @ToString(callSuper = true)
-    public static final class GuacamoleColumn extends GuacamoleColumn {
+    public static final class GuacamoleColumnReln extends GuacamoleColumn {
         private static final long serialVersionUID = 2L;
 
         /** Fixed typeName for GuacamoleTableColumns. */
@@ -98,13 +101,13 @@ public class GuacamoleTableColumns extends RelationshipAttributes {
                 throws InvalidRequestException {
             GuacamoleTableColumns attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return GuacamoleTable._internal()
+                return GuacamoleTableReln._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .semantic(semantic)
                         .build();
             } else {
-                return GuacamoleTable._internal()
+                return GuacamoleTableReln._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -126,13 +129,13 @@ public class GuacamoleTableColumns extends RelationshipAttributes {
                 throws InvalidRequestException {
             GuacamoleTableColumns attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
-                return GuacamoleColumn._internal()
+                return GuacamoleColumnReln._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
                         .semantic(semantic)
                         .build();
             } else {
-                return GuacamoleColumn._internal()
+                return GuacamoleColumnReln._internal()
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
