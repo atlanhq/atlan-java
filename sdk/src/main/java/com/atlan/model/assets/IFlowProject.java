@@ -34,10 +34,16 @@ public interface IFlowProject {
     /** Flow assets contained in this project. */
     RelationField FLOW_ASSETS = new RelationField("flowAssets");
 
+    /** Interim datasets contained in this project. */
+    RelationField FLOW_DATASETS = new RelationField("flowDatasets");
+
+    /** Interim fields contained in this project. */
+    RelationField FLOW_FIELDS = new RelationField("flowFields");
+
     /** Folders for further organizing assets within the project. */
     RelationField FLOW_FOLDERS = new RelationField("flowFolders");
 
-    /** Grouping of data flows (processes) contained in this project. */
+    /** Flow groupings contained in this project. */
     RelationField FLOW_GROUPINGS = new RelationField("flowGroupings");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -361,11 +367,17 @@ public interface IFlowProject {
     /** Flow assets contained in this project. */
     SortedSet<IFlow> getFlowAssets();
 
+    /** Interim datasets contained in this project. */
+    SortedSet<IFlowInterimDataset> getFlowDatasets();
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Interim fields contained in this project. */
+    SortedSet<IFlowInterimField> getFlowFields();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
-
-    /** Folder in which this asset is contained. */
-    IFlowFolder getFlowFolder();
 
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
@@ -373,8 +385,14 @@ public interface IFlowProject {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
-    /** Grouping of data flows (processes) contained in this project. */
+    /** Folders for further organizing assets within the project. */
+    SortedSet<IFlowFolder> getFlowFolders();
+
+    /** Flow groupings contained in this project. */
     SortedSet<IFlowProcessGrouping> getFlowGroupings();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
 
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
@@ -384,6 +402,9 @@ public interface IFlowProject {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -466,7 +487,7 @@ public interface IFlowProject {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

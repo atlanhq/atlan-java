@@ -48,6 +48,14 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Interim dataset that contains these fields. */
+    @Attribute
+    IFlowInterimDataset flowDataset;
+
+    /** Optional error message of the flow run. */
+    @Attribute
+    String flowErrorMessage;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
@@ -65,6 +73,10 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     @Attribute
     String flowFolderQualifiedName;
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    @Attribute
+    String flowId;
+
     /** Project, workspace or namespace in which this asset is contained. */
     @Attribute
     IFlowProject flowProject;
@@ -76,6 +88,10 @@ public class FlowInterimField extends Asset implements IFlowInterimField, ICatal
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    @Attribute
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute

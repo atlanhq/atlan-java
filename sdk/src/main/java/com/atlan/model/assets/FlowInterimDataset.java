@@ -52,6 +52,15 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     @Attribute
     IFlowProcessGrouping flowDetailedBy;
 
+    /** Optional error message of the flow run. */
+    @Attribute
+    String flowErrorMessage;
+
+    /** Fields contained in the interim dataset. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowInterimField> flowFields;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
@@ -69,6 +78,10 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     @Attribute
     String flowFolderQualifiedName;
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    @Attribute
+    String flowId;
+
     /** Project, workspace or namespace in which this asset is contained. */
     @Attribute
     IFlowProject flowProject;
@@ -80,6 +93,10 @@ public class FlowInterimDataset extends Asset implements IFlowInterimDataset, IC
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    @Attribute
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute

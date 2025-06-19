@@ -86,11 +86,29 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    IETLControlFlow etlControlFlow;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IETLDataFlowOperation> etlDataFlowOperations;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IETLExecutableUnit> etlExecutableUnits;
+
+    /** TBC */
+    @Attribute
     IFivetranConnector fivetranConnector;
 
     /** TBC */
     @Attribute
     IFlowProcessGrouping flowGrouping;
+
+    /** TBC */
+    @Attribute
+    IFlowV02ProcessGrouping flowV02Grouping;
 
     /** TBC */
     @Attribute

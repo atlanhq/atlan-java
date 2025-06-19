@@ -165,6 +165,20 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String dbtUniqueId;
 
+    /** Control flow that contains this process representing a data flow between data assets. */
+    @Attribute
+    IETLControlFlow etlControlFlow;
+
+    /** Data flow operations that are contained in this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLDataFlowOperation> etlDataFlowOperations;
+
+    /** Executable units that result in creating this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLExecutableUnit> etlExecutableUnits;
+
     /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
@@ -172,6 +186,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     @Attribute
     IFlowProcessGrouping flowGrouping;
+
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowV02ProcessGrouping flowV02Grouping;
 
     /** Tasks to which this asset provides input. */
     @Attribute

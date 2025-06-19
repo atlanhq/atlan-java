@@ -34,6 +34,9 @@ public interface IFlow {
 
     public static final String TYPE_NAME = "Flow";
 
+    /** Optional error message of the flow run. */
+    KeywordField FLOW_ERROR_MESSAGE = new KeywordField("flowErrorMessage", "flowErrorMessage");
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     NumericField FLOW_FINISHED_AT = new NumericField("flowFinishedAt", "flowFinishedAt");
 
@@ -47,6 +50,9 @@ public interface IFlow {
     /** Unique name of the folder in which this asset is contained. */
     KeywordField FLOW_FOLDER_QUALIFIED_NAME = new KeywordField("flowFolderQualifiedName", "flowFolderQualifiedName");
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    KeywordField FLOW_ID = new KeywordField("flowId", "flowId");
+
     /** Project, workspace or namespace in which this asset is contained. */
     RelationField FLOW_PROJECT = new RelationField("flowProject");
 
@@ -56,6 +62,9 @@ public interface IFlow {
 
     /** Unique name of the project in which this asset is contained. */
     KeywordField FLOW_PROJECT_QUALIFIED_NAME = new KeywordField("flowProjectQualifiedName", "flowProjectQualifiedName");
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    KeywordField FLOW_RUN_ID = new KeywordField("flowRunId", "flowRunId");
 
     /** Schedule for this point in the data processing or orchestration. */
     KeywordField FLOW_SCHEDULE = new KeywordField("flowSchedule", "flowSchedule");
@@ -384,17 +393,20 @@ public interface IFlow {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
-
-    /** Folder in which this asset is contained. */
-    IFlowFolder getFlowFolder();
 
     /** Simple name of the folder in which this asset is contained. */
     String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
 
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
@@ -404,6 +416,9 @@ public interface IFlow {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -486,7 +501,7 @@ public interface IFlow {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

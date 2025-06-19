@@ -34,6 +34,15 @@ public interface IFlowFolder {
     /** Flow assets contained in this folder. */
     RelationField FLOW_ASSETS = new RelationField("flowAssets");
 
+    /** Interim datasets contained in this folder. */
+    RelationField FLOW_DATASETS = new RelationField("flowDatasets");
+
+    /** Interim fields contained in this folder. */
+    RelationField FLOW_FIELDS = new RelationField("flowFields");
+
+    /** Flow groupings contained in this folder. */
+    RelationField FLOW_GROUPINGS = new RelationField("flowGroupings");
+
     /** Parent folder containing the sub-folders. */
     RelationField FLOW_PARENT_FOLDER = new RelationField("flowParentFolder");
 
@@ -361,6 +370,15 @@ public interface IFlowFolder {
     /** Flow assets contained in this folder. */
     SortedSet<IFlow> getFlowAssets();
 
+    /** Interim datasets contained in this folder. */
+    SortedSet<IFlowInterimDataset> getFlowDatasets();
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Interim fields contained in this folder. */
+    SortedSet<IFlowInterimField> getFlowFields();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
@@ -373,6 +391,12 @@ public interface IFlowFolder {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
+    /** Flow groupings contained in this folder. */
+    SortedSet<IFlowProcessGrouping> getFlowGroupings();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
     /** Parent folder containing the sub-folders. */
     IFlowFolder getFlowParentFolder();
 
@@ -384,6 +408,9 @@ public interface IFlowFolder {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -469,7 +496,7 @@ public interface IFlowFolder {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

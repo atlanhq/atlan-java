@@ -367,6 +367,15 @@ public interface IBIProcess {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Control flow that contains this process representing a data flow between data assets. */
+    IETLControlFlow getEtlControlFlow();
+
+    /** Data flow operations that are contained in this process. */
+    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
+
+    /** Executable units that result in creating this process. */
+    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 
@@ -375,6 +384,9 @@ public interface IBIProcess {
 
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowProcessGrouping getFlowGrouping();
+
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    IFlowV02ProcessGrouping getFlowV02Grouping();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -463,7 +475,7 @@ public interface IBIProcess {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

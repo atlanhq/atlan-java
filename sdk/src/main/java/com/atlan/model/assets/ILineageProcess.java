@@ -71,6 +71,9 @@ public interface ILineageProcess {
     RelationField FLOW_GROUPING = new RelationField("flowGrouping");
 
     /** TBC */
+    RelationField FLOW_V02GROUPING = new RelationField("flowV02Grouping");
+
+    /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
     /** TBC */
@@ -429,6 +432,15 @@ public interface ILineageProcess {
     SortedSet<String> getDomainGUIDs();
 
     /** TBC */
+    IETLControlFlow getEtlControlFlow();
+
+    /** TBC */
+    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
+
+    /** TBC */
+    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
+
+    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */
@@ -436,6 +448,9 @@ public interface ILineageProcess {
 
     /** TBC */
     IFlowProcessGrouping getFlowGrouping();
+
+    /** TBC */
+    IFlowV02ProcessGrouping getFlowV02Grouping();
 
     /** TBC */
     Boolean getHasContract();

@@ -53,6 +53,20 @@ public class FlowFolder extends Asset implements IFlowFolder, IFlow, IAsset, IRe
     @Singular
     SortedSet<IFlow> flowAssets;
 
+    /** Interim datasets contained in this folder. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowInterimDataset> flowDatasets;
+
+    /** Optional error message of the flow run. */
+    @Attribute
+    String flowErrorMessage;
+
+    /** Interim fields contained in this folder. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowInterimField> flowFields;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
@@ -70,6 +84,15 @@ public class FlowFolder extends Asset implements IFlowFolder, IFlow, IAsset, IRe
     @Attribute
     String flowFolderQualifiedName;
 
+    /** Flow groupings contained in this folder. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowProcessGrouping> flowGroupings;
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    @Attribute
+    String flowId;
+
     /** Parent folder containing the sub-folders. */
     @Attribute
     IFlowFolder flowParentFolder;
@@ -85,6 +108,10 @@ public class FlowFolder extends Asset implements IFlowFolder, IFlow, IAsset, IRe
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    @Attribute
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute

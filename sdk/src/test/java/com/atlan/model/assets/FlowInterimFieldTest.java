@@ -76,7 +76,16 @@ public class FlowInterimFieldTest {
             .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowErrorMessage("String0")
             .flowFinishedAt(123456789L)
+            .flowFolder(FlowFolder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowFolderName("String0")
+            .flowFolderQualifiedName("String0")
+            .flowId("String0")
+            .flowProject(FlowProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowProjectName("String0")
+            .flowProjectQualifiedName("String0")
+            .flowRunId("String0")
             .flowSchedule("String0")
             .flowStartedAt(123456789L)
             .flowStatus("String0")
@@ -440,6 +449,7 @@ public class FlowInterimFieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .flowDataset(FlowInterimDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();

@@ -361,6 +361,9 @@ public interface IFlowProcessGrouping {
     /** Individual data flows (processes) contained in this grouping. */
     SortedSet<ILineageProcess> getFlowDataFlows();
 
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
@@ -373,6 +376,9 @@ public interface IFlowProcessGrouping {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
 
@@ -381,6 +387,9 @@ public interface IFlowProcessGrouping {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -463,7 +472,7 @@ public interface IFlowProcessGrouping {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

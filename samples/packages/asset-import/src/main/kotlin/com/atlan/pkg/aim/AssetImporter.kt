@@ -78,6 +78,13 @@ import com.atlan.model.assets.FlowInterimDataset
 import com.atlan.model.assets.FlowInterimField
 import com.atlan.model.assets.FlowProcessGrouping
 import com.atlan.model.assets.FlowProject
+import com.atlan.model.assets.FlowV02DataOperation
+import com.atlan.model.assets.FlowV02FieldOperation
+import com.atlan.model.assets.FlowV02Folder
+import com.atlan.model.assets.FlowV02InterimDataset
+import com.atlan.model.assets.FlowV02InterimField
+import com.atlan.model.assets.FlowV02ProcessGrouping
+import com.atlan.model.assets.FlowV02Project
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
@@ -916,10 +923,15 @@ class AssetImporter(
                     "Flows",
                     listOf(
                         FlowProject.TYPE_NAME,
+                        FlowV02Project.TYPE_NAME,
                         FlowFolder.TYPE_NAME,
+                        FlowV02Folder.TYPE_NAME,
                         FlowProcessGrouping.TYPE_NAME,
+                        FlowV02ProcessGrouping.TYPE_NAME,
                         FlowInterimDataset.TYPE_NAME,
+                        FlowV02InterimDataset.TYPE_NAME,
                         FlowInterimField.TYPE_NAME,
+                        FlowV02InterimField.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
@@ -931,6 +943,8 @@ class AssetImporter(
                         ColumnProcess.TYPE_NAME,
                         DbtColumnProcess.TYPE_NAME,
                         FlowDataOperation.TYPE_NAME,
+                        FlowV02DataOperation.TYPE_NAME,
+                        FlowV02FieldOperation.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(

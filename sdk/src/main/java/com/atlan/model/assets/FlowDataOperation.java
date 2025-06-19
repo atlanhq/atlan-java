@@ -81,9 +81,27 @@ public class FlowDataOperation extends Asset
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** Control flow that contains this process representing a data flow between data assets. */
+    @Attribute
+    IETLControlFlow etlControlFlow;
+
+    /** Data flow operations that are contained in this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLDataFlowOperation> etlDataFlowOperations;
+
+    /** Executable units that result in creating this process. */
+    @Attribute
+    @Singular
+    SortedSet<IETLExecutableUnit> etlExecutableUnits;
+
     /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
+
+    /** Optional error message of the flow run. */
+    @Attribute
+    String flowErrorMessage;
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
@@ -106,6 +124,10 @@ public class FlowDataOperation extends Asset
     @Attribute
     IFlowProcessGrouping flowGrouping;
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    @Attribute
+    String flowId;
+
     /** Project, workspace or namespace in which this asset is contained. */
     @Attribute
     IFlowProject flowProject;
@@ -117,6 +139,10 @@ public class FlowDataOperation extends Asset
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    @Attribute
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
@@ -130,6 +156,10 @@ public class FlowDataOperation extends Asset
     /** Overall status of this point in the data processing or orchestration. */
     @Attribute
     String flowStatus;
+
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowV02ProcessGrouping flowV02Grouping;
 
     /** Assets that are inputs to this process. */
     @Attribute

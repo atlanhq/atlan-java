@@ -341,6 +341,18 @@ public interface ICatalog {
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
                 break;
+            case ETLControlFlow.TYPE_NAME:
+                ref = ETLControlFlow.refByQualifiedName(qualifiedName);
+                break;
+            case ETLControlFlowOperation.TYPE_NAME:
+                ref = ETLControlFlowOperation.refByQualifiedName(qualifiedName);
+                break;
+            case ETLDataFlowOperation.TYPE_NAME:
+                ref = ETLDataFlowOperation.refByQualifiedName(qualifiedName);
+                break;
+            case ETLExecutableUnit.TYPE_NAME:
+                ref = ETLExecutableUnit.refByQualifiedName(qualifiedName);
+                break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
                 break;
@@ -353,6 +365,12 @@ public interface ICatalog {
             case FlowInterimField.TYPE_NAME:
                 ref = FlowInterimField.refByQualifiedName(qualifiedName);
                 break;
+            case FlowV02InterimDataset.TYPE_NAME:
+                ref = FlowV02InterimDataset.refByQualifiedName(qualifiedName);
+                break;
+            case FlowV02InterimField.TYPE_NAME:
+                ref = FlowV02InterimField.refByQualifiedName(qualifiedName);
+                break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
                 break;
@@ -364,6 +382,12 @@ public interface ICatalog {
                 break;
             case Insight.TYPE_NAME:
                 ref = Insight.refByQualifiedName(qualifiedName);
+                break;
+            case InterimDataset.TYPE_NAME:
+                ref = InterimDataset.refByQualifiedName(qualifiedName);
+                break;
+            case InterimField.TYPE_NAME:
+                ref = InterimField.refByQualifiedName(qualifiedName);
                 break;
             case KafkaConsumerGroup.TYPE_NAME:
                 ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
@@ -1212,7 +1236,7 @@ public interface ICatalog {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +30,9 @@ import javax.annotation.processing.Generated;
 public interface IFlowInterimField {
 
     public static final String TYPE_NAME = "FlowInterimField";
+
+    /** Interim dataset that contains these fields. */
+    RelationField FLOW_DATASET = new RelationField("flowDataset");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -348,6 +352,12 @@ public interface IFlowInterimField {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Interim dataset that contains these fields. */
+    IFlowInterimDataset getFlowDataset();
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
@@ -360,6 +370,9 @@ public interface IFlowInterimField {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
 
@@ -368,6 +381,9 @@ public interface IFlowInterimField {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -474,7 +490,7 @@ public interface IFlowInterimField {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

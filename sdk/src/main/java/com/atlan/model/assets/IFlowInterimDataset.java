@@ -34,6 +34,9 @@ public interface IFlowInterimDataset {
     /** Process grouping that details the sub-processing to produce the interim dataset. */
     RelationField FLOW_DETAILED_BY = new RelationField("flowDetailedBy");
 
+    /** Fields contained in the interim dataset. */
+    RelationField FLOW_FIELDS = new RelationField("flowFields");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -355,6 +358,12 @@ public interface IFlowInterimDataset {
     /** Process grouping that details the sub-processing to produce the interim dataset. */
     IFlowProcessGrouping getFlowDetailedBy();
 
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Fields contained in the interim dataset. */
+    SortedSet<IFlowInterimField> getFlowFields();
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
 
@@ -367,6 +376,9 @@ public interface IFlowInterimDataset {
     /** Unique name of the folder in which this asset is contained. */
     String getFlowFolderQualifiedName();
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
 
@@ -375,6 +387,9 @@ public interface IFlowInterimDataset {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
@@ -481,7 +496,7 @@ public interface IFlowInterimDataset {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

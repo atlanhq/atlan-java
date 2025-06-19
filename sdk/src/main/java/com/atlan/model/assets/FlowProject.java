@@ -53,14 +53,24 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     @Singular
     SortedSet<IFlow> flowAssets;
 
+    /** Interim datasets contained in this project. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowInterimDataset> flowDatasets;
+
+    /** Optional error message of the flow run. */
+    @Attribute
+    String flowErrorMessage;
+
+    /** Interim fields contained in this project. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowInterimField> flowFields;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
     Long flowFinishedAt;
-
-    /** Folder in which this asset is contained. */
-    @Attribute
-    IFlowFolder flowFolder;
 
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
@@ -70,10 +80,19 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     @Attribute
     String flowFolderQualifiedName;
 
-    /** Grouping of data flows (processes) contained in this project. */
+    /** Folders for further organizing assets within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowFolder> flowFolders;
+
+    /** Flow groupings contained in this project. */
     @Attribute
     @Singular
     SortedSet<IFlowProcessGrouping> flowGroupings;
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    @Attribute
+    String flowId;
 
     /** Project, workspace or namespace in which this asset is contained. */
     @Attribute
@@ -86,6 +105,10 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    @Attribute
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute

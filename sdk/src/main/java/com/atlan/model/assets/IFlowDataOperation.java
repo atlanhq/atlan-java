@@ -367,11 +367,23 @@ public interface IFlowDataOperation {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Control flow that contains this process representing a data flow between data assets. */
+    IETLControlFlow getEtlControlFlow();
+
+    /** Data flow operations that are contained in this process. */
+    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
+
+    /** Executable units that result in creating this process. */
+    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 
     /** fivetranConnector in which this process exists. */
     IFivetranConnector getFivetranConnector();
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();
@@ -388,6 +400,9 @@ public interface IFlowDataOperation {
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowProcessGrouping getFlowGrouping();
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
     /** Project, workspace or namespace in which this asset is contained. */
     IFlowProject getFlowProject();
 
@@ -397,6 +412,9 @@ public interface IFlowDataOperation {
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
 
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
+
     /** Schedule for this point in the data processing or orchestration. */
     String getFlowSchedule();
 
@@ -405,6 +423,9 @@ public interface IFlowDataOperation {
 
     /** Overall status of this point in the data processing or orchestration. */
     String getFlowStatus();
+
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    IFlowV02ProcessGrouping getFlowV02Grouping();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -493,7 +514,7 @@ public interface IFlowDataOperation {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
