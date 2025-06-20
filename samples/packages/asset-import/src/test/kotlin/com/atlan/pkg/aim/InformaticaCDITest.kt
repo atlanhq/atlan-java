@@ -4,6 +4,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.ColumnProcess
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.FlowV02DataOperation
+import com.atlan.model.assets.FlowV02FieldOperation
 import com.atlan.model.assets.FlowV02Folder
 import com.atlan.model.assets.FlowV02InterimDataset
 import com.atlan.model.assets.FlowV02ProcessGrouping
@@ -200,7 +201,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(FlowV02ProcessGrouping.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .where(FlowV02ProcessGrouping.ASSET_USER_DEFINED_TYPE.eq("Mapplet"))
                 .includeOnResults(FlowV02ProcessGrouping.FLOW_V02DATA_FLOWS)
-                .includeOnResults(FlowV02ProcessGrouping.FLOW_V02DATA_FLOWS)
+                .includeOnResults(FlowV02ProcessGrouping.FLOW_V02ABSTRACTS)
                 .includeOnResults(FlowV02ProcessGrouping.NAME)
                 .includeOnRelations(Asset.QUALIFIED_NAME)
                 .stream()
@@ -238,6 +239,7 @@ class InformaticaCDITest : PackageTest("cdi") {
     @Test
     fun dataFlowV02OpsNotInTopLevelLineage() {
         val connection = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)[0]!!
+        val iics = Connection.findByName(client, c1, connectorType)[0]!!
         val tables =
             Table
                 .select(client)
@@ -256,6 +258,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                 FluentLineage
                     .builder(client, table.guid)
                     .includeOnResults(Asset.NAME)
+                    .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
                     .whereAsset(Asset.TYPE_NAME.inLineage.neq(FlowV02DataOperation.TYPE_NAME))
             val lineage =
                 when (table.name) {
@@ -273,7 +276,8 @@ class InformaticaCDITest : PackageTest("cdi") {
                     }
                     else -> emptyList<Asset>()
                 }
-            validateLineage(lineage, 1)
+            val filtered = lineage.filter { it.connectionQualifiedName == connection.qualifiedName || it.connectionQualifiedName == iics.qualifiedName }
+            validateLineage(filtered, 1)
         }
     }
 
@@ -313,6 +317,20 @@ class InformaticaCDITest : PackageTest("cdi") {
                 }
             validateLineage(lineage, 2)
         }
+    }
+
+    @Test
+    fun multiMapInnerColumnLineage() {
+        val connection = Connection.findByName(client, c1, connectorType)[0]!!
+        val fieldOps =
+            FlowV02FieldOperation
+                .select(client)
+                .where(FlowV02FieldOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV02FieldOperation.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
+                .stream()
+                .map { it as FlowV02FieldOperation }
+                .toList()
+        assertEquals(46, fieldOps.size)
     }
 
     @Test
