@@ -87,9 +87,6 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .map { it as FlowV03Project }
                 .toList()
         assertEquals(1, projects.size)
-        // // TODO: why does this 1 relationship not work? assertEquals(5, projects[0].flowV03Groupings.size)
-        // assertEquals(15, projects[0].flowV03Datasets.size)
-        // assertEquals(33, projects[0].flowV03Fields.size)
     }
 
     @Test
@@ -106,9 +103,6 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .map { it as FlowV03Folder }
                 .toList()
         assertEquals(1, folders.size)
-        // // TODO: why does this 1 relationship not work? assertEquals(5, folders[0].flowV03Groupings.size)
-        // assertEquals(15, folders[0].flowV03Datasets.size)
-        // assertEquals(33, folders[0].flowV03Fields.size)
     }
 
     @Test
@@ -118,10 +112,22 @@ class InformaticaCDITest : PackageTest("cdi") {
             LineageProcess
                 .select(client)
                 .where(LineageProcess.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                // TODO: replace with new relationship .includeOnResults(LineageProcess.FLOW_V02GROUPING)
+                .includeOnResults(LineageProcess.FLOW_V03ORCHESTRATED_BY)
                 .stream()
+                .map { it as LineageProcess }
                 .toList()
         assertEquals(5, processes.size)
+        val orchestratedBy = processes.groupBy { it.flowV03OrchestratedBy.qualifiedName }
+        orchestratedBy.forEach { (k, v) ->
+            when (k) {
+                "${connection.qualifiedName}/MultiMap" -> {
+                    assertEquals(4, v.size)
+                }
+                "${connection.qualifiedName}/Complex" -> {
+                    assertEquals(1, v.size)
+                }
+            }
+        }
     }
 
     @Test
