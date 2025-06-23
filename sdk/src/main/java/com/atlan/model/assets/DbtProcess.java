@@ -191,6 +191,14 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     IFlowV02ProcessGrouping flowV02Grouping;
 
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowV03ProcessGrouping flowV03Grouping;
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    @Attribute
+    IFlowV03ControlOperation flowV03OrchestratedBy;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

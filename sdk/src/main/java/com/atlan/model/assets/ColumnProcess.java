@@ -106,6 +106,14 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     IFlowV02ProcessGrouping flowV02Grouping;
 
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowV03ProcessGrouping flowV03Grouping;
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    @Attribute
+    IFlowV03ControlOperation flowV03OrchestratedBy;
+
     /** Assets that are inputs to this process. */
     @Attribute
     @Singular

@@ -392,6 +392,12 @@ public interface IColumnProcess {
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowV02ProcessGrouping getFlowV02Grouping();
 
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    IFlowV03ProcessGrouping getFlowV03Grouping();
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    IFlowV03ControlOperation getFlowV03OrchestratedBy();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 

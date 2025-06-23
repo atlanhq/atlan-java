@@ -74,6 +74,12 @@ public interface ILineageProcess {
     RelationField FLOW_V02GROUPING = new RelationField("flowV02Grouping");
 
     /** TBC */
+    RelationField FLOW_V03GROUPING = new RelationField("flowV03Grouping");
+
+    /** TBC */
+    RelationField FLOW_V03ORCHESTRATED_BY = new RelationField("flowV03OrchestratedBy");
+
+    /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
     /** TBC */
@@ -451,6 +457,12 @@ public interface ILineageProcess {
 
     /** TBC */
     IFlowV02ProcessGrouping getFlowV02Grouping();
+
+    /** TBC */
+    IFlowV03ProcessGrouping getFlowV03Grouping();
+
+    /** TBC */
+    IFlowV03ControlOperation getFlowV03OrchestratedBy();
 
     /** TBC */
     Boolean getHasContract();

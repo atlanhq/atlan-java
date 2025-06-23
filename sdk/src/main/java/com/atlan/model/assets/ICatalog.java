@@ -371,6 +371,12 @@ public interface ICatalog {
             case FlowV02InterimField.TYPE_NAME:
                 ref = FlowV02InterimField.refByQualifiedName(qualifiedName);
                 break;
+            case FlowV03InterimDataset.TYPE_NAME:
+                ref = FlowV03InterimDataset.refByQualifiedName(qualifiedName);
+                break;
+            case FlowV03InterimField.TYPE_NAME:
+                ref = FlowV03InterimField.refByQualifiedName(qualifiedName);
+                break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
                 break;

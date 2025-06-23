@@ -2,17 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -24,23 +21,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * A project, workspace or namespace that is used to organize data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IFlowV03Project {
 
-    public static final String TYPE_NAME = "DbtProcess";
-
-    /** Status of the dbt process job. */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
-
-    /** Additional Context of the ETL pipeline/notebook which creates the process. */
-    String getAdditionalEtlContext();
-
-    /** ADF Activity that is associated with this lineage process. */
-    IAdfActivity getAdfActivity();
+    public static final String TYPE_NAME = "FlowV03Project";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -50,12 +38,6 @@ public interface IDbtProcess {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Dataset type for AI Model - dataset process. */
-    AIDatasetType getAiDatasetType();
-
-    /** Tasks that exist within this process. */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -324,9 +306,6 @@ public interface IDbtProcess {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    String getAst();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -338,12 +317,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Code that ran within the process. */
-    String getCode();
-
-    /** Processes that detail column-level lineage for this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -360,68 +333,8 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** Name of the account in which this asset exists in dbt. */
-    String getDbtAccountName();
-
-    /** Alias of this asset in dbt. */
-    String getDbtAlias();
-
-    /** Connection context for this asset in dbt. */
-    String getDbtConnectionContext();
-
-    /** Version of dbt used in the environment. */
-    String getDbtEnvironmentDbtVersion();
-
-    /** Name of the environment in which this asset exists in dbt. */
-    String getDbtEnvironmentName();
-
-    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
-    Long getDbtJobLastRun();
-
-    /** Name of the job that materialized this asset in dbt. */
-    String getDbtJobName();
-
-    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
-    Long getDbtJobNextRun();
-
-    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
-    String getDbtJobNextRunHumanized();
-
-    /** List of latest dbt job runs across all environments. */
-    List<DbtJobRun> getDbtJobRuns();
-
-    /** Schedule of the job that materialized this asset in dbt. */
-    String getDbtJobSchedule();
-
-    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
-    String getDbtJobScheduleCronHumanized();
-
-    /** Status of the job that materialized this asset in dbt. */
-    String getDbtJobStatus();
-
-    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
-    String getDbtMeta();
-
-    /** Name of the package in which this asset exists in dbt. */
-    String getDbtPackageName();
-
-    /** Status of the dbt process job. */
-    String getDbtProcessJobStatus();
-
-    /** Name of the project in which this asset exists in dbt. */
-    String getDbtProjectName();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** URL of the semantic layer proxy for this asset in dbt. */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** List of tags attached to this asset in dbt. */
-    SortedSet<String> getDbtTags();
-
-    /** Unique identifier of this asset in dbt. */
-    String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -432,32 +345,41 @@ public interface IDbtProcess {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** Control flow that contains this process representing a data flow between data assets. */
-    IETLControlFlow getEtlControlFlow();
-
-    /** Data flow operations that are contained in this process. */
-    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
-
-    /** Executable units that result in creating this process. */
-    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
-
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** fivetranConnector in which this process exists. */
-    IFivetranConnector getFivetranConnector();
+    /** Optional error message of the flow run. */
+    String getFlowV03ErrorMessage();
 
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowProcessGrouping getFlowGrouping();
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowV03FinishedAt();
 
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV02ProcessGrouping getFlowV02Grouping();
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowV03FolderName();
 
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV03ProcessGrouping getFlowV03Grouping();
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowV03FolderQualifiedName();
 
-    /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV03ControlOperation getFlowV03OrchestratedBy();
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowV03Id();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowV03ProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowV03ProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowV03RunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowV03Schedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowV03StartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowV03Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -467,18 +389,6 @@ public interface IDbtProcess {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
-
-    /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
-
-    /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
-
-    /** Assets that are inputs to this task. */
-    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -510,9 +420,6 @@ public interface IDbtProcess {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Matillion component that contains the logic for this lineage process. */
-    IMatillionComponent getMatillionComponent();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -522,26 +429,11 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
-
-    /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
-
-    /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
@@ -549,23 +441,14 @@ public interface IDbtProcess {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
-    /** Assets that are outputs from this task. */
-    SortedSet<ICatalog> getOutputs();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
-    SortedSet<String> getParentConnectionProcessQualifiedNames();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
-
-    /** PowerBI Dataflow that is associated with this lineage process. */
-    IPowerBIDataflow getPowerBIDataflow();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
@@ -650,12 +533,6 @@ public interface IDbtProcess {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
-
-    /** SQL query that ran to produce the outputs. */
-    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

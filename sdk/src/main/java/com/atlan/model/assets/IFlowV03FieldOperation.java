@@ -9,10 +9,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -24,17 +22,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a lineage process for dbt in Atlan.
+ * An operation that uses at least one field-level asset as input and produces at least one field-level asset as output.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IDbtProcess {
+public interface IFlowV03FieldOperation {
 
-    public static final String TYPE_NAME = "DbtProcess";
-
-    /** Status of the dbt process job. */
-    KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
+    public static final String TYPE_NAME = "FlowV03FieldOperation";
 
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
@@ -360,68 +355,8 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** Name of the account in which this asset exists in dbt. */
-    String getDbtAccountName();
-
-    /** Alias of this asset in dbt. */
-    String getDbtAlias();
-
-    /** Connection context for this asset in dbt. */
-    String getDbtConnectionContext();
-
-    /** Version of dbt used in the environment. */
-    String getDbtEnvironmentDbtVersion();
-
-    /** Name of the environment in which this asset exists in dbt. */
-    String getDbtEnvironmentName();
-
-    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
-    Long getDbtJobLastRun();
-
-    /** Name of the job that materialized this asset in dbt. */
-    String getDbtJobName();
-
-    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
-    Long getDbtJobNextRun();
-
-    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
-    String getDbtJobNextRunHumanized();
-
-    /** List of latest dbt job runs across all environments. */
-    List<DbtJobRun> getDbtJobRuns();
-
-    /** Schedule of the job that materialized this asset in dbt. */
-    String getDbtJobSchedule();
-
-    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
-    String getDbtJobScheduleCronHumanized();
-
-    /** Status of the job that materialized this asset in dbt. */
-    String getDbtJobStatus();
-
-    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
-    String getDbtMeta();
-
-    /** Name of the package in which this asset exists in dbt. */
-    String getDbtPackageName();
-
-    /** Status of the dbt process job. */
-    String getDbtProcessJobStatus();
-
-    /** Name of the project in which this asset exists in dbt. */
-    String getDbtProjectName();
-
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
-
-    /** URL of the semantic layer proxy for this asset in dbt. */
-    String getDbtSemanticLayerProxyUrl();
-
-    /** List of tags attached to this asset in dbt. */
-    SortedSet<String> getDbtTags();
-
-    /** Unique identifier of this asset in dbt. */
-    String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -453,11 +388,44 @@ public interface IDbtProcess {
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowV02ProcessGrouping getFlowV02Grouping();
 
+    /** Optional error message of the flow run. */
+    String getFlowV03ErrorMessage();
+
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowV03FinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowV03FolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowV03FolderQualifiedName();
+
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowV03ProcessGrouping getFlowV03Grouping();
 
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowV03Id();
+
     /** Orchestrated control operation that ran these data flows (process). */
     IFlowV03ControlOperation getFlowV03OrchestratedBy();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowV03ProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowV03ProjectQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowV03RunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowV03Schedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowV03StartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowV03Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -468,16 +436,7 @@ public interface IDbtProcess {
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
 
-    /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
-
-    /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
-
-    /** Assets that are inputs to this task. */
+    /** Assets that are inputs to this process. */
     SortedSet<ICatalog> getInputs();
 
     /** TBC */
@@ -522,26 +481,11 @@ public interface IDbtProcess {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
-
-    /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
-
-    /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
@@ -549,7 +493,7 @@ public interface IDbtProcess {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
-    /** Assets that are outputs from this task. */
+    /** Assets that are outputs from this process. */
     SortedSet<ICatalog> getOutputs();
 
     /** List of groups who own this asset. */
@@ -566,6 +510,9 @@ public interface IDbtProcess {
 
     /** PowerBI Dataflow that is associated with this lineage process. */
     IPowerBIDataflow getPowerBIDataflow();
+
+    /** Process in which this task exists. */
+    ILineageProcess getProcess();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();

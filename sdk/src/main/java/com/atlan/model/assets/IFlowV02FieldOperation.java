@@ -421,6 +421,12 @@ public interface IFlowV02FieldOperation {
     /** Overall status of this point in the data processing or orchestration. */
     String getFlowV02Status();
 
+    /** Grouping of data flows (processes) that contains this individual data flow (process). */
+    IFlowV03ProcessGrouping getFlowV03Grouping();
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    IFlowV03ControlOperation getFlowV03OrchestratedBy();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 
