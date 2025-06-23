@@ -433,26 +433,11 @@ public interface IDbtColumnProcess {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** Control flow that contains this process representing a data flow between data assets. */
-    IETLControlFlow getEtlControlFlow();
-
-    /** Data flow operations that are contained in this process. */
-    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
-
-    /** Executable units that result in creating this process. */
-    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
-
     /** TBC */
     SortedSet<IFile> getFiles();
 
     /** fivetranConnector in which this process exists. */
     IFivetranConnector getFivetranConnector();
-
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowProcessGrouping getFlowGrouping();
-
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV02ProcessGrouping getFlowV02Grouping();
 
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
     IFlowV03ProcessGrouping getFlowV03Grouping();
