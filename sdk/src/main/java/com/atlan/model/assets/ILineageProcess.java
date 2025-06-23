@@ -438,25 +438,10 @@ public interface ILineageProcess {
     SortedSet<String> getDomainGUIDs();
 
     /** TBC */
-    IETLControlFlow getEtlControlFlow();
-
-    /** TBC */
-    SortedSet<IETLDataFlowOperation> getEtlDataFlowOperations();
-
-    /** TBC */
-    SortedSet<IETLExecutableUnit> getEtlExecutableUnits();
-
-    /** TBC */
     SortedSet<IFile> getFiles();
 
     /** TBC */
     IFivetranConnector getFivetranConnector();
-
-    /** TBC */
-    IFlowProcessGrouping getFlowGrouping();
-
-    /** TBC */
-    IFlowV02ProcessGrouping getFlowV02Grouping();
 
     /** TBC */
     IFlowV03ProcessGrouping getFlowV03Grouping();
