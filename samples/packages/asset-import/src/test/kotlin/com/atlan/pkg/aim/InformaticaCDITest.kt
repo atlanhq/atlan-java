@@ -155,10 +155,12 @@ class InformaticaCDITest : PackageTest("cdi") {
             when (task.name) {
                 "MultiMap" -> {
                     // 12 here when we may e2s and t2e to the task-level (otherwise 4)
+                    // When the task-level is a control flow op, this should just be the 4 resolved lineage processes
                     assertEquals(4, task.flowV03DataResults.size)
                 }
                 "Complex" -> {
                     // 3 here when we may e2s and t2e to the task-level (otherwise 1)
+                    // When the task-level is a control flow op, this should just be the 1 resolved lineage process
                     assertEquals(1, task.flowV03DataResults.size)
                 }
             }
@@ -513,6 +515,6 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(FlowV03ProcessGrouping.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .stream()
                 .toList()
-        assertEquals(5, groupings.size)
+        assertEquals(3, groupings.size)
     }
 }

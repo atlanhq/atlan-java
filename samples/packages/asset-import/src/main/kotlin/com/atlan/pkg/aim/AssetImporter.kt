@@ -72,6 +72,7 @@ import com.atlan.model.assets.DynamoDBGlobalSecondaryIndex
 import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.File
+import com.atlan.model.assets.FlowV03ControlOperation
 import com.atlan.model.assets.FlowV03DataOperation
 import com.atlan.model.assets.FlowV03FieldOperation
 import com.atlan.model.assets.FlowV03Folder
@@ -918,6 +919,7 @@ class AssetImporter(
                     listOf(
                         FlowV03Project.TYPE_NAME,
                         FlowV03Folder.TYPE_NAME,
+                        FlowV03ControlOperation.TYPE_NAME,
                         FlowV03ProcessGrouping.TYPE_NAME,
                         FlowV03InterimDataset.TYPE_NAME,
                         FlowV03InterimField.TYPE_NAME,
