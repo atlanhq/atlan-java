@@ -96,6 +96,8 @@ class InformaticaCDITest : PackageTest("cdi") {
             FlowV06Folder
                 .select(client)
                 .where(FlowV06Folder.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowV06Folder.FLOW_V06PROJECT_NAME)
+                .includeOnResults(FlowV06Folder.FLOW_V06PROJECT_QUALIFIED_NAME)
                 // .includeOnResults(FlowV06Folder.FLOW_V02GROUPINGS)
                 // .includeOnResults(FlowV06Folder.FLOW_V02DATASETS)
                 // .includeOnResults(FlowV06Folder.FLOW_V02FIELDS)
@@ -103,6 +105,8 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .map { it as FlowV06Folder }
                 .toList()
         assertEquals(1, folders.size)
+        assertEquals("Atlan", folders.first().flowV06ProjectName)
+        assertTrue(folders.first().flowV06ProjectQualifiedName.endsWith("Atlan"))
     }
 
     @Test
@@ -152,22 +156,36 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(FlowV06ControlOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .where(FlowV06ControlOperation.ASSET_USER_DEFINED_TYPE.eq("Mapping Task"))
                 .includeOnResults(FlowV06ControlOperation.FLOW_V06DATA_RESULTS)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06REUSABLE_UNIT_NAME)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06REUSABLE_UNIT_QUALIFIED_NAME)
                 .includeOnResults(FlowV06ControlOperation.NAME)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06PROJECT_NAME)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06FOLDER_NAME)
+                .includeOnResults(FlowV06ControlOperation.FLOW_V06FOLDER_QUALIFIED_NAME)
                 .stream()
                 .map { it as FlowV06ControlOperation }
                 .toList()
         assertEquals(2, mt.size)
         mt.forEach { task ->
+            assertEquals("Atlan", task.flowV06ProjectName)
+            assertEquals("sample_folder", task.flowV06FolderName)
+            assertTrue(task.flowV06ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(task.flowV06FolderQualifiedName.endsWith("sample_folder"))
             when (task.name) {
                 "MultiMap" -> {
                     // 12 here when we may e2s and t2e to the task-level (otherwise 4)
                     // When the task-level is a control flow op, this should just be the 4 resolved lineage processes
                     assertEquals(4, task.flowV06DataResults.size)
+                    assertEquals("${connection.qualifiedName}/MultiMap_mapping", task.flowV06ReusableUnitQualifiedName)
+                    assertEquals("MultiMap (mapping)", task.flowV06ReusableUnitName)
                 }
                 "Complex" -> {
                     // 3 here when we may e2s and t2e to the task-level (otherwise 1)
                     // When the task-level is a control flow op, this should just be the 1 resolved lineage process
                     assertEquals(1, task.flowV06DataResults.size)
+                    assertEquals("${connection.qualifiedName}/Complex_mapping", task.flowV06ReusableUnitQualifiedName)
+                    assertEquals("Complex (mapping)", task.flowV06ReusableUnitName)
                 }
             }
         }
@@ -183,11 +201,19 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(FlowV06ReusableUnit.ASSET_USER_DEFINED_TYPE.eq("Mapping"))
                 .includeOnResults(FlowV06ReusableUnit.FLOW_V06DATA_FLOWS)
                 .includeOnResults(FlowV06ReusableUnit.NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_QUALIFIED_NAME)
                 .stream()
                 .map { it as FlowV06ReusableUnit }
                 .toList()
         assertEquals(2, mappings.size)
         mappings.forEach { mapping ->
+            assertEquals("Atlan", mapping.flowV06ProjectName)
+            assertEquals("sample_folder", mapping.flowV06FolderName)
+            assertTrue(mapping.flowV06ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(mapping.flowV06FolderQualifiedName.endsWith("sample_folder"))
             when (mapping.name) {
                 "MultiMap (mapping)" -> {
                     // 4 here when we only map the inside lineage portions, otherwise 12
@@ -212,12 +238,20 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .includeOnResults(FlowV06ReusableUnit.FLOW_V06DATA_FLOWS)
                 .includeOnResults(FlowV06ReusableUnit.FLOW_V06ABSTRACTS)
                 .includeOnResults(FlowV06ReusableUnit.NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_NAME)
+                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_QUALIFIED_NAME)
                 .includeOnRelations(Asset.QUALIFIED_NAME)
                 .stream()
                 .map { it as FlowV06ReusableUnit }
                 .toList()
         assertEquals(1, mapplets.size)
         mapplets.forEach { mapplet ->
+            assertEquals("Atlan", mapplet.flowV06ProjectName)
+            assertEquals("sample_folder", mapplet.flowV06FolderName)
+            assertTrue(mapplet.flowV06ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(mapplet.flowV06FolderQualifiedName.endsWith("sample_folder"))
             when (mapplet.name) {
                 "Mapplet" -> {
                     assertEquals(3, mapplet.flowV06DataFlows.size)
@@ -237,12 +271,20 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .where(FlowV06Dataset.NAME.eq("Mapplet"))
                 .includeOnResults(FlowV06Dataset.FLOW_V06DETAILED_BY)
+                .includeOnResults(FlowV06Dataset.FLOW_V06PROJECT_NAME)
+                .includeOnResults(FlowV06Dataset.FLOW_V06PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV06Dataset.FLOW_V06FOLDER_NAME)
+                .includeOnResults(FlowV06Dataset.FLOW_V06FOLDER_QUALIFIED_NAME)
                 .includeOnRelations(Asset.QUALIFIED_NAME)
                 .stream()
                 .map { it as FlowV06Dataset }
                 .toList()
         assertEquals(1, ids.size)
         assertEquals("${connection.qualifiedName}/Mapplet", ids[0].flowV06DetailedBy.qualifiedName)
+        assertEquals("Atlan", ids[0].flowV06ProjectName)
+        assertEquals("sample_folder", ids[0].flowV06FolderName)
+        assertTrue(ids[0].flowV06ProjectQualifiedName.endsWith("Atlan"))
+        assertTrue(ids[0].flowV06FolderQualifiedName.endsWith("sample_folder"))
     }
 
     @Test
