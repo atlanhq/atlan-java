@@ -128,7 +128,8 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+                .allowMissingFields(false)
+                .allowExtraFields(false)
 
         val originalReader =
             CsvReader
@@ -136,7 +137,8 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+                .allowMissingFields(false)
+                .allowExtraFields(false)
 
         val testRecords = testReader.ofCsvRecord(Paths.get(testFile)).stream().toList()
         val originalRecords = originalReader.ofCsvRecord(Paths.get(originalFile)).stream().toList()

@@ -173,7 +173,8 @@ class FileBasedDelta(
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+                .allowExtraFields(false)
+                .allowMissingFields(false)
         val reader = builder.ofCsvRecord(inputFile)
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
