@@ -73,11 +73,11 @@ import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.File
 import com.atlan.model.assets.FlowV05ControlOperation
+import com.atlan.model.assets.FlowV05Dataset
 import com.atlan.model.assets.FlowV05DatasetOperation
+import com.atlan.model.assets.FlowV05Field
 import com.atlan.model.assets.FlowV05FieldOperation
 import com.atlan.model.assets.FlowV05Folder
-import com.atlan.model.assets.FlowV05Dataset
-import com.atlan.model.assets.FlowV05Field
 import com.atlan.model.assets.FlowV05ProcessGrouping
 import com.atlan.model.assets.FlowV05Project
 import com.atlan.model.assets.Folder
