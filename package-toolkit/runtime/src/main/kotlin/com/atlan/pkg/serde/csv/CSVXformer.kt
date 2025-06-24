@@ -44,7 +44,8 @@ abstract class CSVXformer(
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+                .allowExtraFields(false)
+                .allowMissingFields(false)
         header = getHeader(inputFile, fieldSeparator)
         reader = builder.ofCsvRecord(input)
         counter = builder.ofCsvRecord(input)
@@ -69,7 +70,8 @@ abstract class CSVXformer(
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
-                    .ignoreDifferentFieldCount(false)
+                    .allowExtraFields(false)
+                    .allowMissingFields(false)
             builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
                 return one
