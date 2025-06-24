@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,14 +22,20 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A project, workspace or namespace that is used to organize data processing.
+ * An ephemeral piece of data either produced by or used as input by a data operation.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV05Project {
+public interface IFlowV06Dataset {
 
-    public static final String TYPE_NAME = "FlowV05Project";
+    public static final String TYPE_NAME = "FlowV06Dataset";
+
+    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
+    RelationField FLOW_V06DETAILED_BY = new RelationField("flowV06DetailedBy");
+
+    /** Fields contained in the ephemeral dataset. */
+    RelationField FLOW_V06FIELDS = new RelationField("flowV06Fields");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -348,38 +355,44 @@ public interface IFlowV05Project {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
+    IFlowV06ReusableUnit getFlowV06DetailedBy();
+
     /** Optional error message of the flow run. */
-    String getFlowV05ErrorMessage();
+    String getFlowV06ErrorMessage();
+
+    /** Fields contained in the ephemeral dataset. */
+    SortedSet<IFlowV06Field> getFlowV06Fields();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV05FinishedAt();
+    Long getFlowV06FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV05FolderName();
+    String getFlowV06FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV05FolderQualifiedName();
+    String getFlowV06FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV05Id();
+    String getFlowV06Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV05ProjectName();
+    String getFlowV06ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV05ProjectQualifiedName();
+    String getFlowV06ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV05RunId();
+    String getFlowV06RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV05Schedule();
+    String getFlowV06Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV05StartedAt();
+    Long getFlowV06StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV05Status();
+    String getFlowV06Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -389,6 +402,15 @@ public interface IFlowV05Project {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Tasks to which this asset provides input. */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** Processes to which this asset provides input. */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -429,11 +451,26 @@ public interface IFlowV05Project {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Tasks from which this asset is output. */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** Processes from which this asset is produced as output. */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

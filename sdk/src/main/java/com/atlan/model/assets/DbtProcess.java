@@ -169,13 +169,13 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    @Attribute
-    IFlowV05ProcessGrouping flowV05Grouping;
-
     /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
-    IFlowV05ControlOperation flowV05OrchestratedBy;
+    IFlowV06ControlOperation flowV06OrchestratedBy;
+
+    /** Reusable unit of data flows (processes) that contains this individual data flow (process). */
+    @Attribute
+    IFlowV06ReusableUnit flowV06ReusableUnit;
 
     /** Tasks to which this asset provides input. */
     @Attribute

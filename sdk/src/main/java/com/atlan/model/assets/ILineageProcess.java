@@ -56,40 +56,13 @@ public interface ILineageProcess {
     RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
 
     /** TBC */
-    RelationField ETL_CONTROL_FLOW = new RelationField("etlControlFlow");
-
-    /** TBC */
-    RelationField ETL_DATA_FLOW_OPERATIONS = new RelationField("etlDataFlowOperations");
-
-    /** TBC */
-    RelationField ETL_EXECUTABLE_UNITS = new RelationField("etlExecutableUnits");
-
-    /** TBC */
     RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
 
     /** TBC */
-    RelationField FLOW_GROUPING = new RelationField("flowGrouping");
+    RelationField FLOW_V06ORCHESTRATED_BY = new RelationField("flowV06OrchestratedBy");
 
     /** TBC */
-    RelationField FLOW_V02GROUPING = new RelationField("flowV02Grouping");
-
-    /** TBC */
-    RelationField FLOW_V03GROUPING = new RelationField("flowV03Grouping");
-
-    /** TBC */
-    RelationField FLOW_V03ORCHESTRATED_BY = new RelationField("flowV03OrchestratedBy");
-
-    /** TBC */
-    RelationField FLOW_V04GROUPING = new RelationField("flowV04Grouping");
-
-    /** TBC */
-    RelationField FLOW_V04ORCHESTRATED_BY = new RelationField("flowV04OrchestratedBy");
-
-    /** TBC */
-    RelationField FLOW_V05GROUPING = new RelationField("flowV05Grouping");
-
-    /** TBC */
-    RelationField FLOW_V05ORCHESTRATED_BY = new RelationField("flowV05OrchestratedBy");
+    RelationField FLOW_V06REUSABLE_UNIT = new RelationField("flowV06ReusableUnit");
 
     /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
@@ -456,10 +429,10 @@ public interface ILineageProcess {
     IFivetranConnector getFivetranConnector();
 
     /** TBC */
-    IFlowV05ProcessGrouping getFlowV05Grouping();
+    IFlowV06ControlOperation getFlowV06OrchestratedBy();
 
     /** TBC */
-    IFlowV05ControlOperation getFlowV05OrchestratedBy();
+    IFlowV06ReusableUnit getFlowV06ReusableUnit();
 
     /** TBC */
     Boolean getHasContract();

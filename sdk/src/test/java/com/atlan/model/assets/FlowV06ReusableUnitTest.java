@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV05ProcessGroupingTest {
+public class FlowV06ReusableUnitTest {
 
-    private static final FlowV05ProcessGrouping full = FlowV05ProcessGrouping._internal()
+    private static final FlowV06ReusableUnit full = FlowV06ReusableUnit._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,17 @@ public class FlowV05ProcessGroupingTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV05ErrorMessage("String0")
-            .flowV05FinishedAt(123456789L)
-            .flowV05FolderName("String0")
-            .flowV05FolderQualifiedName("String0")
-            .flowV05Id("String0")
-            .flowV05ProjectName("String0")
-            .flowV05ProjectQualifiedName("String0")
-            .flowV05RunId("String0")
-            .flowV05Schedule("String0")
-            .flowV05StartedAt(123456789L)
-            .flowV05Status("String0")
+            .flowV06ErrorMessage("String0")
+            .flowV06FinishedAt(123456789L)
+            .flowV06FolderName("String0")
+            .flowV06FolderQualifiedName("String0")
+            .flowV06Id("String0")
+            .flowV06ProjectName("String0")
+            .flowV06ProjectQualifiedName("String0")
+            .flowV06RunId("String0")
+            .flowV06Schedule("String0")
+            .flowV06StartedAt(123456789L)
+            .flowV06Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,27 +430,27 @@ public class FlowV05ProcessGroupingTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV05Abstract(FlowV05Dataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV05Abstract(FlowV05Dataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .flowV05DataFlow(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV05DataFlow(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .flowV05ExecutedByControl(FlowV05ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV05ExecutedByControl(
-                    FlowV05ControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV06Abstract(FlowV06Dataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV06Abstract(FlowV06Dataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV06DataFlow(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV06DataFlow(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV06ExecutedByControl(FlowV06ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV06ExecutedByControl(
+                    FlowV06ControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV05ProcessGrouping frodo;
+    private static FlowV06ReusableUnit frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV05ProcessGrouping.builderEquivalency"})
+    @Test(groups = {"FlowV06ReusableUnit.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV05ProcessGrouping.serialize"},
-            dependsOnGroups = {"FlowV05ProcessGrouping.builderEquivalency"})
+            groups = {"FlowV06ReusableUnit.serialize"},
+            dependsOnGroups = {"FlowV06ReusableUnit.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -459,17 +459,17 @@ public class FlowV05ProcessGroupingTest {
     }
 
     @Test(
-            groups = {"FlowV05ProcessGrouping.deserialize"},
-            dependsOnGroups = {"FlowV05ProcessGrouping.serialize"})
+            groups = {"FlowV06ReusableUnit.deserialize"},
+            dependsOnGroups = {"FlowV06ReusableUnit.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV05ProcessGrouping.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV06ReusableUnit.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV05ProcessGrouping.equivalency"},
-            dependsOnGroups = {"FlowV05ProcessGrouping.serialize", "FlowV05ProcessGrouping.deserialize"})
+            groups = {"FlowV06ReusableUnit.equivalency"},
+            dependsOnGroups = {"FlowV06ReusableUnit.serialize", "FlowV06ReusableUnit.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -478,8 +478,8 @@ public class FlowV05ProcessGroupingTest {
     }
 
     @Test(
-            groups = {"FlowV05ProcessGrouping.equivalency"},
-            dependsOnGroups = {"FlowV05ProcessGrouping.serialize", "FlowV05ProcessGrouping.deserialize"})
+            groups = {"FlowV06ReusableUnit.equivalency"},
+            dependsOnGroups = {"FlowV06ReusableUnit.serialize", "FlowV06ReusableUnit.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

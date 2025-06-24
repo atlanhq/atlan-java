@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV05DatasetOperationTest {
+public class FlowV06ProjectTest {
 
-    private static final FlowV05DatasetOperation full = FlowV05DatasetOperation._internal()
+    private static final FlowV06Project full = FlowV06Project._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,52 +59,17 @@ public class FlowV05DatasetOperationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .additionalEtlContext("String0")
-            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .aiDatasetType(AIDatasetType.TRAINING)
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .etlControlFlow(ETLControlFlow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlDataFlowOperation(ETLDataFlowOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlDataFlowOperation(
-                    ETLDataFlowOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .etlExecutableUnit(ETLExecutableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlExecutableUnit(ETLExecutableUnit.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowGrouping(FlowProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV02Grouping(FlowV02ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03Grouping(FlowV03ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03OrchestratedBy(FlowV03ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV04Grouping(FlowV04ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV04OrchestratedBy(FlowV04ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV05Grouping(FlowV05ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV05OrchestratedBy(FlowV05ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .parentConnectionProcessQualifiedName("String0")
-            .parentConnectionProcessQualifiedName("String1")
-            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
-            .flowV05ErrorMessage("String0")
-            .flowV05FinishedAt(123456789L)
-            .flowV05FolderName("String0")
-            .flowV05FolderQualifiedName("String0")
-            .flowV05Id("String0")
-            .flowV05ProjectName("String0")
-            .flowV05ProjectQualifiedName("String0")
-            .flowV05RunId("String0")
-            .flowV05Schedule("String0")
-            .flowV05StartedAt(123456789L)
-            .flowV05Status("String0")
+            .flowV06ErrorMessage("String0")
+            .flowV06FinishedAt(123456789L)
+            .flowV06FolderName("String0")
+            .flowV06FolderQualifiedName("String0")
+            .flowV06Id("String0")
+            .flowV06ProjectName("String0")
+            .flowV06ProjectQualifiedName("String0")
+            .flowV06RunId("String0")
+            .flowV06Schedule("String0")
+            .flowV06StartedAt(123456789L)
+            .flowV06Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -468,17 +433,17 @@ public class FlowV05DatasetOperationTest {
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV05DatasetOperation frodo;
+    private static FlowV06Project frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV05DatasetOperation.builderEquivalency"})
+    @Test(groups = {"FlowV06Project.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV05DatasetOperation.serialize"},
-            dependsOnGroups = {"FlowV05DatasetOperation.builderEquivalency"})
+            groups = {"FlowV06Project.serialize"},
+            dependsOnGroups = {"FlowV06Project.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -487,17 +452,17 @@ public class FlowV05DatasetOperationTest {
     }
 
     @Test(
-            groups = {"FlowV05DatasetOperation.deserialize"},
-            dependsOnGroups = {"FlowV05DatasetOperation.serialize"})
+            groups = {"FlowV06Project.deserialize"},
+            dependsOnGroups = {"FlowV06Project.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV05DatasetOperation.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV06Project.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV05DatasetOperation.equivalency"},
-            dependsOnGroups = {"FlowV05DatasetOperation.serialize", "FlowV05DatasetOperation.deserialize"})
+            groups = {"FlowV06Project.equivalency"},
+            dependsOnGroups = {"FlowV06Project.serialize", "FlowV06Project.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -506,8 +471,8 @@ public class FlowV05DatasetOperationTest {
     }
 
     @Test(
-            groups = {"FlowV05DatasetOperation.equivalency"},
-            dependsOnGroups = {"FlowV05DatasetOperation.serialize", "FlowV05DatasetOperation.deserialize"})
+            groups = {"FlowV06Project.equivalency"},
+            dependsOnGroups = {"FlowV06Project.serialize", "FlowV06Project.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

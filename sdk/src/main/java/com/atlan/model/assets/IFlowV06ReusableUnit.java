@@ -22,23 +22,23 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A grouping of data flows that will be orchestrated together as a single unit.
+ * A reusable grouping of data flows that will be orchestrated together as a single unit.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV05ProcessGrouping {
+public interface IFlowV06ReusableUnit {
 
-    public static final String TYPE_NAME = "FlowV05ProcessGrouping";
+    public static final String TYPE_NAME = "FlowV06ReusableUnit";
 
-    /** Ephemeral datasets that abstract the sub-processing carried out by the process grouping. */
-    RelationField FLOW_V05ABSTRACTS = new RelationField("flowV05Abstracts");
+    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
+    RelationField FLOW_V06ABSTRACTS = new RelationField("flowV06Abstracts");
 
-    /** Individual data flows (processes) contained in this grouping. */
-    RelationField FLOW_V05DATA_FLOWS = new RelationField("flowV05DataFlows");
+    /** Individual data flows (processes) contained in this reusable unit. */
+    RelationField FLOW_V06DATA_FLOWS = new RelationField("flowV06DataFlows");
 
-    /** Control operations that execute this process grouping. */
-    RelationField FLOW_V05EXECUTED_BY_CONTROLS = new RelationField("flowV05ExecutedByControls");
+    /** Control operations that execute this reusable unit. */
+    RelationField FLOW_V06EXECUTED_BY_CONTROLS = new RelationField("flowV06ExecutedByControls");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -358,47 +358,47 @@ public interface IFlowV05ProcessGrouping {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Ephemeral datasets that abstract the sub-processing carried out by the process grouping. */
-    SortedSet<IFlowV05Dataset> getFlowV05Abstracts();
+    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
+    SortedSet<IFlowV06Dataset> getFlowV06Abstracts();
 
-    /** Individual data flows (processes) contained in this grouping. */
-    SortedSet<ILineageProcess> getFlowV05DataFlows();
+    /** Individual data flows (processes) contained in this reusable unit. */
+    SortedSet<ILineageProcess> getFlowV06DataFlows();
 
     /** Optional error message of the flow run. */
-    String getFlowV05ErrorMessage();
+    String getFlowV06ErrorMessage();
 
-    /** Control operations that execute this process grouping. */
-    SortedSet<IFlowV05ControlOperation> getFlowV05ExecutedByControls();
+    /** Control operations that execute this reusable unit. */
+    SortedSet<IFlowV06ControlOperation> getFlowV06ExecutedByControls();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV05FinishedAt();
+    Long getFlowV06FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV05FolderName();
+    String getFlowV06FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV05FolderQualifiedName();
+    String getFlowV06FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV05Id();
+    String getFlowV06Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV05ProjectName();
+    String getFlowV06ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV05ProjectQualifiedName();
+    String getFlowV06ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV05RunId();
+    String getFlowV06RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV05Schedule();
+    String getFlowV06Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV05StartedAt();
+    Long getFlowV06StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV05Status();
+    String getFlowV06Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

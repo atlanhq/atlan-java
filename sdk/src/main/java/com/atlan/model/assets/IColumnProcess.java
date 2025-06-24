@@ -377,11 +377,11 @@ public interface IColumnProcess {
     /** fivetranConnector in which this process exists. */
     IFivetranConnector getFivetranConnector();
 
-    /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV05ProcessGrouping getFlowV05Grouping();
-
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV05ControlOperation getFlowV05OrchestratedBy();
+    IFlowV06ControlOperation getFlowV06OrchestratedBy();
+
+    /** Reusable unit of data flows (processes) that contains this individual data flow (process). */
+    IFlowV06ReusableUnit getFlowV06ReusableUnit();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

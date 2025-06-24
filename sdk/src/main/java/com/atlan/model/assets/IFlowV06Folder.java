@@ -8,8 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -24,28 +22,20 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Execution of a single orchestrate-able unit of work.
+ * A grouping mechanism within a project to further organize data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV05ControlOperation {
+public interface IFlowV06Folder {
 
-    public static final String TYPE_NAME = "FlowV05ControlOperation";
+    public static final String TYPE_NAME = "FlowV06Folder";
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    RelationField FLOW_V05DATA_RESULTS = new RelationField("flowV05DataResults");
+    /** Parent folder containing the sub-folders. */
+    RelationField FLOW_V06PARENT_FOLDER = new RelationField("flowV06ParentFolder");
 
-    /** Process grouping that the control operation executs. */
-    RelationField FLOW_V05EXECUTES = new RelationField("flowV05Executes");
-
-    /** Simple name of the process grouping this control operation executes. */
-    KeywordTextField FLOW_V05PROCESS_GROUPING_NAME = new KeywordTextField(
-            "flowV05ProcessGroupingName", "flowV05ProcessGroupingName.keyword", "flowV05ProcessGroupingName");
-
-    /** Unique name of the process grouping this control operation executes. */
-    KeywordField FLOW_V05PROCESS_GROUPING_QUALIFIED_NAME =
-            new KeywordField("flowV05ProcessGroupingQualifiedName", "flowV05ProcessGroupingQualifiedName");
+    /** Child (sub) folders contained within the folder. */
+    RelationField FLOW_V06SUB_FOLDERS = new RelationField("flowV06SubFolders");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -365,50 +355,44 @@ public interface IFlowV05ControlOperation {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    SortedSet<ILineageProcess> getFlowV05DataResults();
-
     /** Optional error message of the flow run. */
-    String getFlowV05ErrorMessage();
-
-    /** Process grouping that the control operation executs. */
-    IFlowV05ProcessGrouping getFlowV05Executes();
+    String getFlowV06ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV05FinishedAt();
+    Long getFlowV06FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV05FolderName();
+    String getFlowV06FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV05FolderQualifiedName();
+    String getFlowV06FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV05Id();
+    String getFlowV06Id();
 
-    /** Simple name of the process grouping this control operation executes. */
-    String getFlowV05ProcessGroupingName();
-
-    /** Unique name of the process grouping this control operation executes. */
-    String getFlowV05ProcessGroupingQualifiedName();
+    /** Parent folder containing the sub-folders. */
+    IFlowV06Folder getFlowV06ParentFolder();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV05ProjectName();
+    String getFlowV06ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV05ProjectQualifiedName();
+    String getFlowV06ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV05RunId();
+    String getFlowV06RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV05Schedule();
+    String getFlowV06Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV05StartedAt();
+    Long getFlowV06StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV05Status();
+    String getFlowV06Status();
+
+    /** Child (sub) folders contained within the folder. */
+    SortedSet<IFlowV06Folder> getFlowV06SubFolders();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
