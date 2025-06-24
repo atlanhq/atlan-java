@@ -55,16 +55,16 @@ public interface IAnaplanModule {
     /** Model containing the module. */
     IAnaplanModel getAnaplanModel();
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelName();
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under its hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelQualifiedName();
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleName();
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleQualifiedName();
 
     /** Id/Guid of the Anaplan asset in the source system. */
@@ -73,10 +73,10 @@ public interface IAnaplanModule {
     /** Individual views contained in the module. */
     SortedSet<IAnaplanView> getAnaplanViews();
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceName();
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under its hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceQualifiedName();
 
     /** Detailed message to include in the announcement on this asset. */

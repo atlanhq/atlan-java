@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV03FolderTest {
+public class FlowV05ProjectTest {
 
-    private static final FlowV03Folder full = FlowV03Folder._internal()
+    private static final FlowV05Project full = FlowV05Project._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,17 @@ public class FlowV03FolderTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV03ErrorMessage("String0")
-            .flowV03FinishedAt(123456789L)
-            .flowV03FolderName("String0")
-            .flowV03FolderQualifiedName("String0")
-            .flowV03Id("String0")
-            .flowV03ProjectName("String0")
-            .flowV03ProjectQualifiedName("String0")
-            .flowV03RunId("String0")
-            .flowV03Schedule("String0")
-            .flowV03StartedAt(123456789L)
-            .flowV03Status("String0")
+            .flowV05ErrorMessage("String0")
+            .flowV05FinishedAt(123456789L)
+            .flowV05FolderName("String0")
+            .flowV05FolderQualifiedName("String0")
+            .flowV05Id("String0")
+            .flowV05ProjectName("String0")
+            .flowV05ProjectQualifiedName("String0")
+            .flowV05RunId("String0")
+            .flowV05Schedule("String0")
+            .flowV05StartedAt(123456789L)
+            .flowV05Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,23 +430,20 @@ public class FlowV03FolderTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV03ParentFolder(FlowV03Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03SubFolder(FlowV03Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03SubFolder(FlowV03Folder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV03Folder frodo;
+    private static FlowV05Project frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV03Folder.builderEquivalency"})
+    @Test(groups = {"FlowV05Project.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV03Folder.serialize"},
-            dependsOnGroups = {"FlowV03Folder.builderEquivalency"})
+            groups = {"FlowV05Project.serialize"},
+            dependsOnGroups = {"FlowV05Project.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -455,17 +452,17 @@ public class FlowV03FolderTest {
     }
 
     @Test(
-            groups = {"FlowV03Folder.deserialize"},
-            dependsOnGroups = {"FlowV03Folder.serialize"})
+            groups = {"FlowV05Project.deserialize"},
+            dependsOnGroups = {"FlowV05Project.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV03Folder.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV05Project.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV03Folder.equivalency"},
-            dependsOnGroups = {"FlowV03Folder.serialize", "FlowV03Folder.deserialize"})
+            groups = {"FlowV05Project.equivalency"},
+            dependsOnGroups = {"FlowV05Project.serialize", "FlowV05Project.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -474,8 +471,8 @@ public class FlowV03FolderTest {
     }
 
     @Test(
-            groups = {"FlowV03Folder.equivalency"},
-            dependsOnGroups = {"FlowV03Folder.serialize", "FlowV03Folder.deserialize"})
+            groups = {"FlowV05Project.equivalency"},
+            dependsOnGroups = {"FlowV05Project.serialize", "FlowV05Project.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

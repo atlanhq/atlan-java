@@ -22,14 +22,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * An operation that uses at least one field-level asset as input and produces at least one field-level asset as output.
+ * A nested data operation that uses at least one ephemeral dataset as either an input or output.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03FieldOperation {
+public interface IFlowV05DatasetOperation {
 
-    public static final String TYPE_NAME = "FlowV03FieldOperation";
+    public static final String TYPE_NAME = "FlowV05DatasetOperation";
 
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
@@ -374,43 +374,43 @@ public interface IFlowV03FieldOperation {
     IFivetranConnector getFivetranConnector();
 
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV03ProcessGrouping getFlowV03Grouping();
+    IFlowV05ProcessGrouping getFlowV05Grouping();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
+    String getFlowV05Id();
 
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV03ControlOperation getFlowV03OrchestratedBy();
+    IFlowV05ControlOperation getFlowV05OrchestratedBy();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -495,9 +495,6 @@ public interface IFlowV03FieldOperation {
 
     /** PowerBI Dataflow that is associated with this lineage process. */
     IPowerBIDataflow getPowerBIDataflow();
-
-    /** Process in which this task exists. */
-    ILineageProcess getProcess();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();

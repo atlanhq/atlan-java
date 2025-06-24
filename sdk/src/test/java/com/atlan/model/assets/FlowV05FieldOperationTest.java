@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV03FieldOperationTest {
+public class FlowV05FieldOperationTest {
 
-    private static final FlowV03FieldOperation full = FlowV03FieldOperation._internal()
+    private static final FlowV05FieldOperation full = FlowV05FieldOperation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,18 +59,53 @@ public class FlowV03FieldOperationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV03ErrorMessage("String0")
-            .flowV03FinishedAt(123456789L)
-            .flowV03FolderName("String0")
-            .flowV03FolderQualifiedName("String0")
-            .flowV03Id("String0")
-            .flowV03ProjectName("String0")
-            .flowV03ProjectQualifiedName("String0")
-            .flowV03RunId("String0")
-            .flowV03Schedule("String0")
-            .flowV03StartedAt(123456789L)
-            .flowV03Status("String0")
             .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05ErrorMessage("String0")
+            .flowV05FinishedAt(123456789L)
+            .flowV05FolderName("String0")
+            .flowV05FolderQualifiedName("String0")
+            .flowV05Id("String0")
+            .flowV05ProjectName("String0")
+            .flowV05ProjectQualifiedName("String0")
+            .flowV05RunId("String0")
+            .flowV05Schedule("String0")
+            .flowV05StartedAt(123456789L)
+            .flowV05Status("String0")
+            .additionalEtlContext("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiDatasetType(AIDatasetType.TRAINING)
+            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .ast("String0")
+            .code("String0")
+            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .etlControlFlow(ETLControlFlow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .etlDataFlowOperation(ETLDataFlowOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .etlDataFlowOperation(
+                    ETLDataFlowOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .etlExecutableUnit(ETLExecutableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .etlExecutableUnit(ETLExecutableUnit.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowGrouping(FlowProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV02Grouping(FlowV02ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV03Grouping(FlowV03ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV03OrchestratedBy(FlowV03ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV04Grouping(FlowV04ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV04OrchestratedBy(FlowV04ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05Grouping(FlowV05ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05OrchestratedBy(FlowV05ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .parentConnectionProcessQualifiedName("String0")
+            .parentConnectionProcessQualifiedName("String1")
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sql("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -431,51 +466,20 @@ public class FlowV03FieldOperationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .additionalEtlContext("String0")
-            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .aiDatasetType(AIDatasetType.TRAINING)
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .ast("String0")
-            .code("String0")
-            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .etlControlFlow(ETLControlFlow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlDataFlowOperation(ETLDataFlowOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlDataFlowOperation(
-                    ETLDataFlowOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .etlExecutableUnit(ETLExecutableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .etlExecutableUnit(ETLExecutableUnit.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowGrouping(FlowProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV02Grouping(FlowV02ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03Grouping(FlowV03ProcessGrouping.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03OrchestratedBy(FlowV03ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .parentConnectionProcessQualifiedName("String0")
-            .parentConnectionProcessQualifiedName("String1")
-            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sql("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV03FieldOperation frodo;
+    private static FlowV05FieldOperation frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV03FieldOperation.builderEquivalency"})
+    @Test(groups = {"FlowV05FieldOperation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV03FieldOperation.serialize"},
-            dependsOnGroups = {"FlowV03FieldOperation.builderEquivalency"})
+            groups = {"FlowV05FieldOperation.serialize"},
+            dependsOnGroups = {"FlowV05FieldOperation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -484,17 +488,17 @@ public class FlowV03FieldOperationTest {
     }
 
     @Test(
-            groups = {"FlowV03FieldOperation.deserialize"},
-            dependsOnGroups = {"FlowV03FieldOperation.serialize"})
+            groups = {"FlowV05FieldOperation.deserialize"},
+            dependsOnGroups = {"FlowV05FieldOperation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV03FieldOperation.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV05FieldOperation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV03FieldOperation.equivalency"},
-            dependsOnGroups = {"FlowV03FieldOperation.serialize", "FlowV03FieldOperation.deserialize"})
+            groups = {"FlowV05FieldOperation.equivalency"},
+            dependsOnGroups = {"FlowV05FieldOperation.serialize", "FlowV05FieldOperation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -503,8 +507,8 @@ public class FlowV03FieldOperationTest {
     }
 
     @Test(
-            groups = {"FlowV03FieldOperation.equivalency"},
-            dependsOnGroups = {"FlowV03FieldOperation.serialize", "FlowV03FieldOperation.deserialize"})
+            groups = {"FlowV05FieldOperation.equivalency"},
+            dependsOnGroups = {"FlowV05FieldOperation.serialize", "FlowV05FieldOperation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

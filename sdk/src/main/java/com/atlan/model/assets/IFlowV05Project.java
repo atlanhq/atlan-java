@@ -26,9 +26,9 @@ import javax.annotation.processing.Generated;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03Project {
+public interface IFlowV05Project {
 
-    public static final String TYPE_NAME = "FlowV03Project";
+    public static final String TYPE_NAME = "FlowV05Project";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -349,37 +349,37 @@ public interface IFlowV03Project {
     SortedSet<IFile> getFiles();
 
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
+    String getFlowV05Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

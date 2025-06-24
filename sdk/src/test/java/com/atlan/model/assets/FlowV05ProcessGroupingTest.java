@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV03ProcessGroupingTest {
+public class FlowV05ProcessGroupingTest {
 
-    private static final FlowV03ProcessGrouping full = FlowV03ProcessGrouping._internal()
+    private static final FlowV05ProcessGrouping full = FlowV05ProcessGrouping._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,17 @@ public class FlowV03ProcessGroupingTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV03ErrorMessage("String0")
-            .flowV03FinishedAt(123456789L)
-            .flowV03FolderName("String0")
-            .flowV03FolderQualifiedName("String0")
-            .flowV03Id("String0")
-            .flowV03ProjectName("String0")
-            .flowV03ProjectQualifiedName("String0")
-            .flowV03RunId("String0")
-            .flowV03Schedule("String0")
-            .flowV03StartedAt(123456789L)
-            .flowV03Status("String0")
+            .flowV05ErrorMessage("String0")
+            .flowV05FinishedAt(123456789L)
+            .flowV05FolderName("String0")
+            .flowV05FolderQualifiedName("String0")
+            .flowV05Id("String0")
+            .flowV05ProjectName("String0")
+            .flowV05ProjectQualifiedName("String0")
+            .flowV05RunId("String0")
+            .flowV05Schedule("String0")
+            .flowV05StartedAt(123456789L)
+            .flowV05Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,25 +430,27 @@ public class FlowV03ProcessGroupingTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV03Abstract(FlowV03InterimDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03Abstract(
-                    FlowV03InterimDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .flowV03DataFlow(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV03DataFlow(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV05Abstract(FlowV05Dataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05Abstract(FlowV05Dataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV05DataFlow(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05DataFlow(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV05ExecutedByControl(FlowV05ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV05ExecutedByControl(
+                    FlowV05ControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV03ProcessGrouping frodo;
+    private static FlowV05ProcessGrouping frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV03ProcessGrouping.builderEquivalency"})
+    @Test(groups = {"FlowV05ProcessGrouping.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV03ProcessGrouping.serialize"},
-            dependsOnGroups = {"FlowV03ProcessGrouping.builderEquivalency"})
+            groups = {"FlowV05ProcessGrouping.serialize"},
+            dependsOnGroups = {"FlowV05ProcessGrouping.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -457,17 +459,17 @@ public class FlowV03ProcessGroupingTest {
     }
 
     @Test(
-            groups = {"FlowV03ProcessGrouping.deserialize"},
-            dependsOnGroups = {"FlowV03ProcessGrouping.serialize"})
+            groups = {"FlowV05ProcessGrouping.deserialize"},
+            dependsOnGroups = {"FlowV05ProcessGrouping.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV03ProcessGrouping.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV05ProcessGrouping.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV03ProcessGrouping.equivalency"},
-            dependsOnGroups = {"FlowV03ProcessGrouping.serialize", "FlowV03ProcessGrouping.deserialize"})
+            groups = {"FlowV05ProcessGrouping.equivalency"},
+            dependsOnGroups = {"FlowV05ProcessGrouping.serialize", "FlowV05ProcessGrouping.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -476,8 +478,8 @@ public class FlowV03ProcessGroupingTest {
     }
 
     @Test(
-            groups = {"FlowV03ProcessGrouping.equivalency"},
-            dependsOnGroups = {"FlowV03ProcessGrouping.serialize", "FlowV03ProcessGrouping.deserialize"})
+            groups = {"FlowV05ProcessGrouping.equivalency"},
+            dependsOnGroups = {"FlowV05ProcessGrouping.serialize", "FlowV05ProcessGrouping.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

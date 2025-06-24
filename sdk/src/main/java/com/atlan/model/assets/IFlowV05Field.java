@@ -8,6 +8,8 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -27,12 +29,20 @@ import javax.annotation.processing.Generated;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03InterimField {
+public interface IFlowV05Field {
 
-    public static final String TYPE_NAME = "FlowV03InterimField";
+    public static final String TYPE_NAME = "FlowV05Field";
 
-    /** Interim dataset that contains these fields. */
-    RelationField FLOW_V03DATASET = new RelationField("flowV03Dataset");
+    /** Ephemeral dataset that contains these fields. */
+    RelationField FLOW_V05DATASET = new RelationField("flowV05Dataset");
+
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    KeywordTextField FLOW_V05DATASET_NAME =
+            new KeywordTextField("flowV05DatasetName", "flowV05DatasetName.keyword", "flowV05DatasetName");
+
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    KeywordField FLOW_V05DATASET_QUALIFIED_NAME =
+            new KeywordField("flowV05DatasetQualifiedName", "flowV05DatasetQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -352,41 +362,47 @@ public interface IFlowV03InterimField {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Interim dataset that contains these fields. */
-    IFlowV03InterimDataset getFlowV03Dataset();
+    /** Ephemeral dataset that contains these fields. */
+    IFlowV05Dataset getFlowV05Dataset();
+
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    String getFlowV05DatasetName();
+
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    String getFlowV05DatasetQualifiedName();
 
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
+    String getFlowV05Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

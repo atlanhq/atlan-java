@@ -8,9 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,51 +22,23 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for flow-specific (ETL, other data processing) assets.
+ * A grouping of data flows that will be orchestrated together as a single unit.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03 {
+public interface IFlowV05ProcessGrouping {
 
-    public static final String TYPE_NAME = "FlowV03";
+    public static final String TYPE_NAME = "FlowV05ProcessGrouping";
 
-    /** Optional error message of the flow run. */
-    KeywordField FLOW_V03ERROR_MESSAGE = new KeywordField("flowV03ErrorMessage", "flowV03ErrorMessage");
+    /** Ephemeral datasets that abstract the sub-processing carried out by the process grouping. */
+    RelationField FLOW_V05ABSTRACTS = new RelationField("flowV05Abstracts");
 
-    /** Date and time at which this point in the data processing or orchestration finished. */
-    NumericField FLOW_V03FINISHED_AT = new NumericField("flowV03FinishedAt", "flowV03FinishedAt");
+    /** Individual data flows (processes) contained in this grouping. */
+    RelationField FLOW_V05DATA_FLOWS = new RelationField("flowV05DataFlows");
 
-    /** Simple name of the folder in which this asset is contained. */
-    KeywordTextField FLOW_V03FOLDER_NAME =
-            new KeywordTextField("flowV03FolderName", "flowV03FolderName.keyword", "flowV03FolderName");
-
-    /** Unique name of the folder in which this asset is contained. */
-    KeywordField FLOW_V03FOLDER_QUALIFIED_NAME =
-            new KeywordField("flowV03FolderQualifiedName", "flowV03FolderQualifiedName");
-
-    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    KeywordField FLOW_V03ID = new KeywordField("flowV03Id", "flowV03Id");
-
-    /** Simple name of the project in which this asset is contained. */
-    KeywordTextField FLOW_V03PROJECT_NAME =
-            new KeywordTextField("flowV03ProjectName", "flowV03ProjectName.keyword", "flowV03ProjectName");
-
-    /** Unique name of the project in which this asset is contained. */
-    KeywordField FLOW_V03PROJECT_QUALIFIED_NAME =
-            new KeywordField("flowV03ProjectQualifiedName", "flowV03ProjectQualifiedName");
-
-    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    KeywordField FLOW_V03RUN_ID = new KeywordField("flowV03RunId", "flowV03RunId");
-
-    /** Schedule for this point in the data processing or orchestration. */
-    KeywordField FLOW_V03SCHEDULE = new KeywordField("flowV03Schedule", "flowV03Schedule");
-
-    /** Date and time at which this point in the data processing or orchestration started. */
-    NumericField FLOW_V03STARTED_AT = new NumericField("flowV03StartedAt", "flowV03StartedAt");
-
-    /** Overall status of this point in the data processing or orchestration. */
-    KeywordField FLOW_V03STATUS = new KeywordField("flowV03Status", "flowV03Status");
+    /** Control operations that execute this process grouping. */
+    RelationField FLOW_V05EXECUTED_BY_CONTROLS = new RelationField("flowV05ExecutedByControls");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -388,38 +358,47 @@ public interface IFlowV03 {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Ephemeral datasets that abstract the sub-processing carried out by the process grouping. */
+    SortedSet<IFlowV05Dataset> getFlowV05Abstracts();
+
+    /** Individual data flows (processes) contained in this grouping. */
+    SortedSet<ILineageProcess> getFlowV05DataFlows();
+
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
+
+    /** Control operations that execute this process grouping. */
+    SortedSet<IFlowV05ControlOperation> getFlowV05ExecutedByControls();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
+    String getFlowV05Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

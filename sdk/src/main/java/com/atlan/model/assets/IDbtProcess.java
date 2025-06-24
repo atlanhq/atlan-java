@@ -439,10 +439,10 @@ public interface IDbtProcess {
     IFivetranConnector getFivetranConnector();
 
     /** Grouping of data flows (processes) that contains this individual data flow (process). */
-    IFlowV03ProcessGrouping getFlowV03Grouping();
+    IFlowV05ProcessGrouping getFlowV05Grouping();
 
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV03ControlOperation getFlowV03OrchestratedBy();
+    IFlowV05ControlOperation getFlowV05OrchestratedBy();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

@@ -8,7 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,20 +24,51 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A grouping mechanism within a project to further organize data processing.
+ * Base class for flow-specific (ETL, other data processing) assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03Folder {
+public interface IFlowV05 {
 
-    public static final String TYPE_NAME = "FlowV03Folder";
+    public static final String TYPE_NAME = "FlowV05";
 
-    /** Parent folder containing the sub-folders. */
-    RelationField FLOW_V03PARENT_FOLDER = new RelationField("flowV03ParentFolder");
+    /** Optional error message of the flow run. */
+    KeywordField FLOW_V05ERROR_MESSAGE = new KeywordField("flowV05ErrorMessage", "flowV05ErrorMessage");
 
-    /** Child (sub) folders contained within the folder. */
-    RelationField FLOW_V03SUB_FOLDERS = new RelationField("flowV03SubFolders");
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    NumericField FLOW_V05FINISHED_AT = new NumericField("flowV05FinishedAt", "flowV05FinishedAt");
+
+    /** Simple name of the folder in which this asset is contained. */
+    KeywordTextField FLOW_V05FOLDER_NAME =
+            new KeywordTextField("flowV05FolderName", "flowV05FolderName.keyword", "flowV05FolderName");
+
+    /** Unique name of the folder in which this asset is contained. */
+    KeywordField FLOW_V05FOLDER_QUALIFIED_NAME =
+            new KeywordField("flowV05FolderQualifiedName", "flowV05FolderQualifiedName");
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    KeywordField FLOW_V05ID = new KeywordField("flowV05Id", "flowV05Id");
+
+    /** Simple name of the project in which this asset is contained. */
+    KeywordTextField FLOW_V05PROJECT_NAME =
+            new KeywordTextField("flowV05ProjectName", "flowV05ProjectName.keyword", "flowV05ProjectName");
+
+    /** Unique name of the project in which this asset is contained. */
+    KeywordField FLOW_V05PROJECT_QUALIFIED_NAME =
+            new KeywordField("flowV05ProjectQualifiedName", "flowV05ProjectQualifiedName");
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    KeywordField FLOW_V05RUN_ID = new KeywordField("flowV05RunId", "flowV05RunId");
+
+    /** Schedule for this point in the data processing or orchestration. */
+    KeywordField FLOW_V05SCHEDULE = new KeywordField("flowV05Schedule", "flowV05Schedule");
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    NumericField FLOW_V05STARTED_AT = new NumericField("flowV05StartedAt", "flowV05StartedAt");
+
+    /** Overall status of this point in the data processing or orchestration. */
+    KeywordField FLOW_V05STATUS = new KeywordField("flowV05Status", "flowV05Status");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -356,43 +389,37 @@ public interface IFlowV03Folder {
     SortedSet<IFile> getFiles();
 
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
-
-    /** Parent folder containing the sub-folders. */
-    IFlowV03Folder getFlowV03ParentFolder();
+    String getFlowV05Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
-
-    /** Child (sub) folders contained within the folder. */
-    SortedSet<IFlowV03Folder> getFlowV03SubFolders();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

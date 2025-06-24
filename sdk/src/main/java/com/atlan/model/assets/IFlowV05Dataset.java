@@ -27,15 +27,15 @@ import javax.annotation.processing.Generated;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV03InterimDataset {
+public interface IFlowV05Dataset {
 
-    public static final String TYPE_NAME = "FlowV03InterimDataset";
+    public static final String TYPE_NAME = "FlowV05Dataset";
 
-    /** Process grouping that details the sub-processing to produce the interim dataset. */
-    RelationField FLOW_V03DETAILED_BY = new RelationField("flowV03DetailedBy");
+    /** Process grouping that details the sub-processing to produce the ephemeral dataset. */
+    RelationField FLOW_V05DETAILED_BY = new RelationField("flowV05DetailedBy");
 
-    /** Fields contained in the interim dataset. */
-    RelationField FLOW_V03FIELDS = new RelationField("flowV03Fields");
+    /** Fields contained in the ephemeral dataset. */
+    RelationField FLOW_V05FIELDS = new RelationField("flowV05Fields");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -355,44 +355,44 @@ public interface IFlowV03InterimDataset {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Process grouping that details the sub-processing to produce the interim dataset. */
-    IFlowV03ProcessGrouping getFlowV03DetailedBy();
+    /** Process grouping that details the sub-processing to produce the ephemeral dataset. */
+    IFlowV05ProcessGrouping getFlowV05DetailedBy();
 
     /** Optional error message of the flow run. */
-    String getFlowV03ErrorMessage();
+    String getFlowV05ErrorMessage();
 
-    /** Fields contained in the interim dataset. */
-    SortedSet<IFlowV03InterimField> getFlowV03Fields();
+    /** Fields contained in the ephemeral dataset. */
+    SortedSet<IFlowV05Field> getFlowV05Fields();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV03FinishedAt();
+    Long getFlowV05FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV03FolderName();
+    String getFlowV05FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV03FolderQualifiedName();
+    String getFlowV05FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV03Id();
+    String getFlowV05Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV03ProjectName();
+    String getFlowV05ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV03ProjectQualifiedName();
+    String getFlowV05ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV03RunId();
+    String getFlowV05RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV03Schedule();
+    String getFlowV05Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV03StartedAt();
+    Long getFlowV05StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV03Status();
+    String getFlowV05Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
