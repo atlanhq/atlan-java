@@ -72,14 +72,14 @@ import com.atlan.model.assets.DynamoDBGlobalSecondaryIndex
 import com.atlan.model.assets.DynamoDBLocalSecondaryIndex
 import com.atlan.model.assets.DynamoDBTable
 import com.atlan.model.assets.File
-import com.atlan.model.assets.FlowV03ControlOperation
-import com.atlan.model.assets.FlowV03DataOperation
-import com.atlan.model.assets.FlowV03FieldOperation
-import com.atlan.model.assets.FlowV03Folder
-import com.atlan.model.assets.FlowV03InterimDataset
-import com.atlan.model.assets.FlowV03InterimField
-import com.atlan.model.assets.FlowV03ProcessGrouping
-import com.atlan.model.assets.FlowV03Project
+import com.atlan.model.assets.FlowV05ControlOperation
+import com.atlan.model.assets.FlowV05DatasetOperation
+import com.atlan.model.assets.FlowV05FieldOperation
+import com.atlan.model.assets.FlowV05Folder
+import com.atlan.model.assets.FlowV05Dataset
+import com.atlan.model.assets.FlowV05Field
+import com.atlan.model.assets.FlowV05ProcessGrouping
+import com.atlan.model.assets.FlowV05Project
 import com.atlan.model.assets.Folder
 import com.atlan.model.assets.GCSBucket
 import com.atlan.model.assets.GCSObject
@@ -917,12 +917,12 @@ class AssetImporter(
                 TypeGrouping(
                     "Flows",
                     listOf(
-                        FlowV03Project.TYPE_NAME,
-                        FlowV03Folder.TYPE_NAME,
-                        FlowV03ControlOperation.TYPE_NAME,
-                        FlowV03ProcessGrouping.TYPE_NAME,
-                        FlowV03InterimDataset.TYPE_NAME,
-                        FlowV03InterimField.TYPE_NAME,
+                        FlowV05Project.TYPE_NAME,
+                        FlowV05Folder.TYPE_NAME,
+                        FlowV05ControlOperation.TYPE_NAME,
+                        FlowV05ProcessGrouping.TYPE_NAME,
+                        FlowV05Dataset.TYPE_NAME,
+                        FlowV05Field.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
@@ -933,8 +933,8 @@ class AssetImporter(
                         BIProcess.TYPE_NAME,
                         ColumnProcess.TYPE_NAME,
                         DbtColumnProcess.TYPE_NAME,
-                        FlowV03DataOperation.TYPE_NAME,
-                        FlowV03FieldOperation.TYPE_NAME,
+                        FlowV05DatasetOperation.TYPE_NAME,
+                        FlowV05FieldOperation.TYPE_NAME,
                     ),
                 ),
                 TypeGrouping(
