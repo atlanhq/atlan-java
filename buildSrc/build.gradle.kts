@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.1.21")
+    implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.2.0")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:7.0.4")
     implementation("io.freefair.gradle:lombok-plugin:8.13.1")
     implementation("net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin:4.2.0")
