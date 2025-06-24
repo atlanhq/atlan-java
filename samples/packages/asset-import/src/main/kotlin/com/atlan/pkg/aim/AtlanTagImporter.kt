@@ -68,7 +68,8 @@ class AtlanTagImporter(
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .ignoreDifferentFieldCount(false)
+                .allowExtraFields(false)
+                .allowMissingFields(false)
         reader = builder.ofCsvRecord(inputFile)
         counter = builder.ofCsvRecord(inputFile)
     }

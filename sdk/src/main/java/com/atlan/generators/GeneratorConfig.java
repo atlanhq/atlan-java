@@ -97,7 +97,8 @@ public class GeneratorConfig {
             Map.entry("responseValueArrBoolean", "addResponseValueBoolean"),
             Map.entry("responseValueArrJson", "addResponseValueJson"),
             Map.entry("responseValueArrLong", "addResponseValueLong"),
-            Map.entry("responseValueArrDate", "addResponseValueDate"));
+            Map.entry("responseValueArrDate", "addResponseValueDate"),
+            Map.entry("tableauProjectHierarchy", "addTableauProjectHierarchy"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("__hasLineage", "hasLineage"),
