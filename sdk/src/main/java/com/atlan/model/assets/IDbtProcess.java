@@ -439,10 +439,7 @@ public interface IDbtProcess {
     IFivetranConnector getFivetranConnector();
 
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV06ControlOperation getFlowV06OrchestratedBy();
-
-    /** Reusable unit of data flows (processes) that contains this individual data flow (process). */
-    IFlowV06ReusableUnit getFlowV06ReusableUnit();
+    IFlowV07ControlOperation getFlowV07OrchestratedBy();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -555,7 +552,7 @@ public interface IDbtProcess {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

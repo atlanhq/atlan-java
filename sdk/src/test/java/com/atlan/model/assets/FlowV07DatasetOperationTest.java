@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV06FieldTest {
+public class FlowV07DatasetOperationTest {
 
-    private static final FlowV06Field full = FlowV06Field._internal()
+    private static final FlowV07DatasetOperation full = FlowV07DatasetOperation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,34 +59,39 @@ public class FlowV06FieldTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV06ErrorMessage("String0")
-            .flowV06FinishedAt(123456789L)
-            .flowV06FolderName("String0")
-            .flowV06FolderQualifiedName("String0")
-            .flowV06Id("String0")
-            .flowV06ProjectName("String0")
-            .flowV06ProjectQualifiedName("String0")
-            .flowV06RunId("String0")
-            .flowV06Schedule("String0")
-            .flowV06StartedAt(123456789L)
-            .flowV06Status("String0")
-            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedAttribute(
-                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .additionalEtlContext("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiDatasetType(AIDatasetType.TRAINING)
+            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .ast("String0")
+            .code("String0")
+            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV07OrchestratedBy(FlowV07ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .parentConnectionProcessQualifiedName("String0")
+            .parentConnectionProcessQualifiedName("String1")
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sql("String0")
+            .flowV07ErrorMessage("String0")
+            .flowV07FinishedAt(123456789L)
+            .flowV07FolderName("String0")
+            .flowV07FolderQualifiedName("String0")
+            .flowV07Id("String0")
+            .flowV07ProjectName("String0")
+            .flowV07ProjectQualifiedName("String0")
+            .flowV07RunId("String0")
+            .flowV07Schedule("String0")
+            .flowV07StartedAt(123456789L)
+            .flowV07Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -447,23 +452,21 @@ public class FlowV06FieldTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV06Dataset(FlowV06Dataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV06DatasetName("String0")
-            .flowV06DatasetQualifiedName("String0")
+            .flowV07ReusableUnit(FlowV07ReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV06Field frodo;
+    private static FlowV07DatasetOperation frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV06Field.builderEquivalency"})
+    @Test(groups = {"FlowV07DatasetOperation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV06Field.serialize"},
-            dependsOnGroups = {"FlowV06Field.builderEquivalency"})
+            groups = {"FlowV07DatasetOperation.serialize"},
+            dependsOnGroups = {"FlowV07DatasetOperation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -472,17 +475,17 @@ public class FlowV06FieldTest {
     }
 
     @Test(
-            groups = {"FlowV06Field.deserialize"},
-            dependsOnGroups = {"FlowV06Field.serialize"})
+            groups = {"FlowV07DatasetOperation.deserialize"},
+            dependsOnGroups = {"FlowV07DatasetOperation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV06Field.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV07DatasetOperation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV06Field.equivalency"},
-            dependsOnGroups = {"FlowV06Field.serialize", "FlowV06Field.deserialize"})
+            groups = {"FlowV07DatasetOperation.equivalency"},
+            dependsOnGroups = {"FlowV07DatasetOperation.serialize", "FlowV07DatasetOperation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -491,8 +494,8 @@ public class FlowV06FieldTest {
     }
 
     @Test(
-            groups = {"FlowV06Field.equivalency"},
-            dependsOnGroups = {"FlowV06Field.serialize", "FlowV06Field.deserialize"})
+            groups = {"FlowV07DatasetOperation.equivalency"},
+            dependsOnGroups = {"FlowV07DatasetOperation.serialize", "FlowV07DatasetOperation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

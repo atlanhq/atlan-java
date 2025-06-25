@@ -3,13 +3,13 @@
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.ColumnProcess
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.FlowV06ControlOperation
-import com.atlan.model.assets.FlowV06Dataset
-import com.atlan.model.assets.FlowV06DatasetOperation
-import com.atlan.model.assets.FlowV06FieldOperation
-import com.atlan.model.assets.FlowV06Folder
-import com.atlan.model.assets.FlowV06Project
-import com.atlan.model.assets.FlowV06ReusableUnit
+import com.atlan.model.assets.FlowV07ControlOperation
+import com.atlan.model.assets.FlowV07Dataset
+import com.atlan.model.assets.FlowV07DatasetOperation
+import com.atlan.model.assets.FlowV07FieldOperation
+import com.atlan.model.assets.FlowV07Folder
+import com.atlan.model.assets.FlowV07Project
+import com.atlan.model.assets.FlowV07ReusableUnit
 import com.atlan.model.assets.ILineageProcess
 import com.atlan.model.assets.LineageProcess
 import com.atlan.model.assets.Table
@@ -77,14 +77,14 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun projectExists() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val projects =
-            FlowV06Project
+            FlowV07Project
                 .select(client)
-                .where(FlowV06Project.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                // .includeOnResults(FlowV06Project.FLOW_V02GROUPINGS)
-                // .includeOnResults(FlowV06Project.FLOW_V02DATASETS)
-                // .includeOnResults(FlowV06Project.FLOW_V02FIELDS)
+                .where(FlowV07Project.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                // .includeOnResults(FlowV07Project.FLOW_V02GROUPINGS)
+                // .includeOnResults(FlowV07Project.FLOW_V02DATASETS)
+                // .includeOnResults(FlowV07Project.FLOW_V02FIELDS)
                 .stream()
-                .map { it as FlowV06Project }
+                .map { it as FlowV07Project }
                 .toList()
         assertEquals(1, projects.size)
     }
@@ -93,20 +93,20 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun folderExists() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val folders =
-            FlowV06Folder
+            FlowV07Folder
                 .select(client)
-                .where(FlowV06Folder.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .includeOnResults(FlowV06Folder.FLOW_V06PROJECT_NAME)
-                .includeOnResults(FlowV06Folder.FLOW_V06PROJECT_QUALIFIED_NAME)
-                // .includeOnResults(FlowV06Folder.FLOW_V02GROUPINGS)
-                // .includeOnResults(FlowV06Folder.FLOW_V02DATASETS)
-                // .includeOnResults(FlowV06Folder.FLOW_V02FIELDS)
+                .where(FlowV07Folder.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowV07Folder.FLOW_V07PROJECT_NAME)
+                .includeOnResults(FlowV07Folder.FLOW_V07PROJECT_QUALIFIED_NAME)
+                // .includeOnResults(FlowV07Folder.FLOW_V02GROUPINGS)
+                // .includeOnResults(FlowV07Folder.FLOW_V02DATASETS)
+                // .includeOnResults(FlowV07Folder.FLOW_V02FIELDS)
                 .stream()
-                .map { it as FlowV06Folder }
+                .map { it as FlowV07Folder }
                 .toList()
         assertEquals(1, folders.size)
-        assertEquals("Atlan", folders.first().flowV06ProjectName)
-        assertTrue(folders.first().flowV06ProjectQualifiedName.endsWith("Atlan"))
+        assertEquals("Atlan", folders.first().flowV07ProjectName)
+        assertTrue(folders.first().flowV07ProjectQualifiedName.endsWith("Atlan"))
     }
 
     @Test
@@ -116,12 +116,12 @@ class InformaticaCDITest : PackageTest("cdi") {
             LineageProcess
                 .select(client)
                 .where(LineageProcess.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .includeOnResults(LineageProcess.FLOW_V06ORCHESTRATED_BY)
+                .includeOnResults(LineageProcess.FLOW_V07ORCHESTRATED_BY)
                 .stream()
                 .map { it as LineageProcess }
                 .toList()
         assertEquals(5, processes.size)
-        val orchestratedBy = processes.groupBy { it.flowV06OrchestratedBy.qualifiedName }
+        val orchestratedBy = processes.groupBy { it.flowV07OrchestratedBy.qualifiedName }
         orchestratedBy.forEach { (k, v) ->
             when (k) {
                 "${connection.qualifiedName}/MultiMap" -> {
@@ -151,41 +151,41 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun mappingTasksExist() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mt =
-            FlowV06ControlOperation
+            FlowV07ControlOperation
                 .select(client)
-                .where(FlowV06ControlOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06ControlOperation.ASSET_USER_DEFINED_TYPE.eq("Mapping Task"))
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06DATA_RESULTS)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06REUSABLE_UNIT_NAME)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06REUSABLE_UNIT_QUALIFIED_NAME)
-                .includeOnResults(FlowV06ControlOperation.NAME)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06PROJECT_NAME)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06PROJECT_QUALIFIED_NAME)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06FOLDER_NAME)
-                .includeOnResults(FlowV06ControlOperation.FLOW_V06FOLDER_QUALIFIED_NAME)
+                .where(FlowV07ControlOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07ControlOperation.ASSET_USER_DEFINED_TYPE.eq("Mapping Task"))
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07DATA_RESULTS)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07REUSABLE_UNIT_NAME)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07REUSABLE_UNIT_QUALIFIED_NAME)
+                .includeOnResults(FlowV07ControlOperation.NAME)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07PROJECT_NAME)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07FOLDER_NAME)
+                .includeOnResults(FlowV07ControlOperation.FLOW_V07FOLDER_QUALIFIED_NAME)
                 .stream()
-                .map { it as FlowV06ControlOperation }
+                .map { it as FlowV07ControlOperation }
                 .toList()
         assertEquals(2, mt.size)
         mt.forEach { task ->
-            assertEquals("Atlan", task.flowV06ProjectName)
-            assertEquals("sample_folder", task.flowV06FolderName)
-            assertTrue(task.flowV06ProjectQualifiedName.endsWith("Atlan"))
-            assertTrue(task.flowV06FolderQualifiedName.endsWith("sample_folder"))
+            assertEquals("Atlan", task.flowV07ProjectName)
+            assertEquals("sample_folder", task.flowV07FolderName)
+            assertTrue(task.flowV07ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(task.flowV07FolderQualifiedName.endsWith("sample_folder"))
             when (task.name) {
                 "MultiMap" -> {
                     // 12 here when we may e2s and t2e to the task-level (otherwise 4)
                     // When the task-level is a control flow op, this should just be the 4 resolved lineage processes
-                    assertEquals(4, task.flowV06DataResults.size)
-                    assertEquals("${connection.qualifiedName}/MultiMap_mapping", task.flowV06ReusableUnitQualifiedName)
-                    assertEquals("MultiMap (mapping)", task.flowV06ReusableUnitName)
+                    assertEquals(4, task.flowV07DataResults.size)
+                    assertEquals("${connection.qualifiedName}/MultiMap_mapping", task.flowV07ReusableUnitQualifiedName)
+                    assertEquals("MultiMap (mapping)", task.flowV07ReusableUnitName)
                 }
                 "Complex" -> {
                     // 3 here when we may e2s and t2e to the task-level (otherwise 1)
                     // When the task-level is a control flow op, this should just be the 1 resolved lineage process
-                    assertEquals(1, task.flowV06DataResults.size)
-                    assertEquals("${connection.qualifiedName}/Complex_mapping", task.flowV06ReusableUnitQualifiedName)
-                    assertEquals("Complex (mapping)", task.flowV06ReusableUnitName)
+                    assertEquals(1, task.flowV07DataResults.size)
+                    assertEquals("${connection.qualifiedName}/Complex_mapping", task.flowV07ReusableUnitQualifiedName)
+                    assertEquals("Complex (mapping)", task.flowV07ReusableUnitName)
                 }
             }
         }
@@ -195,33 +195,33 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun mappingsExist() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mappings =
-            FlowV06ReusableUnit
+            FlowV07ReusableUnit
                 .select(client)
-                .where(FlowV06ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06ReusableUnit.ASSET_USER_DEFINED_TYPE.eq("Mapping"))
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06DATA_FLOWS)
-                .includeOnResults(FlowV06ReusableUnit.NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_QUALIFIED_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_QUALIFIED_NAME)
+                .where(FlowV07ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07ReusableUnit.ASSET_USER_DEFINED_TYPE.eq("Mapping"))
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07DATA_FLOWS)
+                .includeOnResults(FlowV07ReusableUnit.NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07PROJECT_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07FOLDER_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07FOLDER_QUALIFIED_NAME)
                 .stream()
-                .map { it as FlowV06ReusableUnit }
+                .map { it as FlowV07ReusableUnit }
                 .toList()
         assertEquals(2, mappings.size)
         mappings.forEach { mapping ->
-            assertEquals("Atlan", mapping.flowV06ProjectName)
-            assertEquals("sample_folder", mapping.flowV06FolderName)
-            assertTrue(mapping.flowV06ProjectQualifiedName.endsWith("Atlan"))
-            assertTrue(mapping.flowV06FolderQualifiedName.endsWith("sample_folder"))
+            assertEquals("Atlan", mapping.flowV07ProjectName)
+            assertEquals("sample_folder", mapping.flowV07FolderName)
+            assertTrue(mapping.flowV07ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(mapping.flowV07FolderQualifiedName.endsWith("sample_folder"))
             when (mapping.name) {
                 "MultiMap (mapping)" -> {
                     // 4 here when we only map the inside lineage portions, otherwise 12
-                    assertEquals(12, mapping.flowV06DataFlows.size)
+                    assertEquals(12, mapping.flowV07DataFlows.size)
                 }
                 "Complex (mapping)" -> {
                     // 2 here when we only map the inside lineage portions, otherwise 4
-                    assertEquals(4, mapping.flowV06DataFlows.size)
+                    assertEquals(4, mapping.flowV07DataFlows.size)
                 }
             }
         }
@@ -231,32 +231,32 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun mappletExists() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val mapplets =
-            FlowV06ReusableUnit
+            FlowV07ReusableUnit
                 .select(client)
-                .where(FlowV06ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06ReusableUnit.ASSET_USER_DEFINED_TYPE.eq("Mapplet"))
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06DATA_FLOWS)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06ABSTRACTS)
-                .includeOnResults(FlowV06ReusableUnit.NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06PROJECT_QUALIFIED_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_NAME)
-                .includeOnResults(FlowV06ReusableUnit.FLOW_V06FOLDER_QUALIFIED_NAME)
+                .where(FlowV07ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07ReusableUnit.ASSET_USER_DEFINED_TYPE.eq("Mapplet"))
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07DATA_FLOWS)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07ABSTRACTS)
+                .includeOnResults(FlowV07ReusableUnit.NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07PROJECT_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07FOLDER_NAME)
+                .includeOnResults(FlowV07ReusableUnit.FLOW_V07FOLDER_QUALIFIED_NAME)
                 .includeOnRelations(Asset.QUALIFIED_NAME)
                 .stream()
-                .map { it as FlowV06ReusableUnit }
+                .map { it as FlowV07ReusableUnit }
                 .toList()
         assertEquals(1, mapplets.size)
         mapplets.forEach { mapplet ->
-            assertEquals("Atlan", mapplet.flowV06ProjectName)
-            assertEquals("sample_folder", mapplet.flowV06FolderName)
-            assertTrue(mapplet.flowV06ProjectQualifiedName.endsWith("Atlan"))
-            assertTrue(mapplet.flowV06FolderQualifiedName.endsWith("sample_folder"))
+            assertEquals("Atlan", mapplet.flowV07ProjectName)
+            assertEquals("sample_folder", mapplet.flowV07FolderName)
+            assertTrue(mapplet.flowV07ProjectQualifiedName.endsWith("Atlan"))
+            assertTrue(mapplet.flowV07FolderQualifiedName.endsWith("sample_folder"))
             when (mapplet.name) {
                 "Mapplet" -> {
-                    assertEquals(3, mapplet.flowV06DataFlows.size)
-                    assertEquals(1, mapplet.flowV06Abstracts.size)
-                    assertEquals("${connection.qualifiedName}/Complex/transformations/Mapplet", mapplet.flowV06Abstracts.first().qualifiedName)
+                    assertEquals(3, mapplet.flowV07DataFlows.size)
+                    assertEquals(1, mapplet.flowV07Abstracts.size)
+                    assertEquals("${connection.qualifiedName}/Complex/transformations/Mapplet", mapplet.flowV07Abstracts.first().qualifiedName)
                 }
             }
         }
@@ -266,29 +266,29 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun interimDatasetForMappletReferencesItsMapplet() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val ids =
-            FlowV06Dataset
+            FlowV07Dataset
                 .select(client)
-                .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06Dataset.NAME.eq("Mapplet"))
-                .includeOnResults(FlowV06Dataset.FLOW_V06DETAILED_BY)
-                .includeOnResults(FlowV06Dataset.FLOW_V06PROJECT_NAME)
-                .includeOnResults(FlowV06Dataset.FLOW_V06PROJECT_QUALIFIED_NAME)
-                .includeOnResults(FlowV06Dataset.FLOW_V06FOLDER_NAME)
-                .includeOnResults(FlowV06Dataset.FLOW_V06FOLDER_QUALIFIED_NAME)
+                .where(FlowV07Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07Dataset.NAME.eq("Mapplet"))
+                .includeOnResults(FlowV07Dataset.FLOW_V07DETAILED_BY)
+                .includeOnResults(FlowV07Dataset.FLOW_V07PROJECT_NAME)
+                .includeOnResults(FlowV07Dataset.FLOW_V07PROJECT_QUALIFIED_NAME)
+                .includeOnResults(FlowV07Dataset.FLOW_V07FOLDER_NAME)
+                .includeOnResults(FlowV07Dataset.FLOW_V07FOLDER_QUALIFIED_NAME)
                 .includeOnRelations(Asset.QUALIFIED_NAME)
                 .stream()
-                .map { it as FlowV06Dataset }
+                .map { it as FlowV07Dataset }
                 .toList()
         assertEquals(1, ids.size)
-        assertEquals("${connection.qualifiedName}/Mapplet", ids[0].flowV06DetailedBy.qualifiedName)
-        assertEquals("Atlan", ids[0].flowV06ProjectName)
-        assertEquals("sample_folder", ids[0].flowV06FolderName)
-        assertTrue(ids[0].flowV06ProjectQualifiedName.endsWith("Atlan"))
-        assertTrue(ids[0].flowV06FolderQualifiedName.endsWith("sample_folder"))
+        assertEquals("${connection.qualifiedName}/Mapplet", ids[0].flowV07DetailedBy.qualifiedName)
+        assertEquals("Atlan", ids[0].flowV07ProjectName)
+        assertEquals("sample_folder", ids[0].flowV07FolderName)
+        assertTrue(ids[0].flowV07ProjectQualifiedName.endsWith("Atlan"))
+        assertTrue(ids[0].flowV07FolderQualifiedName.endsWith("sample_folder"))
     }
 
     @Test
-    fun dataFlowV06OpsNotInTopLevelLineage() {
+    fun dataFlowV07OpsNotInTopLevelLineage() {
         val connection = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)[0]!!
         val iics = Connection.findByName(client, c1, connectorType)[0]!!
         val tables =
@@ -303,14 +303,14 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .toList()
         assertEquals(10, tables.size)
         tables.forEach { table ->
-            // Note: we need to EXPLICITLY EXCLUDE FlowV06DataOperation from lineage, if we want to avoid having it
+            // Note: we need to EXPLICITLY EXCLUDE FlowV07DataOperation from lineage, if we want to avoid having it
             //  in the traversals...
             val builder =
                 FluentLineage
                     .builder(client, table.guid)
                     .includeOnResults(Asset.NAME)
                     .includeOnResults(Asset.CONNECTION_QUALIFIED_NAME)
-                    .whereAsset(Asset.TYPE_NAME.inLineage.neq(FlowV06DatasetOperation.TYPE_NAME))
+                    .whereAsset(Asset.TYPE_NAME.inLineage.neq(FlowV07DatasetOperation.TYPE_NAME))
             val lineage =
                 when (table.name) {
                     "SOURCETABLE", "CUSTOMERS01", "DISNEY_MOVIES", "EMPLOYEES_SR1", "EMPLOYEES_SR" -> {
@@ -336,12 +336,12 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun multiMapInnerLineage() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val interims =
-            FlowV06Dataset
+            FlowV07Dataset
                 .select(client)
-                .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
+                .where(FlowV07Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
                 .stream()
-                .map { it as FlowV06Dataset }
+                .map { it as FlowV07Dataset }
                 .toList()
         assertEquals(8, interims.size)
         interims.forEach { interim ->
@@ -374,12 +374,12 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun multiMapInnerColumnLineage() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val fieldOps =
-            FlowV06FieldOperation
+            FlowV07FieldOperation
                 .select(client)
-                .where(FlowV06FieldOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06FieldOperation.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
+                .where(FlowV07FieldOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07FieldOperation.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/MultiMap"))
                 .stream()
-                .map { it as FlowV06FieldOperation }
+                .map { it as FlowV07FieldOperation }
                 .toList()
         assertEquals(46, fieldOps.size)
     }
@@ -388,12 +388,12 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun complexInnerLineage() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val interims =
-            FlowV06Dataset
+            FlowV07Dataset
                 .select(client)
-                .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Complex"))
+                .where(FlowV07Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Complex"))
                 .stream()
-                .map { it as FlowV06Dataset }
+                .map { it as FlowV07Dataset }
                 .toList()
         assertEquals(3, interims.size)
         interims.forEach { interim ->
@@ -439,12 +439,12 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun complexMappletLineage() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val interims =
-            FlowV06Dataset
+            FlowV07Dataset
                 .select(client)
-                .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .where(FlowV06Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Mapplet"))
+                .where(FlowV07Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07Dataset.QUALIFIED_NAME.startsWith("${connection.qualifiedName}/Mapplet"))
                 .stream()
-                .map { it as FlowV06Dataset }
+                .map { it as FlowV07Dataset }
                 .toList()
         assertEquals(4, interims.size)
         interims.forEach { interim ->
@@ -515,13 +515,13 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun drilldownLineageExists() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val operations =
-            FlowV06DatasetOperation
+            FlowV07DatasetOperation
                 .select(client)
-                .where(FlowV06DatasetOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .includeOnResults(FlowV06DatasetOperation.INPUTS)
-                .includeOnResults(FlowV06DatasetOperation.OUTPUTS)
+                .where(FlowV07DatasetOperation.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowV07DatasetOperation.INPUTS)
+                .includeOnResults(FlowV07DatasetOperation.OUTPUTS)
                 .stream()
-                .map { it as FlowV06DatasetOperation }
+                .map { it as FlowV07DatasetOperation }
                 .toList()
         assertEquals(19, operations.size)
         operations.forEach { operation ->
@@ -535,22 +535,22 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun interimDatasetsExist() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val ids =
-            FlowV06Dataset
+            FlowV07Dataset
                 .select(client)
-                .where(FlowV06Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-                .includeOnResults(FlowV06Dataset.INPUT_TO_PROCESSES)
-                .includeOnResults(FlowV06Dataset.OUTPUT_FROM_PROCESSES)
-                .includeOnResults(FlowV06Dataset.NAME)
+                .where(FlowV07Dataset.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .includeOnResults(FlowV07Dataset.INPUT_TO_PROCESSES)
+                .includeOnResults(FlowV07Dataset.OUTPUT_FROM_PROCESSES)
+                .includeOnResults(FlowV07Dataset.NAME)
                 .stream()
-                .map { it as FlowV06Dataset }
+                .map { it as FlowV07Dataset }
                 .toList()
         assertEquals(15, ids.size)
         ids.forEach { id ->
-            // And every single one of them acts as at least an input to or output from a FlowV06DataOperation
+            // And every single one of them acts as at least an input to or output from a FlowV07DataOperation
             val ops = id.inputToProcesses.union(id.outputFromProcesses)
             assertFalse(ops.isEmpty())
             val types = ops.map { it.typeName }.toSet()
-            assertEquals(setOf(FlowV06DatasetOperation.TYPE_NAME), types)
+            assertEquals(setOf(FlowV07DatasetOperation.TYPE_NAME), types)
         }
     }
 
@@ -558,9 +558,9 @@ class InformaticaCDITest : PackageTest("cdi") {
     fun flowGroupingsExist() {
         val connection = Connection.findByName(client, c1, connectorType)[0]!!
         val groupings =
-            FlowV06ReusableUnit
+            FlowV07ReusableUnit
                 .select(client)
-                .where(FlowV06ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(FlowV07ReusableUnit.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .stream()
                 .toList()
         assertEquals(3, groupings.size)

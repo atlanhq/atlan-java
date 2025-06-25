@@ -8,6 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,14 +24,28 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A project, workspace or namespace that is used to organize data processing.
+ * Execution of a single orchestrate-able unit of work.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV06Project {
+public interface IFlowV07ControlOperation {
 
-    public static final String TYPE_NAME = "FlowV06Project";
+    public static final String TYPE_NAME = "FlowV07ControlOperation";
+
+    /** Individual data flows (processes) orchestrated by this control operation. */
+    RelationField FLOW_V07DATA_RESULTS = new RelationField("flowV07DataResults");
+
+    /** Reusable unit that the control operation executes. */
+    RelationField FLOW_V07EXECUTES = new RelationField("flowV07Executes");
+
+    /** Simple name of the reusable unit this control operation executes. */
+    KeywordTextField FLOW_V07REUSABLE_UNIT_NAME = new KeywordTextField(
+            "flowV07ReusableUnitName", "flowV07ReusableUnitName.keyword", "flowV07ReusableUnitName");
+
+    /** Unique name of the reusable unit this control operation executes. */
+    KeywordField FLOW_V07REUSABLE_UNIT_QUALIFIED_NAME =
+            new KeywordField("flowV07ReusableUnitQualifiedName", "flowV07ReusableUnitQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -348,38 +365,50 @@ public interface IFlowV06Project {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Individual data flows (processes) orchestrated by this control operation. */
+    SortedSet<ILineageProcess> getFlowV07DataResults();
+
     /** Optional error message of the flow run. */
-    String getFlowV06ErrorMessage();
+    String getFlowV07ErrorMessage();
+
+    /** Reusable unit that the control operation executes. */
+    IFlowV07ReusableUnit getFlowV07Executes();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV06FinishedAt();
+    Long getFlowV07FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV06FolderName();
+    String getFlowV07FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV06FolderQualifiedName();
+    String getFlowV07FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV06Id();
+    String getFlowV07Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV06ProjectName();
+    String getFlowV07ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV06ProjectQualifiedName();
+    String getFlowV07ProjectQualifiedName();
+
+    /** Simple name of the reusable unit this control operation executes. */
+    String getFlowV07ReusableUnitName();
+
+    /** Unique name of the reusable unit this control operation executes. */
+    String getFlowV07ReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV06RunId();
+    String getFlowV07RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV06Schedule();
+    String getFlowV07Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV06StartedAt();
+    Long getFlowV07StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV06Status();
+    String getFlowV07Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -453,7 +482,7 @@ public interface IFlowV06Project {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

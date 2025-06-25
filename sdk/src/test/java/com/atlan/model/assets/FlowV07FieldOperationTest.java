@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV06FolderTest {
+public class FlowV07FieldOperationTest {
 
-    private static final FlowV06Folder full = FlowV06Folder._internal()
+    private static final FlowV07FieldOperation full = FlowV07FieldOperation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,18 @@ public class FlowV06FolderTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV06ErrorMessage("String0")
-            .flowV06FinishedAt(123456789L)
-            .flowV06FolderName("String0")
-            .flowV06FolderQualifiedName("String0")
-            .flowV06Id("String0")
-            .flowV06ProjectName("String0")
-            .flowV06ProjectQualifiedName("String0")
-            .flowV06RunId("String0")
-            .flowV06Schedule("String0")
-            .flowV06StartedAt(123456789L)
-            .flowV06Status("String0")
+            .flowV07ErrorMessage("String0")
+            .flowV07FinishedAt(123456789L)
+            .flowV07FolderName("String0")
+            .flowV07FolderQualifiedName("String0")
+            .flowV07Id("String0")
+            .flowV07ProjectName("String0")
+            .flowV07ProjectQualifiedName("String0")
+            .flowV07RunId("String0")
+            .flowV07Schedule("String0")
+            .flowV07StartedAt(123456789L)
+            .flowV07Status("String0")
+            .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,23 +431,42 @@ public class FlowV06FolderTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV06ParentFolder(FlowV06Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV06SubFolder(FlowV06Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV06SubFolder(FlowV06Folder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .additionalEtlContext("String0")
+            .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiDatasetType(AIDatasetType.TRAINING)
+            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .ast("String0")
+            .code("String0")
+            .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV07OrchestratedBy(FlowV07ControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .input(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .matillionComponent(MatillionComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .output(ApplicationField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .parentConnectionProcessQualifiedName("String0")
+            .parentConnectionProcessQualifiedName("String1")
+            .powerBIDataflow(PowerBIDataflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sql("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV06Folder frodo;
+    private static FlowV07FieldOperation frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV06Folder.builderEquivalency"})
+    @Test(groups = {"FlowV07FieldOperation.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV06Folder.serialize"},
-            dependsOnGroups = {"FlowV06Folder.builderEquivalency"})
+            groups = {"FlowV07FieldOperation.serialize"},
+            dependsOnGroups = {"FlowV07FieldOperation.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -455,17 +475,17 @@ public class FlowV06FolderTest {
     }
 
     @Test(
-            groups = {"FlowV06Folder.deserialize"},
-            dependsOnGroups = {"FlowV06Folder.serialize"})
+            groups = {"FlowV07FieldOperation.deserialize"},
+            dependsOnGroups = {"FlowV07FieldOperation.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV06Folder.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV07FieldOperation.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV06Folder.equivalency"},
-            dependsOnGroups = {"FlowV06Folder.serialize", "FlowV06Folder.deserialize"})
+            groups = {"FlowV07FieldOperation.equivalency"},
+            dependsOnGroups = {"FlowV07FieldOperation.serialize", "FlowV07FieldOperation.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -474,8 +494,8 @@ public class FlowV06FolderTest {
     }
 
     @Test(
-            groups = {"FlowV06Folder.equivalency"},
-            dependsOnGroups = {"FlowV06Folder.serialize", "FlowV06Folder.deserialize"})
+            groups = {"FlowV07FieldOperation.equivalency"},
+            dependsOnGroups = {"FlowV07FieldOperation.serialize", "FlowV07FieldOperation.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV06ProjectTest {
+public class FlowV07ProjectTest {
 
-    private static final FlowV06Project full = FlowV06Project._internal()
+    private static final FlowV07Project full = FlowV07Project._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,17 @@ public class FlowV06ProjectTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV06ErrorMessage("String0")
-            .flowV06FinishedAt(123456789L)
-            .flowV06FolderName("String0")
-            .flowV06FolderQualifiedName("String0")
-            .flowV06Id("String0")
-            .flowV06ProjectName("String0")
-            .flowV06ProjectQualifiedName("String0")
-            .flowV06RunId("String0")
-            .flowV06Schedule("String0")
-            .flowV06StartedAt(123456789L)
-            .flowV06Status("String0")
+            .flowV07ErrorMessage("String0")
+            .flowV07FinishedAt(123456789L)
+            .flowV07FolderName("String0")
+            .flowV07FolderQualifiedName("String0")
+            .flowV07Id("String0")
+            .flowV07ProjectName("String0")
+            .flowV07ProjectQualifiedName("String0")
+            .flowV07RunId("String0")
+            .flowV07Schedule("String0")
+            .flowV07StartedAt(123456789L)
+            .flowV07Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -433,17 +433,17 @@ public class FlowV06ProjectTest {
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV06Project frodo;
+    private static FlowV07Project frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV06Project.builderEquivalency"})
+    @Test(groups = {"FlowV07Project.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV06Project.serialize"},
-            dependsOnGroups = {"FlowV06Project.builderEquivalency"})
+            groups = {"FlowV07Project.serialize"},
+            dependsOnGroups = {"FlowV07Project.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -452,17 +452,17 @@ public class FlowV06ProjectTest {
     }
 
     @Test(
-            groups = {"FlowV06Project.deserialize"},
-            dependsOnGroups = {"FlowV06Project.serialize"})
+            groups = {"FlowV07Project.deserialize"},
+            dependsOnGroups = {"FlowV07Project.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV06Project.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV07Project.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV06Project.equivalency"},
-            dependsOnGroups = {"FlowV06Project.serialize", "FlowV06Project.deserialize"})
+            groups = {"FlowV07Project.equivalency"},
+            dependsOnGroups = {"FlowV07Project.serialize", "FlowV07Project.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -471,8 +471,8 @@ public class FlowV06ProjectTest {
     }
 
     @Test(
-            groups = {"FlowV06Project.equivalency"},
-            dependsOnGroups = {"FlowV06Project.serialize", "FlowV06Project.deserialize"})
+            groups = {"FlowV07Project.equivalency"},
+            dependsOnGroups = {"FlowV07Project.serialize", "FlowV07Project.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -27,18 +27,18 @@ import javax.annotation.processing.Generated;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV06ReusableUnit {
+public interface IFlowV07ReusableUnit {
 
-    public static final String TYPE_NAME = "FlowV06ReusableUnit";
+    public static final String TYPE_NAME = "FlowV07ReusableUnit";
 
     /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    RelationField FLOW_V06ABSTRACTS = new RelationField("flowV06Abstracts");
+    RelationField FLOW_V07ABSTRACTS = new RelationField("flowV07Abstracts");
 
-    /** Individual data flows (processes) contained in this reusable unit. */
-    RelationField FLOW_V06DATA_FLOWS = new RelationField("flowV06DataFlows");
+    /** Individual dataset operations contained in this reusable unit. */
+    RelationField FLOW_V07DATA_FLOWS = new RelationField("flowV07DataFlows");
 
     /** Control operations that execute this reusable unit. */
-    RelationField FLOW_V06EXECUTED_BY_CONTROLS = new RelationField("flowV06ExecutedByControls");
+    RelationField FLOW_V07EXECUTED_BY_CONTROLS = new RelationField("flowV07ExecutedByControls");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -359,46 +359,46 @@ public interface IFlowV06ReusableUnit {
     SortedSet<IFile> getFiles();
 
     /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    SortedSet<IFlowV06Dataset> getFlowV06Abstracts();
+    SortedSet<IFlowV07Dataset> getFlowV07Abstracts();
 
-    /** Individual data flows (processes) contained in this reusable unit. */
-    SortedSet<ILineageProcess> getFlowV06DataFlows();
+    /** Individual dataset operations contained in this reusable unit. */
+    SortedSet<IFlowV07DatasetOperation> getFlowV07DataFlows();
 
     /** Optional error message of the flow run. */
-    String getFlowV06ErrorMessage();
+    String getFlowV07ErrorMessage();
 
     /** Control operations that execute this reusable unit. */
-    SortedSet<IFlowV06ControlOperation> getFlowV06ExecutedByControls();
+    SortedSet<IFlowV07ControlOperation> getFlowV07ExecutedByControls();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV06FinishedAt();
+    Long getFlowV07FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV06FolderName();
+    String getFlowV07FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV06FolderQualifiedName();
+    String getFlowV07FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV06Id();
+    String getFlowV07Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV06ProjectName();
+    String getFlowV07ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV06ProjectQualifiedName();
+    String getFlowV07ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV06RunId();
+    String getFlowV07RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV06Schedule();
+    String getFlowV07Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV06StartedAt();
+    Long getFlowV07StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV06Status();
+    String getFlowV07Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -472,7 +472,7 @@ public interface IFlowV06ReusableUnit {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

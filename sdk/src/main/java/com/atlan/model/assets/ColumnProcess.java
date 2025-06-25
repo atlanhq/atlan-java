@@ -86,11 +86,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
 
     /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
-    IFlowV06ControlOperation flowV06OrchestratedBy;
-
-    /** Reusable unit of data flows (processes) that contains this individual data flow (process). */
-    @Attribute
-    IFlowV06ReusableUnit flowV06ReusableUnit;
+    IFlowV07ControlOperation flowV07OrchestratedBy;
 
     /** Assets that are inputs to this process. */
     @Attribute
