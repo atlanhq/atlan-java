@@ -108,27 +108,65 @@ object AssetRefXformer {
         assetRef: String,
         fieldName: String,
     ): Asset {
-        return when (fieldName) {
-            Asset.README.atlanFieldName -> Readme._internal().description(assetRef).build()
-            Asset.LINKS.atlanFieldName -> {
-                val (linkJson, semantic) = getSemantic(assetRef)
-                val link = ctx.client.readValue(linkJson, Link::class.java)
-                link.toBuilder().semantic(semantic).build()
-            }
-            GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
-            GlossaryTerm.CATEGORIES.atlanFieldName,
-            -> GlossaryCategoryXformer.decode(ctx, assetRef, fieldName)
-            GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(ctx, assetRef, fieldName)
-            "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(ctx, assetRef, fieldName)
-            DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, assetRef, fieldName)
-            in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, assetRef, fieldName)
-            in UserDefRelationshipXformer.USER_DEF_RELN_FIELDS -> UserDefRelationshipXformer.decode(ctx, assetRef, fieldName)
-            else -> {
-                val (ref, semantic) = getSemantic(assetRef)
+        val (ref, properties) = AbstractRelationshipAttributesXformer.getRefAndProperties(assetRef)
+        // For any-type-to-any-type relationships, we need to apply additional
+        // logic to detect the type based on something other than fieldName
+        var fieldOverrideForType: String = fieldName
+        var refOverride: String = ref
+        when (fieldName) {
+            in UserDefRelationshipXformer.USER_DEF_RELN_FIELDS -> {
                 val typeName = ref.substringBefore(TYPE_QN_DELIMITER)
-                val qualifiedName = ref.substringAfter(TYPE_QN_DELIMITER)
-                return getRefByQN(ctx, typeName, qualifiedName, semantic)
+                val remainder = ref.substringAfter(TYPE_QN_DELIMITER)
+                when (typeName) {
+                    "TERM" -> {
+                        fieldOverrideForType = "assignedTerms"
+                        refOverride = remainder
+                    }
+                    "CATEGORY" -> {
+                        fieldOverrideForType = GlossaryTerm.CATEGORIES.atlanFieldName
+                        refOverride = remainder
+                    }
+                    "GLOSSARY" -> {
+                        fieldOverrideForType = GlossaryCategory.ANCHOR.atlanFieldName
+                        refOverride = remainder
+                    }
+                    "DOMAIN" -> {
+                        fieldOverrideForType = DataProduct.DATA_DOMAIN.atlanFieldName
+                        refOverride = remainder
+                    }
+                    // TODO: Data products and model assets are currently unhandled
+                }
             }
+        }
+        val baseRef =
+            when (fieldOverrideForType) {
+                Asset.README.atlanFieldName -> Readme._internal().description(refOverride).build()
+                Asset.LINKS.atlanFieldName -> {
+                    val (linkJson, semantic) = getSemantic(refOverride)
+                    val link = ctx.client.readValue(linkJson, Link::class.java)
+                    link.toBuilder().semantic(semantic).build()
+                }
+                GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
+                GlossaryTerm.CATEGORIES.atlanFieldName,
+                -> GlossaryCategoryXformer.decode(ctx, refOverride, fieldOverrideForType)
+                GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(ctx, refOverride, fieldOverrideForType)
+                "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(ctx, refOverride, fieldOverrideForType)
+                DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, refOverride, fieldOverrideForType)
+                in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, refOverride, fieldOverrideForType)
+                else -> {
+                    val (refOnly, semantic) = getSemantic(refOverride)
+                    val typeName = refOnly.substringBefore(TYPE_QN_DELIMITER)
+                    val qualifiedName = refOnly.substringAfter(TYPE_QN_DELIMITER)
+                    getRefByQN(ctx, typeName, qualifiedName, semantic)
+                }
+            }
+        // Extend the baseRef with additional details
+        return when (fieldName) {
+            in UserDefRelationshipXformer.USER_DEF_RELN_FIELDS -> {
+                val (_, semantic) = getSemantic(refOverride)
+                UserDefRelationshipXformer.decode(ctx, baseRef, semantic, properties)
+            }
+            else -> baseRef
         }
     }
 
