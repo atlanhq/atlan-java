@@ -90,7 +90,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
-    IFlowV08ControlOperation flowV08OrchestratedBy;
+    IFlowV09ControlOperation flowV09OrchestratedBy;
 
     /** TBC */
     @Attribute

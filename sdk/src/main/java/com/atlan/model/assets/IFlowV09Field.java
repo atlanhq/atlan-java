@@ -2,13 +2,15 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,20 +24,28 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A nested field-level operation that uses at least one ephemeral field as either an input or output.
+ * A single field of data within a broader ephemeral dataset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV08FieldOperation {
+public interface IFlowV09Field {
 
-    public static final String TYPE_NAME = "FlowV08FieldOperation";
+    public static final String TYPE_NAME = "FlowV09Field";
 
-    /** Additional Context of the ETL pipeline/notebook which creates the process. */
-    String getAdditionalEtlContext();
+    /** Type of the data captured in this field. */
+    KeywordField FLOW_V09DATA_TYPE = new KeywordField("flowV09DataType", "flowV09DataType");
 
-    /** ADF Activity that is associated with this lineage process. */
-    IAdfActivity getAdfActivity();
+    /** Ephemeral dataset that contains these fields. */
+    RelationField FLOW_V09DATASET = new RelationField("flowV09Dataset");
+
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    KeywordTextField FLOW_V09DATASET_NAME =
+            new KeywordTextField("flowV09DatasetName", "flowV09DatasetName.keyword", "flowV09DatasetName");
+
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    KeywordField FLOW_V09DATASET_QUALIFIED_NAME =
+            new KeywordField("flowV09DatasetQualifiedName", "flowV09DatasetQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -45,12 +55,6 @@ public interface IFlowV08FieldOperation {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** Dataset type for AI Model - dataset process. */
-    AIDatasetType getAiDatasetType();
-
-    /** Tasks that exist within this process. */
-    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -319,9 +323,6 @@ public interface IFlowV08FieldOperation {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
-    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
-    String getAst();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -333,12 +334,6 @@ public interface IFlowV08FieldOperation {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
-
-    /** Code that ran within the process. */
-    String getCode();
-
-    /** Processes that detail column-level lineage for this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -370,44 +365,56 @@ public interface IFlowV08FieldOperation {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** fivetranConnector in which this process exists. */
-    IFivetranConnector getFivetranConnector();
+    /** Type of the data captured in this field. */
+    String getFlowV09DataType();
+
+    /** Ephemeral dataset that contains these fields. */
+    IFlowV09Dataset getFlowV09Dataset();
+
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    String getFlowV09DatasetName();
+
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    String getFlowV09DatasetQualifiedName();
 
     /** Optional error message of the flow run. */
-    String getFlowV08ErrorMessage();
+    String getFlowV09ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV08FinishedAt();
+    Long getFlowV09FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV08FolderName();
+    String getFlowV09FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV08FolderQualifiedName();
+    String getFlowV09FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV08Id();
-
-    /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV08ControlOperation getFlowV08OrchestratedBy();
+    String getFlowV09Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV08ProjectName();
+    String getFlowV09ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV08ProjectQualifiedName();
+    String getFlowV09ProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV08RunId();
+    String getFlowV09RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV08Schedule();
+    String getFlowV09Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV08StartedAt();
+    Long getFlowV09StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV08Status();
+    String getFlowV09Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -418,8 +425,14 @@ public interface IFlowV08FieldOperation {
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
 
-    /** Assets that are inputs to this process. */
-    SortedSet<ICatalog> getInputs();
+    /** Tasks to which this asset provides input. */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** Processes to which this asset provides input. */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -451,9 +464,6 @@ public interface IFlowV08FieldOperation {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** Matillion component that contains the logic for this lineage process. */
-    IMatillionComponent getMatillionComponent();
-
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -463,11 +473,26 @@ public interface IFlowV08FieldOperation {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Tasks from which this asset is output. */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** Processes from which this asset is produced as output. */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
@@ -475,26 +500,14 @@ public interface IFlowV08FieldOperation {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
-    /** Assets that are outputs from this process. */
-    SortedSet<ICatalog> getOutputs();
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** TBC */
-    SortedSet<String> getParentConnectionProcessQualifiedNames();
-
     /** Popularity score for this asset. */
     Double getPopularityScore();
-
-    /** PowerBI Dataflow that is associated with this lineage process. */
-    IPowerBIDataflow getPowerBIDataflow();
-
-    /** Process in which this task exists. */
-    ILineageProcess getProcess();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
@@ -579,12 +592,6 @@ public interface IFlowV08FieldOperation {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
-
-    /** SQL query that ran to produce the outputs. */
-    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

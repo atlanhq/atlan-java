@@ -347,11 +347,11 @@ public interface ICatalog {
             case FivetranConnector.TYPE_NAME:
                 ref = FivetranConnector.refByQualifiedName(qualifiedName);
                 break;
-            case FlowV08Dataset.TYPE_NAME:
-                ref = FlowV08Dataset.refByQualifiedName(qualifiedName);
+            case FlowV09Dataset.TYPE_NAME:
+                ref = FlowV09Dataset.refByQualifiedName(qualifiedName);
                 break;
-            case FlowV08Field.TYPE_NAME:
-                ref = FlowV08Field.refByQualifiedName(qualifiedName);
+            case FlowV09Field.TYPE_NAME:
+                ref = FlowV09Field.refByQualifiedName(qualifiedName);
                 break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);

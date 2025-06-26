@@ -10,7 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,28 +24,59 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A single field of data within a broader ephemeral dataset.
+ * Base class for flow-specific (ETL, other data processing) assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV08Field {
+public interface IFlowV09 {
 
-    public static final String TYPE_NAME = "FlowV08Field";
+    public static final String TYPE_NAME = "FlowV09";
 
-    /** Type of the data captured in this field. */
-    KeywordField FLOW_V08DATA_TYPE = new KeywordField("flowV08DataType", "flowV08DataType");
+    /** Optional error message of the flow run. */
+    KeywordField FLOW_V09ERROR_MESSAGE = new KeywordField("flowV09ErrorMessage", "flowV09ErrorMessage");
 
-    /** Ephemeral dataset that contains these fields. */
-    RelationField FLOW_V08DATASET = new RelationField("flowV08Dataset");
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    NumericField FLOW_V09FINISHED_AT = new NumericField("flowV09FinishedAt", "flowV09FinishedAt");
 
-    /** Simple name of the ephemeral dataset in which this field is contained. */
-    KeywordTextField FLOW_V08DATASET_NAME =
-            new KeywordTextField("flowV08DatasetName", "flowV08DatasetName.keyword", "flowV08DatasetName");
+    /** Simple name of the folder in which this asset is contained. */
+    KeywordTextField FLOW_V09FOLDER_NAME =
+            new KeywordTextField("flowV09FolderName", "flowV09FolderName.keyword", "flowV09FolderName");
 
-    /** Unique name of the ephemeral dataset in which this field is contained. */
-    KeywordField FLOW_V08DATASET_QUALIFIED_NAME =
-            new KeywordField("flowV08DatasetQualifiedName", "flowV08DatasetQualifiedName");
+    /** Unique name of the folder in which this asset is contained. */
+    KeywordField FLOW_V09FOLDER_QUALIFIED_NAME =
+            new KeywordField("flowV09FolderQualifiedName", "flowV09FolderQualifiedName");
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    KeywordField FLOW_V09ID = new KeywordField("flowV09Id", "flowV09Id");
+
+    /** Simple name of the project in which this asset is contained. */
+    KeywordTextField FLOW_V09PROJECT_NAME =
+            new KeywordTextField("flowV09ProjectName", "flowV09ProjectName.keyword", "flowV09ProjectName");
+
+    /** Unique name of the project in which this asset is contained. */
+    KeywordField FLOW_V09PROJECT_QUALIFIED_NAME =
+            new KeywordField("flowV09ProjectQualifiedName", "flowV09ProjectQualifiedName");
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    KeywordTextField FLOW_V09REUSABLE_UNIT_NAME = new KeywordTextField(
+            "flowV09ReusableUnitName", "flowV09ReusableUnitName.keyword", "flowV09ReusableUnitName");
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    KeywordField FLOW_V09REUSABLE_UNIT_QUALIFIED_NAME =
+            new KeywordField("flowV09ReusableUnitQualifiedName", "flowV09ReusableUnitQualifiedName");
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    KeywordField FLOW_V09RUN_ID = new KeywordField("flowV09RunId", "flowV09RunId");
+
+    /** Schedule for this point in the data processing or orchestration. */
+    KeywordField FLOW_V09SCHEDULE = new KeywordField("flowV09Schedule", "flowV09Schedule");
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    NumericField FLOW_V09STARTED_AT = new NumericField("flowV09StartedAt", "flowV09StartedAt");
+
+    /** Overall status of this point in the data processing or orchestration. */
+    KeywordField FLOW_V09STATUS = new KeywordField("flowV09Status", "flowV09Status");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -365,50 +396,44 @@ public interface IFlowV08Field {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Type of the data captured in this field. */
-    String getFlowV08DataType();
-
-    /** Ephemeral dataset that contains these fields. */
-    IFlowV08Dataset getFlowV08Dataset();
-
-    /** Simple name of the ephemeral dataset in which this field is contained. */
-    String getFlowV08DatasetName();
-
-    /** Unique name of the ephemeral dataset in which this field is contained. */
-    String getFlowV08DatasetQualifiedName();
-
     /** Optional error message of the flow run. */
-    String getFlowV08ErrorMessage();
+    String getFlowV09ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV08FinishedAt();
+    Long getFlowV09FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV08FolderName();
+    String getFlowV09FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV08FolderQualifiedName();
+    String getFlowV09FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV08Id();
+    String getFlowV09Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV08ProjectName();
+    String getFlowV09ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV08ProjectQualifiedName();
+    String getFlowV09ProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV08RunId();
+    String getFlowV09RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV08Schedule();
+    String getFlowV09Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV08StartedAt();
+    Long getFlowV09StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV08Status();
+    String getFlowV09Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -418,15 +443,6 @@ public interface IFlowV08Field {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
-
-    /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
-
-    /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -467,26 +483,11 @@ public interface IFlowV08Field {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
-
-    /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
-
-    /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

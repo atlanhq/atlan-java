@@ -28,28 +28,28 @@ import javax.annotation.processing.Generated;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV08ReusableUnit {
+public interface IFlowV09ReusableUnit {
 
-    public static final String TYPE_NAME = "FlowV08ReusableUnit";
+    public static final String TYPE_NAME = "FlowV09ReusableUnit";
 
     /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    RelationField FLOW_V08ABSTRACTS = new RelationField("flowV08Abstracts");
+    RelationField FLOW_V09ABSTRACTS = new RelationField("flowV09Abstracts");
 
     /** Count of the number of control flow operations that execute this reusable unit. */
-    NumericField FLOW_V08CONTROL_OPERATION_COUNT =
-            new NumericField("flowV08ControlOperationCount", "flowV08ControlOperationCount");
+    NumericField FLOW_V09CONTROL_OPERATION_COUNT =
+            new NumericField("flowV09ControlOperationCount", "flowV09ControlOperationCount");
 
     /** Individual dataset operations contained in this reusable unit. */
-    RelationField FLOW_V08DATA_FLOWS = new RelationField("flowV08DataFlows");
+    RelationField FLOW_V09DATA_FLOWS = new RelationField("flowV09DataFlows");
 
     /** Count of the number of ephemeral datasets contained within this reusable unit. */
-    NumericField FLOW_V08DATASET_COUNT = new NumericField("flowV08DatasetCount", "flowV08DatasetCount");
+    NumericField FLOW_V09DATASET_COUNT = new NumericField("flowV09DatasetCount", "flowV09DatasetCount");
 
     /** Ephemeral datasets that are contained within the reusable unit. */
-    RelationField FLOW_V08DATASETS = new RelationField("flowV08Datasets");
+    RelationField FLOW_V09DATASETS = new RelationField("flowV09Datasets");
 
     /** Control operations that execute this reusable unit. */
-    RelationField FLOW_V08EXECUTED_BY_CONTROLS = new RelationField("flowV08ExecutedByControls");
+    RelationField FLOW_V09EXECUTED_BY_CONTROLS = new RelationField("flowV09ExecutedByControls");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -370,55 +370,61 @@ public interface IFlowV08ReusableUnit {
     SortedSet<IFile> getFiles();
 
     /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    SortedSet<IFlowV08Dataset> getFlowV08Abstracts();
+    SortedSet<IFlowV09Dataset> getFlowV09Abstracts();
 
     /** Count of the number of control flow operations that execute this reusable unit. */
-    Long getFlowV08ControlOperationCount();
+    Long getFlowV09ControlOperationCount();
 
     /** Individual dataset operations contained in this reusable unit. */
-    SortedSet<IFlowV08DatasetOperation> getFlowV08DataFlows();
+    SortedSet<IFlowV09DatasetOperation> getFlowV09DataFlows();
 
     /** Count of the number of ephemeral datasets contained within this reusable unit. */
-    Long getFlowV08DatasetCount();
+    Long getFlowV09DatasetCount();
 
     /** Ephemeral datasets that are contained within the reusable unit. */
-    SortedSet<IFlowV08Dataset> getFlowV08Datasets();
+    SortedSet<IFlowV09Dataset> getFlowV09Datasets();
 
     /** Optional error message of the flow run. */
-    String getFlowV08ErrorMessage();
+    String getFlowV09ErrorMessage();
 
     /** Control operations that execute this reusable unit. */
-    SortedSet<IFlowV08ControlOperation> getFlowV08ExecutedByControls();
+    SortedSet<IFlowV09ControlOperation> getFlowV09ExecutedByControls();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV08FinishedAt();
+    Long getFlowV09FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV08FolderName();
+    String getFlowV09FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV08FolderQualifiedName();
+    String getFlowV09FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV08Id();
+    String getFlowV09Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV08ProjectName();
+    String getFlowV09ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV08ProjectQualifiedName();
+    String getFlowV09ProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowV09ReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV08RunId();
+    String getFlowV09RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV08Schedule();
+    String getFlowV09Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV08StartedAt();
+    Long getFlowV09StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV08Status();
+    String getFlowV09Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

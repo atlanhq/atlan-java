@@ -38,90 +38,90 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("serial")
-public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, ICatalog, IAsset, IReferenceable {
+public class FlowV09Dataset extends Asset implements IFlowV09Dataset, IFlowV09, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "FlowV08Dataset";
+    public static final String TYPE_NAME = "FlowV09Dataset";
 
-    /** Fixed typeName for FlowV08Datasets. */
+    /** Fixed typeName for FlowV09Datasets. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
     /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
     @Attribute
-    IFlowV08ReusableUnit flowV08DetailedBy;
+    IFlowV09ReusableUnit flowV09DetailedBy;
 
     /** Optional error message of the flow run. */
     @Attribute
-    String flowV08ErrorMessage;
+    String flowV09ErrorMessage;
 
     /** Count of the number of individual fields that make up this ephemeral dataset. */
     @Attribute
-    Long flowV08FieldCount;
+    Long flowV09FieldCount;
 
     /** Fields contained in the ephemeral dataset. */
     @Attribute
     @Singular
-    SortedSet<IFlowV08Field> flowV08Fields;
+    SortedSet<IFlowV09Field> flowV09Fields;
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
-    Long flowV08FinishedAt;
+    Long flowV09FinishedAt;
 
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
-    String flowV08FolderName;
+    String flowV09FolderName;
 
     /** Unique name of the folder in which this asset is contained. */
     @Attribute
-    String flowV08FolderQualifiedName;
+    String flowV09FolderQualifiedName;
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
-    String flowV08Id;
+    String flowV09Id;
 
     /** Reusable unit in which the ephemeral dataset is contained. */
     @Attribute
-    IFlowV08ReusableUnit flowV08ParentUnit;
+    IFlowV09ReusableUnit flowV09ParentUnit;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute
-    String flowV08ProjectName;
+    String flowV09ProjectName;
 
     /** Unique name of the project in which this asset is contained. */
     @Attribute
-    String flowV08ProjectQualifiedName;
+    String flowV09ProjectQualifiedName;
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV08ReusableUnitName;
+    String flowV09ReusableUnitName;
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV08ReusableUnitQualifiedName;
+    String flowV09ReusableUnitQualifiedName;
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
     @Attribute
-    String flowV08RunId;
+    String flowV09RunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
-    String flowV08Schedule;
+    String flowV09Schedule;
 
     /** Date and time at which this point in the data processing or orchestration started. */
     @Attribute
     @Date
-    Long flowV08StartedAt;
+    Long flowV09StartedAt;
 
     /** Overall status of this point in the data processing or orchestration. */
     @Attribute
-    String flowV08Status;
+    String flowV09Status;
 
     /** Type of the ephemeral piece of data. */
     @Attribute
-    String flowV08Type;
+    String flowV09Type;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -164,14 +164,14 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
-     * Builds the minimal object necessary to create a relationship to a FlowV08Dataset, from a potentially
-     * more-complete FlowV08Dataset object.
+     * Builds the minimal object necessary to create a relationship to a FlowV09Dataset, from a potentially
+     * more-complete FlowV09Dataset object.
      *
-     * @return the minimal object necessary to relate to the FlowV08Dataset
-     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowV08Dataset relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the FlowV09Dataset
+     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowV09Dataset relationship are not found in the initial object
      */
     @Override
-    public FlowV08Dataset trimToReference() throws InvalidRequestException {
+    public FlowV09Dataset trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -188,27 +188,27 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Start a fluent search that will return all FlowV08Dataset assets.
+     * Start a fluent search that will return all FlowV09Dataset assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) FlowV08Dataset assets will be included.
+     * optimal retrieval. Only active (non-archived) FlowV09Dataset assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all FlowV08Dataset assets
+     * @return a fluent search that includes all FlowV09Dataset assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all FlowV08Dataset assets.
+     * Start a fluent search that will return all FlowV09Dataset assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) FlowV08Datasets will be included
-     * @return a fluent search that includes all FlowV08Dataset assets
+     * @param includeArchived when true, archived (soft-deleted) FlowV09Datasets will be included
+     * @return a fluent search that includes all FlowV09Dataset assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -220,51 +220,51 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Reference to a FlowV08Dataset by GUID. Use this to create a relationship to this FlowV08Dataset,
+     * Reference to a FlowV09Dataset by GUID. Use this to create a relationship to this FlowV09Dataset,
      * where the relationship should be replaced.
      *
-     * @param guid the GUID of the FlowV08Dataset to reference
-     * @return reference to a FlowV08Dataset that can be used for defining a relationship to a FlowV08Dataset
+     * @param guid the GUID of the FlowV09Dataset to reference
+     * @return reference to a FlowV09Dataset that can be used for defining a relationship to a FlowV09Dataset
      */
-    public static FlowV08Dataset refByGuid(String guid) {
+    public static FlowV09Dataset refByGuid(String guid) {
         return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV08Dataset by GUID. Use this to create a relationship to this FlowV08Dataset,
+     * Reference to a FlowV09Dataset by GUID. Use this to create a relationship to this FlowV09Dataset,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param guid the GUID of the FlowV08Dataset to reference
+     * @param guid the GUID of the FlowV09Dataset to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV08Dataset that can be used for defining a relationship to a FlowV08Dataset
+     * @return reference to a FlowV09Dataset that can be used for defining a relationship to a FlowV09Dataset
      */
-    public static FlowV08Dataset refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FlowV08Dataset._internal().guid(guid).semantic(semantic).build();
+    public static FlowV09Dataset refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return FlowV09Dataset._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
-     * Reference to a FlowV08Dataset by qualifiedName. Use this to create a relationship to this FlowV08Dataset,
+     * Reference to a FlowV09Dataset by qualifiedName. Use this to create a relationship to this FlowV09Dataset,
      * where the relationship should be replaced.
      *
-     * @param qualifiedName the qualifiedName of the FlowV08Dataset to reference
-     * @return reference to a FlowV08Dataset that can be used for defining a relationship to a FlowV08Dataset
+     * @param qualifiedName the qualifiedName of the FlowV09Dataset to reference
+     * @return reference to a FlowV09Dataset that can be used for defining a relationship to a FlowV09Dataset
      */
-    public static FlowV08Dataset refByQualifiedName(String qualifiedName) {
+    public static FlowV09Dataset refByQualifiedName(String qualifiedName) {
         return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV08Dataset by qualifiedName. Use this to create a relationship to this FlowV08Dataset,
+     * Reference to a FlowV09Dataset by qualifiedName. Use this to create a relationship to this FlowV09Dataset,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param qualifiedName the qualifiedName of the FlowV08Dataset to reference
+     * @param qualifiedName the qualifiedName of the FlowV09Dataset to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV08Dataset that can be used for defining a relationship to a FlowV08Dataset
+     * @return reference to a FlowV09Dataset that can be used for defining a relationship to a FlowV09Dataset
      */
-    public static FlowV08Dataset refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
-        return FlowV08Dataset._internal()
+    public static FlowV09Dataset refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+        return FlowV09Dataset._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .semantic(semantic)
@@ -272,29 +272,29 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Retrieves a FlowV08Dataset by one of its identifiers, complete with all of its relationships.
+     * Retrieves a FlowV09Dataset by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV08Dataset to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full FlowV08Dataset, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV08Dataset does not exist or the provided GUID is not a FlowV08Dataset
+     * @param id of the FlowV09Dataset to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full FlowV09Dataset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Dataset does not exist or the provided GUID is not a FlowV09Dataset
      */
     @JsonIgnore
-    public static FlowV08Dataset get(AtlanClient client, String id) throws AtlanException {
+    public static FlowV09Dataset get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, false);
     }
 
     /**
-     * Retrieves a FlowV08Dataset by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a FlowV09Dataset by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV08Dataset to retrieve, either its GUID or its full qualifiedName
+     * @param id of the FlowV09Dataset to retrieve, either its GUID or its full qualifiedName
      * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full FlowV08Dataset, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV08Dataset does not exist or the provided GUID is not a FlowV08Dataset
+     * @return the requested full FlowV09Dataset, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Dataset does not exist or the provided GUID is not a FlowV09Dataset
      */
     @JsonIgnore
-    public static FlowV08Dataset get(AtlanClient client, String id, boolean includeAllRelationships)
+    public static FlowV09Dataset get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
@@ -302,15 +302,15 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
             Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof FlowV08Dataset) {
-                return (FlowV08Dataset) asset;
+            } else if (asset instanceof FlowV09Dataset) {
+                return (FlowV09Dataset) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
-            if (asset instanceof FlowV08Dataset) {
-                return (FlowV08Dataset) asset;
+            if (asset instanceof FlowV09Dataset) {
+                return (FlowV09Dataset) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -318,32 +318,32 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Retrieves a FlowV08Dataset by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowV09Dataset by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV08Dataset to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV08Dataset, including any relationships
-     * @return the requested FlowV08Dataset, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV08Dataset does not exist or the provided GUID is not a FlowV08Dataset
+     * @param id of the FlowV09Dataset to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowV09Dataset, including any relationships
+     * @return the requested FlowV09Dataset, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Dataset does not exist or the provided GUID is not a FlowV09Dataset
      */
     @JsonIgnore
-    public static FlowV08Dataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
+    public static FlowV09Dataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
             throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
     /**
-     * Retrieves a FlowV08Dataset by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowV09Dataset by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV08Dataset to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV08Dataset, including any relationships
-     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowV08Dataset
-     * @return the requested FlowV08Dataset, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV08Dataset does not exist or the provided GUID is not a FlowV08Dataset
+     * @param id of the FlowV09Dataset to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowV09Dataset, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowV09Dataset
+     * @return the requested FlowV09Dataset, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Dataset does not exist or the provided GUID is not a FlowV09Dataset
      */
     @JsonIgnore
-    public static FlowV08Dataset get(
+    public static FlowV09Dataset get(
             AtlanClient client,
             String id,
             Collection<AtlanField> attributes,
@@ -352,8 +352,8 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = FlowV08Dataset.select(client)
-                    .where(FlowV08Dataset.GUID.eq(id))
+            Optional<Asset> asset = FlowV09Dataset.select(client)
+                    .where(FlowV09Dataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -362,14 +362,14 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset.get() instanceof FlowV08Dataset) {
-                return (FlowV08Dataset) asset.get();
+            } else if (asset.get() instanceof FlowV09Dataset) {
+                return (FlowV09Dataset) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = FlowV08Dataset.select(client)
-                    .where(FlowV08Dataset.QUALIFIED_NAME.eq(id))
+            Optional<Asset> asset = FlowV09Dataset.select(client)
+                    .where(FlowV09Dataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -378,8 +378,8 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
-            } else if (asset.get() instanceof FlowV08Dataset) {
-                return (FlowV08Dataset) asset.get();
+            } else if (asset.get() instanceof FlowV09Dataset) {
+                return (FlowV09Dataset) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
@@ -387,11 +387,11 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Restore the archived (soft-deleted) FlowV08Dataset to active.
+     * Restore the archived (soft-deleted) FlowV09Dataset to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the FlowV08Dataset
-     * @return true if the FlowV08Dataset is now active, and false otherwise
+     * @param qualifiedName for the FlowV09Dataset
+     * @return true if the FlowV09Dataset is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -399,28 +399,28 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Builds the minimal object necessary to update a FlowV08Dataset.
+     * Builds the minimal object necessary to update a FlowV09Dataset.
      *
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the minimal request necessary to update the FlowV08Dataset, as a builder
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the minimal request necessary to update the FlowV09Dataset, as a builder
      */
-    public static FlowV08DatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return FlowV08Dataset._internal()
+    public static FlowV09DatasetBuilder<?, ?> updater(String qualifiedName, String name) {
+        return FlowV09Dataset._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowV08Dataset, from a potentially
-     * more-complete FlowV08Dataset object.
+     * Builds the minimal object necessary to apply an update to a FlowV09Dataset, from a potentially
+     * more-complete FlowV09Dataset object.
      *
-     * @return the minimal object necessary to update the FlowV08Dataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowV08Dataset are not found in the initial object
+     * @return the minimal object necessary to update the FlowV09Dataset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for FlowV09Dataset are not found in the initial object
      */
     @Override
-    public FlowV08DatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public FlowV09DatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
@@ -428,200 +428,200 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowV08DatasetBuilder<C extends FlowV08Dataset, B extends FlowV08DatasetBuilder<C, B>>
+    public abstract static class FlowV09DatasetBuilder<C extends FlowV09Dataset, B extends FlowV09DatasetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
-     * Remove the system description from a FlowV08Dataset.
+     * Remove the system description from a FlowV09Dataset.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the updated FlowV08Dataset, or null if the removal failed
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the updated FlowV09Dataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowV09Dataset removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (FlowV09Dataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a FlowV08Dataset.
+     * Remove the user's description from a FlowV09Dataset.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the updated FlowV08Dataset, or null if the removal failed
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the updated FlowV09Dataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowV09Dataset removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (FlowV09Dataset) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a FlowV08Dataset.
+     * Remove the owners from a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV08Dataset's owners
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the updated FlowV08Dataset, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowV09Dataset's owners
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the updated FlowV09Dataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset removeOwners(AtlanClient client, String qualifiedName, String name)
+    public static FlowV09Dataset removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeOwners(client, updater(qualifiedName, name));
+        return (FlowV09Dataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a FlowV08Dataset.
+     * Update the certificate on a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV08Dataset's certificate
-     * @param qualifiedName of the FlowV08Dataset
+     * @param client connectivity to the Atlan tenant on which to update the FlowV09Dataset's certificate
+     * @param qualifiedName of the FlowV09Dataset
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated FlowV08Dataset, or null if the update failed
+     * @return the updated FlowV09Dataset, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset updateCertificate(
+    public static FlowV09Dataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowV08Dataset)
+        return (FlowV09Dataset)
                 Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a FlowV08Dataset.
+     * Remove the certificate from a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV08Dataset's certificate
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the updated FlowV08Dataset, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowV09Dataset's certificate
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the updated FlowV09Dataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static FlowV09Dataset removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (FlowV09Dataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a FlowV08Dataset.
+     * Update the announcement on a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV08Dataset's announcement
-     * @param qualifiedName of the FlowV08Dataset
+     * @param client connectivity to the Atlan tenant on which to update the FlowV09Dataset's announcement
+     * @param qualifiedName of the FlowV09Dataset
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset updateAnnouncement(
+    public static FlowV09Dataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowV08Dataset)
+        return (FlowV09Dataset)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a FlowV08Dataset.
+     * Remove the announcement from a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan client from which to remove the FlowV08Dataset's announcement
-     * @param qualifiedName of the FlowV08Dataset
-     * @param name of the FlowV08Dataset
-     * @return the updated FlowV08Dataset, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the FlowV09Dataset's announcement
+     * @param qualifiedName of the FlowV09Dataset
+     * @param name of the FlowV09Dataset
+     * @return the updated FlowV09Dataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static FlowV09Dataset removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (FlowV09Dataset) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the FlowV08Dataset.
+     * Replace the terms linked to the FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the FlowV08Dataset's assigned terms
-     * @param qualifiedName for the FlowV08Dataset
-     * @param name human-readable name of the FlowV08Dataset
-     * @param terms the list of terms to replace on the FlowV08Dataset, or null to remove all terms from the FlowV08Dataset
-     * @return the FlowV08Dataset that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the FlowV09Dataset's assigned terms
+     * @param qualifiedName for the FlowV09Dataset
+     * @param name human-readable name of the FlowV09Dataset
+     * @param terms the list of terms to replace on the FlowV09Dataset, or null to remove all terms from the FlowV09Dataset
+     * @return the FlowV09Dataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowV08Dataset replaceTerms(
+    public static FlowV09Dataset replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (FlowV08Dataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (FlowV09Dataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the FlowV08Dataset, without replacing existing terms linked to the FlowV08Dataset.
-     * Note: this operation must make two API calls — one to retrieve the FlowV08Dataset's existing terms,
+     * Link additional terms to the FlowV09Dataset, without replacing existing terms linked to the FlowV09Dataset.
+     * Note: this operation must make two API calls — one to retrieve the FlowV09Dataset's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the FlowV08Dataset
-     * @param qualifiedName for the FlowV08Dataset
-     * @param terms the list of terms to append to the FlowV08Dataset
-     * @return the FlowV08Dataset that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the FlowV09Dataset
+     * @param qualifiedName for the FlowV09Dataset
+     * @param terms the list of terms to append to the FlowV09Dataset
+     * @return the FlowV09Dataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV08Dataset appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowV09Dataset appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowV09Dataset) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a FlowV08Dataset, without replacing all existing terms linked to the FlowV08Dataset.
-     * Note: this operation must make two API calls — one to retrieve the FlowV08Dataset's existing terms,
+     * Remove terms from a FlowV09Dataset, without replacing all existing terms linked to the FlowV09Dataset.
+     * Note: this operation must make two API calls — one to retrieve the FlowV09Dataset's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowV08Dataset
-     * @param qualifiedName for the FlowV08Dataset
-     * @param terms the list of terms to remove from the FlowV08Dataset, which must be referenced by GUID
-     * @return the FlowV08Dataset that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowV09Dataset
+     * @param qualifiedName for the FlowV09Dataset
+     * @param terms the list of terms to remove from the FlowV09Dataset, which must be referenced by GUID
+     * @return the FlowV09Dataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV08Dataset removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowV09Dataset removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowV09Dataset) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a FlowV08Dataset, without replacing existing Atlan tags linked to the FlowV08Dataset.
-     * Note: this operation must make two API calls — one to retrieve the FlowV08Dataset's existing Atlan tags,
+     * Add Atlan tags to a FlowV09Dataset, without replacing existing Atlan tags linked to the FlowV09Dataset.
+     * Note: this operation must make two API calls — one to retrieve the FlowV09Dataset's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV08Dataset
-     * @param qualifiedName of the FlowV08Dataset
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09Dataset
+     * @param qualifiedName of the FlowV09Dataset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated FlowV08Dataset
+     * @return the updated FlowV09Dataset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowV08Dataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+    public static FlowV09Dataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+        return (FlowV09Dataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a FlowV08Dataset, without replacing existing Atlan tags linked to the FlowV08Dataset.
-     * Note: this operation must make two API calls — one to retrieve the FlowV08Dataset's existing Atlan tags,
+     * Add Atlan tags to a FlowV09Dataset, without replacing existing Atlan tags linked to the FlowV09Dataset.
+     * Note: this operation must make two API calls — one to retrieve the FlowV09Dataset's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV08Dataset
-     * @param qualifiedName of the FlowV08Dataset
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09Dataset
+     * @param qualifiedName of the FlowV09Dataset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated FlowV08Dataset
+     * @return the updated FlowV09Dataset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
     @Deprecated
-    public static FlowV08Dataset appendAtlanTags(
+    public static FlowV09Dataset appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -629,7 +629,7 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (FlowV08Dataset) Asset.appendAtlanTags(
+        return (FlowV09Dataset) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -640,12 +640,12 @@ public class FlowV08Dataset extends Asset implements IFlowV08Dataset, IFlowV08, 
     }
 
     /**
-     * Remove an Atlan tag from a FlowV08Dataset.
+     * Remove an Atlan tag from a FlowV09Dataset.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowV08Dataset
-     * @param qualifiedName of the FlowV08Dataset
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowV09Dataset
+     * @param qualifiedName of the FlowV09Dataset
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowV08Dataset
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowV09Dataset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
     @Deprecated

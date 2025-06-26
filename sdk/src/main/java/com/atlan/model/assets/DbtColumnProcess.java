@@ -172,7 +172,7 @@ public class DbtColumnProcess extends Asset
 
     /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
-    IFlowV08ControlOperation flowV08OrchestratedBy;
+    IFlowV09ControlOperation flowV09OrchestratedBy;
 
     /** Tasks to which this asset provides input. */
     @Attribute
