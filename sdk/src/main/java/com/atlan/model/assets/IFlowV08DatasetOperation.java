@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -22,20 +23,23 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A grouping mechanism within a project to further organize data processing.
+ * A nested data operation that uses at least one ephemeral dataset as either an input or output.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV07Folder {
+public interface IFlowV08DatasetOperation {
 
-    public static final String TYPE_NAME = "FlowV07Folder";
+    public static final String TYPE_NAME = "FlowV08DatasetOperation";
 
-    /** Parent folder containing the sub-folders. */
-    RelationField FLOW_V07PARENT_FOLDER = new RelationField("flowV07ParentFolder");
+    /** Reusable unit of dataset operations that are all executed together. */
+    RelationField FLOW_V08REUSABLE_UNIT = new RelationField("flowV08ReusableUnit");
 
-    /** Child (sub) folders contained within the folder. */
-    RelationField FLOW_V07SUB_FOLDERS = new RelationField("flowV07SubFolders");
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
+    String getAdditionalEtlContext();
+
+    /** ADF Activity that is associated with this lineage process. */
+    IAdfActivity getAdfActivity();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -45,6 +49,12 @@ public interface IFlowV07Folder {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Dataset type for AI Model - dataset process. */
+    AIDatasetType getAiDatasetType();
+
+    /** Tasks that exist within this process. */
+    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -313,6 +323,9 @@ public interface IFlowV07Folder {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
+    String getAst();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -324,6 +337,12 @@ public interface IFlowV07Folder {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
+
+    /** Code that ran within the process. */
+    String getCode();
+
+    /** Processes that detail column-level lineage for this process. */
+    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -355,44 +374,47 @@ public interface IFlowV07Folder {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** fivetranConnector in which this process exists. */
+    IFivetranConnector getFivetranConnector();
+
     /** Optional error message of the flow run. */
-    String getFlowV07ErrorMessage();
+    String getFlowV08ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV07FinishedAt();
+    Long getFlowV08FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV07FolderName();
+    String getFlowV08FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV07FolderQualifiedName();
+    String getFlowV08FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV07Id();
+    String getFlowV08Id();
 
-    /** Parent folder containing the sub-folders. */
-    IFlowV07Folder getFlowV07ParentFolder();
+    /** Orchestrated control operation that ran these data flows (process). */
+    IFlowV08ControlOperation getFlowV08OrchestratedBy();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV07ProjectName();
+    String getFlowV08ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV07ProjectQualifiedName();
+    String getFlowV08ProjectQualifiedName();
+
+    /** Reusable unit of dataset operations that are all executed together. */
+    IFlowV08ReusableUnit getFlowV08ReusableUnit();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV07RunId();
+    String getFlowV08RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV07Schedule();
+    String getFlowV08Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV07StartedAt();
+    Long getFlowV08StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV07Status();
-
-    /** Child (sub) folders contained within the folder. */
-    SortedSet<IFlowV07Folder> getFlowV07SubFolders();
+    String getFlowV08Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -402,6 +424,9 @@ public interface IFlowV07Folder {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Assets that are inputs to this process. */
+    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -433,6 +458,9 @@ public interface IFlowV07Folder {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
+    /** Matillion component that contains the logic for this lineage process. */
+    IMatillionComponent getMatillionComponent();
+
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -454,19 +482,28 @@ public interface IFlowV07Folder {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
+    /** Assets that are outputs from this process. */
+    SortedSet<ICatalog> getOutputs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
+    /** TBC */
+    SortedSet<String> getParentConnectionProcessQualifiedNames();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    IPowerBIDataflow getPowerBIDataflow();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -546,6 +583,12 @@ public interface IFlowV07Folder {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<ISparkJob> getSparkJobs();
+
+    /** SQL query that ran to produce the outputs. */
+    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

@@ -24,28 +24,28 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Execution of a single orchestrate-able unit of work.
+ * A single field of data within a broader ephemeral dataset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV07ControlOperation {
+public interface IFlowV08Field {
 
-    public static final String TYPE_NAME = "FlowV07ControlOperation";
+    public static final String TYPE_NAME = "FlowV08Field";
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    RelationField FLOW_V07DATA_RESULTS = new RelationField("flowV07DataResults");
+    /** Type of the data captured in this field. */
+    KeywordField FLOW_V08DATA_TYPE = new KeywordField("flowV08DataType", "flowV08DataType");
 
-    /** Reusable unit that the control operation executes. */
-    RelationField FLOW_V07EXECUTES = new RelationField("flowV07Executes");
+    /** Ephemeral dataset that contains these fields. */
+    RelationField FLOW_V08DATASET = new RelationField("flowV08Dataset");
 
-    /** Simple name of the reusable unit this control operation executes. */
-    KeywordTextField FLOW_V07REUSABLE_UNIT_NAME = new KeywordTextField(
-            "flowV07ReusableUnitName", "flowV07ReusableUnitName.keyword", "flowV07ReusableUnitName");
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    KeywordTextField FLOW_V08DATASET_NAME =
+            new KeywordTextField("flowV08DatasetName", "flowV08DatasetName.keyword", "flowV08DatasetName");
 
-    /** Unique name of the reusable unit this control operation executes. */
-    KeywordField FLOW_V07REUSABLE_UNIT_QUALIFIED_NAME =
-            new KeywordField("flowV07ReusableUnitQualifiedName", "flowV07ReusableUnitQualifiedName");
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    KeywordField FLOW_V08DATASET_QUALIFIED_NAME =
+            new KeywordField("flowV08DatasetQualifiedName", "flowV08DatasetQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -365,50 +365,50 @@ public interface IFlowV07ControlOperation {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    SortedSet<ILineageProcess> getFlowV07DataResults();
+    /** Type of the data captured in this field. */
+    String getFlowV08DataType();
+
+    /** Ephemeral dataset that contains these fields. */
+    IFlowV08Dataset getFlowV08Dataset();
+
+    /** Simple name of the ephemeral dataset in which this field is contained. */
+    String getFlowV08DatasetName();
+
+    /** Unique name of the ephemeral dataset in which this field is contained. */
+    String getFlowV08DatasetQualifiedName();
 
     /** Optional error message of the flow run. */
-    String getFlowV07ErrorMessage();
-
-    /** Reusable unit that the control operation executes. */
-    IFlowV07ReusableUnit getFlowV07Executes();
+    String getFlowV08ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV07FinishedAt();
+    Long getFlowV08FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV07FolderName();
+    String getFlowV08FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV07FolderQualifiedName();
+    String getFlowV08FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV07Id();
+    String getFlowV08Id();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV07ProjectName();
+    String getFlowV08ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV07ProjectQualifiedName();
-
-    /** Simple name of the reusable unit this control operation executes. */
-    String getFlowV07ReusableUnitName();
-
-    /** Unique name of the reusable unit this control operation executes. */
-    String getFlowV07ReusableUnitQualifiedName();
+    String getFlowV08ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV07RunId();
+    String getFlowV08RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV07Schedule();
+    String getFlowV08Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV07StartedAt();
+    Long getFlowV08StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV07Status();
+    String getFlowV08Status();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -418,6 +418,15 @@ public interface IFlowV07ControlOperation {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Tasks to which this asset provides input. */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** Processes to which this asset provides input. */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -458,11 +467,26 @@ public interface IFlowV07ControlOperation {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Tasks from which this asset is output. */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** Processes from which this asset is produced as output. */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
@@ -482,7 +506,7 @@ public interface IFlowV07ControlOperation {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

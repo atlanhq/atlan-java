@@ -347,11 +347,11 @@ public interface ICatalog {
             case FivetranConnector.TYPE_NAME:
                 ref = FivetranConnector.refByQualifiedName(qualifiedName);
                 break;
-            case FlowV07Dataset.TYPE_NAME:
-                ref = FlowV07Dataset.refByQualifiedName(qualifiedName);
+            case FlowV08Dataset.TYPE_NAME:
+                ref = FlowV08Dataset.refByQualifiedName(qualifiedName);
                 break;
-            case FlowV07Field.TYPE_NAME:
-                ref = FlowV07Field.refByQualifiedName(qualifiedName);
+            case FlowV08Field.TYPE_NAME:
+                ref = FlowV08Field.refByQualifiedName(qualifiedName);
                 break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
@@ -1212,7 +1212,7 @@ public interface ICatalog {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

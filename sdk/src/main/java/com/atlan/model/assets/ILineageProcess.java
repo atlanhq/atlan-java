@@ -59,7 +59,7 @@ public interface ILineageProcess {
     RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
 
     /** TBC */
-    RelationField FLOW_V07ORCHESTRATED_BY = new RelationField("flowV07OrchestratedBy");
+    RelationField FLOW_V08ORCHESTRATED_BY = new RelationField("flowV08OrchestratedBy");
 
     /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
@@ -426,7 +426,7 @@ public interface ILineageProcess {
     IFivetranConnector getFivetranConnector();
 
     /** TBC */
-    IFlowV07ControlOperation getFlowV07OrchestratedBy();
+    IFlowV08ControlOperation getFlowV08OrchestratedBy();
 
     /** TBC */
     Boolean getHasContract();

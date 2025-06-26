@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV07ControlOperationTest {
+public class FlowV08FolderTest {
 
-    private static final FlowV07ControlOperation full = FlowV07ControlOperation._internal()
+    private static final FlowV08Folder full = FlowV08Folder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,17 @@ public class FlowV07ControlOperationTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV07ErrorMessage("String0")
-            .flowV07FinishedAt(123456789L)
-            .flowV07FolderName("String0")
-            .flowV07FolderQualifiedName("String0")
-            .flowV07Id("String0")
-            .flowV07ProjectName("String0")
-            .flowV07ProjectQualifiedName("String0")
-            .flowV07RunId("String0")
-            .flowV07Schedule("String0")
-            .flowV07StartedAt(123456789L)
-            .flowV07Status("String0")
+            .flowV08ErrorMessage("String0")
+            .flowV08FinishedAt(123456789L)
+            .flowV08FolderName("String0")
+            .flowV08FolderQualifiedName("String0")
+            .flowV08Id("String0")
+            .flowV08ProjectName("String0")
+            .flowV08ProjectQualifiedName("String0")
+            .flowV08RunId("String0")
+            .flowV08Schedule("String0")
+            .flowV08StartedAt(123456789L)
+            .flowV08Status("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,25 +430,23 @@ public class FlowV07ControlOperationTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV07DataResult(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV07DataResult(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .flowV07Executes(FlowV07ReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV07ReusableUnitName("String0")
-            .flowV07ReusableUnitQualifiedName("String0")
+            .flowV08ParentFolder(FlowV08Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV08SubFolder(FlowV08Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV08SubFolder(FlowV08Folder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV07ControlOperation frodo;
+    private static FlowV08Folder frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV07ControlOperation.builderEquivalency"})
+    @Test(groups = {"FlowV08Folder.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV07ControlOperation.serialize"},
-            dependsOnGroups = {"FlowV07ControlOperation.builderEquivalency"})
+            groups = {"FlowV08Folder.serialize"},
+            dependsOnGroups = {"FlowV08Folder.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -457,17 +455,17 @@ public class FlowV07ControlOperationTest {
     }
 
     @Test(
-            groups = {"FlowV07ControlOperation.deserialize"},
-            dependsOnGroups = {"FlowV07ControlOperation.serialize"})
+            groups = {"FlowV08Folder.deserialize"},
+            dependsOnGroups = {"FlowV08Folder.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV07ControlOperation.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV08Folder.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV07ControlOperation.equivalency"},
-            dependsOnGroups = {"FlowV07ControlOperation.serialize", "FlowV07ControlOperation.deserialize"})
+            groups = {"FlowV08Folder.equivalency"},
+            dependsOnGroups = {"FlowV08Folder.serialize", "FlowV08Folder.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -476,8 +474,8 @@ public class FlowV07ControlOperationTest {
     }
 
     @Test(
-            groups = {"FlowV07ControlOperation.equivalency"},
-            dependsOnGroups = {"FlowV07ControlOperation.serialize", "FlowV07ControlOperation.deserialize"})
+            groups = {"FlowV08Folder.equivalency"},
+            dependsOnGroups = {"FlowV08Folder.serialize", "FlowV08Folder.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,14 +22,20 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A project, workspace or namespace that is used to organize data processing.
+ * A grouping mechanism within a project to further organize data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV07Project {
+public interface IFlowV08Folder {
 
-    public static final String TYPE_NAME = "FlowV07Project";
+    public static final String TYPE_NAME = "FlowV08Folder";
+
+    /** Parent folder containing the sub-folders. */
+    RelationField FLOW_V08PARENT_FOLDER = new RelationField("flowV08ParentFolder");
+
+    /** Child (sub) folders contained within the folder. */
+    RelationField FLOW_V08SUB_FOLDERS = new RelationField("flowV08SubFolders");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -349,37 +356,43 @@ public interface IFlowV07Project {
     SortedSet<IFile> getFiles();
 
     /** Optional error message of the flow run. */
-    String getFlowV07ErrorMessage();
+    String getFlowV08ErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV07FinishedAt();
+    Long getFlowV08FinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV07FolderName();
+    String getFlowV08FolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV07FolderQualifiedName();
+    String getFlowV08FolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV07Id();
+    String getFlowV08Id();
+
+    /** Parent folder containing the sub-folders. */
+    IFlowV08Folder getFlowV08ParentFolder();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV07ProjectName();
+    String getFlowV08ProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV07ProjectQualifiedName();
+    String getFlowV08ProjectQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV07RunId();
+    String getFlowV08RunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV07Schedule();
+    String getFlowV08Schedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV07StartedAt();
+    Long getFlowV08StartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV07Status();
+    String getFlowV08Status();
+
+    /** Child (sub) folders contained within the folder. */
+    SortedSet<IFlowV08Folder> getFlowV08SubFolders();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -453,7 +466,7 @@ public interface IFlowV07Project {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** TBC */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

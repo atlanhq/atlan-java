@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV07FolderTest {
+public class FlowV08DatasetTest {
 
-    private static final FlowV07Folder full = FlowV07Folder._internal()
+    private static final FlowV08Dataset full = FlowV08Dataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,17 +59,34 @@ public class FlowV07FolderTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV07ErrorMessage("String0")
-            .flowV07FinishedAt(123456789L)
-            .flowV07FolderName("String0")
-            .flowV07FolderQualifiedName("String0")
-            .flowV07Id("String0")
-            .flowV07ProjectName("String0")
-            .flowV07ProjectQualifiedName("String0")
-            .flowV07RunId("String0")
-            .flowV07Schedule("String0")
-            .flowV07StartedAt(123456789L)
-            .flowV07Status("String0")
+            .flowV08ErrorMessage("String0")
+            .flowV08FinishedAt(123456789L)
+            .flowV08FolderName("String0")
+            .flowV08FolderQualifiedName("String0")
+            .flowV08Id("String0")
+            .flowV08ProjectName("String0")
+            .flowV08ProjectQualifiedName("String0")
+            .flowV08RunId("String0")
+            .flowV08Schedule("String0")
+            .flowV08StartedAt(123456789L)
+            .flowV08Status("String0")
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedAttribute(
+                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -430,23 +447,28 @@ public class FlowV07FolderTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .flowV07ParentFolder(FlowV07Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV07SubFolder(FlowV07Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .flowV07SubFolder(FlowV07Folder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV08DetailedBy(FlowV08ReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV08FieldCount(123456789L)
+            .flowV08Field(FlowV08Field.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV08Field(FlowV08Field.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowV08ParentUnit(FlowV08ReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowV08ReusableUnitName("String0")
+            .flowV08ReusableUnitQualifiedName("String0")
+            .flowV08Type("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV07Folder frodo;
+    private static FlowV08Dataset frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV07Folder.builderEquivalency"})
+    @Test(groups = {"FlowV08Dataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV07Folder.serialize"},
-            dependsOnGroups = {"FlowV07Folder.builderEquivalency"})
+            groups = {"FlowV08Dataset.serialize"},
+            dependsOnGroups = {"FlowV08Dataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -455,17 +477,17 @@ public class FlowV07FolderTest {
     }
 
     @Test(
-            groups = {"FlowV07Folder.deserialize"},
-            dependsOnGroups = {"FlowV07Folder.serialize"})
+            groups = {"FlowV08Dataset.deserialize"},
+            dependsOnGroups = {"FlowV08Dataset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV07Folder.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowV08Dataset.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV07Folder.equivalency"},
-            dependsOnGroups = {"FlowV07Folder.serialize", "FlowV07Folder.deserialize"})
+            groups = {"FlowV08Dataset.equivalency"},
+            dependsOnGroups = {"FlowV08Dataset.serialize", "FlowV08Dataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -474,8 +496,8 @@ public class FlowV07FolderTest {
     }
 
     @Test(
-            groups = {"FlowV07Folder.equivalency"},
-            dependsOnGroups = {"FlowV07Folder.serialize", "FlowV07Folder.deserialize"})
+            groups = {"FlowV08Dataset.equivalency"},
+            dependsOnGroups = {"FlowV08Dataset.serialize", "FlowV08Dataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
