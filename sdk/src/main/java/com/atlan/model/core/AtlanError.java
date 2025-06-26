@@ -46,7 +46,7 @@ public class AtlanError extends AtlanObject {
     /** A human-readable suggestion on resolving the error. */
     String error;
 
-    /** TBC */
+    /** Unique identifier (could be placeholder negative number, not necessarily resolved) of the asset on which the error occurred. */
     String entityGuid;
 
     /** TBC */
