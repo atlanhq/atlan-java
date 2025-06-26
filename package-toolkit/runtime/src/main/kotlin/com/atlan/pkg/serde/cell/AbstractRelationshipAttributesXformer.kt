@@ -9,7 +9,6 @@ import com.atlan.pkg.PackageContext
  * Static object to transform relationship-level attribute details.
  */
 abstract class AbstractRelationshipAttributesXformer {
-
     companion object {
         const val KEY_VAL_DELIMITER = "|||"
         const val PROPERTIES_START = " {{"
