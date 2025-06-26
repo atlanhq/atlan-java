@@ -219,6 +219,11 @@ public abstract class HttpClient {
 
     private <T extends AbstractAtlanResponse<?>> boolean shouldRetry(
             int numRetries, AtlanException exception, AtlanRequest request, T response) {
+        // Continue (without retrying) in case of a successful response
+        if (response != null && response.code() >= 200 && response.code() < 300) {
+            return false;
+        }
+
         // Continue retrying in case of connection errors (ignore max retries in these cases)
         if ((exception != null)
                 && (exception.getCause() != null)
@@ -230,11 +235,6 @@ public abstract class HttpClient {
 
         // Continue retrying in case of rate limiting (ignore max retries in this case)
         if (response != null && response.code() == 429) {
-            if (exception != null) {
-                log.debug(" ... rate-limited, will retry with a delay: {}", response.body(), exception);
-            } else {
-                log.debug(" ... rate-limited, will retry with a delay: {}", response.body());
-            }
             Optional<String> retryAfter = response.headers.firstValue("Retry-After");
             if (retryAfter.isPresent()) {
                 try {

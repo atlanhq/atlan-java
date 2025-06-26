@@ -51,7 +51,7 @@ public class GlobalRateLimiter {
                     break;
                 }
                 // Wait until signaled or timeout
-                log.debug(" ... pausing for {}ms before retrying, given the rate-limit", waitTime);
+                log.debug(" ... already rate-limited, continuing to wait for {}ms before retrying", waitTime);
                 rateAvailable.await(waitTime, TimeUnit.MILLISECONDS);
             }
         } finally {
@@ -69,6 +69,7 @@ public class GlobalRateLimiter {
         try {
             isRateLimited.set(true);
             resumeTimeMillis = System.currentTimeMillis() + retryAfterMillis;
+            log.debug(" ... rate-limited -- pausing for {}ms before retrying", retryAfterMillis);
             // No need to signal as all threads will check the resumeTimeMillis
         } finally {
             lock.unlock();
