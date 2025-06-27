@@ -249,6 +249,7 @@ object Importer {
                 results.hasLinks,
                 results.hasTermAssignments,
                 results.hasDomainRelationship,
+                results.hasProductRelationship,
                 filename,
                 connectionIdentity,
                 qualifiedNameToChildCount,
@@ -261,6 +262,7 @@ object Importer {
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
         hasDomainRelationship: Boolean,
+        hasProductRelationship: Boolean,
         preprocessedFile: String,
         val connectionIdentity: AssetResolver.ConnectionIdentity?,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
@@ -269,6 +271,7 @@ object Importer {
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
             hasDomainRelationship = hasDomainRelationship,
+            hasProductRelationship = hasProductRelationship,
             preprocessedFile = preprocessedFile,
         )
 

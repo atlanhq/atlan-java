@@ -65,6 +65,10 @@ abstract class AbstractBaseImporter(
     protected val checkedForCycles = mutableSetOf<String>()
     protected lateinit var typeToSupertypes: Map<String, Set<String>>
     protected var levelToProcess = 0
+    private val alreadyHandled = setOf(
+        "asset_readme",
+        "asset_links",
+    )
 
     protected data class RelationshipEnds(
         val name: String,
@@ -87,7 +91,8 @@ abstract class AbstractBaseImporter(
                 var cyclical = false
                 if (relationshipDef.endDef1.type == relationshipDef.endDef2.type) {
                     cyclical = true
-                } else {
+                } else if (!alreadyHandled.contains(relationshipDef.name)) {
+                    // Skip this recursive check for any already-handled types
                     val end1Supers = typeToSupertypes.getOrElse(relationshipDef.endDef1.type) { emptySet() }
                     val end2Supers = typeToSupertypes.getOrElse(relationshipDef.endDef2.type) { emptySet() }
                     if (end1Supers.contains(relationshipDef.endDef2.type) || end2Supers.contains(relationshipDef.endDef1.type)) {
