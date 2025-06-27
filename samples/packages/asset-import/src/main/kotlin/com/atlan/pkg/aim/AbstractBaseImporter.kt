@@ -65,10 +65,11 @@ abstract class AbstractBaseImporter(
     protected val checkedForCycles = mutableSetOf<String>()
     protected lateinit var typeToSupertypes: Map<String, Set<String>>
     protected var levelToProcess = 0
-    private val alreadyHandled = setOf(
-        "asset_readme",
-        "asset_links",
-    )
+    private val alreadyHandled =
+        setOf(
+            "asset_readme",
+            "asset_links",
+        )
 
     protected data class RelationshipEnds(
         val name: String,
