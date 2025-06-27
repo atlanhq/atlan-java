@@ -44,6 +44,7 @@ class CategoryImporter(
         setOf(
             GlossaryCategory.NAME.atlanFieldName,
             GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
+            GlossaryCategory.ANCHOR.atlanFieldName,
         )
 
     /** {@inheritDoc} */

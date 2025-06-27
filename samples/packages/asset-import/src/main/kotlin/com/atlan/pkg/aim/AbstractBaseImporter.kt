@@ -16,7 +16,6 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.serde.csv.RowPreprocessor
-import com.atlan.serde.Serde
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -64,6 +63,7 @@ abstract class AbstractBaseImporter(
     protected var header = emptyList<String>()
     protected val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
     protected val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
+    protected val checkedForCycles = mutableSetOf<String>()
     protected lateinit var typeToSupertypes: Map<String, Set<String>>
     protected var levelToProcess = 0
 
@@ -145,14 +145,19 @@ abstract class AbstractBaseImporter(
     ): List<String> {
         // Check if the type on this row has any cyclical relationships as headers in the input file
         val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+        // Short-circuit if we're restricting to certain rows and this is not one of them
+        if (typeNameFilter.isNotEmpty() && typeNameFilter != typeName) return row
         if (this.header.isEmpty()) this.header = header
-        cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
-              checkCyclicalRelationship(typeName, relationship)
-        }
-        typeToSupertypes.getOrElse(typeName) { null }?.forEach { superType ->
-            cyclicalRelationships.getOrElse(superType) { emptySet() }.toList().forEach { relationship ->
+        if (!checkedForCycles.contains(typeName)) {
+            cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
                 checkCyclicalRelationship(typeName, relationship)
             }
+            typeToSupertypes.getOrElse(typeName) { null }?.forEach { superType ->
+                cyclicalRelationships.getOrElse(superType) { emptySet() }.toList().forEach { relationship ->
+                    checkCyclicalRelationship(typeName, relationship)
+                }
+            }
+            checkedForCycles.add(typeName)
         }
         return row
     }

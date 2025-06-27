@@ -38,6 +38,7 @@ class TermImporter(
     private val secondPassRemain =
         setOf(
             GlossaryTerm.NAME.atlanFieldName,
+            GlossaryTerm.ANCHOR.atlanFieldName,
         )
 
     /** {@inheritDoc} */
