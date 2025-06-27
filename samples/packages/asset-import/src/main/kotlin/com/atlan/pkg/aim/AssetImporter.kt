@@ -918,6 +918,7 @@ class AssetImporter(
                 hasTermAssignments = results.hasTermAssignments,
                 outputFile = outputFile ?: filename,
                 hasDomainRelationship = results.hasDomainRelationship,
+                hasProductRelationship = results.hasProductRelationship,
                 typesInFile = typesInFile,
             )
         }
@@ -930,6 +931,7 @@ class AssetImporter(
         hasTermAssignments: Boolean,
         outputFile: String,
         hasDomainRelationship: Boolean,
+        hasProductRelationship: Boolean,
         val typesInFile: Set<String>,
     ) : DeltaProcessor.Results(
             assetRootName = connectionQN,
@@ -938,5 +940,6 @@ class AssetImporter(
             multipleConnections = multipleConnections,
             preprocessedFile = outputFile,
             hasDomainRelationship = hasDomainRelationship,
+            hasProductRelationship = hasProductRelationship,
         )
 }

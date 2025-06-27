@@ -19,7 +19,6 @@ import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicInteger
 
-
 /**
  * Base set of reusable mechanisms across imports of all types.
  *
@@ -247,6 +246,9 @@ abstract class AbstractBaseImporter(
         }
         if (results.hasDomainRelationship) {
             ctx.dataDomainCache.preload()
+        }
+        if (results.hasProductRelationship) {
+            ctx.dataProductCache.preload()
         }
     }
 

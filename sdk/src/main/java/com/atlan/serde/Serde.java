@@ -28,7 +28,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
-import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -79,13 +78,13 @@ public class Serde {
                         Class<?> builderClass = info.loadClass();
                         Class<?> typeClass = builderClass.getEnclosingClass();
                         String typeName =
-                            (String) typeClass.getDeclaredField("TYPE_NAME").get(null);
+                                (String) typeClass.getDeclaredField("TYPE_NAME").get(null);
                         assetMap.put(typeName, typeClass);
                         builderMap.put(typeName, builderClass);
                     } catch (NoSuchFieldException e) {
                         log.debug(
-                            "Asset class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
-                            fullName);
+                                "Asset class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
+                                fullName);
                     } catch (IllegalAccessException e) {
                         log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
                     }
