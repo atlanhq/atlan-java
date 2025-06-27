@@ -167,12 +167,12 @@ abstract class AbstractBaseImporter(
      *
      * @param typeToProcess name of the asset type to process
      * @param columnsToSkip names of any columns to skip processing
-     * @param secondPassRemain names of any columns that should always continue to be processed in a second pass
+     * @param columnsToAlwaysInclude names of any columns that should always be included (in all passes)
      */
     fun import(
         typeToProcess: String,
         columnsToSkip: Set<String>,
-        secondPassRemain: Set<String>,
+        columnsToAlwaysInclude: Set<String>,
     ): ImportResults? {
         cacheAnyPrereqs()
         val passResults = mutableListOf<ImportResults?>()
@@ -190,7 +190,7 @@ abstract class AbstractBaseImporter(
             val firstPassResults = super.import(firstPassSkip)
             if (firstPassResults != null) {
                 passResults.add(firstPassResults)
-                runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, secondPassRemain, passResults)
+                runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, passResults)
             }
         }
         return ImportResults.combineAll(ctx.client, true, *passResults.toTypedArray())
@@ -204,20 +204,21 @@ abstract class AbstractBaseImporter(
      * @param cache the cache to keep updated as the levels of the hierarchy are processed
      * @param typeToProcess name of the asset type to process
      * @param columnsToSkip names of any columns to skip processing
-     * @param secondPassRemain names of any columns that should always continue to be processed in a second pass
+     * @param columnsToAlwaysInclude names of any columns that should always be included, in all passes
      * @param maxDepth maximum depth detected for the hierarchy
      */
     fun importHierarchy(
         cache: AssetCache<*>,
         typeToProcess: String,
         columnsToSkip: Set<String>,
-        secondPassRemain: Set<String>,
+        columnsToAlwaysInclude: Set<String>,
         maxDepth: AtomicInteger,
     ): ImportResults? {
         cacheAnyPrereqs(cache)
         val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.addAll(cyclicalForType)
+        firstPassSkip.removeAll(columnsToAlwaysInclude) // these must remain for all passes
         // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
         logger.info { "Loading $typeToProcess in multiple passes, by level..." }
         val passResults = mutableListOf<ImportResults?>()
@@ -230,7 +231,7 @@ abstract class AbstractBaseImporter(
         // Now do the second pass with cyclical relationships, which we can do in any order
         // as now all the various levels of the hierarchy should already exist from the first pass...
         if (cyclicalForType.isNotEmpty() && passResults.isNotEmpty()) {
-            runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, secondPassRemain, passResults)
+            runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, passResults)
         }
         return ImportResults.combineAll(ctx.client, true, *passResults.toTypedArray())
     }
@@ -256,13 +257,13 @@ abstract class AbstractBaseImporter(
         typeToProcess: String,
         columnsToSkip: Set<String>,
         firstPassSkip: Set<String>,
-        secondPassRemain: Set<String>,
+        columnsToAlwaysInclude: Set<String>,
         passResults: MutableList<ImportResults?>,
     ) {
         val secondPassSkip = columnsToSkip.toMutableSet()
         secondPassSkip.addAll(header)
         secondPassSkip.removeAll(firstPassSkip)
-        secondPassSkip.removeAll(secondPassRemain)
+        secondPassSkip.removeAll(columnsToAlwaysInclude)
         // In this second pass we need to ignore fields that were loaded in the first pass,
         // or we will end up with duplicates (links) or extra audit log messages (tags, README)
         logger.info { "--- Loading cyclical relationships for $typeToProcess (second pass)... ---" }
