@@ -62,13 +62,11 @@ public class Serde {
     private static final Map<String, Class<?>> assetClasses;
     private static final Map<String, Class<?>> builderClasses;
     private static final Map<String, Class<?>> relationshipAttributeClasses;
-    private static final Map<String, Set<String>> superTypes;
 
     static {
         Map<String, Class<?>> assetMap = new HashMap<>();
         Map<String, Class<?>> builderMap = new HashMap<>();
         Map<String, Class<?>> relationshipAttributesMap = new HashMap<>();
-        Map<String, Set<String>> superTypesMap = new HashMap<>();
         try (ScanResult scanResult = new ClassGraph()
                 .enableExternalClasses()
                 .ignoreClassVisibility()
@@ -76,50 +74,21 @@ public class Serde {
                 .scan()) {
             for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
                 String fullName = info.getName();
-                try {
-                    Class<?> candidateClass = info.loadClass();
-                    Class<?> typeClass;
-                    if (fullName.endsWith("Impl")) {
-                        typeClass = candidateClass.getEnclosingClass();
-                    } else {
-                        typeClass = candidateClass;
-                    }
-                    String typeName =
+                if (fullName.endsWith("Impl")) {
+                    try {
+                        Class<?> builderClass = info.loadClass();
+                        Class<?> typeClass = builderClass.getEnclosingClass();
+                        String typeName =
                             (String) typeClass.getDeclaredField("TYPE_NAME").get(null);
-                    if (fullName.endsWith("Impl")) {
                         assetMap.put(typeName, typeClass);
-                        builderMap.put(typeName, candidateClass);
-                    } else {
-                        ClassInfoList interfaces = info.getInterfaces();
-                        interfaces.forEach(i -> {
-                            Class<?> interfaceClass = i.loadClass();
-                            try {
-                                String superTypeName = (String)
-                                        interfaceClass.getField("TYPE_NAME").get(null);
-                                if (!superTypesMap.containsKey(typeName)) {
-                                    superTypesMap.put(typeName, new HashSet<>());
-                                }
-                                if (!typeName.equals(superTypeName)) {
-                                    superTypesMap.get(typeName).add(superTypeName);
-                                }
-                            } catch (NoSuchFieldException e) {
-                                log.debug(
-                                        "Interface class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
-                                        fullName);
-                            } catch (IllegalAccessException e) {
-                                log.error(
-                                        "Unable to access the static TYPE_NAME for the interface class: {}",
-                                        fullName,
-                                        e);
-                            }
-                        });
-                    }
-                } catch (NoSuchFieldException e) {
-                    log.debug(
+                        builderMap.put(typeName, builderClass);
+                    } catch (NoSuchFieldException e) {
+                        log.debug(
                             "Asset class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
                             fullName);
-                } catch (IllegalAccessException e) {
-                    log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
+                    } catch (IllegalAccessException e) {
+                        log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
+                    }
                 }
             }
             for (ClassInfo info :
@@ -150,10 +119,6 @@ public class Serde {
         assetClasses = Collections.unmodifiableMap(assetMap);
         builderClasses = Collections.unmodifiableMap(builderMap);
         relationshipAttributeClasses = Collections.unmodifiableMap(relationshipAttributesMap);
-        // TODO: For now we're manually setting supertypes for abstract types, but would be
-        //  more ideal to do this automatically by walking the typedefs tree
-        superTypesMap.put("Catalog", Set.of("Asset", "Referenceable"));
-        superTypes = Collections.unmodifiableMap(superTypesMap);
     }
 
     public static Class<?> getAssetClassForType(String typeName) throws ClassNotFoundException {
@@ -181,10 +146,6 @@ public class Serde {
         } else {
             throw new ClassNotFoundException("Unable to find builder class for typeName: " + typeName);
         }
-    }
-
-    public static Set<String> getSuperTypesForType(String typeName) {
-        return superTypes.getOrDefault(typeName, new HashSet<>());
     }
 
     private static Set<Module> createModules() {

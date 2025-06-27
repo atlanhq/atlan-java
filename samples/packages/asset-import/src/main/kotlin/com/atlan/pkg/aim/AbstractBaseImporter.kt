@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.fields.AtlanField
+import com.atlan.model.typedefs.EntityDef
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.csv.CSVImporter
@@ -18,6 +19,7 @@ import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.serde.Serde
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicInteger
+
 
 /**
  * Base set of reusable mechanisms across imports of all types.
@@ -62,6 +64,7 @@ abstract class AbstractBaseImporter(
     protected var header = emptyList<String>()
     protected val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
     protected val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
+    protected lateinit var typeToSupertypes: Map<String, Set<String>>
     protected var levelToProcess = 0
 
     protected data class RelationshipEnds(
@@ -77,7 +80,8 @@ abstract class AbstractBaseImporter(
     ): RowPreprocessor.Results {
         // Retrieve all relationships and filter to any cyclical relationships
         // (meaning relationships where both ends are of the same type)
-        val typeDefs = ctx.client.typeDefs.list(AtlanTypeCategory.RELATIONSHIP)
+        val typeDefs = ctx.client.typeDefs.list(listOf(AtlanTypeCategory.RELATIONSHIP, AtlanTypeCategory.ENTITY))
+        typeToSupertypes = buildTypeCache(typeDefs.entityDefs)
         typeDefs.relationshipDefs
             .stream()
             .forEach { relationshipDef ->
@@ -85,8 +89,8 @@ abstract class AbstractBaseImporter(
                 if (relationshipDef.endDef1.type == relationshipDef.endDef2.type) {
                     cyclical = true
                 } else {
-                    val end1Supers = Serde.getSuperTypesForType(relationshipDef.endDef1.type)
-                    val end2Supers = Serde.getSuperTypesForType(relationshipDef.endDef2.type)
+                    val end1Supers = typeToSupertypes.getOrElse(relationshipDef.endDef1.type) { emptySet() }
+                    val end2Supers = typeToSupertypes.getOrElse(relationshipDef.endDef2.type) { emptySet() }
                     if (end1Supers.contains(relationshipDef.endDef2.type) || end2Supers.contains(relationshipDef.endDef1.type)) {
                         cyclical = true
                     }
@@ -96,6 +100,40 @@ abstract class AbstractBaseImporter(
                 }
             }
         return super.preprocess(outputFile, outputHeaders)
+    }
+
+    private fun buildTypeCache(entityDefs: List<EntityDef>): Map<String, Set<String>> {
+        // First, create a map of direct supertype relationships
+        val directSupertypes = entityDefs.associate { it.name to it.superTypes.toSet() }
+
+        // Memoization cache for computed transitive supertypes
+        val cache = mutableMapOf<String, Set<String>>()
+
+        fun getTransitiveSupertypes(typeName: String): Set<String> {
+            // Return cached result if available
+            cache[typeName]?.let { return it }
+
+            val direct = directSupertypes[typeName] ?: emptySet()
+            val transitive = mutableSetOf<String>()
+
+            // Add direct supertypes
+            transitive.addAll(direct)
+
+            // Recursively add supertypes of supertypes
+            for (supertype in direct) {
+                transitive.addAll(getTransitiveSupertypes(supertype))
+            }
+
+            // Cache and return result
+            val result = transitive.toSet()
+            cache[typeName] = result
+            return result
+        }
+
+        // Compute for all entity types
+        return entityDefs.associate { entityDef ->
+            entityDef.name to getTransitiveSupertypes(entityDef.name)
+        }
     }
 
     /** {@inheritDoc} */
@@ -109,9 +147,9 @@ abstract class AbstractBaseImporter(
         val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
         if (this.header.isEmpty()) this.header = header
         cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
-            checkCyclicalRelationship(typeName, relationship)
+              checkCyclicalRelationship(typeName, relationship)
         }
-        Serde.getSuperTypesForType(typeName).forEach { superType ->
+        typeToSupertypes.getOrElse(typeName) { null }?.forEach { superType ->
             cyclicalRelationships.getOrElse(superType) { emptySet() }.toList().forEach { relationship ->
                 checkCyclicalRelationship(typeName, relationship)
             }
@@ -132,6 +170,7 @@ abstract class AbstractBaseImporter(
         columnsToSkip: Set<String>,
         secondPassRemain: Set<String>,
     ): ImportResults? {
+        cacheAnyPrereqs()
         val passResults = mutableListOf<ImportResults?>()
         val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         if (cyclicalForType.isEmpty()) {
@@ -171,7 +210,7 @@ abstract class AbstractBaseImporter(
         secondPassRemain: Set<String>,
         maxDepth: AtomicInteger,
     ): ImportResults? {
-        cache.preload()
+        cacheAnyPrereqs(cache)
         val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.addAll(cyclicalForType)
@@ -190,6 +229,20 @@ abstract class AbstractBaseImporter(
             runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, secondPassRemain, passResults)
         }
         return ImportResults.combineAll(ctx.client, true, *passResults.toTypedArray())
+    }
+
+    private fun cacheAnyPrereqs(cache: AssetCache<*>? = null) {
+        cache?.preload()
+        val results = preprocess()
+        if (results.hasLinks) {
+            ctx.linkCache.preload()
+        }
+        if (results.hasTermAssignments) {
+            ctx.termCache.preload()
+        }
+        if (results.hasDomainRelationship) {
+            ctx.dataDomainCache.preload()
+        }
     }
 
     private fun runCyclicalUpdatePass(
