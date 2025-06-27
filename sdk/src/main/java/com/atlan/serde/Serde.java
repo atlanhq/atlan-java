@@ -99,7 +99,9 @@ public class Serde {
                                 if (!superTypesMap.containsKey(typeName)) {
                                     superTypesMap.put(typeName, new HashSet<>());
                                 }
-                                superTypesMap.get(typeName).add(superTypeName);
+                                if (!typeName.equals(superTypeName)) {
+                                    superTypesMap.get(typeName).add(superTypeName);
+                                }
                             } catch (NoSuchFieldException e) {
                                 log.debug(
                                         "Interface class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
@@ -148,6 +150,9 @@ public class Serde {
         assetClasses = Collections.unmodifiableMap(assetMap);
         builderClasses = Collections.unmodifiableMap(builderMap);
         relationshipAttributeClasses = Collections.unmodifiableMap(relationshipAttributesMap);
+        // TODO: For now we're manually setting supertypes for abstract types, but would be
+        //  more ideal to do this automatically by walking the typedefs tree
+        superTypesMap.put("Catalog", Set.of("Asset", "Referenceable"));
         superTypes = Collections.unmodifiableMap(superTypesMap);
     }
 
@@ -178,13 +183,8 @@ public class Serde {
         }
     }
 
-    public static Set<String> getSuperTypesForType(String typeName) throws ClassNotFoundException {
-        Class<?> result = assetClasses.getOrDefault(typeName, null);
-        if (result != null) {
-            return superTypes.getOrDefault(typeName, new HashSet<>());
-        } else {
-            throw new ClassNotFoundException("Unable to find super types for typeName: " + typeName);
-        }
+    public static Set<String> getSuperTypesForType(String typeName) {
+        return superTypes.getOrDefault(typeName, new HashSet<>());
     }
 
     private static Set<Module> createModules() {

@@ -333,7 +333,8 @@ class AssetImporter(
         val individualResults = mutableListOf<ImportResults?>()
         typeLoadingOrder.forEach {
             typeToProcess = it
-            super.import(typeToProcess, colsToSkip, secondPassRemain)
+            val results = super.import(typeToProcess, colsToSkip, secondPassRemain)
+            if (results != null) individualResults.add(results)
         }
         return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
     }
