@@ -177,14 +177,14 @@ class InformaticaCDITest : PackageTest("cdi") {
                 "MultiMap" -> {
                     // 12 here when we may e2s and t2e to the task-level (otherwise 4)
                     // When the task-level is a control flow op, this should just be the 4 resolved lineage processes
-                    assertEquals(12, task.flowV09DataResults.size)
+                    assertEquals(4, task.flowV09DataResults.size)
                     assertEquals("${connection.qualifiedName}/MultiMap_mapping", task.flowV09ReusableUnitQualifiedName)
                     assertEquals("MultiMap (mapping)", task.flowV09ReusableUnitName)
                 }
                 "Complex" -> {
                     // 3 here when we may e2s and t2e to the task-level (otherwise 1)
                     // When the task-level is a control flow op, this should just be the 1 resolved lineage process
-                    assertEquals(3, task.flowV09DataResults.size)
+                    assertEquals(1, task.flowV09DataResults.size)
                     assertEquals("${connection.qualifiedName}/Complex_mapping", task.flowV09ReusableUnitQualifiedName)
                     assertEquals("Complex (mapping)", task.flowV09ReusableUnitName)
                 }
@@ -219,12 +219,12 @@ class InformaticaCDITest : PackageTest("cdi") {
             when (mapping.name) {
                 "MultiMap (mapping)" -> {
                     // 4 here when we only map the inside lineage portions, otherwise 12
-                    assertEquals(4, mapping.flowV09DataFlows.size)
+                    assertEquals(12, mapping.flowV09DataFlows.size)
                     assertEquals(8, mapping.flowV09DatasetCount)
                 }
                 "Complex (mapping)" -> {
                     // 2 here when we only map the inside lineage portions, otherwise 4
-                    assertEquals(2, mapping.flowV09DataFlows.size)
+                    assertEquals(4, mapping.flowV09DataFlows.size)
                     assertEquals(3, mapping.flowV09DatasetCount)
                 }
             }
