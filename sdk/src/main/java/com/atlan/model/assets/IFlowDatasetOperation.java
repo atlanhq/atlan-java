@@ -2,12 +2,14 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -21,14 +23,23 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A project, workspace or namespace that is used to organize data processing.
+ * A nested data operation that uses at least one ephemeral dataset as either an input or output.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09Project {
+public interface IFlowDatasetOperation {
 
-    public static final String TYPE_NAME = "FlowV09Project";
+    public static final String TYPE_NAME = "FlowDatasetOperation";
+
+    /** Reusable unit of dataset operations that are all executed together. */
+    RelationField FLOW_REUSABLE_UNIT = new RelationField("flowReusableUnit");
+
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
+    String getAdditionalEtlContext();
+
+    /** ADF Activity that is associated with this lineage process. */
+    IAdfActivity getAdfActivity();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -38,6 +49,12 @@ public interface IFlowV09Project {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Dataset type for AI Model - dataset process. */
+    AIDatasetType getAiDatasetType();
+
+    /** Tasks that exist within this process. */
+    SortedSet<IAirflowTask> getAirflowTasks();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -306,6 +323,9 @@ public interface IFlowV09Project {
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
+    String getAst();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -317,6 +337,12 @@ public interface IFlowV09Project {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
+
+    /** Code that ran within the process. */
+    String getCode();
+
+    /** Processes that detail column-level lineage for this process. */
+    SortedSet<IColumnProcess> getColumnProcesses();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -348,44 +374,53 @@ public interface IFlowV09Project {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** fivetranConnector in which this process exists. */
+    IFivetranConnector getFivetranConnector();
+
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
+    String getFlowId();
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    IFlowControlOperation getFlowOrchestratedBy();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
+
+    /** Reusable unit of dataset operations that are all executed together. */
+    IFlowReusableUnit getFlowReusableUnit();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -395,6 +430,9 @@ public interface IFlowV09Project {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Assets that are inputs to this process. */
+    SortedSet<ICatalog> getInputs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -426,6 +464,9 @@ public interface IFlowV09Project {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
+    /** Matillion component that contains the logic for this lineage process. */
+    IMatillionComponent getMatillionComponent();
+
     /** TBC */
     SortedSet<IMCIncident> getMcIncidents();
 
@@ -447,14 +488,23 @@ public interface IFlowV09Project {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
+    /** Assets that are outputs from this process. */
+    SortedSet<ICatalog> getOutputs();
+
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
+    /** TBC */
+    SortedSet<String> getParentConnectionProcessQualifiedNames();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    IPowerBIDataflow getPowerBIDataflow();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
@@ -539,6 +589,12 @@ public interface IFlowV09Project {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<ISparkJob> getSparkJobs();
+
+    /** SQL query that ran to produce the outputs. */
+    String getSql();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

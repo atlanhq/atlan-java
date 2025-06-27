@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FlowV09ProjectTest {
+public class FlowProjectTest {
 
-    private static final FlowV09Project full = FlowV09Project._internal()
+    private static final FlowProject full = FlowProject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,19 +59,19 @@ public class FlowV09ProjectTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .flowV09ErrorMessage("String0")
-            .flowV09FinishedAt(123456789L)
-            .flowV09FolderName("String0")
-            .flowV09FolderQualifiedName("String0")
-            .flowV09Id("String0")
-            .flowV09ProjectName("String0")
-            .flowV09ProjectQualifiedName("String0")
-            .flowV09ReusableUnitName("String0")
-            .flowV09ReusableUnitQualifiedName("String0")
-            .flowV09RunId("String0")
-            .flowV09Schedule("String0")
-            .flowV09StartedAt(123456789L)
-            .flowV09Status("String0")
+            .flowErrorMessage("String0")
+            .flowFinishedAt(123456789L)
+            .flowFolderName("String0")
+            .flowFolderQualifiedName("String0")
+            .flowId("String0")
+            .flowProjectName("String0")
+            .flowProjectQualifiedName("String0")
+            .flowReusableUnitName("String0")
+            .flowReusableUnitQualifiedName("String0")
+            .flowRunId("String0")
+            .flowSchedule("String0")
+            .flowStartedAt(123456789L)
+            .flowStatus("String0")
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -435,17 +435,17 @@ public class FlowV09ProjectTest {
             .build();
 
     private static final int hash = full.hashCode();
-    private static FlowV09Project frodo;
+    private static FlowProject frodo;
     private static String serialized;
 
-    @Test(groups = {"FlowV09Project.builderEquivalency"})
+    @Test(groups = {"FlowProject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"FlowV09Project.serialize"},
-            dependsOnGroups = {"FlowV09Project.builderEquivalency"})
+            groups = {"FlowProject.serialize"},
+            dependsOnGroups = {"FlowProject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -454,17 +454,17 @@ public class FlowV09ProjectTest {
     }
 
     @Test(
-            groups = {"FlowV09Project.deserialize"},
-            dependsOnGroups = {"FlowV09Project.serialize"})
+            groups = {"FlowProject.deserialize"},
+            dependsOnGroups = {"FlowProject.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowV09Project.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, FlowProject.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"FlowV09Project.equivalency"},
-            dependsOnGroups = {"FlowV09Project.serialize", "FlowV09Project.deserialize"})
+            groups = {"FlowProject.equivalency"},
+            dependsOnGroups = {"FlowProject.serialize", "FlowProject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -473,8 +473,8 @@ public class FlowV09ProjectTest {
     }
 
     @Test(
-            groups = {"FlowV09Project.equivalency"},
-            dependsOnGroups = {"FlowV09Project.serialize", "FlowV09Project.deserialize"})
+            groups = {"FlowProject.equivalency"},
+            dependsOnGroups = {"FlowProject.serialize", "FlowProject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -8,7 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -22,20 +24,57 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Execution of a single orchestrate-able unit of work.
+ * Base class for flow-specific (ETL, other data processing) assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09ControlOperation {
+public interface IFlow {
 
-    public static final String TYPE_NAME = "FlowV09ControlOperation";
+    public static final String TYPE_NAME = "Flow";
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    RelationField FLOW_V09DATA_RESULTS = new RelationField("flowV09DataResults");
+    /** Optional error message of the flow run. */
+    KeywordField FLOW_ERROR_MESSAGE = new KeywordField("flowErrorMessage", "flowErrorMessage");
 
-    /** Reusable unit that the control operation executes. */
-    RelationField FLOW_V09EXECUTES = new RelationField("flowV09Executes");
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    NumericField FLOW_FINISHED_AT = new NumericField("flowFinishedAt", "flowFinishedAt");
+
+    /** Simple name of the folder in which this asset is contained. */
+    KeywordTextField FLOW_FOLDER_NAME =
+            new KeywordTextField("flowFolderName", "flowFolderName.keyword", "flowFolderName");
+
+    /** Unique name of the folder in which this asset is contained. */
+    KeywordField FLOW_FOLDER_QUALIFIED_NAME = new KeywordField("flowFolderQualifiedName", "flowFolderQualifiedName");
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    KeywordField FLOW_ID = new KeywordField("flowId", "flowId");
+
+    /** Simple name of the project in which this asset is contained. */
+    KeywordTextField FLOW_PROJECT_NAME =
+            new KeywordTextField("flowProjectName", "flowProjectName.keyword", "flowProjectName");
+
+    /** Unique name of the project in which this asset is contained. */
+    KeywordField FLOW_PROJECT_QUALIFIED_NAME = new KeywordField("flowProjectQualifiedName", "flowProjectQualifiedName");
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    KeywordTextField FLOW_REUSABLE_UNIT_NAME =
+            new KeywordTextField("flowReusableUnitName", "flowReusableUnitName.keyword", "flowReusableUnitName");
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    KeywordField FLOW_REUSABLE_UNIT_QUALIFIED_NAME =
+            new KeywordField("flowReusableUnitQualifiedName", "flowReusableUnitQualifiedName");
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    KeywordField FLOW_RUN_ID = new KeywordField("flowRunId", "flowRunId");
+
+    /** Schedule for this point in the data processing or orchestration. */
+    KeywordField FLOW_SCHEDULE = new KeywordField("flowSchedule", "flowSchedule");
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    NumericField FLOW_STARTED_AT = new NumericField("flowStartedAt", "flowStartedAt");
+
+    /** Overall status of this point in the data processing or orchestration. */
+    KeywordField FLOW_STATUS = new KeywordField("flowStatus", "flowStatus");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -355,50 +394,44 @@ public interface IFlowV09ControlOperation {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Individual data flows (processes) orchestrated by this control operation. */
-    SortedSet<ILineageProcess> getFlowV09DataResults();
-
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
-
-    /** Reusable unit that the control operation executes. */
-    IFlowV09ReusableUnit getFlowV09Executes();
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
+    String getFlowId();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

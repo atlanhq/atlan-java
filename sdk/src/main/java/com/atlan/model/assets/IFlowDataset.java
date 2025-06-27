@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -23,33 +24,29 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A reusable grouping of data flows that will be orchestrated together as a single unit.
+ * An ephemeral piece of data either produced by or used as input by a data operation.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09ReusableUnit {
+public interface IFlowDataset {
 
-    public static final String TYPE_NAME = "FlowV09ReusableUnit";
+    public static final String TYPE_NAME = "FlowDataset";
 
-    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    RelationField FLOW_V09ABSTRACTS = new RelationField("flowV09Abstracts");
+    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
+    RelationField FLOW_DETAILED_BY = new RelationField("flowDetailedBy");
 
-    /** Count of the number of control flow operations that execute this reusable unit. */
-    NumericField FLOW_V09CONTROL_OPERATION_COUNT =
-            new NumericField("flowV09ControlOperationCount", "flowV09ControlOperationCount");
+    /** Count of the number of individual fields that make up this ephemeral dataset. */
+    NumericField FLOW_FIELD_COUNT = new NumericField("flowFieldCount", "flowFieldCount");
 
-    /** Individual dataset operations contained in this reusable unit. */
-    RelationField FLOW_V09DATA_FLOWS = new RelationField("flowV09DataFlows");
+    /** Fields contained in the ephemeral dataset. */
+    RelationField FLOW_FIELDS = new RelationField("flowFields");
 
-    /** Count of the number of ephemeral datasets contained within this reusable unit. */
-    NumericField FLOW_V09DATASET_COUNT = new NumericField("flowV09DatasetCount", "flowV09DatasetCount");
+    /** Reusable unit in which the ephemeral dataset is contained. */
+    RelationField FLOW_PARENT_UNIT = new RelationField("flowParentUnit");
 
-    /** Ephemeral datasets that are contained within the reusable unit. */
-    RelationField FLOW_V09DATASETS = new RelationField("flowV09Datasets");
-
-    /** Control operations that execute this reusable unit. */
-    RelationField FLOW_V09EXECUTED_BY_CONTROLS = new RelationField("flowV09ExecutedByControls");
+    /** Type of the ephemeral piece of data. */
+    KeywordField FLOW_TYPE = new KeywordField("flowType", "flowType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -369,62 +366,59 @@ public interface IFlowV09ReusableUnit {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    SortedSet<IFlowV09Dataset> getFlowV09Abstracts();
-
-    /** Count of the number of control flow operations that execute this reusable unit. */
-    Long getFlowV09ControlOperationCount();
-
-    /** Individual dataset operations contained in this reusable unit. */
-    SortedSet<IFlowV09DatasetOperation> getFlowV09DataFlows();
-
-    /** Count of the number of ephemeral datasets contained within this reusable unit. */
-    Long getFlowV09DatasetCount();
-
-    /** Ephemeral datasets that are contained within the reusable unit. */
-    SortedSet<IFlowV09Dataset> getFlowV09Datasets();
+    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
+    IFlowReusableUnit getFlowDetailedBy();
 
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
+    String getFlowErrorMessage();
 
-    /** Control operations that execute this reusable unit. */
-    SortedSet<IFlowV09ControlOperation> getFlowV09ExecutedByControls();
+    /** Count of the number of individual fields that make up this ephemeral dataset. */
+    Long getFlowFieldCount();
+
+    /** Fields contained in the ephemeral dataset. */
+    SortedSet<IFlowField> getFlowFields();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
+    String getFlowId();
+
+    /** Reusable unit in which the ephemeral dataset is contained. */
+    IFlowReusableUnit getFlowParentUnit();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
+    String getFlowStatus();
+
+    /** Type of the ephemeral piece of data. */
+    String getFlowType();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -434,6 +428,15 @@ public interface IFlowV09ReusableUnit {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
+
+    /** Tasks to which this asset provides input. */
+    SortedSet<IAirflowTask> getInputToAirflowTasks();
+
+    /** Processes to which this asset provides input. */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -474,11 +477,26 @@ public interface IFlowV09ReusableUnit {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
+    /** Attributes implemented by this asset. */
+    SortedSet<IModelAttribute> getModelImplementedAttributes();
+
+    /** Entities implemented by this asset. */
+    SortedSet<IModelEntity> getModelImplementedEntities();
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Tasks from which this asset is output. */
+    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+
+    /** Processes from which this asset is produced as output. */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
+    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();

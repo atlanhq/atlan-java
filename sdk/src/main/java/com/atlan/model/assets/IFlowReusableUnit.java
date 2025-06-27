@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -22,20 +23,30 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A grouping mechanism within a project to further organize data processing.
+ * A reusable grouping of data flows that will be orchestrated together as a single unit.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09Folder {
+public interface IFlowReusableUnit {
 
-    public static final String TYPE_NAME = "FlowV09Folder";
+    public static final String TYPE_NAME = "FlowReusableUnit";
 
-    /** Parent folder containing the sub-folders. */
-    RelationField FLOW_V09PARENT_FOLDER = new RelationField("flowV09ParentFolder");
+    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
+    RelationField FLOW_ABSTRACTS = new RelationField("flowAbstracts");
 
-    /** Child (sub) folders contained within the folder. */
-    RelationField FLOW_V09SUB_FOLDERS = new RelationField("flowV09SubFolders");
+    /** Count of the number of control flow operations that execute this reusable unit. */
+    NumericField FLOW_CONTROL_OPERATION_COUNT =
+            new NumericField("flowControlOperationCount", "flowControlOperationCount");
+
+    /** Individual dataset operations contained in this reusable unit. */
+    RelationField FLOW_DATA_FLOWS = new RelationField("flowDataFlows");
+
+    /** Count of the number of ephemeral datasets contained within this reusable unit. */
+    NumericField FLOW_DATASET_COUNT = new NumericField("flowDatasetCount", "flowDatasetCount");
+
+    /** Ephemeral datasets that are contained within the reusable unit. */
+    RelationField FLOW_DATASETS = new RelationField("flowDatasets");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -355,50 +366,59 @@ public interface IFlowV09Folder {
     /** TBC */
     SortedSet<IFile> getFiles();
 
+    /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
+    SortedSet<IFlowDataset> getFlowAbstracts();
+
+    /** Count of the number of control flow operations that execute this reusable unit. */
+    Long getFlowControlOperationCount();
+
+    /** Individual dataset operations contained in this reusable unit. */
+    SortedSet<IFlowDatasetOperation> getFlowDataFlows();
+
+    /** Count of the number of ephemeral datasets contained within this reusable unit. */
+    Long getFlowDatasetCount();
+
+    /** Ephemeral datasets that are contained within the reusable unit. */
+    SortedSet<IFlowDataset> getFlowDatasets();
+
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
-
-    /** Parent folder containing the sub-folders. */
-    IFlowV09Folder getFlowV09ParentFolder();
+    String getFlowId();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
-
-    /** Child (sub) folders contained within the folder. */
-    SortedSet<IFlowV09Folder> getFlowV09SubFolders();
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

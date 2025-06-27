@@ -38,85 +38,85 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("serial")
-public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICatalog, IAsset, IReferenceable {
+public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "FlowV09Field";
+    public static final String TYPE_NAME = "FlowField";
 
-    /** Fixed typeName for FlowV09Fields. */
+    /** Fixed typeName for FlowFields. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
     /** Type of the data captured in this field. */
     @Attribute
-    String flowV09DataType;
+    String flowDataType;
 
     /** Ephemeral dataset that contains these fields. */
     @Attribute
-    IFlowV09Dataset flowV09Dataset;
+    IFlowDataset flowDataset;
 
     /** Simple name of the ephemeral dataset in which this field is contained. */
     @Attribute
-    String flowV09DatasetName;
+    String flowDatasetName;
 
     /** Unique name of the ephemeral dataset in which this field is contained. */
     @Attribute
-    String flowV09DatasetQualifiedName;
+    String flowDatasetQualifiedName;
 
     /** Optional error message of the flow run. */
     @Attribute
-    String flowV09ErrorMessage;
+    String flowErrorMessage;
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
-    Long flowV09FinishedAt;
+    Long flowFinishedAt;
 
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
-    String flowV09FolderName;
+    String flowFolderName;
 
     /** Unique name of the folder in which this asset is contained. */
     @Attribute
-    String flowV09FolderQualifiedName;
+    String flowFolderQualifiedName;
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
-    String flowV09Id;
+    String flowId;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute
-    String flowV09ProjectName;
+    String flowProjectName;
 
     /** Unique name of the project in which this asset is contained. */
     @Attribute
-    String flowV09ProjectQualifiedName;
+    String flowProjectQualifiedName;
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV09ReusableUnitName;
+    String flowReusableUnitName;
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV09ReusableUnitQualifiedName;
+    String flowReusableUnitQualifiedName;
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
     @Attribute
-    String flowV09RunId;
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
-    String flowV09Schedule;
+    String flowSchedule;
 
     /** Date and time at which this point in the data processing or orchestration started. */
     @Attribute
     @Date
-    Long flowV09StartedAt;
+    Long flowStartedAt;
 
     /** Overall status of this point in the data processing or orchestration. */
     @Attribute
-    String flowV09Status;
+    String flowStatus;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -159,14 +159,14 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     SortedSet<ISparkJob> outputFromSparkJobs;
 
     /**
-     * Builds the minimal object necessary to create a relationship to a FlowV09Field, from a potentially
-     * more-complete FlowV09Field object.
+     * Builds the minimal object necessary to create a relationship to a FlowField, from a potentially
+     * more-complete FlowField object.
      *
-     * @return the minimal object necessary to relate to the FlowV09Field
-     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowV09Field relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the FlowField
+     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowField relationship are not found in the initial object
      */
     @Override
-    public FlowV09Field trimToReference() throws InvalidRequestException {
+    public FlowField trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -183,27 +183,27 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Start a fluent search that will return all FlowV09Field assets.
+     * Start a fluent search that will return all FlowField assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) FlowV09Field assets will be included.
+     * optimal retrieval. Only active (non-archived) FlowField assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all FlowV09Field assets
+     * @return a fluent search that includes all FlowField assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all FlowV09Field assets.
+     * Start a fluent search that will return all FlowField assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) FlowV09Fields will be included
-     * @return a fluent search that includes all FlowV09Field assets
+     * @param includeArchived when true, archived (soft-deleted) FlowFields will be included
+     * @return a fluent search that includes all FlowField assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -215,51 +215,51 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Reference to a FlowV09Field by GUID. Use this to create a relationship to this FlowV09Field,
+     * Reference to a FlowField by GUID. Use this to create a relationship to this FlowField,
      * where the relationship should be replaced.
      *
-     * @param guid the GUID of the FlowV09Field to reference
-     * @return reference to a FlowV09Field that can be used for defining a relationship to a FlowV09Field
+     * @param guid the GUID of the FlowField to reference
+     * @return reference to a FlowField that can be used for defining a relationship to a FlowField
      */
-    public static FlowV09Field refByGuid(String guid) {
+    public static FlowField refByGuid(String guid) {
         return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV09Field by GUID. Use this to create a relationship to this FlowV09Field,
+     * Reference to a FlowField by GUID. Use this to create a relationship to this FlowField,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param guid the GUID of the FlowV09Field to reference
+     * @param guid the GUID of the FlowField to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV09Field that can be used for defining a relationship to a FlowV09Field
+     * @return reference to a FlowField that can be used for defining a relationship to a FlowField
      */
-    public static FlowV09Field refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FlowV09Field._internal().guid(guid).semantic(semantic).build();
+    public static FlowField refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return FlowField._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
-     * Reference to a FlowV09Field by qualifiedName. Use this to create a relationship to this FlowV09Field,
+     * Reference to a FlowField by qualifiedName. Use this to create a relationship to this FlowField,
      * where the relationship should be replaced.
      *
-     * @param qualifiedName the qualifiedName of the FlowV09Field to reference
-     * @return reference to a FlowV09Field that can be used for defining a relationship to a FlowV09Field
+     * @param qualifiedName the qualifiedName of the FlowField to reference
+     * @return reference to a FlowField that can be used for defining a relationship to a FlowField
      */
-    public static FlowV09Field refByQualifiedName(String qualifiedName) {
+    public static FlowField refByQualifiedName(String qualifiedName) {
         return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV09Field by qualifiedName. Use this to create a relationship to this FlowV09Field,
+     * Reference to a FlowField by qualifiedName. Use this to create a relationship to this FlowField,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param qualifiedName the qualifiedName of the FlowV09Field to reference
+     * @param qualifiedName the qualifiedName of the FlowField to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV09Field that can be used for defining a relationship to a FlowV09Field
+     * @return reference to a FlowField that can be used for defining a relationship to a FlowField
      */
-    public static FlowV09Field refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
-        return FlowV09Field._internal()
+    public static FlowField refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+        return FlowField._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .semantic(semantic)
@@ -267,45 +267,44 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Retrieves a FlowV09Field by one of its identifiers, complete with all of its relationships.
+     * Retrieves a FlowField by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09Field to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full FlowV09Field, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Field does not exist or the provided GUID is not a FlowV09Field
+     * @param id of the FlowField to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full FlowField, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowField does not exist or the provided GUID is not a FlowField
      */
     @JsonIgnore
-    public static FlowV09Field get(AtlanClient client, String id) throws AtlanException {
+    public static FlowField get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, false);
     }
 
     /**
-     * Retrieves a FlowV09Field by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a FlowField by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09Field to retrieve, either its GUID or its full qualifiedName
+     * @param id of the FlowField to retrieve, either its GUID or its full qualifiedName
      * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full FlowV09Field, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Field does not exist or the provided GUID is not a FlowV09Field
+     * @return the requested full FlowField, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowField does not exist or the provided GUID is not a FlowField
      */
     @JsonIgnore
-    public static FlowV09Field get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FlowField get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof FlowV09Field) {
-                return (FlowV09Field) asset;
+            } else if (asset instanceof FlowField) {
+                return (FlowField) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
-            if (asset instanceof FlowV09Field) {
-                return (FlowV09Field) asset;
+            if (asset instanceof FlowField) {
+                return (FlowField) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -313,32 +312,32 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Retrieves a FlowV09Field by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowField by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09Field to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV09Field, including any relationships
-     * @return the requested FlowV09Field, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Field does not exist or the provided GUID is not a FlowV09Field
+     * @param id of the FlowField to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowField, including any relationships
+     * @return the requested FlowField, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowField does not exist or the provided GUID is not a FlowField
      */
     @JsonIgnore
-    public static FlowV09Field get(AtlanClient client, String id, Collection<AtlanField> attributes)
+    public static FlowField get(AtlanClient client, String id, Collection<AtlanField> attributes)
             throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
     /**
-     * Retrieves a FlowV09Field by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowField by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09Field to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV09Field, including any relationships
-     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowV09Field
-     * @return the requested FlowV09Field, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09Field does not exist or the provided GUID is not a FlowV09Field
+     * @param id of the FlowField to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowField, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowField
+     * @return the requested FlowField, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowField does not exist or the provided GUID is not a FlowField
      */
     @JsonIgnore
-    public static FlowV09Field get(
+    public static FlowField get(
             AtlanClient client,
             String id,
             Collection<AtlanField> attributes,
@@ -347,8 +346,8 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = FlowV09Field.select(client)
-                    .where(FlowV09Field.GUID.eq(id))
+            Optional<Asset> asset = FlowField.select(client)
+                    .where(FlowField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -357,14 +356,14 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset.get() instanceof FlowV09Field) {
-                return (FlowV09Field) asset.get();
+            } else if (asset.get() instanceof FlowField) {
+                return (FlowField) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = FlowV09Field.select(client)
-                    .where(FlowV09Field.QUALIFIED_NAME.eq(id))
+            Optional<Asset> asset = FlowField.select(client)
+                    .where(FlowField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -373,8 +372,8 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
-            } else if (asset.get() instanceof FlowV09Field) {
-                return (FlowV09Field) asset.get();
+            } else if (asset.get() instanceof FlowField) {
+                return (FlowField) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
@@ -382,11 +381,11 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Restore the archived (soft-deleted) FlowV09Field to active.
+     * Restore the archived (soft-deleted) FlowField to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the FlowV09Field
-     * @return true if the FlowV09Field is now active, and false otherwise
+     * @param qualifiedName for the FlowField
+     * @return true if the FlowField is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -394,28 +393,28 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Builds the minimal object necessary to update a FlowV09Field.
+     * Builds the minimal object necessary to update a FlowField.
      *
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the minimal request necessary to update the FlowV09Field, as a builder
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the minimal request necessary to update the FlowField, as a builder
      */
-    public static FlowV09FieldBuilder<?, ?> updater(String qualifiedName, String name) {
-        return FlowV09Field._internal()
+    public static FlowFieldBuilder<?, ?> updater(String qualifiedName, String name) {
+        return FlowField._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowV09Field, from a potentially
-     * more-complete FlowV09Field object.
+     * Builds the minimal object necessary to apply an update to a FlowField, from a potentially
+     * more-complete FlowField object.
      *
-     * @return the minimal object necessary to update the FlowV09Field, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowV09Field are not found in the initial object
+     * @return the minimal object necessary to update the FlowField, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for FlowField are not found in the initial object
      */
     @Override
-    public FlowV09FieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public FlowFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
@@ -423,200 +422,198 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowV09FieldBuilder<C extends FlowV09Field, B extends FlowV09FieldBuilder<C, B>>
+    public abstract static class FlowFieldBuilder<C extends FlowField, B extends FlowFieldBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
-     * Remove the system description from a FlowV09Field.
+     * Remove the system description from a FlowField.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the updated FlowV09Field, or null if the removal failed
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowField removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09Field) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (FlowField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a FlowV09Field.
+     * Remove the user's description from a FlowField.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the updated FlowV09Field, or null if the removal failed
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowField removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09Field) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (FlowField) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a FlowV09Field.
+     * Remove the owners from a FlowField.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV09Field's owners
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the updated FlowV09Field, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowField's owners
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
-        return (FlowV09Field) Asset.removeOwners(client, updater(qualifiedName, name));
+    public static FlowField removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (FlowField) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a FlowV09Field.
+     * Update the certificate on a FlowField.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV09Field's certificate
-     * @param qualifiedName of the FlowV09Field
+     * @param client connectivity to the Atlan tenant on which to update the FlowField's certificate
+     * @param qualifiedName of the FlowField
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated FlowV09Field, or null if the update failed
+     * @return the updated FlowField, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field updateCertificate(
+    public static FlowField updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowV09Field)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FlowField) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a FlowV09Field.
+     * Remove the certificate from a FlowField.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV09Field's certificate
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the updated FlowV09Field, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowField's certificate
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static FlowField removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09Field) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (FlowField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a FlowV09Field.
+     * Update the announcement on a FlowField.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV09Field's announcement
-     * @param qualifiedName of the FlowV09Field
+     * @param client connectivity to the Atlan tenant on which to update the FlowField's announcement
+     * @param qualifiedName of the FlowField
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field updateAnnouncement(
+    public static FlowField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowV09Field)
+        return (FlowField)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a FlowV09Field.
+     * Remove the announcement from a FlowField.
      *
-     * @param client connectivity to the Atlan client from which to remove the FlowV09Field's announcement
-     * @param qualifiedName of the FlowV09Field
-     * @param name of the FlowV09Field
-     * @return the updated FlowV09Field, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the FlowField's announcement
+     * @param qualifiedName of the FlowField
+     * @param name of the FlowField
+     * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static FlowField removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09Field) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (FlowField) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the FlowV09Field.
+     * Replace the terms linked to the FlowField.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the FlowV09Field's assigned terms
-     * @param qualifiedName for the FlowV09Field
-     * @param name human-readable name of the FlowV09Field
-     * @param terms the list of terms to replace on the FlowV09Field, or null to remove all terms from the FlowV09Field
-     * @return the FlowV09Field that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the FlowField's assigned terms
+     * @param qualifiedName for the FlowField
+     * @param name human-readable name of the FlowField
+     * @param terms the list of terms to replace on the FlowField, or null to remove all terms from the FlowField
+     * @return the FlowField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowV09Field replaceTerms(
+    public static FlowField replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (FlowV09Field) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (FlowField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the FlowV09Field, without replacing existing terms linked to the FlowV09Field.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09Field's existing terms,
+     * Link additional terms to the FlowField, without replacing existing terms linked to the FlowField.
+     * Note: this operation must make two API calls — one to retrieve the FlowField's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the FlowV09Field
-     * @param qualifiedName for the FlowV09Field
-     * @param terms the list of terms to append to the FlowV09Field
-     * @return the FlowV09Field that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the FlowField
+     * @param qualifiedName for the FlowField
+     * @param terms the list of terms to append to the FlowField
+     * @return the FlowField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV09Field appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowField appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV09Field) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowField) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a FlowV09Field, without replacing all existing terms linked to the FlowV09Field.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09Field's existing terms,
+     * Remove terms from a FlowField, without replacing all existing terms linked to the FlowField.
+     * Note: this operation must make two API calls — one to retrieve the FlowField's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowV09Field
-     * @param qualifiedName for the FlowV09Field
-     * @param terms the list of terms to remove from the FlowV09Field, which must be referenced by GUID
-     * @return the FlowV09Field that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowField
+     * @param qualifiedName for the FlowField
+     * @param terms the list of terms to remove from the FlowField, which must be referenced by GUID
+     * @return the FlowField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV09Field removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowField removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV09Field) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowField) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a FlowV09Field, without replacing existing Atlan tags linked to the FlowV09Field.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09Field's existing Atlan tags,
+     * Add Atlan tags to a FlowField, without replacing existing Atlan tags linked to the FlowField.
+     * Note: this operation must make two API calls — one to retrieve the FlowField's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09Field
-     * @param qualifiedName of the FlowV09Field
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowField
+     * @param qualifiedName of the FlowField
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated FlowV09Field
+     * @return the updated FlowField
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowV09Field appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+    public static FlowField appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (FlowV09Field) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+        return (FlowField) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a FlowV09Field, without replacing existing Atlan tags linked to the FlowV09Field.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09Field's existing Atlan tags,
+     * Add Atlan tags to a FlowField, without replacing existing Atlan tags linked to the FlowField.
+     * Note: this operation must make two API calls — one to retrieve the FlowField's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09Field
-     * @param qualifiedName of the FlowV09Field
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowField
+     * @param qualifiedName of the FlowField
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated FlowV09Field
+     * @return the updated FlowField
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
     @Deprecated
-    public static FlowV09Field appendAtlanTags(
+    public static FlowField appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -624,7 +621,7 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (FlowV09Field) Asset.appendAtlanTags(
+        return (FlowField) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -635,12 +632,12 @@ public class FlowV09Field extends Asset implements IFlowV09Field, IFlowV09, ICat
     }
 
     /**
-     * Remove an Atlan tag from a FlowV09Field.
+     * Remove an Atlan tag from a FlowField.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowV09Field
-     * @param qualifiedName of the FlowV09Field
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowField
+     * @param qualifiedName of the FlowField
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowV09Field
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowField
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
     @Deprecated

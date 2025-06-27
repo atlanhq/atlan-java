@@ -439,7 +439,7 @@ public interface IDbtProcess {
     IFivetranConnector getFivetranConnector();
 
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowV09ControlOperation getFlowV09OrchestratedBy();
+    IFlowControlOperation getFlowOrchestratedBy();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

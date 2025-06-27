@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * A nested field-level operation that uses at least one ephemeral field as either an input or output.
+ * A nested data operation that uses at least one ephemeral dataset as either an input or output.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -40,13 +40,13 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("serial")
-public class FlowV09FieldOperation extends Asset
-        implements IFlowV09FieldOperation, IFlowV09, IColumnProcess, IAsset, IReferenceable, ILineageProcess {
+public class FlowDatasetOperation extends Asset
+        implements IFlowDatasetOperation, ILineageProcess, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "FlowV09FieldOperation";
+    public static final String TYPE_NAME = "FlowDatasetOperation";
 
-    /** Fixed typeName for FlowV09FieldOperations. */
+    /** Fixed typeName for FlowDatasetOperations. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -87,61 +87,65 @@ public class FlowV09FieldOperation extends Asset
 
     /** Optional error message of the flow run. */
     @Attribute
-    String flowV09ErrorMessage;
+    String flowErrorMessage;
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date
-    Long flowV09FinishedAt;
+    Long flowFinishedAt;
 
     /** Simple name of the folder in which this asset is contained. */
     @Attribute
-    String flowV09FolderName;
+    String flowFolderName;
 
     /** Unique name of the folder in which this asset is contained. */
     @Attribute
-    String flowV09FolderQualifiedName;
+    String flowFolderQualifiedName;
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
-    String flowV09Id;
+    String flowId;
 
     /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
-    IFlowV09ControlOperation flowV09OrchestratedBy;
+    IFlowControlOperation flowOrchestratedBy;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute
-    String flowV09ProjectName;
+    String flowProjectName;
 
     /** Unique name of the project in which this asset is contained. */
     @Attribute
-    String flowV09ProjectQualifiedName;
+    String flowProjectQualifiedName;
+
+    /** Reusable unit of dataset operations that are all executed together. */
+    @Attribute
+    IFlowReusableUnit flowReusableUnit;
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV09ReusableUnitName;
+    String flowReusableUnitName;
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute
-    String flowV09ReusableUnitQualifiedName;
+    String flowReusableUnitQualifiedName;
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
     @Attribute
-    String flowV09RunId;
+    String flowRunId;
 
     /** Schedule for this point in the data processing or orchestration. */
     @Attribute
-    String flowV09Schedule;
+    String flowSchedule;
 
     /** Date and time at which this point in the data processing or orchestration started. */
     @Attribute
     @Date
-    Long flowV09StartedAt;
+    Long flowStartedAt;
 
     /** Overall status of this point in the data processing or orchestration. */
     @Attribute
-    String flowV09Status;
+    String flowStatus;
 
     /** Assets that are inputs to this process. */
     @Attribute
@@ -167,10 +171,6 @@ public class FlowV09FieldOperation extends Asset
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Process in which this task exists. */
-    @Attribute
-    ILineageProcess process;
-
     /** TBC */
     @Attribute
     @Singular
@@ -181,14 +181,14 @@ public class FlowV09FieldOperation extends Asset
     String sql;
 
     /**
-     * Builds the minimal object necessary to create a relationship to a FlowV09FieldOperation, from a potentially
-     * more-complete FlowV09FieldOperation object.
+     * Builds the minimal object necessary to create a relationship to a FlowDatasetOperation, from a potentially
+     * more-complete FlowDatasetOperation object.
      *
-     * @return the minimal object necessary to relate to the FlowV09FieldOperation
-     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowV09FieldOperation relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the FlowDatasetOperation
+     * @throws InvalidRequestException if any of the minimal set of required properties for a FlowDatasetOperation relationship are not found in the initial object
      */
     @Override
-    public FlowV09FieldOperation trimToReference() throws InvalidRequestException {
+    public FlowDatasetOperation trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -205,27 +205,27 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Start a fluent search that will return all FlowV09FieldOperation assets.
+     * Start a fluent search that will return all FlowDatasetOperation assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) FlowV09FieldOperation assets will be included.
+     * optimal retrieval. Only active (non-archived) FlowDatasetOperation assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all FlowV09FieldOperation assets
+     * @return a fluent search that includes all FlowDatasetOperation assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all FlowV09FieldOperation assets.
+     * Start a fluent search that will return all FlowDatasetOperation assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) FlowV09FieldOperations will be included
-     * @return a fluent search that includes all FlowV09FieldOperation assets
+     * @param includeArchived when true, archived (soft-deleted) FlowDatasetOperations will be included
+     * @return a fluent search that includes all FlowDatasetOperation assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -237,51 +237,51 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Reference to a FlowV09FieldOperation by GUID. Use this to create a relationship to this FlowV09FieldOperation,
+     * Reference to a FlowDatasetOperation by GUID. Use this to create a relationship to this FlowDatasetOperation,
      * where the relationship should be replaced.
      *
-     * @param guid the GUID of the FlowV09FieldOperation to reference
-     * @return reference to a FlowV09FieldOperation that can be used for defining a relationship to a FlowV09FieldOperation
+     * @param guid the GUID of the FlowDatasetOperation to reference
+     * @return reference to a FlowDatasetOperation that can be used for defining a relationship to a FlowDatasetOperation
      */
-    public static FlowV09FieldOperation refByGuid(String guid) {
+    public static FlowDatasetOperation refByGuid(String guid) {
         return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV09FieldOperation by GUID. Use this to create a relationship to this FlowV09FieldOperation,
+     * Reference to a FlowDatasetOperation by GUID. Use this to create a relationship to this FlowDatasetOperation,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param guid the GUID of the FlowV09FieldOperation to reference
+     * @param guid the GUID of the FlowDatasetOperation to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV09FieldOperation that can be used for defining a relationship to a FlowV09FieldOperation
+     * @return reference to a FlowDatasetOperation that can be used for defining a relationship to a FlowDatasetOperation
      */
-    public static FlowV09FieldOperation refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FlowV09FieldOperation._internal().guid(guid).semantic(semantic).build();
+    public static FlowDatasetOperation refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return FlowDatasetOperation._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
-     * Reference to a FlowV09FieldOperation by qualifiedName. Use this to create a relationship to this FlowV09FieldOperation,
+     * Reference to a FlowDatasetOperation by qualifiedName. Use this to create a relationship to this FlowDatasetOperation,
      * where the relationship should be replaced.
      *
-     * @param qualifiedName the qualifiedName of the FlowV09FieldOperation to reference
-     * @return reference to a FlowV09FieldOperation that can be used for defining a relationship to a FlowV09FieldOperation
+     * @param qualifiedName the qualifiedName of the FlowDatasetOperation to reference
+     * @return reference to a FlowDatasetOperation that can be used for defining a relationship to a FlowDatasetOperation
      */
-    public static FlowV09FieldOperation refByQualifiedName(String qualifiedName) {
+    public static FlowDatasetOperation refByQualifiedName(String qualifiedName) {
         return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a FlowV09FieldOperation by qualifiedName. Use this to create a relationship to this FlowV09FieldOperation,
+     * Reference to a FlowDatasetOperation by qualifiedName. Use this to create a relationship to this FlowDatasetOperation,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param qualifiedName the qualifiedName of the FlowV09FieldOperation to reference
+     * @param qualifiedName the qualifiedName of the FlowDatasetOperation to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a FlowV09FieldOperation that can be used for defining a relationship to a FlowV09FieldOperation
+     * @return reference to a FlowDatasetOperation that can be used for defining a relationship to a FlowDatasetOperation
      */
-    public static FlowV09FieldOperation refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
-        return FlowV09FieldOperation._internal()
+    public static FlowDatasetOperation refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+        return FlowDatasetOperation._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .semantic(semantic)
@@ -289,29 +289,29 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Retrieves a FlowV09FieldOperation by one of its identifiers, complete with all of its relationships.
+     * Retrieves a FlowDatasetOperation by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09FieldOperation to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full FlowV09FieldOperation, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09FieldOperation does not exist or the provided GUID is not a FlowV09FieldOperation
+     * @param id of the FlowDatasetOperation to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full FlowDatasetOperation, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowV09FieldOperation get(AtlanClient client, String id) throws AtlanException {
+    public static FlowDatasetOperation get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, false);
     }
 
     /**
-     * Retrieves a FlowV09FieldOperation by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a FlowDatasetOperation by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09FieldOperation to retrieve, either its GUID or its full qualifiedName
+     * @param id of the FlowDatasetOperation to retrieve, either its GUID or its full qualifiedName
      * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full FlowV09FieldOperation, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09FieldOperation does not exist or the provided GUID is not a FlowV09FieldOperation
+     * @return the requested full FlowDatasetOperation, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowV09FieldOperation get(AtlanClient client, String id, boolean includeAllRelationships)
+    public static FlowDatasetOperation get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
@@ -319,15 +319,15 @@ public class FlowV09FieldOperation extends Asset
             Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof FlowV09FieldOperation) {
-                return (FlowV09FieldOperation) asset;
+            } else if (asset instanceof FlowDatasetOperation) {
+                return (FlowDatasetOperation) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
-            if (asset instanceof FlowV09FieldOperation) {
-                return (FlowV09FieldOperation) asset;
+            if (asset instanceof FlowDatasetOperation) {
+                return (FlowDatasetOperation) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -335,32 +335,32 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Retrieves a FlowV09FieldOperation by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowDatasetOperation by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09FieldOperation to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV09FieldOperation, including any relationships
-     * @return the requested FlowV09FieldOperation, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09FieldOperation does not exist or the provided GUID is not a FlowV09FieldOperation
+     * @param id of the FlowDatasetOperation to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowDatasetOperation, including any relationships
+     * @return the requested FlowDatasetOperation, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowV09FieldOperation get(AtlanClient client, String id, Collection<AtlanField> attributes)
+    public static FlowDatasetOperation get(AtlanClient client, String id, Collection<AtlanField> attributes)
             throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
     /**
-     * Retrieves a FlowV09FieldOperation by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a FlowDatasetOperation by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the FlowV09FieldOperation to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the FlowV09FieldOperation, including any relationships
-     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowV09FieldOperation
-     * @return the requested FlowV09FieldOperation, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowV09FieldOperation does not exist or the provided GUID is not a FlowV09FieldOperation
+     * @param id of the FlowDatasetOperation to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the FlowDatasetOperation, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the FlowDatasetOperation
+     * @return the requested FlowDatasetOperation, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowV09FieldOperation get(
+    public static FlowDatasetOperation get(
             AtlanClient client,
             String id,
             Collection<AtlanField> attributes,
@@ -369,8 +369,8 @@ public class FlowV09FieldOperation extends Asset
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = FlowV09FieldOperation.select(client)
-                    .where(FlowV09FieldOperation.GUID.eq(id))
+            Optional<Asset> asset = FlowDatasetOperation.select(client)
+                    .where(FlowDatasetOperation.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -379,14 +379,14 @@ public class FlowV09FieldOperation extends Asset
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset.get() instanceof FlowV09FieldOperation) {
-                return (FlowV09FieldOperation) asset.get();
+            } else if (asset.get() instanceof FlowDatasetOperation) {
+                return (FlowDatasetOperation) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = FlowV09FieldOperation.select(client)
-                    .where(FlowV09FieldOperation.QUALIFIED_NAME.eq(id))
+            Optional<Asset> asset = FlowDatasetOperation.select(client)
+                    .where(FlowDatasetOperation.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -395,8 +395,8 @@ public class FlowV09FieldOperation extends Asset
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
-            } else if (asset.get() instanceof FlowV09FieldOperation) {
-                return (FlowV09FieldOperation) asset.get();
+            } else if (asset.get() instanceof FlowDatasetOperation) {
+                return (FlowDatasetOperation) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
@@ -404,11 +404,11 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Restore the archived (soft-deleted) FlowV09FieldOperation to active.
+     * Restore the archived (soft-deleted) FlowDatasetOperation to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the FlowV09FieldOperation
-     * @return true if the FlowV09FieldOperation is now active, and false otherwise
+     * @param qualifiedName for the FlowDatasetOperation
+     * @return true if the FlowDatasetOperation is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -416,28 +416,28 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to update a FlowV09FieldOperation.
+     * Builds the minimal object necessary to update a FlowDatasetOperation.
      *
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the minimal request necessary to update the FlowV09FieldOperation, as a builder
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the minimal request necessary to update the FlowDatasetOperation, as a builder
      */
-    public static FlowV09FieldOperationBuilder<?, ?> updater(String qualifiedName, String name) {
-        return FlowV09FieldOperation._internal()
+    public static FlowDatasetOperationBuilder<?, ?> updater(String qualifiedName, String name) {
+        return FlowDatasetOperation._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowV09FieldOperation, from a potentially
-     * more-complete FlowV09FieldOperation object.
+     * Builds the minimal object necessary to apply an update to a FlowDatasetOperation, from a potentially
+     * more-complete FlowDatasetOperation object.
      *
-     * @return the minimal object necessary to update the FlowV09FieldOperation, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowV09FieldOperation are not found in the initial object
+     * @return the minimal object necessary to update the FlowDatasetOperation, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for FlowDatasetOperation are not found in the initial object
      */
     @Override
-    public FlowV09FieldOperationBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public FlowDatasetOperationBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
@@ -445,201 +445,201 @@ public class FlowV09FieldOperation extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowV09FieldOperationBuilder<
-                    C extends FlowV09FieldOperation, B extends FlowV09FieldOperationBuilder<C, B>>
+    public abstract static class FlowDatasetOperationBuilder<
+                    C extends FlowDatasetOperation, B extends FlowDatasetOperationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
-     * Remove the system description from a FlowV09FieldOperation.
+     * Remove the system description from a FlowDatasetOperation.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the updated FlowV09FieldOperation, or null if the removal failed
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowDatasetOperation removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (FlowDatasetOperation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a FlowV09FieldOperation.
+     * Remove the user's description from a FlowDatasetOperation.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the updated FlowV09FieldOperation, or null if the removal failed
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static FlowDatasetOperation removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (FlowDatasetOperation) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a FlowV09FieldOperation.
+     * Remove the owners from a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV09FieldOperation's owners
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the updated FlowV09FieldOperation, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowDatasetOperation's owners
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation removeOwners(AtlanClient client, String qualifiedName, String name)
+    public static FlowDatasetOperation removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeOwners(client, updater(qualifiedName, name));
+        return (FlowDatasetOperation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a FlowV09FieldOperation.
+     * Update the certificate on a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV09FieldOperation's certificate
-     * @param qualifiedName of the FlowV09FieldOperation
+     * @param client connectivity to the Atlan tenant on which to update the FlowDatasetOperation's certificate
+     * @param qualifiedName of the FlowDatasetOperation
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated FlowV09FieldOperation, or null if the update failed
+     * @return the updated FlowDatasetOperation, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation updateCertificate(
+    public static FlowDatasetOperation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowV09FieldOperation)
+        return (FlowDatasetOperation)
                 Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a FlowV09FieldOperation.
+     * Remove the certificate from a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the FlowV09FieldOperation's certificate
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the updated FlowV09FieldOperation, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the FlowDatasetOperation's certificate
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static FlowDatasetOperation removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (FlowDatasetOperation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a FlowV09FieldOperation.
+     * Update the announcement on a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant on which to update the FlowV09FieldOperation's announcement
-     * @param qualifiedName of the FlowV09FieldOperation
+     * @param client connectivity to the Atlan tenant on which to update the FlowDatasetOperation's announcement
+     * @param qualifiedName of the FlowDatasetOperation
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation updateAnnouncement(
+    public static FlowDatasetOperation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowV09FieldOperation)
+        return (FlowDatasetOperation)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a FlowV09FieldOperation.
+     * Remove the announcement from a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan client from which to remove the FlowV09FieldOperation's announcement
-     * @param qualifiedName of the FlowV09FieldOperation
-     * @param name of the FlowV09FieldOperation
-     * @return the updated FlowV09FieldOperation, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the FlowDatasetOperation's announcement
+     * @param qualifiedName of the FlowDatasetOperation
+     * @param name of the FlowDatasetOperation
+     * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static FlowDatasetOperation removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (FlowDatasetOperation) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the FlowV09FieldOperation.
+     * Replace the terms linked to the FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the FlowV09FieldOperation's assigned terms
-     * @param qualifiedName for the FlowV09FieldOperation
-     * @param name human-readable name of the FlowV09FieldOperation
-     * @param terms the list of terms to replace on the FlowV09FieldOperation, or null to remove all terms from the FlowV09FieldOperation
-     * @return the FlowV09FieldOperation that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the FlowDatasetOperation's assigned terms
+     * @param qualifiedName for the FlowDatasetOperation
+     * @param name human-readable name of the FlowDatasetOperation
+     * @param terms the list of terms to replace on the FlowDatasetOperation, or null to remove all terms from the FlowDatasetOperation
+     * @return the FlowDatasetOperation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowV09FieldOperation replaceTerms(
+    public static FlowDatasetOperation replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (FlowV09FieldOperation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (FlowDatasetOperation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the FlowV09FieldOperation, without replacing existing terms linked to the FlowV09FieldOperation.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09FieldOperation's existing terms,
+     * Link additional terms to the FlowDatasetOperation, without replacing existing terms linked to the FlowDatasetOperation.
+     * Note: this operation must make two API calls — one to retrieve the FlowDatasetOperation's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the FlowV09FieldOperation
-     * @param qualifiedName for the FlowV09FieldOperation
-     * @param terms the list of terms to append to the FlowV09FieldOperation
-     * @return the FlowV09FieldOperation that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the FlowDatasetOperation
+     * @param qualifiedName for the FlowDatasetOperation
+     * @param terms the list of terms to append to the FlowDatasetOperation
+     * @return the FlowDatasetOperation that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV09FieldOperation appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowDatasetOperation appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowDatasetOperation) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a FlowV09FieldOperation, without replacing all existing terms linked to the FlowV09FieldOperation.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09FieldOperation's existing terms,
+     * Remove terms from a FlowDatasetOperation, without replacing all existing terms linked to the FlowDatasetOperation.
+     * Note: this operation must make two API calls — one to retrieve the FlowDatasetOperation's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowV09FieldOperation
-     * @param qualifiedName for the FlowV09FieldOperation
-     * @param terms the list of terms to remove from the FlowV09FieldOperation, which must be referenced by GUID
-     * @return the FlowV09FieldOperation that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the FlowDatasetOperation
+     * @param qualifiedName for the FlowDatasetOperation
+     * @param terms the list of terms to remove from the FlowDatasetOperation, which must be referenced by GUID
+     * @return the FlowDatasetOperation that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FlowV09FieldOperation removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static FlowDatasetOperation removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (FlowDatasetOperation) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a FlowV09FieldOperation, without replacing existing Atlan tags linked to the FlowV09FieldOperation.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09FieldOperation's existing Atlan tags,
+     * Add Atlan tags to a FlowDatasetOperation, without replacing existing Atlan tags linked to the FlowDatasetOperation.
+     * Note: this operation must make two API calls — one to retrieve the FlowDatasetOperation's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09FieldOperation
-     * @param qualifiedName of the FlowV09FieldOperation
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowDatasetOperation
+     * @param qualifiedName of the FlowDatasetOperation
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated FlowV09FieldOperation
+     * @return the updated FlowDatasetOperation
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowV09FieldOperation appendAtlanTags(
+    public static FlowDatasetOperation appendAtlanTags(
             AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (FlowV09FieldOperation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+        return (FlowDatasetOperation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a FlowV09FieldOperation, without replacing existing Atlan tags linked to the FlowV09FieldOperation.
-     * Note: this operation must make two API calls — one to retrieve the FlowV09FieldOperation's existing Atlan tags,
+     * Add Atlan tags to a FlowDatasetOperation, without replacing existing Atlan tags linked to the FlowDatasetOperation.
+     * Note: this operation must make two API calls — one to retrieve the FlowDatasetOperation's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowV09FieldOperation
-     * @param qualifiedName of the FlowV09FieldOperation
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the FlowDatasetOperation
+     * @param qualifiedName of the FlowDatasetOperation
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated FlowV09FieldOperation
+     * @return the updated FlowDatasetOperation
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
     @Deprecated
-    public static FlowV09FieldOperation appendAtlanTags(
+    public static FlowDatasetOperation appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -647,7 +647,7 @@ public class FlowV09FieldOperation extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (FlowV09FieldOperation) Asset.appendAtlanTags(
+        return (FlowDatasetOperation) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -658,12 +658,12 @@ public class FlowV09FieldOperation extends Asset
     }
 
     /**
-     * Remove an Atlan tag from a FlowV09FieldOperation.
+     * Remove an Atlan tag from a FlowDatasetOperation.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowV09FieldOperation
-     * @param qualifiedName of the FlowV09FieldOperation
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a FlowDatasetOperation
+     * @param qualifiedName of the FlowDatasetOperation
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowV09FieldOperation
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the FlowDatasetOperation
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
     @Deprecated

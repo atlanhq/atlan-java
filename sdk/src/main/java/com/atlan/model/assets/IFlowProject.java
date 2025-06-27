@@ -8,9 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,59 +21,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for flow-specific (ETL, other data processing) assets.
+ * A project, workspace or namespace that is used to organize data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09 {
+public interface IFlowProject {
 
-    public static final String TYPE_NAME = "FlowV09";
-
-    /** Optional error message of the flow run. */
-    KeywordField FLOW_V09ERROR_MESSAGE = new KeywordField("flowV09ErrorMessage", "flowV09ErrorMessage");
-
-    /** Date and time at which this point in the data processing or orchestration finished. */
-    NumericField FLOW_V09FINISHED_AT = new NumericField("flowV09FinishedAt", "flowV09FinishedAt");
-
-    /** Simple name of the folder in which this asset is contained. */
-    KeywordTextField FLOW_V09FOLDER_NAME =
-            new KeywordTextField("flowV09FolderName", "flowV09FolderName.keyword", "flowV09FolderName");
-
-    /** Unique name of the folder in which this asset is contained. */
-    KeywordField FLOW_V09FOLDER_QUALIFIED_NAME =
-            new KeywordField("flowV09FolderQualifiedName", "flowV09FolderQualifiedName");
-
-    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    KeywordField FLOW_V09ID = new KeywordField("flowV09Id", "flowV09Id");
-
-    /** Simple name of the project in which this asset is contained. */
-    KeywordTextField FLOW_V09PROJECT_NAME =
-            new KeywordTextField("flowV09ProjectName", "flowV09ProjectName.keyword", "flowV09ProjectName");
-
-    /** Unique name of the project in which this asset is contained. */
-    KeywordField FLOW_V09PROJECT_QUALIFIED_NAME =
-            new KeywordField("flowV09ProjectQualifiedName", "flowV09ProjectQualifiedName");
-
-    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    KeywordTextField FLOW_V09REUSABLE_UNIT_NAME = new KeywordTextField(
-            "flowV09ReusableUnitName", "flowV09ReusableUnitName.keyword", "flowV09ReusableUnitName");
-
-    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    KeywordField FLOW_V09REUSABLE_UNIT_QUALIFIED_NAME =
-            new KeywordField("flowV09ReusableUnitQualifiedName", "flowV09ReusableUnitQualifiedName");
-
-    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    KeywordField FLOW_V09RUN_ID = new KeywordField("flowV09RunId", "flowV09RunId");
-
-    /** Schedule for this point in the data processing or orchestration. */
-    KeywordField FLOW_V09SCHEDULE = new KeywordField("flowV09Schedule", "flowV09Schedule");
-
-    /** Date and time at which this point in the data processing or orchestration started. */
-    NumericField FLOW_V09STARTED_AT = new NumericField("flowV09StartedAt", "flowV09StartedAt");
-
-    /** Overall status of this point in the data processing or orchestration. */
-    KeywordField FLOW_V09STATUS = new KeywordField("flowV09Status", "flowV09Status");
+    public static final String TYPE_NAME = "FlowProject";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -397,43 +349,43 @@ public interface IFlowV09 {
     SortedSet<IFile> getFiles();
 
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
+    String getFlowId();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();

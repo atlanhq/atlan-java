@@ -8,8 +8,6 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -24,29 +22,20 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * An ephemeral piece of data either produced by or used as input by a data operation.
+ * A grouping mechanism within a project to further organize data processing.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IFlowV09Dataset {
+public interface IFlowFolder {
 
-    public static final String TYPE_NAME = "FlowV09Dataset";
+    public static final String TYPE_NAME = "FlowFolder";
 
-    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
-    RelationField FLOW_V09DETAILED_BY = new RelationField("flowV09DetailedBy");
+    /** Parent folder containing the sub-folders. */
+    RelationField FLOW_PARENT_FOLDER = new RelationField("flowParentFolder");
 
-    /** Count of the number of individual fields that make up this ephemeral dataset. */
-    NumericField FLOW_V09FIELD_COUNT = new NumericField("flowV09FieldCount", "flowV09FieldCount");
-
-    /** Fields contained in the ephemeral dataset. */
-    RelationField FLOW_V09FIELDS = new RelationField("flowV09Fields");
-
-    /** Reusable unit in which the ephemeral dataset is contained. */
-    RelationField FLOW_V09PARENT_UNIT = new RelationField("flowV09ParentUnit");
-
-    /** Type of the ephemeral piece of data. */
-    KeywordField FLOW_V09TYPE = new KeywordField("flowV09Type", "flowV09Type");
+    /** Child (sub) folders contained within the folder. */
+    RelationField FLOW_SUB_FOLDERS = new RelationField("flowSubFolders");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -366,59 +355,50 @@ public interface IFlowV09Dataset {
     /** TBC */
     SortedSet<IFile> getFiles();
 
-    /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
-    IFlowV09ReusableUnit getFlowV09DetailedBy();
-
     /** Optional error message of the flow run. */
-    String getFlowV09ErrorMessage();
-
-    /** Count of the number of individual fields that make up this ephemeral dataset. */
-    Long getFlowV09FieldCount();
-
-    /** Fields contained in the ephemeral dataset. */
-    SortedSet<IFlowV09Field> getFlowV09Fields();
+    String getFlowErrorMessage();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
-    Long getFlowV09FinishedAt();
+    Long getFlowFinishedAt();
 
     /** Simple name of the folder in which this asset is contained. */
-    String getFlowV09FolderName();
+    String getFlowFolderName();
 
     /** Unique name of the folder in which this asset is contained. */
-    String getFlowV09FolderQualifiedName();
+    String getFlowFolderQualifiedName();
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
-    String getFlowV09Id();
+    String getFlowId();
 
-    /** Reusable unit in which the ephemeral dataset is contained. */
-    IFlowV09ReusableUnit getFlowV09ParentUnit();
+    /** Parent folder containing the sub-folders. */
+    IFlowFolder getFlowParentFolder();
 
     /** Simple name of the project in which this asset is contained. */
-    String getFlowV09ProjectName();
+    String getFlowProjectName();
 
     /** Unique name of the project in which this asset is contained. */
-    String getFlowV09ProjectQualifiedName();
+    String getFlowProjectQualifiedName();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitName();
+    String getFlowReusableUnitName();
 
     /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
-    String getFlowV09ReusableUnitQualifiedName();
+    String getFlowReusableUnitQualifiedName();
 
     /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
-    String getFlowV09RunId();
+    String getFlowRunId();
 
     /** Schedule for this point in the data processing or orchestration. */
-    String getFlowV09Schedule();
+    String getFlowSchedule();
 
     /** Date and time at which this point in the data processing or orchestration started. */
-    Long getFlowV09StartedAt();
+    Long getFlowStartedAt();
 
     /** Overall status of this point in the data processing or orchestration. */
-    String getFlowV09Status();
+    String getFlowStatus();
 
-    /** Type of the ephemeral piece of data. */
-    String getFlowV09Type();
+    /** Child (sub) folders contained within the folder. */
+    SortedSet<IFlowFolder> getFlowSubFolders();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -428,15 +408,6 @@ public interface IFlowV09Dataset {
 
     /** Data products for which this asset is an input port. */
     SortedSet<IDataProduct> getInputPortDataProducts();
-
-    /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
-
-    /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -477,26 +448,11 @@ public interface IFlowV09Dataset {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
-
-    /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
-
-    /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
 
     /** Data products for which this asset is an output port. */
     SortedSet<IDataProduct> getOutputPortDataProducts();
