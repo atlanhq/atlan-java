@@ -40,7 +40,8 @@ class AssetsWithUserDefinedRelationshipsTest : PackageTest("awudr") {
         gtcIn.useLines { lines ->
             lines.forEach { line ->
                 val revised =
-                    line.replace("{DBNAME1}", db1)
+                    line
+                        .replace("{DBNAME1}", db1)
                         .replace("{DBNAME2}", db2)
                 gtcOut.appendText("$revised,\n")
             }
@@ -61,12 +62,14 @@ class AssetsWithUserDefinedRelationshipsTest : PackageTest("awudr") {
 
     override fun teardown() {
         val connection = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)[0]!!
-        val dbs = Database.select(client)
-            .where(Database.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-            .where(Database.NAME.`in`(listOf(db1, db2)))
-            .stream()
-            .map { it.guid }
-            .toList()
+        val dbs =
+            Database
+                .select(client)
+                .where(Database.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(Database.NAME.`in`(listOf(db1, db2)))
+                .stream()
+                .map { it.guid }
+                .toList()
         client.assets.delete(dbs, AtlanDeleteType.PURGE)
     }
 
@@ -105,13 +108,15 @@ class AssetsWithUserDefinedRelationshipsTest : PackageTest("awudr") {
 
     private fun databasesCreated(name: String): Database {
         val connection = Connection.findByName(client, "production", AtlanConnectorType.SNOWFLAKE)[0]!!
-        val db = Database.select(client)
-            .where(Database.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
-            .where(Database.NAME.eq(name))
-            .includesOnResults(dbAttrs)
-            .stream()
-            .map { it as Database }
-            .toList()
+        val db =
+            Database
+                .select(client)
+                .where(Database.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
+                .where(Database.NAME.eq(name))
+                .includesOnResults(dbAttrs)
+                .stream()
+                .map { it as Database }
+                .toList()
         assertEquals(1, db.size)
         assertEquals(name, db[0].name)
         return db[0]

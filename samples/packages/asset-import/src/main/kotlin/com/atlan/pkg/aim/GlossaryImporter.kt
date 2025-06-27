@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
@@ -32,13 +33,18 @@ class GlossaryImporter(
         typeNameFilter = Glossary.TYPE_NAME,
         logger = logger,
     ) {
+    private val secondPassRemain =
+        setOf(
+            Asset.NAME.atlanFieldName,
+        )
+
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Glossary.QUALIFIED_NAME.atlanFieldName)
-        return super.import(colsToSkip)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
     }
 
     /** {@inheritDoc} */

@@ -37,27 +37,20 @@ class CategoryImporter(
         typeNameFilter = GlossaryCategory.TYPE_NAME,
         logger = logger,
     ) {
-    private var levelToProcess = 0
-
     // Maximum depth of any category in the CSV -- will be updated on first pass through the CSV
     // file by includeRow() method
     private val maxCategoryDepth = AtomicInteger(1)
+    private val secondPassRemain =
+        setOf(
+            GlossaryCategory.NAME.atlanFieldName,
+            GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
+        )
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(GlossaryCategory.QUALIFIED_NAME.atlanFieldName)
-        // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
-        logger.info { "Loading categories in multiple passes, by level..." }
-        val individualResults = mutableListOf<ImportResults?>()
-        while (levelToProcess < maxCategoryDepth.get()) {
-            levelToProcess += 1
-            logger.info { "--- Loading level $levelToProcess categories... ---" }
-            val results = super.import(colsToSkip)
-            individualResults.add(results)
-        }
-        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
+        return super.importHierarchy(cache, typeNameFilter, colsToSkip, secondPassRemain, maxCategoryDepth)
     }
 
     /** {@inheritDoc} */

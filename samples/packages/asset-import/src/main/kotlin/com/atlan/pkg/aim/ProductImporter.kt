@@ -15,7 +15,6 @@ import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_PRODUCT_DELIMITER
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
@@ -38,7 +37,7 @@ class ProductImporter(
     ctx: PackageContext<AssetImportCfg>,
     filename: String,
     logger: KLogger,
-) : CSVImporter(
+) : AbstractBaseImporter(
         ctx = ctx,
         filename = filename,
         logger = logger,
@@ -92,6 +91,10 @@ class ProductImporter(
             ),
     ) {
     private val cache = ctx.dataProductCache
+    private val secondPassRemain =
+        setOf(
+            Asset.NAME.atlanFieldName,
+        )
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
@@ -108,7 +111,7 @@ class ProductImporter(
         if (includes.hasTermAssignments) {
             ctx.termCache.preload()
         }
-        return super.import(colsToSkip)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
     }
 
     /** {@inheritDoc} */
