@@ -109,6 +109,7 @@ public class UserDefRelationship extends RelationshipAttributes {
                         .build();
             } else {
                 return UserDefRelationshipFrom._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -137,6 +138,7 @@ public class UserDefRelationship extends RelationshipAttributes {
                         .build();
             } else {
                 return UserDefRelationshipTo._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

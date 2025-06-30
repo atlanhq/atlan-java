@@ -1,3 +1,3 @@
-qualifiedName,typeName,name,userDescription,userDefRelationshipTo
-{{snowflake/production}}/{DBNAME1},Database,{DBNAME1},Test database for user-defined relationships,
-{{snowflake/production}}/{DBNAME2},Database,{DBNAME2},Another test database for user-defined relationships,Database@{{snowflake/production}}/{DBNAME1} {{toTypeLabel=is copied to|||fromTypeLabel=is copied from}}
+qualifiedName,typeName,connectionQualifiedName,name,userDescription,userDefRelationshipTo
+{{snowflake/production}}/{DBNAME1},Database,{{snowflake/production}},{DBNAME1},Test database for user-defined relationships,
+{{snowflake/production}}/{DBNAME2},Database,{{snowflake/production}},{DBNAME2},Another test database for user-defined relationships,Database@{{snowflake/production}}/{DBNAME1} {{toTypeLabel=is copied to|||fromTypeLabel=is copied from}}

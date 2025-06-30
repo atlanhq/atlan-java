@@ -114,6 +114,7 @@ class AssetsWithUserDefinedRelationshipsTest : PackageTest("awudr") {
                 .where(Database.CONNECTION_QUALIFIED_NAME.eq(connection.qualifiedName))
                 .where(Database.NAME.eq(name))
                 .includesOnResults(dbAttrs)
+                .includeRelationshipAttributes(true)
                 .stream()
                 .map { it as Database }
                 .toList()
