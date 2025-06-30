@@ -202,8 +202,9 @@ abstract class AbstractBaseImporter(
         typeName: String,
         relationships: Set<TypeDefCache.RelationshipEnds>,
     ) {
-        relationships.forEach { relationship ->
-            if (!alreadyHandled.contains(relationship.name)) {
+        relationships
+            .filter { !alreadyHandled.contains(it.name) }
+            .forEach { relationship ->
                 val one = relationship.end1
                 val two = relationship.end2
                 if (header.contains(one) && header.contains(two)) {
@@ -223,6 +224,5 @@ abstract class AbstractBaseImporter(
                     mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
                 }
             }
-        }
     }
 }

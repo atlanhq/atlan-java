@@ -128,15 +128,13 @@ class TypeDefCache(
         relationshipDefs
             .filter { formsCycle(it.endDef1.type, it.endDef2.type) }
             .forEach { relationshipDef ->
-                val type1 = relationshipDef.endDef1.type
-                val type2 = relationshipDef.endDef2.type
                 val re = RelationshipEnds(
                     relationshipDef.name,
-                    type1,
-                    type2,
+                    relationshipDef.endDef1.name,
+                    relationshipDef.endDef2.name,
                 )
-                cyclicalRelationshipsMap.getOrPut(type1) { mutableSetOf() }.add(re)
-                cyclicalRelationshipsMap.getOrPut(type2) { mutableSetOf() }.add(re)
+                cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef1.type) { mutableSetOf() }.add(re)
+                cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef2.type) { mutableSetOf() }.add(re)
             }
     }
 
@@ -149,8 +147,12 @@ class TypeDefCache(
     fun getCyclicalRelationshipsForType(
         typeName: String,
     ): Set<RelationshipEnds> {
-        // Return cached result if available
-        return cyclicalRelationshipsMap.getOrElse(typeName) { emptySet() }
+        // Look up the cyclical relationships in this type and all of its supertypes
+        val consolidated = cyclicalRelationshipsMap.getOrElse(typeName) { mutableSetOf() }.toMutableSet()
+        inheritanceMap[typeName]?.forEach {
+            consolidated.addAll(getCyclicalRelationshipsForType(it))
+        }
+        return consolidated.toSet()
     }
 
     /** Preload the cache (will only act once, in case called multiple times on the same cache) */
@@ -162,6 +164,11 @@ class TypeDefCache(
         }
     }
 
+    /**
+     * @param name of the relationship
+     * @param end1 name of the attribute at end1 of the relationship
+     * @param end2 name of the attribute at end2 of the relationship
+     */
     data class RelationshipEnds(
         val name: String,
         val end1: String,
