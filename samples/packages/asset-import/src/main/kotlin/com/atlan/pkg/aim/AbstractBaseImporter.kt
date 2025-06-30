@@ -15,8 +15,8 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Base set of reusable mechanisms across imports of all types.
@@ -210,9 +210,9 @@ abstract class AbstractBaseImporter(
                 // alerting the user that this can't work, and they'll need to pick one end or the other
                 throw IllegalStateException(
                     """
-                Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
-                You should only use one end of this relationship or the other when importing.
-                """.trimIndent(),
+                    Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
+                    You should only use one end of this relationship or the other when importing.
+                    """.trimIndent(),
                 )
             }
             // Retain any of the cyclical relationships that remain so that we can second-pass process them

@@ -22,9 +22,9 @@ import java.util.stream.Stream
 class TypeDefCache(
     ctx: PackageContext<*>,
 ) : AbstractMassCache<TypeDef>(
-    ctx.client,
-    "typedef",
-) {
+        ctx.client,
+        "typedef",
+    ) {
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val typeDelimiter = "|"
@@ -52,17 +52,16 @@ class TypeDefCache(
      * @param typedef for which to construct the identity
      * @return the unique string identity
      */
-    fun getIdentityForTypedef(typedef: TypeDef): String {
-        return "${typedef.category.value}$typeDelimiter${typedef.name}"
-    }
+    fun getIdentityForTypedef(typedef: TypeDef): String = "${typedef.category.value}$typeDelimiter${typedef.name}"
 
     /** {@inheritDoc}  */
     override fun refreshCache() {
         logger.debug { "Refreshing cache of typedefs..." }
-        val response = client.typeDefs.list(
-            listOf(AtlanTypeCategory.ENTITY, AtlanTypeCategory.RELATIONSHIP),
-            RequestOptions.from(client).skipLogging(true).build(),
-        )
+        val response =
+            client.typeDefs.list(
+                listOf(AtlanTypeCategory.ENTITY, AtlanTypeCategory.RELATIONSHIP),
+                RequestOptions.from(client).skipLogging(true).build(),
+            )
         cacheInheritance(response.entityDefs)
         response.relationshipDefs.forEach { relationDef ->
             cache(getIdentityForTypedef(relationDef), relationDef.name, relationDef)
@@ -128,21 +127,19 @@ class TypeDefCache(
                                 relationshipDef.name,
                                 relationshipDef.endDef1.type,
                                 relationshipDef.endDef2.type,
-                            )
+                            ),
                         )
                     }
                     inheritanceMap.getOrDefault(typeName, null)?.forEach { superType ->
                         cycles.addAll(getCyclicalRelationshipsForType(superType))
                     }
                 }
-        }
+            }
         cyclicalRelationshipsMap[typeName] = cycles.toSet()
         return cyclicalRelationshipsMap[typeName]!!
     }
 
-    private fun isCyclical(
-        relationshipDef: RelationshipDef,
-    ): Boolean {
+    private fun isCyclical(relationshipDef: RelationshipDef): Boolean {
         if (relationshipDef.endDef1.type == relationshipDef.endDef2.type) {
             return true
         } else {
