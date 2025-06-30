@@ -34,7 +34,7 @@ class InformaticaCDITest : PackageTest("cdi") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
-    private val connectorType = "iics"
+    private val connectorType = AtlanConnectorType.INFORMATICA_CDI
     val testFile = "iics-cdi-assets.csv"
 
     private fun prepFile() {
