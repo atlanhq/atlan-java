@@ -5,19 +5,18 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
-import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.model.fields.AtlanField
-import com.atlan.model.typedefs.EntityDef
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
+import com.atlan.pkg.cache.TypeDefCache
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Base set of reusable mechanisms across imports of all types.
@@ -60,86 +59,14 @@ abstract class AbstractBaseImporter(
         typeNameFilter = typeNameFilter,
     ) {
     protected var header = emptyList<String>()
-    protected val cyclicalRelationships = mutableMapOf<String, MutableSet<RelationshipEnds>>()
     protected val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
-    protected val checkedForCycles = mutableSetOf<String>()
-    protected lateinit var typeToSupertypes: Map<String, Set<String>>
     protected var levelToProcess = 0
     private val alreadyHandled =
         setOf(
             "asset_readme",
             "asset_links",
         )
-
-    protected data class RelationshipEnds(
-        val name: String,
-        val end1: String,
-        val end2: String,
-    )
-
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): RowPreprocessor.Results {
-        // Retrieve all relationships and filter to any cyclical relationships
-        // (meaning relationships where both ends are of the same type)
-        val typeDefs = ctx.client.typeDefs.list(listOf(AtlanTypeCategory.RELATIONSHIP, AtlanTypeCategory.ENTITY))
-        typeToSupertypes = buildTypeCache(typeDefs.entityDefs)
-        typeDefs.relationshipDefs
-            .stream()
-            .forEach { relationshipDef ->
-                var cyclical = false
-                if (relationshipDef.endDef1.type == relationshipDef.endDef2.type) {
-                    cyclical = true
-                } else if (!alreadyHandled.contains(relationshipDef.name)) {
-                    // Skip this recursive check for any already-handled types
-                    val end1Supers = typeToSupertypes.getOrElse(relationshipDef.endDef1.type) { emptySet() }
-                    val end2Supers = typeToSupertypes.getOrElse(relationshipDef.endDef2.type) { emptySet() }
-                    if (end1Supers.contains(relationshipDef.endDef2.type) || end2Supers.contains(relationshipDef.endDef1.type)) {
-                        cyclical = true
-                    }
-                }
-                if (cyclical) {
-                    cyclicalRelationships.getOrPut(relationshipDef.endDef1.type) { mutableSetOf() }.add(RelationshipEnds(relationshipDef.name, relationshipDef.endDef1.name, relationshipDef.endDef2.name))
-                }
-            }
-        return super.preprocess(outputFile, outputHeaders)
-    }
-
-    private fun buildTypeCache(entityDefs: List<EntityDef>): Map<String, Set<String>> {
-        // First, create a map of direct supertype relationships
-        val directSupertypes = entityDefs.associate { it.name to it.superTypes.toSet() }
-
-        // Memoization cache for computed transitive supertypes
-        val cache = mutableMapOf<String, Set<String>>()
-
-        fun getTransitiveSupertypes(typeName: String): Set<String> {
-            // Return cached result if available
-            cache[typeName]?.let { return it }
-
-            val direct = directSupertypes[typeName] ?: emptySet()
-            val transitive = mutableSetOf<String>()
-
-            // Add direct supertypes
-            transitive.addAll(direct)
-
-            // Recursively add supertypes of supertypes
-            for (supertype in direct) {
-                transitive.addAll(getTransitiveSupertypes(supertype))
-            }
-
-            // Cache and return result
-            val result = transitive.toSet()
-            cache[typeName] = result
-            return result
-        }
-
-        // Compute for all entity types
-        return entityDefs.associate { entityDef ->
-            entityDef.name to getTransitiveSupertypes(entityDef.name)
-        }
-    }
+    private val hasCachedPrereqs = AtomicBoolean(false)
 
     /** {@inheritDoc} */
     override fun preprocessRow(
@@ -153,17 +80,7 @@ abstract class AbstractBaseImporter(
         // Short-circuit if we're restricting to certain rows and this is not one of them
         if (typeNameFilter.isNotEmpty() && typeNameFilter != typeName) return row
         if (this.header.isEmpty()) this.header = header
-        if (!checkedForCycles.contains(typeName)) {
-            cyclicalRelationships.getOrElse(typeName) { emptySet() }.toList().forEach { relationship ->
-                checkCyclicalRelationship(typeName, relationship)
-            }
-            typeToSupertypes.getOrElse(typeName) { null }?.forEach { superType ->
-                cyclicalRelationships.getOrElse(superType) { emptySet() }.toList().forEach { relationship ->
-                    checkCyclicalRelationship(typeName, relationship)
-                }
-            }
-            checkedForCycles.add(typeName)
-        }
+        checkCyclicalRelationship(typeName, ctx.typeDefCache.getCyclicalRelationshipsForType(typeName, alreadyHandled))
         return row
     }
 
@@ -243,19 +160,23 @@ abstract class AbstractBaseImporter(
     }
 
     private fun cacheAnyPrereqs(cache: AssetCache<*>? = null) {
-        cache?.preload()
-        val results = preprocess()
-        if (results.hasLinks) {
-            ctx.linkCache.preload()
-        }
-        if (results.hasTermAssignments) {
-            ctx.termCache.preload()
-        }
-        if (results.hasDomainRelationship) {
-            ctx.dataDomainCache.preload()
-        }
-        if (results.hasProductRelationship) {
-            ctx.dataProductCache.preload()
+        if (!hasCachedPrereqs.get()) {
+            cache?.preload()
+            ctx.typeDefCache.preload()
+            val results = preprocess()
+            if (results.hasLinks) {
+                ctx.linkCache.preload()
+            }
+            if (results.hasTermAssignments) {
+                ctx.termCache.preload()
+            }
+            if (results.hasDomainRelationship) {
+                ctx.dataDomainCache.preload()
+            }
+            if (results.hasProductRelationship) {
+                ctx.dataProductCache.preload()
+            }
+            hasCachedPrereqs.set(true)
         }
     }
 
@@ -279,25 +200,27 @@ abstract class AbstractBaseImporter(
 
     private fun checkCyclicalRelationship(
         typeName: String,
-        relationship: RelationshipEnds,
+        relationships: Set<TypeDefCache.RelationshipEnds>,
     ) {
-        val one = relationship.end1
-        val two = relationship.end2
-        if (header.contains(one) && header.contains(two)) {
-            // If both ends of the same relationship are in the input file, throw an error
-            // alerting the user that this can't work, and they'll need to pick one end or the other
-            throw IllegalStateException(
-                """
+        relationships.forEach { relationship ->
+            val one = relationship.end1
+            val two = relationship.end2
+            if (header.contains(one) && header.contains(two)) {
+                // If both ends of the same relationship are in the input file, throw an error
+                // alerting the user that this can't work, and they'll need to pick one end or the other
+                throw IllegalStateException(
+                    """
                 Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
                 You should only use one end of this relationship or the other when importing.
                 """.trimIndent(),
-            )
-        }
-        // Retain any of the cyclical relationships that remain so that we can second-pass process them
-        if (header.contains(one)) {
-            mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
-        } else if (header.contains(two)) {
-            mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+                )
+            }
+            // Retain any of the cyclical relationships that remain so that we can second-pass process them
+            if (header.contains(one)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
+            } else if (header.contains(two)) {
+                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+            }
         }
     }
 }
