@@ -80,7 +80,7 @@ abstract class AbstractBaseImporter(
         // Short-circuit if we're restricting to certain rows and this is not one of them
         if (typeNameFilter.isNotEmpty() && typeNameFilter != typeName) return row
         if (this.header.isEmpty()) this.header = header
-        checkCyclicalRelationship(typeName, ctx.typeDefCache.getCyclicalRelationshipsForType(typeName, alreadyHandled))
+        checkCyclicalRelationships(typeName, ctx.typeDefCache.getCyclicalRelationshipsForType(typeName))
         return row
     }
 
@@ -198,28 +198,30 @@ abstract class AbstractBaseImporter(
         if (secondPassResults != null) passResults.add(secondPassResults)
     }
 
-    private fun checkCyclicalRelationship(
+    private fun checkCyclicalRelationships(
         typeName: String,
         relationships: Set<TypeDefCache.RelationshipEnds>,
     ) {
         relationships.forEach { relationship ->
-            val one = relationship.end1
-            val two = relationship.end2
-            if (header.contains(one) && header.contains(two)) {
-                // If both ends of the same relationship are in the input file, throw an error
-                // alerting the user that this can't work, and they'll need to pick one end or the other
-                throw IllegalStateException(
-                    """
+            if (!alreadyHandled.contains(relationship.name)) {
+                val one = relationship.end1
+                val two = relationship.end2
+                if (header.contains(one) && header.contains(two)) {
+                    // If both ends of the same relationship are in the input file, throw an error
+                    // alerting the user that this can't work, and they'll need to pick one end or the other
+                    throw IllegalStateException(
+                        """
                     Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
                     You should only use one end of this relationship or the other when importing.
                     """.trimIndent(),
-                )
-            }
-            // Retain any of the cyclical relationships that remain so that we can second-pass process them
-            if (header.contains(one)) {
-                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
-            } else if (header.contains(two)) {
-                mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+                    )
+                }
+                // Retain any of the cyclical relationships that remain so that we can second-pass process them
+                if (header.contains(one)) {
+                    mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
+                } else if (header.contains(two)) {
+                    mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+                }
             }
         }
     }

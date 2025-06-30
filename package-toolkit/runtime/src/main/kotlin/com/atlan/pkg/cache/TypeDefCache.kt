@@ -12,7 +12,6 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
-import java.util.stream.Stream
 
 /**
  * Utility class for bulk-loading a cache of typedefs.
@@ -30,7 +29,7 @@ class TypeDefCache(
     private val typeDelimiter = "|"
     private var preloaded = AtomicBoolean(false)
     private val inheritanceMap: MutableMap<String, Set<String>> = ConcurrentHashMap()
-    private val cyclicalRelationshipsMap: MutableMap<String, Set<RelationshipEnds>> = ConcurrentHashMap()
+    private val cyclicalRelationshipsMap: MutableMap<String, MutableSet<RelationshipEnds>> = ConcurrentHashMap()
 
     init {
         this.bulkRefresh.set(true)
@@ -63,9 +62,7 @@ class TypeDefCache(
                 RequestOptions.from(client).skipLogging(true).build(),
             )
         cacheInheritance(response.entityDefs)
-        response.relationshipDefs.forEach { relationDef ->
-            cache(getIdentityForTypedef(relationDef), relationDef.name, relationDef)
-        }
+        cacheRelationshipCycles(response.relationshipDefs)
     }
 
     private fun cacheInheritance(entityDefs: List<EntityDef>) {
@@ -102,6 +99,47 @@ class TypeDefCache(
         }
     }
 
+    private fun cacheRelationshipCycles(relationshipDefs: List<RelationshipDef>) {
+
+        fun isSubtypeOf(type1: String, type2: String): Boolean {
+            if (type1 == type2) return true
+
+            val visited = mutableSetOf<String>()
+            val stack = mutableListOf(type1)
+
+            while (stack.isNotEmpty()) {
+                val current = stack.removeLastOrNull() ?: break
+                if (current in visited) continue
+                visited.add(current)
+                inheritanceMap[current]?.forEach { supertype ->
+                    if (supertype == type2) return true
+                    stack.add(supertype)
+                }
+            }
+
+            return false
+        }
+
+        fun formsCycle(type1: String, type2: String): Boolean {
+            return isSubtypeOf(type1, type2) ||
+                isSubtypeOf(type2, type1)
+        }
+
+        relationshipDefs
+            .filter { formsCycle(it.endDef1.type, it.endDef2.type) }
+            .forEach { relationshipDef ->
+                val type1 = relationshipDef.endDef1.type
+                val type2 = relationshipDef.endDef2.type
+                val re = RelationshipEnds(
+                    relationshipDef.name,
+                    type1,
+                    type2,
+                )
+                cyclicalRelationshipsMap.getOrPut(type1) { mutableSetOf() }.add(re)
+                cyclicalRelationshipsMap.getOrPut(type2) { mutableSetOf() }.add(re)
+            }
+    }
+
     /**
      * Fetch the cyclical relationships for the provided entity type.
      *
@@ -110,54 +148,10 @@ class TypeDefCache(
      */
     fun getCyclicalRelationshipsForType(
         typeName: String,
-        alreadyHandled: Set<String> = emptySet(),
     ): Set<RelationshipEnds> {
         // Return cached result if available
-        cyclicalRelationshipsMap[typeName]?.let { return it }
-
-        val cycles = mutableSetOf<RelationshipEnds>()
-        listAll()
-            .filter { it.value is RelationshipDef }
-            .map { it.value as RelationshipDef }
-            .forEach { relationshipDef ->
-                if (!alreadyHandled.contains(relationshipDef.name)) {
-                    if (isCyclical(relationshipDef)) {
-                        cycles.add(
-                            RelationshipEnds(
-                                relationshipDef.name,
-                                relationshipDef.endDef1.type,
-                                relationshipDef.endDef2.type,
-                            ),
-                        )
-                    }
-                    inheritanceMap.getOrDefault(typeName, null)?.forEach { superType ->
-                        cycles.addAll(getCyclicalRelationshipsForType(superType))
-                    }
-                }
-            }
-        cyclicalRelationshipsMap[typeName] = cycles.toSet()
-        return cyclicalRelationshipsMap[typeName]!!
+        return cyclicalRelationshipsMap.getOrElse(typeName) { emptySet() }
     }
-
-    private fun isCyclical(relationshipDef: RelationshipDef): Boolean {
-        if (relationshipDef.endDef1.type == relationshipDef.endDef2.type) {
-            return true
-        } else {
-            val end1Supers = inheritanceMap.getOrElse(relationshipDef.endDef1.type) { emptySet() }
-            val end2Supers = inheritanceMap.getOrElse(relationshipDef.endDef2.type) { emptySet() }
-            if (end1Supers.contains(relationshipDef.endDef2.type) || end2Supers.contains(relationshipDef.endDef1.type)) {
-                return true
-            }
-        }
-        return false
-    }
-
-    /**
-     * List all the typedefs held in the cache.
-     *
-     * @return the set of all typedefs in the cache
-     */
-    fun listAll(): Stream<Map.Entry<String, TypeDef>> = entrySet()
 
     /** Preload the cache (will only act once, in case called multiple times on the same cache) */
     @Synchronized
