@@ -21,6 +21,7 @@ import com.atlan.model.assets.ICosmosMongoDBCollection;
 import com.atlan.model.assets.IDbtMetric;
 import com.atlan.model.assets.IDbtModel;
 import com.atlan.model.assets.IDbtModelColumn;
+import com.atlan.model.assets.IDbtSeed;
 import com.atlan.model.assets.IDbtSource;
 import com.atlan.model.assets.IDbtTest;
 import com.atlan.model.assets.IGlossaryTerm;
@@ -144,6 +145,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Histogram columnHistogram;
 
+    /** When true, this column is of type measure/calculated. */
+    @Attribute
+    Boolean columnIsMeasure;
+
     /** Greatest value in a numeric column. */
     @Attribute
     Double columnMax;
@@ -160,6 +165,10 @@ public class GuacamoleColumn extends Asset
     /** Arithmetic mean of the values in a numeric column. */
     @Attribute
     Double columnMean;
+
+    /** The type of measure/calculated column this is, eg: base, calculated, derived. */
+    @Attribute
+    String columnMeasureType;
 
     /** Calculated median of the values in a numeric column. */
     @Attribute
@@ -254,6 +263,11 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
+
+    /** DBT seeds that materialize the SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
 
     /** TBC */
     @Attribute
