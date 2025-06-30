@@ -91,6 +91,11 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> displayPreferences;
 
     /** TBC */
@@ -325,6 +330,7 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
                     .where(Stakeholder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -340,6 +346,7 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
                     .where(Stakeholder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

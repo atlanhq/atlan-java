@@ -350,6 +350,7 @@ public class MicroStrategyCube extends Asset
                     .where(MicroStrategyCube.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -365,6 +366,7 @@ public class MicroStrategyCube extends Asset
                     .where(MicroStrategyCube.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

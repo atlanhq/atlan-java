@@ -318,6 +318,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
                     .where(PowerBITile.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -333,6 +334,7 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
                     .where(PowerBITile.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

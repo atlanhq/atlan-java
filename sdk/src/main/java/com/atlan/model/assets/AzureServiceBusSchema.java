@@ -299,6 +299,7 @@ public class AzureServiceBusSchema extends Asset
                     .where(AzureServiceBusSchema.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -314,6 +315,7 @@ public class AzureServiceBusSchema extends Asset
                     .where(AzureServiceBusSchema.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

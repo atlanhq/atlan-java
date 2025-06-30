@@ -86,6 +86,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<IDbtSource> dbtSources;
 
     /** TBC */
@@ -434,6 +439,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
                     .where(MaterializedView.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -449,6 +455,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
                     .where(MaterializedView.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

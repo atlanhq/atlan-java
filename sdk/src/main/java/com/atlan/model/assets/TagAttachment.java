@@ -248,6 +248,7 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
                     .where(TagAttachment.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -263,6 +264,7 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
                     .where(TagAttachment.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

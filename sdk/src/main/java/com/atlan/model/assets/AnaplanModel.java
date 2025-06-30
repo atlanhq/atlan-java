@@ -48,38 +48,38 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanDimension assets contained within this AnaplanModel. */
+    /** Individual dimensions contained in the model. */
     @Attribute
     @Singular
     SortedSet<IAnaplanDimension> anaplanDimensions;
 
-    /** AnaplanList assets contained within this AnaplanModel. */
+    /** Individual lists contained in the model. */
     @Attribute
     @Singular
     SortedSet<IAnaplanList> anaplanLists;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleName;
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleQualifiedName;
 
-    /** AnaplanModule assets contained within this AnaplanModel. */
+    /** Individual modules contained in the model. */
     @Attribute
     @Singular
     SortedSet<IAnaplanModule> anaplanModules;
 
-    /** AnaplanPage assets containing this AnaplanModel. */
+    /** Pages related to the model. */
     @Attribute
     @Singular
     SortedSet<IAnaplanPage> anaplanPages;
@@ -88,15 +88,15 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
     @Attribute
     String anaplanSourceId;
 
-    /** AnaplanWorkspace asset containing this AnaplanModel. */
+    /** Workspace containing the model. */
     @Attribute
     IAnaplanWorkspace anaplanWorkspace;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 
@@ -333,6 +333,7 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
                     .where(AnaplanModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -348,6 +349,7 @@ public class AnaplanModel extends Asset implements IAnaplanModel, IAnaplan, IBI,
                     .where(AnaplanModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

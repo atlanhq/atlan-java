@@ -329,6 +329,7 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
                     .where(APIQuery.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -344,6 +345,7 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
                     .where(APIQuery.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -51,7 +51,7 @@ public interface IColumn {
     /** Compression type of this column. */
     KeywordField COLUMN_COMPRESSION = new KeywordField("columnCompression", "columnCompression");
 
-    /** TBC */
+    /** Model columns related to this column. */
     RelationField COLUMN_DBT_MODEL_COLUMNS = new RelationField("columnDbtModelColumns");
 
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
@@ -82,6 +82,9 @@ public interface IColumn {
     /** List of values in a histogram that represents the contents of this column. */
     KeywordField COLUMN_HISTOGRAM = new KeywordField("columnHistogram", "columnHistogram");
 
+    /** When true, this column is of type measure/calculated. */
+    BooleanField COLUMN_IS_MEASURE = new BooleanField("columnIsMeasure", "columnIsMeasure");
+
     /** Greatest value in a numeric column. */
     NumericField COLUMN_MAX = new NumericField("columnMax", "columnMax");
 
@@ -94,6 +97,9 @@ public interface IColumn {
 
     /** Arithmetic mean of the values in a numeric column. */
     NumericField COLUMN_MEAN = new NumericField("columnMean", "columnMean");
+
+    /** The type of measure/calculated column this is, eg: base, calculated, derived. */
+    KeywordField COLUMN_MEASURE_TYPE = new KeywordField("columnMeasureType", "columnMeasureType");
 
     /** Calculated median of the values in a numeric column. */
     NumericField COLUMN_MEDIAN = new NumericField("columnMedian", "columnMedian");
@@ -151,10 +157,10 @@ public interface IColumn {
     /** Data type of values in this column. */
     KeywordTextField DATA_TYPE = new KeywordTextField("dataType", "dataType", "dataType.text");
 
-    /** TBC */
+    /** Metrics related to this model column. */
     RelationField DBT_METRICS = new RelationField("dbtMetrics");
 
-    /** TBC */
+    /** (Deprecated) Model columns related to this model column. */
     RelationField DBT_MODEL_COLUMNS = new RelationField("dbtModelColumns");
 
     /** Default value for this column. */
@@ -251,7 +257,7 @@ public interface IColumn {
     /** Queries that access this column. */
     RelationField QUERIES = new RelationField("queries");
 
-    /** TBC */
+    /** Raw data type definition of this column. */
     TextField RAW_DATA_TYPE_DEFINITION = new TextField("rawDataTypeDefinition", "rawDataTypeDefinition");
 
     /** Snowflake dynamic table in which this column exists. */
@@ -299,10 +305,10 @@ public interface IColumn {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -335,7 +341,7 @@ public interface IColumn {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -542,6 +548,9 @@ public interface IColumn {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -575,7 +584,7 @@ public interface IColumn {
     /** Compression type of this column. */
     String getColumnCompression();
 
-    /** TBC */
+    /** Model columns related to this column. */
     SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
 
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
@@ -602,6 +611,9 @@ public interface IColumn {
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
 
+    /** When true, this column is of type measure/calculated. */
+    Boolean getColumnIsMeasure();
+
     /** Greatest value in a numeric column. */
     Double getColumnMax();
 
@@ -613,6 +625,9 @@ public interface IColumn {
 
     /** Arithmetic mean of the values in a numeric column. */
     Double getColumnMean();
+
+    /** The type of measure/calculated column this is, eg: base, calculated, derived. */
+    String getColumnMeasureType();
 
     /** Calculated median of the values in a numeric column. */
     Double getColumnMedian();
@@ -686,22 +701,25 @@ public interface IColumn {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
-    /** TBC */
+    /** Metrics related to this model column. */
     SortedSet<IDbtMetric> getDbtMetrics();
 
-    /** TBC */
+    /** (Deprecated) Model columns related to this model column. */
     SortedSet<IDbtModelColumn> getDbtModelColumns();
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     SortedSet<IDbtModel> getDbtModels();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** DBT seeds that materialize the SQL asset. */
+    SortedSet<IDbtSeed> getDbtSeedAssets();
+
+    /** Source containing the assets. */
     SortedSet<IDbtSource> getDbtSources();
 
-    /** TBC */
+    /** Tests related to this asset. */
     SortedSet<IDbtTest> getDbtTests();
 
     /** Default value for this column. */
@@ -767,7 +785,7 @@ public interface IColumn {
     /** When true, the values in this column can be null. */
     Boolean getIsNullable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Whether this column is a partition column (true) or not (false). */
@@ -923,7 +941,7 @@ public interface IColumn {
     /** Map of unique users who have queried this asset to the number of times they have queried it. */
     Map<String, Long> getQueryUserMap();
 
-    /** TBC */
+    /** Raw data type definition of this column. */
     String getRawDataTypeDefinition();
 
     /** README that is linked to this asset. */
@@ -1013,10 +1031,10 @@ public interface IColumn {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();
 
-    /** TBC */
+    /** Assets related to the model. */
     SortedSet<IDbtModel> getSqlDbtModels();
 
     /** Users who have starred this asset. */

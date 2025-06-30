@@ -309,6 +309,7 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
                     .where(DomoCard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -324,6 +325,7 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
                     .where(DomoCard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

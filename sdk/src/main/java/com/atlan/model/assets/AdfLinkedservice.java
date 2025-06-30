@@ -370,6 +370,7 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
                     .where(AdfLinkedservice.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -385,6 +386,7 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
                     .where(AdfLinkedservice.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

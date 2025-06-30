@@ -286,6 +286,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
                     .where(TableauSite.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -301,6 +302,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
                     .where(TableauSite.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

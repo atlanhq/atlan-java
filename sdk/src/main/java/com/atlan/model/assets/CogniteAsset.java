@@ -306,6 +306,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
                     .where(CogniteAsset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -321,6 +322,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
                     .where(CogniteAsset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

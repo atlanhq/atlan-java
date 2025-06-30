@@ -32,13 +32,13 @@ public interface ICubeHierarchy {
 
     public static final String TYPE_NAME = "CubeHierarchy";
 
-    /** Dimension in which this hierarchy exists. */
+    /** Dimension containing the hierarchy. */
     RelationField CUBE_DIMENSION = new RelationField("cubeDimension");
 
     /** Number of total fields in the cube hierarchy. */
     NumericField CUBE_FIELD_COUNT = new NumericField("cubeFieldCount", "cubeFieldCount");
 
-    /** Individual fields that make up the hierarchy. */
+    /** Individual fields contained in the hierarchy. */
     RelationField CUBE_FIELDS = new RelationField("cubeFields");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -68,10 +68,10 @@ public interface ICubeHierarchy {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -104,7 +104,7 @@ public interface ICubeHierarchy {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -311,6 +311,9 @@ public interface ICubeHierarchy {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -335,7 +338,7 @@ public interface ICubeHierarchy {
     /** Type of the connector through which this asset is accessible. */
     String getConnectorName();
 
-    /** Dimension in which this hierarchy exists. */
+    /** Dimension containing the hierarchy. */
     ICubeDimension getCubeDimension();
 
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
@@ -347,7 +350,7 @@ public interface ICubeHierarchy {
     /** Number of total fields in the cube hierarchy. */
     Long getCubeFieldCount();
 
-    /** Individual fields that make up the hierarchy. */
+    /** Individual fields contained in the hierarchy. */
     SortedSet<ICubeField> getCubeFields();
 
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
@@ -410,7 +413,7 @@ public interface ICubeHierarchy {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

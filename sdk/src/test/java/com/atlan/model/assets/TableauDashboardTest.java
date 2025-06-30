@@ -189,6 +189,7 @@ public class TableauDashboardTest {
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
+            .assetUserDefinedType("String0")
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .certificateStatus(CertificateStatus.DEPRECATED)
@@ -439,6 +440,9 @@ public class TableauDashboardTest {
             .addProjectHierarchy(Map.of("key2", "value2"))
             .projectQualifiedName("String0")
             .siteQualifiedName("String0")
+            .tableauDashboardField(TableauDashboardField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .tableauDashboardField(
+                    TableauDashboardField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .tableauEmbeddedDashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .tableauEmbeddedDashboard(
                     TableauDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

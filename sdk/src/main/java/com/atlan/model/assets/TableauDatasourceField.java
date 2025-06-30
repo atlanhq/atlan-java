@@ -138,6 +138,10 @@ public class TableauDatasourceField extends Asset
     @Attribute
     String tableauDatasourceFieldRole;
 
+    /** Worksheet fields that use this datasource field. */
+    @Attribute
+    ITableauWorksheetField tableauWorksheetField;
+
     /** Unique name of the top-level project in which this datasource field exists. */
     @Attribute
     String topLevelProjectQualifiedName;
@@ -359,6 +363,7 @@ public class TableauDatasourceField extends Asset
                     .where(TableauDatasourceField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -374,6 +379,7 @@ public class TableauDatasourceField extends Asset
                     .where(TableauDatasourceField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

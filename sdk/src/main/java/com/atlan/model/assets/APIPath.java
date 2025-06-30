@@ -342,6 +342,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
                     .where(APIPath.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -357,6 +358,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
                     .where(APIPath.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

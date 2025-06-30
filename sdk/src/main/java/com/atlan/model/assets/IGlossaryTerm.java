@@ -387,6 +387,9 @@ public interface IGlossaryTerm {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IAsset> getAssignedEntities();
 
     /** TBC */

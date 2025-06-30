@@ -84,6 +84,10 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     IFivetranConnector fivetranConnector;
 
+    /** Orchestrated control operation that ran these data flows (process). */
+    @Attribute
+    IFlowControlOperation flowOrchestratedBy;
+
     /** Assets that are inputs to this process. */
     @Attribute
     @Singular
@@ -309,6 +313,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
                     .where(BIProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -324,6 +329,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
                     .where(BIProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -265,6 +265,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
                     .where(AtlanCollection.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -280,6 +281,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
                     .where(AtlanCollection.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

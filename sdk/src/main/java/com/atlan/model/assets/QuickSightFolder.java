@@ -319,6 +319,7 @@ public class QuickSightFolder extends Asset
                     .where(QuickSightFolder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -334,6 +335,7 @@ public class QuickSightFolder extends Asset
                     .where(QuickSightFolder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

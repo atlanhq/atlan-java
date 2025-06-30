@@ -310,6 +310,7 @@ public class SalesforceOrganization extends Asset
                     .where(SalesforceOrganization.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -325,6 +326,7 @@ public class SalesforceOrganization extends Asset
                     .where(SalesforceOrganization.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

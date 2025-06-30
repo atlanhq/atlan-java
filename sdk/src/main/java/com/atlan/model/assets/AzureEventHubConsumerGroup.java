@@ -318,6 +318,7 @@ public class AzureEventHubConsumerGroup extends Asset
                     .where(AzureEventHubConsumerGroup.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -333,6 +334,7 @@ public class AzureEventHubConsumerGroup extends Asset
                     .where(AzureEventHubConsumerGroup.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -102,6 +102,11 @@ public class TableauDashboard extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Fields that exist within this dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<ITableauDashboardField> tableauDashboardFields;
+
     /** Dashboards that are embedded in this dashboard. */
     @Attribute
     @Singular
@@ -322,6 +327,7 @@ public class TableauDashboard extends Asset
                     .where(TableauDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -337,6 +343,7 @@ public class TableauDashboard extends Asset
                     .where(TableauDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

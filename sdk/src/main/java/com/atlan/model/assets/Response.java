@@ -253,6 +253,7 @@ public class Response extends Asset implements IResponse, IAsset, IReferenceable
                     .where(Response.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -268,6 +269,7 @@ public class Response extends Asset implements IResponse, IAsset, IReferenceable
                     .where(Response.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

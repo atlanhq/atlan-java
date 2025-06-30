@@ -332,6 +332,7 @@ public class MicroStrategyDocument extends Asset
                     .where(MicroStrategyDocument.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -347,6 +348,7 @@ public class MicroStrategyDocument extends Asset
                     .where(MicroStrategyDocument.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

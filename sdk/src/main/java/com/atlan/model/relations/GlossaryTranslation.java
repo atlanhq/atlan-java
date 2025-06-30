@@ -113,22 +113,27 @@ public class GlossaryTranslation extends RelationshipAttributes {
          * Build the GlossaryTranslation relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm translationTerm(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm translationTerm(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryTranslation attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return TranslationTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return TranslationTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -137,22 +142,27 @@ public class GlossaryTranslation extends RelationshipAttributes {
          * Build the GlossaryTranslation relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm translatedTerm(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm translatedTerm(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryTranslation attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return TranslatedTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return TranslatedTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

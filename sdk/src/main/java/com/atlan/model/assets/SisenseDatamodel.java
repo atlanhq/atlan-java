@@ -327,6 +327,7 @@ public class SisenseDatamodel extends Asset
                     .where(SisenseDatamodel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -342,6 +343,7 @@ public class SisenseDatamodel extends Asset
                     .where(SisenseDatamodel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

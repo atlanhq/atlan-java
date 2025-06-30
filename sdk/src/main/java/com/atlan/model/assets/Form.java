@@ -249,6 +249,7 @@ public class Form extends Asset implements IForm, IAsset, IReferenceable {
                     .where(Form.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -264,6 +265,7 @@ public class Form extends Asset implements IForm, IAsset, IReferenceable {
                     .where(Form.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

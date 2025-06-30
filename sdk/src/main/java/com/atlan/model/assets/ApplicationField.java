@@ -48,16 +48,16 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unique identifier for the App asset from the source system. */
+    /** Unique identifier for the application asset from the source system. */
     @Attribute
     String appId;
 
-    /** Assets contained within this ApplicationField. */
+    /** Assets owned by the ApplicationField. */
     @Attribute
     @Singular
     SortedSet<IAsset> applicationFieldOwnedAssets;
 
-    /** Application asset containing this ApplicationField. */
+    /** Application owning the ApplicationField. */
     @Attribute
     IApplication applicationParent;
 
@@ -298,6 +298,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                     .where(ApplicationField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -313,6 +314,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
                     .where(ApplicationField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

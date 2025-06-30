@@ -49,6 +49,10 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
 
     /** TBC */
     @Attribute
+    String abacService;
+
+    /** TBC */
+    @Attribute
     @Singular("putAuthServiceConfig")
     Map<String, String> authServiceConfig;
 
@@ -261,6 +265,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
                     .where(AuthService.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -276,6 +281,7 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
                     .where(AuthService.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

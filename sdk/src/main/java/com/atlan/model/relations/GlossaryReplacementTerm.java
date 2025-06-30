@@ -113,22 +113,27 @@ public class GlossaryReplacementTerm extends RelationshipAttributes {
          * Build the GlossaryReplacementTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm replacementTerm(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm replacementTerm(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ReplacementTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ReplacementTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }
@@ -137,22 +142,27 @@ public class GlossaryReplacementTerm extends RelationshipAttributes {
          * Build the GlossaryReplacementTerm relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm replacedBy(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm replacedBy(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossaryReplacementTerm attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return ReplacedBy._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return ReplacedBy._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

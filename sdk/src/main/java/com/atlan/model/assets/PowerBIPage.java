@@ -310,6 +310,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
                     .where(PowerBIPage.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -325,6 +326,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
                     .where(PowerBIPage.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

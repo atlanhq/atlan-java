@@ -324,6 +324,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
                     .where(SparkJob.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -339,6 +340,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
                     .where(SparkJob.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

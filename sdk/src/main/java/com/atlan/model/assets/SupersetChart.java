@@ -302,6 +302,7 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
                     .where(SupersetChart.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -317,6 +318,7 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
                     .where(SupersetChart.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

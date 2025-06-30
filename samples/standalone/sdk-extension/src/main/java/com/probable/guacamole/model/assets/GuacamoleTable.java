@@ -17,6 +17,7 @@ import com.atlan.model.assets.IAtlanQuery;
 import com.atlan.model.assets.ICatalog;
 import com.atlan.model.assets.IColumn;
 import com.atlan.model.assets.IDbtModel;
+import com.atlan.model.assets.IDbtSeed;
 import com.atlan.model.assets.IDbtSource;
 import com.atlan.model.assets.IDbtTest;
 import com.atlan.model.assets.IGlossaryTerm;
@@ -107,6 +108,11 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
+
+    /** DBT seeds that materialize the SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
 
     /** TBC */
     @Attribute
@@ -338,6 +344,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
+
+    /** Number of objects in this table. */
+    @Attribute
+    Long tableObjectCount;
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute

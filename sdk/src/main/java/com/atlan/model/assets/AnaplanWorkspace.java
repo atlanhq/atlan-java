@@ -49,24 +49,24 @@ public class AnaplanWorkspace extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** AnaplanModel assets contained within this AnaplanWorkspace. */
+    /** Individual models contained in the workspace. */
     @Attribute
     @Singular
     SortedSet<IAnaplanModel> anaplanModels;
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleName;
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleQualifiedName;
 
@@ -74,19 +74,19 @@ public class AnaplanWorkspace extends Asset
     @Attribute
     String anaplanSourceId;
 
-    /** Alloted Size quota for the AnaplanWorkspace from the source system, estimated in MB. */
+    /** Alloted size quota for the AnaplanWorkspace from the source system, estimated in MB. */
     @Attribute
     Long anaplanWorkspaceAllowanceSize;
 
-    /** Current Size of the AnaplanWorkspace from the source system, estimated in MB. */
+    /** Current size of the AnaplanWorkspace from the source system, estimated in MB. */
     @Attribute
     Long anaplanWorkspaceCurrentSize;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 
@@ -323,6 +323,7 @@ public class AnaplanWorkspace extends Asset
                     .where(AnaplanWorkspace.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AnaplanWorkspace extends Asset
                     .where(AnaplanWorkspace.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

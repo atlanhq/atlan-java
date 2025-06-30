@@ -331,6 +331,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
                     .where(PowerBIColumn.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -346,6 +347,7 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
                     .where(PowerBIColumn.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

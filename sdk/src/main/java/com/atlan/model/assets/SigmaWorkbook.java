@@ -314,6 +314,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
                     .where(SigmaWorkbook.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -329,6 +330,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
                     .where(SigmaWorkbook.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

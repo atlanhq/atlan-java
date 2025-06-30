@@ -59,6 +59,9 @@ public interface ILineageProcess {
     RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
 
     /** TBC */
+    RelationField FLOW_ORCHESTRATED_BY = new RelationField("flowOrchestratedBy");
+
+    /** TBC */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
     /** TBC */
@@ -363,6 +366,9 @@ public interface ILineageProcess {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -418,6 +424,9 @@ public interface ILineageProcess {
 
     /** TBC */
     IFivetranConnector getFivetranConnector();
+
+    /** TBC */
+    IFlowControlOperation getFlowOrchestratedBy();
 
     /** TBC */
     Boolean getHasContract();

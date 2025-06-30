@@ -349,6 +349,7 @@ public class SapErpFunctionModule extends Asset
                     .where(SapErpFunctionModule.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -364,6 +365,7 @@ public class SapErpFunctionModule extends Asset
                     .where(SapErpFunctionModule.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

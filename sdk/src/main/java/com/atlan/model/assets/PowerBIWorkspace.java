@@ -339,6 +339,7 @@ public class PowerBIWorkspace extends Asset
                     .where(PowerBIWorkspace.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -354,6 +355,7 @@ public class PowerBIWorkspace extends Asset
                     .where(PowerBIWorkspace.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

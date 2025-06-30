@@ -32,16 +32,16 @@ public interface IAnaplanLineItem {
 
     public static final String TYPE_NAME = "AnaplanLineItem";
 
-    /** AnaplanDimension assets contained within this AnaplanLineItem. */
+    /** Dimensions related to the line item. */
     RelationField ANAPLAN_DIMENSIONS = new RelationField("anaplanDimensions");
 
     /** Formula of the AnaplanLineItem from the source system. */
     KeywordField ANAPLAN_LINE_ITEM_FORMULA = new KeywordField("anaplanLineItemFormula", "anaplanLineItemFormula");
 
-    /** AnaplanList assets contained within this AnaplanLineItem. */
+    /** Lists related to the line item. */
     RelationField ANAPLAN_LISTS = new RelationField("anaplanLists");
 
-    /** AnaplanModule asset containing this AnaplanLineItem. */
+    /** Module containing the line item. */
     RelationField ANAPLAN_MODULE = new RelationField("anaplanModule");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -53,37 +53,37 @@ public interface IAnaplanLineItem {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
-    /** AnaplanDimension assets contained within this AnaplanLineItem. */
+    /** Dimensions related to the line item. */
     SortedSet<IAnaplanDimension> getAnaplanDimensions();
 
     /** Formula of the AnaplanLineItem from the source system. */
     String getAnaplanLineItemFormula();
 
-    /** AnaplanList assets contained within this AnaplanLineItem. */
+    /** Lists related to the line item. */
     SortedSet<IAnaplanList> getAnaplanLists();
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelName();
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelQualifiedName();
 
-    /** AnaplanModule asset containing this AnaplanLineItem. */
+    /** Module containing the line item. */
     IAnaplanModule getAnaplanModule();
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleName();
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleQualifiedName();
 
     /** Id/Guid of the Anaplan asset in the source system. */
     String getAnaplanSourceId();
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceName();
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceQualifiedName();
 
     /** Detailed message to include in the announcement on this asset. */
@@ -104,10 +104,10 @@ public interface IAnaplanLineItem {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -140,7 +140,7 @@ public interface IAnaplanLineItem {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -347,6 +347,9 @@ public interface IAnaplanLineItem {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -419,7 +422,7 @@ public interface IAnaplanLineItem {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

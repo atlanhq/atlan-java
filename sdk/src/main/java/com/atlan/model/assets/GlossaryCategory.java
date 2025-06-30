@@ -279,6 +279,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
                     .where(GlossaryCategory.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -294,6 +295,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
                     .where(GlossaryCategory.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

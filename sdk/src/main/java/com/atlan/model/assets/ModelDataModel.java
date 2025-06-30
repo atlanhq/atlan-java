@@ -355,6 +355,7 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
                     .where(ModelDataModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -370,6 +371,7 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
                     .where(ModelDataModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

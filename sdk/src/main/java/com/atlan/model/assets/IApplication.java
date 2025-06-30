@@ -31,10 +31,10 @@ public interface IApplication {
 
     public static final String TYPE_NAME = "Application";
 
-    /** ApplicationFields contained within this Application. */
+    /** ApplicationFields owned by the Application. */
     RelationField APPLICATION_CHILD_FIELDS = new RelationField("applicationChildFields");
 
-    /** Assets contained within this Application. */
+    /** Assets owned by the Application. */
     RelationField APPLICATION_OWNED_ASSETS = new RelationField("applicationOwnedAssets");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -64,22 +64,22 @@ public interface IApplication {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Unique identifier for the App asset from the source system. */
+    /** Unique identifier for the application asset from the source system. */
     String getAppId();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationFields contained within this Application. */
+    /** ApplicationFields owned by the Application. */
     SortedSet<IApplicationField> getApplicationChildFields();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
 
-    /** Assets contained within this Application. */
+    /** Assets owned by the Application. */
     SortedSet<IAsset> getApplicationOwnedAssets();
 
     /** Qualified name of the Application that contains this asset. */
@@ -109,7 +109,7 @@ public interface IApplication {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -316,6 +316,9 @@ public interface IApplication {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -388,7 +391,7 @@ public interface IApplication {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

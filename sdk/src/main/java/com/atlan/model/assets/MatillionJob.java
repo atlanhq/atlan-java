@@ -319,6 +319,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
                     .where(MatillionJob.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -334,6 +335,7 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
                     .where(MatillionJob.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -327,6 +327,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
                     .where(KafkaTopic.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -342,6 +343,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
                     .where(KafkaTopic.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

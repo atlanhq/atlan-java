@@ -50,74 +50,74 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     @Attribute
     String dbtAccountName;
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     @Attribute
     String dbtAlias;
 
-    /** TBC */
+    /** Compiled SQL of the dbt model. */
     @Attribute
     String dbtCompiledSQL;
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     @Attribute
     String dbtConnectionContext;
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     @Attribute
     String dbtEnvironmentDbtVersion;
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     @Attribute
     String dbtEnvironmentName;
 
-    /** TBC */
+    /** Error message if any for the dbt model. */
     @Attribute
     String dbtError;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     @Attribute
     @Date
     Long dbtJobLastRun;
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobName;
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     @Attribute
     @Date
     Long dbtJobNextRun;
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     @Attribute
     String dbtJobNextRunHumanized;
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     @Attribute
     @Singular
     List<DbtJobRun> dbtJobRuns;
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobSchedule;
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobScheduleCronHumanized;
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     @Attribute
     String dbtJobStatus;
 
-    /** TBC */
+    /** Type of materialization used for the dbt model. */
     @Attribute
     String dbtMaterializationType;
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     @Attribute
     String dbtMeta;
 
@@ -131,79 +131,79 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Singular
     SortedSet<IDbtModelColumn> dbtModelColumns;
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation completed. */
     @Attribute
     @Date
     Long dbtModelCompileCompletedAt;
 
-    /** TBC */
+    /** Timestamp when the dbt model compilation started. */
     @Attribute
     @Date
     Long dbtModelCompileStartedAt;
 
-    /** TBC */
+    /** Timestamp when the dbt model execution completed. */
     @Attribute
     @Date
     Long dbtModelExecuteCompletedAt;
 
-    /** TBC */
+    /** Timestamp when the dbt model execution started. */
     @Attribute
     @Date
     Long dbtModelExecuteStartedAt;
 
-    /** TBC */
+    /** Execution time of the dbt model. */
     @Attribute
     Double dbtModelExecutionTime;
 
-    /** TBC */
+    /** Elapsed time of the dbt model run. */
     @Attribute
     Double dbtModelRunElapsedTime;
 
-    /** TBC */
+    /** Timestamp when the dbt model run was generated. */
     @Attribute
     @Date
     Long dbtModelRunGeneratedAt;
 
-    /** TBC */
+    /** Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<ISQL> dbtModelSqlAssets;
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     @Attribute
     String dbtPackageName;
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     @Attribute
     String dbtProjectName;
 
-    /** TBC */
+    /** Raw SQL of the dbt model. */
     @Attribute
     String dbtRawSQL;
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     @Attribute
     String dbtSemanticLayerProxyUrl;
 
-    /** TBC */
+    /** Statistics of the dbt model. */
     @Attribute
     String dbtStats;
 
-    /** TBC */
+    /** Status of the dbt model. */
     @Attribute
     String dbtStatus;
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     @Attribute
     @Singular
     SortedSet<String> dbtTags;
 
-    /** TBC */
+    /** Tests related to this model. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     @Attribute
     String dbtUniqueId;
 
@@ -247,7 +247,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** TBC */
+    /** (Deprecated) Assets related to the model. */
     @Attribute
     @JsonProperty("sqlAsset")
     ISQL primarySqlAsset;
@@ -443,6 +443,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
                     .where(DbtModel.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -458,6 +459,7 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
                     .where(DbtModel.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

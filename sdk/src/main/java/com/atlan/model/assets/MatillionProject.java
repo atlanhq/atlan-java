@@ -316,6 +316,7 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
                     .where(MatillionProject.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -331,6 +332,7 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
                     .where(MatillionProject.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

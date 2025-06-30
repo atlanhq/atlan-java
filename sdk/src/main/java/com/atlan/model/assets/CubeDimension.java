@@ -49,7 +49,7 @@ public class CubeDimension extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Cube in which this dimension exists. */
+    /** Cube containing the dimension. */
     @Attribute
     ICube cube;
 
@@ -61,7 +61,7 @@ public class CubeDimension extends Asset
     @Attribute
     String cubeDimensionQualifiedName;
 
-    /** Individual hierarchies that make up the dimension. */
+    /** Individual hierarchies contained in the dimension. */
     @Attribute
     @Singular
     SortedSet<ICubeHierarchy> cubeHierarchies;
@@ -319,6 +319,7 @@ public class CubeDimension extends Asset
                     .where(CubeDimension.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -334,6 +335,7 @@ public class CubeDimension extends Asset
                     .where(CubeDimension.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

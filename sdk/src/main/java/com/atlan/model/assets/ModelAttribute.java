@@ -403,6 +403,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
                     .where(ModelAttribute.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -418,6 +419,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
                     .where(ModelAttribute.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
