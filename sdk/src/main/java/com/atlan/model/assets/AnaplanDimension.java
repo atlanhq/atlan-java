@@ -49,42 +49,42 @@ public class AnaplanDimension extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanView assets containing this AnaplanDimension as a Column type dimension. */
+    /** Views related to the column dimension. */
     @Attribute
     @Singular
     SortedSet<IAnaplanView> anaplanColumnViews;
 
-    /** AnaplanLineItem assets containing this AnaplanDimension. */
+    /** Line items related to the dimension. */
     @Attribute
     @Singular
     SortedSet<IAnaplanLineItem> anaplanLineItems;
 
-    /** AnaplanModel asset containing this AnaplanDimension. */
+    /** Model containing the dimension. */
     @Attribute
     IAnaplanModel anaplanModel;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleName;
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleQualifiedName;
 
-    /** AnaplanView assets containing this AnaplanDimension as a Page type dimension. */
+    /** Views related to the page dimension. */
     @Attribute
     @Singular
     SortedSet<IAnaplanView> anaplanPageViews;
 
-    /** AnaplanView assets containing this AnaplanDimension as a Row type dimension. */
+    /** Views related to the row dimension. */
     @Attribute
     @Singular
     SortedSet<IAnaplanView> anaplanRowViews;
@@ -93,11 +93,11 @@ public class AnaplanDimension extends Asset
     @Attribute
     String anaplanSourceId;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 
@@ -334,6 +334,7 @@ public class AnaplanDimension extends Asset
                     .where(AnaplanDimension.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -349,6 +350,7 @@ public class AnaplanDimension extends Asset
                     .where(AnaplanDimension.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

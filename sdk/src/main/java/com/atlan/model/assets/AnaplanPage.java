@@ -48,7 +48,7 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanApp asset containing this AnaplanPage. */
+    /** App containing the page. */
     @Attribute
     IAnaplanApp anaplanApp;
 
@@ -56,28 +56,28 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Attribute
     String anaplanAppQualifiedName;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** AnaplanModel assets contained within this AnaplanPage. */
+    /** Models related to the page. */
     @Attribute
     @Singular
     SortedSet<IAnaplanModel> anaplanModels;
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleName;
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleQualifiedName;
 
-    /** Category Name of the AnaplanPage from the source system. */
+    /** Category name of the AnaplanPage from the source system. */
     @Attribute
     String anaplanPageCategoryName;
 
@@ -89,11 +89,11 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     @Attribute
     String anaplanSourceId;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 
@@ -330,6 +330,7 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
                     .where(AnaplanPage.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -345,6 +346,7 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
                     .where(AnaplanPage.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

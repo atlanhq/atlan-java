@@ -298,6 +298,7 @@ public class ThoughtspotAnswer extends Asset
                     .where(ThoughtspotAnswer.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -313,6 +314,7 @@ public class ThoughtspotAnswer extends Asset
                     .where(ThoughtspotAnswer.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

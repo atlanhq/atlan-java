@@ -340,6 +340,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
                     .where(QlikApp.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -355,6 +356,7 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
                     .where(QlikApp.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

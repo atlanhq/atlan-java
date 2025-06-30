@@ -322,6 +322,7 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                     .where(APIObject.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -337,6 +338,7 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                     .where(APIObject.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

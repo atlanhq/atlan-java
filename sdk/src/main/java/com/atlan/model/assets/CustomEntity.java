@@ -304,6 +304,7 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
                     .where(CustomEntity.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -319,6 +320,7 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
                     .where(CustomEntity.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

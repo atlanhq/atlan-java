@@ -324,6 +324,7 @@ public class QuickSightAnalysis extends Asset
                     .where(QuickSightAnalysis.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -339,6 +340,7 @@ public class QuickSightAnalysis extends Asset
                     .where(QuickSightAnalysis.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

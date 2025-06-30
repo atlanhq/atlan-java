@@ -307,6 +307,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
                     .where(SourceTag.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -322,6 +323,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
                     .where(SourceTag.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

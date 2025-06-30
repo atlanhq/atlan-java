@@ -351,6 +351,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
                     .where(LookerLook.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -366,6 +367,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
                     .where(LookerLook.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

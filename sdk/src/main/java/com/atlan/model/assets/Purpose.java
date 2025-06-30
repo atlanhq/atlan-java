@@ -96,6 +96,11 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> displayPreferences;
 
     /** TBC */
@@ -304,6 +309,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
                     .where(Purpose.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -319,6 +325,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
                     .where(Purpose.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

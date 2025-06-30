@@ -117,6 +117,11 @@ public class TableauWorksheet extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Fields that exist within this worksheet. */
+    @Attribute
+    @Singular
+    SortedSet<ITableauWorksheetField> tableauWorksheetFields;
+
     /** Unique name of the top-level project in which this worksheet exists. */
     @Attribute
     String topLevelProjectQualifiedName;
@@ -322,6 +327,7 @@ public class TableauWorksheet extends Asset
                     .where(TableauWorksheet.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -337,6 +343,7 @@ public class TableauWorksheet extends Asset
                     .where(TableauWorksheet.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

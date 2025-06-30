@@ -32,16 +32,16 @@ public interface IAnaplanPage {
 
     public static final String TYPE_NAME = "AnaplanPage";
 
-    /** AnaplanApp asset containing this AnaplanPage. */
+    /** App containing the page. */
     RelationField ANAPLAN_APP = new RelationField("anaplanApp");
 
     /** Unique name of the AnaplanApp asset that contains this asset. */
     KeywordField ANAPLAN_APP_QUALIFIED_NAME = new KeywordField("anaplanAppQualifiedName", "anaplanAppQualifiedName");
 
-    /** AnaplanModel assets contained within this AnaplanPage. */
+    /** Models related to the page. */
     RelationField ANAPLAN_MODELS = new RelationField("anaplanModels");
 
-    /** Category Name of the AnaplanPage from the source system. */
+    /** Category name of the AnaplanPage from the source system. */
     KeywordField ANAPLAN_PAGE_CATEGORY_NAME = new KeywordField("anaplanPageCategoryName", "anaplanPageCategoryName");
 
     /** Type of the AnaplanPage from the source system. */
@@ -56,28 +56,28 @@ public interface IAnaplanPage {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
-    /** AnaplanApp asset containing this AnaplanPage. */
+    /** App containing the page. */
     IAnaplanApp getAnaplanApp();
 
     /** Unique name of the AnaplanApp asset that contains this asset. */
     String getAnaplanAppQualifiedName();
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelName();
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     String getAnaplanModelQualifiedName();
 
-    /** AnaplanModel assets contained within this AnaplanPage. */
+    /** Models related to the page. */
     SortedSet<IAnaplanModel> getAnaplanModels();
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleName();
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     String getAnaplanModuleQualifiedName();
 
-    /** Category Name of the AnaplanPage from the source system. */
+    /** Category name of the AnaplanPage from the source system. */
     String getAnaplanPageCategoryName();
 
     /** Type of the AnaplanPage from the source system. */
@@ -86,10 +86,10 @@ public interface IAnaplanPage {
     /** Id/Guid of the Anaplan asset in the source system. */
     String getAnaplanSourceId();
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceName();
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     String getAnaplanWorkspaceQualifiedName();
 
     /** Detailed message to include in the announcement on this asset. */
@@ -110,10 +110,10 @@ public interface IAnaplanPage {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -146,7 +146,7 @@ public interface IAnaplanPage {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -353,6 +353,9 @@ public interface IAnaplanPage {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -425,7 +428,7 @@ public interface IAnaplanPage {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

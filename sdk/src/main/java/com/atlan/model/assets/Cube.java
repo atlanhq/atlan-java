@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a cube in Atlan.
+ * Instance of a Cube in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -60,7 +60,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
     @Attribute
     String cubeDimensionQualifiedName;
 
-    /** Individual dimensions that make up the cube. */
+    /** Individual dimensions contained in the cube. */
     @Attribute
     @Singular
     SortedSet<ICubeDimension> cubeDimensions;
@@ -312,6 +312,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
                     .where(Cube.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -327,6 +328,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
                     .where(Cube.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

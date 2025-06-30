@@ -295,6 +295,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
                     .where(BusinessPolicy.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -310,6 +311,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
                     .where(BusinessPolicy.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

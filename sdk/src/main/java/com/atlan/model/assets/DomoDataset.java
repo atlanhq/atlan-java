@@ -315,6 +315,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
                     .where(DomoDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -330,6 +331,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
                     .where(DomoDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -365,6 +365,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
                     .where(LookerField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -380,6 +381,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
                     .where(LookerField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

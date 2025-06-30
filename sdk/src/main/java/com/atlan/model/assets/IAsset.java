@@ -64,10 +64,10 @@ public interface IAsset {
     /** Checks that run on this asset. */
     RelationField ANOMALO_CHECKS = new RelationField("anomaloChecks");
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     RelationField APPLICATION = new RelationField("application");
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     RelationField APPLICATION_FIELD = new RelationField("applicationField");
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -105,7 +105,7 @@ public interface IAsset {
     /** URL of the source in Anomalo. */
     TextField ASSET_ANOMALO_SOURCE_URL = new TextField("assetAnomaloSourceUrl", "assetAnomaloSourceUrl");
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     TextField ASSET_COVER_IMAGE = new TextField("assetCoverImage", "assetCoverImage");
 
     /** Name of the account in which this asset exists in dbt. */
@@ -354,6 +354,9 @@ public interface IAsset {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     TextField ASSET_THEME_HEX = new TextField("assetThemeHex", "assetThemeHex");
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    KeywordField ASSET_USER_DEFINED_TYPE = new KeywordField("assetUserDefinedType", "assetUserDefinedType");
+
     /** Status of this asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
             new KeywordTextField("certificateStatus", "certificateStatus", "certificateStatus.text");
@@ -417,7 +420,7 @@ public interface IAsset {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     BooleanField IS_EDITABLE = new BooleanField("isEditable", "isEditable");
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     BooleanField IS_PARTIAL = new BooleanField("isPartial", "isPartial");
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -628,10 +631,10 @@ public interface IAsset {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -664,7 +667,7 @@ public interface IAsset {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -871,6 +874,9 @@ public interface IAsset {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -934,7 +940,7 @@ public interface IAsset {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

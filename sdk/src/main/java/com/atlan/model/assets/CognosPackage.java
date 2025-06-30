@@ -321,6 +321,7 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
                     .where(CognosPackage.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -336,6 +337,7 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
                     .where(CognosPackage.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

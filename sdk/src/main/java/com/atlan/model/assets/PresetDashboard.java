@@ -335,6 +335,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
                     .where(PresetDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -350,6 +351,7 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
                     .where(PresetDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

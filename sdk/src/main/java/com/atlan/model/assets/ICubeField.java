@@ -44,13 +44,13 @@ public interface ICubeField {
     KeywordTextField CUBE_FIELD_MEASURE_EXPRESSION = new KeywordTextField(
             "cubeFieldMeasureExpression", "cubeFieldMeasureExpression.keyword", "cubeFieldMeasureExpression");
 
-    /** Hierarchy in which this field exists. */
+    /** Hierarchy containing the field. */
     RelationField CUBE_HIERARCHY = new RelationField("cubeHierarchy");
 
-    /** Individual fields nested within this cube field. */
+    /** Individual fields contained in the parent field. */
     RelationField CUBE_NESTED_FIELDS = new RelationField("cubeNestedFields");
 
-    /** Parent field in which this field is nested. */
+    /** Parent field containing the field. */
     RelationField CUBE_PARENT_FIELD = new RelationField("cubeParentField");
 
     /** Name of the parent field in which this field is nested. */
@@ -91,10 +91,10 @@ public interface ICubeField {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -127,7 +127,7 @@ public interface ICubeField {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -334,6 +334,9 @@ public interface ICubeField {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -373,7 +376,7 @@ public interface ICubeField {
     /** Expression used to calculate this measure. */
     String getCubeFieldMeasureExpression();
 
-    /** Hierarchy in which this field exists. */
+    /** Hierarchy containing the field. */
     ICubeHierarchy getCubeHierarchy();
 
     /** Simple name of the dimension hierarchy in which this asset exists, or empty if it is itself a hierarchy. */
@@ -385,10 +388,10 @@ public interface ICubeField {
     /** Simple name of the cube in which this asset exists, or empty if it is itself a cube. */
     String getCubeName();
 
-    /** Individual fields nested within this cube field. */
+    /** Individual fields contained in the parent field. */
     SortedSet<ICubeField> getCubeNestedFields();
 
-    /** Parent field in which this field is nested. */
+    /** Parent field containing the field. */
     ICubeField getCubeParentField();
 
     /** Name of the parent field in which this field is nested. */
@@ -451,7 +454,7 @@ public interface ICubeField {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

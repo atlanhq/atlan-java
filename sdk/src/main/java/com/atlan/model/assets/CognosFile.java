@@ -320,6 +320,7 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
                     .where(CognosFile.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -335,6 +336,7 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
                     .where(CognosFile.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

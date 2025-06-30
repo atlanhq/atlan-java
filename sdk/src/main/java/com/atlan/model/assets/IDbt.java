@@ -35,69 +35,69 @@ public interface IDbt {
 
     public static final String TYPE_NAME = "Dbt";
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     KeywordTextField DBT_ACCOUNT_NAME =
             new KeywordTextField("dbtAccountName", "dbtAccountName.keyword", "dbtAccountName");
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     KeywordTextField DBT_ALIAS = new KeywordTextField("dbtAlias", "dbtAlias.keyword", "dbtAlias");
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     TextField DBT_CONNECTION_CONTEXT = new TextField("dbtConnectionContext", "dbtConnectionContext");
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     KeywordTextField DBT_ENVIRONMENT_DBT_VERSION = new KeywordTextField(
             "dbtEnvironmentDbtVersion", "dbtEnvironmentDbtVersion.keyword", "dbtEnvironmentDbtVersion");
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     KeywordTextField DBT_ENVIRONMENT_NAME =
             new KeywordTextField("dbtEnvironmentName", "dbtEnvironmentName.keyword", "dbtEnvironmentName");
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     NumericField DBT_JOB_LAST_RUN = new NumericField("dbtJobLastRun", "dbtJobLastRun");
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     KeywordTextField DBT_JOB_NAME = new KeywordTextField("dbtJobName", "dbtJobName.keyword", "dbtJobName");
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     NumericField DBT_JOB_NEXT_RUN = new NumericField("dbtJobNextRun", "dbtJobNextRun");
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     KeywordTextField DBT_JOB_NEXT_RUN_HUMANIZED =
             new KeywordTextField("dbtJobNextRunHumanized", "dbtJobNextRunHumanized.keyword", "dbtJobNextRunHumanized");
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     KeywordField DBT_JOB_RUNS = new KeywordField("dbtJobRuns", "dbtJobRuns");
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     TextField DBT_JOB_SCHEDULE = new TextField("dbtJobSchedule", "dbtJobSchedule");
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     KeywordTextField DBT_JOB_SCHEDULE_CRON_HUMANIZED = new KeywordTextField(
             "dbtJobScheduleCronHumanized", "dbtJobScheduleCronHumanized.keyword", "dbtJobScheduleCronHumanized");
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     KeywordField DBT_JOB_STATUS = new KeywordField("dbtJobStatus", "dbtJobStatus");
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     TextField DBT_META = new TextField("dbtMeta", "dbtMeta");
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     KeywordTextField DBT_PACKAGE_NAME =
             new KeywordTextField("dbtPackageName", "dbtPackageName.keyword", "dbtPackageName");
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     KeywordTextField DBT_PROJECT_NAME =
             new KeywordTextField("dbtProjectName", "dbtProjectName.keyword", "dbtProjectName");
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     KeywordField DBT_SEMANTIC_LAYER_PROXY_URL =
             new KeywordField("dbtSemanticLayerProxyUrl", "dbtSemanticLayerProxyUrl");
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     TextField DBT_TAGS = new TextField("dbtTags", "dbtTags");
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     KeywordTextField DBT_UNIQUE_ID = new KeywordTextField("dbtUniqueId", "dbtUniqueId.keyword", "dbtUniqueId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -127,10 +127,10 @@ public interface IDbt {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -163,7 +163,7 @@ public interface IDbt {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -370,6 +370,9 @@ public interface IDbt {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -400,64 +403,64 @@ public interface IDbt {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     String getDbtAccountName();
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     String getDbtAlias();
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     String getDbtConnectionContext();
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     String getDbtEnvironmentDbtVersion();
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     String getDbtEnvironmentName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     Long getDbtJobLastRun();
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     String getDbtJobName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     Long getDbtJobNextRun();
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     String getDbtJobNextRunHumanized();
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     List<DbtJobRun> getDbtJobRuns();
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     String getDbtJobSchedule();
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     String getDbtJobScheduleCronHumanized();
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     String getDbtJobStatus();
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     String getDbtMeta();
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     String getDbtPackageName();
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     String getDbtProjectName();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     String getDbtSemanticLayerProxyUrl();
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     SortedSet<String> getDbtTags();
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -499,7 +502,7 @@ public interface IDbt {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

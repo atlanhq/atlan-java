@@ -304,6 +304,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
                     .where(SisenseFolder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -319,6 +320,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
                     .where(SisenseFolder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

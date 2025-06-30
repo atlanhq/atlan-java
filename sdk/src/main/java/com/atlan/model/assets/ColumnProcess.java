@@ -84,6 +84,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     IFivetranConnector fivetranConnector;
 
+    /** Orchestrated control operation that ran these data flows (process). */
+    @Attribute
+    IFlowControlOperation flowOrchestratedBy;
+
     /** Assets that are inputs to this process. */
     @Attribute
     @Singular
@@ -314,6 +318,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
                     .where(ColumnProcess.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -329,6 +334,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
                     .where(ColumnProcess.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

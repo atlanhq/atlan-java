@@ -314,6 +314,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
                     .where(SisenseWidget.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -329,6 +330,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
                     .where(SisenseWidget.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

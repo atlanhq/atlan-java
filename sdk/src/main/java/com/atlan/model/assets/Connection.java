@@ -372,6 +372,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                     .where(Connection.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -387,6 +388,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                     .where(Connection.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -67,10 +67,10 @@ public interface IMongoDBDatabase {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -103,7 +103,7 @@ public interface IMongoDBDatabase {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -310,6 +310,9 @@ public interface IMongoDBDatabase {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -352,16 +355,19 @@ public interface IMongoDBDatabase {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     SortedSet<IDbtModel> getDbtModels();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** DBT seeds that materialize the SQL asset. */
+    SortedSet<IDbtSeed> getDbtSeedAssets();
+
+    /** Source containing the assets. */
     SortedSet<IDbtSource> getDbtSources();
 
-    /** TBC */
+    /** Tests related to this asset. */
     SortedSet<IDbtTest> getDbtTests();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -403,7 +409,7 @@ public interface IMongoDBDatabase {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Whether this asset has been profiled (true) or not (false). */
@@ -592,10 +598,10 @@ public interface IMongoDBDatabase {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
-    /** TBC */
+    /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();
 
-    /** TBC */
+    /** Assets related to the model. */
     SortedSet<IDbtModel> getSqlDbtModels();
 
     /** Users who have starred this asset. */

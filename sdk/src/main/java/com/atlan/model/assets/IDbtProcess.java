@@ -33,7 +33,7 @@ public interface IDbtProcess {
 
     public static final String TYPE_NAME = "DbtProcess";
 
-    /** TBC */
+    /** Status of the dbt process job. */
     KeywordField DBT_PROCESS_JOB_STATUS = new KeywordField("dbtProcessJobStatus", "dbtProcessJobStatus");
 
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
@@ -75,10 +75,10 @@ public interface IDbtProcess {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -111,7 +111,7 @@ public interface IDbtProcess {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -318,6 +318,9 @@ public interface IDbtProcess {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -357,67 +360,67 @@ public interface IDbtProcess {
     /** Latest certified version of the data contract for this asset. */
     IDataContract getDataContractLatestCertified();
 
-    /** TBC */
+    /** Name of the account in which this asset exists in dbt. */
     String getDbtAccountName();
 
-    /** TBC */
+    /** Alias of this asset in dbt. */
     String getDbtAlias();
 
-    /** TBC */
+    /** Connection context for this asset in dbt. */
     String getDbtConnectionContext();
 
-    /** TBC */
+    /** Version of dbt used in the environment. */
     String getDbtEnvironmentDbtVersion();
 
-    /** TBC */
+    /** Name of the environment in which this asset exists in dbt. */
     String getDbtEnvironmentName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     Long getDbtJobLastRun();
 
-    /** TBC */
+    /** Name of the job that materialized this asset in dbt. */
     String getDbtJobName();
 
-    /** TBC */
+    /** Time (epoch) at which the job that materialized this asset in dbt will next run, in milliseconds. */
     Long getDbtJobNextRun();
 
-    /** TBC */
+    /** Human-readable time at which the job that materialized this asset in dbt will next run. */
     String getDbtJobNextRunHumanized();
 
-    /** List of latest DBT job runs across all environments */
+    /** List of latest dbt job runs across all environments. */
     List<DbtJobRun> getDbtJobRuns();
 
-    /** TBC */
+    /** Schedule of the job that materialized this asset in dbt. */
     String getDbtJobSchedule();
 
-    /** TBC */
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
     String getDbtJobScheduleCronHumanized();
 
-    /** TBC */
+    /** Status of the job that materialized this asset in dbt. */
     String getDbtJobStatus();
 
-    /** TBC */
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
     String getDbtMeta();
 
-    /** TBC */
+    /** Name of the package in which this asset exists in dbt. */
     String getDbtPackageName();
 
-    /** TBC */
+    /** Status of the dbt process job. */
     String getDbtProcessJobStatus();
 
-    /** TBC */
+    /** Name of the project in which this asset exists in dbt. */
     String getDbtProjectName();
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** URL of the semantic layer proxy for this asset in dbt. */
     String getDbtSemanticLayerProxyUrl();
 
-    /** TBC */
+    /** List of tags attached to this asset in dbt. */
     SortedSet<String> getDbtTags();
 
-    /** TBC */
+    /** Unique identifier of this asset in dbt. */
     String getDbtUniqueId();
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
@@ -434,6 +437,9 @@ public interface IDbtProcess {
 
     /** fivetranConnector in which this process exists. */
     IFivetranConnector getFivetranConnector();
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    IFlowControlOperation getFlowOrchestratedBy();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -465,7 +471,7 @@ public interface IDbtProcess {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */

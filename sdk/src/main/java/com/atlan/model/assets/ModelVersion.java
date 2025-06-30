@@ -354,6 +354,7 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
                     .where(ModelVersion.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -369,6 +370,7 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
                     .where(ModelVersion.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

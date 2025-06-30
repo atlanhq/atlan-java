@@ -333,6 +333,7 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
                     .where(APIField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -348,6 +349,7 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
                     .where(APIField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

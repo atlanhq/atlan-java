@@ -97,6 +97,11 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> displayPreferences;
 
     /** TBC */
@@ -313,6 +318,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                     .where(Persona.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -328,6 +334,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                     .where(Persona.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

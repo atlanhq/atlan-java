@@ -315,6 +315,7 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
                     .where(SodaCheck.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -330,6 +331,7 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
                     .where(SodaCheck.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

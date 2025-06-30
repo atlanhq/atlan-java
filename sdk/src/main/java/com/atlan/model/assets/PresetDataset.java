@@ -313,6 +313,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
                     .where(PresetDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -328,6 +329,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
                     .where(PresetDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

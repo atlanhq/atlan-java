@@ -54,6 +54,9 @@ public interface ITableauWorksheet {
     /** Unique name of the site in which this worksheet exists. */
     TextField SITE_QUALIFIED_NAME = new TextField("siteQualifiedName", "siteQualifiedName");
 
+    /** Fields that exist within this worksheet. */
+    RelationField TABLEAU_WORKSHEET_FIELDS = new RelationField("tableauWorksheetFields");
+
     /** Unique name of the top-level project in which this worksheet exists. */
     TextField TOP_LEVEL_PROJECT_QUALIFIED_NAME =
             new TextField("topLevelProjectQualifiedName", "topLevelProjectQualifiedName");
@@ -91,10 +94,10 @@ public interface ITableauWorksheet {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     IApplication getApplication();
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     IApplicationField getApplicationField();
 
     /** Qualified name of the ApplicationField that contains this asset. */
@@ -127,7 +130,7 @@ public interface ITableauWorksheet {
     /** URL of the source in Anomalo. */
     String getAssetAnomaloSourceUrl();
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
     /** Name of the account in which this asset exists in dbt. */
@@ -334,6 +337,9 @@ public interface ITableauWorksheet {
     /** Color (in hexadecimal RGB) to use to represent this asset. */
     String getAssetThemeHex();
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
@@ -415,7 +421,7 @@ public interface ITableauWorksheet {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
@@ -585,6 +591,9 @@ public interface ITableauWorksheet {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Fields that exist within this worksheet. */
+    SortedSet<ITableauWorksheetField> getTableauWorksheetFields();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

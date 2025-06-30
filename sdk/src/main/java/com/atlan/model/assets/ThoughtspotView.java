@@ -303,6 +303,7 @@ public class ThoughtspotView extends Asset
                     .where(ThoughtspotView.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -318,6 +319,7 @@ public class ThoughtspotView extends Asset
                     .where(ThoughtspotView.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

@@ -326,6 +326,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
                     .where(ModeWorkspace.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -341,6 +342,7 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
                     .where(ModeWorkspace.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

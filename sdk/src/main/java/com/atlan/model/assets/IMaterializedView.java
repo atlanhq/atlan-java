@@ -352,6 +352,9 @@ public interface IMaterializedView {
     String getAssetThemeHex();
 
     /** TBC */
+    String getAssetUserDefinedType();
+
+    /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** TBC */
@@ -404,6 +407,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSeed> getDbtSeedAssets();
 
     /** TBC */
     SortedSet<IDbtSource> getDbtSources();

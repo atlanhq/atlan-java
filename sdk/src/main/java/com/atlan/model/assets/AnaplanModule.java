@@ -48,28 +48,28 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AnaplanLineItem assets contained within this AnaplanModule. */
+    /** Individual line items contained in the module. */
     @Attribute
     @Singular
     SortedSet<IAnaplanLineItem> anaplanLineItems;
 
-    /** AnaplanModel asset containing this AnaplanModule. */
+    /** Model containing the module. */
     @Attribute
     IAnaplanModel anaplanModel;
 
-    /** Simple name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelName;
 
-    /** Unique name of the AnaplanModel asset that contains this asset(AnaplanModule and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanModel asset that contains this asset (AnaplanModule and everything under its hierarchy). */
     @Attribute
     String anaplanModelQualifiedName;
 
-    /** Simple name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Simple name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleName;
 
-    /** Unique name of the AnaplanModule asset that contains this asset(AnaplanLineItem, AnaplanList, AnaplanView and everthing under their hierarchy). */
+    /** Unique name of the AnaplanModule asset that contains this asset (AnaplanLineItem, AnaplanList, AnaplanView and everything under their hierarchy). */
     @Attribute
     String anaplanModuleQualifiedName;
 
@@ -77,16 +77,16 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
     @Attribute
     String anaplanSourceId;
 
-    /** AnaplanView assets contained within this AnaplanModule. */
+    /** Individual views contained in the module. */
     @Attribute
     @Singular
     SortedSet<IAnaplanView> anaplanViews;
 
-    /** Simple name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Simple name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceName;
 
-    /** Unique name of the AnaplanWorkspace asset that contains this asset(AnaplanModel and everthing under it's hierarchy). */
+    /** Unique name of the AnaplanWorkspace asset that contains this asset (AnaplanModel and everything under its hierarchy). */
     @Attribute
     String anaplanWorkspaceQualifiedName;
 
@@ -323,6 +323,7 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
                     .where(AnaplanModule.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -338,6 +339,7 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
                     .where(AnaplanModule.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

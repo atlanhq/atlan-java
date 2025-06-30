@@ -126,6 +126,10 @@ public class TableauCalculatedField extends Asset
     @Attribute
     String tableauDataType;
 
+    /** Worksheet fields that use this calculated field. */
+    @Attribute
+    ITableauWorksheetField tableauWorksheetFields;
+
     /** Unique name of the top-level project in which this calculated field exists. */
     @Attribute
     String topLevelProjectQualifiedName;
@@ -337,6 +341,7 @@ public class TableauCalculatedField extends Asset
                     .where(TableauCalculatedField.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -352,6 +357,7 @@ public class TableauCalculatedField extends Asset
                     .where(TableauCalculatedField.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

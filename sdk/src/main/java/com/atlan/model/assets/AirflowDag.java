@@ -329,6 +329,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
                     .where(AirflowDag.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -344,6 +345,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
                     .where(AirflowDag.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

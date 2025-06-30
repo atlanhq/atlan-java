@@ -352,6 +352,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
                     .where(AdfDataset.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -367,6 +368,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
                     .where(AdfDataset.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

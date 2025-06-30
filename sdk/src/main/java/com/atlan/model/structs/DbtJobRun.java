@@ -29,52 +29,52 @@ public class DbtJobRun extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unique Id of the DBT job */
+    /** Unique Id of the dbt job. */
     String dbtJobId;
 
-    /** Name of the DBT job instance */
+    /** Name of the dbt job instance. */
     String dbtJobName;
 
-    /** Unique environment id for the DBT job */
+    /** Unique environment id for the dbt job. */
     String dbtEnvironmentId;
 
-    /** Environment name where the DBT job runs */
+    /** Environment name where the dbt job runs. */
     String dbtEnvironmentName;
 
-    /** Unique id for the DBT job run */
+    /** Unique id for the dbt job run. */
     String dbtJobRunId;
 
     /** Dbt job instance run completion timestamp */
     Long dbtJobRunCompletedAt;
 
-    /** Status of the dbt job run */
+    /** Status of the dbt job run. */
     String dbtJobRunStatus;
 
-    /** Status of the dbt test executed by current job run */
+    /** Status of the dbt test executed by current job run. */
     String dbtTestRunStatus;
 
-    /** Status of the dbt model executed by current job run */
+    /** Status of the dbt model executed by current job run. */
     String dbtModelRunStatus;
 
-    /** compiled sql executed by a dbt model/test triggered by this dbt job run instance */
+    /** Compiled sql executed by a dbt model/test triggered by this dbt job run instance. */
     String dbtCompiledSQL;
 
-    /** compiled code executed by a dbt model/test triggered by this dbt job run instance */
+    /** Compiled code executed by a dbt model/test triggered by this dbt job run instance. */
     String dbtCompiledCode;
 
     /**
      * Quickly create a new DbtJobRun.
-     * @param dbtJobId Unique Id of the DBT job
-     * @param dbtJobName Name of the DBT job instance
-     * @param dbtEnvironmentId Unique environment id for the DBT job
-     * @param dbtEnvironmentName Environment name where the DBT job runs
-     * @param dbtJobRunId Unique id for the DBT job run
+     * @param dbtJobId Unique Id of the dbt job.
+     * @param dbtJobName Name of the dbt job instance.
+     * @param dbtEnvironmentId Unique environment id for the dbt job.
+     * @param dbtEnvironmentName Environment name where the dbt job runs.
+     * @param dbtJobRunId Unique id for the dbt job run.
      * @param dbtJobRunCompletedAt Dbt job instance run completion timestamp
-     * @param dbtJobRunStatus Status of the dbt job run
-     * @param dbtTestRunStatus Status of the dbt test executed by current job run
-     * @param dbtModelRunStatus Status of the dbt model executed by current job run
-     * @param dbtCompiledSQL compiled sql executed by a dbt model/test triggered by this dbt job run instance
-     * @param dbtCompiledCode compiled code executed by a dbt model/test triggered by this dbt job run instance
+     * @param dbtJobRunStatus Status of the dbt job run.
+     * @param dbtTestRunStatus Status of the dbt test executed by current job run.
+     * @param dbtModelRunStatus Status of the dbt model executed by current job run.
+     * @param dbtCompiledSQL Compiled sql executed by a dbt model/test triggered by this dbt job run instance.
+     * @param dbtCompiledCode Compiled code executed by a dbt model/test triggered by this dbt job run instance.
      * @return a DbtJobRun with the provided information
      */
     public static DbtJobRun of(

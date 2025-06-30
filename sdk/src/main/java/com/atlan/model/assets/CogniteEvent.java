@@ -285,6 +285,7 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
                     .where(CogniteEvent.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -300,6 +301,7 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
                     .where(CogniteEvent.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

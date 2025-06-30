@@ -359,6 +359,7 @@ public class PowerBIDataflow extends Asset
                     .where(PowerBIDataflow.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -374,6 +375,7 @@ public class PowerBIDataflow extends Asset
                     .where(PowerBIDataflow.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

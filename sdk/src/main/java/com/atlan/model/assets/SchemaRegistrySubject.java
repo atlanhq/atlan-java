@@ -322,6 +322,7 @@ public class SchemaRegistrySubject extends Asset
                     .where(SchemaRegistrySubject.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -337,6 +338,7 @@ public class SchemaRegistrySubject extends Asset
                     .where(SchemaRegistrySubject.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

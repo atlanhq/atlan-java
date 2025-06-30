@@ -107,22 +107,27 @@ public class GlossarySemanticAssignment extends RelationshipAttributes {
          * Build the GlossarySemanticAssignment relationship (with attributes) into a related object.
          *
          * @param related the related asset to which to build the detailed relationship
+         * @param semantic to use for saving the relationship
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public IGlossaryTerm assignedTerm(IGlossaryTerm related) throws InvalidRequestException {
+        public IGlossaryTerm assignedTerm(IGlossaryTerm related, Reference.SaveSemantic semantic)
+                throws InvalidRequestException {
             GlossarySemanticAssignment attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {
                 return AssignedTerm._internal()
                         .guid(related.getGuid())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             } else {
                 return AssignedTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
                         .relationshipAttributes(attributes)
+                        .semantic(semantic)
                         .build();
             }
         }

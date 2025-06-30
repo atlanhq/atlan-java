@@ -321,6 +321,7 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
                     .where(CognosDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -336,6 +337,7 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
                     .where(CognosDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

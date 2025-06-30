@@ -348,6 +348,7 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
                     .where(SapErpComponent.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -363,6 +364,7 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
                     .where(SapErpComponent.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

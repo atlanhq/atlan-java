@@ -364,6 +364,7 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
                     .where(CognosFolder.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -379,6 +380,7 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
                     .where(CognosFolder.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();

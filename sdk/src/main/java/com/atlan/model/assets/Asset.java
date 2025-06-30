@@ -108,11 +108,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<IAnomaloCheck> anomaloChecks;
 
-    /** Application asset containing this Asset. */
+    /** Application owning the Asset. */
     @Attribute
     IApplication application;
 
-    /** ApplicationField asset containing this Asset. */
+    /** ApplicationField owning the Asset. */
     @Attribute
     IApplicationField applicationField;
 
@@ -159,7 +159,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetAnomaloSourceUrl;
 
-    /** TBC */
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     @Attribute
     String assetCoverImage;
 
@@ -461,6 +461,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetThemeHex;
 
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    @Attribute
+    String assetUserDefinedType;
+
     /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular
@@ -552,7 +556,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Boolean isEditable;
 
-    /** TBC */
+    /** Indicates this asset is not fully-known, if true. */
     @Attribute
     Boolean isPartial;
 

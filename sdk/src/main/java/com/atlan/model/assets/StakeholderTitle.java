@@ -251,6 +251,7 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
                     .where(StakeholderTitle.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
@@ -266,6 +267,7 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
                     .where(StakeholderTitle.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
+                    .includeRelationshipAttributes(true)
                     .pageSize(1)
                     .stream()
                     .findFirst();
