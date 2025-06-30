@@ -128,6 +128,7 @@ public class GlossaryValidValue extends RelationshipAttributes {
                         .build();
             } else {
                 return ValidValue._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -156,6 +157,7 @@ public class GlossaryValidValue extends RelationshipAttributes {
                         .build();
             } else {
                 return ValidValuesFor._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

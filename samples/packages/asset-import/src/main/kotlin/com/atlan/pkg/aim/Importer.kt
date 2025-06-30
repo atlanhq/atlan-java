@@ -131,10 +131,6 @@ object Importer {
                 }
                 logger.info { "=== Importing glossaries... ===" }
                 val glossaryImporter = GlossaryImporter(ctx, glossariesInput, logger)
-                val includes = glossaryImporter.preprocess()
-                if (includes.hasLinks) {
-                    ctx.linkCache.preload()
-                }
                 val resultsGlossary = glossaryImporter.import()
                 logger.info { "=== Importing categories... ===" }
                 val categoryImporter = CategoryImporter(ctx, glossariesInput, logger)
@@ -174,15 +170,9 @@ object Importer {
                 }
                 logger.info { "=== Importing domains... ===" }
                 val domainImporter = DomainImporter(ctx, dataProductsInput, logger)
-                if (domainImporter.preprocess().hasLinks) {
-                    ctx.linkCache.preload()
-                }
                 val resultsDomain = domainImporter.import()
                 logger.info { "=== Importing products... ===" }
                 val productImporter = ProductImporter(ctx, dataProductsInput, logger)
-                if (productImporter.preprocess().hasLinks) {
-                    ctx.linkCache.preload()
-                }
                 val resultsProduct = productImporter.import()
                 ImportResults.combineAll(ctx.client, true, resultsDomain, resultsProduct)
             } else {
@@ -214,12 +204,6 @@ object Importer {
                     AssetImporter
                         .Preprocessor(ctx, assetsInput, assetsFieldSeparator[0], logger)
                         .preprocess<AssetImporter.Results>()
-                if (preprocessedDetails.hasLinks) {
-                    ctx.linkCache.preload()
-                }
-                if (preprocessedDetails.hasDomainRelationship) {
-                    ctx.dataDomainCache.preload()
-                }
                 DeltaProcessor(
                     ctx = ctx,
                     semantic = ctx.config.assetsDeltaSemantic,
@@ -255,7 +239,6 @@ object Importer {
 
                     logger.info { "=== Importing assets... ===" }
                     val assetImporter = AssetImporter(ctx, delta, assetsInput, logger)
-                    assetImporter.preprocess() // Note: we still do this to detect any cyclical relationships
                     val importedAssets = assetImporter.import()
 
                     delta.processDeletions()

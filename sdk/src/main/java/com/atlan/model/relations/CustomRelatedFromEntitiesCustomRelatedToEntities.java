@@ -110,6 +110,7 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
                         .build();
             } else {
                 return CustomRelatedFromEntity._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -138,6 +139,7 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
                         .build();
             } else {
                 return CustomRelatedToEntity._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

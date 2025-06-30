@@ -154,6 +154,7 @@ public class ${className} extends RelationshipAttributes {
                         .build();
             } else {
                 return ${endDef2AttrName?cap_first}._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -183,6 +184,7 @@ public class ${className} extends RelationshipAttributes {
                         .build();
             } else {
                 return ${endDef1AttrName?cap_first}._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

@@ -127,6 +127,7 @@ public class GlossaryIsA extends RelationshipAttributes {
                         .build();
             } else {
                 return IsA._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -155,6 +156,7 @@ public class GlossaryIsA extends RelationshipAttributes {
                         .build();
             } else {
                 return Classify._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

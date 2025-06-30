@@ -128,6 +128,7 @@ public class GlossaryPreferredTerm extends RelationshipAttributes {
                         .build();
             } else {
                 return PreferredToTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -156,6 +157,7 @@ public class GlossaryPreferredTerm extends RelationshipAttributes {
                         .build();
             } else {
                 return PreferredTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

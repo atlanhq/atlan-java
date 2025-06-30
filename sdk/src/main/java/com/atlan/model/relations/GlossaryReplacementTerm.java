@@ -128,6 +128,7 @@ public class GlossaryReplacementTerm extends RelationshipAttributes {
                         .build();
             } else {
                 return ReplacementTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -156,6 +157,7 @@ public class GlossaryReplacementTerm extends RelationshipAttributes {
                         .build();
             } else {
                 return ReplacedBy._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

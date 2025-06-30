@@ -128,6 +128,7 @@ public class GlossaryTranslation extends RelationshipAttributes {
                         .build();
             } else {
                 return TranslationTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -156,6 +157,7 @@ public class GlossaryTranslation extends RelationshipAttributes {
                         .build();
             } else {
                 return TranslatedTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

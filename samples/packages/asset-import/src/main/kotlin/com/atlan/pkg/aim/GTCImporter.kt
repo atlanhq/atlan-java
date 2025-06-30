@@ -14,7 +14,6 @@ import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.RowPreprocessor
@@ -41,11 +40,11 @@ abstract class GTCImporter(
     protected val cache: AssetCache<*>,
     typeNameFilter: String,
     logger: KLogger,
-) : CSVImporter(
+) : AbstractBaseImporter(
         ctx,
         filename,
         logger,
-        typeNameFilter,
+        typeNameFilter = typeNameFilter,
         attrsToOverwrite =
             attributesToClear(
                 ctx.config

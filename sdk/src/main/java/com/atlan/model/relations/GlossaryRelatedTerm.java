@@ -110,6 +110,7 @@ public class GlossaryRelatedTerm extends RelationshipAttributes {
                         .build();
             } else {
                 return SeeAlso._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

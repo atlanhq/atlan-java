@@ -14,7 +14,6 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_DOMAIN_DELIMITER
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
@@ -40,7 +39,7 @@ class DomainImporter(
     ctx: PackageContext<AssetImportCfg>,
     filename: String,
     logger: KLogger,
-) : CSVImporter(
+) : AbstractBaseImporter(
         ctx,
         filename,
         logger = logger,
@@ -95,13 +94,17 @@ class DomainImporter(
     ) {
     // Note: Always track batches (above) for domain importer, to ensure cache is managed
 
-    private var levelToProcess = 0
-
     // Maximum depth of any domain in the CSV -- will be updated on first pass through the CSV
     // file by includeRow() method
     private val maxDomainDepth = AtomicInteger(1)
 
     private val cache = ctx.dataDomainCache
+
+    private val secondPassRemain =
+        setOf(
+            DataDomain.NAME.atlanFieldName,
+            DataDomain.PARENT_DOMAIN.atlanFieldName,
+        )
 
     /** {@inheritDoc} */
     override fun cacheCreated(list: Stream<Asset>) {
@@ -115,12 +118,10 @@ class DomainImporter(
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(DataDomain.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(DataProduct.DATA_DOMAIN.atlanFieldName)
-
         val includes = preprocess()
         if (includes.hasLinks) {
             ctx.linkCache.preload()
@@ -128,16 +129,7 @@ class DomainImporter(
         if (includes.hasTermAssignments) {
             ctx.termCache.preload()
         }
-
-        logger.info { "Loading domains in multiple passes, by level..." }
-        val individualResults = mutableListOf<ImportResults?>()
-        while (levelToProcess < maxDomainDepth.get()) {
-            levelToProcess += 1
-            logger.info { "--- Loading level $levelToProcess domains... ---" }
-            val results = super.import(colsToSkip)
-            individualResults.add(results)
-        }
-        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
+        return super.importHierarchy(cache, typeNameFilter, colsToSkip, secondPassRemain, maxDomainDepth)
     }
 
     /** {@inheritDoc} */

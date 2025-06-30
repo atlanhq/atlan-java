@@ -122,6 +122,7 @@ public class GlossarySemanticAssignment extends RelationshipAttributes {
                         .build();
             } else {
                 return AssignedTerm._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

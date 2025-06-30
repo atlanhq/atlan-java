@@ -110,6 +110,7 @@ public class CustomParentEntityCustomChildEntities extends RelationshipAttribute
                         .build();
             } else {
                 return CustomParentEntity._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -138,6 +139,7 @@ public class CustomParentEntityCustomChildEntities extends RelationshipAttribute
                         .build();
             } else {
                 return CustomChildEntity._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

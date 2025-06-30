@@ -7,9 +7,7 @@ import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.pkg.serde.cell.GlossaryTermXformer
 import com.atlan.pkg.serde.cell.GlossaryXformer
-import com.atlan.pkg.serde.cell.UserDefRelationshipXformer
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
@@ -37,37 +35,19 @@ class TermImporter(
         typeNameFilter = GlossaryTerm.TYPE_NAME,
         logger = logger,
     ) {
-    private val secondPassIgnore =
+    private val secondPassRemain =
         setOf(
-            GlossaryTerm.LINKS.atlanFieldName,
-            GlossaryTerm.ATLAN_TAGS.atlanFieldName,
-            GlossaryTerm.README.atlanFieldName,
-            GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName,
+            GlossaryTerm.NAME.atlanFieldName,
+            GlossaryTerm.ANCHOR.atlanFieldName,
         )
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
-        val firstPassSkip = columnsToSkip.toMutableSet()
-        firstPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
-        firstPassSkip.addAll(GlossaryTermXformer.TERM_TO_TERM_FIELDS)
-        firstPassSkip.addAll(UserDefRelationshipXformer.USER_DEF_RELN_FIELDS)
-        firstPassSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
-        // Import categories by level, top-to-bottom, and stop when we hit a level with no categories
-        logger.info { "--- Loading terms in first pass, without term-to-term relationships... ---" }
-        val firstPassResults = super.import(firstPassSkip)
-        return if (firstPassResults != null) {
-            val secondPassSkip = columnsToSkip.toMutableSet()
-            secondPassSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
-            secondPassSkip.addAll(secondPassIgnore)
-            // In this second pass we need to ignore fields that were loaded in the first pass,
-            // or we will end up with duplicates (links) or extra audit log messages (tags, README)
-            logger.info { "--- Loading term-to-term relationships (second pass)... ---" }
-            val secondPassResults = super.import(secondPassSkip)
-            return ImportResults.combineAll(ctx.client, true, firstPassResults, secondPassResults)
-        } else {
-            null
-        }
+        val colsToSkip = columnsToSkip.toMutableSet()
+        colsToSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
+        colsToSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
     }
 
     /** {@inheritDoc} */

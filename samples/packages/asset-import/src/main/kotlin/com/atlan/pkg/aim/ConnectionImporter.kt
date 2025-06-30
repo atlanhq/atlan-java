@@ -11,7 +11,6 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
-import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
 import java.util.stream.Stream
@@ -32,7 +31,7 @@ class ConnectionImporter(
     ctx: PackageContext<AssetImportCfg>,
     private val inputFile: String,
     logger: KLogger,
-) : CSVImporter(
+) : AbstractBaseImporter(
         ctx = ctx,
         filename = inputFile,
         logger = logger,
@@ -61,11 +60,17 @@ class ConnectionImporter(
         const val CUSTOM_CONNECTOR_TYPE = "customConnectorType"
     }
 
+    private val secondPassRemain =
+        setOf(
+            Asset.QUALIFIED_NAME.atlanFieldName,
+            Asset.NAME.atlanFieldName,
+        )
+
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Connection.QUALIFIED_NAME.atlanFieldName)
-        return super.import(colsToSkip)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
     }
 
     /** {@inheritDoc} */

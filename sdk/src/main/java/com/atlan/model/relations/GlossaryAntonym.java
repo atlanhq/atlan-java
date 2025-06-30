@@ -110,6 +110,7 @@ public class GlossaryAntonym extends RelationshipAttributes {
                         .build();
             } else {
                 return Antonym._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

@@ -112,6 +112,7 @@ public class GlossaryTermCategorization extends RelationshipAttributes {
                         .build();
             } else {
                 return Category._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
@@ -140,6 +141,7 @@ public class GlossaryTermCategorization extends RelationshipAttributes {
                         .build();
             } else {
                 return Term._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())

@@ -110,6 +110,7 @@ public class GlossarySynonym extends RelationshipAttributes {
                         .build();
             } else {
                 return Synonym._internal()
+                        .typeName(related.getTypeName())
                         .uniqueAttributes(UniqueAttributes.builder()
                                 .qualifiedName(related.getQualifiedName())
                                 .build())
