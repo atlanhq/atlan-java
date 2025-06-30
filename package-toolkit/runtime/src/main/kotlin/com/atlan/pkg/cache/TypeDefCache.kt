@@ -100,8 +100,10 @@ class TypeDefCache(
     }
 
     private fun cacheRelationshipCycles(relationshipDefs: List<RelationshipDef>) {
-
-        fun isSubtypeOf(type1: String, type2: String): Boolean {
+        fun isSubtypeOf(
+            type1: String,
+            type2: String,
+        ): Boolean {
             if (type1 == type2) return true
 
             val visited = mutableSetOf<String>()
@@ -120,19 +122,22 @@ class TypeDefCache(
             return false
         }
 
-        fun formsCycle(type1: String, type2: String): Boolean {
-            return isSubtypeOf(type1, type2) ||
+        fun formsCycle(
+            type1: String,
+            type2: String,
+        ): Boolean =
+            isSubtypeOf(type1, type2) ||
                 isSubtypeOf(type2, type1)
-        }
 
         relationshipDefs
             .filter { formsCycle(it.endDef1.type, it.endDef2.type) }
             .forEach { relationshipDef ->
-                val re = RelationshipEnds(
-                    relationshipDef.name,
-                    relationshipDef.endDef1.name,
-                    relationshipDef.endDef2.name,
-                )
+                val re =
+                    RelationshipEnds(
+                        relationshipDef.name,
+                        relationshipDef.endDef1.name,
+                        relationshipDef.endDef2.name,
+                    )
                 cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef1.type) { mutableSetOf() }.add(re)
                 cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef2.type) { mutableSetOf() }.add(re)
             }
@@ -144,9 +149,7 @@ class TypeDefCache(
      * @param typeName of the entity
      * @return the set of cyclical relationships that exist for that type of entity
      */
-    fun getCyclicalRelationshipsForType(
-        typeName: String,
-    ): Set<RelationshipEnds> {
+    fun getCyclicalRelationshipsForType(typeName: String): Set<RelationshipEnds> {
         // Look up the cyclical relationships in this type and all of its supertypes
         val consolidated = cyclicalRelationshipsMap.getOrElse(typeName) { mutableSetOf() }.toMutableSet()
         inheritanceMap[typeName]?.forEach {
