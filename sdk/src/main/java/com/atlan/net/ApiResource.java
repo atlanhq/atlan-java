@@ -366,7 +366,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
         MDC.put("X-Atlan-Request-Id", requestId);
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled() && (options == null || !options.getSkipLogging())) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
                     log.debug(
@@ -379,6 +379,8 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             } else {
                 log.debug(" ... empty response.");
             }
+        } else {
+            log.debug(" ... response received -- skipped logging as requested.");
         }
         return response;
     }

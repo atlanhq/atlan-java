@@ -11,6 +11,7 @@ import com.atlan.pkg.cache.DataProductCache
 import com.atlan.pkg.cache.GlossaryCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
+import com.atlan.pkg.cache.TypeDefCache
 
 /**
  * Context for a custom package, including its tenant connectivity (client), package-specific configuration,
@@ -33,6 +34,7 @@ class PackageContext<T : CustomConfig<T>>(
     val dataDomainCache = DataDomainCache(this)
     val dataProductCache = DataProductCache(this)
     val linkCache = LinkCache(this)
+    val typeDefCache = TypeDefCache(this)
 
     /** {@inheritDoc} */
     override fun close() {
@@ -43,6 +45,7 @@ class PackageContext<T : CustomConfig<T>>(
         AtlanCloseable.close(dataDomainCache)
         AtlanCloseable.close(dataProductCache)
         AtlanCloseable.close(linkCache)
+        AtlanCloseable.close(typeDefCache)
         if (!reusedClient) {
             AtlanCloseable.close(client)
         }

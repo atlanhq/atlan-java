@@ -28,6 +28,9 @@ public class RequestOptions {
     private final Proxy connectionProxy;
     private final PasswordAuthentication proxyCredential;
 
+    @Builder.Default
+    private final boolean skipLogging = false;
+
     @Singular
     private final Map<String, List<String>> extraHeaders;
 
