@@ -107,14 +107,28 @@ abstract class CSVImporter(
      * @param columnsToSkip (optional) columns in the CSV file to skip when loading (primarily useful for multi-pass loads)
      * @return details about the results of the import
      */
-    open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? {
+    open fun import(columnsToSkip: Set<String> = setOf()): ImportResults? = import(columnsToSkip, atlanTagHandling, customMetadataHandling)
+
+    /**
+     * Actually run the import.
+     *
+     * @param columnsToSkip (optional) columns in the CSV file to skip when loading (primarily useful for multi-pass loads)
+     * @param overrideTagHandling override how tag handling is done for this import run
+     * @param overrideCustomMetadataHandling override how custom metadata handling is done for this import run
+     * @return details about the results of the import
+     */
+    fun import(
+        columnsToSkip: Set<String> = setOf(),
+        overrideTagHandling: AtlanTagHandling,
+        overrideCustomMetadataHandling: CustomMetadataHandling,
+    ): ImportResults? {
         CSVReader(
             filename,
             updateOnly,
             trackBatches,
             caseSensitive,
-            customMetadataHandling,
-            atlanTagHandling,
+            overrideCustomMetadataHandling,
+            overrideTagHandling,
             creationHandling,
             tableViewAgnostic,
             fieldSeparator,
