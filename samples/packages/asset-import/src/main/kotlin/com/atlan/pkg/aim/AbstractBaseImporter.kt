@@ -207,7 +207,7 @@ abstract class AbstractBaseImporter(
             .forEach { relationship ->
                 val one = relationship.end1
                 val two = relationship.end2
-                if (header.contains(one) && header.contains(two)) {
+                if (one != two && header.contains(one) && header.contains(two)) {
                     // If both ends of the same relationship are in the input file, throw an error
                     // alerting the user that this can't work, and they'll need to pick one end or the other
                     throw IllegalStateException(
