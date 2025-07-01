@@ -17,6 +17,9 @@ public enum FileType implements AtlanEnum {
     JSON("json"),
     XML("xml"),
     ZIP("zip"),
+    YXDB("yxdb"),
+    XLSM("xlsm"),
+    HYPER("hyper"),
     ;
 
     @JsonValue
