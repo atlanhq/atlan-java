@@ -194,7 +194,14 @@ abstract class AbstractBaseImporter(
         // In this second pass we need to ignore fields that were loaded in the first pass,
         // or we will end up with duplicates (links) or extra audit log messages (tags, README)
         logger.info { "--- Loading cyclical relationships for $typeToProcess (second pass)... ---" }
-        val secondPassResults = super.import(secondPassSkip)
+        // Note: for the second pass, ignore any tags or custom metadata (should have been set in the first
+        // pass, if there were any, so no need to set them again (and add noise to activity log))
+        val secondPassResults =
+            super.import(
+                secondPassSkip,
+                AtlanTagHandling.IGNORE,
+                CustomMetadataHandling.IGNORE,
+            )
         if (secondPassResults != null) passResults.add(secondPassResults)
     }
 
