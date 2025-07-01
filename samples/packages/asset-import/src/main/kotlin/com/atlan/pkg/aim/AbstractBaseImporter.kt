@@ -187,10 +187,10 @@ abstract class AbstractBaseImporter(
         columnsToAlwaysInclude: Set<String>,
         passResults: MutableList<ImportResults?>,
     ) {
-        val secondPassSkip = columnsToSkip.toMutableSet()
-        secondPassSkip.addAll(header)
-        secondPassSkip.removeAll(firstPassSkip)
-        secondPassSkip.removeAll(columnsToAlwaysInclude)
+        val secondPassSkip = header.toMutableSet() // Start from the premise we will ignore everything
+        secondPassSkip.removeAll(firstPassSkip) // Add back in anything we skipped in the first pass
+        secondPassSkip.addAll(columnsToSkip) // Continue to skip anything we should always skip
+        secondPassSkip.removeAll(columnsToAlwaysInclude) // Finally, continue to keep anything we should always keep
         // In this second pass we need to ignore fields that were loaded in the first pass,
         // or we will end up with duplicates (links) or extra audit log messages (tags, README)
         logger.info { "--- Loading cyclical relationships for $typeToProcess (second pass)... ---" }

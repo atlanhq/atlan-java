@@ -14,7 +14,6 @@ import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
-import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
@@ -135,42 +134,29 @@ abstract class GTCImporter(
      */
     abstract fun getCacheId(deserializer: RowDeserializer): String
 
-    /** Pre-process the GTC import file. */
-    fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-
-    private class Preprocessor(
-        originalFile: String,
-        fieldSeparator: Char,
-        logger: KLogger,
-    ) : CSVPreprocessor(
-            filename = originalFile,
-            logger = logger,
-            fieldSeparator = fieldSeparator,
-        ) {
-        /** {@inheritDoc} */
-        override fun preprocessRow(
-            row: List<String>,
-            header: List<String>,
-            typeIdx: Int,
-            qnIdx: Int,
-        ): List<String> {
-            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-            if (typeName.isNotBlank() && typeName !in GLOSSARY_TYPES) {
-                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-                throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
-            }
-            return row // No-op
+    /** {@inheritDoc} */
+    override fun preprocessRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): List<String> {
+        val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+        if (typeName.isNotBlank() && typeName !in GLOSSARY_TYPES) {
+            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
+            throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
         }
+        return super.preprocessRow(row, header, typeIdx, qnIdx)
+    }
 
-        /** {@inheritDoc} */
-        override fun finalize(
-            header: List<String>,
-            outputFile: String?,
-        ): RowPreprocessor.Results {
-            if (header.contains(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)) {
-                logger.warn { "Found asset assignments in the glossary input file. Due to the order in which files are loaded, term <> asset assignments should only be provided in the assets file. Any found in the glossary file will be skipped." }
-            }
-            return super.finalize(header, outputFile)
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): RowPreprocessor.Results {
+        if (header.contains(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)) {
+            logger.warn { "Found asset assignments in the glossary input file. Due to the order in which files are loaded, term <> asset assignments should only be provided in the assets file. Any found in the glossary file will be skipped." }
         }
+        return super.preprocess(outputFile, outputHeaders)
     }
 }
