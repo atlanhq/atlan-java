@@ -36,6 +36,9 @@ public interface IFlowDataset {
     /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
     RelationField FLOW_DETAILED_BY = new RelationField("flowDetailedBy");
 
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral piece of data. */
+    KeywordField FLOW_EXPRESSION = new KeywordField("flowExpression", "flowExpression");
+
     /** Count of the number of individual fields that make up this ephemeral dataset. */
     NumericField FLOW_FIELD_COUNT = new NumericField("flowFieldCount", "flowFieldCount");
 
@@ -44,6 +47,9 @@ public interface IFlowDataset {
 
     /** Reusable unit in which the ephemeral dataset is contained. */
     RelationField FLOW_PARENT_UNIT = new RelationField("flowParentUnit");
+
+    /** Query (e.g. SQL) that was run to produce this ephemeral piece of data. */
+    KeywordField FLOW_QUERY = new KeywordField("flowQuery", "flowQuery");
 
     /** Type of the ephemeral piece of data. */
     KeywordField FLOW_TYPE = new KeywordField("flowType", "flowType");
@@ -372,6 +378,9 @@ public interface IFlowDataset {
     /** Optional error message of the flow run. */
     String getFlowErrorMessage();
 
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral piece of data. */
+    String getFlowExpression();
+
     /** Count of the number of individual fields that make up this ephemeral dataset. */
     Long getFlowFieldCount();
 
@@ -398,6 +407,9 @@ public interface IFlowDataset {
 
     /** Unique name of the project in which this asset is contained. */
     String getFlowProjectQualifiedName();
+
+    /** Query (e.g. SQL) that was run to produce this ephemeral piece of data. */
+    String getFlowQuery();
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
     String getFlowReusableUnitName();

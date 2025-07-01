@@ -450,10 +450,12 @@ public class FlowDatasetTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .flowDetailedBy(FlowReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowExpression("String0")
             .flowFieldCount(123456789L)
             .flowField(FlowField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowField(FlowField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .flowParentUnit(FlowReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowQuery("String0")
             .flowType("String0")
             .build();
 

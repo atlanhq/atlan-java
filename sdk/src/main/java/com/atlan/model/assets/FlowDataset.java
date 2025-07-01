@@ -56,6 +56,10 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     @Attribute
     String flowErrorMessage;
 
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral piece of data. */
+    @Attribute
+    String flowExpression;
+
     /** Count of the number of individual fields that make up this ephemeral dataset. */
     @Attribute
     Long flowFieldCount;
@@ -93,6 +97,10 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     /** Unique name of the project in which this asset is contained. */
     @Attribute
     String flowProjectQualifiedName;
+
+    /** Query (e.g. SQL) that was run to produce this ephemeral piece of data. */
+    @Attribute
+    String flowQuery;
 
     /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
     @Attribute

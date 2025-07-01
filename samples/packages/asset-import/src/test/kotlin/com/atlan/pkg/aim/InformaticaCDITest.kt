@@ -554,6 +554,8 @@ class InformaticaCDITest : PackageTest("cdi") {
                 .includeOnResults(FlowDataset.FLOW_TYPE)
                 .includeOnResults(FlowDataset.FLOW_FIELD_COUNT)
                 .includeOnResults(FlowDataset.FLOW_FIELDS)
+                .includeOnResults(FlowDataset.FLOW_EXPRESSION)
+                .includeOnResults(FlowDataset.FLOW_QUERY)
                 .stream()
                 .map { it as FlowDataset }
                 .toList()
@@ -575,6 +577,8 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("MultiMap_mapping"))
                     assertEquals(5, id.flowFieldCount)
                     assertEquals(5, id.flowFields.size)
+                    assertEquals("MOVIE_ID = MOVIE_ID", id.flowExpression)
+                    assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.MOVIE_DETAILS", id.flowQuery)
                 }
                 "Target2" -> {
                     assertEquals("TARGET", id.flowType)
@@ -589,6 +593,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("MultiMap_mapping"))
                     assertEquals(3, id.flowFieldCount)
                     assertEquals(3, id.flowFields.size)
+                    assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.CUSTOMERS01", id.flowQuery)
                 }
                 "Source" -> {
                     assertEquals("SOURCE", id.flowType)
@@ -597,6 +602,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             assertTrue(id.flowReusableUnitQualifiedName.endsWith("MultiMap_mapping"))
                             assertEquals(4, id.flowFieldCount)
                             assertEquals(4, id.flowFields.size)
+                            assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.EMPLOYEES_SR1", id.flowQuery)
                         }
                         "Complex (mapping)" -> {
                             assertTrue(id.flowReusableUnitQualifiedName.endsWith("Complex_mapping"))
@@ -629,6 +635,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("MultiMap_mapping"))
                     assertEquals(4, id.flowFieldCount)
                     assertEquals(4, id.flowFields.size)
+                    assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.EMPLOYEES_SR1", id.flowQuery)
                 }
                 "Target1" -> {
                     assertEquals("TARGET", id.flowType)
