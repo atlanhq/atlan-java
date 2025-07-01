@@ -167,7 +167,7 @@ implements <a href="IFlowDataset.html" title="interface in com.atlan.model.asset
 <code><a href="IFlow.html#FLOW_ERROR_MESSAGE">FLOW_ERROR_MESSAGE</a>, <a href="IFlow.html#FLOW_FINISHED_AT">FLOW_FINISHED_AT</a>, <a href="IFlow.html#FLOW_FOLDER_NAME">FLOW_FOLDER_NAME</a>, <a href="IFlow.html#FLOW_FOLDER_QUALIFIED_NAME">FLOW_FOLDER_QUALIFIED_NAME</a>, <a href="IFlow.html#FLOW_ID">FLOW_ID</a>, <a href="IFlow.html#FLOW_PROJECT_NAME">FLOW_PROJECT_NAME</a>, <a href="IFlow.html#FLOW_PROJECT_QUALIFIED_NAME">FLOW_PROJECT_QUALIFIED_NAME</a>, <a href="IFlow.html#FLOW_REUSABLE_UNIT_NAME">FLOW_REUSABLE_UNIT_NAME</a>, <a href="IFlow.html#FLOW_REUSABLE_UNIT_QUALIFIED_NAME">FLOW_REUSABLE_UNIT_QUALIFIED_NAME</a>, <a href="IFlow.html#FLOW_RUN_ID">FLOW_RUN_ID</a>, <a href="IFlow.html#FLOW_SCHEDULE">FLOW_SCHEDULE</a>, <a href="IFlow.html#FLOW_STARTED_AT">FLOW_STARTED_AT</a>, <a href="IFlow.html#FLOW_STATUS">FLOW_STATUS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IFlowDataset">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IFlowDataset.html" title="interface in com.atlan.model.assets">IFlowDataset</a></h3>
-<code><a href="IFlowDataset.html#FLOW_DETAILED_BY">FLOW_DETAILED_BY</a>, <a href="IFlowDataset.html#FLOW_FIELD_COUNT">FLOW_FIELD_COUNT</a>, <a href="IFlowDataset.html#FLOW_FIELDS">FLOW_FIELDS</a>, <a href="IFlowDataset.html#FLOW_PARENT_UNIT">FLOW_PARENT_UNIT</a>, <a href="IFlowDataset.html#FLOW_TYPE">FLOW_TYPE</a></code></div>
+<code><a href="IFlowDataset.html#FLOW_DETAILED_BY">FLOW_DETAILED_BY</a>, <a href="IFlowDataset.html#FLOW_EXPRESSION">FLOW_EXPRESSION</a>, <a href="IFlowDataset.html#FLOW_FIELD_COUNT">FLOW_FIELD_COUNT</a>, <a href="IFlowDataset.html#FLOW_FIELDS">FLOW_FIELDS</a>, <a href="IFlowDataset.html#FLOW_PARENT_UNIT">FLOW_PARENT_UNIT</a>, <a href="IFlowDataset.html#FLOW_QUERY">FLOW_QUERY</a>, <a href="IFlowDataset.html#FLOW_TYPE">FLOW_TYPE</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -276,50 +276,60 @@ implements <a href="IFlowDataset.html" title="interface in com.atlan.model.asset
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Optional error message of the flow run.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFieldCount()" class="member-name-link">getFlowFieldCount</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowExpression()" class="member-name-link">getFlowExpression</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Logic that is applied, injected or otherwise used as part of producing this ephemeral piece of data.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFieldCount()" class="member-name-link">getFlowFieldCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Count of the number of individual fields that make up this ephemeral dataset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IFlowField.html" title="interface in com.atlan.model.assets">IFlowField</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFields()" class="member-name-link">getFlowFields</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IFlowField.html" title="interface in com.atlan.model.assets">IFlowField</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFields()" class="member-name-link">getFlowFields</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Fields contained in the ephemeral dataset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFinishedAt()" class="member-name-link">getFlowFinishedAt</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFinishedAt()" class="member-name-link">getFlowFinishedAt</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Date and time at which this point in the data processing or orchestration finished.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFolderName()" class="member-name-link">getFlowFolderName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFolderName()" class="member-name-link">getFlowFolderName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Simple name of the folder in which this asset is contained.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFolderQualifiedName()" class="member-name-link">getFlowFolderQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowFolderQualifiedName()" class="member-name-link">getFlowFolderQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the folder in which this asset is contained.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowId()" class="member-name-link">getFlowId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowId()" class="member-name-link">getFlowId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IFlowReusableUnit.html" title="interface in com.atlan.model.assets">IFlowReusableUnit</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowParentUnit()" class="member-name-link">getFlowParentUnit</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IFlowReusableUnit.html" title="interface in com.atlan.model.assets">IFlowReusableUnit</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowParentUnit()" class="member-name-link">getFlowParentUnit</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reusable unit in which the ephemeral dataset is contained.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowProjectName()" class="member-name-link">getFlowProjectName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowProjectName()" class="member-name-link">getFlowProjectName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Simple name of the project in which this asset is contained.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowProjectQualifiedName()" class="member-name-link">getFlowProjectQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowProjectQualifiedName()" class="member-name-link">getFlowProjectQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unique name of the project in which this asset is contained.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowQuery()" class="member-name-link">getFlowQuery</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Query (e.g.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFlowReusableUnitName()" class="member-name-link">getFlowReusableUnitName</a>()</code></div>
@@ -1209,6 +1219,17 @@ implements <a href="IFlowDataset.html" title="interface in com.atlan.model.asset
 </section>
 </li>
 <li>
+<section class="detail" id="getFlowExpression()">
+<h3>getFlowExpression</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFlowExpression</span>()</div>
+<div class="block">Logic that is applied, injected or otherwise used as part of producing this ephemeral piece of data.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IFlowDataset.html#getFlowExpression()">getFlowExpression</a></code>&nbsp;in interface&nbsp;<code><a href="IFlowDataset.html" title="interface in com.atlan.model.assets">IFlowDataset</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getFlowFieldCount()">
 <h3>getFlowFieldCount</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getFlowFieldCount</span>()</div>
@@ -1316,6 +1337,17 @@ implements <a href="IFlowDataset.html" title="interface in com.atlan.model.asset
 <dd><code><a href="IFlow.html#getFlowProjectQualifiedName()">getFlowProjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IFlow.html" title="interface in com.atlan.model.assets">IFlow</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="IFlowDataset.html#getFlowProjectQualifiedName()">getFlowProjectQualifiedName</a></code>&nbsp;in interface&nbsp;<code><a href="IFlowDataset.html" title="interface in com.atlan.model.assets">IFlowDataset</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFlowQuery()">
+<h3>getFlowQuery</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFlowQuery</span>()</div>
+<div class="block">Query (e.g. SQL) that was run to produce this ephemeral piece of data.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IFlowDataset.html#getFlowQuery()">getFlowQuery</a></code>&nbsp;in interface&nbsp;<code><a href="IFlowDataset.html" title="interface in com.atlan.model.assets">IFlowDataset</a></code></dd>
 </dl>
 </section>
 </li>
