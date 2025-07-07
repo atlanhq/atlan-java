@@ -12,6 +12,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.util.Stopwatch;
 import java.net.ConnectException;
+import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.List;
@@ -285,6 +286,13 @@ public abstract class HttpClient {
                         request.options().getMaxNetworkRetries());
             }
             return false;
+        }
+
+        // There can be ephemeral network routing problems, which we should retry on
+        // (but only up to the maximum retry limit, otherwise if they are not ephemeral
+        // we will cause an infinite loop)
+        if ((exception != null) && (exception.getCause() instanceof NoRouteToHostException)) {
+            return true;
         }
 
         if (response != null) {
