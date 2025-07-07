@@ -30,6 +30,7 @@ configurations.all {
         force(
             libs.parsson,
             libs.json.path,
+            libs.json.smart,
             libs.guava,
             libs.commons.compress,
             libs.commons.io,
