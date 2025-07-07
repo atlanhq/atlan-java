@@ -17,6 +17,7 @@ parsson = "1.1.7"
 simplejavamail = "8.12.6"
 swagger = "2.1.30"
 jsonpath = "2.9.0"
+jsonsmart = "2.5.2"
 commons-compress = "1.27.1"
 commons-io = "2.19.0"
 sqlite = "3.50.2.0"
@@ -64,6 +65,7 @@ guava = { module = "com.google.guava:guava", version.ref = "guava" }
 simple-java-mail = { module = "org.simplejavamail:simple-java-mail", version.ref = "simplejavamail" }
 swagger-parser = { module = "io.swagger.parser.v3:swagger-parser", version.ref = "swagger" }
 json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "jsonpath" }
+json-smart = { module = "net.minidev:json-smart", version.ref = "jsonsmart" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }

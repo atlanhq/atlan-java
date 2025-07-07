@@ -1108,6 +1108,30 @@ object Utils {
         }
     }
 
+    /**
+     * Validates that a user-provided path is safe, within the context
+     * of a defined base directory.
+     *
+     * @param baseDirectory within which the path is to be validated
+     * @param userProvided location the user has provided
+     */
+    @Throws(IllegalArgumentException::class)
+    fun validatePathIsSafe(
+        baseDirectory: String,
+        userProvided: String,
+    ) {
+        val base = Paths.get(baseDirectory).toAbsolutePath().normalize()
+        val resolved = base.resolve(userProvided).normalize()
+        when {
+            !resolved.startsWith(base) ->
+                IllegalArgumentException("Path traversal attempt detected -- will not proceed due to security implications.")
+            userProvided.contains('\u0000') ->
+                IllegalArgumentException("Null bytes in the path or filename are not allowed.")
+            resolved.toAbsolutePath().toString().length > 800 ->
+                IllegalArgumentException("User-provided path and filename are too long (exceeds maximum length of 800 characters).")
+        }
+    }
+
     private data class CacheUpdates(
         val added: OffHeapAssetCache,
         val removed: OffHeapAssetCache,

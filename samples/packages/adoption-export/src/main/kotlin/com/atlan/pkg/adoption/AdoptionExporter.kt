@@ -6,6 +6,7 @@ import AdoptionExportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.validatePathIsSafe
 import com.atlan.pkg.adoption.exports.AssetChanges
 import com.atlan.pkg.adoption.exports.AssetViews
 import com.atlan.pkg.adoption.exports.DetailedSearches
@@ -47,11 +48,17 @@ object AdoptionExporter {
 
             // Touch every file, just so they exist, to avoid any workflow failures
             Paths.get(outputDirectory).toFile().mkdirs()
+            validatePathIsSafe(outputDirectory, FILENAME)
             Paths.get(xlsxFile).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, CHANGES_FILE)
             Paths.get(changesFile).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, VIEWS_FILE)
             Paths.get(viewsFile).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, USER_SEARCHES_FILE)
             Paths.get(userSearchesFile).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, USER_CHANGES_FILE)
             Paths.get(userChangesFile).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, USER_VIEWS_FILE)
             Paths.get(userViewsFile).toFile().createNewFile()
 
             val fileOutputs = mutableListOf<String>()

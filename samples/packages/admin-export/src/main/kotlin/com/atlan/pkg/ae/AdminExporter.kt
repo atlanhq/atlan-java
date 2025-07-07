@@ -7,6 +7,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Glossary
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.validatePathIsSafe
 import com.atlan.pkg.ae.exports.Groups
 import com.atlan.pkg.ae.exports.Personas
 import com.atlan.pkg.ae.exports.Policies
@@ -53,11 +54,17 @@ object AdminExporter {
 
             // Touch every file, just so they exist, to avoid any Argo failures
             Paths.get(outputDirectory).toFile().mkdirs()
+            validatePathIsSafe(outputDirectory, FILENAME)
             Paths.get(outputDirectory, FILENAME).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, USERS_FILE)
             Paths.get(outputDirectory, USERS_FILE).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, GROUPS_FILE)
             Paths.get(outputDirectory, GROUPS_FILE).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, PERSONAS_FILE)
             Paths.get(outputDirectory, PERSONAS_FILE).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, PURPOSES_FILE)
             Paths.get(outputDirectory, PURPOSES_FILE).toFile().createNewFile()
+            validatePathIsSafe(outputDirectory, POLICIES_FILE)
             Paths.get(outputDirectory, POLICIES_FILE).toFile().createNewFile()
 
             val fileOutputs = mutableListOf<String>()
