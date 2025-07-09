@@ -78,6 +78,7 @@ openlineage = { module = "io.openlineage:openlineage-java", version.ref = "openl
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-mu" }
 rocksdb = { module = "org.rocksdb:rocksdbjni", version.ref = "rocksdb" }
+jetty = { module = "org.eclipse.jetty:jetty-bom", version.ref = "jetty" }
 jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 jetty-server = { module = "org.eclipse.jetty:jetty-server", version.ref = "jetty" }
 jetty-http2-common = { module = "org.eclipse.jetty.http2:jetty-http2-common", version.ref = "jetty" }
