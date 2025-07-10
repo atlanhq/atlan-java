@@ -35,7 +35,11 @@ configurations.all {
             libs.commons.compress,
             libs.commons.io,
             libs.jetty.http,
+            libs.jetty.server,
+            libs.jetty.http2.common,
+            libs.jetty.http2.hpack,
             libs.netty.common,
+            libs.rhino,
         )
     }
 }
