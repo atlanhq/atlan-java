@@ -23,10 +23,12 @@ class InvalidConnectionTest : PackageTest("ic") {
     private lateinit var ctx: PackageContext<CubeAssetsBuilderCfg>
 
     private fun createInvalidConnection() {
-        val req = Connection.creator(client, conn1, conn1Type)
-            .qualifiedName(conn1)
-            .nullField("connectorName")
-            .build()
+        val req =
+            Connection
+                .creator(client, conn1, conn1Type)
+                .qualifiedName(conn1)
+                .nullField("connectorName")
+                .build()
         val resp = req.save(client).block()
         connection = resp.getResult(req)
     }
@@ -56,7 +58,7 @@ class InvalidConnectionTest : PackageTest("ic") {
         logHasMessage(
             "WARN",
             """
-                Unable to uniquely identify asset for cache -- skipping it: $conn1
+            Unable to uniquely identify asset for cache -- skipping it: $conn1
             """.trimIndent(),
         )
     }
