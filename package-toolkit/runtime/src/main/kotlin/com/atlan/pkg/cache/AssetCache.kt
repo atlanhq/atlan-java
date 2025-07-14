@@ -92,9 +92,13 @@ abstract class AssetCache<T : Asset>(
     ) {
         if (asset != null && !isArchived(id, asset)) {
             val identity = name ?: getIdentityForAsset(asset)
-            super.cache(id, identity, asset)
-            ignore.remove(id)
-            ignore.remove(identity)
+            if (identity.isNotBlank()) {
+                super.cache(id, identity, asset)
+                ignore.remove(id)
+                ignore.remove(identity)
+            } else {
+                logger.warn { "Unable to uniquely identify asset for cache -- skipping it: ${asset.qualifiedName}" }
+            }
         }
     }
 

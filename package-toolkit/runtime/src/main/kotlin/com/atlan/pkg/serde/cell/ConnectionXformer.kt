@@ -27,7 +27,7 @@ object ConnectionXformer {
             is Connection -> {
                 val connection = ctx.connectionCache.getByGuid(asset.guid)
                 if (connection is Connection) {
-                    return encode(connection.name, connection.connectorType.value)
+                    return encode(connection.name ?: "", connection.connectorName ?: "")
                 } else {
                     ""
                 }

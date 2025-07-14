@@ -79,6 +79,12 @@ public class ConnectionCache extends AbstractAssetCache {
     @Override
     public ObjectName getName(Asset asset) {
         if (asset instanceof Connection connection) {
+            if (asset.getName() == null || asset.getConnectorName() == null) {
+                log.warn(
+                        "Invalid connection metadata -- missing either name or connector, skipping: {}",
+                        asset.getQualifiedName());
+                return null;
+            }
             return new ConnectionName(connection);
         }
         return null;
