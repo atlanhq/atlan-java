@@ -96,7 +96,7 @@ class ConnectionCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: Connection): String = getIdentityForAsset(asset.name, asset.connectorName ?: Connection.getConnectorFromQualifiedName(asset.qualifiedName))
+    override fun getIdentityForAsset(asset: Connection): String = getIdentityForAsset(asset.name ?: "", asset.connectorName ?: Connection.getConnectorFromQualifiedName(asset.qualifiedName) ?: "")
 
     /**
      * Build a connection identity from its component parts.
@@ -131,7 +131,13 @@ class ConnectionCache(
     fun getIdentityMap(): Map<AssetResolver.ConnectionIdentity, String> {
         val map = mutableMapOf<AssetResolver.ConnectionIdentity, String>()
         listAll().forEach { (_, connection) ->
-            map[AssetResolver.ConnectionIdentity(connection.name, connection.connectorName ?: Connection.getConnectorFromQualifiedName(connection.qualifiedName))] = connection.qualifiedName
+            val name = connection.name ?: ""
+            val type = connection.connectorName ?: Connection.getConnectorFromQualifiedName(connection.qualifiedName) ?: ""
+            if (name.isBlank() || type.isBlank()) {
+                logger.warn { "Invalid connection found in cache, skipping: ${connection.qualifiedName}" }
+            } else {
+                map[AssetResolver.ConnectionIdentity(name, type)] = connection.qualifiedName
+            }
         }
         return map
     }

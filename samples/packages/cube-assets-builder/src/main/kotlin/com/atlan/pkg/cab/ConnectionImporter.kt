@@ -6,9 +6,11 @@ import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
+import com.atlan.model.enums.AtlanConnectionCategory
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
 import mu.KLogger
 import java.util.stream.Stream
 
@@ -42,16 +44,31 @@ class ConnectionImporter(
     ) {
     companion object {
         const val CONNECTOR_TYPE = "connectorType"
+        const val CUSTOM_CONNECTOR_TYPE = "customConnectorType"
     }
 
     /** {@inheritDoc} */
     @Suppress("UNCHECKED_CAST")
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(Connection.CONNECTION_NAME.atlanFieldName)?.let { it as String } ?: ""
-        val type =
-            deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
-                ?: throw NoSuchElementException("No typeName provided for the connection, cannot be processed.")
-        val identity = ctx.connectionCache.getIdentityForAsset(name, type)
+        // Note: we need the UNPROCESSED qualifiedName here (otherwise it'll try to resolve a potentially-deferred
+        //  QN before we've had any chance to see whether it exists or not)
+        val qualifiedName = deserializer.qualifiedName
+        val cName = deserializer.getValue(Connection.CONNECTOR_NAME.atlanFieldName)?.let { it as String }
+        val cType = deserializer.getValue(CONNECTOR_TYPE)?.let { it as AtlanConnectorType }
+        val customType = deserializer.getValue(CUSTOM_CONNECTOR_TYPE)?.let { it as String }
+        val deferredIdentity = getDeferredIdentity(qualifiedName)
+        val resolvedType =
+            if (qualifiedName.isEmpty()) {
+                customType ?: if (cType == null || cType == AtlanConnectorType.UNKNOWN_CUSTOM) cName else cType.value
+            } else {
+                deferredIdentity?.type ?: Connection.getConnectorFromQualifiedName(qualifiedName)
+            }
+        if (resolvedType == null || resolvedType.isEmpty()) {
+            throw NoSuchElementException("Invalid connectorType provided for the connection, cannot be processed: $qualifiedName (name: $name)")
+        }
+        val resolvedName = deferredIdentity?.name ?: name
+        val identity = ctx.connectionCache.getIdentityForAsset(resolvedName, resolvedType)
         val existing = ctx.connectionCache.getByIdentity(identity)
         return if (existing != null) {
             existing.trimToRequired()
@@ -59,10 +76,12 @@ class ConnectionImporter(
             val users = deserializer.getValue(Connection.ADMIN_USERS.atlanFieldName)?.let { it as List<String> }
             val groups = deserializer.getValue(Connection.ADMIN_GROUPS.atlanFieldName)?.let { it as List<String> }
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
-            if (users != null || groups != null || roles != null) {
-                Connection.creator(ctx.client, name, type, roles, groups, users)
+            val ct = AtlanConnectorType.fromValue(resolvedType)
+            if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
+                Connection.creator(ctx.client, resolvedName, ct, roles, groups, users)
             } else {
-                Connection.creator(ctx.client, name, type)
+                val category = deserializer.getValue(Connection.CATEGORY.atlanFieldName)?.let { it as AtlanConnectionCategory }
+                Connection.creator(ctx.client, resolvedName, resolvedType, category, roles, groups, users)
             }
         }
     }
