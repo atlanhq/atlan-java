@@ -10,6 +10,8 @@ configurations.all {
             libs.jetty.server,
             libs.jetty.http2.common,
             libs.jetty.http2.hpack,
+            libs.commons.lang,
+            libs.nimbus,
         )
     }
 }

@@ -46,6 +46,8 @@ configurations.all {
             libs.jetty.http2.common,
             libs.jetty.http2.hpack,
             libs.rhino,
+            libs.commons.lang,
+            libs.nimbus,
         )
     }
 }

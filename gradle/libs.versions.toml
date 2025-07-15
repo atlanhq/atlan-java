@@ -35,6 +35,7 @@ rocksdb = "10.2.1"
 jetty = "12.0.23"
 netty = "4.2.3.Final"
 rhino = "1.8.0"
+nimbus = "10.0.2"
 otel = "1.51.0"
 otel-instrumentation = "2.17.1-alpha"
 
@@ -87,6 +88,7 @@ jetty-http2-common = { module = "org.eclipse.jetty.http2:jetty-http2-common", ve
 jetty-http2-hpack = { module = "org.eclipse.jetty.http2:jetty-http2-hpack", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
 rhino = { module = "org.mozilla:rhino", version.ref = "rhino" }
+nimbus = { module = "com.nimbusds:nimbus-jose-jwt", version.ref = "nimbus" }
 otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otel" }
 otel-instrumentation-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha", version.ref = "otel-instrumentation" }
 otel-api = { module = "io.opentelemetry:opentelemetry-api" }
