@@ -41,6 +41,7 @@ configurations.all {
             libs.netty.common,
             libs.rhino,
             libs.commons.lang,
+            libs.nimbus,
         )
     }
 }
