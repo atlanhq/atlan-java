@@ -61,11 +61,11 @@ class DuplicateDetectorTest : PackageTest("dd") {
                 .includeOnResults(GlossaryTerm.CERTIFICATE_STATUS)
                 .stream()
                 .toList()
-        assertTrue(terms.size > 0)
+        assertTrue(terms.isNotEmpty())
         terms.forEach { term ->
             term as GlossaryTerm
             assertTrue(term.name.startsWith("Dup. ("))
-            assertTrue(term.assignedEntities.size > 0)
+            assertTrue(term.assignedEntities.isNotEmpty())
             assertTrue(term.description.startsWith("Assets with the same set of"))
             assertEquals(CertificateStatus.DRAFT, term.certificateStatus)
         }
