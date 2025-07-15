@@ -131,6 +131,20 @@ signing {
     sign(publishing.publications["mavenJavaPkgCfg"])
 }
 
+configurations.all {
+    resolutionStrategy {
+        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
+        force(
+            libs.jetty.http,
+            libs.jetty.server,
+            libs.jetty.http2.common,
+            libs.jetty.http2.hpack,
+            libs.commons.lang,
+            libs.nimbus,
+        )
+    }
+}
+
 spotless {
     // For now disable the check on generated code, as it will not be properly formatted
     kotlin {
