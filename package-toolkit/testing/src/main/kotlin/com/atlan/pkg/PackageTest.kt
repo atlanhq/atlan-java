@@ -35,8 +35,11 @@ import uk.org.webcompere.systemstubs.security.SystemExit
 import java.io.File
 import java.util.Random
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.collections.isNotEmpty
 import kotlin.math.min
 import kotlin.math.round
+import kotlin.sequences.chunked
+import kotlin.sequences.toList
 
 /**
  * Base class that all package integration tests should extend.
@@ -408,23 +411,7 @@ abstract class PackageTest(
                     val guidList = assets.toList()
                     val totalToDelete = guidList.size
                     logger.info { " --- Purging $totalToDelete assets from ${it.qualifiedName}... ---" }
-                    if (totalToDelete < 20) {
-                        client.assets.delete(guidList, deletionType).block()
-                    } else {
-                        val currentCount = AtomicLong(0)
-                        guidList
-                            .asSequence()
-                            .chunked(20)
-                            .toList()
-                            .parallelStream()
-                            .forEach { batch ->
-                                val i = currentCount.getAndAdd(batch.size.toLong())
-                                logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
-                                if (batch.isNotEmpty()) {
-                                    client.assets.delete(batch, deletionType).block()
-                                }
-                            }
-                    }
+                    batchedDeletion(guidList, deletionType)
                 }
                 // Purge the connection itself, now that all assets are purged
                 logger.info { " --- Purging connection: ${it.qualifiedName}... ---" }
@@ -483,11 +470,37 @@ abstract class PackageTest(
                 .toList()
         logger.info { " --- Purging glossary $name, ${categories.size} categories, and ${terms.size} terms... ---" }
         try {
-            if (terms.isNotEmpty()) client.assets.delete(terms, AtlanDeleteType.PURGE)
-            if (categories.isNotEmpty()) client.assets.delete(categories, AtlanDeleteType.PURGE)
+            batchedDeletion(terms)
+            batchedDeletion(categories)
             Glossary.purge(client, glossary.guid)
         } catch (e: Exception) {
             logger.error(e) { "Unable to purge glossary or its contents: $name" }
+        }
+    }
+
+    private fun batchedDeletion(
+        list: List<String>,
+        type: AtlanDeleteType = AtlanDeleteType.PURGE,
+    ) {
+        val totalToDelete = list.size
+        if (totalToDelete > 0) {
+            if (totalToDelete < 20) {
+                client.assets.delete(list, type).block()
+            } else {
+                val currentCount = AtomicLong(0)
+                list
+                    .asSequence()
+                    .chunked(20)
+                    .toList()
+                    .parallelStream()
+                    .forEach { batch ->
+                        val i = currentCount.getAndAdd(batch.size.toLong())
+                        logger.info { " ... next batch of 20 (${round((i.toDouble() / totalToDelete) * 100)}%)" }
+                        if (batch.isNotEmpty()) {
+                            client.assets.delete(batch, type).block()
+                        }
+                    }
+            }
         }
     }
 
@@ -510,7 +523,7 @@ abstract class PackageTest(
                 .map { it.guid }
                 .toList()
         try {
-            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.PURGE)
+            batchedDeletion(domainGuids)
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove domain: $name" }
         }
@@ -530,7 +543,7 @@ abstract class PackageTest(
                 .map { it.guid }
                 .toList()
         try {
-            if (domainGuids.isNotEmpty()) client.assets.delete(domainGuids, AtlanDeleteType.PURGE)
+            batchedDeletion(domainGuids)
         } catch (e: Exception) {
             logger.error(e) { "Unable to remove product: $name" }
         }
@@ -560,9 +573,7 @@ abstract class PackageTest(
                         .stream()
                         .map { it.guid }
                         .toList()
-                if (productGuids.isNotEmpty()) {
-                    client.assets.delete(productGuids, AtlanDeleteType.PURGE)
-                }
+                if (productGuids.isNotEmpty()) batchedDeletion(productGuids)
 
                 // find all subdomains under the domain
                 val subdomains =
