@@ -40,6 +40,7 @@ configurations.all {
             libs.jetty.http2.hpack,
             libs.netty.common,
             libs.rhino,
+            libs.commons.lang,
         )
     }
 }

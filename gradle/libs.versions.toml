@@ -20,6 +20,7 @@ jsonpath = "2.9.0"
 jsonsmart = "2.5.2"
 commons-compress = "1.27.1"
 commons-io = "2.19.0"
+commons-lang = "3.18.0"
 sqlite = "3.50.2.0"
 jakarta-mail = "2.1.3"
 angus-mail = "2.0.3"
@@ -69,6 +70,7 @@ json-path = { module = "com.jayway.jsonpath:json-path", version.ref = "jsonpath"
 json-smart = { module = "net.minidev:json-smart", version.ref = "jsonsmart" }
 commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commons-compress" }
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+commons-lang = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang" }
 sqlite = { module = "org.xerial:sqlite-jdbc", version.ref = "sqlite" }
 jakarta-mail = { module = "com.sun.mail:jakarta.mail", version.ref = "jakarta-mail" }
 angus-mail = { module = "org.eclipse.angus:angus-mail", version.ref = "angus-mail" }
