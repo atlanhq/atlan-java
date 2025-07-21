@@ -17,8 +17,8 @@ import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.sts.StsClient
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
+import java.io.RandomAccessFile
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
@@ -295,7 +295,7 @@ class S3Sync(
             val file = filePath.toFile()
             val fileSize = file.length()
 
-            require(fileSize > 0) { "File is empty" }
+            require(fileSize > 0) { "File is empty." }
 
             // Calculate number of parts
             val totalParts = ceil(fileSize.toDouble() / partSize).toInt()
@@ -395,33 +395,35 @@ class S3Sync(
 
             repeat(maxRetries) { attempt ->
                 try {
-                    // Read part data
-                    var partData = ByteArray(partSize.toInt())
-                    FileInputStream(file).use { fis ->
-                        fis.skip(startPos)
-                        val bytesRead = fis.read(partData, 0, partSize.toInt())
+                    // Read part data using RandomAccessFile for reliable positioning
+                    val partData = ByteArray(partSize.toInt())
+                    RandomAccessFile(file, "r").use { raf ->
+                        raf.seek(startPos)
+                        val bytesRead = raf.read(partData, 0, partSize.toInt())
 
-                        if (bytesRead != partSize.toInt()) {
-                            // Adjust array size for the last part
-                            partData = partData.copyOf(bytesRead)
-                        }
+                        // Adjust array size if we read fewer bytes (last part)
+                        val actualPartData =
+                            if (bytesRead == partSize.toInt()) {
+                                partData
+                            } else {
+                                partData.copyOf(bytesRead)
+                            }
+                        // Upload part
+                        val uploadPartResponse =
+                            s3Client.uploadPart({
+                                it
+                                    .bucket(bucketName)
+                                    .key(objectKey)
+                                    .uploadId(uploadId)
+                                    .partNumber(partNumber)
+                            }, RequestBody.fromBytes(actualPartData))
+
+                        return CompletedPart
+                            .builder()
+                            .partNumber(partNumber)
+                            .eTag(uploadPartResponse.eTag())
+                            .build()
                     }
-
-                    // Upload part
-                    val uploadPartResponse =
-                        s3Client.uploadPart({
-                            it
-                                .bucket(bucketName)
-                                .key(objectKey)
-                                .uploadId(uploadId)
-                                .partNumber(partNumber)
-                        }, RequestBody.fromBytes(partData))
-
-                    return CompletedPart
-                        .builder()
-                        .partNumber(partNumber)
-                        .eTag(uploadPartResponse.eTag())
-                        .build()
                 } catch (e: Exception) {
                     lastException = e
                     logger.warn { "Attempt ${attempt + 1}/$maxRetries failed for part $partNumber: ${e.message}" }
