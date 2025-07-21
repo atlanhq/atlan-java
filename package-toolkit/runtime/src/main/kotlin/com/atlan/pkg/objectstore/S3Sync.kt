@@ -2,20 +2,29 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.objectstore
 
+import com.atlan.net.HttpClient
 import mu.KLogger
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.AwsCredentials
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
+import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.CompletedPart
 import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
-import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import software.amazon.awssdk.services.sts.StsClient
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
+import java.nio.file.Path
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicLong
+import kotlin.math.ceil
+import kotlin.math.min
 
 /**
  * Class to generally move data between S3 and local storage.
@@ -34,6 +43,11 @@ class S3Sync(
     private val secretKey: String = "",
     roleArn: String = "",
 ) : ObjectStorageSyncer {
+    companion object {
+        private const val DEFAULT_PART_SIZE = 100 * 1024 * 1024L // 100MB
+        private const val MAX_RETRIES = 3
+    }
+
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
             logger.info { "Authenticating to S3 using provided IAM role ARN." }
@@ -241,16 +255,190 @@ class S3Sync(
         try {
             val local = File(localFile)
             val objectKey = File(remoteKey).path
-            s3Client.putObject(
-                PutObjectRequest
-                    .builder()
-                    .bucket(bucketName)
-                    .key(objectKey)
-                    .build(),
+            val uploader = MultipartUploader(s3Client, logger)
+            uploader.uploadFile(
+                bucketName,
+                objectKey,
                 local.toPath(),
-            )
+            ) { bytesUploaded, totalBytes ->
+                val percentage = (bytesUploaded * 100.0) / totalBytes
+                logger.info { " ... upload progress: ${"%.1f".format(percentage)}%" }
+            }
         } catch (e: Exception) {
             throw IOException(e)
+        }
+    }
+
+    /**
+     * Private class to handle uploading large files (>5GB) to S3 via the SDK.
+     */
+    private class MultipartUploader(
+        private val s3Client: S3Client,
+        private val logger: KLogger,
+        private val partSize: Long = DEFAULT_PART_SIZE,
+        private val maxRetries: Int = MAX_RETRIES,
+    ) {
+        /**
+         * Upload a file using multipart upload with progress tracking.
+         *
+         * @param bucketName S3 bucket name
+         * @param objectKey S3 object key
+         * @param filePath Path to local file
+         * @param progressCallback Callback for progress updates (bytesUploaded, totalBytes)
+         */
+        fun uploadFile(
+            bucketName: String,
+            objectKey: String,
+            filePath: Path,
+            progressCallback: ((Long, Long) -> Unit)? = null,
+        ) {
+            val file = filePath.toFile()
+            val fileSize = file.length()
+
+            require(fileSize > 0) { "File is empty" }
+
+            // Calculate number of parts
+            val totalParts = ceil(fileSize.toDouble() / partSize).toInt()
+            logger.info { " ... starting multipart upload for file: ${file.name} (${fileSize / (1024.0 * 1024.0)} MB) in $totalParts parts." }
+
+            // Step 1: Initiate multipart upload
+            val initResponse =
+                s3Client.createMultipartUpload {
+                    it.bucket(bucketName).key(objectKey)
+                }
+
+            val uploadId = initResponse.uploadId()
+            val completedParts = mutableListOf<CompletedPart>()
+            val totalBytesUploaded = AtomicLong(0)
+
+            try {
+                // Step 2: Upload parts with retry logic
+                val executor = Executors.newFixedThreadPool(min(totalParts, 8))
+                val futures = mutableListOf<CompletableFuture<CompletedPart>>()
+
+                for (partNumber in 1..totalParts) {
+                    val startPos = (partNumber - 1) * partSize
+                    val currentPartSize = min(partSize, fileSize - startPos)
+
+                    val future =
+                        CompletableFuture.supplyAsync({
+                            try {
+                                val part =
+                                    uploadPartWithRetry(
+                                        bucketName,
+                                        objectKey,
+                                        uploadId,
+                                        file,
+                                        partNumber,
+                                        startPos,
+                                        currentPartSize,
+                                    )
+
+                                // Update progress
+                                val uploaded = totalBytesUploaded.addAndGet(currentPartSize)
+                                progressCallback?.invoke(uploaded, fileSize)
+
+                                logger.info { " ... completed part $partNumber/$totalParts (${(uploaded * 100.0) / fileSize}%)" }
+
+                                part
+                            } catch (e: Exception) {
+                                throw RuntimeException("Failed to upload part $partNumber", e)
+                            }
+                        }, executor)
+
+                    futures.add(future)
+                }
+
+                // Wait for all parts to complete
+                futures.forEach { completedParts.add(it.join()) }
+                executor.shutdown()
+
+                // Step 3: Complete multipart upload
+                val completeResponse =
+                    s3Client.completeMultipartUpload {
+                        it
+                            .bucket(bucketName)
+                            .key(objectKey)
+                            .uploadId(uploadId)
+                            .multipartUpload { upload ->
+                                upload.parts(completedParts)
+                            }
+                    }
+
+                logger.info { " ... multipart upload completed successfully -- ETag: ${completeResponse.eTag()}" }
+            } catch (e: Exception) {
+                // Step 4: Abort multipart upload on failure
+                try {
+                    s3Client.abortMultipartUpload {
+                        it.bucket(bucketName).key(objectKey).uploadId(uploadId)
+                    }
+                    logger.error(e) { "Multipart upload aborted due to error." }
+                } catch (abortException: Exception) {
+                    logger.error(abortException) { "Failed to abort multipart upload." }
+                }
+
+                throw RuntimeException("Multipart upload failed.", e)
+            }
+        }
+
+        @Throws(IOException::class)
+        private fun uploadPartWithRetry(
+            bucketName: String,
+            objectKey: String,
+            uploadId: String,
+            file: File,
+            partNumber: Int,
+            startPos: Long,
+            partSize: Long,
+        ): CompletedPart {
+            var lastException: Exception? = null
+
+            repeat(maxRetries) { attempt ->
+                try {
+                    // Read part data
+                    var partData = ByteArray(partSize.toInt())
+                    FileInputStream(file).use { fis ->
+                        fis.skip(startPos)
+                        val bytesRead = fis.read(partData, 0, partSize.toInt())
+
+                        if (bytesRead != partSize.toInt()) {
+                            // Adjust array size for the last part
+                            partData = partData.copyOf(bytesRead)
+                        }
+                    }
+
+                    // Upload part
+                    val uploadPartResponse =
+                        s3Client.uploadPart({
+                            it
+                                .bucket(bucketName)
+                                .key(objectKey)
+                                .uploadId(uploadId)
+                                .partNumber(partNumber)
+                        }, RequestBody.fromBytes(partData))
+
+                    return CompletedPart
+                        .builder()
+                        .partNumber(partNumber)
+                        .eTag(uploadPartResponse.eTag())
+                        .build()
+                } catch (e: Exception) {
+                    lastException = e
+                    logger.warn { "Attempt ${attempt + 1}/$maxRetries failed for part $partNumber: ${e.message}" }
+                    logger.debug(e) { "Failed attempt details:" }
+
+                    if (attempt < maxRetries - 1) {
+                        try {
+                            Thread.sleep(HttpClient.waitTime(attempt).toMillis()) // Exponential backoff
+                        } catch (ie: InterruptedException) {
+                            Thread.currentThread().interrupt()
+                            throw RuntimeException("Upload interrupted", ie)
+                        }
+                    }
+                }
+            }
+
+            throw RuntimeException("Failed to upload part $partNumber after $maxRetries attempts.", lastException)
         }
     }
 }
