@@ -43,11 +43,6 @@ class S3Sync(
     private val secretKey: String = "",
     roleArn: String = "",
 ) : ObjectStorageSyncer {
-    companion object {
-        private const val DEFAULT_PART_SIZE = 100 * 1024 * 1024L // 100MB
-        private const val MAX_RETRIES = 3
-    }
-
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
             logger.info { "Authenticating to S3 using provided IAM role ARN." }
@@ -271,12 +266,17 @@ class S3Sync(
 
     /**
      * Private class to handle uploading large files (>5GB) to S3 via the SDK.
+     *
+     * @param s3Client client to use for the upload
+     * @param logger through which to log progress or problems
+     * @param partSize (optional) maximum size of each partial upload (default: 100 MB)
+     * @param maxRetries (optional) maximum number of retries per partial upload (default: 3)
      */
     private class MultipartUploader(
         private val s3Client: S3Client,
         private val logger: KLogger,
-        private val partSize: Long = DEFAULT_PART_SIZE,
-        private val maxRetries: Int = MAX_RETRIES,
+        private val partSize: Long = 100 * 1024 * 1024L,
+        private val maxRetries: Int = 3,
     ) {
         /**
          * Upload a file using multipart upload with progress tracking.
