@@ -40,21 +40,21 @@ public interface IThoughtspotColumn {
     /** Defines the analytical role of a column in data analysis categorizing it as a dimension, measure, or attribute. */
     KeywordField THOUGHTSPOT_COLUMN_TYPE = new KeywordField("thoughtspotColumnType", "thoughtspotColumnType");
 
-    /** TBC */
+    /** Table in which this column exists. */
     RelationField THOUGHTSPOT_TABLE = new RelationField("thoughtspotTable");
 
     /** Unique name of the table in which this column exists. */
     KeywordTextField THOUGHTSPOT_TABLE_QUALIFIED_NAME = new KeywordTextField(
             "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName.text");
 
-    /** TBC */
+    /** View in which this column exists. */
     RelationField THOUGHTSPOT_VIEW = new RelationField("thoughtspotView");
 
     /** Unique name of the view in which this column exists. */
     KeywordTextField THOUGHTSPOT_VIEW_QUALIFIED_NAME = new KeywordTextField(
             "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName.text");
 
-    /** TBC */
+    /** Worksheet in which this column exists. */
     RelationField THOUGHTSPOT_WORKSHEET = new RelationField("thoughtspotWorksheet");
 
     /** Unique name of the worksheet in which this column exists. */
@@ -255,6 +255,9 @@ public interface IThoughtspotColumn {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -326,6 +329,9 @@ public interface IThoughtspotColumn {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -576,7 +582,7 @@ public interface IThoughtspotColumn {
     /** TBC */
     String getThoughtspotChartType();
 
-    /** Number of Columns. */
+    /** Number of columns. */
     Long getThoughtspotColumnCount();
 
     /** Specifies the technical format of data stored in a column such as integer, float, string, date, boolean etc. */
@@ -591,19 +597,19 @@ public interface IThoughtspotColumn {
     /** TBC */
     String getThoughtspotQuestionText();
 
-    /** TBC */
+    /** Table in which this column exists. */
     IThoughtspotTable getThoughtspotTable();
 
     /** Unique name of the table in which this column exists. */
     String getThoughtspotTableQualifiedName();
 
-    /** TBC */
+    /** View in which this column exists. */
     IThoughtspotView getThoughtspotView();
 
     /** Unique name of the view in which this column exists. */
     String getThoughtspotViewQualifiedName();
 
-    /** TBC */
+    /** Worksheet in which this column exists. */
     IThoughtspotWorksheet getThoughtspotWorksheet();
 
     /** Unique name of the worksheet in which this column exists. */

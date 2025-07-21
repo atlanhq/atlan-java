@@ -48,26 +48,31 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashboards contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosDashboard> cognosDashboards;
 
-    /** Tooltip text present for the Cognos asset */
+    /** Datasets contained in the folder. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosDataset> cognosDatasets;
+
+    /** Tooltip text present for the Cognos asset. */
     @Attribute
     String cognosDefaultScreenTip;
 
-    /** TBC */
+    /** Explorations contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosExploration> cognosExplorations;
 
-    /** TBC */
+    /** Files contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosFile> cognosFiles;
 
-    /** TBC */
+    /** Folder containing the dashboard. */
     @Attribute
     ICognosFolder cognosFolder;
 
@@ -79,55 +84,55 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     @Attribute
     Integer cognosFolderSubFolderCount;
 
-    /** ID of the asset in Cognos */
+    /** ID of the asset in Cognos. */
     @Attribute
     String cognosId;
 
-    /** Whether the Cognos asset is diabled */
+    /** Whether the Cognos asset is disabled. */
     @Attribute
     Boolean cognosIsDisabled;
 
-    /** Whether the Cognos asset is hidden from the ui */
+    /** Whether the Cognos asset is hidden from the UI. */
     @Attribute
     Boolean cognosIsHidden;
 
-    /** TBC */
+    /** Modules contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosModule> cognosModules;
 
-    /** TBC */
+    /** Packages contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosPackage> cognosPackages;
 
-    /** Name of the parent asset in Cognos */
+    /** Name of the parent of the asset in Cognos. */
     @Attribute
     String cognosParentName;
 
-    /** Qualified name of the parent asset in Cognos */
+    /** Qualified name of the parent asset in Cognos. */
     @Attribute
     String cognosParentQualifiedName;
 
-    /** Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name'] */
+    /** Path of the asset in Cognos (e.g. /content/folder[@name='Folder Name']). */
     @Attribute
     String cognosPath;
 
-    /** TBC */
+    /** Reports contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosReport> cognosReports;
 
-    /** TBC */
+    /** Subfolders contained in the folder. */
     @Attribute
     @Singular
     SortedSet<ICognosFolder> cognosSubFolders;
 
-    /** Cognos type of the Cognos asset. E.g. report, dashboard, package, etc. */
+    /** Type of the Cognos asset (e.g. report, dashboard, package, etc). */
     @Attribute
     String cognosType;
 
-    /** Version of the Cognos asset */
+    /** Version of the Cognos asset. */
     @Attribute
     String cognosVersion;
 

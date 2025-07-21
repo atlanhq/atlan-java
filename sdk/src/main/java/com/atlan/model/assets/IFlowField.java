@@ -46,6 +46,9 @@ public interface IFlowField {
     /** Unique name of the ephemeral dataset in which this field is contained. */
     KeywordField FLOW_DATASET_QUALIFIED_NAME = new KeywordField("flowDatasetQualifiedName", "flowDatasetQualifiedName");
 
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral field of data. */
+    KeywordField FLOW_EXPRESSION = new KeywordField("flowExpression", "flowExpression");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -238,6 +241,9 @@ public interface IFlowField {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -310,6 +316,9 @@ public interface IFlowField {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -378,6 +387,9 @@ public interface IFlowField {
 
     /** Optional error message of the flow run. */
     String getFlowErrorMessage();
+
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral field of data. */
+    String getFlowExpression();
 
     /** Date and time at which this point in the data processing or orchestration finished. */
     Long getFlowFinishedAt();

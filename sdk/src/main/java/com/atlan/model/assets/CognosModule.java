@@ -48,43 +48,48 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Tooltip text present for the Cognos asset */
+    /** Columns contained in the module. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
+    /** Tooltip text present for the Cognos asset. */
     @Attribute
     String cognosDefaultScreenTip;
 
-    /** TBC */
+    /** Folder containing the module. */
     @Attribute
     ICognosFolder cognosFolder;
 
-    /** ID of the asset in Cognos */
+    /** ID of the asset in Cognos. */
     @Attribute
     String cognosId;
 
-    /** Whether the Cognos asset is diabled */
+    /** Whether the Cognos asset is disabled. */
     @Attribute
     Boolean cognosIsDisabled;
 
-    /** Whether the Cognos asset is hidden from the ui */
+    /** Whether the Cognos asset is hidden from the UI. */
     @Attribute
     Boolean cognosIsHidden;
 
-    /** Name of the parent asset in Cognos */
+    /** Name of the parent of the asset in Cognos. */
     @Attribute
     String cognosParentName;
 
-    /** Qualified name of the parent asset in Cognos */
+    /** Qualified name of the parent asset in Cognos. */
     @Attribute
     String cognosParentQualifiedName;
 
-    /** Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name'] */
+    /** Path of the asset in Cognos (e.g. /content/folder[@name='Folder Name']). */
     @Attribute
     String cognosPath;
 
-    /** Cognos type of the Cognos asset. E.g. report, dashboard, package, etc. */
+    /** Type of the Cognos asset (e.g. report, dashboard, package, etc). */
     @Attribute
     String cognosType;
 
-    /** Version of the Cognos asset */
+    /** Version of the Cognos asset. */
     @Attribute
     String cognosVersion;
 

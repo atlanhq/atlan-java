@@ -48,7 +48,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Domo Cards that are contained by this Domo Dataset. */
     @Attribute
     @Singular
     SortedSet<IDomoCard> domoCards;
@@ -61,7 +61,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     @Attribute
     Long domoDatasetColumnCount;
 
-    /** TBC */
+    /** Domo Dataset Columns that are contained by this Domo Dataset. */
     @Attribute
     @Singular
     SortedSet<IDomoDatasetColumn> domoDatasetColumns;

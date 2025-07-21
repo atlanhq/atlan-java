@@ -54,11 +54,11 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
     @Singular
     Map<String, String> apiExternalDocs;
 
-    /** Type of APIField. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIField, as free text (e.g. STRING, NUMBER etc). */
     @Attribute
     String apiFieldType;
 
-    /** Secondary Type of APIField. E.g. LIST/STRING, then LIST would be the secondary type. */
+    /** Secondary type of APIField (e.g. LIST/STRING, then LIST would be the secondary type). */
     @Attribute
     String apiFieldTypeSecondary;
 

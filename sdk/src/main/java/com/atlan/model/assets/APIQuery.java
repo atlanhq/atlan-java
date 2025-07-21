@@ -74,11 +74,11 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
     @Attribute
     String apiObjectQualifiedName;
 
-    /** Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIQueryOutput, as free text (e.g. STRING, NUMBER etc). */
     @Attribute
     String apiQueryOutputType;
 
-    /** Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type. */
+    /** Secondary Type of APIQueryOutput (e.g. LIST/STRING then LIST would be the secondary type). */
     @Attribute
     String apiQueryOutputTypeSecondary;
 

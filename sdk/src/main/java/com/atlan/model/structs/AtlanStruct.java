@@ -32,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = BadgeCondition.class, name = BadgeCondition.TYPE_NAME),
     @JsonSubTypes.Type(value = BusinessPolicyRule.class, name = BusinessPolicyRule.TYPE_NAME),
     @JsonSubTypes.Type(value = ColumnValueFrequencyMap.class, name = ColumnValueFrequencyMap.TYPE_NAME),
+    @JsonSubTypes.Type(value = DatabricksAIModelVersionMetric.class, name = DatabricksAIModelVersionMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = DbtJobRun.class, name = DbtJobRun.TYPE_NAME),
     @JsonSubTypes.Type(value = DbtMetricFilter.class, name = DbtMetricFilter.TYPE_NAME),
     @JsonSubTypes.Type(value = FormField.class, name = FormField.TYPE_NAME),
@@ -47,6 +48,8 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SourceTagAttachmentValue.class, name = SourceTagAttachmentValue.TYPE_NAME),
     @JsonSubTypes.Type(value = SourceTagAttribute.class, name = SourceTagAttribute.TYPE_NAME),
     @JsonSubTypes.Type(value = StarredDetails.class, name = StarredDetails.TYPE_NAME),
+    @JsonSubTypes.Type(value = TypeRegistryEndDef.class, name = TypeRegistryEndDef.TYPE_NAME),
+    @JsonSubTypes.Type(value = TypeRegistryValidValue.class, name = TypeRegistryValidValue.TYPE_NAME),
 })
 @Slf4j
 public abstract class AtlanStruct extends AtlanObject {

@@ -31,7 +31,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an AI application in Atlan
+ * Instance of an AI application in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -47,7 +47,7 @@ public interface IAIApplication {
     /** Version of the AI application */
     KeywordField AI_APPLICATION_VERSION = new KeywordField("aiApplicationVersion", "aiApplicationVersion");
 
-    /** AI models that are used in this AI application */
+    /** AI models that are used in this AI application. */
     RelationField MODELS = new RelationField("models");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -248,6 +248,9 @@ public interface IAIApplication {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -319,6 +322,9 @@ public interface IAIApplication {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -458,7 +464,7 @@ public interface IAIApplication {
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();
 
-    /** AI models that are used in this AI application */
+    /** AI models that are used in this AI application. */
     SortedSet<IAIModel> getModels();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */

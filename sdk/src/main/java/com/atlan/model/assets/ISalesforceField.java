@@ -87,7 +87,7 @@ public interface ISalesforceField {
     /** List of values from which a user can pick while adding a record. */
     TextField PICKLIST_VALUES = new TextField("picklistValues", "picklistValues");
 
-    /** Total number of digits allowed */
+    /** Total number of digits allowed. */
     NumericField PRECISION = new NumericField("precision", "precision");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -285,6 +285,9 @@ public interface ISalesforceField {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -356,6 +359,9 @@ public interface ISalesforceField {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -558,7 +564,7 @@ public interface ISalesforceField {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Total number of digits allowed */
+    /** Total number of digits allowed. */
     Integer getPrecision();
 
     /** Array of product guids linked to this asset */

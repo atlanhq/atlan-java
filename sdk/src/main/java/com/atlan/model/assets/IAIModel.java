@@ -32,7 +32,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an AI model in Atlan
+ * Instance of an AI model in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -44,13 +44,16 @@ public interface IAIModel {
     /** Search DSL used to define which assets/datasets are part of the AI model. */
     TextField AI_MODEL_DATASETS_DSL = new TextField("aiModelDatasetsDSL", "aiModelDatasetsDSL");
 
-    /** Status of the AI model */
+    /** Status of the AI model. */
     KeywordField AI_MODEL_STATUS = new KeywordField("aiModelStatus", "aiModelStatus");
 
-    /** Version of the AI model */
+    /** Version of the AI model. */
     KeywordField AI_MODEL_VERSION = new KeywordField("aiModelVersion", "aiModelVersion");
 
-    /** AI applications that are created using this AI model */
+    /** Versions contained within the model. */
+    RelationField AI_MODEL_VERSIONS = new RelationField("aiModelVersions");
+
+    /** AI applications that are created using this AI model. */
     RelationField APPLICATIONS = new RelationField("applications");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -65,11 +68,14 @@ public interface IAIModel {
     /** Search DSL used to define which assets/datasets are part of the AI model. */
     String getAiModelDatasetsDSL();
 
-    /** Status of the AI model */
+    /** Status of the AI model. */
     AIModelStatus getAiModelStatus();
 
-    /** Version of the AI model */
+    /** Version of the AI model. */
     String getAiModelVersion();
+
+    /** Versions contained within the model. */
+    SortedSet<IAIModelVersion> getAiModelVersions();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -101,7 +107,7 @@ public interface IAIModel {
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
-    /** AI applications that are created using this AI model */
+    /** AI applications that are created using this AI model. */
     SortedSet<IAIApplication> getApplications();
 
     /** All associated Anomalo check types. */
@@ -257,6 +263,9 @@ public interface IAIModel {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -328,6 +337,9 @@ public interface IAIModel {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

@@ -80,6 +80,7 @@ public class SchemaTest {
             .putQueryUserMap("key2", 654321L)
             .schemaName("String0")
             .schemaQualifiedName("String0")
+            .sqlAIModelContextQualifiedName("String0")
             .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -176,6 +177,7 @@ public class SchemaTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -215,6 +217,7 @@ public class SchemaTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -468,6 +471,9 @@ public class SchemaTest {
             .calculationView(CalculationView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .calculationView(CalculationView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .database(Database.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .databricksAIModelContext(DatabricksAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .databricksAIModelContext(
+                    DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .function(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .function(Function.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .linkedSchemaQualifiedName("String0")
@@ -476,6 +482,9 @@ public class SchemaTest {
             .procedure(Procedure.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .procedure(Procedure.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .schemaExternalLocation("String0")
+            .snowflakeAIModelContext(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeAIModelContext(
+                    SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeDynamicTable(
                     SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

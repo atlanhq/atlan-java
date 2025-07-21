@@ -33,7 +33,7 @@ public interface IDomoDataset {
 
     public static final String TYPE_NAME = "DomoDataset";
 
-    /** TBC */
+    /** Domo Cards that are contained by this Domo Dataset. */
     RelationField DOMO_CARDS = new RelationField("domoCards");
 
     /** Number of cards linked to the Domo dataset. */
@@ -42,7 +42,7 @@ public interface IDomoDataset {
     /** Number of columns in the Domo dataset. */
     NumericField DOMO_DATASET_COLUMN_COUNT = new NumericField("domoDatasetColumnCount", "domoDatasetColumnCount");
 
-    /** TBC */
+    /** Domo Dataset Columns that are contained by this Domo Dataset. */
     RelationField DOMO_DATASET_COLUMNS = new RelationField("domoDatasetColumns");
 
     /** An ISO-8601 representation of the time the DataSet was last run. */
@@ -243,6 +243,9 @@ public interface IDomoDataset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -315,6 +318,9 @@ public interface IDomoDataset {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -366,7 +372,7 @@ public interface IDomoDataset {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** Domo Cards that are contained by this Domo Dataset. */
     SortedSet<IDomoCard> getDomoCards();
 
     /** Number of cards linked to the Domo dataset. */
@@ -375,7 +381,7 @@ public interface IDomoDataset {
     /** Number of columns in the Domo dataset. */
     Long getDomoDatasetColumnCount();
 
-    /** TBC */
+    /** Domo Dataset Columns that are contained by this Domo Dataset. */
     SortedSet<IDomoDatasetColumn> getDomoDatasetColumns();
 
     /** An ISO-8601 representation of the time the DataSet was last run. */

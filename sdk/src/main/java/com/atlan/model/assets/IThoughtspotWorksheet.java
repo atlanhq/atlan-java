@@ -31,7 +31,7 @@ public interface IThoughtspotWorksheet {
 
     public static final String TYPE_NAME = "ThoughtspotWorksheet";
 
-    /** TBC */
+    /** Columns that exist within this worksheet. */
     RelationField THOUGHTSPOT_COLUMNS = new RelationField("thoughtspotColumns");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -226,6 +226,9 @@ public interface IThoughtspotWorksheet {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -297,6 +300,9 @@ public interface IThoughtspotWorksheet {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -547,10 +553,10 @@ public interface IThoughtspotWorksheet {
     /** TBC */
     String getThoughtspotChartType();
 
-    /** Number of Columns. */
+    /** Number of columns. */
     Long getThoughtspotColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this worksheet. */
     SortedSet<IThoughtspotColumn> getThoughtspotColumns();
 
     /** Total number of data table joins executed for analysis. */

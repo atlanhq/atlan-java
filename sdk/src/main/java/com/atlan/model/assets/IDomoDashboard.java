@@ -32,16 +32,16 @@ public interface IDomoDashboard {
 
     public static final String TYPE_NAME = "DomoDashboard";
 
-    /** TBC */
+    /** Domo Cards that associate with this Domo Dashboard. */
     RelationField DOMO_CARDS = new RelationField("domoCards");
 
     /** Number of cards linked to this dashboard. */
     NumericField DOMO_DASHBOARD_CARD_COUNT = new NumericField("domoDashboardCardCount", "domoDashboardCardCount");
 
-    /** TBC */
+    /** Child Domo Dashboards that are contained by this parent Domo Dashboard. */
     RelationField DOMO_DASHBOARD_CHILDREN = new RelationField("domoDashboardChildren");
 
-    /** TBC */
+    /** Parent Domo Dashboard that contains this child Domo Dashboard. */
     RelationField DOMO_DASHBOARD_PARENT = new RelationField("domoDashboardParent");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -236,6 +236,9 @@ public interface IDomoDashboard {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -308,6 +311,9 @@ public interface IDomoDashboard {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -359,16 +365,16 @@ public interface IDomoDashboard {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** Domo Cards that associate with this Domo Dashboard. */
     SortedSet<IDomoCard> getDomoCards();
 
     /** Number of cards linked to this dashboard. */
     Long getDomoDashboardCardCount();
 
-    /** TBC */
+    /** Child Domo Dashboards that are contained by this parent Domo Dashboard. */
     SortedSet<IDomoDashboard> getDomoDashboardChildren();
 
-    /** TBC */
+    /** Parent Domo Dashboard that contains this child Domo Dashboard. */
     IDomoDashboard getDomoDashboardParent();
 
     /** Id of the Domo dataset. */

@@ -93,11 +93,11 @@ public class ThoughtspotView extends Asset
     @Attribute
     String thoughtspotChartType;
 
-    /** Number of Columns. */
+    /** Number of columns. */
     @Attribute
     Long thoughtspotColumnCount;
 
-    /** TBC */
+    /** Columns that exist within this view. */
     @Attribute
     @Singular
     SortedSet<IThoughtspotColumn> thoughtspotColumns;

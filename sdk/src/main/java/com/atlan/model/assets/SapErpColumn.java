@@ -251,6 +251,10 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, IC
     @Attribute
     String schemaQualifiedName;
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular

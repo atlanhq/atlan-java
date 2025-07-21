@@ -35,10 +35,10 @@ public interface IDynamoDBTable {
 
     public static final String TYPE_NAME = "DynamoDBTable";
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     RelationField DYNAMO_DB_GLOBAL_SECONDARY_INDEXES = new RelationField("dynamoDBGlobalSecondaryIndexes");
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     RelationField DYNAMO_DB_LOCAL_SECONDARY_INDEXES = new RelationField("dynamoDBLocalSecondaryIndexes");
 
     /** Represents the number of global secondary indexes on the table. */
@@ -242,6 +242,9 @@ public interface IDynamoDBTable {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -313,6 +316,9 @@ public interface IDynamoDBTable {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -398,10 +404,10 @@ public interface IDynamoDBTable {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     SortedSet<IDynamoDBGlobalSecondaryIndex> getDynamoDBGlobalSecondaryIndexes();
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     SortedSet<IDynamoDBLocalSecondaryIndex> getDynamoDBLocalSecondaryIndexes();
 
     /** Specifies the partition key of the DynamoDB Table/Index */
@@ -700,6 +706,9 @@ public interface IDynamoDBTable {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
 
     /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();

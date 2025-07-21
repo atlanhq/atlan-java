@@ -160,6 +160,7 @@ public class FlowFieldTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -199,6 +200,7 @@ public class FlowFieldTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -453,6 +455,7 @@ public class FlowFieldTest {
             .flowDataset(FlowDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowDatasetName("String0")
             .flowDatasetQualifiedName("String0")
+            .flowExpression("String0")
             .build();
 
     private static final int hash = full.hashCode();

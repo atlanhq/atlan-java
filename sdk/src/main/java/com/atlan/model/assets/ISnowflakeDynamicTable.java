@@ -231,6 +231,9 @@ public interface ISnowflakeDynamicTable {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -302,6 +305,9 @@ public interface ISnowflakeDynamicTable {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -662,6 +668,9 @@ public interface ISnowflakeDynamicTable {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
 
     /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();

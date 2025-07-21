@@ -68,6 +68,10 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
     @Attribute
     String flowErrorMessage;
 
+    /** Logic that is applied, injected or otherwise used as part of producing this ephemeral field of data. */
+    @Attribute
+    String flowExpression;
+
     /** Date and time at which this point in the data processing or orchestration finished. */
     @Attribute
     @Date

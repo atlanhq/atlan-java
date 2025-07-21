@@ -74,6 +74,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String databaseQualifiedName;
 
+    /** Contexts contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabricksAIModelContext> databricksAIModelContexts;
+
     /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
@@ -193,6 +198,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String schemaQualifiedName;
 
+    /** Contexts contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeAIModelContext> snowflakeAIModelContexts;
+
     /** Snowflake dynamic tables that exist within this schema. */
     @Attribute
     @Singular
@@ -217,6 +227,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<ISnowflakeTag> snowflakeTags;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
 
     /** Sources related to this asset. */
     @Attribute

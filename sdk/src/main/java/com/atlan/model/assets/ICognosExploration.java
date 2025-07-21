@@ -31,7 +31,10 @@ public interface ICognosExploration {
 
     public static final String TYPE_NAME = "CognosExploration";
 
-    /** TBC */
+    /** Columns contained in the exploration. */
+    RelationField COGNOS_COLUMNS = new RelationField("cognosColumns");
+
+    /** Folder containing the exploration. */
     RelationField COGNOS_FOLDER = new RelationField("cognosFolder");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -226,6 +229,9 @@ public interface ICognosExploration {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -298,6 +304,9 @@ public interface ICognosExploration {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -322,34 +331,37 @@ public interface ICognosExploration {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** Tooltip text present for the Cognos asset */
+    /** Columns contained in the exploration. */
+    SortedSet<ICognosColumn> getCognosColumns();
+
+    /** Tooltip text present for the Cognos asset. */
     String getCognosDefaultScreenTip();
 
-    /** TBC */
+    /** Folder containing the exploration. */
     ICognosFolder getCognosFolder();
 
-    /** ID of the asset in Cognos */
+    /** ID of the asset in Cognos. */
     String getCognosId();
 
-    /** Whether the Cognos asset is diabled */
+    /** Whether the Cognos asset is disabled. */
     Boolean getCognosIsDisabled();
 
-    /** Whether the Cognos asset is hidden from the ui */
+    /** Whether the Cognos asset is hidden from the UI. */
     Boolean getCognosIsHidden();
 
-    /** Name of the parent asset in Cognos */
+    /** Name of the parent of the asset in Cognos. */
     String getCognosParentName();
 
-    /** Qualified name of the parent asset in Cognos */
+    /** Qualified name of the parent asset in Cognos. */
     String getCognosParentQualifiedName();
 
-    /** Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name'] */
+    /** Path of the asset in Cognos (e.g. /content/folder[@name='Folder Name']). */
     String getCognosPath();
 
-    /** Cognos type of the Cognos asset. E.g. report, dashboard, package, etc. */
+    /** Type of the Cognos asset (e.g. report, dashboard, package, etc). */
     String getCognosType();
 
-    /** Version of the Cognos asset */
+    /** Version of the Cognos asset. */
     String getCognosVersion();
 
     /** Simple name of the connection through which this asset is accessible. */

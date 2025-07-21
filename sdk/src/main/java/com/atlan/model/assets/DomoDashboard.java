@@ -48,7 +48,7 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Domo Cards that associate with this Domo Dashboard. */
     @Attribute
     @Singular
     SortedSet<IDomoCard> domoCards;
@@ -57,12 +57,12 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     @Attribute
     Long domoDashboardCardCount;
 
-    /** TBC */
+    /** Child Domo Dashboards that are contained by this parent Domo Dashboard. */
     @Attribute
     @Singular
     SortedSet<IDomoDashboard> domoDashboardChildren;
 
-    /** TBC */
+    /** Parent Domo Dashboard that contains this child Domo Dashboard. */
     @Attribute
     IDomoDashboard domoDashboardParent;
 

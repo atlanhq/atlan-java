@@ -106,12 +106,12 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     @Attribute
     @Singular
     SortedSet<IDynamoDBGlobalSecondaryIndex> dynamoDBGlobalSecondaryIndexes;
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     @Attribute
     @Singular
     SortedSet<IDynamoDBLocalSecondaryIndex> dynamoDBLocalSecondaryIndexes;
@@ -319,6 +319,10 @@ public class DynamoDBTable extends Asset
     /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
 
     /** Sources related to this asset. */
     @Attribute

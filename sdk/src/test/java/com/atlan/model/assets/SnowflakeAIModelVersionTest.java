@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AIModelTest {
+public class SnowflakeAIModelVersionTest {
 
-    private static final AIModel full = AIModel._internal()
+    private static final SnowflakeAIModelVersion full = SnowflakeAIModelVersion._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,6 +59,7 @@ public class AIModelTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .aiModel(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .ethicalAIAccountabilityConfig(EthicalAIAccountabilityConfig.HAS_OWNER)
             .ethicalAIBiasMitigationConfig(EthicalAIBiasMitigationConfig.INEFFECTIVE)
             .ethicalAIEnvironmentalConsciousnessConfig(EthicalAIEnvironmentalConsciousnessConfig.LOW_RISK)
@@ -154,6 +155,7 @@ public class AIModelTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -193,6 +195,7 @@ public class AIModelTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -443,25 +446,59 @@ public class AIModelTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .aiModelDatasetsDSL("String0")
-            .aiModelStatus(AIModelStatus.ACTIVE)
-            .aiModelVersion("String0")
-            .aiApplication(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .aiApplication(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .calculationViewName("String0")
+            .calculationViewQualifiedName("String0")
+            .databaseName("String0")
+            .databaseQualifiedName("String0")
+            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isProfiled(true)
+            .lastProfiledAt(123456789L)
+            .queryCount(123456789L)
+            .queryCountUpdatedAt(123456789L)
+            .queryUserCount(123456789L)
+            .putQueryUserMap("key1", 123456L)
+            .putQueryUserMap("key2", 654321L)
+            .schemaName("String0")
+            .schemaQualifiedName("String0")
+            .sqlAIModelContextQualifiedName("String0")
+            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .tableName("String0")
+            .tableQualifiedName("String0")
+            .viewName("String0")
+            .viewQualifiedName("String0")
+            .snowflakeAIModelContext(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeAIModelVersionAlias("String0")
+            .snowflakeAIModelVersionAlias("String1")
+            .snowflakeAIModelVersionFunction("String0")
+            .snowflakeAIModelVersionFunction("String1")
+            .snowflakeAIModelVersionMetric("key1", "value1")
+            .snowflakeAIModelVersionMetric("key2", "value2")
+            .snowflakeAIModelVersionName("String0")
+            .snowflakeAIModelVersionType("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static AIModel frodo;
+    private static SnowflakeAIModelVersion frodo;
     private static String serialized;
 
-    @Test(groups = {"AIModel.builderEquivalency"})
+    @Test(groups = {"SnowflakeAIModelVersion.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"AIModel.serialize"},
-            dependsOnGroups = {"AIModel.builderEquivalency"})
+            groups = {"SnowflakeAIModelVersion.serialize"},
+            dependsOnGroups = {"SnowflakeAIModelVersion.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -470,17 +507,17 @@ public class AIModelTest {
     }
 
     @Test(
-            groups = {"AIModel.deserialize"},
-            dependsOnGroups = {"AIModel.serialize"})
+            groups = {"SnowflakeAIModelVersion.deserialize"},
+            dependsOnGroups = {"SnowflakeAIModelVersion.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AIModel.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, SnowflakeAIModelVersion.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"AIModel.equivalency"},
-            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
+            groups = {"SnowflakeAIModelVersion.equivalency"},
+            dependsOnGroups = {"SnowflakeAIModelVersion.serialize", "SnowflakeAIModelVersion.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -489,8 +526,8 @@ public class AIModelTest {
     }
 
     @Test(
-            groups = {"AIModel.equivalency"},
-            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
+            groups = {"SnowflakeAIModelVersion.equivalency"},
+            dependsOnGroups = {"SnowflakeAIModelVersion.serialize", "SnowflakeAIModelVersion.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -154,6 +154,7 @@ public class AIApplicationTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -193,6 +194,7 @@ public class AIApplicationTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -445,8 +447,8 @@ public class AIApplicationTest {
             .viewerUser("String1")
             .aiApplicationDevelopmentStage(AIApplicationDevelopmentStage.PROPOSAL)
             .aiApplicationVersion("String0")
-            .model(AIModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .model(AIModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .model(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .model(SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

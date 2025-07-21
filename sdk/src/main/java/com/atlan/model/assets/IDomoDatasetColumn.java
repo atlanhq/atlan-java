@@ -32,7 +32,7 @@ public interface IDomoDatasetColumn {
 
     public static final String TYPE_NAME = "DomoDatasetColumn";
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Dataset Column. */
     RelationField DOMO_DATASET = new RelationField("domoDataset");
 
     /** Type of Domo Dataset Column. */
@@ -233,6 +233,9 @@ public interface IDomoDatasetColumn {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -305,6 +308,9 @@ public interface IDomoDatasetColumn {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -356,7 +362,7 @@ public interface IDomoDatasetColumn {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Dataset Column. */
     IDomoDataset getDomoDataset();
 
     /** Type of Domo Dataset Column. */

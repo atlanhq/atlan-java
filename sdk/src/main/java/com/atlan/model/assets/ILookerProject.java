@@ -37,10 +37,10 @@ public interface ILookerProject {
     /** Fields that exist within this project. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Child projects that exist within this project. */
     RelationField LOOKER_CHILD_PROJECTS = new RelationField("lookerChildProjects");
 
-    /** TBC */
+    /** Projects in which this project exists. */
     RelationField LOOKER_PARENT_PROJECTS = new RelationField("lookerParentProjects");
 
     /** Models that exist within this project. */
@@ -241,6 +241,9 @@ public interface ILookerProject {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -312,6 +315,9 @@ public interface ILookerProject {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -421,10 +427,10 @@ public interface ILookerProject {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Child projects that exist within this project. */
     SortedSet<ILookerProject> getLookerChildProjects();
 
-    /** TBC */
+    /** Projects in which this project exists. */
     SortedSet<ILookerProject> getLookerParentProjects();
 
     /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */
