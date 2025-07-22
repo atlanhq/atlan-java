@@ -10,7 +10,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.TypeRegistryPropagationType;
-import com.atlan.model.enums.TypeRegistryStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -32,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Definition of an association (peer-to-peer) relationship in the metamodel.
+ * Workspace definition of an association (peer-to-peer) relationship in the metamodel.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -42,7 +41,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("serial")
 public class TypeRegistryAssociationRelationship extends Asset
-        implements ITypeRegistryAssociationRelationship, ITypeRegistryRelationship, ITypeRegistry, IReferenceable {
+        implements ITypeRegistryAssociationRelationship,
+                ITypeRegistryWorkspaced,
+                ITypeRegistryRelationship,
+                ITypeRegistry,
+                IAsset,
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TypeRegistryAssociationRelationship";
@@ -66,10 +70,6 @@ public class TypeRegistryAssociationRelationship extends Asset
     @Attribute
     String typeRegistryDeprecatedBy;
 
-    /** Explanatory definition of this portion of the metamodel. */
-    @Attribute
-    String typeRegistryDescription;
-
     /** First end of the relationship. */
     @Attribute
     TypeRegistryEndDef typeRegistryEnd1;
@@ -78,21 +78,13 @@ public class TypeRegistryAssociationRelationship extends Asset
     @Attribute
     TypeRegistryEndDef typeRegistryEnd2;
 
-    /** Whether this portion of the metamodel is deprecated (marked for removal). */
+    /** Whether this portion of the metamodel should no longer be used. */
     @Attribute
     Boolean typeRegistryIsDeprecated;
 
     /** Whether this relationship supports many of end1 referencing many of end2 (and vice versa). */
     @Attribute
     Boolean typeRegistryManyToMany;
-
-    /** Unique name for this portion of the metamodel. */
-    @Attribute
-    String typeRegistryName;
-
-    /** Namespace in which the relationship's definition is contained. */
-    @Attribute
-    ITypeRegistryNamespace typeRegistryNamespace;
 
     /** Metamodel object that replaces this one. */
     @Attribute
@@ -103,17 +95,13 @@ public class TypeRegistryAssociationRelationship extends Asset
     @Singular
     SortedSet<ITypeRegistry> typeRegistryReplaces;
 
-    /** Status of this portion of the metamodel. */
-    @Attribute
-    TypeRegistryStatus typeRegistryStatus;
-
     /** How tags should propagate through this relationship, if at all. */
     @Attribute
     TypeRegistryPropagationType typeRegistryTagPropagation;
 
-    /** Version of this relationship's definition. */
+    /** Unpublished workspace in which this portion of the metamodel is contained. */
     @Attribute
-    String typeRegistryVersion;
+    ITypeRegistryWorkspace typeRegistryWorkspace;
 
     /**
      * Builds the minimal object necessary to create a relationship to a TypeRegistryAssociationRelationship, from a potentially

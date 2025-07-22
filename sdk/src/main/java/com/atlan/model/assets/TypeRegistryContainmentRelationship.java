@@ -10,7 +10,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.TypeRegistryPropagationType;
-import com.atlan.model.enums.TypeRegistryStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -32,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Definition of a containment (parent-child) relationship in the metamodel.
+ * Workspace definition of a containment (parent-child) relationship in the metamodel.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -42,7 +41,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("serial")
 public class TypeRegistryContainmentRelationship extends Asset
-        implements ITypeRegistryContainmentRelationship, ITypeRegistryRelationship, ITypeRegistry, IReferenceable {
+        implements ITypeRegistryContainmentRelationship,
+                ITypeRegistryWorkspaced,
+                ITypeRegistryRelationship,
+                ITypeRegistry,
+                IAsset,
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TypeRegistryContainmentRelationship";
@@ -70,21 +74,9 @@ public class TypeRegistryContainmentRelationship extends Asset
     @Attribute
     String typeRegistryDeprecatedBy;
 
-    /** Explanatory definition of this portion of the metamodel. */
-    @Attribute
-    String typeRegistryDescription;
-
-    /** Whether this portion of the metamodel is deprecated (marked for removal). */
+    /** Whether this portion of the metamodel should no longer be used. */
     @Attribute
     Boolean typeRegistryIsDeprecated;
-
-    /** Unique name for this portion of the metamodel. */
-    @Attribute
-    String typeRegistryName;
-
-    /** Namespace in which the relationship's definition is contained. */
-    @Attribute
-    ITypeRegistryNamespace typeRegistryNamespace;
 
     /** Parent (containing) end of the containment relationship. */
     @Attribute
@@ -99,17 +91,13 @@ public class TypeRegistryContainmentRelationship extends Asset
     @Singular
     SortedSet<ITypeRegistry> typeRegistryReplaces;
 
-    /** Status of this portion of the metamodel. */
-    @Attribute
-    TypeRegistryStatus typeRegistryStatus;
-
     /** How tags should propagate through this relationship, if at all. */
     @Attribute
     TypeRegistryPropagationType typeRegistryTagPropagation;
 
-    /** Version of this relationship's definition. */
+    /** Unpublished workspace in which this portion of the metamodel is contained. */
     @Attribute
-    String typeRegistryVersion;
+    ITypeRegistryWorkspace typeRegistryWorkspace;
 
     /**
      * Builds the minimal object necessary to create a relationship to a TypeRegistryContainmentRelationship, from a potentially
@@ -348,6 +336,47 @@ public class TypeRegistryContainmentRelationship extends Asset
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a TypeRegistryContainmentRelationship.
+     *
+     * @param name of the TypeRegistryContainmentRelationship
+     * @param workspace in which the TypeRegistryContainmentRelationship should be registered
+     * @param parent end of the relationship that represents the containing asset (parent)
+     * @param children end of the relationship that represents the contained assets (children)
+     * @return the minimal request necessary to create the TypeRegistryContainmentRelationship, as a builder
+     * @throws InvalidRequestException if the table provided is without a qualifiedName
+     */
+    public static TypeRegistryContainmentRelationshipBuilder<?, ?> creator(
+            String name, TypeRegistryWorkspace workspace, TypeRegistryEndDef parent, TypeRegistryEndDef children)
+            throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", workspace.getQualifiedName());
+        validateRelationship(Table.TYPE_NAME, map);
+        return creator(name, workspace.getQualifiedName(), parent, children)
+                .typeRegistryWorkspace(workspace.trimToReference());
+    }
+
+    /**
+     * Builds the minimal object necessary to create a TypeRegistryContainmentRelationship.
+     *
+     * @param name of the TypeRegistryContainmentRelationship
+     * @param workspaceQualifiedName unique name of the workspace in which the TypeRegistryContainmentRelationship should be registered
+     * @param parent end of the relationship that represents the containing asset (parent)
+     * @param children end of the relationship that represents the contained assets (children)
+     * @return the minimal request necessary to create the TypeRegistryContainmentRelationship, as a builder
+     */
+    public static TypeRegistryContainmentRelationshipBuilder<?, ?> creator(
+            String name, String workspaceQualifiedName, TypeRegistryEndDef parent, TypeRegistryEndDef children) {
+        return TypeRegistryContainmentRelationship._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(
+                        ITypeRegistryRelationship.generateQualifiedName(workspaceQualifiedName, parent, children))
+                .name(ITypeRegistryRelationship.generateName(parent, children))
+                .typeRegistryParent(parent)
+                .typeRegistryChildren(children)
+                .typeRegistryWorkspace(TypeRegistryWorkspace.refByQualifiedName(workspaceQualifiedName));
     }
 
     /**

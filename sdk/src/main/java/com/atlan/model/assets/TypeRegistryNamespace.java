@@ -9,7 +9,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.model.enums.TypeRegistryStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -39,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("serial")
-public class TypeRegistryNamespace extends Asset implements ITypeRegistryNamespace, ITypeRegistry, IReferenceable {
+public class TypeRegistryNamespace extends Asset
+        implements ITypeRegistryNamespace, ITypeRegistry, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TypeRegistryNamespace";
@@ -58,27 +58,19 @@ public class TypeRegistryNamespace extends Asset implements ITypeRegistryNamespa
     @Attribute
     String typeRegistryDeprecatedBy;
 
-    /** Explanatory definition of this portion of the metamodel. */
-    @Attribute
-    String typeRegistryDescription;
-
     /** Asset types contained within the namespace. */
     @Attribute
     @Singular
-    SortedSet<ITypeRegistryEntity> typeRegistryEntities;
+    SortedSet<ITypeRegistryPublishedEntity> typeRegistryEntities;
 
     /** Enumerations contained wtihin the namespace. */
     @Attribute
     @Singular
     SortedSet<ITypeRegistryEnum> typeRegistryEnumerations;
 
-    /** Whether this portion of the metamodel is deprecated (marked for removal). */
+    /** Whether this portion of the metamodel should no longer be used. */
     @Attribute
     Boolean typeRegistryIsDeprecated;
-
-    /** Unique name for this portion of the metamodel. */
-    @Attribute
-    String typeRegistryName;
 
     /** Unique string to prefix all objects in the namespace with, to ensure their uniqueness. */
     @Attribute
@@ -87,7 +79,7 @@ public class TypeRegistryNamespace extends Asset implements ITypeRegistryNamespa
     /** Relationships contained within the namespace. */
     @Attribute
     @Singular
-    SortedSet<ITypeRegistryRelationship> typeRegistryRelationships;
+    SortedSet<ITypeRegistryPublishedRelationship> typeRegistryRelationships;
 
     /** Metamodel object that replaces this one. */
     @Attribute
@@ -98,14 +90,15 @@ public class TypeRegistryNamespace extends Asset implements ITypeRegistryNamespa
     @Singular
     SortedSet<ITypeRegistry> typeRegistryReplaces;
 
-    /** Status of this portion of the metamodel. */
-    @Attribute
-    TypeRegistryStatus typeRegistryStatus;
-
     /** Structs contained within the namespace. */
     @Attribute
     @Singular
     SortedSet<ITypeRegistryStruct> typeRegistryStructs;
+
+    /** Unpublished workspaces contained in this namespace. */
+    @Attribute
+    @Singular
+    SortedSet<ITypeRegistryWorkspace> typeRegistryWorkspaces;
 
     /**
      * Builds the minimal object necessary to create a relationship to a TypeRegistryNamespace, from a potentially
@@ -345,27 +338,27 @@ public class TypeRegistryNamespace extends Asset implements ITypeRegistryNamespa
     /**
      * Builds the minimal object necessary to create a TypeRegistryNamespace.
      *
-     * @param client connectivity to the Atlan tenant on which the TypeRegistryNamespace is intended to be created
      * @param name of the TypeRegistryNamespace
+     * @param connectionQualifiedName temporary creation to fit existing bootstrap policies
      * @return the minimal request necessary to create the TypeRegistryNamespace, as a builder
      */
-    public static TypeRegistryNamespaceBuilder<?, ?> creator(AtlanClient client, String name) {
+    public static TypeRegistryNamespaceBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return TypeRegistryNamespace._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(name))
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
-                .typeRegistryPrefix(name)
-                .typeRegistryStatus(TypeRegistryStatus.DRAFT);
+                .typeRegistryPrefix(name);
     }
 
     /**
      * Generate a unique name for this TypeRegistryNamespace.
      *
+     * @param connectionQualifiedName temporary creation to fit existing bootstrap policies
      * @param name human-readable name for the TypeRegistryNamespace
      * @return the unique qualifiedName of the TypeRegistryNamespace
      */
-    public static String generateQualifiedName(String name) {
-        return "TypeRegistry/" + name;
+    public static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/TypeRegistry/" + name;
     }
 
     /**

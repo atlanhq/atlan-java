@@ -33,6 +33,7 @@ import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.TypeRegistryEndDef;
 <#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 <#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>

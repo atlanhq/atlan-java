@@ -2,27 +2,27 @@
     /**
      * Builds the minimal object necessary to create a TypeRegistryNamespace.
      *
-     * @param client connectivity to the Atlan tenant on which the TypeRegistryNamespace is intended to be created
      * @param name of the TypeRegistryNamespace
+     * @param connectionQualifiedName temporary creation to fit existing bootstrap policies
      * @return the minimal request necessary to create the TypeRegistryNamespace, as a builder
      */
-    public static TypeRegistryNamespaceBuilder<?, ?> creator(AtlanClient client, String name) {
+    public static TypeRegistryNamespaceBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return TypeRegistryNamespace._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(generateQualifiedName(name))
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
-                .typeRegistryPrefix(name)
-                .typeRegistryStatus(TypeRegistryStatus.DRAFT);
+                .typeRegistryPrefix(name);
     }
 
     /**
      * Generate a unique name for this TypeRegistryNamespace.
      *
+     * @param connectionQualifiedName temporary creation to fit existing bootstrap policies
      * @param name human-readable name for the TypeRegistryNamespace
      * @return the unique qualifiedName of the TypeRegistryNamespace
      */
-    public static String generateQualifiedName(String name) {
-        return "TypeRegistry/" + name;
+    public static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/TypeRegistry/" + name;
     }
 
     /**

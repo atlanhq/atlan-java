@@ -10,7 +10,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.TypeRegistryDataType;
-import com.atlan.model.enums.TypeRegistryStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -40,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("serial")
-public class TypeRegistryAttribute extends Asset implements ITypeRegistryAttribute, ITypeRegistry, IReferenceable {
+public class TypeRegistryAttribute extends Asset
+        implements ITypeRegistryAttribute, ITypeRegistry, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TypeRegistryAttribute";
@@ -63,25 +63,17 @@ public class TypeRegistryAttribute extends Asset implements ITypeRegistryAttribu
     @Attribute
     String typeRegistryDeprecatedBy;
 
-    /** Explanatory definition of this portion of the metamodel. */
-    @Attribute
-    String typeRegistryDescription;
-
     /** Entity in which the attributes are contained. */
     @Attribute
     ITypeRegistryEntity typeRegistryEntity;
 
-    /** Whether this portion of the metamodel is deprecated (marked for removal). */
+    /** Whether this portion of the metamodel should no longer be used. */
     @Attribute
     Boolean typeRegistryIsDeprecated;
 
     /** Whether this attribute allows multiple values. */
     @Attribute
     Boolean typeRegistryMultiValued;
-
-    /** Unique name for this portion of the metamodel. */
-    @Attribute
-    String typeRegistryName;
 
     /** Relationship in which the attributes are contained. */
     @Attribute
@@ -95,10 +87,6 @@ public class TypeRegistryAttribute extends Asset implements ITypeRegistryAttribu
     @Attribute
     @Singular
     SortedSet<ITypeRegistry> typeRegistryReplaces;
-
-    /** Status of this portion of the metamodel. */
-    @Attribute
-    TypeRegistryStatus typeRegistryStatus;
 
     /** Struct in which the attributes are contained. */
     @Attribute
