@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AIModelTest {
+public class CognosDatasetTest {
 
-    private static final AIModel full = AIModel._internal()
+    private static final CognosDataset full = CognosDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,13 +59,15 @@ public class AIModelTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .ethicalAIAccountabilityConfig(EthicalAIAccountabilityConfig.HAS_OWNER)
-            .ethicalAIBiasMitigationConfig(EthicalAIBiasMitigationConfig.INEFFECTIVE)
-            .ethicalAIEnvironmentalConsciousnessConfig(EthicalAIEnvironmentalConsciousnessConfig.LOW_RISK)
-            .ethicalAIFairnessConfig(EthicalAIFairnessConfig.LOW_RISK)
-            .ethicalAIPrivacyConfig(EthicalAIPrivacyConfig.PERSONAL_DATA)
-            .ethicalAIReliabilityAndSafetyConfig(EthicalAIReliabilityAndSafetyConfig.LOW)
-            .ethicalAITransparencyConfig(EthicalAITransparencyConfig.LIMITED_DISCLOSURE)
+            .cognosDefaultScreenTip("String0")
+            .cognosId("String0")
+            .cognosIsDisabled(true)
+            .cognosIsHidden(true)
+            .cognosParentName("String0")
+            .cognosParentQualifiedName("String0")
+            .cognosPath("String0")
+            .cognosType("String0")
+            .cognosVersion("String0")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -443,25 +445,23 @@ public class AIModelTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .aiModelDatasetsDSL("String0")
-            .aiModelStatus(AIModelStatus.ACTIVE)
-            .aiModelVersion("String0")
-            .aiApplication(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .aiApplication(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cognosColumn(CognosColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cognosColumn(CognosColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cognosFolder(CognosFolder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static AIModel frodo;
+    private static CognosDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"AIModel.builderEquivalency"})
+    @Test(groups = {"CognosDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"AIModel.serialize"},
-            dependsOnGroups = {"AIModel.builderEquivalency"})
+            groups = {"CognosDataset.serialize"},
+            dependsOnGroups = {"CognosDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -470,17 +470,17 @@ public class AIModelTest {
     }
 
     @Test(
-            groups = {"AIModel.deserialize"},
-            dependsOnGroups = {"AIModel.serialize"})
+            groups = {"CognosDataset.deserialize"},
+            dependsOnGroups = {"CognosDataset.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AIModel.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, CognosDataset.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"AIModel.equivalency"},
-            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
+            groups = {"CognosDataset.equivalency"},
+            dependsOnGroups = {"CognosDataset.serialize", "CognosDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -489,8 +489,8 @@ public class AIModelTest {
     }
 
     @Test(
-            groups = {"AIModel.equivalency"},
-            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
+            groups = {"CognosDataset.equivalency"},
+            dependsOnGroups = {"CognosDataset.serialize", "CognosDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

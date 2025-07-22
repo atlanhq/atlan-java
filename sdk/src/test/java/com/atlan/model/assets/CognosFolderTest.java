@@ -447,6 +447,8 @@ public class CognosFolderTest {
             .viewerUser("String1")
             .cognosDashboard(CognosDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cognosDashboard(CognosDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cognosDataset(CognosDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cognosDataset(CognosDataset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .cognosExploration(CognosExploration.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .cognosExploration(CognosExploration.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .cognosFile(CognosFile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

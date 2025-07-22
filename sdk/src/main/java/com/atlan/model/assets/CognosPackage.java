@@ -48,6 +48,11 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Columns contained in the package. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

@@ -40,6 +40,9 @@ public interface ISchema {
     /** Database in which this schema exists. */
     RelationField DATABASE = new RelationField("database");
 
+    /** Contexts contained within the schema. */
+    RelationField DATABRICKS_AI_MODEL_CONTEXTS = new RelationField("databricksAIModelContexts");
+
     /** Functions that exist within this schema. */
     RelationField FUNCTIONS = new RelationField("functions");
 
@@ -55,6 +58,9 @@ public interface ISchema {
 
     /** External location of this schema, for example: an S3 object location. */
     KeywordField SCHEMA_EXTERNAL_LOCATION = new KeywordField("schemaExternalLocation", "schemaExternalLocation");
+
+    /** Contexts contained within the schema. */
+    RelationField SNOWFLAKE_AI_MODEL_CONTEXTS = new RelationField("snowflakeAIModelContexts");
 
     /** Snowflake dynamic tables that exist within this schema. */
     RelationField SNOWFLAKE_DYNAMIC_TABLES = new RelationField("snowflakeDynamicTables");
@@ -404,6 +410,9 @@ public interface ISchema {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
+    /** Contexts contained within the schema. */
+    SortedSet<IDatabricksAIModelContext> getDatabricksAIModelContexts();
+
     /** (Deprecated) Model containing the assets. */
     SortedSet<IDbtModel> getDbtModels();
 
@@ -577,6 +586,9 @@ public interface ISchema {
 
     /** TBC */
     SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+
+    /** Contexts contained within the schema. */
+    SortedSet<ISnowflakeAIModelContext> getSnowflakeAIModelContexts();
 
     /** Snowflake dynamic tables that exist within this schema. */
     SortedSet<ISnowflakeDynamicTable> getSnowflakeDynamicTables();

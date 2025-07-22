@@ -37,10 +37,10 @@ public interface ILookerProject {
     /** Fields that exist within this project. */
     RelationField FIELDS = new RelationField("fields");
 
-    /** TBC */
+    /** Child projects that exist within this project. */
     RelationField LOOKER_CHILD_PROJECTS = new RelationField("lookerChildProjects");
 
-    /** TBC */
+    /** Projects in which this project exists. */
     RelationField LOOKER_PARENT_PROJECTS = new RelationField("lookerParentProjects");
 
     /** Models that exist within this project. */
@@ -421,10 +421,10 @@ public interface ILookerProject {
     /** Links that are attached to this asset. */
     SortedSet<ILink> getLinks();
 
-    /** TBC */
+    /** Child projects that exist within this project. */
     SortedSet<ILookerProject> getLookerChildProjects();
 
-    /** TBC */
+    /** Projects in which this project exists. */
     SortedSet<ILookerProject> getLookerParentProjects();
 
     /** An alpha-numeric slug for the underlying Looker asset that can be used to uniquely identify it */

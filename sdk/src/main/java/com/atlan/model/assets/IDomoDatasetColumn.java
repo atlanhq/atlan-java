@@ -32,7 +32,7 @@ public interface IDomoDatasetColumn {
 
     public static final String TYPE_NAME = "DomoDatasetColumn";
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Dataset Column. */
     RelationField DOMO_DATASET = new RelationField("domoDataset");
 
     /** Type of Domo Dataset Column. */
@@ -356,7 +356,7 @@ public interface IDomoDatasetColumn {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Dataset Column. */
     IDomoDataset getDomoDataset();
 
     /** Type of Domo Dataset Column. */

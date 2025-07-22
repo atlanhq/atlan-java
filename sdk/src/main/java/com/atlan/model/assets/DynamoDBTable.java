@@ -106,12 +106,12 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     @Attribute
     @Singular
     SortedSet<IDynamoDBGlobalSecondaryIndex> dynamoDBGlobalSecondaryIndexes;
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     @Attribute
     @Singular
     SortedSet<IDynamoDBLocalSecondaryIndex> dynamoDBLocalSecondaryIndexes;

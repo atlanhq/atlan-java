@@ -50,6 +50,9 @@ public interface IAIModel {
     /** Version of the AI model */
     KeywordField AI_MODEL_VERSION = new KeywordField("aiModelVersion", "aiModelVersion");
 
+    /** Versions contained within the model. */
+    RelationField AI_MODEL_VERSIONS = new RelationField("aiModelVersions");
+
     /** AI applications that are created using this AI model */
     RelationField APPLICATIONS = new RelationField("applications");
 
@@ -70,6 +73,9 @@ public interface IAIModel {
 
     /** Version of the AI model */
     String getAiModelVersion();
+
+    /** Versions contained within the model. */
+    SortedSet<IAIModelVersion> getAiModelVersions();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();

@@ -35,10 +35,10 @@ public interface IDynamoDBTable {
 
     public static final String TYPE_NAME = "DynamoDBTable";
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     RelationField DYNAMO_DB_GLOBAL_SECONDARY_INDEXES = new RelationField("dynamoDBGlobalSecondaryIndexes");
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     RelationField DYNAMO_DB_LOCAL_SECONDARY_INDEXES = new RelationField("dynamoDBLocalSecondaryIndexes");
 
     /** Represents the number of global secondary indexes on the table. */
@@ -398,10 +398,10 @@ public interface IDynamoDBTable {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
-    /** TBC */
+    /** DynamoDB table containing global secondary indexes */
     SortedSet<IDynamoDBGlobalSecondaryIndex> getDynamoDBGlobalSecondaryIndexes();
 
-    /** TBC */
+    /** DynamoDB table containing local secondary indexes */
     SortedSet<IDynamoDBLocalSecondaryIndex> getDynamoDBLocalSecondaryIndexes();
 
     /** Specifies the partition key of the DynamoDB Table/Index */

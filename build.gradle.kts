@@ -32,26 +32,25 @@ allprojects {
             "-Xms2g"
         )
     }
-}
-
-configurations.all {
-    resolutionStrategy {
-        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
-        force(
-            libs.parsson,
-            libs.json.path,
-            libs.json.smart,
-            libs.guava,
-            libs.commons.compress,
-            libs.commons.io,
-            libs.jetty.http,
-            libs.jetty.server,
-            libs.jetty.http2.common,
-            libs.jetty.http2.hpack,
-            libs.netty.common,
-            libs.rhino,
-            libs.commons.lang,
-            libs.nimbus,
-        )
+    configurations.all {
+        resolutionStrategy {
+            // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
+            force(
+                libs.parsson,
+                libs.json.path,
+                libs.json.smart,
+                libs.guava,
+                libs.commons.compress,
+                libs.commons.io,
+                libs.jetty.http,
+                libs.jetty.server,
+                libs.jetty.http2.common,
+                libs.jetty.http2.hpack,
+                libs.netty.common,
+                libs.rhino,
+                libs.commons.lang,
+                libs.nimbus,
+            )
+        }
     }
 }

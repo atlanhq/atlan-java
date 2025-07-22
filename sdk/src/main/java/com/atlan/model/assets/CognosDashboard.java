@@ -48,6 +48,11 @@ public class CognosDashboard extends Asset implements ICognosDashboard, ICognos,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Columns contained in the dashboard. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

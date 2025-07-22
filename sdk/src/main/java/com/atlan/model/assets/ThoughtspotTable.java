@@ -97,7 +97,7 @@ public class ThoughtspotTable extends Asset
     @Attribute
     Long thoughtspotColumnCount;
 
-    /** TBC */
+    /** Columns that exist within this table. */
     @Attribute
     @Singular
     SortedSet<IThoughtspotColumn> thoughtspotColumns;

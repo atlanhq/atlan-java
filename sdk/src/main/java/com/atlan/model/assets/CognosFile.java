@@ -48,6 +48,11 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Columns contained in the file. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

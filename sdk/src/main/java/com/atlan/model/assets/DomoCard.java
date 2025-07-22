@@ -61,12 +61,12 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
     @Attribute
     String domoCardTypeValue;
 
-    /** TBC */
+    /** Domo Dashboards that are associated with this Domo Card. */
     @Attribute
     @Singular
     SortedSet<IDomoDashboard> domoDashboards;
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Card. */
     @Attribute
     IDomoDataset domoDataset;
 

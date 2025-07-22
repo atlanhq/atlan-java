@@ -34,19 +34,6 @@ tasks {
     }
 }
 
-configurations.all {
-    resolutionStrategy {
-        // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
-        force(
-            versionCatalogs.named("libs").findLibrary("parsson").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("json-path").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("guava").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("commons-compress").orElseThrow(::AssertionError),
-            versionCatalogs.named("libs").findLibrary("commons-io").orElseThrow(::AssertionError),
-        )
-    }
-}
-
 kotlin {
     jvmToolchain(17)
     compilerOptions {

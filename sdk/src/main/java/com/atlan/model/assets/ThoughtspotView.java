@@ -97,7 +97,7 @@ public class ThoughtspotView extends Asset
     @Attribute
     Long thoughtspotColumnCount;
 
-    /** TBC */
+    /** Columns that exist within this view. */
     @Attribute
     @Singular
     SortedSet<IThoughtspotColumn> thoughtspotColumns;

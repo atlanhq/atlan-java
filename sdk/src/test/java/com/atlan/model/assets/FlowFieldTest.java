@@ -453,6 +453,7 @@ public class FlowFieldTest {
             .flowDataset(FlowDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowDatasetName("String0")
             .flowDatasetQualifiedName("String0")
+            .flowExpression("String0")
             .build();
 
     private static final int hash = full.hashCode();

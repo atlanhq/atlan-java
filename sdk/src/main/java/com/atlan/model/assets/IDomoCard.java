@@ -43,10 +43,10 @@ public interface IDomoCard {
     /** Type of the Domo Card. */
     KeywordField DOMO_CARD_TYPE_VALUE = new KeywordField("domoCardTypeValue", "domoCardTypeValue");
 
-    /** TBC */
+    /** Domo Dashboards that are associated with this Domo Card. */
     RelationField DOMO_DASHBOARDS = new RelationField("domoDashboards");
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Card. */
     RelationField DOMO_DATASET = new RelationField("domoDataset");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -373,10 +373,10 @@ public interface IDomoCard {
     /** Type of the Domo Card. */
     String getDomoCardTypeValue();
 
-    /** TBC */
+    /** Domo Dashboards that are associated with this Domo Card. */
     SortedSet<IDomoDashboard> getDomoDashboards();
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Card. */
     IDomoDataset getDomoDataset();
 
     /** Id of the Domo dataset. */
