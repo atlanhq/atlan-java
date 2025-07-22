@@ -24,6 +24,16 @@ dependencyCheck {
     failBuildOnCVSS = 7.0F
 }
 
+allprojects {
+    tasks.withType<JavaCompile> {
+        options.isFork = true
+        options.forkOptions.jvmArgs = listOf(
+            "-Xmx4g",
+            "-Xms2g"
+        )
+    }
+}
+
 configurations.all {
     resolutionStrategy {
         // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs
