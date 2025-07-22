@@ -49,7 +49,7 @@ public class DomoDatasetColumn extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Domo Dataset that contains this Domo Dataset Column. */
     @Attribute
     IDomoDataset domoDataset;
 

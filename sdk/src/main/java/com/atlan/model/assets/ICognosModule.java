@@ -31,6 +31,9 @@ public interface ICognosModule {
 
     public static final String TYPE_NAME = "CognosModule";
 
+    /** Columns contained in the module. */
+    RelationField COGNOS_COLUMNS = new RelationField("cognosColumns");
+
     /** TBC */
     RelationField COGNOS_FOLDER = new RelationField("cognosFolder");
 
@@ -321,6 +324,9 @@ public interface ICognosModule {
 
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
+
+    /** Columns contained in the module. */
+    SortedSet<ICognosColumn> getCognosColumns();
 
     /** Tooltip text present for the Cognos asset */
     String getCognosDefaultScreenTip();

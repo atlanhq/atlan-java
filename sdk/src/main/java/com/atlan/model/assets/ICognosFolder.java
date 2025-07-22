@@ -35,6 +35,9 @@ public interface ICognosFolder {
     /** TBC */
     RelationField COGNOS_DASHBOARDS = new RelationField("cognosDashboards");
 
+    /** Datasets contained in the folder. */
+    RelationField COGNOS_DATASETS = new RelationField("cognosDatasets");
+
     /** TBC */
     RelationField COGNOS_EXPLORATIONS = new RelationField("cognosExplorations");
 
@@ -354,6 +357,9 @@ public interface ICognosFolder {
 
     /** TBC */
     SortedSet<ICognosDashboard> getCognosDashboards();
+
+    /** Datasets contained in the folder. */
+    SortedSet<ICognosDataset> getCognosDatasets();
 
     /** Tooltip text present for the Cognos asset */
     String getCognosDefaultScreenTip();

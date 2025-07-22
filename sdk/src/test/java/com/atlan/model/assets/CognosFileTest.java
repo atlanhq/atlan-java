@@ -445,6 +445,8 @@ public class CognosFileTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .cognosColumn(CognosColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cognosColumn(CognosColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .cognosFolder(CognosFolder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

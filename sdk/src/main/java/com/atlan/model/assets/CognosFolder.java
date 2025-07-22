@@ -53,6 +53,11 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     @Singular
     SortedSet<ICognosDashboard> cognosDashboards;
 
+    /** Datasets contained in the folder. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosDataset> cognosDatasets;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

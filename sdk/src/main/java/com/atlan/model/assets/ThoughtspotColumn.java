@@ -113,7 +113,7 @@ public class ThoughtspotColumn extends Asset
     @Attribute
     String thoughtspotQuestionText;
 
-    /** TBC */
+    /** Table in which this column exists. */
     @Attribute
     IThoughtspotTable thoughtspotTable;
 
@@ -121,7 +121,7 @@ public class ThoughtspotColumn extends Asset
     @Attribute
     String thoughtspotTableQualifiedName;
 
-    /** TBC */
+    /** View in which this column exists. */
     @Attribute
     IThoughtspotView thoughtspotView;
 
@@ -129,7 +129,7 @@ public class ThoughtspotColumn extends Asset
     @Attribute
     String thoughtspotViewQualifiedName;
 
-    /** TBC */
+    /** Worksheet in which this column exists. */
     @Attribute
     IThoughtspotWorksheet thoughtspotWorksheet;
 

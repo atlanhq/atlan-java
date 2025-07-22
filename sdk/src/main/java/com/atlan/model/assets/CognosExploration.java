@@ -49,6 +49,11 @@ public class CognosExploration extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Columns contained in the exploration. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;

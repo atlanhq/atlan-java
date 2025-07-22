@@ -35,7 +35,7 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     public static final String TYPE_NAME = "DynamoDBGlobalSecondaryIndex";
 
-    /** TBC */
+    /** DynamoDB global secondary index */
     RelationField DYNAMO_DB_TABLE = new RelationField("dynamoDBTable");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -404,7 +404,7 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Status of the DynamoDB Asset */
     DynamoDBStatus getDynamoDBStatus();
 
-    /** TBC */
+    /** DynamoDB global secondary index */
     IDynamoDBTable getDynamoDBTable();
 
     /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */

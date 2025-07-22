@@ -135,7 +135,7 @@ public class DynamoDBLocalSecondaryIndex extends Asset
     @Attribute
     DynamoDBStatus dynamoDBStatus;
 
-    /** TBC */
+    /** DynamoDB local secondary index */
     @Attribute
     IDynamoDBTable dynamoDBTable;
 

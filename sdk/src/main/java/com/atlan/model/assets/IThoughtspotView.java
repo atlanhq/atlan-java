@@ -31,7 +31,7 @@ public interface IThoughtspotView {
 
     public static final String TYPE_NAME = "ThoughtspotView";
 
-    /** TBC */
+    /** Columns that exist within this view. */
     RelationField THOUGHTSPOT_COLUMNS = new RelationField("thoughtspotColumns");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -550,7 +550,7 @@ public interface IThoughtspotView {
     /** Number of Columns. */
     Long getThoughtspotColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this view. */
     SortedSet<IThoughtspotColumn> getThoughtspotColumns();
 
     /** Total number of data table joins executed for analysis. */

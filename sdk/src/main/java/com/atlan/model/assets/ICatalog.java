@@ -77,9 +77,6 @@ public interface ICatalog {
             case AIApplication.TYPE_NAME:
                 ref = AIApplication.refByQualifiedName(qualifiedName);
                 break;
-            case AIModel.TYPE_NAME:
-                ref = AIModel.refByQualifiedName(qualifiedName);
-                break;
             case APIField.TYPE_NAME:
                 ref = APIField.refByQualifiedName(qualifiedName);
                 break;
@@ -212,8 +209,14 @@ public interface ICatalog {
             case CogniteTimeSeries.TYPE_NAME:
                 ref = CogniteTimeSeries.refByQualifiedName(qualifiedName);
                 break;
+            case CognosColumn.TYPE_NAME:
+                ref = CognosColumn.refByQualifiedName(qualifiedName);
+                break;
             case CognosDashboard.TYPE_NAME:
                 ref = CognosDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case CognosDataset.TYPE_NAME:
+                ref = CognosDataset.refByQualifiedName(qualifiedName);
                 break;
             case CognosDatasource.TYPE_NAME:
                 ref = CognosDatasource.refByQualifiedName(qualifiedName);
@@ -277,6 +280,12 @@ public interface ICatalog {
                 break;
             case Database.TYPE_NAME:
                 ref = Database.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksAIModelContext.TYPE_NAME:
+                ref = DatabricksAIModelContext.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksAIModelVersion.TYPE_NAME:
+                ref = DatabricksAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
             case DatabricksUnityCatalogTag.TYPE_NAME:
                 ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
@@ -691,6 +700,12 @@ public interface ICatalog {
                 break;
             case SisenseWidget.TYPE_NAME:
                 ref = SisenseWidget.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeAIModelContext.TYPE_NAME:
+                ref = SnowflakeAIModelContext.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeAIModelVersion.TYPE_NAME:
+                ref = SnowflakeAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
             case SnowflakeDynamicTable.TYPE_NAME:
                 ref = SnowflakeDynamicTable.refByQualifiedName(qualifiedName);

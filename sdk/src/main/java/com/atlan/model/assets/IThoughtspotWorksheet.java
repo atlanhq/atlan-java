@@ -31,7 +31,7 @@ public interface IThoughtspotWorksheet {
 
     public static final String TYPE_NAME = "ThoughtspotWorksheet";
 
-    /** TBC */
+    /** Columns that exist within this worksheet. */
     RelationField THOUGHTSPOT_COLUMNS = new RelationField("thoughtspotColumns");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -550,7 +550,7 @@ public interface IThoughtspotWorksheet {
     /** Number of Columns. */
     Long getThoughtspotColumnCount();
 
-    /** TBC */
+    /** Columns that exist within this worksheet. */
     SortedSet<IThoughtspotColumn> getThoughtspotColumns();
 
     /** Total number of data table joins executed for analysis. */

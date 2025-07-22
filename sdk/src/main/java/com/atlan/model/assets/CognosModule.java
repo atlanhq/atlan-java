@@ -48,6 +48,11 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Columns contained in the module. */
+    @Attribute
+    @Singular
+    SortedSet<ICognosColumn> cognosColumns;
+
     /** Tooltip text present for the Cognos asset */
     @Attribute
     String cognosDefaultScreenTip;
