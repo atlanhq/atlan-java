@@ -71,7 +71,7 @@ public class DatabricksAIModelContext extends Asset
 
     /** Versions contained within the model. */
     @Attribute
-    @Singular
+    @Singular("modelVersion")
     SortedSet<IAIModelVersion> aiModelVersions;
 
     /** AI applications that are created using this AI model */

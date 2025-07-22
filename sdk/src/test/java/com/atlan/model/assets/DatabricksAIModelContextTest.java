@@ -62,8 +62,8 @@ public class DatabricksAIModelContextTest {
             .aiModelDatasetsDSL("String0")
             .aiModelStatus(AIModelStatus.ACTIVE)
             .aiModelVersion("String0")
-            .aiModelVersion(DatabricksAIModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .aiModelVersion(
+            .modelVersion(DatabricksAIModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelVersion(
                     DatabricksAIModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .aiApplication(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .aiApplication(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
