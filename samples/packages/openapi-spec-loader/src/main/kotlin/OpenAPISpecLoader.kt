@@ -98,7 +98,7 @@ object OpenAPISpecLoader {
                 .extension
                 .lowercase()
         when (fileType) {
-            "json" -> {
+            "json", "yaml", "yml" -> {
                 logger.info { "Loading OpenAPI specification from $sourceFile into: $connectionQN" }
                 loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceFile), batchSize)
             }
@@ -108,7 +108,7 @@ object OpenAPISpecLoader {
                 processExtractedFiles(ctx, connectionQN, extractedFiles, batchSize)
             }
             else -> {
-                logger.error { "Invalid file type. Please provide a JSON or ZIP file." }
+                logger.error { "Invalid file type. Please provide a JSON, YAML or ZIP file." }
                 exitProcess(1)
             }
         }
@@ -120,9 +120,9 @@ object OpenAPISpecLoader {
         extractedFiles: List<String>,
         batchSize: Int,
     ) {
-        extractedFiles.filter { it.endsWith(".json") }.forEach { jsonFile ->
-            logger.info { "Loading OpenAPI specification from extracted file: $jsonFile" }
-            loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(jsonFile), batchSize)
+        extractedFiles.filter { it.endsWith(".json") || it.endsWith(".yaml") || it.endsWith(".yml") }.forEach { file ->
+            logger.info { "Loading OpenAPI specification from extracted file: $file" }
+            loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(file), batchSize)
         }
     }
 

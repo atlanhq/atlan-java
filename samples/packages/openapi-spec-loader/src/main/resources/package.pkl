@@ -57,7 +57,7 @@ uiConfig {
         }
         ["spec_file"] = new FileUploader {
           title = "Spec file"
-          fileTypes { "application/json" "application/zip" }
+          fileTypes { "application/json" "application/zip" "application/yaml" }
           required = false
           helpText = "Select the OpenAPI spec file containing metadata to import."
           placeholderText = "Select OpenAPI JSON or ZIP file"
