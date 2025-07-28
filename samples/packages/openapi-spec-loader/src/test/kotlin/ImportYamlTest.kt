@@ -16,12 +16,12 @@ import kotlin.test.assertNotNull
 /**
  * Test import of the canonical PetStore example from Swagger.
  */
-class ImportFileTest : PackageTest("f") {
+class ImportYamlTest : PackageTest("y") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val connectorType = AtlanConnectorType.OPENLINEAGE
+    private val connectorType = AtlanConnectorType.COCKROACHDB
     private val testId = makeUnique("c1")
-    private val testFile = "openapi.json"
+    private val testFile = "openapi.yaml"
     private val files =
         listOf(
             "debug.log",
@@ -75,9 +75,9 @@ class ImportFileTest : PackageTest("f") {
         assertEquals(1, results.size)
         val one = results[0] as APISpec
         assertEquals("Swagger Petstore - OpenAPI 3.0", one.name)
-        assertEquals("3.0.2", one.apiSpecType)
-        assertEquals("http://www.apache.org/licenses/LICENSE-2.0.html", one.apiSpecLicenseURL)
-        assertEquals("http://swagger.io/terms/", one.apiSpecTermsOfServiceURL)
+        assertEquals("3.0.4", one.apiSpecType)
+        assertEquals("https://www.apache.org/licenses/LICENSE-2.0.html", one.apiSpecLicenseURL)
+        assertEquals("https://swagger.io/terms/", one.apiSpecTermsOfServiceURL)
         assertFalse(one.apiIsAuthOptional)
         assertTrue(one.qualifiedName.startsWith(connectionQN))
     }
