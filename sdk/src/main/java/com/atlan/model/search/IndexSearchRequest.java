@@ -204,9 +204,6 @@ public class IndexSearchRequest extends AtlanObject {
             if (searchParameters.getExcludeAtlanTags() != null) {
                 this.excludeAtlanTags(searchParameters.getExcludeAtlanTags());
             }
-            if (searchParameters.getAllowDeletedRelations() != null) {
-                this.allowDeletedRelations(searchParameters.getAllowDeletedRelations());
-            }
             if (searchParameters.getIncludeAtlanTagNames() != null) {
                 this.includeAtlanTagNames(searchParameters.getIncludeAtlanTagNames());
             }
