@@ -129,9 +129,19 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#$fillValuesFrom(C)" class="member-name-link">$fillValuesFrom</a><wbr>(<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">C</a>&nbsp;instance)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#allowDeletedRelations(java.lang.Boolean)" class="member-name-link">allowDeletedRelations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;allowDeletedRelations)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#accessControlExclusive(java.lang.Boolean)" class="member-name-link">accessControlExclusive</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;accessControlExclusive)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">TBC</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#allowDeletedRelations(java.lang.Boolean)" class="member-name-link">allowDeletedRelations</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;allowDeletedRelations)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include deleted relationships to this asset (true) or not (false).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#applySearchParameters(com.atlan.model.search.SearchParameters)" class="member-name-link">applySearchParameters</a><wbr>(<a href="SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a>&nbsp;searchParameters)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Apply the provided search parameters to this index search request.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#attribute(java.lang.String)" class="member-name-link">attribute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;attribute)</code></div>
@@ -154,79 +164,84 @@ loadScripts(document, 'script');</script>
 <div class="block">Parameters for the search itself.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#excludeAtlanTags(java.lang.Boolean)" class="member-name-link">excludeAtlanTags</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;excludeAtlanTags)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableFullRestriction(java.lang.Boolean)" class="member-name-link">enableFullRestriction</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;enableFullRestriction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether to fully restrict results of the search based on the policies of the requestor.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#excludeAtlanTags(java.lang.Boolean)" class="member-name-link">excludeAtlanTags</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;excludeAtlanTags)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include Atlan tags for assets (false) or not (true).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#excludeMeanings(java.lang.Boolean)" class="member-name-link">excludeMeanings</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;excludeMeanings)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#excludeMeanings(java.lang.Boolean)" class="member-name-link">excludeMeanings</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;excludeMeanings)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include term relationships for assets (false) or not (true).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#includeAtlanTagNames(java.lang.Boolean)" class="member-name-link">includeAtlanTagNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;includeAtlanTagNames)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#includeAtlanTagNames(java.lang.Boolean)" class="member-name-link">includeAtlanTagNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;includeAtlanTagNames)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include Atlan tag names for assets (true) or not (false).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#includeRelationshipAttributes(java.lang.Boolean)" class="member-name-link">includeRelationshipAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;includeRelationshipAttributes)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#includeRelationshipAttributes(java.lang.Boolean)" class="member-name-link">includeRelationshipAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;includeRelationshipAttributes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#persona(java.lang.String)" class="member-name-link">persona</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;persona)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#persona(java.lang.String)" class="member-name-link">persona</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;persona)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Qualified name of a persona through which to restrict the results of the search.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#purpose(java.lang.String)" class="member-name-link">purpose</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;purpose)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#purpose(java.lang.String)" class="member-name-link">purpose</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;purpose)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Qualified name of a purpose through which to restrict the results of the search.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#relationAttribute(java.lang.String)" class="member-name-link">relationAttribute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;relationAttribute)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#relationAttributes(java.util.Collection)" class="member-name-link">relationAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;relationAttributes)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#relationAttribute(java.lang.String)" class="member-name-link">relationAttribute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;relationAttribute)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#requestMetadata(com.atlan.model.search.IndexSearchRequest.Metadata)" class="member-name-link">requestMetadata</a><wbr>(<a href="IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a>&nbsp;requestMetadata)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#relationAttributes(java.util.Collection)" class="member-name-link">relationAttributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;relationAttributes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#requestMetadata(com.atlan.model.search.IndexSearchRequest.Metadata)" class="member-name-link">requestMetadata</a><wbr>(<a href="IndexSearchRequest.Metadata.html" title="class in com.atlan.model.search">IndexSearchRequest.Metadata</a>&nbsp;requestMetadata)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Controls how the search is logged (if at all).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#requestRelationshipAttrsForSearch(java.lang.Boolean)" class="member-name-link">requestRelationshipAttrsForSearch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;requestRelationshipAttrsForSearch)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#requestRelationshipAttrsForSearch(java.lang.Boolean)" class="member-name-link">requestRelationshipAttrsForSearch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;requestRelationshipAttrsForSearch)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">see <a href="#includeRelationshipAttributes(java.lang.Boolean)"><code>includeRelationshipAttributes(java.lang.Boolean)</code></a> instead</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showHighlights(java.lang.Boolean)" class="member-name-link">showHighlights</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showHighlights)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showHighlights(java.lang.Boolean)" class="member-name-link">showHighlights</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showHighlights)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showSearchMetadata(java.lang.Boolean)" class="member-name-link">showSearchMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showSearchMetadata)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showSearchMetadata(java.lang.Boolean)" class="member-name-link">showSearchMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showSearchMetadata)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether to include lower-level search metadata in results (true) or not (false).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showSearchScore(java.lang.Boolean)" class="member-name-link">showSearchScore</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showSearchScore)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showSearchScore(java.lang.Boolean)" class="member-name-link">showSearchScore</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;showSearchScore)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">When true, include the score of each result.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#suppressLogs(java.lang.Boolean)" class="member-name-link">suppressLogs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;suppressLogs)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#suppressLogs(java.lang.Boolean)" class="member-name-link">suppressLogs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;suppressLogs)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -261,6 +276,19 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="applySearchParameters(com.atlan.model.search.SearchParameters)">
+<h3>applySearchParameters</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></span>&nbsp;<span class="element-name">applySearchParameters</span><wbr><span class="parameters">(<a href="SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a>&nbsp;searchParameters)</span></div>
+<div class="block">Apply the provided search parameters to this index search request.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>searchParameters</code> - to apply</dd>
+<dt>Returns:</dt>
+<dd>this index search request with the provided search parameters applied</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="$fillValuesFrom(C)">
 <h3 id="$fillValuesFrom(com.atlan.model.search.IndexSearchRequest)">$fillValuesFrom</h3>
@@ -371,6 +399,28 @@ loadScripts(document, 'script');</script>
 <div class="block">Whether to include Atlan tag names for assets (true) or not (false). By default, this is true and
  Atlan tag names are therefore included. Note that this can be set to true even when excludeAtlanTags
  is set to false.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="enableFullRestriction(java.lang.Boolean)">
+<h3>enableFullRestriction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></span>&nbsp;<span class="element-name">enableFullRestriction</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;enableFullRestriction)</span></div>
+<div class="block">Whether to fully restrict results of the search based on the policies of the requestor.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="accessControlExclusive(java.lang.Boolean)">
+<h3>accessControlExclusive</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="type parameter in IndexSearchRequest.IndexSearchRequestBuilder">B</a></span>&nbsp;<span class="element-name">accessControlExclusive</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;accessControlExclusive)</span></div>
+<div class="block">TBC</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>

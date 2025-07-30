@@ -46391,6 +46391,11 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>accessControlExclusive</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> accessControlExclusive</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
 <h5>allowDeletedRelations</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> allowDeletedRelations</pre>
 <div class="block">Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
@@ -46405,6 +46410,11 @@ loadScripts(document, 'script');</script>
 <h5>dsl</h5>
 <pre><a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a> dsl</pre>
 <div class="block">Parameters for the search itself.</div>
+</li>
+<li class="block-list">
+<h5>enableFullRestriction</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> enableFullRestriction</pre>
+<div class="block">Whether to fully restrict results of the search based on the policies of the requestor.</div>
 </li>
 <li class="block-list">
 <h5>excludeAtlanTags</h5>
@@ -46825,14 +46835,25 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>accessControlExclusive</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> accessControlExclusive</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
 <h5>allowDeletedRelations</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> allowDeletedRelations</pre>
-<div class="block">TBC</div>
+<div class="block">Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
+ and therefore only active (not deleted) relationships will be included.</div>
 </li>
 <li class="block-list">
 <h5>attributes</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; attributes</pre>
 <div class="block">List of attributes that were requested in the search.</div>
+</li>
+<li class="block-list">
+<h5>enableFullRestriction</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> enableFullRestriction</pre>
+<div class="block">Whether to fully restrict results of the search based on the policies of the requestor.</div>
 </li>
 <li class="block-list">
 <h5>excludeAtlanTags</h5>
@@ -46845,6 +46866,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Whether the term relationships for assets are excluded from the results (true) or not (false).</div>
 </li>
 <li class="block-list">
+<h5>includeAtlanTagNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> includeAtlanTagNames</pre>
+<div class="block">Whether to include Atlan tag names for assets (true) or not (false). By default, this is true and
+ Atlan tag names are therefore included. Note that this can be set to true even when excludeAtlanTags
+ is set to false.</div>
+</li>
+<li class="block-list">
+<h5>includeRelationshipAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> includeRelationshipAttributes</pre>
+<div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
+ By default, this is false and therefore relationship-level attributes are not included.</div>
+</li>
+<li class="block-list">
 <h5>query</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> query</pre>
 <div class="block">Query that was run to produce these search results.
@@ -46855,6 +46889,26 @@ loadScripts(document, 'script');</script>
 <h5>relationAttributes</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; relationAttributes</pre>
 <div class="block">List of attributes that were requested to be included on each relationship found in the search.</div>
+</li>
+<li class="block-list">
+<h5>requestRelationshipAttrsForSearch</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> requestRelationshipAttrsForSearch</pre>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">see <code>SearchParameters.includeRelationshipAttributes</code> instead</div>
+</div>
+<div class="block">Whether to include relationship-level attributes for any relationships to each asset (true) or not (false).
+ By default, this is false and therefore relationship-level attributes are not included.</div>
+</li>
+<li class="block-list">
+<h5>showHighlights</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> showHighlights</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>showSearchMetadata</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> showSearchMetadata</pre>
+<div class="block">Whether to include lower-level search metadata in results (true) or not (false).
+ This must be true in order to use extensive paging (beyond built-in thresholds).</div>
 </li>
 <li class="block-list">
 <h5>showSearchScore</h5>
