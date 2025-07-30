@@ -91,6 +91,16 @@ public class IndexSearchRequest extends AtlanObject {
     Boolean includeAtlanTagNames = true;
 
     /**
+     * Whether to fully restrict results of the search based on the policies of the requestor.
+     */
+    @Builder.Default
+    Boolean enableFullRestriction = false;
+
+    /** TBC */
+    @Builder.Default
+    Boolean accessControlExclusive = false;
+
+    /**
      * Whether to include deleted relationships to this asset (true) or not (false). By default, this is false
      * and therefore only active (not deleted) relationships will be included.
      */
@@ -167,5 +177,58 @@ public class IndexSearchRequest extends AtlanObject {
 
     public abstract static class IndexSearchRequestBuilder<
                     C extends IndexSearchRequest, B extends IndexSearchRequestBuilder<C, B>>
-            extends AtlanObject.AtlanObjectBuilder<C, B> {}
+            extends AtlanObject.AtlanObjectBuilder<C, B> {
+
+        /**
+         * Apply the provided search parameters to this index search request.
+         *
+         * @param searchParameters to apply
+         * @return this index search request with the provided search parameters applied
+         */
+        public B applySearchParameters(SearchParameters searchParameters) {
+            if (searchParameters.getAttributes() != null) {
+                this.attributes(searchParameters.getAttributes());
+            }
+            if (searchParameters.getRelationAttributes() != null) {
+                this.relationAttributes(searchParameters.getRelationAttributes());
+            }
+            if (searchParameters.getShowSearchScore() != null) {
+                this.showSearchScore(searchParameters.getShowSearchScore());
+            }
+            if (searchParameters.getSuppressLogs() != null) {
+                this.suppressLogs(searchParameters.getSuppressLogs());
+            }
+            if (searchParameters.getExcludeMeanings() != null) {
+                this.excludeMeanings(searchParameters.getExcludeMeanings());
+            }
+            if (searchParameters.getExcludeAtlanTags() != null) {
+                this.excludeAtlanTags(searchParameters.getExcludeAtlanTags());
+            }
+            if (searchParameters.getAllowDeletedRelations() != null) {
+                this.allowDeletedRelations(searchParameters.getAllowDeletedRelations());
+            }
+            if (searchParameters.getIncludeAtlanTagNames() != null) {
+                this.includeAtlanTagNames(searchParameters.getIncludeAtlanTagNames());
+            }
+            if (searchParameters.getEnableFullRestriction() != null) {
+                this.enableFullRestriction(searchParameters.getEnableFullRestriction());
+            }
+            if (searchParameters.getAccessControlExclusive() != null) {
+                this.accessControlExclusive(searchParameters.getAccessControlExclusive());
+            }
+            if (searchParameters.getAllowDeletedRelations()  != null) {
+                this.allowDeletedRelations(searchParameters.getAllowDeletedRelations());
+            }
+            if (searchParameters.getIncludeRelationshipAttributes() != null) {
+                this.includeRelationshipAttributes(searchParameters.getIncludeRelationshipAttributes());
+            }
+            if (searchParameters.getShowSearchMetadata()  != null) {
+                this.showSearchMetadata(searchParameters.getShowSearchMetadata());
+            }
+            if (searchParameters.getShowHighlights() != null) {
+                this.showHighlights(searchParameters.getShowHighlights());
+            }
+            return self();
+        }
+    }
 }

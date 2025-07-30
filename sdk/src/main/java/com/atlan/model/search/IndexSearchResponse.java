@@ -98,14 +98,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
-        if (searchParameters.getAttributes() != null) {
-            next = next.attributes(searchParameters.getAttributes());
-        }
-        if (searchParameters.getRelationAttributes() != null) {
-            next = next.relationAttributes(searchParameters.getRelationAttributes());
-        }
-        return next.build().search(client);
+        return IndexSearchRequest.builder(dsl)
+            .applySearchParameters(searchParameters)
+            .build()
+            .search(client);
     }
 
     /**
@@ -132,14 +128,11 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 .clearPageOffsets()
                 .pageOffsets(offsets.getSorts())
                 .build();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
-        if (searchParameters.getAttributes() != null) {
-            next = next.attributes(searchParameters.getAttributes());
-        }
-        if (searchParameters.getRelationAttributes() != null) {
-            next = next.relationAttributes(searchParameters.getRelationAttributes());
-        }
-        return next.showSearchMetadata(true).build().search(client);
+        return IndexSearchRequest.builder(dsl)
+            .applySearchParameters(searchParameters)
+            .showSearchMetadata(true)
+            .build()
+            .search(client);
     }
 
     private IndexSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
@@ -147,14 +140,11 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         List<SortOptions> revisedSort = sortByTimestampFirst(dsl.getSort());
         int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> first = IndexSearchRequest.builder(dsl);
-        if (searchParameters.getAttributes() != null) {
-            first = first.attributes(searchParameters.getAttributes());
-        }
-        if (searchParameters.getRelationAttributes() != null) {
-            first = first.relationAttributes(searchParameters.getRelationAttributes());
-        }
-        return first.showSearchMetadata(true).build().search(client);
+        return IndexSearchRequest.builder(dsl)
+            .applySearchParameters(searchParameters)
+            .showSearchMetadata(true)
+            .build()
+            .search(client);
     }
 
     /**
@@ -168,14 +158,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     @JsonIgnore
     public List<Asset> getSpecificPage(int offset, int pageSize) throws AtlanException {
         IndexSearchDSL dsl = getQuery().toBuilder().from(offset).size(pageSize).build();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
-        if (searchParameters.getAttributes() != null) {
-            next = next.attributes(searchParameters.getAttributes());
-        }
-        if (searchParameters.getRelationAttributes() != null) {
-            next = next.relationAttributes(searchParameters.getRelationAttributes());
-        }
-        IndexSearchResponse response = next.build().search(client);
+        IndexSearchResponse response = IndexSearchRequest.builder(dsl)
+            .applySearchParameters(searchParameters)
+            .build()
+            .search(client);
         if (response != null && response.getAssets() != null) {
             return response.getAssets();
         } else {
