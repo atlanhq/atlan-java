@@ -312,6 +312,7 @@ public class AttributeDefOptions extends AtlanObject {
             WorkflowRun.TYPE_NAME);
     public static final Set<String> ALL_GLOSSARY_TYPES =
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
+    public static final Set<String> ALL_AI_TYPES = Set.of(AIApplication.TYPE_NAME, IAIModel.TYPE_NAME);
     public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(File.TYPE_NAME);
     public static final Set<String> ALL_DOMAINS = Set.of("*/super");
@@ -352,6 +353,7 @@ public class AttributeDefOptions extends AtlanObject {
                     .applicableAssetTypes(ALL_ASSET_TYPES)
                     .applicableGlossaries(Glossary.getAllQualifiedNames(client))
                     .applicableGlossaryTypes(ALL_GLOSSARY_TYPES)
+                    .applicableAITypes(ALL_AI_TYPES)
                     .applicableDomains(ALL_DOMAINS)
                     .applicableDomainTypes(ALL_DOMAIN_TYPES)
                     .applicableOtherAssetTypes(ALL_OTHER_TYPES);
@@ -441,6 +443,16 @@ public class AttributeDefOptions extends AtlanObject {
     @JsonDeserialize(using = StringToSetDeserializer.class)
     @JsonProperty("assetTypesList")
     Set<String> applicableAssetTypes;
+
+    /**
+     * AI asset type names to which to restrict the attribute.
+     * Only AI assets of one of these types will have this attribute available.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("aiAssetsTypeList")
+    Set<String> applicableAITypes;
 
     /**
      * Glossary type names to which to restrict the attribute.
@@ -566,6 +578,9 @@ public class AttributeDefOptions extends AtlanObject {
         }
         if (options.applicableGlossaryTypes != null) {
             this.applicableGlossaryTypes = options.applicableGlossaryTypes;
+        }
+        if (options.applicableAITypes != null) {
+            this.applicableAITypes = options.applicableAITypes;
         }
         if (options.applicableDomainTypes != null) {
             this.applicableDomainTypes = options.applicableDomainTypes;
