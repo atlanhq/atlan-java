@@ -99,9 +99,9 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         dsl = dsl.toBuilder().from(from + page).build();
 
         return IndexSearchRequest.builder(dsl)
-            .applySearchParameters(searchParameters)
-            .build()
-            .search(client);
+                .applySearchParameters(searchParameters)
+                .build()
+                .search(client);
     }
 
     /**
@@ -129,10 +129,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 .pageOffsets(offsets.getSorts())
                 .build();
         return IndexSearchRequest.builder(dsl)
-            .applySearchParameters(searchParameters)
-            .showSearchMetadata(true)
-            .build()
-            .search(client);
+                .applySearchParameters(searchParameters)
+                .showSearchMetadata(true)
+                .build()
+                .search(client);
     }
 
     private IndexSearchResponse getFirstPageTimestampOrdered() throws AtlanException {
@@ -141,10 +141,10 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         int page = dsl.getSize() == null ? DEFAULT_PAGE_SIZE : dsl.getSize();
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
         return IndexSearchRequest.builder(dsl)
-            .applySearchParameters(searchParameters)
-            .showSearchMetadata(true)
-            .build()
-            .search(client);
+                .applySearchParameters(searchParameters)
+                .showSearchMetadata(true)
+                .build()
+                .search(client);
     }
 
     /**
@@ -159,9 +159,9 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     public List<Asset> getSpecificPage(int offset, int pageSize) throws AtlanException {
         IndexSearchDSL dsl = getQuery().toBuilder().from(offset).size(pageSize).build();
         IndexSearchResponse response = IndexSearchRequest.builder(dsl)
-            .applySearchParameters(searchParameters)
-            .build()
-            .search(client);
+                .applySearchParameters(searchParameters)
+                .build()
+                .search(client);
         if (response != null && response.getAssets() != null) {
             return response.getAssets();
         } else {

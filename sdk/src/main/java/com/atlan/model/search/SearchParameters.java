@@ -3,11 +3,8 @@
 package com.atlan.model.search;
 
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.enums.UTMTags;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

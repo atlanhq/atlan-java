@@ -216,13 +216,13 @@ public class IndexSearchRequest extends AtlanObject {
             if (searchParameters.getAccessControlExclusive() != null) {
                 this.accessControlExclusive(searchParameters.getAccessControlExclusive());
             }
-            if (searchParameters.getAllowDeletedRelations()  != null) {
+            if (searchParameters.getAllowDeletedRelations() != null) {
                 this.allowDeletedRelations(searchParameters.getAllowDeletedRelations());
             }
             if (searchParameters.getIncludeRelationshipAttributes() != null) {
                 this.includeRelationshipAttributes(searchParameters.getIncludeRelationshipAttributes());
             }
-            if (searchParameters.getShowSearchMetadata()  != null) {
+            if (searchParameters.getShowSearchMetadata() != null) {
                 this.showSearchMetadata(searchParameters.getShowSearchMetadata());
             }
             if (searchParameters.getShowHighlights() != null) {
