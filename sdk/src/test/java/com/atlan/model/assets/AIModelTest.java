@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DatabricksAIModelVersionTest {
+public class AIModelTest {
 
-    private static final DatabricksAIModelVersion full = DatabricksAIModelVersion._internal()
+    private static final AIModel full = AIModel._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,7 +59,6 @@ public class DatabricksAIModelVersionTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .aiModel(AIModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .ethicalAIAccountabilityConfig(EthicalAIAccountabilityConfig.HAS_OWNER)
             .ethicalAIBiasMitigationConfig(EthicalAIBiasMitigationConfig.INEFFECTIVE)
             .ethicalAIEnvironmentalConsciousnessConfig(EthicalAIEnvironmentalConsciousnessConfig.LOW_RISK)
@@ -444,75 +443,28 @@ public class DatabricksAIModelVersionTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .calculationViewName("String0")
-            .calculationViewQualifiedName("String0")
-            .databaseName("String0")
-            .databaseQualifiedName("String0")
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .isProfiled(true)
-            .lastProfiledAt(123456789L)
-            .queryCount(123456789L)
-            .queryCountUpdatedAt(123456789L)
-            .queryUserCount(123456789L)
-            .putQueryUserMap("key1", 123456L)
-            .putQueryUserMap("key2", 654321L)
-            .schemaName("String0")
-            .schemaQualifiedName("String0")
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .tableName("String0")
-            .tableQualifiedName("String0")
-            .viewName("String0")
-            .viewQualifiedName("String0")
-            .databricksAIModelContext(DatabricksAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .databricksAIModelVersionAlias("String0")
-            .databricksAIModelVersionAlias("String1")
-            .databricksAIModelVersionArtifactUri("String0")
-            .databricksAIModelVersionDatasetCount(123456789L)
-            .databricksAIModelVersionId(123456789L)
-            .databricksAIModelVersionMetric(DatabricksAIModelVersionMetric.builder()
-                    .databricksAIModelVersionMetricKey("String0")
-                    .databricksAIModelVersionMetricValue(123.456)
-                    .databricksAIModelVersionMetricTimestamp(123456789L)
-                    .databricksAIModelVersionMetricStep(123)
-                    .build())
-            .databricksAIModelVersionMetric(DatabricksAIModelVersionMetric.builder()
-                    .databricksAIModelVersionMetricKey("String1")
-                    .databricksAIModelVersionMetricValue(654.321)
-                    .databricksAIModelVersionMetricTimestamp(987654321L)
-                    .databricksAIModelVersionMetricStep(456)
-                    .build())
-            .databricksAIModelVersionParam("key1", "value1")
-            .databricksAIModelVersionParam("key2", "value2")
-            .databricksAIModelVersionRunEndTime(123456789L)
-            .databricksAIModelVersionRunId("String0")
-            .databricksAIModelVersionRunName("String0")
-            .databricksAIModelVersionRunStartTime(123456789L)
-            .databricksAIModelVersionSource("String0")
-            .databricksAIModelVersionStatus("String0")
+            .aiModelDatasetsDSL("String0")
+            .aiModelStatus(AIModelStatus.ACTIVE)
+            .aiModelVersion("String0")
+            .modelVersion(DatabricksAIModelVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelVersion(
+                    DatabricksAIModelVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .aiApplication(AIApplication.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiApplication(AIApplication.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static DatabricksAIModelVersion frodo;
+    private static AIModel frodo;
     private static String serialized;
 
-    @Test(groups = {"DatabricksAIModelVersion.builderEquivalency"})
+    @Test(groups = {"AIModel.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DatabricksAIModelVersion.serialize"},
-            dependsOnGroups = {"DatabricksAIModelVersion.builderEquivalency"})
+            groups = {"AIModel.serialize"},
+            dependsOnGroups = {"AIModel.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -521,17 +473,17 @@ public class DatabricksAIModelVersionTest {
     }
 
     @Test(
-            groups = {"DatabricksAIModelVersion.deserialize"},
-            dependsOnGroups = {"DatabricksAIModelVersion.serialize"})
+            groups = {"AIModel.deserialize"},
+            dependsOnGroups = {"AIModel.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DatabricksAIModelVersion.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, AIModel.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DatabricksAIModelVersion.equivalency"},
-            dependsOnGroups = {"DatabricksAIModelVersion.serialize", "DatabricksAIModelVersion.deserialize"})
+            groups = {"AIModel.equivalency"},
+            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -540,8 +492,8 @@ public class DatabricksAIModelVersionTest {
     }
 
     @Test(
-            groups = {"DatabricksAIModelVersion.equivalency"},
-            dependsOnGroups = {"DatabricksAIModelVersion.serialize", "DatabricksAIModelVersion.deserialize"})
+            groups = {"AIModel.equivalency"},
+            dependsOnGroups = {"AIModel.serialize", "AIModel.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -40,6 +40,7 @@ public class AttributeDefOptions extends AtlanObject {
             ADLSContainer.TYPE_NAME,
             ADLSObject.TYPE_NAME,
             AIApplication.TYPE_NAME,
+            AIModel.TYPE_NAME,
             APIField.TYPE_NAME,
             APIObject.TYPE_NAME,
             APIPath.TYPE_NAME,
@@ -312,7 +313,7 @@ public class AttributeDefOptions extends AtlanObject {
             WorkflowRun.TYPE_NAME);
     public static final Set<String> ALL_GLOSSARY_TYPES =
             Set.of(Glossary.TYPE_NAME, GlossaryTerm.TYPE_NAME, GlossaryCategory.TYPE_NAME);
-    public static final Set<String> ALL_AI_TYPES = Set.of(AIApplication.TYPE_NAME, IAIModel.TYPE_NAME);
+    public static final Set<String> ALL_AI_TYPES = Set.of(AIApplication.TYPE_NAME, AIModel.TYPE_NAME);
     public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(File.TYPE_NAME);
     public static final Set<String> ALL_DOMAINS = Set.of("*/super");
