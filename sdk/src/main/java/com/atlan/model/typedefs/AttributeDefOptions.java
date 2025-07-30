@@ -445,6 +445,16 @@ public class AttributeDefOptions extends AtlanObject {
     Set<String> applicableAssetTypes;
 
     /**
+     * AI asset type names to which to restrict the attribute.
+     * Only AI assets of one of these types will have this attribute available.
+     */
+    @Singular
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    @JsonProperty("aiAssetsTypeList")
+    Set<String> applicableAITypes;
+
+    /**
      * Glossary type names to which to restrict the attribute.
      * Only glossary assets of one of these types will have this attribute available.
      * To further restrict the glossary content for this custom metadata by glossary, see {@link #applicableGlossaries}.
@@ -454,16 +464,6 @@ public class AttributeDefOptions extends AtlanObject {
     @JsonDeserialize(using = StringToSetDeserializer.class)
     @JsonProperty("glossaryTypeList")
     Set<String> applicableGlossaryTypes;
-
-    /**
-     * AI asset type names to which to restrict the attribute.
-     * Only AI assets of one of these types will have this attribute available.
-     */
-    @Singular
-    @JsonSerialize(using = SetToStringSerializer.class)
-    @JsonDeserialize(using = StringToSetDeserializer.class)
-    @JsonProperty("aiAssetsTypeList")
-    Set<String> applicableAITypes;
 
     /**
      * Data product type names to which to restrict the attribute.
