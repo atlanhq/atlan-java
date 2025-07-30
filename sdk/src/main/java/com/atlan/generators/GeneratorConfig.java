@@ -357,7 +357,8 @@ public class GeneratorConfig {
                 .forceNonAbstractAsset("Database")
                 .forceNonAbstractAsset("MongoDBDatabase")
                 .forceNonAbstractAsset("MongoDBCollection")
-                .forceNonAbstractAsset("Persona");
+                .forceNonAbstractAsset("Persona")
+                .forceNonAbstractAsset("AIModel");
     }
 
     /**

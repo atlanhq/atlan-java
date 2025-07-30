@@ -48,7 +48,7 @@ public class AttributeDefOptions extends AtlanObject {
         GlossaryTerm.TYPE_NAME,
         GlossaryCategory.TYPE_NAME
     );
-    public static final Set<String> ALL_AI_TYPES = Set.of(AIApplication.TYPE_NAME, IAIModel.TYPE_NAME);
+    public static final Set<String> ALL_AI_TYPES = Set.of(AIApplication.TYPE_NAME, AIModel.TYPE_NAME);
     public static final Set<String> ALL_DOMAIN_TYPES = Set.of(DataDomain.TYPE_NAME, DataProduct.TYPE_NAME);
     public static final Set<String> ALL_OTHER_TYPES = Set.of(
         File.TYPE_NAME

@@ -59,7 +59,7 @@ public class SnowflakeAIModelVersionTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .aiModel(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .aiModel(AIModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .ethicalAIAccountabilityConfig(EthicalAIAccountabilityConfig.HAS_OWNER)
             .ethicalAIBiasMitigationConfig(EthicalAIBiasMitigationConfig.INEFFECTIVE)
             .ethicalAIEnvironmentalConsciousnessConfig(EthicalAIEnvironmentalConsciousnessConfig.LOW_RISK)
