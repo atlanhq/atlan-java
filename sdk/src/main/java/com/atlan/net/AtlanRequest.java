@@ -247,7 +247,8 @@ public class AtlanRequest {
 
         // Authorization
         if (client.isLocal()) {
-            String encodedCreds = Base64.getEncoder().encodeToString(client.getBasicAuth().getBytes(StandardCharsets.UTF_8));
+            String encodedCreds =
+                    Base64.getEncoder().encodeToString(client.getBasicAuth().getBytes(StandardCharsets.UTF_8));
             headerMap.put("Authorization", List.of(String.format("Basic %s", encodedCreds)));
         } else {
             String apiToken = client.getApiToken();
