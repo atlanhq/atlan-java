@@ -52,11 +52,16 @@ public class AtlanClient implements AtlanCloseable {
 
     private final String apiBase;
     private final boolean internalAccess;
+    private final boolean localAccess;
 
     /** API token to use for authenticating API calls. */
     @Getter
     @Setter
     private volatile String apiToken;
+
+    /** Basic auth settings for running locally (only). */
+    @Getter
+    private volatile String basicAuth;
 
     /** Unique identifier (GUID) of the user this client impersonates. */
     @Getter
@@ -226,8 +231,15 @@ public class AtlanClient implements AtlanCloseable {
         } else if (baseURL.equals("INTERNAL")) {
             apiBase = null;
             internalAccess = true;
+            localAccess = false;
+        } else if (baseURL.equals("LOCAL")) {
+            internalAccess = false;
+            localAccess = true;
+            apiBase = "http://localhost:21000";
+            this.basicAuth = apiToken;
         } else {
             internalAccess = false;
+            localAccess = false;
             apiBase = Atlan.prepURL(baseURL);
         }
         this.apiToken = apiToken;
@@ -377,6 +389,14 @@ public class AtlanClient implements AtlanCloseable {
      */
     public boolean isInternal() {
         return internalAccess;
+    }
+
+    /**
+     * Indicates whether the SDK is configured to run against a locally-running development instance (true) or not (false).
+     * @return boolean indicating whether the SDK is configured for locally-running development instance (true) or not (false)
+     */
+    public boolean isLocal() {
+        return localAccess;
     }
 
     /** Retrieve the base URL for the tenant of Atlan configured in this client. */

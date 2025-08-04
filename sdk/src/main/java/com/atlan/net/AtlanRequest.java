@@ -12,6 +12,7 @@ import com.atlan.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -245,17 +246,22 @@ public class AtlanRequest {
         headerMap.put("Accept-Charset", List.of(ApiResource.CHARSET.name()));
 
         // Authorization
-        String apiToken = client.getApiToken();
-        if (checkApiToken) {
-            if (apiToken == null) {
-                throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
-            } else if (apiToken.isEmpty()) {
-                throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
-            } else if (StringUtils.containsWhitespace(apiToken)) {
-                throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
+        if (client.isLocal()) {
+            String encodedCreds = Base64.getEncoder().encodeToString(client.getBasicAuth().getBytes(StandardCharsets.UTF_8));
+            headerMap.put("Authorization", List.of(String.format("Basic %s", encodedCreds)));
+        } else {
+            String apiToken = client.getApiToken();
+            if (checkApiToken) {
+                if (apiToken == null) {
+                    throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
+                } else if (apiToken.isEmpty()) {
+                    throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
+                } else if (StringUtils.containsWhitespace(apiToken)) {
+                    throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
+                }
             }
+            headerMap.put("Authorization", List.of(String.format("Bearer %s", apiToken)));
         }
-        headerMap.put("Authorization", List.of(String.format("Bearer %s", apiToken)));
 
         return HttpHeaders.of(headerMap);
     }

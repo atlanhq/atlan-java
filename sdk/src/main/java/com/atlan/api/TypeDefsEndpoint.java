@@ -401,7 +401,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         for (TypeDef typeDef : typeDefs) {
             String serviceType = typeDef.getServiceType();
-            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+            if (!client.isLocal() && serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
                 throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
             }
             switch (typeDef.getCategory()) {
