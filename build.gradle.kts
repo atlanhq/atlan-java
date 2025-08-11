@@ -32,6 +32,9 @@ allprojects {
             "-Xms2g"
         )
     }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        compilerOptions.freeCompilerArgs.add("-Xannotation-default-target=param-property")
+    }
     configurations.all {
         resolutionStrategy {
             // Note: force a safe version of all of these libraries, even if transitive, to avoid potential CVEs

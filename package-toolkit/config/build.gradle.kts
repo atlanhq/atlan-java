@@ -76,7 +76,7 @@ tasks {
     }
 }
 
-task("sourcesJar", type = Jar::class) {
+tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

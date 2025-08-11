@@ -73,7 +73,7 @@ gitPublish {
     }
 }
 
-tasks.create<Copy>("generateJava") {
+tasks.register<Copy>("generateJava") {
     val templateContext = mapOf("version" to version)
     inputs.properties(templateContext) // for gradle up-to-date check
     from("src/template/java")
@@ -87,18 +87,18 @@ tasks.compileJava {
     dependsOn(tasks.getByName("generateJava"))
 }
 
-tasks.create<Zip>("buildZip") {
+tasks.register<Zip>("buildZip") {
     into("java/lib") {
         from(tasks.shadowJar)
     }
 }
 
-tasks.create<Jar>("sourcesJar") {
+tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
     from(tasks.delombok)
 }
 
-tasks.create<Jar>("javadocJar") {
+tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
