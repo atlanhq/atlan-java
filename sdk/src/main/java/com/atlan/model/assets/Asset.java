@@ -476,8 +476,8 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** DQ metadata captured for asset from external DQ tool(s). */
     @Attribute
-    @Singular("putAssetV2ExternalDQMetadata")
-    Map<String, AssetExternalDQMetadata> assetV2ExternalDQMetadata;
+    @Singular
+    Map<String, AssetExternalDQMetadata> assetV2ExternalDQMetadataDetails;
 
     /** Glossary terms that are linked to this asset. */
     @Attribute

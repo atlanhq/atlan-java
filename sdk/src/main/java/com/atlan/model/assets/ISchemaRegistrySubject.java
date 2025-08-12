@@ -345,7 +345,7 @@ public interface ISchemaRegistrySubject {
     String getAssetUserDefinedType();
 
     /** DQ metadata captured for asset from external DQ tool(s). */
-    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadataDetails();
 
     /** TBC */
     SortedSet<IAsset> getAssets();

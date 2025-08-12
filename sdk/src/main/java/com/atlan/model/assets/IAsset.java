@@ -370,8 +370,8 @@ public interface IAsset {
     KeywordField ASSET_USER_DEFINED_TYPE = new KeywordField("assetUserDefinedType", "assetUserDefinedType");
 
     /** DQ metadata captured for asset from external DQ tool(s). */
-    KeywordField ASSET_V2EXTERNAL_DQ_METADATA =
-            new KeywordField("assetV2ExternalDQMetadata", "assetV2ExternalDQMetadata");
+    KeywordField ASSET_V2EXTERNAL_DQ_METADATA_DETAILS =
+            new KeywordField("assetV2ExternalDQMetadataDetails", "assetV2ExternalDQMetadataDetails");
 
     /** Status of this asset's certification. */
     KeywordTextField CERTIFICATE_STATUS =
@@ -900,7 +900,7 @@ public interface IAsset {
     String getAssetUserDefinedType();
 
     /** DQ metadata captured for asset from external DQ tool(s). */
-    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadataDetails();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

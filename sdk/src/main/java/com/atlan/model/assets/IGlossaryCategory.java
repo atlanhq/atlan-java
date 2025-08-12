@@ -346,7 +346,7 @@ public interface IGlossaryCategory {
     String getAssetUserDefinedType();
 
     /** TBC */
-    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadataDetails();
 
     /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();

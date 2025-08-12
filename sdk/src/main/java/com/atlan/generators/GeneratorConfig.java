@@ -99,8 +99,7 @@ public class GeneratorConfig {
             Map.entry("responseValueArrLong", "addResponseValueLong"),
             Map.entry("responseValueArrDate", "addResponseValueDate"),
             Map.entry("tableauProjectHierarchy", "addTableauProjectHierarchy"),
-            Map.entry("aiModelVersions", "modelVersion"),
-            Map.entry("assetV2ExternalDQMetadata", "putAssetV2ExternalDQMetadata"));
+            Map.entry("aiModelVersions", "modelVersion"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("__hasLineage", "hasLineage"),

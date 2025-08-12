@@ -190,8 +190,8 @@ public class FlowFolderTest {
             .assetTag("String1")
             .assetThemeHex("String0")
             .assetUserDefinedType("String0")
-            .putAssetV2ExternalDQMetadata(
-                    null,
+            .assetV2ExternalDQMetadataDetail(
+                    "String0",
                     AssetExternalDQMetadata.builder()
                             .assetV2ExternalDQSystemName("String0")
                             .assetV2ExternalDQSourceLogo("String0")
@@ -206,8 +206,8 @@ public class FlowFolderTest {
                             .assetV2ExternalDQScoreDimensions(List.of(null, null))
                             .assetV2ExternalDQTests(List.of(null, null))
                             .build())
-            .putAssetV2ExternalDQMetadata(
-                    null,
+            .assetV2ExternalDQMetadataDetail(
+                    "String1",
                     AssetExternalDQMetadata.builder()
                             .assetV2ExternalDQSystemName("String1")
                             .assetV2ExternalDQSourceLogo("String1")

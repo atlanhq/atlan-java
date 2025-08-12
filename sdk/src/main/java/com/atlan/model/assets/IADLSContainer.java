@@ -380,7 +380,7 @@ public interface IADLSContainer {
     String getAssetUserDefinedType();
 
     /** DQ metadata captured for asset from external DQ tool(s). */
-    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadataDetails();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
