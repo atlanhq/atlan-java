@@ -235,7 +235,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 break;
             default:
-                log.warn("Unknown primitive type for test attribute {} - skipping.", typeName);
+                log.warn("Unknown primitive type for (raw) test attribute {} - skipping.", typeName);
                 break;
         }
         return value;
@@ -493,11 +493,19 @@ public class AssetTestGenerator extends AssetGenerator {
                             try {
                                 Class<?> embedded = Class.forName(type.getTypeName());
                                 String simpleClassName = embedded.getSimpleName();
-                                sb.append("[")
-                                        .append(getRawPrimitiveValue("List<", simpleClassName, 0))
-                                        .append(", ")
-                                        .append(getRawPrimitiveValue("List<", simpleClassName, 1))
-                                        .append("]");
+                                if (isPrimitive(embedded)) {
+                                    sb.append("[")
+                                            .append(getRawPrimitiveValue("List<", simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getRawPrimitiveValue("List<", simpleClassName, 1))
+                                            .append("]");
+                                } else {
+                                    sb.append("[")
+                                            .append(getRawStructValue(simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getRawStructValue(simpleClassName, 1))
+                                            .append("]");
+                                }
                             } catch (ClassNotFoundException e) {
                                 log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }
