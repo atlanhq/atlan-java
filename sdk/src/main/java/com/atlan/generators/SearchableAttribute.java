@@ -185,6 +185,9 @@ public class SearchableAttribute<T extends SearchableAttribute<?>> extends Attri
                                 duplicate =
                                         searchable.put(SearchableAttribute.IndexType.RANK_FEATURE, fieldName) != null;
                                 break;
+                            case "date":
+                                // Ignore -- nothing special to do for this one
+                                break;
                             default:
                                 log.warn(
                                         "Unknown index type on attribute {}, field {}: {}",

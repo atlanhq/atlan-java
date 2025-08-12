@@ -68,7 +68,11 @@ public class AttributeGenerator extends TypeGenerator {
         }
         if (container != null) {
             long nestingCount = container.chars().filter(c -> c == '<').count();
-            refType = container + baseName + ">".repeat((int) nestingCount);
+            if (type.getType() == MappedType.Type.STRUCT && container.equals("Map<")) {
+                refType = container + "String, " + type.getName() + ">".repeat((int) nestingCount);
+            } else {
+                refType = container + baseName + ">".repeat((int) nestingCount);
+            }
         } else {
             refType = baseName;
         }

@@ -347,6 +347,7 @@ public class GeneratorConfig {
                 .doNotGenerateAsset("__AtlasUserSavedSearch")
                 .doNotGenerateAsset("__ExportImportAuditEntry")
                 .doNotGenerateAsset("__internal")
+                .doNotGenerateAsset("__InstanceConfig")
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
                 .forceNonAbstractAsset("QlikSpace")

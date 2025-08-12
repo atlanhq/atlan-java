@@ -102,7 +102,7 @@ public class AssetTestGenerator extends AssetGenerator {
                             }
                             break;
                         case STRUCT:
-                            addStructRef(builder, multiValued, type.getName());
+                            addStructRef(builder, multiValued, type.getName(), type.getContainer());
                             break;
                         default:
                             log.warn("Unhandled testing type {} - skipping.", type.getType());
@@ -235,7 +235,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 break;
             default:
-                log.warn("Unknown primitive type for test attribute {} - skipping.", typeName);
+                log.warn("Unknown primitive type for (raw) test attribute {} - skipping.", typeName);
                 break;
         }
         return value;
@@ -364,10 +364,19 @@ public class AssetTestGenerator extends AssetGenerator {
         return typeName;
     }
 
-    private void addStructRef(TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName) {
+    private void addStructRef(
+            TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName, String container) {
         if (!multiValued) {
             testAttributes.add(builder.values(List.of(getStructValue(typeName, 0)))
                     .rawValues(List.of(getRawStructValue(typeName, 0)))
+                    .build());
+        } else if (container.equals("Map<")) {
+            testAttributes.add(builder.values(List.of(
+                            getPrimitiveValue(null, "String", 0) + ", " + getStructValue(typeName, 0),
+                            getPrimitiveValue(null, "String", 1) + ", " + getStructValue(typeName, 1)))
+                    .rawValues(List.of(
+                            getPrimitiveValue(null, "String", 0) + ", " + getRawStructValue(typeName, 0),
+                            getPrimitiveValue(null, "String", 1) + ", " + getRawStructValue(typeName, 1)))
                     .build());
         } else {
             testAttributes.add(builder.values(List.of(getStructValue(typeName, 0), getStructValue(typeName, 1)))
@@ -401,11 +410,19 @@ public class AssetTestGenerator extends AssetGenerator {
                             try {
                                 Class<?> embedded = Class.forName(type.getTypeName());
                                 String simpleClassName = embedded.getSimpleName();
-                                sb.append("List.of(")
-                                        .append(getPrimitiveValue("List<", simpleClassName, 0))
-                                        .append(", ")
-                                        .append(getPrimitiveValue("List<", simpleClassName, 1))
-                                        .append(")");
+                                if (isPrimitive(embedded)) {
+                                    sb.append("List.of(")
+                                            .append(getPrimitiveValue("List<", simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getPrimitiveValue("List<", simpleClassName, 1))
+                                            .append(")");
+                                } else {
+                                    sb.append("List.of(")
+                                            .append(getStructValue(simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getStructValue(simpleClassName, 1))
+                                            .append(")");
+                                }
                             } catch (ClassNotFoundException e) {
                                 log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }
@@ -476,11 +493,19 @@ public class AssetTestGenerator extends AssetGenerator {
                             try {
                                 Class<?> embedded = Class.forName(type.getTypeName());
                                 String simpleClassName = embedded.getSimpleName();
-                                sb.append("[")
-                                        .append(getRawPrimitiveValue("List<", simpleClassName, 0))
-                                        .append(", ")
-                                        .append(getRawPrimitiveValue("List<", simpleClassName, 1))
-                                        .append("]");
+                                if (isPrimitive(embedded)) {
+                                    sb.append("[")
+                                            .append(getRawPrimitiveValue("List<", simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getRawPrimitiveValue("List<", simpleClassName, 1))
+                                            .append("]");
+                                } else {
+                                    sb.append("[")
+                                            .append(getRawStructValue(simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getRawStructValue(simpleClassName, 1))
+                                            .append("]");
+                                }
                             } catch (ClassNotFoundException e) {
                                 log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }

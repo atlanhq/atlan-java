@@ -27,6 +27,7 @@ public abstract class TypeGenerator {
             Map.entry("long", "Long"),
             Map.entry("date", "Long"),
             Map.entry("float", "Double"),
+            Map.entry("double", "Double"),
             Map.entry("string,string", "String, String"),
             Map.entry("string,long", "String, Long"));
 
@@ -66,7 +67,12 @@ public abstract class TypeGenerator {
         // First try to map a primitive type
         String primitiveName = PRIMITIVE_MAPPINGS.getOrDefault(baseType, null);
         if (primitiveName != null) {
+            // Note: this will also handle primitive maps (string,string)
             builder.type(MappedType.Type.PRIMITIVE).name(primitiveName);
+        } else if (baseType.startsWith("string,") && container.equals("Map<")) {
+            // If we're here, we have a map<string,SomethingElse> non-primitive map
+            String valueType = baseType.substring(baseType.indexOf(",") + 1);
+            builder.type(MappedType.Type.STRUCT).name(valueType);
         } else {
             // Failing that, attempt to map to a cached type (enum, struct, etc)
             MappedType mappedType = cache.getCachedType(baseType);
@@ -136,9 +142,9 @@ public abstract class TypeGenerator {
             ASSET
         }
 
-        private String originalBase;
-        private String name;
-        private String container;
-        private Type type;
+        private String originalBase; // string,string ; string,SomeObjectDef ; etc
+        private String name; // String ; SomeObjectDef ; etc
+        private String container; // Map< ; List< ; etc
+        private Type type; // PRIMITIVE ; ENUM ; STRUCT ; ASSET
     }
 }

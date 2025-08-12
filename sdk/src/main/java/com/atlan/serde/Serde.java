@@ -280,15 +280,27 @@ public class Serde {
      */
     static Object deserializeObject(AtlanClient client, JsonNode jsonObject, Method method) {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
-        if (paramClass == Map.class
-                && ReflectionCache.getParameterizedTypeOfMethod(method)
-                        .getTypeName()
-                        .equals("java.util.Map<? extends java.lang.String, ? extends java.lang.Long>")) {
-            // TODO: Unclear why this cannot be handled more generically, but nothing else seems to work
-            return client.convertValue(jsonObject, new TypeReference<Map<String, Long>>() {});
+        if (paramClass == Map.class) {
+            return client.convertValue(jsonObject, createTypeRef(ReflectionCache.getParameterizedTypeOfMethod(method)));
         } else {
             return client.convertValue(jsonObject, paramClass);
         }
+    }
+
+    /**
+     * Create a Jackson type reference at runtime referring to the Java reflected type provided.
+     *
+     * @param type Java-reflected type
+     * @return the Jackson type reference equivalent
+     * @param <T> dynamic type
+     */
+    static <T> TypeReference<T> createTypeRef(Type type) {
+        return new TypeReference<>() {
+            @Override
+            public Type getType() {
+                return type;
+            }
+        };
     }
 
     /**
