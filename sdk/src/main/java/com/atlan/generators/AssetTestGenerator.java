@@ -410,11 +410,19 @@ public class AssetTestGenerator extends AssetGenerator {
                             try {
                                 Class<?> embedded = Class.forName(type.getTypeName());
                                 String simpleClassName = embedded.getSimpleName();
-                                sb.append("List.of(")
-                                        .append(getPrimitiveValue("List<", simpleClassName, 0))
-                                        .append(", ")
-                                        .append(getPrimitiveValue("List<", simpleClassName, 1))
-                                        .append(")");
+                                if (isPrimitive(embedded)) {
+                                    sb.append("List.of(")
+                                            .append(getPrimitiveValue("List<", simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getPrimitiveValue("List<", simpleClassName, 1))
+                                            .append(")");
+                                } else {
+                                    sb.append("List.of(")
+                                            .append(getStructValue(simpleClassName, 0))
+                                            .append(", ")
+                                            .append(getStructValue(simpleClassName, 1))
+                                            .append(")");
+                                }
                             } catch (ClassNotFoundException e) {
                                 log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }
