@@ -32,36 +32,36 @@ public interface IMode {
 
     public static final String TYPE_NAME = "Mode";
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     KeywordField MODE_ID = new KeywordField("modeId", "modeId");
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     KeywordTextField MODE_QUERY_NAME = new KeywordTextField("modeQueryName", "modeQueryName.keyword", "modeQueryName");
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     KeywordTextField MODE_QUERY_QUALIFIED_NAME =
             new KeywordTextField("modeQueryQualifiedName", "modeQueryQualifiedName", "modeQueryQualifiedName.text");
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     KeywordTextField MODE_REPORT_NAME =
             new KeywordTextField("modeReportName", "modeReportName.keyword", "modeReportName");
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     KeywordTextField MODE_REPORT_QUALIFIED_NAME =
             new KeywordTextField("modeReportQualifiedName", "modeReportQualifiedName", "modeReportQualifiedName.text");
 
-    /** TBC */
+    /** Token for the Mode asset. */
     KeywordTextField MODE_TOKEN = new KeywordTextField("modeToken", "modeToken", "modeToken.text");
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     KeywordTextField MODE_WORKSPACE_NAME =
             new KeywordTextField("modeWorkspaceName", "modeWorkspaceName.keyword", "modeWorkspaceName");
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     KeywordTextField MODE_WORKSPACE_QUALIFIED_NAME = new KeywordTextField(
             "modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName.text");
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     KeywordTextField MODE_WORKSPACE_USERNAME =
             new KeywordTextField("modeWorkspaceUsername", "modeWorkspaceUsername", "modeWorkspaceUsername.text");
 
@@ -257,6 +257,9 @@ public interface IMode {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -328,6 +331,9 @@ public interface IMode {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -440,31 +446,31 @@ public interface IMode {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     String getModeId();
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     String getModeQueryName();
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     String getModeQueryQualifiedName();
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     String getModeReportName();
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     String getModeReportQualifiedName();
 
-    /** TBC */
+    /** Token for the Mode asset. */
     String getModeToken();
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     String getModeWorkspaceName();
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     String getModeWorkspaceQualifiedName();
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     String getModeWorkspaceUsername();
 
     /** Attributes implemented by this asset. */
@@ -506,7 +512,7 @@ public interface IMode {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

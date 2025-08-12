@@ -40,10 +40,10 @@ public interface IAPIQuery {
     /** Count of the APIField of this query that are input to it. */
     NumericField API_INPUT_FIELD_COUNT = new NumericField("apiInputFieldCount", "apiInputFieldCount");
 
-    /** Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIQueryOutput, as free text (e.g. STRING, NUMBER etc). */
     KeywordField API_QUERY_OUTPUT_TYPE = new KeywordField("apiQueryOutputType", "apiQueryOutputType");
 
-    /** Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type. */
+    /** Secondary Type of APIQueryOutput (e.g. LIST/STRING then LIST would be the secondary type). */
     KeywordField API_QUERY_OUTPUT_TYPE_SECONDARY =
             new KeywordField("apiQueryOutputTypeSecondary", "apiQueryOutputTypeSecondary");
 
@@ -92,10 +92,10 @@ public interface IAPIQuery {
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     String getApiObjectQualifiedName();
 
-    /** Type of APIQueryOutput. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIQueryOutput, as free text (e.g. STRING, NUMBER etc). */
     String getApiQueryOutputType();
 
-    /** Secondary Type of APIQueryOutput. E.g. LIST/STRING then LIST would be the secondary type. */
+    /** Secondary Type of APIQueryOutput (e.g. LIST/STRING then LIST would be the secondary type). */
     String getApiQueryOutputTypeSecondary();
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
@@ -275,6 +275,9 @@ public interface IAPIQuery {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -346,6 +349,9 @@ public interface IAPIQuery {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -497,7 +503,7 @@ public interface IAPIQuery {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

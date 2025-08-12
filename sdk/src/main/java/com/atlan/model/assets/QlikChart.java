@@ -112,6 +112,11 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     String qlikChartType;
 
+    /** Columns contained in the chart. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikColumn> qlikColumns;
+
     /** Identifier of this asset, from Qlik. */
     @Attribute
     String qlikId;

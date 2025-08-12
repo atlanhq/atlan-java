@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Action.class, name = Action.TYPE_NAME),
+    @JsonSubTypes.Type(value = AppWorkflowRunStep.class, name = AppWorkflowRunStep.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyValiditySchedule.class, name = AuthPolicyValiditySchedule.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsCloudWatchMetric.class, name = AwsCloudWatchMetric.TYPE_NAME),

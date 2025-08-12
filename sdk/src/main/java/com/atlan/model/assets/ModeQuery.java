@@ -68,19 +68,19 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Singular
     SortedSet<IModeChart> modeCharts;
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     @Attribute
     String modeId;
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     @Attribute
     String modeQueryName;
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     @Attribute
     String modeQueryQualifiedName;
 
-    /** TBC */
+    /** Raw query for the Mode asset. */
     @Attribute
     String modeRawQuery;
 
@@ -88,31 +88,31 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Attribute
     IModeReport modeReport;
 
-    /** TBC */
+    /** Number of reports imported into this query. */
     @Attribute
     Long modeReportImportCount;
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     @Attribute
     String modeReportName;
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     @Attribute
     String modeReportQualifiedName;
 
-    /** TBC */
+    /** Token for the Mode asset. */
     @Attribute
     String modeToken;
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceName;
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceQualifiedName;
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceUsername;
 

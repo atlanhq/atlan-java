@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class FlowControlOperation extends Asset implements IFlowControlOperation, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -74,6 +74,16 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     @Attribute
     String flowId;
 
+    /** Input parameters for the flow run. */
+    @Attribute
+    @Singular
+    Map<String, String> flowInputParameters;
+
+    /** Control operations that are configured to execute before this one. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowControlOperation> flowPredecessors;
+
     /** Simple name of the project in which this asset is contained. */
     @Attribute
     String flowProjectName;
@@ -106,6 +116,11 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     /** Overall status of this point in the data processing or orchestration. */
     @Attribute
     String flowStatus;
+
+    /** Control operations that are configured to execute only after this one. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowControlOperation> flowSuccessors;
 
     /**
      * Builds the minimal object necessary to create a relationship to a FlowControlOperation, from a potentially

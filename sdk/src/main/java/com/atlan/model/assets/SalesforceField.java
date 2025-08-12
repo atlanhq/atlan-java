@@ -167,7 +167,7 @@ public class SalesforceField extends Asset
     @Singular
     SortedSet<String> picklistValues;
 
-    /** Total number of digits allowed */
+    /** Total number of digits allowed. */
     @Attribute
     Integer precision;
 

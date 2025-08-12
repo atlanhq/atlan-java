@@ -32,13 +32,13 @@ public interface IQuickSight {
 
     public static final String TYPE_NAME = "QuickSight";
 
-    /** TBC */
+    /** Unique identifier for the QuickSight asset. */
     KeywordField QUICK_SIGHT_ID = new KeywordField("quickSightId", "quickSightId");
 
-    /** TBC */
+    /** Unique identifier for the QuickSight sheet. */
     KeywordField QUICK_SIGHT_SHEET_ID = new KeywordField("quickSightSheetId", "quickSightSheetId");
 
-    /** TBC */
+    /** Name of the QuickSight sheet. */
     KeywordTextField QUICK_SIGHT_SHEET_NAME =
             new KeywordTextField("quickSightSheetName", "quickSightSheetName.keyword", "quickSightSheetName");
 
@@ -234,6 +234,9 @@ public interface IQuickSight {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -305,6 +308,9 @@ public interface IQuickSight {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -456,16 +462,16 @@ public interface IQuickSight {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Unique identifier for the QuickSight asset. */
     String getQuickSightId();
 
-    /** TBC */
+    /** Unique identifier for the QuickSight sheet. */
     String getQuickSightSheetId();
 
-    /** TBC */
+    /** Name of the QuickSight sheet. */
     String getQuickSightSheetName();
 
     /** README that is linked to this asset. */

@@ -245,6 +245,9 @@ public interface IDataStudioAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -316,6 +319,9 @@ public interface IDataStudioAsset {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -503,7 +509,7 @@ public interface IDataStudioAsset {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

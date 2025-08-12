@@ -117,6 +117,11 @@ public class TableauWorksheet extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Fields that exist within this worksheet. */
     @Attribute
     @Singular

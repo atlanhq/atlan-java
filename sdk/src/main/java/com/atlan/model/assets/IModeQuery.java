@@ -36,13 +36,13 @@ public interface IModeQuery {
     /** Charts that exist within this query. */
     RelationField MODE_CHARTS = new RelationField("modeCharts");
 
-    /** TBC */
+    /** Raw query for the Mode asset. */
     TextField MODE_RAW_QUERY = new TextField("modeRawQuery", "modeRawQuery");
 
     /** Report in which this query exists. */
     RelationField MODE_REPORT = new RelationField("modeReport");
 
-    /** TBC */
+    /** Number of reports imported into this query. */
     NumericField MODE_REPORT_IMPORT_COUNT = new NumericField("modeReportImportCount", "modeReportImportCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -237,6 +237,9 @@ public interface IModeQuery {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -308,6 +311,9 @@ public interface IModeQuery {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -423,40 +429,40 @@ public interface IModeQuery {
     /** Charts that exist within this query. */
     SortedSet<IModeChart> getModeCharts();
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     String getModeId();
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     String getModeQueryName();
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     String getModeQueryQualifiedName();
 
-    /** TBC */
+    /** Raw query for the Mode asset. */
     String getModeRawQuery();
 
     /** Report in which this query exists. */
     IModeReport getModeReport();
 
-    /** TBC */
+    /** Number of reports imported into this query. */
     Long getModeReportImportCount();
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     String getModeReportName();
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     String getModeReportQualifiedName();
 
-    /** TBC */
+    /** Token for the Mode asset. */
     String getModeToken();
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     String getModeWorkspaceName();
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     String getModeWorkspaceQualifiedName();
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     String getModeWorkspaceUsername();
 
     /** Attributes implemented by this asset. */
@@ -498,7 +504,7 @@ public interface IModeQuery {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

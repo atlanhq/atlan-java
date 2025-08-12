@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Represents Source tag association asset
+ * Represents Source tag association asset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -47,11 +47,11 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Represents associated tag value */
+    /** Represents associated tag value. */
     @Attribute
     String tagAttachmentStringValue;
 
-    /** Represents associated source tag's qualified name */
+    /** Represents associated source tag's qualified name. */
     @Attribute
     String tagQualifiedName;
 

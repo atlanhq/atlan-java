@@ -37,7 +37,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of an AI application in Atlan
+ * Instance of an AI application in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -117,7 +117,7 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
-    /** AI models that are used in this AI application */
+    /** AI models that are used in this AI application. */
     @Attribute
     @Singular
     SortedSet<IAIModel> models;

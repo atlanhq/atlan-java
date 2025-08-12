@@ -177,6 +177,10 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     @Attribute
     String snowflakePipeNotificationChannelName;
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular

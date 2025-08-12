@@ -18,6 +18,7 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -33,6 +34,12 @@ public interface IFlowControlOperation {
 
     /** Individual data flows (processes) orchestrated by this control operation. */
     RelationField FLOW_DATA_RESULTS = new RelationField("flowDataResults");
+
+    /** Control operations that are configured to execute before this one. */
+    RelationField FLOW_PREDECESSORS = new RelationField("flowPredecessors");
+
+    /** Control operations that are configured to execute only after this one. */
+    RelationField FLOW_SUCCESSORS = new RelationField("flowSuccessors");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -226,6 +233,9 @@ public interface IFlowControlOperation {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -297,6 +307,9 @@ public interface IFlowControlOperation {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -370,6 +383,12 @@ public interface IFlowControlOperation {
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     String getFlowId();
 
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
+
+    /** Control operations that are configured to execute before this one. */
+    SortedSet<IFlowControlOperation> getFlowPredecessors();
+
     /** Simple name of the project in which this asset is contained. */
     String getFlowProjectName();
 
@@ -393,6 +412,9 @@ public interface IFlowControlOperation {
 
     /** Overall status of this point in the data processing or orchestration. */
     String getFlowStatus();
+
+    /** Control operations that are configured to execute only after this one. */
+    SortedSet<IFlowControlOperation> getFlowSuccessors();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -466,7 +488,7 @@ public interface IFlowControlOperation {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

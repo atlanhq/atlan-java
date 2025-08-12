@@ -259,6 +259,9 @@ public interface ITableauDashboard {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -330,6 +333,9 @@ public interface ITableauDashboard {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -487,7 +493,7 @@ public interface ITableauDashboard {
     /** Unique name of the project in which this dashboard exists. */
     String getProjectQualifiedName();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -591,6 +597,9 @@ public interface ITableauDashboard {
 
     /** Dashboards in which this dashboard is embedded in (list of parent dashboards of this dashboard). */
     SortedSet<ITableauDashboard> getTableauParentDashboards();
+
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    SortedSet<String> getTableauProjectHierarchyQualifiedNames();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

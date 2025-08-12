@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -29,6 +30,10 @@ import javax.annotation.processing.Generated;
 public interface ITableau {
 
     public static final String TYPE_NAME = "Tableau";
+
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    KeywordField TABLEAU_PROJECT_HIERARCHY_QUALIFIED_NAMES =
+            new KeywordField("tableauProjectHierarchyQualifiedNames", "tableauProjectHierarchyQualifiedNames");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -222,6 +227,9 @@ public interface ITableau {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -293,6 +301,9 @@ public interface ITableau {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -444,7 +455,7 @@ public interface ITableau {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */
@@ -536,6 +547,9 @@ public interface ITableau {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    SortedSet<String> getTableauProjectHierarchyQualifiedNames();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();

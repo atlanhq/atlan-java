@@ -36,50 +36,50 @@ public class ResponseValue extends AtlanStruct {
     /** Unique identifier of the field in a form. */
     String responseFieldId;
 
-    /** Response type 'string' */
+    /** Response type 'string'. */
     String responseValueString;
 
-    /** Response type 'int' */
+    /** Response type 'int'. */
     Integer responseValueInt;
 
-    /** Response type 'boolean' */
+    /** Response type 'boolean'. */
     Boolean responseValueBoolean;
 
-    /** Response type 'json' */
+    /** Response type 'json'. */
     String responseValueJson;
 
-    /** Response type 'long' */
+    /** Response type 'long'. */
     Long responseValueLong;
 
-    /** Response type 'date' */
+    /** Response type 'date'. */
     Long responseValueDate;
 
-    /** Response type array of 'string' */
+    /** Response type array of 'string'. */
     @Singular("addResponseValueString")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<String> responseValueArrString;
 
-    /** Response type array of 'int' */
+    /** Response type array of 'int'. */
     @Singular("addResponseValueInt")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Integer> responseValueArrInt;
 
-    /** Response type array of 'boolean' */
+    /** Response type array of 'boolean'. */
     @Singular("addResponseValueBoolean")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Boolean> responseValueArrBoolean;
 
-    /** Response type array of 'json' */
+    /** Response type array of 'json'. */
     @Singular("addResponseValueJson")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<String> responseValueArrJson;
 
-    /** Response type array of 'long' */
+    /** Response type array of 'long'. */
     @Singular("addResponseValueLong")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Long> responseValueArrLong;
 
-    /** Response type array of 'date' */
+    /** Response type array of 'date'. */
     @Singular("addResponseValueDate")
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Long> responseValueArrDate;
@@ -92,18 +92,18 @@ public class ResponseValue extends AtlanStruct {
     /**
      * Quickly create a new ResponseValue.
      * @param responseFieldId Unique identifier of the field in a form.
-     * @param responseValueString Response type 'string'
-     * @param responseValueInt Response type 'int'
-     * @param responseValueBoolean Response type 'boolean'
-     * @param responseValueJson Response type 'json'
-     * @param responseValueLong Response type 'long'
-     * @param responseValueDate Response type 'date'
-     * @param responseValueArrString Response type array of 'string'
-     * @param responseValueArrInt Response type array of 'int'
-     * @param responseValueArrBoolean Response type array of 'boolean'
-     * @param responseValueArrJson Response type array of 'json'
-     * @param responseValueArrLong Response type array of 'long'
-     * @param responseValueArrDate Response type array of 'date'
+     * @param responseValueString Response type 'string'.
+     * @param responseValueInt Response type 'int'.
+     * @param responseValueBoolean Response type 'boolean'.
+     * @param responseValueJson Response type 'json'.
+     * @param responseValueLong Response type 'long'.
+     * @param responseValueDate Response type 'date'.
+     * @param responseValueArrString Response type array of 'string'.
+     * @param responseValueArrInt Response type array of 'int'.
+     * @param responseValueArrBoolean Response type array of 'boolean'.
+     * @param responseValueArrJson Response type array of 'json'.
+     * @param responseValueArrLong Response type array of 'long'.
+     * @param responseValueArrDate Response type array of 'date'.
      * @param responseValueOptions Options of the response to a field in a form.
      * @return a ResponseValue with the provided information
      */
