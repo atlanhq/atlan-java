@@ -270,6 +270,12 @@ public interface IAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     TextField ASSET_ICON = new TextField("assetIcon", "assetIcon");
 
+    /** Internal Popularity score for this asset. */
+    NumericRankField ASSET_INTERNAL_POPULARITY_SCORE = new NumericRankField(
+            "assetInternalPopularityScore",
+            "assetInternalPopularityScore",
+            "assetInternalPopularityScore.rank_feature");
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES = new KeywordTextField(
             "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames.text");
@@ -349,6 +355,10 @@ public interface IAsset {
 
     /** TBC */
     KeywordField ASSET_SODA_SOURCE_URL = new KeywordField("assetSodaSourceURL", "assetSodaSourceURL");
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    KeywordTextField ASSET_SOURCE_README =
+            new KeywordTextField("assetSourceReadme", "assetSourceReadme.keyword", "assetSourceReadme");
 
     /** List of tags attached to this asset. */
     KeywordTextField ASSET_TAGS = new KeywordTextField("assetTags", "assetTags", "assetTags.text");
@@ -802,6 +812,9 @@ public interface IAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -873,6 +886,9 @@ public interface IAsset {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

@@ -63,32 +63,32 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Number of charts in this report. */
     @Attribute
     Long modeChartCount;
 
-    /** TBC */
+    /** Token for the Mode collection. */
     @Attribute
     String modeCollectionToken;
 
-    /** TBC */
+    /** Collections related to this report. */
     @Attribute
     @Singular
     SortedSet<IModeCollection> modeCollections;
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     @Attribute
     String modeId;
 
-    /** Whether the report is archived (true) or unarchived (false) */
+    /** Whether the report is archived. */
     @Attribute
     Boolean modeIsArchived;
 
-    /** TBC */
+    /** Whether the report is public. */
     @Attribute
     Boolean modeIsPublic;
 
-    /** TBC */
+    /** Whether the report is shared. */
     @Attribute
     Boolean modeIsShared;
 
@@ -97,48 +97,48 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     @Singular
     SortedSet<IModeQuery> modeQueries;
 
-    /** TBC */
+    /** Number of queries in this report. */
     @Attribute
     Long modeQueryCount;
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     @Attribute
     String modeQueryName;
 
-    /** TBC */
+    /** Preview of the query for the Mode asset. */
     @Attribute
     String modeQueryPreview;
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     @Attribute
     String modeQueryQualifiedName;
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     @Attribute
     String modeReportName;
 
-    /** TBC */
+    /** Date and time when the report was published. */
     @Attribute
     @Date
     Long modeReportPublishedAt;
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     @Attribute
     String modeReportQualifiedName;
 
-    /** TBC */
+    /** Token for the Mode asset. */
     @Attribute
     String modeToken;
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceName;
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceQualifiedName;
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceUsername;
 

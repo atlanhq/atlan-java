@@ -213,6 +213,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    String sqlAIModelContextQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 

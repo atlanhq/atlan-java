@@ -53,7 +53,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
     @Singular
     SortedSet<IConnection> inputs;
 
-    /** Connection assets that are outputs from this connection process */
+    /** Connection assets that are outputs from this connection process. */
     @Attribute
     @Singular
     SortedSet<IConnection> outputs;

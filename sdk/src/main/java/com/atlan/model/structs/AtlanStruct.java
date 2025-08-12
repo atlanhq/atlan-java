@@ -24,14 +24,14 @@ import lombok.extern.slf4j.Slf4j;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Action.class, name = Action.TYPE_NAME),
-    @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
-    @JsonSubTypes.Type(value = AuthPolicyValiditySchedule.class, name = AuthPolicyValiditySchedule.TYPE_NAME),
+    @JsonSubTypes.Type(value = AppWorkflowRunStep.class, name = AppWorkflowRunStep.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQMetadata.class, name = AssetExternalDQMetadata.TYPE_NAME),
     @JsonSubTypes.Type(
             value = AssetExternalDQScoreBreakdownByDimension.class,
             name = AssetExternalDQScoreBreakdownByDimension.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestDetails.class, name = AssetExternalDQTestDetails.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestRunHistory.class, name = AssetExternalDQTestRunHistory.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsCloudWatchMetric.class, name = AwsCloudWatchMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsTag.class, name = AwsTag.TYPE_NAME),
     @JsonSubTypes.Type(value = AzureTag.class, name = AzureTag.TYPE_NAME),

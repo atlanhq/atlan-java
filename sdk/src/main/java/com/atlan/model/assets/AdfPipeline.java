@@ -57,7 +57,7 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
     @Attribute
     String adfAssetFolderPath;
 
-    /** ADF pipelines that is associated with this ADF Dataflos. */
+    /** ADF pipelines that is associated with this ADF Dataflows. */
     @Attribute
     @Singular
     SortedSet<IAdfDataflow> adfDataflows;

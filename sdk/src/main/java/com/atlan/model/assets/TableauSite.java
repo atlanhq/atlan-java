@@ -93,6 +93,11 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     @Singular
     SortedSet<ITableauProject> projects;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /**
      * Builds the minimal object necessary to create a relationship to a TableauSite, from a potentially
      * more-complete TableauSite object.

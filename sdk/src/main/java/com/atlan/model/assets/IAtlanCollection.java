@@ -234,6 +234,9 @@ public interface IAtlanCollection {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    Double getAssetInternalPopularityScore();
+
+    /** TBC */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
     /** TBC */
@@ -304,6 +307,9 @@ public interface IAtlanCollection {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** TBC */
+    String getAssetSourceReadme();
 
     /** TBC */
     SortedSet<String> getAssetTags();

@@ -96,6 +96,11 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Attribute
     String qlikAppQualifiedName;
 
+    /** Columns contained in the dataset. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikColumn> qlikColumns;
+
     /** Subtype this dataset asset. */
     @Attribute
     String qlikDatasetSubtype;

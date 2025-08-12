@@ -102,15 +102,15 @@ public class QuickSightDatasetField extends Asset
     @Attribute
     String quickSightDatasetQualifiedName;
 
-    /** TBC */
+    /** Unique identifier for the QuickSight asset. */
     @Attribute
     String quickSightId;
 
-    /** TBC */
+    /** Unique identifier for the QuickSight sheet. */
     @Attribute
     String quickSightSheetId;
 
-    /** TBC */
+    /** Name of the QuickSight sheet. */
     @Attribute
     String quickSightSheetName;
 

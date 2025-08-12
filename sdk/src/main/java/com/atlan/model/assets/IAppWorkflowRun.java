@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AppWorkflowRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -12,6 +13,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AppWorkflowRunStep;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -91,6 +93,12 @@ public interface IAppWorkflowRun {
 
     /** Timestamp when the workflow run began execution. */
     Long getAppWorkflowRunStartedAt();
+
+    /** Overall execution status of the entire workflow run. */
+    AppWorkflowRunStatus getAppWorkflowRunStatus();
+
+    /** Collection of individual workflow steps in this run. */
+    List<AppWorkflowRunStep> getAppWorkflowRunSteps();
 
     /** Application owning the Asset. */
     IApplication getApplication();

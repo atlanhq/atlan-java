@@ -318,6 +318,10 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     Long sizeBytes;
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
+
     /** TBC */
     @Attribute
     @Singular

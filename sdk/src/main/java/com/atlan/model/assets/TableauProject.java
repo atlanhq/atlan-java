@@ -124,6 +124,11 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Attribute
     String siteQualifiedName;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Unique name of the top-level project in which this project exists, if this is a nested project. */
     @Attribute
     String topLevelProjectQualifiedName;

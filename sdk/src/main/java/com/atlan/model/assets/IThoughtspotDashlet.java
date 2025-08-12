@@ -239,6 +239,9 @@ public interface IThoughtspotDashlet {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -310,6 +313,9 @@ public interface IThoughtspotDashlet {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -563,7 +569,7 @@ public interface IThoughtspotDashlet {
     /** TBC */
     String getThoughtspotChartType();
 
-    /** Number of Columns. */
+    /** Number of columns. */
     Long getThoughtspotColumnCount();
 
     /** Total number of data table joins executed for analysis. */

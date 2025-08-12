@@ -126,6 +126,11 @@ public class TableauCalculatedField extends Asset
     @Attribute
     String tableauDataType;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Worksheet fields that use this calculated field. */
     @Attribute
     ITableauWorksheetField tableauWorksheetFields;

@@ -278,6 +278,9 @@ public interface IAtlanQuery {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    Double getAssetInternalPopularityScore();
+
+    /** TBC */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
     /** TBC */
@@ -348,6 +351,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** TBC */
+    String getAssetSourceReadme();
 
     /** TBC */
     SortedSet<String> getAssetTags();
@@ -666,6 +672,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    String getSqlAIModelContextQualifiedName();
 
     /** TBC */
     SortedSet<IDbtSource> getSqlDBTSources();

@@ -36,7 +36,7 @@ public interface IConnectionProcess {
     /** Connection assets that are inputs to this connection process. */
     KeywordField INPUTS = new KeywordField("inputs", "inputs");
 
-    /** Connection assets that are outputs from this connection process */
+    /** Connection assets that are outputs from this connection process. */
     KeywordField OUTPUTS = new KeywordField("outputs", "outputs");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -231,6 +231,9 @@ public interface IConnectionProcess {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -302,6 +305,9 @@ public interface IConnectionProcess {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -423,7 +429,7 @@ public interface IConnectionProcess {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
-    /** Connection assets that are outputs from this connection process */
+    /** Connection assets that are outputs from this connection process. */
     SortedSet<IConnection> getOutputs();
 
     /** List of groups who own this asset. */

@@ -105,6 +105,11 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Singular
     SortedSet<IQlikChart> qlikCharts;
 
+    /** Columns contained in the sheet. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikColumn> qlikColumns;
+
     /** Identifier of this asset, from Qlik. */
     @Attribute
     String qlikId;

@@ -37,34 +37,34 @@ public interface IModeReport {
 
     public static final String TYPE_NAME = "ModeReport";
 
-    /** TBC */
+    /** Number of charts in this report. */
     NumericField MODE_CHART_COUNT = new NumericField("modeChartCount", "modeChartCount");
 
-    /** TBC */
+    /** Token for the Mode collection. */
     KeywordField MODE_COLLECTION_TOKEN = new KeywordField("modeCollectionToken", "modeCollectionToken");
 
-    /** TBC */
+    /** Collections related to this report. */
     RelationField MODE_COLLECTIONS = new RelationField("modeCollections");
 
-    /** Whether the report is archived (true) or unarchived (false) */
+    /** Whether the report is archived. */
     BooleanField MODE_IS_ARCHIVED = new BooleanField("modeIsArchived", "modeIsArchived");
 
-    /** TBC */
+    /** Whether the report is public. */
     BooleanField MODE_IS_PUBLIC = new BooleanField("modeIsPublic", "modeIsPublic");
 
-    /** TBC */
+    /** Whether the report is shared. */
     BooleanField MODE_IS_SHARED = new BooleanField("modeIsShared", "modeIsShared");
 
     /** Queries that exist within this report. */
     RelationField MODE_QUERIES = new RelationField("modeQueries");
 
-    /** TBC */
+    /** Number of queries in this report. */
     NumericField MODE_QUERY_COUNT = new NumericField("modeQueryCount", "modeQueryCount");
 
-    /** TBC */
+    /** Preview of the query for the Mode asset. */
     TextField MODE_QUERY_PREVIEW = new TextField("modeQueryPreview", "modeQueryPreview");
 
-    /** TBC */
+    /** Date and time when the report was published. */
     NumericField MODE_REPORT_PUBLISHED_AT = new NumericField("modeReportPublishedAt", "modeReportPublishedAt");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -259,6 +259,9 @@ public interface IModeReport {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -330,6 +333,9 @@ public interface IModeReport {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -445,61 +451,61 @@ public interface IModeReport {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** TBC */
+    /** Number of charts in this report. */
     Long getModeChartCount();
 
-    /** TBC */
+    /** Token for the Mode collection. */
     String getModeCollectionToken();
 
-    /** TBC */
+    /** Collections related to this report. */
     SortedSet<IModeCollection> getModeCollections();
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     String getModeId();
 
-    /** Whether the report is archived (true) or unarchived (false) */
+    /** Whether the report is archived. */
     Boolean getModeIsArchived();
 
-    /** TBC */
+    /** Whether the report is public. */
     Boolean getModeIsPublic();
 
-    /** TBC */
+    /** Whether the report is shared. */
     Boolean getModeIsShared();
 
     /** Queries that exist within this report. */
     SortedSet<IModeQuery> getModeQueries();
 
-    /** TBC */
+    /** Number of queries in this report. */
     Long getModeQueryCount();
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     String getModeQueryName();
 
-    /** TBC */
+    /** Preview of the query for the Mode asset. */
     String getModeQueryPreview();
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     String getModeQueryQualifiedName();
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     String getModeReportName();
 
-    /** TBC */
+    /** Date and time when the report was published. */
     Long getModeReportPublishedAt();
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     String getModeReportQualifiedName();
 
-    /** TBC */
+    /** Token for the Mode asset. */
     String getModeToken();
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     String getModeWorkspaceName();
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     String getModeWorkspaceQualifiedName();
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     String getModeWorkspaceUsername();
 
     /** Attributes implemented by this asset. */

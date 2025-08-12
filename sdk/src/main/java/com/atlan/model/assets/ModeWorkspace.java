@@ -72,39 +72,39 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Singular
     SortedSet<IModeCollection> modeCollections;
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     @Attribute
     String modeId;
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     @Attribute
     String modeQueryName;
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     @Attribute
     String modeQueryQualifiedName;
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     @Attribute
     String modeReportName;
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     @Attribute
     String modeReportQualifiedName;
 
-    /** TBC */
+    /** Token for the Mode asset. */
     @Attribute
     String modeToken;
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceName;
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceQualifiedName;
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceUsername;
 

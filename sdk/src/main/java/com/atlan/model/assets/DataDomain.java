@@ -102,11 +102,6 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     @Attribute
     String parentDomainQualifiedName;
 
-    /** Stakeholder assigned to the Domain */
-    @Attribute
-    @Singular
-    SortedSet<IStakeholder> stakeholders;
-
     /** Sub-data domains that exist within this data domain. */
     @Attribute
     @Singular

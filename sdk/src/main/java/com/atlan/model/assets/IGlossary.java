@@ -256,6 +256,9 @@ public interface IGlossary {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    Double getAssetInternalPopularityScore();
+
+    /** TBC */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
     /** TBC */
@@ -326,6 +329,9 @@ public interface IGlossary {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** TBC */
+    String getAssetSourceReadme();
 
     /** TBC */
     SortedSet<String> getAssetTags();

@@ -24,7 +24,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Represents Source tag association asset
+ * Represents Source tag association asset.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -33,11 +33,11 @@ public interface ITagAttachment {
 
     public static final String TYPE_NAME = "TagAttachment";
 
-    /** Represents associated tag value */
+    /** Represents associated tag value. */
     KeywordTextField TAG_ATTACHMENT_STRING_VALUE = new KeywordTextField(
             "tagAttachmentStringValue", "tagAttachmentStringValue", "tagAttachmentStringValue.text");
 
-    /** Represents associated source tag's qualified name */
+    /** Represents associated source tag's qualified name. */
     KeywordTextField TAG_QUALIFIED_NAME =
             new KeywordTextField("tagQualifiedName", "tagQualifiedName", "tagQualifiedName.text");
 
@@ -233,6 +233,9 @@ public interface ITagAttachment {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -304,6 +307,9 @@ public interface ITagAttachment {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -527,10 +533,10 @@ public interface ITagAttachment {
     /** Subtype of this asset. */
     String getSubType();
 
-    /** Represents associated tag value */
+    /** Represents associated tag value. */
     String getTagAttachmentStringValue();
 
-    /** Represents associated source tag's qualified name */
+    /** Represents associated source tag's qualified name. */
     String getTagQualifiedName();
 
     /** Name of the Atlan workspace in which this asset exists. */

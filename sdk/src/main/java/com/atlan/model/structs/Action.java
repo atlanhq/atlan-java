@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 /**
- * Action for the task
+ * Action for the task.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -29,24 +29,24 @@ public class Action extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** url to call to take action */
+    /** URL to call to take action. */
     String taskActionFulfillmentUrl;
 
-    /** method to call to take action */
+    /** Method to call to take action. */
     String taskActionFulfillmentMethod;
 
-    /** payload to send to the fulfillment endpoint */
+    /** Payload to send to the fulfillment endpoint. */
     String taskActionFulfillmentPayload;
 
-    /** Display text for the UI component */
+    /** Display text for the UI component. */
     String taskActionDisplayText;
 
     /**
      * Quickly create a new Action.
-     * @param taskActionFulfillmentUrl url to call to take action
-     * @param taskActionFulfillmentMethod method to call to take action
-     * @param taskActionFulfillmentPayload payload to send to the fulfillment endpoint
-     * @param taskActionDisplayText Display text for the UI component
+     * @param taskActionFulfillmentUrl URL to call to take action.
+     * @param taskActionFulfillmentMethod Method to call to take action.
+     * @param taskActionFulfillmentPayload Payload to send to the fulfillment endpoint.
+     * @param taskActionDisplayText Display text for the UI component.
      * @return a Action with the provided information
      */
     public static Action of(

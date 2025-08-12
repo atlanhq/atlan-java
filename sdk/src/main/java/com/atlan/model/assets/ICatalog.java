@@ -79,6 +79,9 @@ public interface ICatalog {
             case AIApplication.TYPE_NAME:
                 ref = AIApplication.refByQualifiedName(qualifiedName);
                 break;
+            case AIModel.TYPE_NAME:
+                ref = AIModel.refByQualifiedName(qualifiedName);
+                break;
             case APIField.TYPE_NAME:
                 ref = APIField.refByQualifiedName(qualifiedName);
                 break;
@@ -147,6 +150,9 @@ public interface ICatalog {
                 break;
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
+                break;
+            case AppWorkflowRun.TYPE_NAME:
+                ref = AppWorkflowRun.refByQualifiedName(qualifiedName);
                 break;
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
@@ -288,6 +294,9 @@ public interface ICatalog {
                 break;
             case DatabricksAIModelVersion.TYPE_NAME:
                 ref = DatabricksAIModelVersion.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksNotebook.TYPE_NAME:
+                ref = DatabricksNotebook.refByQualifiedName(qualifiedName);
                 break;
             case DatabricksUnityCatalogTag.TYPE_NAME:
                 ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
@@ -570,6 +579,9 @@ public interface ICatalog {
                 break;
             case QlikChart.TYPE_NAME:
                 ref = QlikChart.refByQualifiedName(qualifiedName);
+                break;
+            case QlikColumn.TYPE_NAME:
+                ref = QlikColumn.refByQualifiedName(qualifiedName);
                 break;
             case QlikDataset.TYPE_NAME:
                 ref = QlikDataset.refByQualifiedName(qualifiedName);
@@ -1007,6 +1019,9 @@ public interface ICatalog {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -1078,6 +1093,9 @@ public interface ICatalog {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

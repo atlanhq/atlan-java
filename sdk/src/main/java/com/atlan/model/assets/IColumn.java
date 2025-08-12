@@ -17,6 +17,7 @@ import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetHistogram;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.model.structs.PopularityInsights;
@@ -49,6 +50,12 @@ public interface IColumn {
     /** Average length of values in a string column. */
     NumericField COLUMN_AVERAGE_LENGTH = new NumericField("columnAverageLength", "columnAverageLength");
 
+    /** Average length of values in a string column. */
+    NumericField COLUMN_AVERAGE_LENGTH_VALUE = new NumericField("columnAverageLengthValue", "columnAverageLengthValue");
+
+    /** Average value in this column. */
+    NumericField COLUMN_AVERAGE_VALUE = new NumericField("columnAverageValue", "columnAverageValue");
+
     /** Compression type of this column. */
     KeywordField COLUMN_COMPRESSION = new KeywordField("columnCompression", "columnCompression");
 
@@ -65,6 +72,10 @@ public interface IColumn {
     /** Number of rows that contain distinct values. */
     NumericField COLUMN_DISTINCT_VALUES_COUNT_LONG =
             new NumericField("columnDistinctValuesCountLong", "columnDistinctValuesCountLong");
+
+    /** Detailed information representing a histogram of values for a column. */
+    KeywordField COLUMN_DISTRIBUTION_HISTOGRAM =
+            new KeywordField("columnDistributionHistogram", "columnDistributionHistogram");
 
     /** Number of rows that contain duplicate values. */
     NumericField COLUMN_DUPLICATE_VALUES_COUNT =
@@ -89,6 +100,9 @@ public interface IColumn {
     /** Greatest value in a numeric column. */
     NumericField COLUMN_MAX = new NumericField("columnMax", "columnMax");
 
+    /** Greatest value in a numeric column. */
+    NumericField COLUMN_MAX_VALUE = new NumericField("columnMaxValue", "columnMaxValue");
+
     /** Length of the longest value in a string column. */
     NumericField COLUMN_MAXIMUM_STRING_LENGTH =
             new NumericField("columnMaximumStringLength", "columnMaximumStringLength");
@@ -99,14 +113,23 @@ public interface IColumn {
     /** Arithmetic mean of the values in a numeric column. */
     NumericField COLUMN_MEAN = new NumericField("columnMean", "columnMean");
 
+    /** Arithmetic mean of the values in a numeric column. */
+    NumericField COLUMN_MEAN_VALUE = new NumericField("columnMeanValue", "columnMeanValue");
+
     /** The type of measure/calculated column this is, eg: base, calculated, derived. */
     KeywordField COLUMN_MEASURE_TYPE = new KeywordField("columnMeasureType", "columnMeasureType");
 
     /** Calculated median of the values in a numeric column. */
     NumericField COLUMN_MEDIAN = new NumericField("columnMedian", "columnMedian");
 
+    /** Calculated median of the values in a numeric column. */
+    NumericField COLUMN_MEDIAN_VALUE = new NumericField("columnMedianValue", "columnMedianValue");
+
     /** Least value in a numeric column. */
     NumericField COLUMN_MIN = new NumericField("columnMin", "columnMin");
+
+    /** Least value in a numeric column. */
+    NumericField COLUMN_MIN_VALUE = new NumericField("columnMinValue", "columnMinValue");
 
     /** Length of the shortest value in a string column. */
     NumericField COLUMN_MINIMUM_STRING_LENGTH =
@@ -129,8 +152,15 @@ public interface IColumn {
     /** Calculated standard deviation of the values in a numeric column. */
     NumericField COLUMN_STANDARD_DEVIATION = new NumericField("columnStandardDeviation", "columnStandardDeviation");
 
+    /** Calculated standard deviation of the values in a numeric column. */
+    NumericField COLUMN_STANDARD_DEVIATION_VALUE =
+            new NumericField("columnStandardDeviationValue", "columnStandardDeviationValue");
+
     /** Calculated sum of the values in a numeric column. */
     NumericField COLUMN_SUM = new NumericField("columnSum", "columnSum");
+
+    /** Calculated sum of the values in a numeric column. */
+    NumericField COLUMN_SUM_VALUE = new NumericField("columnSumValue", "columnSumValue");
 
     /** List of top values in this column. */
     KeywordField COLUMN_TOP_VALUES = new KeywordField("columnTopValues", "columnTopValues");
@@ -148,6 +178,9 @@ public interface IColumn {
 
     /** Calculated variance of the values in a numeric column. */
     NumericField COLUMN_VARIANCE = new NumericField("columnVariance", "columnVariance");
+
+    /** Calculated variance of the values in a numeric column. */
+    NumericField COLUMN_VARIANCE_VALUE = new NumericField("columnVarianceValue", "columnVarianceValue");
 
     /** Cosmos collection in which this column exists. */
     RelationField COSMOS_MONGO_DB_COLLECTION = new RelationField("cosmosMongoDBCollection");
@@ -471,6 +504,9 @@ public interface IColumn {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -543,6 +579,9 @@ public interface IColumn {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -585,6 +624,12 @@ public interface IColumn {
     /** Average length of values in a string column. */
     Double getColumnAverageLength();
 
+    /** Average length of values in a string column. */
+    Double getColumnAverageLengthValue();
+
+    /** Average value in this column. */
+    Double getColumnAverageValue();
+
     /** Compression type of this column. */
     String getColumnCompression();
 
@@ -599,6 +644,9 @@ public interface IColumn {
 
     /** Number of rows that contain distinct values. */
     Long getColumnDistinctValuesCountLong();
+
+    /** Detailed information representing a histogram of values for a column. */
+    AssetHistogram getColumnDistributionHistogram();
 
     /** Number of rows that contain duplicate values. */
     Integer getColumnDuplicateValuesCount();
@@ -621,6 +669,9 @@ public interface IColumn {
     /** Greatest value in a numeric column. */
     Double getColumnMax();
 
+    /** Greatest value in a numeric column. */
+    Double getColumnMaxValue();
+
     /** Length of the longest value in a string column. */
     Integer getColumnMaximumStringLength();
 
@@ -630,14 +681,23 @@ public interface IColumn {
     /** Arithmetic mean of the values in a numeric column. */
     Double getColumnMean();
 
+    /** Arithmetic mean of the values in a numeric column. */
+    Double getColumnMeanValue();
+
     /** The type of measure/calculated column this is, eg: base, calculated, derived. */
     String getColumnMeasureType();
 
     /** Calculated median of the values in a numeric column. */
     Double getColumnMedian();
 
+    /** Calculated median of the values in a numeric column. */
+    Double getColumnMedianValue();
+
     /** Least value in a numeric column. */
     Double getColumnMin();
+
+    /** Least value in a numeric column. */
+    Double getColumnMinValue();
 
     /** Length of the shortest value in a string column. */
     Integer getColumnMinimumStringLength();
@@ -657,8 +717,14 @@ public interface IColumn {
     /** Calculated standard deviation of the values in a numeric column. */
     Double getColumnStandardDeviation();
 
+    /** Calculated standard deviation of the values in a numeric column. */
+    Double getColumnStandardDeviationValue();
+
     /** Calculated sum of the values in a numeric column. */
     Double getColumnSum();
+
+    /** Calculated sum of the values in a numeric column. */
+    Double getColumnSumValue();
 
     /** List of top values in this column. */
     List<ColumnValueFrequencyMap> getColumnTopValues();
@@ -674,6 +740,9 @@ public interface IColumn {
 
     /** Calculated variance of the values in a numeric column. */
     Double getColumnVariance();
+
+    /** Calculated variance of the values in a numeric column. */
+    Double getColumnVarianceValue();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -1034,6 +1103,9 @@ public interface IColumn {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
 
     /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();

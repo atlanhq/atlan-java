@@ -290,6 +290,9 @@ public interface ILineageProcess {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    Double getAssetInternalPopularityScore();
+
+    /** TBC */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
     /** TBC */
@@ -360,6 +363,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** TBC */
+    String getAssetSourceReadme();
 
     /** TBC */
     SortedSet<String> getAssetTags();
