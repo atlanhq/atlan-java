@@ -15,6 +15,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -353,6 +354,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getAssetUserDefinedType();
+
+    /** TBC */
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
 
     /** TBC */
     SortedSet<IGlossaryTerm> getAssignedTerms();

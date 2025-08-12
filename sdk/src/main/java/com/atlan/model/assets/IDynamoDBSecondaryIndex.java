@@ -14,6 +14,7 @@ import com.atlan.model.enums.TableType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -314,6 +315,9 @@ public interface IDynamoDBSecondaryIndex {
 
     /** Name to use for this type of asset, as a subtype of the actual typeName. */
     String getAssetUserDefinedType();
+
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetV2ExternalDQMetadata();
 
     /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();

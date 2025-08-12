@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class AnaplanWorkspace extends Asset
         implements IAnaplanWorkspace, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

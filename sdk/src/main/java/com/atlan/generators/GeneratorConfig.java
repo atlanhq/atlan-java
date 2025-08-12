@@ -99,7 +99,8 @@ public class GeneratorConfig {
             Map.entry("responseValueArrLong", "addResponseValueLong"),
             Map.entry("responseValueArrDate", "addResponseValueDate"),
             Map.entry("tableauProjectHierarchy", "addTableauProjectHierarchy"),
-            Map.entry("aiModelVersions", "modelVersion"));
+            Map.entry("aiModelVersions", "modelVersion"),
+            Map.entry("assetV2ExternalDQMetadata", "putAssetV2ExternalDQMetadata"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("__hasLineage", "hasLineage"),
@@ -347,6 +348,7 @@ public class GeneratorConfig {
                 .doNotGenerateAsset("__AtlasUserSavedSearch")
                 .doNotGenerateAsset("__ExportImportAuditEntry")
                 .doNotGenerateAsset("__internal")
+                .doNotGenerateAsset("__InstanceConfig")
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
                 .forceNonAbstractAsset("QlikSpace")

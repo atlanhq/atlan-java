@@ -22,6 +22,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
@@ -464,6 +465,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Name to use for this type of asset, as a subtype of the actual typeName. */
     @Attribute
     String assetUserDefinedType;
+
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    @Attribute
+    @Singular("putAssetV2ExternalDQMetadata")
+    Map<String, AssetExternalDQMetadata> assetV2ExternalDQMetadata;
 
     /** Glossary terms that are linked to this asset. */
     @Attribute

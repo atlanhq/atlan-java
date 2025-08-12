@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class DbtMetric extends Asset
         implements IDbtMetric, IDbt, IMetric, ICatalog, IAsset, IReferenceable, IDataQuality {
     private static final long serialVersionUID = 2L;
