@@ -105,6 +105,11 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     @Attribute
     String siteQualifiedName;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Unique name of the top-level project in which this metric exists. */
     @Attribute
     String topLevelProjectQualifiedName;

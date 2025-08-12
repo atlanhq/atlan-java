@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class FlowFieldOperation extends Asset
         implements IFlowFieldOperation, IColumnProcess, IFlow, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
@@ -105,6 +105,11 @@ public class FlowFieldOperation extends Asset
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
     String flowId;
+
+    /** Input parameters for the flow run. */
+    @Attribute
+    @Singular
+    Map<String, String> flowInputParameters;
 
     /** Orchestrated control operation that ran these data flows (process). */
     @Attribute

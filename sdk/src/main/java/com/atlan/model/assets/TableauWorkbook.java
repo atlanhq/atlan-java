@@ -116,6 +116,11 @@ public class TableauWorkbook extends Asset
     @Attribute
     String siteQualifiedName;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Simple name of the top-level project in which this workbook exists. */
     @Attribute
     String topLevelProjectName;

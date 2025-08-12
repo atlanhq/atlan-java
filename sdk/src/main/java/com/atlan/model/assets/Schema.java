@@ -228,6 +228,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ISnowflakeTag> snowflakeTags;
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular

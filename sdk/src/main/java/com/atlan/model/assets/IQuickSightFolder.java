@@ -242,6 +242,9 @@ public interface IQuickSightFolder {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -313,6 +316,9 @@ public interface IQuickSightFolder {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -482,13 +488,13 @@ public interface IQuickSightFolder {
     /** Type of this folder, for example: SHARED. */
     QuickSightFolderType getQuickSightFolderType();
 
-    /** TBC */
+    /** Unique identifier for the QuickSight asset. */
     String getQuickSightId();
 
-    /** TBC */
+    /** Unique identifier for the QuickSight sheet. */
     String getQuickSightSheetId();
 
-    /** TBC */
+    /** Name of the QuickSight sheet. */
     String getQuickSightSheetName();
 
     /** README that is linked to this asset. */

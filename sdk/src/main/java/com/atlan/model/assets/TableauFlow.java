@@ -120,6 +120,11 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Attribute
     String siteQualifiedName;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Unique name of the top-level project in which this flow exists. */
     @Attribute
     String topLevelProjectQualifiedName;

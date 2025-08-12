@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -88,6 +88,11 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
     String flowId;
+
+    /** Input parameters for the flow run. */
+    @Attribute
+    @Singular
+    Map<String, String> flowInputParameters;
 
     /** Simple name of the project in which this asset is contained. */
     @Attribute

@@ -274,6 +274,9 @@ public interface IMaterializedView {
     AtlanIcon getAssetIcon();
 
     /** TBC */
+    Double getAssetInternalPopularityScore();
+
+    /** TBC */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
     /** TBC */
@@ -344,6 +347,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** TBC */
+    String getAssetSourceReadme();
 
     /** TBC */
     SortedSet<String> getAssetTags();
@@ -656,6 +662,9 @@ public interface IMaterializedView {
 
     /** TBC */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    String getSqlAIModelContextQualifiedName();
 
     /** TBC */
     SortedSet<IDbtSource> getSqlDBTSources();

@@ -34,10 +34,10 @@ public interface IAPIField {
 
     public static final String TYPE_NAME = "APIField";
 
-    /** Type of APIField. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIField, as free text (e.g. STRING, NUMBER etc). */
     KeywordField API_FIELD_TYPE = new KeywordField("apiFieldType", "apiFieldType");
 
-    /** Secondary Type of APIField. E.g. LIST/STRING, then LIST would be the secondary type. */
+    /** Secondary type of APIField (e.g. LIST/STRING, then LIST would be the secondary type). */
     KeywordField API_FIELD_TYPE_SECONDARY = new KeywordField("apiFieldTypeSecondary", "apiFieldTypeSecondary");
 
     /** APIObject asset containing this APIField. */
@@ -79,10 +79,10 @@ public interface IAPIField {
     /** External documentation of the API. */
     Map<String, String> getApiExternalDocs();
 
-    /** Type of APIField. E.g. STRING, NUMBER etc. It is free text. */
+    /** Type of APIField, as free text (e.g. STRING, NUMBER etc). */
     String getApiFieldType();
 
-    /** Secondary Type of APIField. E.g. LIST/STRING, then LIST would be the secondary type. */
+    /** Secondary type of APIField (e.g. LIST/STRING, then LIST would be the secondary type). */
     String getApiFieldTypeSecondary();
 
     /** Whether authentication is optional (true) or required (false). */
@@ -280,6 +280,9 @@ public interface IAPIField {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -351,6 +354,9 @@ public interface IAPIField {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

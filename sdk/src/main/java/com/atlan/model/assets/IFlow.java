@@ -20,6 +20,7 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -48,6 +49,9 @@ public interface IFlow {
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     KeywordField FLOW_ID = new KeywordField("flowId", "flowId");
+
+    /** Input parameters for the flow run. */
+    KeywordField FLOW_INPUT_PARAMETERS = new KeywordField("flowInputParameters", "flowInputParameters");
 
     /** Simple name of the project in which this asset is contained. */
     KeywordTextField FLOW_PROJECT_NAME =
@@ -268,6 +272,9 @@ public interface IFlow {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -340,6 +347,9 @@ public interface IFlow {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -408,6 +418,9 @@ public interface IFlow {
 
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     String getFlowId();
+
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
 
     /** Simple name of the project in which this asset is contained. */
     String getFlowProjectName();

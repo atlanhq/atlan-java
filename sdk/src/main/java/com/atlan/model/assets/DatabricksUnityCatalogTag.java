@@ -33,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Databricks' Unity catalog tag in Atlan.
+ * Instance of a Databricks Unity catalog tag in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -168,6 +168,10 @@ public class DatabricksUnityCatalogTag extends Asset
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
 
     /** Sources related to this asset. */
     @Attribute

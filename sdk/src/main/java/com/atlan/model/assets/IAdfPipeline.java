@@ -38,7 +38,7 @@ public interface IAdfPipeline {
     /** ADF Pipeline that is associated with these ADF Activities. */
     RelationField ADF_ACTIVITIES = new RelationField("adfActivities");
 
-    /** ADF pipelines that is associated with this ADF Dataflos. */
+    /** ADF pipelines that is associated with this ADF Dataflows. */
     RelationField ADF_DATAFLOWS = new RelationField("adfDataflows");
 
     /** ADF pipelines that is associated with this ADF Datasets. */
@@ -62,7 +62,7 @@ public interface IAdfPipeline {
     /** Defines the folder path in which this ADF asset exists. */
     String getAdfAssetFolderPath();
 
-    /** ADF pipelines that is associated with this ADF Dataflos. */
+    /** ADF pipelines that is associated with this ADF Dataflows. */
     SortedSet<IAdfDataflow> getAdfDataflows();
 
     /** ADF pipelines that is associated with this ADF Datasets. */
@@ -275,6 +275,9 @@ public interface IAdfPipeline {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -346,6 +349,9 @@ public interface IAdfPipeline {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

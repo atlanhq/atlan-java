@@ -32,19 +32,19 @@ public interface ICognosFolder {
 
     public static final String TYPE_NAME = "CognosFolder";
 
-    /** TBC */
+    /** Dashboards contained in the folder. */
     RelationField COGNOS_DASHBOARDS = new RelationField("cognosDashboards");
 
     /** Datasets contained in the folder. */
     RelationField COGNOS_DATASETS = new RelationField("cognosDatasets");
 
-    /** TBC */
+    /** Explorations contained in the folder. */
     RelationField COGNOS_EXPLORATIONS = new RelationField("cognosExplorations");
 
-    /** TBC */
+    /** Files contained in the folder. */
     RelationField COGNOS_FILES = new RelationField("cognosFiles");
 
-    /** TBC */
+    /** Folder containing the dashboard. */
     RelationField COGNOS_FOLDER = new RelationField("cognosFolder");
 
     /** Number of children in the folder (excluding subfolders). */
@@ -55,16 +55,16 @@ public interface ICognosFolder {
     NumericField COGNOS_FOLDER_SUB_FOLDER_COUNT =
             new NumericField("cognosFolderSubFolderCount", "cognosFolderSubFolderCount");
 
-    /** TBC */
+    /** Modules contained in the folder. */
     RelationField COGNOS_MODULES = new RelationField("cognosModules");
 
-    /** TBC */
+    /** Packages contained in the folder. */
     RelationField COGNOS_PACKAGES = new RelationField("cognosPackages");
 
-    /** TBC */
+    /** Reports contained in the folder. */
     RelationField COGNOS_REPORTS = new RelationField("cognosReports");
 
-    /** TBC */
+    /** Subfolders contained in the folder. */
     RelationField COGNOS_SUB_FOLDERS = new RelationField("cognosSubFolders");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -259,6 +259,9 @@ public interface ICognosFolder {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -331,6 +334,9 @@ public interface ICognosFolder {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -355,22 +361,22 @@ public interface ICognosFolder {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** TBC */
+    /** Dashboards contained in the folder. */
     SortedSet<ICognosDashboard> getCognosDashboards();
 
     /** Datasets contained in the folder. */
     SortedSet<ICognosDataset> getCognosDatasets();
 
-    /** Tooltip text present for the Cognos asset */
+    /** Tooltip text present for the Cognos asset. */
     String getCognosDefaultScreenTip();
 
-    /** TBC */
+    /** Explorations contained in the folder. */
     SortedSet<ICognosExploration> getCognosExplorations();
 
-    /** TBC */
+    /** Files contained in the folder. */
     SortedSet<ICognosFile> getCognosFiles();
 
-    /** TBC */
+    /** Folder containing the dashboard. */
     ICognosFolder getCognosFolder();
 
     /** Number of children in the folder (excluding subfolders). */
@@ -379,40 +385,40 @@ public interface ICognosFolder {
     /** Number of sub-folders in the folder. */
     Integer getCognosFolderSubFolderCount();
 
-    /** ID of the asset in Cognos */
+    /** ID of the asset in Cognos. */
     String getCognosId();
 
-    /** Whether the Cognos asset is diabled */
+    /** Whether the Cognos asset is disabled. */
     Boolean getCognosIsDisabled();
 
-    /** Whether the Cognos asset is hidden from the ui */
+    /** Whether the Cognos asset is hidden from the UI. */
     Boolean getCognosIsHidden();
 
-    /** TBC */
+    /** Modules contained in the folder. */
     SortedSet<ICognosModule> getCognosModules();
 
-    /** TBC */
+    /** Packages contained in the folder. */
     SortedSet<ICognosPackage> getCognosPackages();
 
-    /** Name of the parent asset in Cognos */
+    /** Name of the parent of the asset in Cognos. */
     String getCognosParentName();
 
-    /** Qualified name of the parent asset in Cognos */
+    /** Qualified name of the parent asset in Cognos. */
     String getCognosParentQualifiedName();
 
-    /** Path of the asset in Cognos. E.g. /content/folder[@name='Folder Name'] */
+    /** Path of the asset in Cognos (e.g. /content/folder[@name='Folder Name']). */
     String getCognosPath();
 
-    /** TBC */
+    /** Reports contained in the folder. */
     SortedSet<ICognosReport> getCognosReports();
 
-    /** TBC */
+    /** Subfolders contained in the folder. */
     SortedSet<ICognosFolder> getCognosSubFolders();
 
-    /** Cognos type of the Cognos asset. E.g. report, dashboard, package, etc. */
+    /** Type of the Cognos asset (e.g. report, dashboard, package, etc). */
     String getCognosType();
 
-    /** Version of the Cognos asset */
+    /** Version of the Cognos asset. */
     String getCognosVersion();
 
     /** Simple name of the connection through which this asset is accessible. */

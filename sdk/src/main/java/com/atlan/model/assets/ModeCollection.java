@@ -71,32 +71,32 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Attribute
     String modeCollectionType;
 
-    /** TBC */
+    /** Unique identifier for the Mode asset. */
     @Attribute
     String modeId;
 
-    /** TBC */
+    /** Simple name of the query for the Mode asset. */
     @Attribute
     String modeQueryName;
 
-    /** TBC */
+    /** Unique name of the query for the Mode asset. */
     @Attribute
     String modeQueryQualifiedName;
 
-    /** TBC */
+    /** Simple name of the report for the Mode asset. */
     @Attribute
     String modeReportName;
 
-    /** TBC */
+    /** Unique name of the report for the Mode asset. */
     @Attribute
     String modeReportQualifiedName;
 
-    /** TBC */
+    /** Reports related to this collection. */
     @Attribute
     @Singular
     SortedSet<IModeReport> modeReports;
 
-    /** TBC */
+    /** Token for the Mode asset. */
     @Attribute
     String modeToken;
 
@@ -104,15 +104,15 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     @Attribute
     IModeWorkspace modeWorkspace;
 
-    /** TBC */
+    /** Simple name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceName;
 
-    /** TBC */
+    /** Unique name of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceQualifiedName;
 
-    /** TBC */
+    /** Username of the workspace for the Mode asset. */
     @Attribute
     String modeWorkspaceUsername;
 

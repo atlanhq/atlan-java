@@ -38,43 +38,43 @@ public interface ITask {
     /** List of actions associated with this task. */
     KeywordField TASK_ACTIONS = new KeywordField("taskActions", "taskActions");
 
-    /** username of the user who created this task */
+    /** Username of the user who created this task. */
     KeywordField TASK_CREATED_BY = new KeywordField("taskCreatedBy", "taskCreatedBy");
 
-    /** action executed by the recipient */
+    /** Action executed by the recipient. */
     KeywordField TASK_EXECUTION_ACTION = new KeywordField("taskExecutionAction", "taskExecutionAction");
 
-    /** comment for the action executed by user */
+    /** Comment for the action executed by user. */
     TextField TASK_EXECUTION_COMMENT = new TextField("taskExecutionComment", "taskExecutionComment");
 
-    /** Time (epoch) at which the task expires . */
+    /** Time (epoch) at which the task expires. */
     NumericField TASK_EXPIRES_AT = new NumericField("taskExpiresAt", "taskExpiresAt");
 
-    /** contains external integration config for the task */
+    /** Contains external integration config for the task. */
     TextField TASK_INTEGRATION_CONFIG = new TextField("taskIntegrationConfig", "taskIntegrationConfig");
 
-    /** flag to make task read/unread */
+    /** Flag to make task read/unread. */
     BooleanField TASK_IS_READ = new BooleanField("taskIsRead", "taskIsRead");
 
-    /** contains the payload that is proposed to the task */
+    /** Contains the payload that is proposed to the task. */
     TextField TASK_PROPOSALS = new TextField("taskProposals", "taskProposals");
 
-    /** recipient of the task */
+    /** Recipient of the task. */
     KeywordField TASK_RECIPIENT = new KeywordField("taskRecipient", "taskRecipient");
 
-    /** assetId to preview */
+    /** Unique identifier of the asset to preview. */
     KeywordField TASK_RELATED_ASSET_GUID = new KeywordField("taskRelatedAssetGuid", "taskRelatedAssetGuid");
 
-    /** requestor of the task */
+    /** Requestor of the task. */
     KeywordField TASK_REQUESTOR = new KeywordField("taskRequestor", "taskRequestor");
 
-    /** comment of requestor for the task */
+    /** Comment of requestor for the task. */
     TextField TASK_REQUESTOR_COMMENT = new TextField("taskRequestorComment", "taskRequestorComment");
 
-    /** type of task */
+    /** Type of task. */
     KeywordField TASK_TYPE = new KeywordField("taskType", "taskType");
 
-    /** username of the user who updated this task */
+    /** Username of the user who updated this task. */
     KeywordField TASK_UPDATED_BY = new KeywordField("taskUpdatedBy", "taskUpdatedBy");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -269,6 +269,9 @@ public interface ITask {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -340,6 +343,9 @@ public interface ITask {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -563,43 +569,43 @@ public interface ITask {
     /** List of actions associated with this task. */
     List<Action> getTaskActions();
 
-    /** username of the user who created this task */
+    /** Username of the user who created this task. */
     String getTaskCreatedBy();
 
-    /** action executed by the recipient */
+    /** Action executed by the recipient. */
     String getTaskExecutionAction();
 
-    /** comment for the action executed by user */
+    /** Comment for the action executed by user. */
     String getTaskExecutionComment();
 
-    /** Time (epoch) at which the task expires . */
+    /** Time (epoch) at which the task expires. */
     Long getTaskExpiresAt();
 
-    /** contains external integration config for the task */
+    /** Contains external integration config for the task. */
     String getTaskIntegrationConfig();
 
-    /** flag to make task read/unread */
+    /** Flag to make task read/unread. */
     Boolean getTaskIsRead();
 
-    /** contains the payload that is proposed to the task */
+    /** Contains the payload that is proposed to the task. */
     String getTaskProposals();
 
-    /** recipient of the task */
+    /** Recipient of the task. */
     String getTaskRecipient();
 
-    /** assetId to preview */
+    /** Unique identifier of the asset to preview. */
     String getTaskRelatedAssetGuid();
 
-    /** requestor of the task */
+    /** Requestor of the task. */
     String getTaskRequestor();
 
-    /** comment of requestor for the task */
+    /** Comment of requestor for the task. */
     String getTaskRequestorComment();
 
-    /** type of task */
+    /** Type of task. */
     String getTaskType();
 
-    /** username of the user who updated this task */
+    /** Username of the user who updated this task. */
     String getTaskUpdatedBy();
 
     /** Name of the Atlan workspace in which this asset exists. */

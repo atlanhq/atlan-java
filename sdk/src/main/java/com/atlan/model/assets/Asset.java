@@ -338,6 +338,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     AtlanIcon assetIcon;
 
+    /** Internal Popularity score for this asset. */
+    @Attribute
+    Double assetInternalPopularityScore;
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     @Attribute
     @Singular
@@ -451,6 +455,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** TBC */
     @Attribute
     String assetSodaSourceURL;
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    @Attribute
+    String assetSourceReadme;
 
     /** List of tags attached to this asset. */
     @Attribute

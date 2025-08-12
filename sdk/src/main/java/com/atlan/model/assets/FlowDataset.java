@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
@@ -85,6 +85,11 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
     @Attribute
     String flowId;
+
+    /** Input parameters for the flow run. */
+    @Attribute
+    @Singular
+    Map<String, String> flowInputParameters;
 
     /** Reusable unit in which the ephemeral dataset is contained. */
     @Attribute

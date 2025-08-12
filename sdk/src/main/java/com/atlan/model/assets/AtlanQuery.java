@@ -213,6 +213,10 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    String sqlAIModelContextQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 

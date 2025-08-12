@@ -140,6 +140,11 @@ public class TableauDashboardField extends Asset
     @Singular("addTableauProjectHierarchy")
     List<Map<String, String>> tableauProjectHierarchy;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Unique name of the project in which this dashboard field exists. */
     @Attribute
     String tableauProjectQualifiedName;

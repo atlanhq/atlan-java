@@ -61,11 +61,11 @@ public class SnowflakeAIModelContext extends Asset
     @Attribute
     String aiModelDatasetsDSL;
 
-    /** Status of the AI model */
+    /** Status of the AI model. */
     @Attribute
     AIModelStatus aiModelStatus;
 
-    /** Version of the AI model */
+    /** Version of the AI model. */
     @Attribute
     String aiModelVersion;
 
@@ -74,7 +74,7 @@ public class SnowflakeAIModelContext extends Asset
     @Singular("modelVersion")
     SortedSet<IAIModelVersion> aiModelVersions;
 
-    /** AI applications that are created using this AI model */
+    /** AI applications that are created using this AI model. */
     @Attribute
     @Singular("aiApplication")
     SortedSet<IAIApplication> applications;
@@ -226,6 +226,10 @@ public class SnowflakeAIModelContext extends Asset
     @Attribute
     @Singular
     SortedSet<ISnowflakeAIModelVersion> snowflakeAIModelVersions;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
 
     /** Sources related to this asset. */
     @Attribute

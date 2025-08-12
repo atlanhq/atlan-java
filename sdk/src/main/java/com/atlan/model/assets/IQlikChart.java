@@ -45,6 +45,9 @@ public interface IQlikChart {
     /** Subtype of this chart, for example: bar, graph, pie, etc. */
     KeywordField QLIK_CHART_TYPE = new KeywordField("qlikChartType", "qlikChartType");
 
+    /** Columns contained in the chart. */
+    RelationField QLIK_COLUMNS = new RelationField("qlikColumns");
+
     /** Sheet in which this chart exists. */
     RelationField QLIK_SHEET = new RelationField("qlikSheet");
 
@@ -240,6 +243,9 @@ public interface IQlikChart {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -311,6 +317,9 @@ public interface IQlikChart {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -479,6 +488,9 @@ public interface IQlikChart {
 
     /** Subtype of this chart, for example: bar, graph, pie, etc. */
     String getQlikChartType();
+
+    /** Columns contained in the chart. */
+    SortedSet<IQlikColumn> getQlikColumns();
 
     /** Identifier of this asset, from Qlik. */
     String getQlikId();

@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("serial")
 public class ADLSContainer extends Asset
-        implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSContainer, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSContainer";

@@ -281,6 +281,10 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     Long sizeBytes;
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular

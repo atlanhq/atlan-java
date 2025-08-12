@@ -138,6 +138,11 @@ public class TableauDatasourceField extends Asset
     @Attribute
     String tableauDatasourceFieldRole;
 
+    /** Array of qualified names representing the project hierarchy for this Tableau asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
     /** Worksheet fields that use this datasource field. */
     @Attribute
     ITableauWorksheetField tableauWorksheetField;

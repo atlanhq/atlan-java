@@ -97,15 +97,15 @@ public class QuickSightDashboardVisual extends Asset
     @Attribute
     String quickSightDashboardQualifiedName;
 
-    /** TBC */
+    /** Unique identifier for the QuickSight asset. */
     @Attribute
     String quickSightId;
 
-    /** TBC */
+    /** Unique identifier for the QuickSight sheet. */
     @Attribute
     String quickSightSheetId;
 
-    /** TBC */
+    /** Name of the QuickSight sheet. */
     @Attribute
     String quickSightSheetName;
 

@@ -45,6 +45,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.AssetHistogram;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.util.StringUtils;
@@ -103,6 +104,14 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnAverageLength;
 
+    /** Average length of values in a string column. */
+    @Attribute
+    Double columnAverageLengthValue;
+
+    /** Average value in this column. */
+    @Attribute
+    Double columnAverageValue;
+
     /** Compression type of this column. */
     @Attribute
     String columnCompression;
@@ -123,6 +132,10 @@ public class GuacamoleColumn extends Asset
     /** Number of rows that contain distinct values. */
     @Attribute
     Long columnDistinctValuesCountLong;
+
+    /** Detailed information representing a histogram of values for a column. */
+    @Attribute
+    AssetHistogram columnDistributionHistogram;
 
     /** Number of rows that contain duplicate values. */
     @Attribute
@@ -153,6 +166,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnMax;
 
+    /** Greatest value in a numeric column. */
+    @Attribute
+    Double columnMaxValue;
+
     /** Length of the longest value in a string column. */
     @Attribute
     Integer columnMaximumStringLength;
@@ -166,6 +183,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnMean;
 
+    /** Arithmetic mean of the values in a numeric column. */
+    @Attribute
+    Double columnMeanValue;
+
     /** The type of measure/calculated column this is, eg: base, calculated, derived. */
     @Attribute
     String columnMeasureType;
@@ -174,9 +195,17 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnMedian;
 
+    /** Calculated median of the values in a numeric column. */
+    @Attribute
+    Double columnMedianValue;
+
     /** Least value in a numeric column. */
     @Attribute
     Double columnMin;
+
+    /** Least value in a numeric column. */
+    @Attribute
+    Double columnMinValue;
 
     /** Length of the shortest value in a string column. */
     @Attribute
@@ -203,9 +232,17 @@ public class GuacamoleColumn extends Asset
     @Attribute
     Double columnStandardDeviation;
 
+    /** Calculated standard deviation of the values in a numeric column. */
+    @Attribute
+    Double columnStandardDeviationValue;
+
     /** Calculated sum of the values in a numeric column. */
     @Attribute
     Double columnSum;
+
+    /** Calculated sum of the values in a numeric column. */
+    @Attribute
+    Double columnSumValue;
 
     /** List of top values in this column. */
     @Attribute
@@ -227,6 +264,10 @@ public class GuacamoleColumn extends Asset
     /** Calculated variance of the values in a numeric column. */
     @Attribute
     Double columnVariance;
+
+    /** Calculated variance of the values in a numeric column. */
+    @Attribute
+    Double columnVarianceValue;
 
     /** Cosmos collection in which this column exists. */
     @Attribute
@@ -500,6 +541,10 @@ public class GuacamoleColumn extends Asset
     /** Snowflake dynamic table in which this column exists. */
     @Attribute
     ISnowflakeDynamicTable snowflakeDynamicTable;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    @Attribute
+    String sqlAIModelContextQualifiedName;
 
     /** TBC */
     @Attribute

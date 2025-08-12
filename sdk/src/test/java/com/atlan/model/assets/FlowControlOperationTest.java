@@ -64,6 +64,8 @@ public class FlowControlOperationTest {
             .flowFolderName("String0")
             .flowFolderQualifiedName("String0")
             .flowId("String0")
+            .flowInputParameter("key1", "value1")
+            .flowInputParameter("key2", "value2")
             .flowProjectName("String0")
             .flowProjectQualifiedName("String0")
             .flowReusableUnitName("String0")
@@ -143,6 +145,7 @@ public class FlowControlOperationTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -182,6 +185,7 @@ public class FlowControlOperationTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -434,6 +438,10 @@ public class FlowControlOperationTest {
             .viewerUser("String1")
             .flowDataResult(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowDataResult(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowPredecessor(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowPredecessor(FlowControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowSuccessor(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowSuccessor(FlowControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

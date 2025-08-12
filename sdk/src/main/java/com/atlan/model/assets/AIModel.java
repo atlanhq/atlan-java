@@ -37,7 +37,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of an AI model in Atlan
+ * Instance of an AI model in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -60,11 +60,11 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
     @Attribute
     String aiModelDatasetsDSL;
 
-    /** Status of the AI model */
+    /** Status of the AI model. */
     @Attribute
     AIModelStatus aiModelStatus;
 
-    /** Version of the AI model */
+    /** Version of the AI model. */
     @Attribute
     String aiModelVersion;
 
@@ -73,7 +73,7 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
     @Singular("modelVersion")
     SortedSet<IAIModelVersion> aiModelVersions;
 
-    /** AI applications that are created using this AI model */
+    /** AI applications that are created using this AI model. */
     @Attribute
     @Singular("aiApplication")
     SortedSet<IAIApplication> applications;

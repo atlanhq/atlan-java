@@ -155,6 +155,7 @@ public class QlikChartTest {
             .assetDbtUniqueId("String0")
             .assetDbtWorkflowLastUpdated("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetInternalPopularityScore(123.456)
             .assetMcAlertQualifiedName("String0")
             .assetMcAlertQualifiedName("String1")
             .assetMcIncidentName("String0")
@@ -194,6 +195,7 @@ public class QlikChartTest {
             .assetSodaLastScanAt(123456789L)
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
+            .assetSourceReadme("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -448,6 +450,8 @@ public class QlikChartTest {
             .qlikChartOrientation("String0")
             .qlikChartSubtitle("String0")
             .qlikChartType("String0")
+            .qlikColumn(QlikColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .qlikColumn(QlikColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .qlikSheet(QlikSheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

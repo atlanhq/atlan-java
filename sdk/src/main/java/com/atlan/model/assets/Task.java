@@ -53,56 +53,56 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
     @Singular
     List<Action> taskActions;
 
-    /** username of the user who created this task */
+    /** Username of the user who created this task. */
     @Attribute
     String taskCreatedBy;
 
-    /** action executed by the recipient */
+    /** Action executed by the recipient. */
     @Attribute
     String taskExecutionAction;
 
-    /** comment for the action executed by user */
+    /** Comment for the action executed by user. */
     @Attribute
     String taskExecutionComment;
 
-    /** Time (epoch) at which the task expires . */
+    /** Time (epoch) at which the task expires. */
     @Attribute
     @Date
     Long taskExpiresAt;
 
-    /** contains external integration config for the task */
+    /** Contains external integration config for the task. */
     @Attribute
     String taskIntegrationConfig;
 
-    /** flag to make task read/unread */
+    /** Flag to make task read/unread. */
     @Attribute
     Boolean taskIsRead;
 
-    /** contains the payload that is proposed to the task */
+    /** Contains the payload that is proposed to the task. */
     @Attribute
     String taskProposals;
 
-    /** recipient of the task */
+    /** Recipient of the task. */
     @Attribute
     String taskRecipient;
 
-    /** assetId to preview */
+    /** Unique identifier of the asset to preview. */
     @Attribute
     String taskRelatedAssetGuid;
 
-    /** requestor of the task */
+    /** Requestor of the task. */
     @Attribute
     String taskRequestor;
 
-    /** comment of requestor for the task */
+    /** Comment of requestor for the task. */
     @Attribute
     String taskRequestorComment;
 
-    /** type of task */
+    /** Type of task. */
     @Attribute
     String taskType;
 
-    /** username of the user who updated this task */
+    /** Username of the user who updated this task. */
     @Attribute
     String taskUpdatedBy;
 
