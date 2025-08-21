@@ -307,14 +307,15 @@
       "description": "A second example classification, created via API token.",
       "typeVersion": "1.0",
       "options": {
-        "color": "Red",
-        "createdFromAtlan": "false",
-        "hasTag": "true"
+        "color": "Red"
       },
       "attributeDefs": [
         {
-          "name": "Bhosu74RJGY0vdjnY6LHBQ",
+          "name": "zvB2ZQHKlJ6zWI1c3a1vfe",
+          "displayName": "sourceTagAttachment",
+          "description": "",
           "typeName": "array<SourceTagAttachment>",
+          "isDefaultValueNull": false,
           "isOptional": true,
           "cardinality": "SET",
           "valuesMinCount": 0,
@@ -324,14 +325,11 @@
           "includeInNotification": false,
           "skipScrubbing": false,
           "searchWeight": -1,
-          "displayName": "sourceTagAttachment",
-          "isDefaultValueNull": false
+          "isNew": true
         }
       ],
       "superTypes": [],
-      "entityTypes": [
-        "Asset"
-      ],
+      "entityTypes": [],
       "displayName": "String1",
       "subTypes": []
     }
