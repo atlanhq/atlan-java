@@ -105,35 +105,35 @@ class IncrementalUpdateTest : PackageTest("iut") {
     private val attrs: List<AtlanField> =
         listOf(
             Asset.NAME,
-            Asset.DESCRIPTION,
+            Asset.USER_DESCRIPTION,
         )
 
     @Test(groups = ["aim.iut.create"])
     fun db1Created() {
         val db = getDatabase(db1)
         assertNotNull(db)
-        assertEquals("Test database for incremental updates", db.description)
+        assertEquals("Test database for incremental updates", db.userDescription)
     }
 
     @Test(groups = ["aim.iut.create"])
     fun db2Created() {
         val db = getDatabase(db2)
         assertNotNull(db)
-        assertEquals("Another test database for incremental updates", db.description)
+        assertEquals("Another test database for incremental updates", db.userDescription)
     }
 
     @Test(groups = ["aim.iut.create"])
     fun sch1Created() {
         val sch = getSchema(sch1)
         assertNotNull(sch)
-        assertEquals("Test schema for incremental updates", sch.description)
+        assertEquals("Test schema for incremental updates", sch.userDescription)
     }
 
     @Test(groups = ["aim.iut.create"])
     fun sch2Created() {
         val sch = getSchema(sch2)
         assertNotNull(sch)
-        assertEquals("Another test schema for incremental updates", sch.description)
+        assertEquals("Another test schema for incremental updates", sch.userDescription)
     }
 
     private fun getDatabase(name: String): Database {
@@ -188,28 +188,28 @@ class IncrementalUpdateTest : PackageTest("iut") {
     fun db1Updated() {
         val db = getDatabase(db1)
         assertNotNull(db)
-        assertEquals("Test database for more incremental updates", db.description)
+        assertEquals("Test database for more incremental updates", db.userDescription)
     }
 
     @Test(dependsOnGroups = ["aim.iut.runUpdate"])
     fun db2Updated() {
         val db = getDatabase(db2)
         assertNotNull(db)
-        assertEquals("Another test database for more incremental updates", db.description)
+        assertEquals("Another test database for more incremental updates", db.userDescription)
     }
 
     @Test(dependsOnGroups = ["aim.iut.runUpdate"])
     fun sch1Updated() {
-        val sch = getDatabase(sch1)
+        val sch = getSchema(sch1)
         assertNotNull(sch)
-        assertEquals("Test schema for more incremental updates", sch.description)
+        assertEquals("Test schema for more incremental updates", sch.userDescription)
     }
 
     @Test(dependsOnGroups = ["aim.iut.runUpdate"])
     fun sch2Updated() {
-        val sch = getDatabase(sch2)
+        val sch = getSchema(sch2)
         assertNotNull(sch)
-        assertEquals("Another test schema for more incremental updates", sch.description)
+        assertEquals("Another test schema for more incremental updates", sch.userDescription)
     }
 
     @Test(dependsOnGroups = ["aim.iut.runUpdate"])
