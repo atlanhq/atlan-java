@@ -455,6 +455,9 @@ public interface ICatalog {
             case MicroStrategyAttribute.TYPE_NAME:
                 ref = MicroStrategyAttribute.refByQualifiedName(qualifiedName);
                 break;
+            case MicroStrategyColumn.TYPE_NAME:
+                ref = MicroStrategyColumn.refByQualifiedName(qualifiedName);
+                break;
             case MicroStrategyCube.TYPE_NAME:
                 ref = MicroStrategyCube.refByQualifiedName(qualifiedName);
                 break;

@@ -33,6 +33,9 @@ public interface IMicroStrategyFact {
 
     public static final String TYPE_NAME = "MicroStrategyFact";
 
+    /** Individual columns contained in the fact. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** List of expressions for this fact. */
     TextField MICRO_STRATEGY_FACT_EXPRESSIONS =
             new TextField("microStrategyFactExpressions", "microStrategyFactExpressions");
@@ -429,6 +432,9 @@ public interface IMicroStrategyFact {
 
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
+
+    /** Individual columns contained in the fact. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();

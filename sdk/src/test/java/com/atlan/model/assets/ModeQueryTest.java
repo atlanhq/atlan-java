@@ -12,6 +12,7 @@ import com.atlan.model.structs.*;
 import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
@@ -457,6 +458,11 @@ public class ModeQueryTest {
     private static final int hash = full.hashCode();
     private static ModeQuery frodo;
     private static String serialized;
+
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
+    }
 
     @Test(groups = {"ModeQuery.builderEquivalency"})
     void builderEquivalency() {

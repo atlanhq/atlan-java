@@ -37,6 +37,9 @@ public interface IMicroStrategyAttribute {
     TextField MICRO_STRATEGY_ATTRIBUTE_FORMS =
             new TextField("microStrategyAttributeForms", "microStrategyAttributeForms");
 
+    /** Individual columns contained in the attribute. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** Cubes in which this attribute is used. */
     RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
 
@@ -438,6 +441,9 @@ public interface IMicroStrategyAttribute {
 
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
+
+    /** Individual columns contained in the attribute. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();

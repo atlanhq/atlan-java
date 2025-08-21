@@ -8,11 +8,11 @@ import org.testng.annotations.BeforeSuite
 class MockTenant : MockAtlanTenant() {
     @BeforeSuite
     fun start() {
-        startServer()
+        initializeClient()
     }
 
     @AfterSuite
     fun stop() {
-        stopServer()
+        closeClient()
     }
 }

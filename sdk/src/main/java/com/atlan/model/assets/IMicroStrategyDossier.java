@@ -33,11 +33,14 @@ public interface IMicroStrategyDossier {
 
     public static final String TYPE_NAME = "MicroStrategyDossier";
 
+    /** Individual columns contained in the dossier. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** List of chapter names in this dossier. */
     TextField MICRO_STRATEGY_DOSSIER_CHAPTER_NAMES =
             new TextField("microStrategyDossierChapterNames", "microStrategyDossierChapterNames");
 
-    /** Project in which this dossier exists */
+    /** Project in which this dossier exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
     /** Visualizations that exist within this dossier. */
@@ -430,6 +433,9 @@ public interface IMicroStrategyDossier {
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
 
+    /** Individual columns contained in the dossier. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
+
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();
 
@@ -445,7 +451,7 @@ public interface IMicroStrategyDossier {
     /** Location of this asset in MicroStrategy. */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Project in which this dossier exists */
+    /** Project in which this dossier exists. */
     IMicroStrategyProject getMicroStrategyProject();
 
     /** Simple name of the project in which this asset exists. */

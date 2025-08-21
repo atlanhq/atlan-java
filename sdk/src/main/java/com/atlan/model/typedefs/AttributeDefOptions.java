@@ -184,6 +184,7 @@ public class AttributeDefOptions extends AtlanObject {
             MetabaseDashboard.TYPE_NAME,
             MetabaseQuestion.TYPE_NAME,
             MicroStrategyAttribute.TYPE_NAME,
+            MicroStrategyColumn.TYPE_NAME,
             MicroStrategyCube.TYPE_NAME,
             MicroStrategyDocument.TYPE_NAME,
             MicroStrategyDossier.TYPE_NAME,

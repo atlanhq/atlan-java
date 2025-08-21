@@ -22,6 +22,10 @@ class ISO8601TimestampsTest {
     private val logger = getLogger(this.javaClass.name)
 
     companion object {
+        init {
+            MockAtlanTenant.initializeClient()
+        }
+
         private val config = Utils.parseConfig<MockConfig>("{}", "{}")
         private val ctx = PackageContext(config, MockAtlanTenant.client, true)
         private val EMPTY = ""

@@ -12,6 +12,7 @@ import com.atlan.model.structs.*;
 import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
@@ -453,6 +454,9 @@ public class MicroStrategyDossierTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
+            .microStrategyColumn(MicroStrategyColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyColumn(
+                    MicroStrategyColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .microStrategyDossierChapterName("String0")
             .microStrategyDossierChapterName("String1")
             .microStrategyProject(MicroStrategyProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -464,6 +468,11 @@ public class MicroStrategyDossierTest {
     private static final int hash = full.hashCode();
     private static MicroStrategyDossier frodo;
     private static String serialized;
+
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
+    }
 
     @Test(groups = {"MicroStrategyDossier.builderEquivalency"})
     void builderEquivalency() {

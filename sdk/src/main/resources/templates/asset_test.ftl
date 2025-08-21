@@ -14,9 +14,9 @@ import ${packageRoot}.enums.*;
 import ${packageRoot}.structs.*;
 import java.io.IOException;
 import java.util.*;
-import org.testng.annotations.Test;
-
 import javax.annotation.processing.Generated;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 @Generated(value="${generatorName}")
 @SuppressWarnings("deprecation")
@@ -73,6 +73,11 @@ public class ${className}Test {
     private static final int hash = full.hashCode();
     private static ${className} frodo;
     private static String serialized;
+
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
+    }
 
     @Test(groups = {"${className}.builderEquivalency"})
     void builderEquivalency() {

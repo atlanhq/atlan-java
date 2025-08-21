@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/meta/types/typedefs?type=business_metadata&type=struct"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "typedefs-custom-metadata-cache.json"
+  }
+}

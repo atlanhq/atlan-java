@@ -78,6 +78,11 @@ public class MicroStrategyReport extends Asset
     @Attribute
     String microStrategyCertifiedBy;
 
+    /** Individual columns contained in the report. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyColumn> microStrategyColumns;
+
     /** Simple names of the cubes related to this asset. */
     @Attribute
     @Singular

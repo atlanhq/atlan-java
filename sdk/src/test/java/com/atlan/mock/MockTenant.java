@@ -7,12 +7,12 @@ import org.testng.annotations.BeforeSuite;
 
 public class MockTenant extends MockAtlanTenant {
     @BeforeSuite
-    void start() {
-        startServer();
+    void start() throws InterruptedException {
+        initializeClient();
     }
 
     @AfterSuite
     void stop() {
-        stopServer();
+        closeClient();
     }
 }
