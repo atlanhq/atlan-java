@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeSuite
 class MockTenant : MockAtlanTenant() {
     @BeforeSuite
     fun start() {
-        createClient()
+        initializeClient()
     }
 
     @AfterSuite

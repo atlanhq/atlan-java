@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeSuite;
 
 public class MockTenant extends MockAtlanTenant {
     @BeforeSuite
-    void start() {
-        createClient();
+    void start() throws InterruptedException {
+        initializeClient();
     }
 
     @AfterSuite
