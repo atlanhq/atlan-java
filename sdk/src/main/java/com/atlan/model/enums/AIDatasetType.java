@@ -13,6 +13,7 @@ public enum AIDatasetType implements AtlanEnum {
     INFERENCE("INFERENCE"),
     VALIDATION("VALIDATION"),
     OUTPUT("OUTPUT"),
+    INPUT("INPUT"),
     ;
 
     @JsonValue

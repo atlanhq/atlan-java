@@ -8,8 +8,9 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
@@ -24,33 +25,93 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a MicroStrategy attribute in Atlan.
+ * Base class for MicroStrategy column assets in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IMicroStrategyAttribute {
+public interface IMicroStrategyColumn {
 
-    public static final String TYPE_NAME = "MicroStrategyAttribute";
+    public static final String TYPE_NAME = "MicroStrategyColumn";
 
-    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
-    TextField MICRO_STRATEGY_ATTRIBUTE_FORMS =
-            new TextField("microStrategyAttributeForms", "microStrategyAttributeForms");
+    /** Attribute containing the column. */
+    RelationField MICRO_STRATEGY_ATTRIBUTE = new RelationField("microStrategyAttribute");
 
-    /** Individual columns contained in the attribute. */
-    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+    /** Unique identifier of the Attribute in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_ATTRIBUTE_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnAttributeQualifiedName",
+            "microStrategyColumnAttributeQualifiedName.keyword",
+            "microStrategyColumnAttributeQualifiedName");
 
-    /** Cubes in which this attribute is used. */
-    RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
+    /** Unique identifier of the Cube in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_CUBE_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnCubeQualifiedName",
+            "microStrategyColumnCubeQualifiedName.keyword",
+            "microStrategyColumnCubeQualifiedName");
 
-    /** Metrics that use this attribute. */
-    RelationField MICRO_STRATEGY_METRICS = new RelationField("microStrategyMetrics");
+    /** Unique identifier of the Document in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_DOCUMENT_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnDocumentQualifiedName",
+            "microStrategyColumnDocumentQualifiedName.keyword",
+            "microStrategyColumnDocumentQualifiedName");
 
-    /** Project in which this attribute exists. */
-    RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
+    /** Unique identifier of the Dossier in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_DOSSIER_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnDossierQualifiedName",
+            "microStrategyColumnDossierQualifiedName.keyword",
+            "microStrategyColumnDossierQualifiedName");
 
-    /** Reports in which this attribute is used. */
-    RelationField MICRO_STRATEGY_REPORTS = new RelationField("microStrategyReports");
+    /** Expression or formula used to define this column. */
+    KeywordField MICRO_STRATEGY_COLUMN_EXPRESSION =
+            new KeywordField("microStrategyColumnExpression", "microStrategyColumnExpression");
+
+    /** Unique identifier of the Fact in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_FACT_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnFactQualifiedName",
+            "microStrategyColumnFactQualifiedName.keyword",
+            "microStrategyColumnFactQualifiedName");
+
+    /** Unique identifier of the column in MicroStrategy. */
+    KeywordField MICRO_STRATEGY_COLUMN_ID = new KeywordField("microStrategyColumnId", "microStrategyColumnId");
+
+    /** Unique identifier of the Metric in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_METRIC_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnMetricQualifiedName",
+            "microStrategyColumnMetricQualifiedName.keyword",
+            "microStrategyColumnMetricQualifiedName");
+
+    /** Unique identifier of the Report in which this column exists. */
+    KeywordTextField MICRO_STRATEGY_COLUMN_REPORT_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyColumnReportQualifiedName",
+            "microStrategyColumnReportQualifiedName.keyword",
+            "microStrategyColumnReportQualifiedName");
+
+    /** Type of the column (Eg attribute_column, fact_column, metric_column etc). */
+    KeywordField MICRO_STRATEGY_COLUMN_TYPE = new KeywordField("microStrategyColumnType", "microStrategyColumnType");
+
+    /** Cube containing the column. */
+    RelationField MICRO_STRATEGY_CUBE = new RelationField("microStrategyCube");
+
+    /** Data type of the column. */
+    KeywordField MICRO_STRATEGY_DATA_TYPE = new KeywordField("microStrategyDataType", "microStrategyDataType");
+
+    /** Document containing the column. */
+    RelationField MICRO_STRATEGY_DOCUMENT = new RelationField("microStrategyDocument");
+
+    /** Dossier containing the column. */
+    RelationField MICRO_STRATEGY_DOSSIER = new RelationField("microStrategyDossier");
+
+    /** Fact containing the column. */
+    RelationField MICRO_STRATEGY_FACT = new RelationField("microStrategyFact");
+
+    /** Metric containing the column. */
+    RelationField MICRO_STRATEGY_METRIC = new RelationField("microStrategyMetric");
+
+    /** Name of the parent asset. */
+    KeywordField MICRO_STRATEGY_PARENT_NAME = new KeywordField("microStrategyParentName", "microStrategyParentName");
+
+    /** Report containing the column. */
+    RelationField MICRO_STRATEGY_REPORT = new RelationField("microStrategyReport");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -433,8 +494,8 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<IMetric> getMetrics();
 
-    /** JSON string specifying the attribute's name, description, displayFormat, etc. */
-    String getMicroStrategyAttributeForms();
+    /** Attribute containing the column. */
+    IMicroStrategyAttribute getMicroStrategyAttribute();
 
     /** Time (epoch) this asset was certified in MicroStrategy, in milliseconds. */
     Long getMicroStrategyCertifiedAt();
@@ -442,8 +503,38 @@ public interface IMicroStrategyAttribute {
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
 
-    /** Individual columns contained in the attribute. */
-    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
+    /** Unique identifier of the Attribute in which this column exists. */
+    String getMicroStrategyColumnAttributeQualifiedName();
+
+    /** Unique identifier of the Cube in which this column exists. */
+    String getMicroStrategyColumnCubeQualifiedName();
+
+    /** Unique identifier of the Document in which this column exists. */
+    String getMicroStrategyColumnDocumentQualifiedName();
+
+    /** Unique identifier of the Dossier in which this column exists. */
+    String getMicroStrategyColumnDossierQualifiedName();
+
+    /** Expression or formula used to define this column. */
+    String getMicroStrategyColumnExpression();
+
+    /** Unique identifier of the Fact in which this column exists. */
+    String getMicroStrategyColumnFactQualifiedName();
+
+    /** Unique identifier of the column in MicroStrategy. */
+    String getMicroStrategyColumnId();
+
+    /** Unique identifier of the Metric in which this column exists. */
+    String getMicroStrategyColumnMetricQualifiedName();
+
+    /** Unique identifier of the Report in which this column exists. */
+    String getMicroStrategyColumnReportQualifiedName();
+
+    /** Type of the column (Eg attribute_column, fact_column, metric_column etc). */
+    String getMicroStrategyColumnType();
+
+    /** Cube containing the column. */
+    IMicroStrategyCube getMicroStrategyCube();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();
@@ -451,8 +542,17 @@ public interface IMicroStrategyAttribute {
     /** Unique names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
-    /** Cubes in which this attribute is used. */
-    SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
+    /** Data type of the column. */
+    String getMicroStrategyDataType();
+
+    /** Document containing the column. */
+    IMicroStrategyDocument getMicroStrategyDocument();
+
+    /** Dossier containing the column. */
+    IMicroStrategyDossier getMicroStrategyDossier();
+
+    /** Fact containing the column. */
+    IMicroStrategyFact getMicroStrategyFact();
 
     /** Whether the asset is certified in MicroStrategy (true) or not (false). */
     Boolean getMicroStrategyIsCertified();
@@ -460,11 +560,11 @@ public interface IMicroStrategyAttribute {
     /** Location of this asset in MicroStrategy. */
     List<Map<String, String>> getMicroStrategyLocation();
 
-    /** Metrics that use this attribute. */
-    SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
+    /** Metric containing the column. */
+    IMicroStrategyMetric getMicroStrategyMetric();
 
-    /** Project in which this attribute exists. */
-    IMicroStrategyProject getMicroStrategyProject();
+    /** Name of the parent asset. */
+    String getMicroStrategyParentName();
 
     /** Simple name of the project in which this asset exists. */
     String getMicroStrategyProjectName();
@@ -472,14 +572,14 @@ public interface IMicroStrategyAttribute {
     /** Unique name of the project in which this asset exists. */
     String getMicroStrategyProjectQualifiedName();
 
+    /** Report containing the column. */
+    IMicroStrategyReport getMicroStrategyReport();
+
     /** Simple names of the reports related to this asset. */
     SortedSet<String> getMicroStrategyReportNames();
 
     /** Unique names of the reports related to this asset. */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
-
-    /** Reports in which this attribute is used. */
-    SortedSet<IMicroStrategyReport> getMicroStrategyReports();
 
     /** Attributes implemented by this asset. */
     SortedSet<IModelAttribute> getModelImplementedAttributes();

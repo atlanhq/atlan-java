@@ -4,7 +4,7 @@ package ${packageRoot}.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.AtlanClient;
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.model.assets.Meaning;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
@@ -14,13 +14,10 @@ import ${packageRoot}.enums.*;
 import ${packageRoot}.structs.*;
 import java.io.IOException;
 import java.util.*;
-import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import javax.annotation.processing.Generated;
 
-@Slf4j
 @Generated(value="${generatorName}")
 @SuppressWarnings("deprecation")
 public class ${className}Test {
@@ -76,16 +73,6 @@ public class ${className}Test {
     private static final int hash = full.hashCode();
     private static ${className} frodo;
     private static String serialized;
-    private static AtlanClient client = new AtlanClient("http://localhost:8765", "unused");
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            client.close();
-        } catch (Exception e) {
-            log.error("Unable to close client used for unit tests.", e);
-        }
-    }
 
     @Test(groups = {"${className}.builderEquivalency"})
     void builderEquivalency() {
@@ -97,7 +84,7 @@ public class ${className}Test {
             dependsOnGroups = {"${className}.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson(client);
+        serialized = full.toJson(MockAtlanTenant.client);
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -107,7 +94,7 @@ public class ${className}Test {
             dependsOnGroups = {"${className}.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = client.readValue(serialized, ${className}.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, ${className}.class);
         assertNotNull(frodo);
     }
 
@@ -117,7 +104,7 @@ public class ${className}Test {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson(client);
+        String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

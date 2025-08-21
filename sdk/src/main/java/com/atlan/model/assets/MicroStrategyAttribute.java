@@ -77,6 +77,11 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     String microStrategyCertifiedBy;
 
+    /** Individual columns contained in the attribute. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyColumn> microStrategyColumns;
+
     /** Simple names of the cubes related to this asset. */
     @Attribute
     @Singular

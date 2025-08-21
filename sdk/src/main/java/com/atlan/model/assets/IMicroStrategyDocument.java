@@ -32,6 +32,9 @@ public interface IMicroStrategyDocument {
 
     public static final String TYPE_NAME = "MicroStrategyDocument";
 
+    /** Individual columns contained in the document. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** Project in which this document exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");
 
@@ -421,6 +424,9 @@ public interface IMicroStrategyDocument {
 
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
+
+    /** Individual columns contained in the document. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();

@@ -2,21 +2,19 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.mock;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-
 import com.atlan.AtlanClient;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class MockAtlanTenant {
 
-    public static final AtlanClient client = new AtlanClient("http://localhost:8765", "unused");
+    public static AtlanClient client = null;
 
-    public void startServer() {
-        // Nothing to do, server is now run via Gradle
+    public void createClient() {
+        client = new AtlanClient("http://localhost:8765", "unused");
     }
 
-    public void stopServer() {
+    public void closeClient() {
         try {
             client.close();
         } catch (Exception e) {

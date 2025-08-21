@@ -47,6 +47,9 @@ public interface IMicroStrategyMetric {
     /** Attributes this metric uses. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
+    /** Individual columns contained in the metric. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** Cubes this metric uses. */
     RelationField MICRO_STRATEGY_CUBES = new RelationField("microStrategyCubes");
 
@@ -486,6 +489,9 @@ public interface IMicroStrategyMetric {
 
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
+
+    /** Individual columns contained in the metric. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();

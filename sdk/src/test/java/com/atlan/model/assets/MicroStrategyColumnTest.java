@@ -16,9 +16,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ADLSAccountTest {
+public class MicroStrategyColumnTest {
 
-    private static final ADLSAccount full = ADLSAccount._internal()
+    private static final MicroStrategyColumn full = MicroStrategyColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -59,19 +59,21 @@ public class ADLSAccountTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .adlsAccountName("String0")
-            .adlsAccountQualifiedName("String0")
-            .adlsAccountSecondaryLocation("String0")
-            .azureLocation("String0")
-            .azureResourceId("String0")
-            .azureTag(AzureTag.builder()
-                    .azureTagKey("String0")
-                    .azureTagValue("String0")
-                    .build())
-            .azureTag(AzureTag.builder()
-                    .azureTagKey("String1")
-                    .azureTagValue("String1")
-                    .build())
+            .microStrategyCertifiedAt(123456789L)
+            .microStrategyCertifiedBy("String0")
+            .microStrategyCubeName("String0")
+            .microStrategyCubeName("String1")
+            .microStrategyCubeQualifiedName("String0")
+            .microStrategyCubeQualifiedName("String1")
+            .microStrategyIsCertified(true)
+            .putMicroStrategyLocation(Map.of("key1", "value1"))
+            .putMicroStrategyLocation(Map.of("key2", "value2"))
+            .microStrategyProjectName("String0")
+            .microStrategyProjectQualifiedName("String0")
+            .microStrategyReportName("String0")
+            .microStrategyReportName("String1")
+            .microStrategyReportQualifiedName("String0")
+            .microStrategyReportQualifiedName("String1")
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -451,32 +453,39 @@ public class ADLSAccountTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .adlsAccountAccessTier(ADLSAccessTier.COOL)
-            .adlsAccountKind(ADLSStorageKind.BLOB_STORAGE)
-            .adlsAccountPerformance(ADLSPerformance.STANDARD)
-            .adlsAccountProvisionState(ADLSProvisionState.CREATING)
-            .adlsAccountReplication(ADLSReplicationType.LRS)
-            .adlsAccountResourceGroup("String0")
-            .adlsAccountSubscription("String0")
-            .adlsContainer(ADLSContainer.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .adlsContainer(ADLSContainer.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .adlsETag("String0")
-            .adlsEncryptionType(ADLSEncryptionTypes.MICROSOFT_STORAGE)
-            .adlsPrimaryDiskState(ADLSAccountStatus.AVAILABLE)
+            .microStrategyAttribute(MicroStrategyAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyColumnAttributeQualifiedName("String0")
+            .microStrategyColumnCubeQualifiedName("String0")
+            .microStrategyColumnDocumentQualifiedName("String0")
+            .microStrategyColumnDossierQualifiedName("String0")
+            .microStrategyColumnExpression("String0")
+            .microStrategyColumnFactQualifiedName("String0")
+            .microStrategyColumnId("String0")
+            .microStrategyColumnMetricQualifiedName("String0")
+            .microStrategyColumnReportQualifiedName("String0")
+            .microStrategyColumnType("String0")
+            .microStrategyCube(MicroStrategyCube.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyDataType("String0")
+            .microStrategyDocument(MicroStrategyDocument.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyDossier(MicroStrategyDossier.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyFact(MicroStrategyFact.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyMetric(MicroStrategyMetric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .microStrategyParentName("String0")
+            .microStrategyReport(MicroStrategyReport.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static ADLSAccount frodo;
+    private static MicroStrategyColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"ADLSAccount.builderEquivalency"})
+    @Test(groups = {"MicroStrategyColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"ADLSAccount.serialize"},
-            dependsOnGroups = {"ADLSAccount.builderEquivalency"})
+            groups = {"MicroStrategyColumn.serialize"},
+            dependsOnGroups = {"MicroStrategyColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson(MockAtlanTenant.client);
@@ -485,17 +494,17 @@ public class ADLSAccountTest {
     }
 
     @Test(
-            groups = {"ADLSAccount.deserialize"},
-            dependsOnGroups = {"ADLSAccount.serialize"})
+            groups = {"MicroStrategyColumn.deserialize"},
+            dependsOnGroups = {"MicroStrategyColumn.serialize"})
     void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, ADLSAccount.class);
+        frodo = MockAtlanTenant.client.readValue(serialized, MicroStrategyColumn.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"ADLSAccount.equivalency"},
-            dependsOnGroups = {"ADLSAccount.serialize", "ADLSAccount.deserialize"})
+            groups = {"MicroStrategyColumn.equivalency"},
+            dependsOnGroups = {"MicroStrategyColumn.serialize", "MicroStrategyColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -504,8 +513,8 @@ public class ADLSAccountTest {
     }
 
     @Test(
-            groups = {"ADLSAccount.equivalency"},
-            dependsOnGroups = {"ADLSAccount.serialize", "ADLSAccount.deserialize"})
+            groups = {"MicroStrategyColumn.equivalency"},
+            dependsOnGroups = {"MicroStrategyColumn.serialize", "MicroStrategyColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

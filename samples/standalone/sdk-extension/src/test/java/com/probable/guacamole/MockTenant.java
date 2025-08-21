@@ -9,11 +9,11 @@ import org.testng.annotations.BeforeSuite;
 public class MockTenant extends MockAtlanTenant {
     @BeforeSuite
     void start() {
-        startServer();
+        createClient();
     }
 
     @AfterSuite
     void stop() {
-        stopServer();
+        closeClient();
     }
 }

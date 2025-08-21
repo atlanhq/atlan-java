@@ -37,6 +37,9 @@ public interface IMicroStrategyCube {
     /** Attributes used by this cube. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
 
+    /** Individual columns contained in the cube. */
+    RelationField MICRO_STRATEGY_COLUMNS = new RelationField("microStrategyColumns");
+
     /** Query used to create the cube. */
     TextField MICRO_STRATEGY_CUBE_QUERY = new TextField("microStrategyCubeQuery", "microStrategyCubeQuery");
 
@@ -438,6 +441,9 @@ public interface IMicroStrategyCube {
 
     /** User who certified this asset, in MicroStrategy. */
     String getMicroStrategyCertifiedBy();
+
+    /** Individual columns contained in the cube. */
+    SortedSet<IMicroStrategyColumn> getMicroStrategyColumns();
 
     /** Simple names of the cubes related to this asset. */
     SortedSet<String> getMicroStrategyCubeNames();

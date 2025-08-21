@@ -73,6 +73,11 @@ public class MicroStrategyDossier extends Asset
     @Attribute
     String microStrategyCertifiedBy;
 
+    /** Individual columns contained in the dossier. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyColumn> microStrategyColumns;
+
     /** Simple names of the cubes related to this asset. */
     @Attribute
     @Singular
@@ -97,7 +102,7 @@ public class MicroStrategyDossier extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
-    /** Project in which this dossier exists */
+    /** Project in which this dossier exists. */
     @Attribute
     IMicroStrategyProject microStrategyProject;
 
