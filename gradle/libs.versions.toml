@@ -86,7 +86,9 @@ jetty-http = { module = "org.eclipse.jetty:jetty-http", version.ref = "jetty" }
 jetty-server = { module = "org.eclipse.jetty:jetty-server", version.ref = "jetty" }
 jetty-http2-common = { module = "org.eclipse.jetty.http2:jetty-http2-common", version.ref = "jetty" }
 jetty-http2-hpack = { module = "org.eclipse.jetty.http2:jetty-http2-hpack", version.ref = "jetty" }
+jetty-http2-server = { module = "org.eclipse.jetty.http2:jetty-http2-server", version.ref = "jetty" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
+netty-codec-http2 = { module = "io.netty:netty-codec-http2", version.ref = "netty" }
 rhino = { module = "org.mozilla:rhino", version.ref = "rhino" }
 nimbus = { module = "com.nimbusds:nimbus-jose-jwt", version.ref = "nimbus" }
 otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "otel" }
