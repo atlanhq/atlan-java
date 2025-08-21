@@ -12,6 +12,7 @@ import com.atlan.model.structs.*;
 import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
@@ -452,6 +453,11 @@ public class PersonaTest {
     private static final int hash = full.hashCode();
     private static Persona frodo;
     private static String serialized;
+
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
+    }
 
     @Test(groups = {"Persona.builderEquivalency"})
     void builderEquivalency() {
