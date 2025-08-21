@@ -1,0 +1,5 @@
+qualifiedName,typeName,connectionQualifiedName,name,userDescription
+{{snowflake/production}}/{DBNAME1},Database,{{snowflake/production}},{DBNAME1},Test database for incremental updates
+{{snowflake/production}}/{DBNAME2},Database,{{snowflake/production}},{DBNAME2},Another test database for incremental updates
+{{snowflake/production}}/{DBNAME1}/{SCHNAME1},Schema,{{snowflake/production}},{SCHNAME1},Test schema for incremental updates
+{{snowflake/production}}/{DBNAME2}/{SCHNAME2},Schema,{{snowflake/production}},{SCHNAME2},Another test schema for incremental updates

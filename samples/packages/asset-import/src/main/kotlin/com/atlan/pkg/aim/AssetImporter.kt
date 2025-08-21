@@ -365,14 +365,7 @@ class AssetImporter(
         qnIdx: Int,
     ): Boolean {
         // Note: skip all Connection asset types, since they will be loaded up-front
-        val candidateRow =
-            if (updateOnly) {
-                // If we are only updating, process in-parallel, in any order
-                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }).let { typeName -> typeName.isNotBlank() && typeName != Connection.TYPE_NAME }
-            } else {
-                // If we are doing more than only updates, process the assets in top-down order
-                row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
-            }
+        val candidateRow = row.size >= typeIdx && CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" }) == typeToProcess
         // Only proceed processing this candidate row if we're doing non-delta processing, or we have
         // detected that it needs to be loaded via the delta processing
         return if (candidateRow) {
