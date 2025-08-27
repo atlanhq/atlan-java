@@ -28,5 +28,4 @@ class GUM(
         Glossary
             .select(client)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
 }

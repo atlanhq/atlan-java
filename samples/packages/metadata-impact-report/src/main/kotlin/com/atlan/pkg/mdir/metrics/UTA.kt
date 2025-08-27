@@ -30,6 +30,4 @@ class UTA(
             .where(Asset.TYPE_NAME.`in`(TABLE_LEVEL))
             .where(Asset.SOURCE_READ_COUNT.gt(0))
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(10))
 }

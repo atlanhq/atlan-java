@@ -29,6 +29,4 @@ class TLAwL(
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
             .withLineage()
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(5))
 }

@@ -30,6 +30,4 @@ class AwDC(
             .where(Asset.DESCRIPTION.hasAnyValue())
             .whereNot(Asset.DESCRIPTION.eq(""))
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
 }

@@ -30,5 +30,4 @@ class UTQ(
             .where(Asset.TYPE_NAME.`in`(TABLE_LEVEL))
             .where(Asset.SOURCE_READ_COUNT.gt(0))
             .pageSize(batchSize)
-            .aggregate("total", Asset.SOURCE_READ_COUNT.sum())
 }

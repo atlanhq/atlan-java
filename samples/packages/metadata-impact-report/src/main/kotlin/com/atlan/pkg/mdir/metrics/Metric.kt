@@ -92,22 +92,10 @@ abstract class Metric(
      *
      * @return a single numeric metric representing this report
      */
-    open fun quantify(): Double {
-        val response = query().pageSize(1).toRequest().search(client)
-        val overall = response.aggregations["total"]?.metric ?: 0.0
+    open fun quantify(): Long {
+        val overall = query().count()
         logger.info {
             " ... overall metric for $name: $overall"
-        }
-        if (response.aggregations.containsKey("breakdown")) {
-            val agg = response.aggregations["breakdown"]
-            agg as AggregationBucketResult
-            val map = mutableMapOf<String, Number>()
-            agg.buckets.forEach {
-                map[it.key.toString()] = it.docCount
-            }
-            logger.info {
-                " ... metric breakdown for $name: $map"
-            }
         }
         return overall
     }

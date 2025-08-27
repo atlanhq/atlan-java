@@ -28,6 +28,4 @@ class GTM(
         GlossaryTerm
             .select(client)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", GlossaryTerm.ANCHOR.bucketBy(100))
 }

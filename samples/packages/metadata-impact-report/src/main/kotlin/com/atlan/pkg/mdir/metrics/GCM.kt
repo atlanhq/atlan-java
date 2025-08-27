@@ -28,6 +28,4 @@ class GCM(
         GlossaryCategory
             .select(client)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", GlossaryCategory.ANCHOR.bucketBy(100))
 }

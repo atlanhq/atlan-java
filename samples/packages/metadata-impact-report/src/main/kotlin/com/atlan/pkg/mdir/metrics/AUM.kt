@@ -62,6 +62,4 @@ class AUM(
             .select()
             .whereNot(Asset.TYPE_NAME.`in`(EXCLUDE_ASSETS))
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
 }

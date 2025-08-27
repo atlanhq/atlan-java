@@ -42,8 +42,6 @@ class DLAxL(
             .where(Asset.TYPE_NAME.`in`(DLA.DASHBOARD_LEVEL))
             .withoutLineage()
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
             .includesOnResults(DLA.ATTRIBUTES)
             .includeOnResults(Asset.HAS_LINEAGE)
             .includeOnRelations(Asset.NAME)

@@ -29,6 +29,4 @@ class AwOG(
             .whereNot(Asset.TYPE_NAME.`in`(EXCLUDE_ASSETS))
             .where(Asset.OWNER_GROUPS.hasAnyValue())
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
 }
