@@ -35,9 +35,6 @@ class HQV(
             .where(Asset.SOURCE_READ_COUNT.gt(100))
             .pageSize(batchSize)
             .sort(Asset.SOURCE_READ_COUNT.order(SortOrder.Desc))
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(5))
-            .aggregate("sum", Asset.SOURCE_READ_COUNT.sum())
             .includesOnResults(TLA.ATTRIBUTES)
             .includeOnResults(Asset.SOURCE_READ_COUNT)
 

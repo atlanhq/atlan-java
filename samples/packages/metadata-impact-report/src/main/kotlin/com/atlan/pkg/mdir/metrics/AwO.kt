@@ -34,7 +34,5 @@ class AwO(
             .whereSome(hasGroupOwner)
             .minSomes(1)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
     }
 }

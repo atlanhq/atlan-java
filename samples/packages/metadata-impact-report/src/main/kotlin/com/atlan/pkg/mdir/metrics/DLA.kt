@@ -80,6 +80,4 @@ class DLA(
             .select()
             .where(Asset.TYPE_NAME.`in`(DASHBOARD_LEVEL))
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
 }

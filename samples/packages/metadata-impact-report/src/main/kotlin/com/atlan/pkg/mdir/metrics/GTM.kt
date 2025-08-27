@@ -3,7 +3,6 @@
 package com.atlan.pkg.mdir.metrics
 
 import com.atlan.AtlanClient
-import com.atlan.model.assets.Asset
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.search.FluentSearch.FluentSearchBuilder
 import com.atlan.pkg.mdir.Reporter
@@ -28,6 +27,4 @@ class GTM(
         GlossaryTerm
             .select(client)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", GlossaryTerm.ANCHOR.bucketBy(100))
 }

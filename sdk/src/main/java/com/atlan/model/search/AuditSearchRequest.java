@@ -57,7 +57,7 @@ public class AuditSearchRequest extends AtlanObject {
     /** Name of the agent (specific run of a workflow) that created or changed the asset. */
     public static final KeywordField AGENT_ID = new KeywordField("headers", "headers.x-atlan-agent-id");
 
-    private static final SortOptions LATEST_FIRST = CREATED.order(SortOrder.Desc);
+    public static final SortOptions LATEST_FIRST = CREATED.order(SortOrder.Desc);
 
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;

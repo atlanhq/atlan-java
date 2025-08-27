@@ -314,7 +314,7 @@ object Reporter {
     private fun writeMetricToDomain(
         client: AtlanClient,
         metric: Metric,
-        quantified: Double,
+        quantified: Long,
         subdomainNameToQualifiedName: Map<String, String>,
     ): Asset {
         val builder =
@@ -369,7 +369,7 @@ object Reporter {
 
     private fun writeMetricToFile(
         metric: Metric,
-        quantified: Double,
+        quantified: Long,
         overview: TabularWriter,
         details: TabularWriter,
         includeDetails: Boolean,

@@ -32,19 +32,15 @@ class TLAxQ(
         client.assets
             .select()
             .where(Asset.TYPE_NAME.`in`(TLA.TABLE_LEVEL))
-            .withoutLineage()
+            // .withoutLineage()
             .where(Asset.SOURCE_READ_COUNT.eq(0))
             .pageSize(batchSize)
             .sort(Table.SIZE_BYTES.order(SortOrder.Desc))
             .sort(Asset.SOURCE_TOTAL_COST.order(SortOrder.Desc))
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(5))
-            .aggregate("size", Table.SIZE_BYTES.sum())
-            .aggregate("cost", Asset.SOURCE_TOTAL_COST.sum())
-            .aggregate("rows", Table.ROW_COUNT.sum())
             .includesOnResults(TLA.ATTRIBUTES)
             .includeOnResults(Asset.SOURCE_READ_COUNT)
             .includeOnResults(Asset.SOURCE_TOTAL_COST)
+            .includeOnResults(Asset.HAS_LINEAGE)
 
     /** {@inheritDoc} */
     override fun getDetailedHeader(): Map<String, String> =
@@ -54,6 +50,7 @@ class TLAxQ(
             "Schema" to "Name of the schema for the table-level asset",
             "Name" to "Name of the table-level asset itself",
             "Type" to "Type of the table-level asset",
+            "Has lineage?" to "Whether the asset is involved in any lineage",
             "Size (GB)" to "Size of the table-level asset's storage, in gigabytes",
             "Rows" to "Total number of rows of data in the asset",
             "Cost" to "Total compute cost for the asset, in credits",
@@ -86,6 +83,7 @@ class TLAxQ(
             sql.schemaName ?: "",
             sql.name ?: "",
             sql.typeName ?: "",
+            sql.hasLineage ?: false,
             size,
             rows,
             cost,

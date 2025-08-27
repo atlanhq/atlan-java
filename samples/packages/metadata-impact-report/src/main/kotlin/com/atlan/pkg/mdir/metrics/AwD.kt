@@ -34,7 +34,5 @@ class AwD(
             .whereSome(hasUserDesc)
             .minSomes(1)
             .pageSize(batchSize)
-            .aggregate("total", Asset.GUID.distinct())
-            .aggregate("breakdown", Asset.TYPE_NAME.bucketBy(100))
     }
 }

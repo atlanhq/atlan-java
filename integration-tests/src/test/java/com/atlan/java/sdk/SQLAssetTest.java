@@ -1047,7 +1047,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
-        // Column.appendAtlanTags(client, column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
         Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
@@ -1062,7 +1061,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
-        // Column.removeAtlanTag(client, column5.getQualifiedName(), ATLAN_TAG_NAME2);
         Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1));
@@ -1092,7 +1090,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
-        // Column.appendAtlanTags(client, column5.getQualifiedName(), List.of(ATLAN_TAG_NAME2));
         Column column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
         validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
@@ -1241,7 +1238,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         Column column = response.getResult(toUpdate);
-        // Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term1, term2));
         validateUpdatedColumn(column);
         column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
@@ -1256,7 +1252,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         Column column = response.getResult(toUpdate);
-        // Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
         column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
@@ -1271,7 +1266,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         Column column = response.getResult(toUpdate);
-        // Column column = Column.appendTerms(client, column5.getQualifiedName(), List.of(term2));
         validateUpdatedColumn(column);
         column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
@@ -1286,7 +1280,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = toUpdate.save(client);
         assertNotNull(response);
         Column column = response.getResult(toUpdate);
-        // Column column = Column.removeTerms(client, column5.getQualifiedName(), List.of(term1));
         validateUpdatedColumn(column);
         column = Column.get(client, column5.getGuid(), true);
         validateCompleteColumn(column);
