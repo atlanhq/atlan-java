@@ -230,23 +230,24 @@ class TypeDefCache(
 
             // Check each relationship for cycles
             relationshipNames.forEach { relationshipName ->
-                val relationshipDef = getByName(relationshipName) as RelationshipDef
+                val relationshipDef = getByName(relationshipName)
+                if (relationshipDef is RelationshipDef) {
+                    val type1 = relationshipDef.endDef1.type
+                    val type2 = relationshipDef.endDef2.type
 
-                val type1 = relationshipDef.endDef1.type
-                val type2 = relationshipDef.endDef2.type
+                    if (formsCycle(type1, type2)) {
+                        val re =
+                            RelationshipEnds(
+                                relationshipDef.name,
+                                relationshipDef.endDef1.name,
+                                relationshipDef.endDef2.name,
+                            )
+                        cyclicalRelationships.add(re)
 
-                if (formsCycle(type1, type2)) {
-                    val re =
-                        RelationshipEnds(
-                            relationshipDef.name,
-                            relationshipDef.endDef1.name,
-                            relationshipDef.endDef2.name,
-                        )
-                    cyclicalRelationships.add(re)
-
-                    // Also add to the map for the other type
-                    val otherType = if (type1 == typeName) type2 else type1
-                    cyclicalRelationshipsMap.getOrPut(otherType) { mutableSetOf() }.add(re)
+                        // Also add to the map for the other type
+                        val otherType = if (type1 == typeName) type2 else type1
+                        cyclicalRelationshipsMap.getOrPut(otherType) { mutableSetOf() }.add(re)
+                    }
                 }
             }
 
