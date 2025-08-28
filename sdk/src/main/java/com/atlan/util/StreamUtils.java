@@ -31,19 +31,26 @@ public final class StreamUtils {
         requireNonNull(stream);
         requireNonNull(charset);
 
+        int anticipatedSize = stream.available();
+        validateSize(anticipatedSize);
+
         @Cleanup
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Math.max(stream.available(), DEFAULT_BUF_SIZE));
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream(Math.max(anticipatedSize, DEFAULT_BUF_SIZE));
         final byte[] buffer = new byte[DEFAULT_BUF_SIZE];
 
         int bytesRead;
         int totalBytes = 0;
         while ((bytesRead = stream.read(buffer)) != -1) {
             totalBytes += bytesRead;
-            if (totalBytes > MAX_SIZE) {
-                throw new IOException("Response exceeds " + MAX_SIZE + " bytes -- too large to be processed.");
-            }
+            validateSize(totalBytes);
             baos.write(buffer, 0, bytesRead);
         }
         return baos.toString(charset);
+    }
+
+    private static void validateSize(int size) throws IOException {
+        if (size > MAX_SIZE) {
+            throw new IOException("Response exceeds " + MAX_SIZE + " bytes -- too large to be processed.");
+        }
     }
 }
