@@ -15,6 +15,7 @@ import com.atlan.util.StringUtils
 object DataDomainXformer {
     const val DATA_PRODUCT_DELIMITER = "@@@"
     const val DATA_DOMAIN_DELIMITER = "@"
+    const val NO_DOMAIN_SENTINEL = "±§NO_DOMAIN_SENTINEL§±"
 
     /**
      * Encodes (serializes) a data domain reference into a string form.
