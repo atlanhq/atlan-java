@@ -58,6 +58,7 @@ tasks {
                 testLogging.showStandardStreams = true
             }
         }
+        maxHeapSize = "1g"
         testLogging {
             events("failed")
             exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
