@@ -162,7 +162,6 @@ abstract class AbstractBaseImporter(
     private fun cacheAnyPrereqs(cache: AssetCache<*>? = null) {
         if (!hasCachedPrereqs.get()) {
             cache?.preload()
-            ctx.typeDefCache.preload()
             val results = preprocess()
             if (results.hasLinks) {
                 ctx.linkCache.preload()

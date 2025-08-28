@@ -3,6 +3,7 @@
 package com.atlan.pkg.cache
 
 import com.atlan.cache.AbstractMassCache
+import com.atlan.exception.AtlanException
 import com.atlan.model.enums.AtlanTypeCategory
 import com.atlan.model.typedefs.EntityDef
 import com.atlan.model.typedefs.RelationshipDef
@@ -12,6 +13,9 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.concurrent.read
+import kotlin.concurrent.write
 
 /**
  * Utility class for bulk-loading a cache of typedefs.
@@ -27,22 +31,53 @@ class TypeDefCache(
     private val logger = Utils.getLogger(this.javaClass.name)
 
     private val typeDelimiter = "|"
-    private var preloaded = AtomicBoolean(false)
-    private val inheritanceMap: MutableMap<String, Set<String>> = ConcurrentHashMap()
+
+    private var relationshipsPreloaded = AtomicBoolean(false)
+
+    private val directSupertypesCache: MutableMap<String, Set<String>> = ConcurrentHashMap()
+    private val transitiveSupertypesCache: MutableMap<String, Set<String>> = ConcurrentHashMap()
+    private val typeToRelationships: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
     private val cyclicalRelationshipsMap: MutableMap<String, MutableSet<RelationshipEnds>> = ConcurrentHashMap()
 
+    private val inheritanceLock = ReentrantReadWriteLock()
+    private val relationshipLock = ReentrantReadWriteLock()
+
     init {
-        this.bulkRefresh.set(true)
+        this.bulkRefresh.set(false)
     }
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        // Nothing to do -- only allow bulk-loading
+        var result: TypeDef? = null
+        try {
+            logger.debug { " ... looking up: $id" }
+            result =
+                client.typeDefs.getByGuid(
+                    id,
+                    RequestOptions.from(client).skipLogging(true).build(),
+                )
+        } catch (e: AtlanException) {
+            logger.warn { "Unable to lookup or find typedef: $id" }
+            logger.debug(e) { "Full stack trace:" }
+        }
+        if (result != null) cache(result.guid, result.name, result)
     }
 
     /** {@inheritDoc} */
     override fun lookupByName(name: String?) {
-        // Nothing to do -- only allow bulk-loading
+        var result: TypeDef? = null
+        try {
+            logger.debug { " ... looking up: $name" }
+            result =
+                client.typeDefs.get(
+                    name,
+                    RequestOptions.from(client).skipLogging(true).build(),
+                )
+        } catch (e: AtlanException) {
+            logger.warn { "Unable to lookup or find typedef: $name" }
+            logger.debug(e) { "Full stack trace:" }
+        }
+        if (result != null) cache(result.guid, name, result)
     }
 
     /**
@@ -53,94 +88,176 @@ class TypeDefCache(
      */
     fun getIdentityForTypedef(typedef: TypeDef): String = "${typedef.category.value}$typeDelimiter${typedef.name}"
 
-    /** {@inheritDoc}  */
-    override fun refreshCache() {
-        logger.debug { "Refreshing cache of typedefs..." }
-        val response =
-            client.typeDefs.list(
-                listOf(AtlanTypeCategory.ENTITY, AtlanTypeCategory.RELATIONSHIP),
-                RequestOptions.from(client).skipLogging(true).build(),
-            )
-        cacheInheritance(response.entityDefs)
-        cacheRelationshipCycles(response.relationshipDefs)
+    /**
+     * Load all relationship definitions to identify cyclical relationships
+     */
+    @Synchronized
+    fun preloadRelationships() {
+        if (!relationshipsPreloaded.get()) {
+            logger.debug { "Loading relationship definitions for cycle detection..." }
+            val response =
+                client.typeDefs.list(
+                    listOf(AtlanTypeCategory.RELATIONSHIP),
+                    RequestOptions.from(client).skipLogging(true).build(),
+                )
+            response.relationshipDefs.forEach { relationshipDef ->
+                cache(relationshipDef.guid, relationshipDef.name, relationshipDef)
+                val type1 = relationshipDef.endDef1.type
+                val type2 = relationshipDef.endDef2.type
+                typeToRelationships.getOrPut(type1) { mutableSetOf() }.add(relationshipDef.name)
+                typeToRelationships.getOrPut(type2) { mutableSetOf() }.add(relationshipDef.name)
+            }
+            relationshipsPreloaded.set(true)
+        }
     }
 
-    private fun cacheInheritance(entityDefs: List<EntityDef>) {
-        // First, create a map of direct supertype relationships
-        val directSupertypes = entityDefs.associate { it.name to it.superTypes.toSet() }
-
-        // Memoization cache for computed transitive supertypes
-        val cache = mutableMapOf<String, Set<String>>()
-
-        fun getTransitiveSupertypes(typeName: String): Set<String> {
-            // Return cached result if available
-            cache[typeName]?.let { return it }
-
-            val direct = directSupertypes[typeName] ?: emptySet()
-            val transitive = mutableSetOf<String>()
-
-            // Add direct supertypes
-            transitive.addAll(direct)
-
-            // Recursively add supertypes of supertypes
-            for (supertype in direct) {
-                transitive.addAll(getTransitiveSupertypes(supertype))
+    /**
+     * Get the direct supertypes for a given type name
+     *
+     * @param typeName the name of the type
+     * @return set of direct supertype names, or empty set if none
+     */
+    private fun getDirectSupertypes(typeName: String): Set<String> {
+        directSupertypesCache[typeName]?.let { return it }
+        val type = getByName(typeName, true)
+        if (type is EntityDef) {
+            // Cache direct supertypes, and if we've fallen through to here invalidate transitive cache
+            // (to force it to be recalculated next time it's looked up)
+            directSupertypesCache[typeName] = type.superTypes?.toSet() ?: setOf()
+            inheritanceLock.write {
+                transitiveSupertypesCache.remove(typeName)
             }
+        }
+        return directSupertypesCache.getOrDefault(typeName, emptySet())
+    }
 
-            // Cache and return result
-            val result = transitive.toSet()
-            cache[typeName] = result
+    /**
+     * Get all transitive supertypes for a given type name
+     *
+     * @param typeName the name of the type
+     * @return set of all supertype names (including transitive ones)
+     */
+    private fun getTransitiveSupertypes(typeName: String): Set<String> {
+        // Short-circuit from transitive cache, if it's there
+        inheritanceLock.read {
+            transitiveSupertypesCache[typeName]?.let { return it }
+        }
+
+        inheritanceLock.write {
+            // Double-check after acquiring the write lock
+            transitiveSupertypesCache[typeName]?.let { return it }
+            val result = computeTransitiveSupertypes(typeName)
+            transitiveSupertypesCache[typeName] = result
             return result
         }
-
-        // Compute for all entity types
-        entityDefs.forEach { entityDef ->
-            inheritanceMap[entityDef.name] = getTransitiveSupertypes(entityDef.name)
-        }
     }
 
-    private fun cacheRelationshipCycles(relationshipDefs: List<RelationshipDef>) {
-        fun isSubtypeOf(
-            type1: String,
-            type2: String,
-        ): Boolean {
-            if (type1 == type2) return true
+    /**
+     * Compute the complete set of transitive supertypes for a type
+     */
+    private fun computeTransitiveSupertypes(typeName: String): Set<String> {
+        val direct = getDirectSupertypes(typeName)
+        val transitive = mutableSetOf<String>()
 
-            val visited = mutableSetOf<String>()
-            val stack = mutableListOf(type1)
+        // Add direct supertypes
+        transitive.addAll(direct)
 
-            while (stack.isNotEmpty()) {
-                val current = stack.removeLastOrNull() ?: break
-                if (current in visited) continue
-                visited.add(current)
-                inheritanceMap[current]?.forEach { supertype ->
-                    if (supertype == type2) return true
-                    stack.add(supertype)
+        // Recursively add supertypes of supertypes
+        for (supertype in direct) {
+            // Use already cached results if available
+            val cachedTransitive = transitiveSupertypesCache[supertype]
+            if (cachedTransitive != null) {
+                transitive.addAll(cachedTransitive)
+            } else {
+                // Recursively compute
+                val supertypeTransitive = computeTransitiveSupertypes(supertype)
+                transitive.addAll(supertypeTransitive)
+                // Cache the result for this supertype too
+                transitiveSupertypesCache[supertype] = supertypeTransitive
+            }
+        }
+
+        return transitive.toSet()
+    }
+
+    /**
+     * Check if one type is a subtype of another
+     *
+     * @param type1 the potential subtype
+     * @param type2 the potential supertype
+     * @return true if type1 is a subtype of (or equal to) type2
+     */
+    fun isSubtypeOf(
+        type1: String,
+        type2: String,
+    ): Boolean {
+        if (type1 == type2) return true
+        return type2 in getTransitiveSupertypes(type1)
+    }
+
+    /**
+     * Check if two types form a cycle in the inheritance hierarchy
+     *
+     * @param type1 first type to compare
+     * @param type2 second type to compare
+     * @return true if the types are the same or cyclically related through inheritance
+     */
+    fun formsCycle(
+        type1: String,
+        type2: String,
+    ): Boolean = isSubtypeOf(type1, type2) || isSubtypeOf(type2, type1)
+
+    private fun getRelationshipsForType(typeName: String): Set<String> {
+        preloadRelationships()
+        return typeToRelationships[typeName]?.toSet() ?: emptySet()
+    }
+
+    /**
+     * Compute and cache cyclical relationships for a type
+     */
+    private fun computeCyclicalRelationshipsForType(typeName: String) {
+        relationshipLock.write {
+            // Skip if already computed
+            if (cyclicalRelationshipsMap.containsKey(typeName)) {
+                return
+            }
+
+            logger.debug { " ... calculating cyclical relationships for type: $typeName" }
+            val cyclicalRelationships = mutableSetOf<RelationshipEnds>()
+
+            // Get all relationships involving this type
+            val relationshipNames = getRelationshipsForType(typeName)
+
+            // Check each relationship for cycles
+            relationshipNames.forEach { relationshipName ->
+                val relationshipDef = getByName(relationshipName) as RelationshipDef
+
+                val type1 = relationshipDef.endDef1.type
+                val type2 = relationshipDef.endDef2.type
+
+                if (formsCycle(type1, type2)) {
+                    val re =
+                        RelationshipEnds(
+                            relationshipDef.name,
+                            relationshipDef.endDef1.name,
+                            relationshipDef.endDef2.name,
+                        )
+                    cyclicalRelationships.add(re)
+
+                    // Also add to the map for the other type
+                    val otherType = if (type1 == typeName) type2 else type1
+                    cyclicalRelationshipsMap.getOrPut(otherType) { mutableSetOf() }.add(re)
                 }
             }
 
-            return false
+            // Store the results (even if empty)
+            cyclicalRelationshipsMap[typeName] = cyclicalRelationships
         }
+    }
 
-        fun formsCycle(
-            type1: String,
-            type2: String,
-        ): Boolean =
-            isSubtypeOf(type1, type2) ||
-                isSubtypeOf(type2, type1)
-
-        relationshipDefs
-            .filter { formsCycle(it.endDef1.type, it.endDef2.type) }
-            .forEach { relationshipDef ->
-                val re =
-                    RelationshipEnds(
-                        relationshipDef.name,
-                        relationshipDef.endDef1.name,
-                        relationshipDef.endDef2.name,
-                    )
-                cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef1.type) { mutableSetOf() }.add(re)
-                cyclicalRelationshipsMap.getOrPut(relationshipDef.endDef2.type) { mutableSetOf() }.add(re)
-            }
+    /** {@inheritDoc}  */
+    override fun refreshCache() {
+        logger.warn { "Full refresh requested, but not handled - will only lazy-load..." }
     }
 
     /**
@@ -150,21 +267,26 @@ class TypeDefCache(
      * @return the set of cyclical relationships that exist for that type of entity
      */
     fun getCyclicalRelationshipsForType(typeName: String): Set<RelationshipEnds> {
-        // Look up the cyclical relationships in this type and all of its supertypes
-        val consolidated = cyclicalRelationshipsMap.getOrElse(typeName) { mutableSetOf() }.toMutableSet()
-        inheritanceMap[typeName]?.forEach {
-            consolidated.addAll(getCyclicalRelationshipsForType(it))
+        logger.info { "Checking cyclical relationships for type: $typeName" }
+        if (relationshipLock.read { !cyclicalRelationshipsMap.containsKey(typeName) }) {
+            computeCyclicalRelationshipsForType(typeName)
         }
-        return consolidated.toSet()
-    }
 
-    /** Preload the cache (will only act once, in case called multiple times on the same cache) */
-    @Synchronized
-    fun preload() {
-        if (!preloaded.get()) {
-            refreshIfNeeded()
-            preloaded.set(true)
+        // Start with any direct cyclical relationships for this type
+        val consolidated = relationshipLock.read { cyclicalRelationshipsMap[typeName]?.toMutableSet() ?: mutableSetOf() }
+
+        // Then for each supertype, ensure its cyclical relationships are computed and added
+        val supertypes = getTransitiveSupertypes(typeName)
+        supertypes.forEach { supertype ->
+            if (relationshipLock.read { !cyclicalRelationshipsMap.containsKey(supertype) }) {
+                computeCyclicalRelationshipsForType(supertype)
+            }
+            relationshipLock.read {
+                cyclicalRelationshipsMap[supertype]?.let { consolidated.addAll(it) }
+            }
         }
+
+        return consolidated.toSet()
     }
 
     /**
