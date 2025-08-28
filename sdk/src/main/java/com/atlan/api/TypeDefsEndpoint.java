@@ -40,6 +40,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     private static final String endpoint = "/types/typedefs";
     private static final String endpoint_singular = "/types/typedef";
     private static final String endpoint_by_name = "/types/typedef/name";
+    private static final String endpoint_by_guid = "/types/typedef/guid";
 
     public TypeDefsEndpoint(AtlanClient client) {
         super(client);
@@ -123,6 +124,34 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      */
     public TypeDef get(String internalName, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint_by_name, internalName);
+        WrappedTypeDef response =
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, options);
+        TypeDef typeDef = response.getTypeDef();
+        typeDef.setRawJsonObject(response.getRawJsonObject());
+        return typeDef;
+    }
+
+    /**
+     * Retrieves a specific type definition from Atlan.
+     *
+     * @param guid the UUID of the type definition
+     * @return details of that specific type definition
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDef getByGuid(String guid) throws AtlanException {
+        return getByGuid(guid, null);
+    }
+
+    /**
+     * Retrieves a specific type definition from Atlan.
+     *
+     * @param guid the UUID of the type definition
+     * @param options to override default client settings
+     * @return details of that specific type definition
+     * @throws AtlanException on any API communication issue
+     */
+    public TypeDef getByGuid(String guid, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint_by_guid, guid);
         WrappedTypeDef response =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, options);
         TypeDef typeDef = response.getTypeDef();
