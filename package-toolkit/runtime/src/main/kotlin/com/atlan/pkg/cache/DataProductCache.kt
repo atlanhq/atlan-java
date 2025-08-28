@@ -10,7 +10,6 @@ import com.atlan.net.HttpClient
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
-import com.atlan.pkg.serde.cell.GlossaryXformer
 
 class DataProductCache(
     val ctx: PackageContext<*>,
@@ -48,7 +47,7 @@ class DataProductCache(
                     while (response != null && response.assets?.isNotEmpty() ?: false) {
                         for (candidate in response) {
                             val dp = candidate as DataProduct
-                            val domId = DataDomainXformer.encode(ctx, dp.dataDomain as DataDomain)
+                            val domId = dp.dataDomain?.let { DataDomainXformer.encode(ctx, it as DataDomain) } ?: DataDomainXformer.NO_DOMAIN_SENTINEL
                             if (domId == domainIdentity) {
                                 // Short-circuit as soon as we find a data product in the appropriate domain
                                 return dp
@@ -112,7 +111,10 @@ class DataProductCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: DataProduct): String = "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${DataDomainXformer.encode(ctx, asset.dataDomain as DataDomain)}"
+    override fun getIdentityForAsset(asset: DataProduct): String {
+        val domain = asset.dataDomain?.let { DataDomainXformer.encode(ctx, it as DataDomain) } ?: DataDomainXformer.NO_DOMAIN_SENTINEL
+        return "${asset.name}${DataDomainXformer.DATA_PRODUCT_DELIMITER}$domain"
+    }
 
     /** {@inheritDoc} */
     override fun refreshCache() {
