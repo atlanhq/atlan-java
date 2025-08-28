@@ -217,6 +217,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves a specific type definition from Atlan.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByGuid(java.lang.String)" class="member-name-link">getByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getByGuid(java.lang.String,com.atlan.net.RequestOptions)" class="member-name-link">getByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#list(com.atlan.model.enums.AtlanTypeCategory)" class="member-name-link">list</a><wbr>(<a href="../model/enums/AtlanTypeCategory.html" title="enum class in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -417,6 +428,40 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>internalName</code> - the internal (hashed-string, if used) name of the type definition</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt>Returns:</dt>
+<dd>details of that specific type definition</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getByGuid(java.lang.String)">
+<h3>getByGuid</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></span>&nbsp;<span class="element-name">getByGuid</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</span>
+                  throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>guid</code> - the UUID of the type definition</dd>
+<dt>Returns:</dt>
+<dd>details of that specific type definition</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getByGuid(java.lang.String,com.atlan.net.RequestOptions)">
+<h3>getByGuid</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></span>&nbsp;<span class="element-name">getByGuid</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</span>
+                  throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>guid</code> - the UUID of the type definition</dd>
 <dd><code>options</code> - to override default client settings</dd>
 <dt>Returns:</dt>
 <dd>details of that specific type definition</dd>
