@@ -38,6 +38,7 @@ class TypeDefCache(
     private val transitiveSupertypesCache: MutableMap<String, Set<String>> = ConcurrentHashMap()
     private val typeToRelationships: MutableMap<String, MutableSet<String>> = ConcurrentHashMap()
     private val cyclicalRelationshipsMap: MutableMap<String, MutableSet<RelationshipEnds>> = ConcurrentHashMap()
+    private val consolidatedCyclicalRelationshipsMap: MutableMap<String, Set<RelationshipEnds>> = ConcurrentHashMap()
 
     private val inheritanceLock = ReentrantReadWriteLock()
     private val relationshipLock = ReentrantReadWriteLock()
@@ -243,10 +244,6 @@ class TypeDefCache(
                                 relationshipDef.endDef2.name,
                             )
                         cyclicalRelationships.add(re)
-
-                        // Also add to the map for the other type
-                        val otherType = if (type1 == typeName) type2 else type1
-                        cyclicalRelationshipsMap.getOrPut(otherType) { mutableSetOf() }.add(re)
                     }
                 }
             }
@@ -268,6 +265,9 @@ class TypeDefCache(
      * @return the set of cyclical relationships that exist for that type of entity
      */
     fun getCyclicalRelationshipsForType(typeName: String): Set<RelationshipEnds> {
+        if (typeName.isBlank()) return emptySet()
+        consolidatedCyclicalRelationshipsMap[typeName]?.let { return it }
+
         logger.info { "Checking cyclical relationships for type: $typeName" }
         if (relationshipLock.read { !cyclicalRelationshipsMap.containsKey(typeName) }) {
             computeCyclicalRelationshipsForType(typeName)
@@ -278,16 +278,30 @@ class TypeDefCache(
 
         // Then for each supertype, ensure its cyclical relationships are computed and added
         val supertypes = getTransitiveSupertypes(typeName)
+
+        if (supertypes.isEmpty()) {
+            val result = consolidated.toSet()
+            consolidatedCyclicalRelationshipsMap[typeName] = result
+            return result
+        }
+
         supertypes.forEach { supertype ->
-            if (relationshipLock.read { !cyclicalRelationshipsMap.containsKey(supertype) }) {
-                computeCyclicalRelationshipsForType(supertype)
-            }
-            relationshipLock.read {
-                cyclicalRelationshipsMap[supertype]?.let { consolidated.addAll(it) }
+            val cachedSuperResult = consolidatedCyclicalRelationshipsMap[supertype]
+            if (cachedSuperResult != null) {
+                consolidated.addAll(cachedSuperResult)
+            } else {
+                if (relationshipLock.read { !cyclicalRelationshipsMap.containsKey(supertype) }) {
+                    computeCyclicalRelationshipsForType(supertype)
+                }
+                relationshipLock.read {
+                    cyclicalRelationshipsMap[supertype]?.let { consolidated.addAll(it) }
+                }
             }
         }
 
-        return consolidated.toSet()
+        val result = consolidated.toSet()
+        consolidatedCyclicalRelationshipsMap[typeName] = result
+        return result
     }
 
     /**
