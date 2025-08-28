@@ -243,10 +243,6 @@ class TypeDefCache(
                                 relationshipDef.endDef2.name,
                             )
                         cyclicalRelationships.add(re)
-
-                        // Also add to the map for the other type
-                        val otherType = if (type1 == typeName) type2 else type1
-                        cyclicalRelationshipsMap.getOrPut(otherType) { mutableSetOf() }.add(re)
                     }
                 }
             }
