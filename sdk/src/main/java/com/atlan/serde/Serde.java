@@ -49,7 +49,7 @@ public class Serde {
 
     /** Singular ObjectMapper through which to (de-)serialize raw POJOs, including all details, untranslated. */
     public static final ObjectMapper allInclusiveMapper =
-            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.ALWAYS);
+            new ObjectMapper().setDefaultPropertyInclusion(JsonInclude.Include.ALWAYS);
 
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
@@ -192,7 +192,7 @@ public class Serde {
                         null,
                         null,
                         new ClientAwareDeserializationContext(BeanDeserializerFactory.instance, null, client))
-                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                .setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // Set standard (non-tenant-specific) modules
         for (Module m : SIMPLE_MODULES) {
@@ -211,7 +211,7 @@ public class Serde {
     public static ObjectMapper createMapperYAML() {
         // Set default options, using client-aware deserialization
         ObjectMapper om = new ObjectMapper(new YAMLFactory().disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID))
-                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                .setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL, true);
         // Set standard (non-tenant-specific) modules
