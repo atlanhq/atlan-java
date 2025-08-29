@@ -14,9 +14,6 @@ import mu.KLogger
 import java.io.File.separator
 import java.io.IOException
 import java.nio.file.Paths
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 /**
  * Automate the delta detection and asset removal from imports that use a full CSV file of all
@@ -188,11 +185,7 @@ class DeltaProcessor(
         extension: String,
     ) {
         val previousFileLocation = "$previousFilesPrefix/$qualifiedNamePrefix"
-        val sortedTime =
-            DateTimeFormatter
-                .ofPattern("yyyyMMdd-HHmmssSSS")
-                .withZone(ZoneId.of("UTC"))
-                .format(Instant.now())
+        val sortedTime = Utils.getNowAsISO8601()
         Utils.uploadOutputFile(objectStore, localFile, previousFileLocation, "$sortedTime$extension")
     }
 

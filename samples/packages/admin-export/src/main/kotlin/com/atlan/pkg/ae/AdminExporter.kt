@@ -38,6 +38,8 @@ object AdminExporter {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdminExportCfg>().use { ctx ->
 
+            val now = Utils.getNowAsISO8601()
+
             // Before we start processing, will pre-cache all glossaries,
             // so we can resolve them to meaningful names
             val glossaryMap = preloadGlossaryNameMap(ctx)
@@ -114,6 +116,7 @@ object AdminExporter {
                             xlsxFileActual,
                             ctx.config.targetPrefix,
                             Paths.get(xlsxFileActual).fileName.toString(),
+                            now,
                         )
                     } else {
                         fileOutputs.forEach {
@@ -121,6 +124,8 @@ object AdminExporter {
                             Utils.uploadOutputFile(
                                 it,
                                 ctx.config.targetPrefix,
+                                key = null,
+                                timestamp = now,
                             )
                         }
                     }
