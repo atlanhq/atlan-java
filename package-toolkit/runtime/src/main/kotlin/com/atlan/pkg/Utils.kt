@@ -48,6 +48,9 @@ import java.io.IOException
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.nio.file.Paths
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.concurrent.ThreadLocalRandom
 import java.util.concurrent.atomic.AtomicLong
 import java.util.zip.ZipEntry
@@ -69,6 +72,10 @@ object Utils {
     // Note: this default value is necessary to avoid internal Argo errors if the
     // file is actually optional (only value that seems likely to be in all tenants' S3 buckets)
     const val DEFAULT_FILE = "argo-artifacts/atlan-update/@atlan-packages-last-safe-run.txt"
+    val ISO_8601_FORMATTER: DateTimeFormatter =
+        DateTimeFormatter
+            .ofPattern("yyyyMMdd-HHmmssSSS")
+            .withZone(ZoneId.of("UTC"))
 
     class GlobalExceptionHandler : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(
@@ -973,11 +980,13 @@ object Utils {
      * @param outputFile path and filename of the file to upload
      * @param prefix (path / directory) where the file should be uploaded in object store
      * @param key (filename) of the file in object store
+     * @param timestamp (optional) timestamp to inject (wherever {{ts}} appears)
      */
     fun uploadOutputFile(
         outputFile: String,
         prefix: String? = null,
         key: String? = null,
+        timestamp: String? = null,
     ) {
         val credFile = Paths.get("/tmp", "credentials", "success", "result-0.json")
         val sync: ObjectStorageSyncer? =
@@ -1015,7 +1024,7 @@ object Utils {
             } else {
                 getBackingStore()
             }
-        sync?.let { uploadOutputFile(it, outputFile, prefix, key) } ?: {
+        sync?.let { uploadOutputFile(it, outputFile, prefix, key, timestamp) } ?: {
             throw IllegalStateException("No valid target to upload output file found.")
         }
     }
@@ -1027,17 +1036,45 @@ object Utils {
      * @param outputFile path and filename of the file to upload
      * @param prefix (path / directory) where the file should be uploaded in object store
      * @param key (filename) of the file in object store
+     * @param timestamp (optional) timestamp to inject (wherever {{ts}} appears)
      */
     fun uploadOutputFile(
         syncer: ObjectStorageSyncer,
         outputFile: String,
         prefix: String? = null,
         key: String? = null,
+        timestamp: String? = null,
     ) {
         val preppedPrefix = getOrDefault(prefix?.trimEnd('/'), "")
         val preppedKey = getOrDefault(key?.trimStart('/'), File(outputFile).name) // default to filename from the output file
-        val preppedPath = if (preppedPrefix.isBlank()) preppedKey else "$preppedPrefix/$preppedKey"
+        val injectedPrefix = injectTimestampIfRequested(preppedPrefix, timestamp)
+        val injectedKey = injectTimestampIfRequested(preppedKey, timestamp)
+        val preppedPath = if (injectedPrefix.isBlank()) injectedKey else "$injectedPrefix/$injectedKey"
         syncer.uploadTo(outputFile, preppedPath)
+    }
+
+    /**
+     * Calculate an ISO-8601-formatted string representing the precise current time.
+     * For example: 20250829-180810891
+     *
+     * @return the ISO-8601-formatted string for the current date and time
+     */
+    fun getNowAsISO8601(): String = ISO_8601_FORMATTER.format(Instant.now())
+
+    /**
+     * If the special characters {{ts}} appear in the string, replace them with the current timestamp.
+     *
+     * @param path in which to look for the string
+     * @param timestamp (optional) the timestamp to inject (if not provided, will generate one for the time the file is uploaded)
+     * @return the timestamp-injected string (if {{ts}} appeared), or the original string (if not)
+     */
+    private fun injectTimestampIfRequested(
+        path: String,
+        timestamp: String? = null,
+    ): String {
+        if (!path.contains("{{ts}}")) return path
+        val toInject = timestamp ?: getNowAsISO8601()
+        return path.replace("{{ts}}", toInject)
     }
 
     /**
