@@ -1525,6 +1525,11 @@ loadScripts(document, 'script');</script>
 <div class="block">List of administration-related events for this user.</div>
 </li>
 <li class="block-list">
+<h5>assignedRole</h5>
+<pre><a href="com/atlan/model/admin/AtlanUser.SubRole.html" title="class in com.atlan.model.admin">AtlanUser.SubRole</a> assignedRole</pre>
+<div class="block">Sub-role the user is assigned, if any.</div>
+</li>
+<li class="block-list">
 <h5>attributes</h5>
 <pre><a href="com/atlan/model/admin/AtlanUser.UserAttributes.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes</a> attributes</pre>
 <div class="block">Detailed attributes of the user.</div>
@@ -1575,6 +1580,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Unique identifier (GUID) of the user within Atlan.</div>
 </li>
 <li class="block-list">
+<h5>isScimUser</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> isScimUser</pre>
+<div class="block">Whether the user is linked via SCIM.</div>
+</li>
+<li class="block-list">
 <h5>lastLoginTime</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> lastLoginTime</pre>
 <div class="block">Time (epoch) at which the user last logged into Atlan.</div>
@@ -1603,6 +1613,11 @@ loadScripts(document, 'script');</script>
 <h5>roles</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; roles</pre>
 <div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>status</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> status</pre>
+<div class="block">Status of the user (e.g. Invited).</div>
 </li>
 <li class="block-list">
 <h5>username</h5>
@@ -1655,6 +1670,50 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.admin.AtlanUser.SubRole">
+<h3>Class&nbsp;<a href="com/atlan/model/admin/AtlanUser.SubRole.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AtlanUser.SubRole</a></h3>
+<div class="type-signature">class SubRole extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>description</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> description</pre>
+<div class="block">Display name for the sub-role.</div>
+</li>
+<li class="block-list">
+<h5>id</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> id</pre>
+<div class="block">Unique identifier (UUID) of the sub-role.</div>
+</li>
+<li class="block-list">
+<h5>level</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> level</pre>
+<div class="block">Level of the sub-role.</div>
+</li>
+<li class="block-list">
+<h5>name</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> name</pre>
+<div class="block">Unique name of the sub-role.</div>
+</li>
+<li class="block-list">
+<h5>summary</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> summary</pre>
+<div class="block">Explanation of the sub-role.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.admin.AtlanUser.UserAttributes">
 <h3>Class&nbsp;<a href="com/atlan/model/admin/AtlanUser.UserAttributes.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AtlanUser.UserAttributes</a></h3>
 <div class="type-signature">class UserAttributes extends <a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -1667,6 +1726,11 @@ loadScripts(document, 'script');</script>
 <section class="detail">
 <h4>Serialized Fields</h4>
 <ul class="block-list">
+<li class="block-list">
+<h5>assignedRoleLevel</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assignedRoleLevel</pre>
+<div class="block">TBC</div>
+</li>
 <li class="block-list">
 <h5>designation</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; designation</pre>
