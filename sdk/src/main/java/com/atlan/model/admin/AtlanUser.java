@@ -77,6 +77,15 @@ public class AtlanUser extends AtlanObject {
     @JsonIgnore // TODO
     SortedSet<String> purposes;
 
+    /** Whether the user is linked via SCIM. */
+    Boolean isScimUser;
+
+    /** Status of the user (e.g. Invited). */
+    String status;
+
+    /** Sub-role the user is assigned, if any. */
+    SubRole assignedRole;
+
     /** List of administration-related events for this user. */
     final List<AdminEvent> adminEvents;
 
@@ -267,6 +276,9 @@ public class AtlanUser extends AtlanObject {
 
         /** User-provided role during initial registration when profileRole is "other". */
         List<String> profileRoleOther;
+
+        /** TBC */
+        List<String> assignedRoleLevel;
     }
 
     /**
@@ -298,5 +310,29 @@ public class AtlanUser extends AtlanObject {
         public int compareTo(Persona o) {
             return personaComparator.compare(this, o);
         }
+    }
+
+    @Getter
+    @Jacksonized
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
+    public static final class SubRole extends AtlanObject {
+        private static final long serialVersionUID = 2L;
+
+        /** Unique identifier (UUID) of the sub-role. */
+        String id;
+
+        /** Unique name of the sub-role. */
+        String name;
+
+        /** Display name for the sub-role. */
+        String description;
+
+        /** Level of the sub-role. */
+        String level;
+
+        /** Explanation of the sub-role. */
+        String summary;
     }
 }
