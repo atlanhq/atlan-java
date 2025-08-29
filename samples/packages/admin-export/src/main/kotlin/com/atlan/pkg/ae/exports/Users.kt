@@ -67,6 +67,7 @@ class Users(
                             .userId(user.id)
                             .build(),
                     ).count()*/
+            val licenseType = user.assignedRole?.description ?: user.workspaceRole
             writer.writeRecord(
                 listOf(
                     user.username,
@@ -79,7 +80,7 @@ class Users(
                     TimestampXformer.encode(user.lastLoginTime),
                     // loginCount,
                     personas,
-                    user.workspaceRole,
+                    licenseType,
                     designation,
                     nontechnicalNames,
                     ts,
