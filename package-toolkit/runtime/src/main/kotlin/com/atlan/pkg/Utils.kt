@@ -980,7 +980,7 @@ object Utils {
      * @param outputFile path and filename of the file to upload
      * @param prefix (path / directory) where the file should be uploaded in object store
      * @param key (filename) of the file in object store
-     * @param timestamp (optional) timestamp to inject (wherever {{ts}} appears)
+     * @param timestamp (optional) timestamp to inject (wherever {ts} appears)
      */
     fun uploadOutputFile(
         outputFile: String,
@@ -1036,7 +1036,7 @@ object Utils {
      * @param outputFile path and filename of the file to upload
      * @param prefix (path / directory) where the file should be uploaded in object store
      * @param key (filename) of the file in object store
-     * @param timestamp (optional) timestamp to inject (wherever {{ts}} appears)
+     * @param timestamp (optional) timestamp to inject (wherever {ts} appears)
      */
     fun uploadOutputFile(
         syncer: ObjectStorageSyncer,
@@ -1062,19 +1062,19 @@ object Utils {
     fun getNowAsISO8601(): String = ISO_8601_FORMATTER.format(Instant.now())
 
     /**
-     * If the special characters {{ts}} appear in the string, replace them with the current timestamp.
+     * If the special characters {ts} appear in the string, replace them with the current timestamp.
      *
      * @param path in which to look for the string
      * @param timestamp (optional) the timestamp to inject (if not provided, will generate one for the time the file is uploaded)
-     * @return the timestamp-injected string (if {{ts}} appeared), or the original string (if not)
+     * @return the timestamp-injected string (if {ts} appeared), or the original string (if not)
      */
     private fun injectTimestampIfRequested(
         path: String,
         timestamp: String? = null,
     ): String {
-        if (!path.contains("{{ts}}")) return path
+        if (!path.contains("{ts}")) return path
         val toInject = timestamp ?: getNowAsISO8601()
-        return path.replace("{{ts}}", toInject)
+        return path.replace("{ts}", toInject)
     }
 
     /**
