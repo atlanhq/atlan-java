@@ -295,7 +295,10 @@ class S3Sync(
             val file = filePath.toFile()
             val fileSize = file.length()
 
-            require(fileSize > 0) { "File is empty." }
+            if (fileSize <= 0) {
+                logger.warn { " ... empty file - skipping." }
+                return
+            }
 
             // Calculate number of parts
             val totalParts = ceil(fileSize.toDouble() / partSize).toInt()
