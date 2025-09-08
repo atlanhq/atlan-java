@@ -35,7 +35,7 @@ rocksdb = "10.2.1"
 jetty = "12.1.0"
 netty = "4.2.5.Final"
 rhino = "1.8.0"
-nimbus = "10.4.2"
+nimbus = "10.5"
 otel = "1.53.0"
 otel-instrumentation = "2.19.0-alpha"
 
