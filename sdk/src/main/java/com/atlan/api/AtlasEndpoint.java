@@ -10,7 +10,7 @@ import com.atlan.exception.ApiConnectionException;
  */
 public abstract class AtlasEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/meta";
-    private static final String SERVICE = "http://atlas-service-atlas.atlas.svc.cluster.local/api/atlas/v2";
+    private static final String SERVICE = "http://atlas-ratelimited.atlas.svc.cluster.local/api/atlas/v2";
 
     protected AtlasEndpoint(AtlanClient client) {
         super(client);
