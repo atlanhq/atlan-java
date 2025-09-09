@@ -320,11 +320,19 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
      */
     public String getAttributeForSearchResults(String setName, String attributeName, long minimumTime)
             throws AtlanException {
-        String setId = getSidForName(setName, false);
-        String attrId = _getAttributeForSearchResults(setId, attributeName);
+        String setId;
+        String attrId = null;
+        try {
+            setId = getSidForName(setName, false);
+            attrId = _getAttributeForSearchResults(setId, attributeName);
+        } catch (NotFoundException e) {
+            // Ignore on not found here, as we will retry below (allowing failure there if
+            // we are not allowed to refresh).
+        }
         if (attrId == null) {
             // If we've not found any names, refresh the cache and look again (could be stale)
             refresh(minimumTime);
+            setId = getSidForName(setName, false);
             attrId = _getAttributeForSearchResults(setId, attributeName);
         }
         return attrId;
@@ -371,11 +379,19 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
      * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
      */
     public Set<String> getAttributesForSearchResults(String setName, long minimumTime) throws AtlanException {
-        String setId = getSidForName(setName, false);
-        Set<String> dotNames = _getAttributesForSearchResults(setId);
+        String setId;
+        Set<String> dotNames = null;
+        try {
+            setId = getSidForName(setName, false);
+            dotNames = _getAttributesForSearchResults(setId);
+        } catch (NotFoundException e) {
+            // Ignore on not found here, as we will retry below (allowing failure there if
+            // we are not allowed to refresh).
+        }
         if (dotNames == null) {
             // If we've not found any names, refresh the cache and look again (could be stale)
             refresh(minimumTime);
+            setId = getSidForName(setName, false);
             dotNames = _getAttributesForSearchResults(setId);
         }
         return dotNames == null ? Collections.emptySet() : Collections.unmodifiableSet(dotNames);
