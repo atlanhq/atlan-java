@@ -1,0 +1,2 @@
+qualifiedName,typeName,name,connectorType,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,Data Quality::Type
+{{CONNECTION}}/ANALYTICS/WIDE_WORLD_IMPORTERS/{{TABLE}},Table,{{TABLE}},snowflake,{{CONNECTION}},{{CONNECTION}}/ANALYTICS,ANALYTICS,{{CONNECTION}}/ANALYTICS/WIDE_WORLD_IMPORTERS,WIDE_WORLD_IMPORTERS,Freshness

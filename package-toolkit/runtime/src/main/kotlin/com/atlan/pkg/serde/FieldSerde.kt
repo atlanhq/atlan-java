@@ -104,41 +104,72 @@ object FieldSerde {
      * is stored as custom metadata.
      *
      * @param ctx context in which the package is running
+     * @param setName name of the custom metadata set in which the field exists
      * @param attrDef attribute definition of the field
      * @param value the single field's value
+     * @param logger through which to record any errors
      * @return the deserialized form of that field's value
      */
     fun getCustomMetadataValueFromString(
         ctx: PackageContext<*>,
+        setName: String,
         attrDef: AttributeDef,
         value: String?,
+        logger: KLogger,
     ): Any? =
         if (value.isNullOrEmpty()) {
             null
         } else if (attrDef.options?.multiValueSelect == true) {
-            getMultiValuedCustomMetadata(ctx, attrDef, value)
+            getMultiValuedCustomMetadata(ctx, setName, attrDef, value, logger)
         } else {
-            getSingleValuedCustomMetadata(ctx, attrDef, value)
+            getSingleValuedCustomMetadata(ctx, setName, attrDef, value, logger)
         }
 
     private fun getMultiValuedCustomMetadata(
         ctx: PackageContext<*>,
+        setName: String,
         attrDef: AttributeDef,
         value: String?,
+        logger: KLogger,
     ): List<String> =
         if (value.isNullOrEmpty()) {
             listOf()
         } else {
-            value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(ctx, attrDef, it.trim()).toString() }
+            value.split(CellXformer.LIST_DELIMITER).mapNotNull {
+                getSingleValuedCustomMetadata(ctx, setName, attrDef, it.trim(), logger)?.toString()
+            }
         }
 
     private fun getSingleValuedCustomMetadata(
         ctx: PackageContext<*>,
+        setName: String,
         attrDef: AttributeDef,
         value: String?,
+        logger: KLogger,
     ): Any? {
         if (value == null) {
             return null
+        }
+        if (value.isNotBlank() && attrDef.options?.isEnum ?: false) {
+            val enumName = attrDef.typeName
+            if (enumName != null) {
+                val enumDef = ctx.client.enumCache.getByName(enumName)
+                if (!enumDef.validValues.contains(value)) {
+                    if (FAIL_ON_ERRORS.get()) {
+                        throw IllegalArgumentException(
+                            """
+                            Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value.
+                            You must use one of the valid values defined for the options associated with this attribute.
+                            """.trimIndent(),
+                        )
+                    } else {
+                        logger.warn {
+                            "Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value -- skipping it."
+                        }
+                        return null
+                    }
+                }
+            }
         }
         return when (attrDef.basicType.lowercase()) {
             "boolean" -> CellXformer.decodeBoolean(value)
