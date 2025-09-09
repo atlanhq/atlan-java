@@ -164,11 +164,10 @@ object FieldSerde {
                         logger.warn {
                             "Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value -- skipping it."
                         }
-                        return ""
+                        return null
                     }
                 }
             }
-            return CellXformer.decodeString(ctx, value)
         }
         return when (attrDef.basicType.lowercase()) {
             "boolean" -> CellXformer.decodeBoolean(value)
