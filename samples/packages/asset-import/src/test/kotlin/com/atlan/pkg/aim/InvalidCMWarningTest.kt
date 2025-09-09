@@ -79,12 +79,13 @@ class InvalidCMWarningTest : PackageTest("icmw") {
     @Test
     fun tableCreatedWithoutCM() {
         val snowflakeConnection = Connection.findByName(client, "development", AtlanConnectorType.SNOWFLAKE)?.get(0)!!
+        val cmAttrs = client.customMetadataCache.getAttributesForSearchResults("Data Quality")
         val request =
             Table
                 .select(client)
                 .where(Table.CONNECTION_QUALIFIED_NAME.eq(snowflakeConnection.qualifiedName))
                 .where(Table.NAME.eq(table))
-                ._includesOnResults(client.customMetadataCache.getAttributesForSearchResults("Data Quality"))
+                ._includesOnResults(cmAttrs)
                 .toRequest()
         val tablesFound = retrySearchUntil(request, 1)
         assertNotNull(tablesFound)
@@ -101,7 +102,7 @@ class InvalidCMWarningTest : PackageTest("icmw") {
         logHasMessage(
             "WARN",
             """
-            abc
+            Invalid value provided for custom metadata Data Quality attribute Type: Freshness -- skipping it.
             """.trimIndent(),
         )
     }
