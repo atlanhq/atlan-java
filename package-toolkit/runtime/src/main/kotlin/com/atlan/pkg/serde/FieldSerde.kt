@@ -135,7 +135,9 @@ object FieldSerde {
         if (value.isNullOrEmpty()) {
             listOf()
         } else {
-            value.split(CellXformer.LIST_DELIMITER).map { getSingleValuedCustomMetadata(ctx, setName, attrDef, it.trim(), logger).toString() }
+            value.split(CellXformer.LIST_DELIMITER).mapNotNull {
+                getSingleValuedCustomMetadata(ctx, setName, attrDef, it.trim(), logger)?.toString()
+            }
         }
 
     private fun getSingleValuedCustomMetadata(
