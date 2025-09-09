@@ -127,7 +127,12 @@ class ProductImporter(
         val candidateDP = DataProduct.creator(name, dataDomain.qualifiedName, dataProductAssetsDSL)
         return if (qualifiedName != getCacheId(deserializer, dataDomain)) {
             // If there is an existing qualifiedName, use it, otherwise we will get a conflict exception
-            candidateDP.qualifiedName(qualifiedName)
+            // AND also clear out the default "ACTIVE" status that was set by the creator (so we don't
+            // clobber whatever the existing status is)
+            candidateDP
+                .qualifiedName(qualifiedName)
+                .daapStatus(null)
+                .dataProductStatus(null)
         } else {
             // If there is no existing qualifiedName, we MUST use the generated qualifiedName,
             // otherwise we will get a permission exception
