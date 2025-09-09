@@ -722,11 +722,24 @@ public class GlossaryTest extends AtlanLiveTest {
     @Test(
             groups = {"glossary.update.term.removeRelationship2"},
             dependsOnGroups = {"glossary.update.term.appendRelationship2"})
-    void removeUnrelatedRelationship() {
+    void removeUnrelatedRelationship() throws AtlanException {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .seeAlsoOne(GlossaryTerm.refByGuid(term2.getGuid(), Reference.SaveSemantic.REMOVE))
                 .build();
-        assertThrows(NotFoundException.class, () -> term.save(client));
+        AssetMutationResponse response = term.save(client);
+        assertNotNull(response);
+        GlossaryTerm result = GlossaryTerm.get(client, term1.getGuid(), true);
+        assertNotNull(result);
+        assertNotNull(result.getSeeAlso());
+        Set<IGlossaryTerm> activeRelationships = result.getSeeAlso().stream()
+                .filter(r -> r.getRelationshipStatus() == AtlanStatus.ACTIVE)
+                .collect(Collectors.toSet());
+        assertEquals(activeRelationships.size(), 2);
+        Set<String> relatedGuids =
+                activeRelationships.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
+        assertEquals(relatedGuids.size(), 2);
+        assertTrue(relatedGuids.contains(term3.getGuid()));
+        assertTrue(relatedGuids.contains(term4.getGuid()));
     }
 
     @Test(
