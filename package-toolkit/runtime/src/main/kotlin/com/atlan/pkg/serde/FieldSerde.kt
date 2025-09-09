@@ -150,20 +150,22 @@ object FieldSerde {
         }
         if (value.isNotBlank() && attrDef.options?.isEnum ?: false) {
             val enumName = attrDef.typeName
-            val enumDef = ctx.client.enumCache.getByName(enumName)
-            if (!enumDef.validValues.contains(value)) {
-                if (FAIL_ON_ERRORS.get()) {
-                    throw IllegalArgumentException(
-                        """
-                        Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value.
-                        You must use one of the valid values defined for the options associated with this attribute.
-                        """.trimIndent(),
-                    )
-                } else {
-                    logger.warn {
-                        "Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value -- skipping it."
+            if (enumName != null) {
+                val enumDef = ctx.client.enumCache.getByName(enumName)
+                if (!enumDef.validValues.contains(value)) {
+                    if (FAIL_ON_ERRORS.get()) {
+                        throw IllegalArgumentException(
+                            """
+                            Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value.
+                            You must use one of the valid values defined for the options associated with this attribute.
+                            """.trimIndent(),
+                        )
+                    } else {
+                        logger.warn {
+                            "Invalid value provided for custom metadata $setName attribute ${attrDef.displayName}: $value -- skipping it."
+                        }
+                        return ""
                     }
-                    return ""
                 }
             }
             return CellXformer.decodeString(ctx, value)
