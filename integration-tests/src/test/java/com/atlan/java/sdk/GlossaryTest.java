@@ -732,11 +732,11 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(result);
         assertNotNull(result.getSeeAlso());
         Set<IGlossaryTerm> activeRelationships = result.getSeeAlso().stream()
-            .filter(r -> r.getRelationshipStatus() == AtlanStatus.ACTIVE)
-            .collect(Collectors.toSet());
+                .filter(r -> r.getRelationshipStatus() == AtlanStatus.ACTIVE)
+                .collect(Collectors.toSet());
         assertEquals(activeRelationships.size(), 2);
         Set<String> relatedGuids =
-            activeRelationships.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
+                activeRelationships.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
         assertEquals(relatedGuids.size(), 2);
         assertTrue(relatedGuids.contains(term3.getGuid()));
         assertTrue(relatedGuids.contains(term4.getGuid()));
