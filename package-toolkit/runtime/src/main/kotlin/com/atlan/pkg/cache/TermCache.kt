@@ -103,7 +103,10 @@ class TermCache(
     }
 
     /** {@inheritDoc}  */
-    override fun getIdentityForAsset(asset: GlossaryTerm): String = "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}${asset.anchor.name}"
+    override fun getIdentityForAsset(asset: GlossaryTerm): String =
+        asset.anchor?.name?.let { glossaryName ->
+            "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
+        } ?: throw IllegalStateException("Term found with no anchor: ${asset.toJson(client)})")
 
     /** {@inheritDoc} */
     override fun refreshCache() {

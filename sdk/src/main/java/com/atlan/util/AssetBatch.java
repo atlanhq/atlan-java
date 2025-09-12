@@ -741,6 +741,24 @@ public class AssetBatch implements AtlanCloseable {
     }
 
     /**
+     * Internal class to capture deferred related assets that must be loaded in subsequent passes
+     * of the batch processing.
+     */
+    @Getter
+    @Builder
+    @Jacksonized
+    @EqualsAndHashCode
+    public static final class RelatedAssetHold {
+        private final Asset fromAsset;
+        private final Map<String, Collection<Asset>> relatedMap;
+
+        public RelatedAssetHold(Asset fromAsset, Map<String, Collection<Asset>> relatedMap) {
+            this.fromAsset = fromAsset;
+            this.relatedMap = relatedMap;
+        }
+    }
+
+    /**
      * Class to uniquely identify an asset by its type and qualifiedName.
      */
     @Getter
