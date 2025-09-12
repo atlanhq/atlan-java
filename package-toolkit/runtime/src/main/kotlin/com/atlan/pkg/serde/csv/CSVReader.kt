@@ -31,6 +31,7 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.Semaphore
 import java.util.concurrent.atomic.AtomicLong
+import java.util.stream.Stream
 
 /**
  * Utility class for reading from CSV files, using FastCSV.
@@ -147,7 +148,6 @@ class CSVReader
             var someFailure = false
 
             val parallelism = ForkJoinPool.getCommonPoolParallelism()
-            val semaphore = Semaphore(parallelism) // to limit parallelism of related (off-heap) asset processing
             val filteredRowCount = AtomicLong(0)
             counter.stream().skip(1).forEach { row ->
                 if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
@@ -263,35 +263,27 @@ class CSVReader
                         val searchAndDelete: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
                         relatedHolds.values().forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
                         logger.info { "Processing $totalRelated total related assets in a second pass." }
-                        relatedHolds.entrySet().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
+                        relatedHolds.entrySet().forEachParallel(logger) { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
                             val placeholderGuid = hold.key
                             val relatedAssetHold = hold.value
                             val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
                             if (!resolvedGuid.isNullOrBlank()) {
-                                semaphore.acquire()
                                 val resolvedAsset =
                                     relatedAssetHold.fromAsset
                                         .toBuilder()
                                         .guid(resolvedGuid)
                                         .build() as Asset
-                                // Submit in parallel to the default ForkJoinPool
-                                CompletableFuture.runAsync {
-                                    try {
-                                        AssetRefXformer.buildRelated(
-                                            ctx,
-                                            resolvedAsset,
-                                            relatedAssetHold.relatedMap,
-                                            relatedBatch,
-                                            relatedCount,
-                                            totalRelated,
-                                            logger,
-                                            batchSize,
-                                            linkIdempotency,
-                                        )
-                                    } finally {
-                                        semaphore.release()
-                                    }
-                                }
+                                AssetRefXformer.buildRelated(
+                                    ctx,
+                                    resolvedAsset,
+                                    relatedAssetHold.relatedMap,
+                                    relatedBatch,
+                                    relatedCount,
+                                    totalRelated,
+                                    logger,
+                                    batchSize,
+                                    linkIdempotency,
+                                )
                             } else {
                                 logger.info { " ... skipped related asset as primary asset was skipped (above)." }
                                 relatedCount.getAndIncrement()
@@ -427,6 +419,38 @@ class CSVReader
                     logger.warn { " ... skipped asset: ${it.typeName}::${it.qualifiedName}" }
                 }
             }
+        }
+
+        private fun <T> Stream<T>.forEachParallel(
+            logger: KLogger,
+            parallelism: Int = ForkJoinPool.getCommonPoolParallelism(),
+            action: (T) -> Unit,
+        ) {
+            val semaphore = Semaphore(parallelism)
+            val futures =
+                this
+                    .map { item ->
+                        semaphore.acquire()
+                        try {
+                            CompletableFuture
+                                .runAsync {
+                                    try {
+                                        action(item)
+                                    } finally {
+                                        semaphore.release()
+                                    }
+                                }.exceptionally { ex ->
+                                    logger.error { "Error during parallel processing: ${ex.message}" }
+                                    logger.debug(ex) { "Full details: " }
+                                    null
+                                }
+                        } catch (e: Exception) {
+                            semaphore.release()
+                            throw e
+                        }
+                    }.toList() // Collect all futures
+
+            CompletableFuture.allOf(*futures.toTypedArray()).join()
         }
 
         /** {@inheritDoc}  */
