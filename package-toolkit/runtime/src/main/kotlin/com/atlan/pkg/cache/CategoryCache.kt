@@ -144,7 +144,9 @@ class CategoryCache(
                 getIdentity(asset.parentCategory.guid)
             }
         return if (parentIdentity.isNullOrBlank()) {
-            "${asset.name}${GLOSSARY_DELIMITER}${asset.anchor.name}"
+            asset.anchor?.name?.let { glossaryName ->
+                "${asset.name}${GLOSSARY_DELIMITER}$glossaryName"
+            } ?: throw IllegalStateException("Category found with no anchor: ${asset.toJson(client)})")
         } else {
             val parentPath = parentIdentity.split(GLOSSARY_DELIMITER)[0]
             "$parentPath${GlossaryCategoryXformer.CATEGORY_DELIMITER}${asset.name}$GLOSSARY_DELIMITER${asset.anchor.name}"

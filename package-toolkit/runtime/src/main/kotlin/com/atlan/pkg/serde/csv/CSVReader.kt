@@ -2,11 +2,10 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
-import com.atlan.cache.OffHeapObjectCache
+import com.atlan.cache.OffHeapDeferredCache
 import com.atlan.cache.ReflectionCache
 import com.atlan.exception.AtlanException
 import com.atlan.model.assets.Asset
-import com.atlan.model.core.AtlanObject
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanDeleteType
 import com.atlan.model.enums.AtlanTagHandling
@@ -16,6 +15,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.util.AssetBatch
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
@@ -180,7 +180,7 @@ class CSVReader
                     AssetCreationHandling.FULL,
                     false,
                 ).use { relatedBatch ->
-                    OffHeapObjectCache<RelatedAssetHold>(ctx.client, "related-holds").use { relatedHolds ->
+                    OffHeapDeferredCache(ctx.client, "related-holds").use { relatedHolds ->
                         // Step 0: split the single file into one file per thread
                         val csvChunkFiles = mutableListOf<Path>()
                         val chunkSize = totalRowCount / parallelism
@@ -229,7 +229,7 @@ class CSVReader
                                         primaryBatch.add(asset)
                                         Utils.logProgress(count, totalRowCount, logger, batchSize)
                                         if (assets.related.isNotEmpty()) {
-                                            relatedHolds.put(asset.guid, RelatedAssetHold(asset, assets.related))
+                                            relatedHolds.put(asset.guid, AssetBatch.RelatedAssetHold(asset, assets.related))
                                         }
                                         if (assets.delete.isNotEmpty()) {
                                             deferDeletes[asset.guid] = assets.delete
@@ -263,7 +263,7 @@ class CSVReader
                         val searchAndDelete: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
                         relatedHolds.values().forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
                         logger.info { "Processing $totalRelated total related assets in a second pass." }
-                        relatedHolds.entrySet().forEachParallel(logger) { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
+                        relatedHolds.entrySet().forEachParallel(logger) { hold: MutableMap.MutableEntry<String, AssetBatch.RelatedAssetHold> ->
                             val placeholderGuid = hold.key
                             val relatedAssetHold = hold.value
                             val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
@@ -460,9 +460,4 @@ class CSVReader
             counter.close()
             reader.close()
         }
-
-        data class RelatedAssetHold(
-            val fromAsset: Asset,
-            val relatedMap: Map<String, Collection<Asset>>,
-        ) : AtlanObject()
     }
