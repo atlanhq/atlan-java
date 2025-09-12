@@ -429,5 +429,5 @@ class CSVReader
         data class RelatedAssetHold(
             val fromAsset: Asset,
             val relatedMap: Map<String, Collection<Asset>>,
-        ): AtlanObject()
+        ) : AtlanObject()
     }
