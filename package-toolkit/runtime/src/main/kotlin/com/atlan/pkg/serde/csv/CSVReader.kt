@@ -29,6 +29,9 @@ import java.nio.file.Paths
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.sequences.chunked
+import kotlin.sequences.toList
+import kotlin.streams.asSequence
 
 /**
  * Utility class for reading from CSV files, using FastCSV.
@@ -260,32 +263,40 @@ class CSVReader
                         val searchAndDelete: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
                         relatedHolds.values().forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
                         logger.info { "Processing $totalRelated total related assets in a second pass." }
-                        relatedHolds.entrySet().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
-                            val placeholderGuid = hold.key
-                            val relatedAssetHold = hold.value
-                            val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
-                            if (!resolvedGuid.isNullOrBlank()) {
-                                val resolvedAsset =
-                                    relatedAssetHold.fromAsset
-                                        .toBuilder()
-                                        .guid(resolvedGuid)
-                                        .build() as Asset
-                                AssetRefXformer.buildRelated(
-                                    ctx,
-                                    resolvedAsset,
-                                    relatedAssetHold.relatedMap,
-                                    relatedBatch,
-                                    relatedCount,
-                                    totalRelated,
-                                    logger,
-                                    batchSize,
-                                    linkIdempotency,
-                                )
-                            } else {
-                                logger.info { " ... skipped related asset as primary asset was skipped (above)." }
-                                relatedCount.getAndIncrement()
+                        relatedHolds
+                            .entrySet()
+                            .asSequence()
+                            .chunked(batchSize)
+                            .toList()
+                            .parallelStream()
+                            .forEach { subset: List<MutableMap.MutableEntry<String, RelatedAssetHold>> ->
+                                subset.forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
+                                    val placeholderGuid = hold.key
+                                    val relatedAssetHold = hold.value
+                                    val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
+                                    if (!resolvedGuid.isNullOrBlank()) {
+                                        val resolvedAsset =
+                                            relatedAssetHold.fromAsset
+                                                .toBuilder()
+                                                .guid(resolvedGuid)
+                                                .build() as Asset
+                                        AssetRefXformer.buildRelated(
+                                            ctx,
+                                            resolvedAsset,
+                                            relatedAssetHold.relatedMap,
+                                            relatedBatch,
+                                            relatedCount,
+                                            totalRelated,
+                                            logger,
+                                            batchSize,
+                                            linkIdempotency,
+                                        )
+                                    } else {
+                                        logger.info { " ... skipped related asset as primary asset was skipped (above)." }
+                                        relatedCount.getAndIncrement()
+                                    }
+                                }
                             }
-                        }
                         deferDeletes.entries.parallelStream().forEach { delete: MutableMap.MutableEntry<String, Set<AtlanField>> ->
                             val placeholderGuid = delete.key
                             val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
