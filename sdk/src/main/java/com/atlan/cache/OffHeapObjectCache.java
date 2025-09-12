@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  * memory usage.
  */
 @Slf4j
-class OffHeapObjectCache<T extends AtlanObject> extends AbstractOffHeapCache<String, T> {
+public class OffHeapObjectCache<T extends AtlanObject> extends AbstractOffHeapCache<String, T> {
 
     private final AtlanClient client;
 
