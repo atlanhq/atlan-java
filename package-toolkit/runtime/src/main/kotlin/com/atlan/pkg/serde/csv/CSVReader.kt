@@ -26,12 +26,11 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ForkJoinPool
+import java.util.concurrent.Semaphore
 import java.util.concurrent.atomic.AtomicLong
-import kotlin.sequences.chunked
-import kotlin.sequences.toList
-import kotlin.streams.asSequence
 
 /**
  * Utility class for reading from CSV files, using FastCSV.
@@ -148,6 +147,7 @@ class CSVReader
             var someFailure = false
 
             val parallelism = ForkJoinPool.getCommonPoolParallelism()
+            val semaphore = Semaphore(parallelism) // to limit parallelism of related (off-heap) asset processing
             val filteredRowCount = AtomicLong(0)
             counter.stream().skip(1).forEach { row ->
                 if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
@@ -263,23 +263,20 @@ class CSVReader
                         val searchAndDelete: MutableMap<String, Set<AtlanField>> = ConcurrentHashMap()
                         relatedHolds.values().forEach { b -> totalRelated.getAndAdd(b.relatedMap.size.toLong()) }
                         logger.info { "Processing $totalRelated total related assets in a second pass." }
-                        relatedHolds
-                            .entrySet()
-                            .asSequence()
-                            .chunked(batchSize)
-                            .toList()
-                            .parallelStream()
-                            .forEach { subset: List<MutableMap.MutableEntry<String, RelatedAssetHold>> ->
-                                subset.forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
-                                    val placeholderGuid = hold.key
-                                    val relatedAssetHold = hold.value
-                                    val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
-                                    if (!resolvedGuid.isNullOrBlank()) {
-                                        val resolvedAsset =
-                                            relatedAssetHold.fromAsset
-                                                .toBuilder()
-                                                .guid(resolvedGuid)
-                                                .build() as Asset
+                        relatedHolds.entrySet().forEach { hold: MutableMap.MutableEntry<String, RelatedAssetHold> ->
+                            val placeholderGuid = hold.key
+                            val relatedAssetHold = hold.value
+                            val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
+                            if (!resolvedGuid.isNullOrBlank()) {
+                                semaphore.acquire()
+                                val resolvedAsset =
+                                    relatedAssetHold.fromAsset
+                                        .toBuilder()
+                                        .guid(resolvedGuid)
+                                        .build() as Asset
+                                // Submit in parallel to the default ForkJoinPool
+                                CompletableFuture.runAsync {
+                                    try {
                                         AssetRefXformer.buildRelated(
                                             ctx,
                                             resolvedAsset,
@@ -291,12 +288,15 @@ class CSVReader
                                             batchSize,
                                             linkIdempotency,
                                         )
-                                    } else {
-                                        logger.info { " ... skipped related asset as primary asset was skipped (above)." }
-                                        relatedCount.getAndIncrement()
+                                    } finally {
+                                        semaphore.release()
                                     }
                                 }
+                            } else {
+                                logger.info { " ... skipped related asset as primary asset was skipped (above)." }
+                                relatedCount.getAndIncrement()
                             }
+                        }
                         deferDeletes.entries.parallelStream().forEach { delete: MutableMap.MutableEntry<String, Set<AtlanField>> ->
                             val placeholderGuid = delete.key
                             val resolvedGuid = primaryBatch.resolvedGuids[placeholderGuid]
