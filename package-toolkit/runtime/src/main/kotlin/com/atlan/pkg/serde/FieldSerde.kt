@@ -151,7 +151,7 @@ object FieldSerde {
             return null
         }
         if (value.isNotBlank() && attrDef.options?.isEnum ?: false) {
-            val enumName = attrDef.typeName
+            val enumName = attrDef.basicType
             if (enumName != null) {
                 val enumDef = ctx.client.enumCache.getByName(enumName)
                 if (!enumDef.validValues.contains(value)) {
