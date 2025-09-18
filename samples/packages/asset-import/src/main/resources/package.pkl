@@ -113,6 +113,9 @@ uiConfig {
             ["ownerGroups"] = "Owners (groups)"
             ["assignedTerms"] = "Assigned terms"
             ["readme"] = "README"
+            ["seeAlso"] = "Associated terms"
+            ["synonyms"] = "Synonyms"
+            ["antonyms"] = "Antonyms"
           }
           helpText = "Select attributes you want to clear (remove) from glossaries, categories and terms if their value is blank in the provided file."
           multiSelect = true
