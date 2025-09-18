@@ -97,6 +97,7 @@ class MeshExporter(
                 Asset.STARRED_DETAILS,
                 DataProduct.DAAP_CRITICALITY,
                 DataProduct.DAAP_SENSITIVITY,
+                DataProduct.OUTPUT_PORTS,
                 DataProduct.DATA_PRODUCT_ASSETS_PLAYBOOK_FILTER,
                 DataProduct.DATA_PRODUCT_ASSETS_DSL,
                 DataProduct.DAAP_VISIBILITY,
