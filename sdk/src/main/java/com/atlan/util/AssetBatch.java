@@ -514,9 +514,24 @@ public class AssetBatch implements AtlanCloseable {
                 }
                 builder.pageSize(Math.max(maxSize * 2, IndexSearchDSL.DEFAULT_PAGE_SIZE)).stream()
                         .forEach(asset -> {
-                            AssetIdentity assetId =
-                                    new AssetIdentity(asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
-                            found.put(assetId, asset.getQualifiedName());
+                            boolean valid = true;
+                            if (asset.getTypeName() == null
+                                    || asset.getTypeName().isEmpty()) {
+                                log.warn("Found asset with no type -- skipping: {}", asset.toJson(client));
+                                log.debug(" ... when searching for these qualifiedNames: {}", qualifiedNames);
+                                valid = false;
+                            }
+                            if (asset.getQualifiedName() == null
+                                    || asset.getQualifiedName().isEmpty()) {
+                                log.warn("Found asset with no qualifiedName -- skipping: {}", asset.toJson(client));
+                                log.debug(" ... when searching for these qualifiedNames: {}", qualifiedNames);
+                                valid = false;
+                            }
+                            if (valid) {
+                                AssetIdentity assetId = new AssetIdentity(
+                                        asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
+                                found.put(assetId, asset.getQualifiedName());
+                            }
                         });
                 revised = new ArrayList<>();
                 for (Asset asset : _batch) {
