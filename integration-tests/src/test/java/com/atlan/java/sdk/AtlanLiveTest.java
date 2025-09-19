@@ -163,7 +163,7 @@ public abstract class AtlanLiveTest {
             throws AtlanException, InterruptedException {
         int count = 1;
         IndexSearchResponse response = request.search(client);
-        boolean remainingActive = true;
+        boolean remainingActive = false;
         if (isDeleteQuery) {
             remainingActive = !response.getAssets().stream()
                     .filter(it -> it.getStatus() != AtlanStatus.DELETED)
