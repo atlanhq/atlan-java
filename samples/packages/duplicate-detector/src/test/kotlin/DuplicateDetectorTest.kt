@@ -30,7 +30,7 @@ class DuplicateDetectorTest : PackageTest("dd") {
         runCustomPackage(
             DuplicateDetectorCfg(
                 glossaryName = glossaryName,
-                qnPrefix = "default/snowflake",
+                qnPrefix = "default/mssql",
                 controlConfigStrategy = "default",
                 assetTypes = listOf(Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME),
             ),
