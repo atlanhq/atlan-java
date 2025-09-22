@@ -2,7 +2,7 @@
 plugins {
     id("com.atlan.java")
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
-    id("org.owasp.dependencycheck") version "12.1.3"
+    id("org.owasp.dependencycheck") version "12.1.5"
 }
 
 group = providers.gradleProperty("GROUP").get()
