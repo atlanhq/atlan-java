@@ -276,12 +276,12 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throws AtlanException {
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         log.debug("({}) {} with: {}", method, url, body);
         ApiResource.atlanResponseGetter.request(client, method, url, body, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         if (log.isDebugEnabled()) {
             log.debug(" ... empty response.");
         }
@@ -360,12 +360,12 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throws AtlanException {
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         log.debug("({}) {} with: {}", method, url, body);
         T response = ApiResource.atlanResponseGetter.request(client, method, url, body, clazz, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         if (log.isDebugEnabled() && (options == null || !options.getSkipLogging())) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -404,13 +404,13 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throws AtlanException {
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         log.debug("({}) {} with: {}", method, url, body);
         String response =
                 ApiResource.atlanResponseGetter.requestPlainText(client, method, url, body, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 log.debug(" ... response: {}", response);
@@ -481,13 +481,13 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         }
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         log.debug("({}) {} with: {}", method, url, filename);
         T response = ApiResource.atlanResponseGetter.request(
                 client, method, url, payload, filename, clazz, extras, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -531,11 +531,11 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         }
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         T response = ApiResource.atlanResponseGetter.request(client, method, url, map, clazz, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        injectTraceId(requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -548,6 +548,11 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             }
         }
         return response;
+    }
+
+    public static void injectTraceId(String requestId) {
+        MDC.put("X-Atlan-Request-Id", requestId);
+        MDC.put("trace_id", requestId);
     }
 
     /**
