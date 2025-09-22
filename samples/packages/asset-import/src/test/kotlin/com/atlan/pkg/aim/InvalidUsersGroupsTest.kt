@@ -83,8 +83,8 @@ class InvalidUsersGroupsTest : PackageTest("iug") {
 
     @Test
     fun warningsInLog() {
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer trace_id:  span_id:  trace_flags:  - Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
-        assertTrue(logHasMessage("WARN", "com.atlan.pkg.aim.Importer trace_id:  span_id:  trace_flags:  - Unable to decode value from field -- skipping ownerUsers: invalidUser"))
+        assertTrue(logHasMessage("WARN", "Unable to decode value from field -- skipping ownerGroups: invalidGroup"))
+        assertTrue(logHasMessage("WARN", "Unable to decode value from field -- skipping ownerUsers: invalidUser"))
     }
 
     @Test
