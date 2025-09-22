@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.*;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
 
 /**
  * Base class for all event-stream response objects.
@@ -93,13 +92,13 @@ public abstract class ApiEventStreamResource extends AtlanObject implements Atla
             throws AtlanException {
         // Create a unique ID for every request, and add it to the logging context and header
         String requestId = UUID.randomUUID().toString();
-        MDC.put("X-Atlan-Request-Id", requestId);
+        ApiResource.injectTraceId(requestId);
         log.debug("({}) {} with: {}", method, url, body);
         T response =
                 ApiResource.atlanResponseGetter.requestStream(client, method, url, body, clazz, options, requestId);
         // Ensure we reset the Atlan request ID, so we always have the context from the original
         // request that was made (even if it in turn triggered off other requests)
-        MDC.put("X-Atlan-Request-Id", requestId);
+        ApiResource.injectTraceId(requestId);
         return response;
     }
 }
