@@ -551,7 +551,6 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     }
 
     public static void injectTraceId(String requestId) {
-        MDC.put("X-Atlan-Request-Id", requestId);
         MDC.put("trace_id", requestId);
     }
 
