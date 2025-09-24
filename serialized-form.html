@@ -5387,6 +5387,11 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>sparkOrchestratedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISpark.html" title="interface in com.atlan.model.assets">ISpark</a>&gt; sparkOrchestratedAssets</pre>
+<div class="block">Spark assets that are executed by this airflow asset.</div>
+</li>
+<li class="block-list">
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for AirflowDags.</div>
@@ -5569,6 +5574,11 @@ loadScripts(document, 'script');</script>
 <h5>process</h5>
 <pre><a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a> process</pre>
 <div class="block">Process in which this task exists.</div>
+</li>
+<li class="block-list">
+<h5>sparkOrchestratedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISpark.html" title="interface in com.atlan.model.assets">ISpark</a>&gt; sparkOrchestratedAssets</pre>
+<div class="block">Spark assets that are executed by this airflow asset.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -8106,6 +8116,121 @@ loadScripts(document, 'script');</script>
 <div class="block">Name of the DBT workflow in Atlan that last updated the asset.</div>
 </li>
 <li class="block-list">
+<h5>assetDQFreshnessExpectation</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQFreshnessExpectation</pre>
+<div class="block">Expectation of data freshness from Source.</div>
+</li>
+<li class="block-list">
+<h5>assetDQFreshnessValue</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQFreshnessValue</pre>
+<div class="block">Value of data freshness from Source.</div>
+</li>
+<li class="block-list">
+<h5>assetDQResult</h5>
+<pre><a href="com/atlan/model/enums/DataQualityResult.html" title="enum class in com.atlan.model.enums">DataQualityResult</a> assetDQResult</pre>
+<div class="block">Overall result of all the dq rules. If any one rule failed, then fail else pass.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRowScopeFilterColumnQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQRowScopeFilterColumnQualifiedName</pre>
+<div class="block">Qualified name of the column used for row scope filtering in DQ rules for this asset.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleAttachedDimensions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/enums/DataQualityDimension.html" title="enum class in com.atlan.model.enums">DataQualityDimension</a>&gt; assetDQRuleAttachedDimensions</pre>
+<div class="block">List of all the dimensions of attached rules.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleAttachedRuleTypes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetDQRuleAttachedRuleTypes</pre>
+<div class="block">List of all the types of attached rules.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleFailedCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQRuleFailedCount</pre>
+<div class="block">Count of failed DQ rules attached to this asset.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleFailedDimensions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/enums/DataQualityDimension.html" title="enum class in com.atlan.model.enums">DataQualityDimension</a>&gt; assetDQRuleFailedDimensions</pre>
+<div class="block">List of all the dimensions of failed rules.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleFailedRuleTypes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetDQRuleFailedRuleTypes</pre>
+<div class="block">List of all the types of failed rules.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleLastRunAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQRuleLastRunAt</pre>
+<div class="block">Time (epoch) at which the last dq rule ran.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRulePassedCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQRulePassedCount</pre>
+<div class="block">Count of passed DQ rules attached to this asset.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRulePassedDimensions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/enums/DataQualityDimension.html" title="enum class in com.atlan.model.enums">DataQualityDimension</a>&gt; assetDQRulePassedDimensions</pre>
+<div class="block">List of all the dimensions for which all the rules passed.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRulePassedRuleTypes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetDQRulePassedRuleTypes</pre>
+<div class="block">List of all the types of rules for which all the rules passed.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleResultTags</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetDQRuleResultTags</pre>
+<div class="block">Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count.</div>
+</li>
+<li class="block-list">
+<h5>assetDQRuleTotalCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQRuleTotalCount</pre>
+<div class="block">Count of DQ rules attached to this asset.</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleCrontab</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQScheduleCrontab</pre>
+<div class="block">Crontab of the DQ rule that will run at datasource.</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleSourceSyncedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetDQScheduleSourceSyncedAt</pre>
+<div class="block">Time (epoch) at which the schedule synced to the source.</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleSourceSyncErrorCode</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQScheduleSourceSyncErrorCode</pre>
+<div class="block">Error code in the case of sync state being "error".</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleSourceSyncErrorMessage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQScheduleSourceSyncErrorMessage</pre>
+<div class="block">Error message in the case of sync state being "error".</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleSourceSyncRawError</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQScheduleSourceSyncRawError</pre>
+<div class="block">Raw error message from the source.</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleSourceSyncStatus</h5>
+<pre><a href="com/atlan/model/enums/DataQualitySourceSyncStatus.html" title="enum class in com.atlan.model.enums">DataQualitySourceSyncStatus</a> assetDQScheduleSourceSyncStatus</pre>
+<div class="block">Latest sync status of the schedule to the source.</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleTimeZone</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetDQScheduleTimeZone</pre>
+<div class="block">Timezone of the DQ rule schedule that will run at datasource</div>
+</li>
+<li class="block-list">
+<h5>assetDQScheduleType</h5>
+<pre><a href="com/atlan/model/enums/DataQualityScheduleType.html" title="enum class in com.atlan.model.enums">DataQualityScheduleType</a> assetDQScheduleType</pre>
+<div class="block">Type of schedule of the DQ rule that will run at datasource.</div>
+</li>
+<li class="block-list">
 <h5>assetIcon</h5>
 <pre><a href="com/atlan/model/enums/AtlanIcon.html" title="enum class in com.atlan.model.enums">AtlanIcon</a> assetIcon</pre>
 <div class="block">Name of the icon to use for this asset. (Only applies to glossaries, currently.)</div>
@@ -8374,6 +8499,16 @@ loadScripts(document, 'script');</script>
 <h5>domainGUIDs</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; domainGUIDs</pre>
 <div class="block">Array of domain guids linked to this asset</div>
+</li>
+<li class="block-list">
+<h5>dqBaseDatasetRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDataQualityRule.html" title="interface in com.atlan.model.assets">IDataQualityRule</a>&gt; dqBaseDatasetRules</pre>
+<div class="block">Rules that are applied on this dataset.</div>
+</li>
+<li class="block-list">
+<h5>dqReferenceDatasetRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDataQualityRule.html" title="interface in com.atlan.model.assets">IDataQualityRule</a>&gt; dqReferenceDatasetRules</pre>
+<div class="block">Rules where this dataset is referenced.</div>
 </li>
 <li class="block-list">
 <h5>files</h5>
@@ -8999,6 +9134,11 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
@@ -9730,6 +9870,295 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.BigqueryRoutine">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/BigqueryRoutine.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BigqueryRoutine</a></h3>
+<div class="type-signature">class BigqueryRoutine extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>bigqueryAtlanSchema</h5>
+<pre><a href="com/atlan/model/assets/ISchema.html" title="interface in com.atlan.model.assets">ISchema</a> bigqueryAtlanSchema</pre>
+<div class="block">Schema in which this routine exists.</div>
+</li>
+<li class="block-list">
+<h5>bigqueryProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; bigqueryProcesses</pre>
+<div class="block">Processes that utilize this routine.</div>
+</li>
+<li class="block-list">
+<h5>bigqueryRoutineArguments</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; bigqueryRoutineArguments</pre>
+<div class="block">Arguments that are passed in to the routine.</div>
+</li>
+<li class="block-list">
+<h5>bigqueryRoutineDdl</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bigqueryRoutineDdl</pre>
+<div class="block">The ddl statement used to create the bigquery routine.</div>
+</li>
+<li class="block-list">
+<h5>bigqueryRoutineReturnType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bigqueryRoutineReturnType</pre>
+<div class="block">Return data type of the bigquery routine (null for stored procedures).</div>
+</li>
+<li class="block-list">
+<h5>bigqueryRoutineSecurityType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> bigqueryRoutineSecurityType</pre>
+<div class="block">Security type of the routine, always null.</div>
+</li>
+<li class="block-list">
+<h5>bigqueryRoutineType</h5>
+<pre><a href="com/atlan/model/enums/BigqueryRoutineType.html" title="enum class in com.atlan.model.enums">BigqueryRoutineType</a> bigqueryRoutineType</pre>
+<div class="block">Type of bigquery routine (sp, udf, or tvf).</div>
+</li>
+<li class="block-list">
+<h5>calculationViewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewName</pre>
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>calculationViewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewQualifiedName</pre>
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>databaseName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseName</pre>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>databaseQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseQualifiedName</pre>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>dbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; dbtModels</pre>
+<div class="block">(Deprecated) Model containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtSeedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSeed.html" title="interface in com.atlan.model.assets">IDbtSeed</a>&gt; dbtSeedAssets</pre>
+<div class="block">DBT seeds that materialize the SQL asset.</div>
+</li>
+<li class="block-list">
+<h5>dbtSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; dbtSources</pre>
+<div class="block">Source containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtTests</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a>&gt; dbtTests</pre>
+<div class="block">Tests related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>definition</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> definition</pre>
+<div class="block">SQL definition of the procedure.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>isProfiled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> isProfiled</pre>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>lastProfiledAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> lastProfiledAt</pre>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>queryCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCount</pre>
+<div class="block">Number of times this asset has been queried.</div>
+</li>
+<li class="block-list">
+<h5>queryCountUpdatedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCountUpdatedAt</pre>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>queryUserCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryUserCount</pre>
+<div class="block">Number of unique users who have queried this asset.</div>
+</li>
+<li class="block-list">
+<h5>queryUserMap</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt; queryUserMap</pre>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
+</li>
+<li class="block-list">
+<h5>schema</h5>
+<pre><a href="com/atlan/model/assets/ISchema.html" title="interface in com.atlan.model.assets">ISchema</a> schema</pre>
+<div class="block">Schema in which this stored procedure exists.</div>
+</li>
+<li class="block-list">
+<h5>schemaName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaName</pre>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>schemaQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaQualifiedName</pre>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>sqlAIModelContextQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlAIModelContextQualifiedName</pre>
+<div class="block">Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context.</div>
+</li>
+<li class="block-list">
+<h5>sqlArguments</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/structs/SQLProcedureArgument.html" title="class in com.atlan.model.structs">SQLProcedureArgument</a>&gt; sqlArguments</pre>
+<div class="block">List of procedure arguments with name and type information.</div>
+</li>
+<li class="block-list">
+<h5>sqlCatalogId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlCatalogId</pre>
+<div class="block">Internal ID for the database containing the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlDbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; sqlDbtModels</pre>
+<div class="block">Assets related to the model.</div>
+</li>
+<li class="block-list">
+<h5>sqlDBTSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
+<div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlExternalAccessIntegrations</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlExternalAccessIntegrations</pre>
+<div class="block">Names of external access integrations used by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlInstalledPackages</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlInstalledPackages</pre>
+<div class="block">Packages actually installed for the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>sqlLanguage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlLanguage</pre>
+<div class="block">Programming language used for the procedure (e.g., SQL, JavaScript, Python, Scala).</div>
+</li>
+<li class="block-list">
+<h5>sqlOwnerRoleType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlOwnerRoleType</pre>
+<div class="block">Type of role that owns the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlPackages</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlPackages</pre>
+<div class="block">Packages requested by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedureReturn</h5>
+<pre><a href="com/atlan/model/structs/SQLProcedureReturn.html" title="class in com.atlan.model.structs">SQLProcedureReturn</a> sqlProcedureReturn</pre>
+<div class="block">Detailed information about the procedure's return type.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; sqlProcesses</pre>
+<div class="block">Processes that utilize this procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlRuntimeVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlRuntimeVersion</pre>
+<div class="block">Version of the language runtime used by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlSchemaId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlSchemaId</pre>
+<div class="block">Internal ID for the schema containing the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlSecrets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlSecrets</pre>
+<div class="block">Secret variables used by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>tableName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>tableQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableQualifiedName</pre>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for BigqueryRoutines.</div>
+</li>
+<li class="block-list">
+<h5>viewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewName</pre>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+<li class="block-list">
+<h5>viewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewQualifiedName</pre>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.BigqueryTag">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/BigqueryTag.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BigqueryTag</a></h3>
 <div class="type-signature">class BigqueryTag extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -9898,6 +10327,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -9982,6 +10416,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -10035,6 +10474,11 @@ loadScripts(document, 'script');</script>
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
 <div class="block">SQL query that ran to produce the outputs.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -10460,6 +10904,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -13250,6 +13699,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Default value for this column.</div>
 </li>
 <li class="block-list">
+<h5>dqBaseColumnRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDataQualityRule.html" title="interface in com.atlan.model.assets">IDataQualityRule</a>&gt; dqBaseColumnRules</pre>
+<div class="block">Rules that are applied on this column.</div>
+</li>
+<li class="block-list">
+<h5>dqReferenceColumnRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDataQualityRule.html" title="interface in com.atlan.model.assets">IDataQualityRule</a>&gt; dqReferenceColumnRules</pre>
+<div class="block">Rules where this column is referenced.</div>
+</li>
+<li class="block-list">
 <h5>foreignKeyFrom</h5>
 <pre><a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a> foreignKeyFrom</pre>
 <div class="block">Column this foreign key column refers to.</div>
@@ -13500,6 +13959,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>subDataType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> subDataType</pre>
 <div class="block">Sub-data type of this column.</div>
@@ -13594,6 +14058,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -13654,6 +14123,11 @@ loadScripts(document, 'script');</script>
 <div class="block">SQL query that ran to produce the outputs.</div>
 </li>
 <li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
+</li>
+<li class="block-list">
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for ColumnProcesss.</div>
@@ -13696,6 +14170,36 @@ loadScripts(document, 'script');</script>
 <h5>connectionDbtEnvironments</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; connectionDbtEnvironments</pre>
 <div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>connectionDQCredentialGuid</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> connectionDQCredentialGuid</pre>
+<div class="block">Unique identifier (GUID) for the data quality credentials to use for this connection.</div>
+</li>
+<li class="block-list">
+<h5>connectionDQEnvironmentSetupErrorMessage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> connectionDQEnvironmentSetupErrorMessage</pre>
+<div class="block">Error message if data quality environment setup failed for this connection.</div>
+</li>
+<li class="block-list">
+<h5>connectionDQEnvironmentSetupStatus</h5>
+<pre><a href="com/atlan/model/enums/ConnectionDQEnvironmentSetupStatus.html" title="enum class in com.atlan.model.enums">ConnectionDQEnvironmentSetupStatus</a> connectionDQEnvironmentSetupStatus</pre>
+<div class="block">Status of the data quality environment setup for this connection.</div>
+</li>
+<li class="block-list">
+<h5>connectionDQEnvironmentSetupStatusUpdatedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> connectionDQEnvironmentSetupStatusUpdatedAt</pre>
+<div class="block">Timestamp when the data quality environment setup status was last updated.</div>
+</li>
+<li class="block-list">
+<h5>connectionDQEnvironmentSourceDatabaseName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> connectionDQEnvironmentSourceDatabaseName</pre>
+<div class="block">Name of the database in the source environment for data quality.</div>
+</li>
+<li class="block-list">
+<h5>connectionIsDQEnabled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> connectionIsDQEnabled</pre>
+<div class="block">Whether data quality is enabled for this connection (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>connectionSSOCredentialGuid</h5>
@@ -14390,6 +14894,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
 <div class="block">Definition of the table.</div>
@@ -14637,6 +15146,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -15378,6 +15892,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -15630,6 +16149,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -15916,6 +16440,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -16105,6 +16634,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -16289,6 +16823,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -16317,6 +16856,419 @@ loadScripts(document, 'script');</script>
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for DatabricksUnityCatalogTags.</div>
+</li>
+<li class="block-list">
+<h5>viewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewName</pre>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+<li class="block-list">
+<h5>viewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewQualifiedName</pre>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.DatabricksVolume">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/DatabricksVolume.html" title="class in com.atlan.model.assets">com.atlan.model.assets.DatabricksVolume</a></h3>
+<div class="type-signature">class DatabricksVolume extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>calculationViewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewName</pre>
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>calculationViewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewQualifiedName</pre>
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>databaseName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseName</pre>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>databaseQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseQualifiedName</pre>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumeExternalLocation</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databricksVolumeExternalLocation</pre>
+<div class="block">The storage location where the volume is created.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumeOwner</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databricksVolumeOwner</pre>
+<div class="block">User or group (principal) currently owning the volume.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumePaths</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDatabricksVolumePath.html" title="interface in com.atlan.model.assets">IDatabricksVolumePath</a>&gt; databricksVolumePaths</pre>
+<div class="block">Paths contained within the volume.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumeSchema</h5>
+<pre><a href="com/atlan/model/assets/ISchema.html" title="interface in com.atlan.model.assets">ISchema</a> databricksVolumeSchema</pre>
+<div class="block">Schema that contains the volume.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumeType</h5>
+<pre><a href="com/atlan/model/enums/DatabricksVolumeType.html" title="enum class in com.atlan.model.enums">DatabricksVolumeType</a> databricksVolumeType</pre>
+<div class="block">Type of the volume.</div>
+</li>
+<li class="block-list">
+<h5>dbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; dbtModels</pre>
+<div class="block">(Deprecated) Model containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtSeedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSeed.html" title="interface in com.atlan.model.assets">IDbtSeed</a>&gt; dbtSeedAssets</pre>
+<div class="block">DBT seeds that materialize the SQL asset.</div>
+</li>
+<li class="block-list">
+<h5>dbtSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; dbtSources</pre>
+<div class="block">Source containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtTests</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a>&gt; dbtTests</pre>
+<div class="block">Tests related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>isProfiled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> isProfiled</pre>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>lastProfiledAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> lastProfiledAt</pre>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>queryCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCount</pre>
+<div class="block">Number of times this asset has been queried.</div>
+</li>
+<li class="block-list">
+<h5>queryCountUpdatedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCountUpdatedAt</pre>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>queryUserCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryUserCount</pre>
+<div class="block">Number of unique users who have queried this asset.</div>
+</li>
+<li class="block-list">
+<h5>queryUserMap</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt; queryUserMap</pre>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
+</li>
+<li class="block-list">
+<h5>schemaName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaName</pre>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>schemaQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaQualifiedName</pre>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>sqlAIModelContextQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlAIModelContextQualifiedName</pre>
+<div class="block">Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context.</div>
+</li>
+<li class="block-list">
+<h5>sqlDbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; sqlDbtModels</pre>
+<div class="block">Assets related to the model.</div>
+</li>
+<li class="block-list">
+<h5>sqlDBTSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
+<div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>tableName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>tableQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableQualifiedName</pre>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DatabricksVolumes.</div>
+</li>
+<li class="block-list">
+<h5>viewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewName</pre>
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+<li class="block-list">
+<h5>viewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> viewQualifiedName</pre>
+<div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.DatabricksVolumePath">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/DatabricksVolumePath.html" title="class in com.atlan.model.assets">com.atlan.model.assets.DatabricksVolumePath</a></h3>
+<div class="type-signature">class DatabricksVolumePath extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>calculationViewName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewName</pre>
+<div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>calculationViewQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewQualifiedName</pre>
+<div class="block">Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
+</li>
+<li class="block-list">
+<h5>databaseName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseName</pre>
+<div class="block">Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>databaseQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databaseQualifiedName</pre>
+<div class="block">Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolume</h5>
+<pre><a href="com/atlan/model/assets/IDatabricksVolume.html" title="interface in com.atlan.model.assets">IDatabricksVolume</a> databricksVolume</pre>
+<div class="block">Volume that contains the paths.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumePathPath</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databricksVolumePathPath</pre>
+<div class="block">Path of data on the volume.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumePathVolumeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databricksVolumePathVolumeName</pre>
+<div class="block">Name of the parent volume.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumePathVolumeQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> databricksVolumePathVolumeQualifiedName</pre>
+<div class="block">Qualified name of the parent volume.</div>
+</li>
+<li class="block-list">
+<h5>dbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; dbtModels</pre>
+<div class="block">(Deprecated) Model containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtSeedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSeed.html" title="interface in com.atlan.model.assets">IDbtSeed</a>&gt; dbtSeedAssets</pre>
+<div class="block">DBT seeds that materialize the SQL asset.</div>
+</li>
+<li class="block-list">
+<h5>dbtSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; dbtSources</pre>
+<div class="block">Source containing the assets.</div>
+</li>
+<li class="block-list">
+<h5>dbtTests</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtTest.html" title="interface in com.atlan.model.assets">IDbtTest</a>&gt; dbtTests</pre>
+<div class="block">Tests related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>isProfiled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> isProfiled</pre>
+<div class="block">Whether this asset has been profiled (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>lastProfiledAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> lastProfiledAt</pre>
+<div class="block">Time (epoch) at which this asset was last profiled, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>queryCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCount</pre>
+<div class="block">Number of times this asset has been queried.</div>
+</li>
+<li class="block-list">
+<h5>queryCountUpdatedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryCountUpdatedAt</pre>
+<div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
+</li>
+<li class="block-list">
+<h5>queryUserCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> queryUserCount</pre>
+<div class="block">Number of unique users who have queried this asset.</div>
+</li>
+<li class="block-list">
+<h5>queryUserMap</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt; queryUserMap</pre>
+<div class="block">Map of unique users who have queried this asset to the number of times they have queried it.</div>
+</li>
+<li class="block-list">
+<h5>schemaName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaName</pre>
+<div class="block">Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>schemaQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> schemaQualifiedName</pre>
+<div class="block">Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema.</div>
+</li>
+<li class="block-list">
+<h5>sqlAIModelContextQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlAIModelContextQualifiedName</pre>
+<div class="block">Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context.</div>
+</li>
+<li class="block-list">
+<h5>sqlDbtModels</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; sqlDbtModels</pre>
+<div class="block">Assets related to the model.</div>
+</li>
+<li class="block-list">
+<h5>sqlDBTSources</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
+<div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>tableName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
+<div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>tableQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableQualifiedName</pre>
+<div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DatabricksVolumePaths.</div>
 </li>
 <li class="block-list">
 <h5>viewName</h5>
@@ -16707,6 +17659,294 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.assets.DataQualityRule">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/DataQualityRule.html" title="class in com.atlan.model.assets">com.atlan.model.assets.DataQualityRule</a></h3>
+<div class="type-signature">class DataQualityRule extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>dqIsPartOfContract</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> dqIsPartOfContract</pre>
+<div class="block">Whether this data quality is part of contract (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>dqRuleAlertPriority</h5>
+<pre><a href="com/atlan/model/enums/DataQualityRuleAlertPriority.html" title="enum class in com.atlan.model.enums">DataQualityRuleAlertPriority</a> dqRuleAlertPriority</pre>
+<div class="block">Default priority level for alerts involving this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleBaseColumn</h5>
+<pre><a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a> dqRuleBaseColumn</pre>
+<div class="block">Base column attached to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleBaseColumnQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleBaseColumnQualifiedName</pre>
+<div class="block">Base column qualified name that attached to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleBaseDataset</h5>
+<pre><a href="com/atlan/model/assets/IAsset.html" title="interface in com.atlan.model.assets">IAsset</a> dqRuleBaseDataset</pre>
+<div class="block">Base dataset attached to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleBaseDatasetQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleBaseDatasetQualifiedName</pre>
+<div class="block">Base dataset qualified name that attached to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleConfigArguments</h5>
+<pre><a href="com/atlan/model/structs/DataQualityRuleConfigArguments.html" title="class in com.atlan.model.structs">DataQualityRuleConfigArguments</a> dqRuleConfigArguments</pre>
+<div class="block">Json string of the rule config that contains the rule definitions.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleCustomSQL</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleCustomSQL</pre>
+<div class="block">SQL code for custom SQL rules.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleDimension</h5>
+<pre><a href="com/atlan/model/enums/DataQualityDimension.html" title="enum class in com.atlan.model.enums">DataQualityDimension</a> dqRuleDimension</pre>
+<div class="block">Dimension of the data quality rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleLatestMetricValue</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleLatestMetricValue</pre>
+<div class="block">Last result metrics value of the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleLatestMetricValueComputedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> dqRuleLatestMetricValueComputedAt</pre>
+<div class="block">Time (epoch) at which the latest metric value was evaluated in the source.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleLatestResult</h5>
+<pre><a href="com/atlan/model/enums/DataQualityResult.html" title="enum class in com.atlan.model.enums">DataQualityResult</a> dqRuleLatestResult</pre>
+<div class="block">Latest result of the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleLatestResultComputedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> dqRuleLatestResultComputedAt</pre>
+<div class="block">Time (epoch) at which the latest rule result was evaluated.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleLatestResultFetchedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> dqRuleLatestResultFetchedAt</pre>
+<div class="block">Time (epoch) at which the latest rule result was fetched.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleReferenceColumnQualifiedNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; dqRuleReferenceColumnQualifiedNames</pre>
+<div class="block">List of unique reference column's qualified names related to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleReferenceColumns</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt; dqRuleReferenceColumns</pre>
+<div class="block">Columns referenced in this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleReferenceDatasetQualifiedNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; dqRuleReferenceDatasetQualifiedNames</pre>
+<div class="block">List of unique reference dataset's qualified names related to this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleReferenceDatasets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt; dqRuleReferenceDatasets</pre>
+<div class="block">Datasets referenced in this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleRowScopeFilteringEnabled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> dqRuleRowScopeFilteringEnabled</pre>
+<div class="block">Whether row scope filtering is enabled for this data quality rule (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>dqRuleSourceSyncedAt</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> dqRuleSourceSyncedAt</pre>
+<div class="block">Time (epoch) at which the rule synced to the source.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleSourceSyncErrorCode</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleSourceSyncErrorCode</pre>
+<div class="block">Error code in the case of state being "failure".</div>
+</li>
+<li class="block-list">
+<h5>dqRuleSourceSyncErrorMessage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleSourceSyncErrorMessage</pre>
+<div class="block">Error message in the case of state being "error".</div>
+</li>
+<li class="block-list">
+<h5>dqRuleSourceSyncRawError</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleSourceSyncRawError</pre>
+<div class="block">Raw error message from the source.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleSourceSyncStatus</h5>
+<pre><a href="com/atlan/model/enums/DataQualitySourceSyncStatus.html" title="enum class in com.atlan.model.enums">DataQualitySourceSyncStatus</a> dqRuleSourceSyncStatus</pre>
+<div class="block">Latest sync status of the rule to the source.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleStatus</h5>
+<pre><a href="com/atlan/model/enums/DataQualityRuleStatus.html" title="enum class in com.atlan.model.enums">DataQualityRuleStatus</a> dqRuleStatus</pre>
+<div class="block">Status of the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplate</h5>
+<pre><a href="com/atlan/model/assets/IDataQualityRuleTemplate.html" title="interface in com.atlan.model.assets">IDataQualityRuleTemplate</a> dqRuleTemplate</pre>
+<div class="block">Template used to create this rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateName</pre>
+<div class="block">Name of the rule template corresponding to the rule.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DataQualityRules.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.DataQualityRuleTemplate">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/DataQualityRuleTemplate.html" title="class in com.atlan.model.assets">com.atlan.model.assets.DataQualityRuleTemplate</a></h3>
+<div class="type-signature">class DataQualityRuleTemplate extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>dqIsPartOfContract</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> dqIsPartOfContract</pre>
+<div class="block">Whether this data quality is part of contract (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>dqRules</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDataQualityRule.html" title="interface in com.atlan.model.assets">IDataQualityRule</a>&gt; dqRules</pre>
+<div class="block">Rules that are created from the template.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfig</h5>
+<pre><a href="com/atlan/model/structs/DataQualityRuleTemplateConfig.html" title="class in com.atlan.model.structs">DataQualityRuleTemplateConfig</a> dqRuleTemplateConfig</pre>
+<div class="block">Rule config that will help render the form and define the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateDimension</h5>
+<pre><a href="com/atlan/model/enums/DataQualityDimension.html" title="enum class in com.atlan.model.enums">DataQualityDimension</a> dqRuleTemplateDimension</pre>
+<div class="block">Name of the dimension the rule belongs to.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateMetricValueType</h5>
+<pre><a href="com/atlan/model/enums/DataQualityRuleTemplateMetricValueType.html" title="enum class in com.atlan.model.enums">DataQualityRuleTemplateMetricValueType</a> dqRuleTemplateMetricValueType</pre>
+<div class="block">Type of the metric value returned by the rule(absolute, percentage, time etc.).</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DataQualityRuleTemplates.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.assets.DataStudioAsset">
 <h3>Class&nbsp;<a href="com/atlan/model/assets/DataStudioAsset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.DataStudioAsset</a></h3>
 <div class="type-signature">class DataStudioAsset extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -17072,6 +18312,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -17270,6 +18515,11 @@ loadScripts(document, 'script');</script>
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
 <div class="block">SQL query that ran to produce the outputs.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -17983,6 +19233,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -18176,6 +19431,11 @@ loadScripts(document, 'script');</script>
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
 <div class="block">SQL query that ran to produce the outputs.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -19303,6 +20563,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
 <div class="block">Definition of the table.</div>
@@ -19535,6 +20800,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -20277,6 +21547,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
 <div class="block">Definition of the table.</div>
@@ -20659,6 +21934,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableDefinition</h5>
@@ -21053,6 +22333,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableDefinition</h5>
@@ -21805,6 +23090,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -21933,6 +23223,11 @@ loadScripts(document, 'script');</script>
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
 <div class="block">SQL query that ran to produce the outputs.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -22143,6 +23438,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Parsed AST of the code or SQL statements that describe the logic of this process.</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines used by this process.</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">Code that ran within the process.</div>
@@ -22271,6 +23571,11 @@ loadScripts(document, 'script');</script>
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
 <div class="block">SQL query that ran to produce the outputs.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
+<div class="block">Procedures used by this process.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -22880,6 +24185,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -23902,6 +25212,11 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
 <h5>code</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> code</pre>
 <div class="block">TBC</div>
@@ -23954,6 +25269,11 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>sql</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sql</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedures</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a>&gt; sqlProcedures</pre>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
@@ -25491,6 +26811,11 @@ loadScripts(document, 'script');</script>
 <li class="block-list">
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
 <div class="block">TBC</div>
 </li>
 <li class="block-list">
@@ -30162,6 +31487,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
 <div class="block">Definition of the table.</div>
@@ -30394,6 +31724,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -32682,6 +34017,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context.</div>
 </li>
 <li class="block-list">
+<h5>sqlArguments</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/structs/SQLProcedureArgument.html" title="class in com.atlan.model.structs">SQLProcedureArgument</a>&gt; sqlArguments</pre>
+<div class="block">List of procedure arguments with name and type information.</div>
+</li>
+<li class="block-list">
+<h5>sqlCatalogId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlCatalogId</pre>
+<div class="block">Internal ID for the database containing the procedure.</div>
+</li>
+<li class="block-list">
 <h5>sqlDbtModels</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt; sqlDbtModels</pre>
 <div class="block">Assets related to the model.</div>
@@ -32690,6 +34035,61 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlExternalAccessIntegrations</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlExternalAccessIntegrations</pre>
+<div class="block">Names of external access integrations used by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlInstalledPackages</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlInstalledPackages</pre>
+<div class="block">Packages actually installed for the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>sqlLanguage</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlLanguage</pre>
+<div class="block">Programming language used for the procedure (e.g., SQL, JavaScript, Python, Scala).</div>
+</li>
+<li class="block-list">
+<h5>sqlOwnerRoleType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlOwnerRoleType</pre>
+<div class="block">Type of role that owns the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlPackages</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlPackages</pre>
+<div class="block">Packages requested by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcedureReturn</h5>
+<pre><a href="com/atlan/model/structs/SQLProcedureReturn.html" title="class in com.atlan.model.structs">SQLProcedureReturn</a> sqlProcedureReturn</pre>
+<div class="block">Detailed information about the procedure's return type.</div>
+</li>
+<li class="block-list">
+<h5>sqlProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; sqlProcesses</pre>
+<div class="block">Processes that utilize this procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlRuntimeVersion</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlRuntimeVersion</pre>
+<div class="block">Version of the language runtime used by the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlSchemaId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlSchemaId</pre>
+<div class="block">Internal ID for the schema containing the procedure.</div>
+</li>
+<li class="block-list">
+<h5>sqlSecrets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlSecrets</pre>
+<div class="block">Secret variables used by the procedure.</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -35179,6 +36579,21 @@ loadScripts(document, 'script');</script>
 <div class="block">Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified.</div>
 </li>
 <li class="block-list">
+<h5>s3ObjectLockLegalHoldEnabled</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> s3ObjectLockLegalHoldEnabled</pre>
+<div class="block">Whether the object lock legal hold is enabled (true) or not (false).</div>
+</li>
+<li class="block-list">
+<h5>s3ObjectLockMode</h5>
+<pre><a href="com/atlan/model/enums/S3ObjectLockMode.html" title="enum class in com.atlan.model.enums">S3ObjectLockMode</a> s3ObjectLockMode</pre>
+<div class="block">Mode of the object lock retention.</div>
+</li>
+<li class="block-list">
+<h5>s3ObjectLockRetainUntil</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> s3ObjectLockRetainUntil</pre>
+<div class="block">Time (epoch) when the object lock retention will expire.</div>
+</li>
+<li class="block-list">
 <h5>s3ObjectSize</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> s3ObjectSize</pre>
 <div class="block">Object size in bytes.</div>
@@ -36276,6 +37691,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -36950,6 +38370,11 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>bigqueryRoutines</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a>&gt; bigqueryRoutines</pre>
+<div class="block">Routines that exist within this schema.</div>
+</li>
+<li class="block-list">
 <h5>calculationViewName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> calculationViewName</pre>
 <div class="block">Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view.</div>
@@ -36983,6 +38408,11 @@ loadScripts(document, 'script');</script>
 <h5>databricksAIModelContexts</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDatabricksAIModelContext.html" title="interface in com.atlan.model.assets">IDatabricksAIModelContext</a>&gt; databricksAIModelContexts</pre>
 <div class="block">Contexts contained within the schema.</div>
+</li>
+<li class="block-list">
+<h5>databricksVolumes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDatabricksVolume.html" title="interface in com.atlan.model.assets">IDatabricksVolume</a>&gt; databricksVolumes</pre>
+<div class="block">Volume contained within the schema.</div>
 </li>
 <li class="block-list">
 <h5>dbtModels</h5>
@@ -37153,6 +38583,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableCount</h5>
@@ -38697,6 +40132,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -38944,6 +40384,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -39265,6 +40710,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableDefinition</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableDefinition</pre>
 <div class="block">Definition of the table.</div>
@@ -39494,6 +40944,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -39691,6 +41146,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>sqlStageSchema</h5>
@@ -39907,6 +41367,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -40096,6 +41561,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -40233,6 +41703,11 @@ loadScripts(document, 'script');</script>
 <h5>sodaCheckLastScanAt</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> sodaCheckLastScanAt</pre>
 <div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>sodaCheckLinkedAssetQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sodaCheckLinkedAssetQualifiedName</pre>
+<div class="block">QualifiedName of the asset associated with the check.</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
@@ -40411,6 +41886,11 @@ loadScripts(document, 'script');</script>
 <h5>sparkMaster</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sparkMaster</pre>
 <div class="block">The Spark master URL eg. local, local[4], or spark://master:7077</div>
+</li>
+<li class="block-list">
+<h5>sparkOrchestratedByAirflowAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflow.html" title="interface in com.atlan.model.assets">IAirflow</a>&gt; sparkOrchestratedByAirflowAssets</pre>
+<div class="block">Airflow assets that execute this spark asset.</div>
 </li>
 <li class="block-list">
 <h5>sparkRunEndTime</h5>
@@ -41180,6 +42660,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableDefinition</h5>
@@ -43009,6 +44494,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Sources related to this asset.</div>
 </li>
 <li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
+</li>
+<li class="block-list">
 <h5>tableName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> tableName</pre>
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
@@ -44032,6 +45522,11 @@ loadScripts(document, 'script');</script>
 <h5>sqlDBTSources</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IDbtSource.html" title="interface in com.atlan.model.assets">IDbtSource</a>&gt; sqlDBTSources</pre>
 <div class="block">Sources related to this asset.</div>
+</li>
+<li class="block-list">
+<h5>sqlIsSecure</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> sqlIsSecure</pre>
+<div class="block">Whether this asset is secure (true) or not (false).</div>
 </li>
 <li class="block-list">
 <h5>tableName</h5>
@@ -48560,6 +50055,163 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.structs.DataQualityRuleConfigArguments">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/DataQualityRuleConfigArguments.html" title="class in com.atlan.model.structs">com.atlan.model.structs.DataQualityRuleConfigArguments</a></h3>
+<div class="type-signature">class DataQualityRuleConfigArguments extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>dqRuleConfigArgumentsRaw</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleConfigArgumentsRaw</pre>
+<div class="block">Raw json string of the rule config that contains the rule definitions.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleConfigRuleConditions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleConfigRuleConditions</pre>
+<div class="block">Json string containing the rule conditions.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleThresholdObject</h5>
+<pre><a href="com/atlan/model/structs/DataQualityRuleThresholdObject.html" title="class in com.atlan.model.structs">DataQualityRuleThresholdObject</a> dqRuleThresholdObject</pre>
+<div class="block">Threshold object for the rule.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DataQualityRuleConfigArguments.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.structs.DataQualityRuleTemplateConfig">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/DataQualityRuleTemplateConfig.html" title="class in com.atlan.model.structs">com.atlan.model.structs.DataQualityRuleTemplateConfig</a></h3>
+<div class="type-signature">class DataQualityRuleTemplateConfig extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>dqRuleTemplateConfigAdvancedSettings</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigAdvancedSettings</pre>
+<div class="block">Advanced settings for the rule template.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigBaseColumnQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigBaseColumnQualifiedName</pre>
+<div class="block">Config for selecting base column for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigBaseDatasetQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigBaseDatasetQualifiedName</pre>
+<div class="block">Config for selecting base dataset for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigCustomSQL</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigCustomSQL</pre>
+<div class="block">Config for adding custom SQL.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigDimension</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigDimension</pre>
+<div class="block">Config for selecting rule dimension.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigDisplayName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigDisplayName</pre>
+<div class="block">Config for selecting display name for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigReferenceColumnQualifiedNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigReferenceColumnQualifiedNames</pre>
+<div class="block">Config for selecting reference columns for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigReferenceDatasetQualifiedNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigReferenceDatasetQualifiedNames</pre>
+<div class="block">Config for selecting reference datasets for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigRuleConditions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigRuleConditions</pre>
+<div class="block">Configuration for Rule conditions of the template.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigThresholdObject</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigThresholdObject</pre>
+<div class="block">Config for selecting threshold object for the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleTemplateConfigUserDescription</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleTemplateConfigUserDescription</pre>
+<div class="block">Config for entering description of the rule by user.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DataQualityRuleTemplateConfig.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.structs.DataQualityRuleThresholdObject">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/DataQualityRuleThresholdObject.html" title="class in com.atlan.model.structs">com.atlan.model.structs.DataQualityRuleThresholdObject</a></h3>
+<div class="type-signature">class DataQualityRuleThresholdObject extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>dqRuleThresholdCompareOperator</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleThresholdCompareOperator</pre>
+<div class="block">Compare operator to compare with the metric value of the rule.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleThresholdUnit</h5>
+<pre><a href="com/atlan/model/enums/DataQualityRuleThresholdUnit.html" title="enum class in com.atlan.model.enums">DataQualityRuleThresholdUnit</a> dqRuleThresholdUnit</pre>
+<div class="block">Unit of the threshold value.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleThresholdValue</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> dqRuleThresholdValue</pre>
+<div class="block">Threshold value to compare with the metric value of the rule.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for DataQualityRuleThresholdObject.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.structs.DbtJobRun">
 <h3>Class&nbsp;<a href="com/atlan/model/structs/DbtJobRun.html" title="class in com.atlan.model.structs">com.atlan.model.structs.DbtJobRun</a></h3>
 <div class="type-signature">class DbtJobRun extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -49278,6 +50930,89 @@ loadScripts(document, 'script');</script>
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for SourceTagAttribute.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.structs.SQLProcedureArgument">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/SQLProcedureArgument.html" title="class in com.atlan.model.structs">com.atlan.model.structs.SQLProcedureArgument</a></h3>
+<div class="type-signature">class SQLProcedureArgument extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>sqlArgumentName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlArgumentName</pre>
+<div class="block">Name of the argument.</div>
+</li>
+<li class="block-list">
+<h5>sqlArgumentType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlArgumentType</pre>
+<div class="block">Data type of the argument.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SQLProcedureArgument.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.structs.SQLProcedureReturn">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/SQLProcedureReturn.html" title="class in com.atlan.model.structs">com.atlan.model.structs.SQLProcedureReturn</a></h3>
+<div class="type-signature">class SQLProcedureReturn extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>sqlReturnCharacterMaximumLength</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> sqlReturnCharacterMaximumLength</pre>
+<div class="block">Maximum length in characters for string return values.</div>
+</li>
+<li class="block-list">
+<h5>sqlReturnCharacterOctetLength</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> sqlReturnCharacterOctetLength</pre>
+<div class="block">Maximum length in bytes for string return values.</div>
+</li>
+<li class="block-list">
+<h5>sqlReturnNumericPrecision</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> sqlReturnNumericPrecision</pre>
+<div class="block">Numeric precision for numeric return values.</div>
+</li>
+<li class="block-list">
+<h5>sqlReturnNumericPrecisionRadix</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> sqlReturnNumericPrecisionRadix</pre>
+<div class="block">Radix of precision for numeric return values.</div>
+</li>
+<li class="block-list">
+<h5>sqlReturnType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> sqlReturnType</pre>
+<div class="block">Data type of the return value.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SQLProcedureReturn.</div>
 </li>
 </ul>
 </section>
