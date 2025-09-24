@@ -18,6 +18,7 @@ import com.atlan.model.assets.ICalculationView;
 import com.atlan.model.assets.ICatalog;
 import com.atlan.model.assets.IColumn;
 import com.atlan.model.assets.ICosmosMongoDBCollection;
+import com.atlan.model.assets.IDataQualityRule;
 import com.atlan.model.assets.IDbtMetric;
 import com.atlan.model.assets.IDbtModel;
 import com.atlan.model.assets.IDbtModelColumn;
@@ -324,6 +325,16 @@ public class GuacamoleColumn extends Asset
     @Attribute
     String defaultValue;
 
+    /** Rules that are applied on this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqBaseColumnRules;
+
+    /** Rules where this column is referenced. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqReferenceColumnRules;
+
     /** Column this foreign key column refers to. */
     @Attribute
     IColumn foreignKeyFrom;
@@ -555,6 +566,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
 
     /** Sub-data type of this column. */
     @Attribute
