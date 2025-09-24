@@ -292,6 +292,16 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String defaultValue;
 
+    /** Rules that are applied on this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqBaseColumnRules;
+
+    /** Rules where this column is referenced. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqReferenceColumnRules;
+
     /** Column this foreign key column refers to. */
     @Attribute
     IColumn foreignKeyFrom;
@@ -510,6 +520,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
 
     /** Sub-data type of this column. */
     @Attribute

@@ -8,6 +8,10 @@ import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.AtlasGlossaryType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
@@ -127,6 +131,75 @@ public interface IGlossary {
 
     /** TBC */
     String getAssetCoverImage();
+
+    /** TBC */
+    Long getAssetDQFreshnessExpectation();
+
+    /** TBC */
+    Long getAssetDQFreshnessValue();
+
+    /** TBC */
+    DataQualityResult getAssetDQResult();
+
+    /** TBC */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** TBC */
+    Long getAssetDQRuleFailedCount();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** TBC */
+    Long getAssetDQRuleLastRunAt();
+
+    /** TBC */
+    Long getAssetDQRulePassedCount();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** TBC */
+    Long getAssetDQRuleTotalCount();
+
+    /** TBC */
+    String getAssetDQScheduleCrontab();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** TBC */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** TBC */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** TBC */
+    String getAssetDQScheduleTimeZone();
+
+    /** TBC */
+    DataQualityScheduleType getAssetDQScheduleType();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -385,6 +458,12 @@ public interface IGlossary {
 
     /** TBC */
     SortedSet<String> getDomainGUIDs();
+
+    /** TBC */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** TBC */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
 
     /** TBC */
     SortedSet<IFile> getFiles();

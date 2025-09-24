@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -176,6 +180,9 @@ public interface ICatalog {
             case AzureServiceBusTopic.TYPE_NAME:
                 ref = AzureServiceBusTopic.refByQualifiedName(qualifiedName);
                 break;
+            case BigqueryRoutine.TYPE_NAME:
+                ref = BigqueryRoutine.refByQualifiedName(qualifiedName);
+                break;
             case BigqueryTag.TYPE_NAME:
                 ref = BigqueryTag.refByQualifiedName(qualifiedName);
                 break;
@@ -281,6 +288,12 @@ public interface ICatalog {
             case DataProduct.TYPE_NAME:
                 ref = DataProduct.refByQualifiedName(qualifiedName);
                 break;
+            case DataQualityRule.TYPE_NAME:
+                ref = DataQualityRule.refByQualifiedName(qualifiedName);
+                break;
+            case DataQualityRuleTemplate.TYPE_NAME:
+                ref = DataQualityRuleTemplate.refByQualifiedName(qualifiedName);
+                break;
             case DataStudioAsset.TYPE_NAME:
                 ref = DataStudioAsset.refByQualifiedName(qualifiedName);
                 break;
@@ -298,6 +311,12 @@ public interface ICatalog {
                 break;
             case DatabricksUnityCatalogTag.TYPE_NAME:
                 ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksVolume.TYPE_NAME:
+                ref = DatabricksVolume.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksVolumePath.TYPE_NAME:
+                ref = DatabricksVolumePath.refByQualifiedName(qualifiedName);
                 break;
             case DataverseAttribute.TYPE_NAME:
                 ref = DataverseAttribute.refByQualifiedName(qualifiedName);
@@ -894,6 +913,75 @@ public interface ICatalog {
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
+
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
 
@@ -1148,6 +1236,12 @@ public interface ICatalog {
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
+
+    /** Rules that are applied on this dataset. */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** Rules where this dataset is referenced. */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
 
     /** TBC */
     SortedSet<IFile> getFiles();

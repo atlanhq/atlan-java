@@ -290,6 +290,10 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
+
     /** Definition of the table. */
     @Attribute
     String tableDefinition;

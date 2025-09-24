@@ -7,12 +7,20 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.SQLProcedureArgument;
+import com.atlan.model.structs.SQLProcedureReturn;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -38,6 +46,45 @@ public interface IProcedure {
 
     /** Schema in which this stored procedure exists. */
     RelationField SCHEMA = new RelationField("atlanSchema");
+
+    /** List of procedure arguments with name and type information. */
+    KeywordField SQL_ARGUMENTS = new KeywordField("sqlArguments", "sqlArguments");
+
+    /** Internal ID for the database containing the procedure. */
+    KeywordField SQL_CATALOG_ID = new KeywordField("sqlCatalogId", "sqlCatalogId");
+
+    /** Names of external access integrations used by the procedure. */
+    KeywordField SQL_EXTERNAL_ACCESS_INTEGRATIONS =
+            new KeywordField("sqlExternalAccessIntegrations", "sqlExternalAccessIntegrations");
+
+    /** Packages actually installed for the procedure. */
+    KeywordField SQL_INSTALLED_PACKAGES = new KeywordField("sqlInstalledPackages", "sqlInstalledPackages");
+
+    /** Programming language used for the procedure (e.g., SQL, JavaScript, Python, Scala). */
+    KeywordTextField SQL_LANGUAGE = new KeywordTextField("sqlLanguage", "sqlLanguage.keyword", "sqlLanguage");
+
+    /** Type of role that owns the procedure. */
+    KeywordTextField SQL_OWNER_ROLE_TYPE =
+            new KeywordTextField("sqlOwnerRoleType", "sqlOwnerRoleType.keyword", "sqlOwnerRoleType");
+
+    /** Packages requested by the procedure. */
+    KeywordField SQL_PACKAGES = new KeywordField("sqlPackages", "sqlPackages");
+
+    /** Detailed information about the procedure's return type. */
+    KeywordField SQL_PROCEDURE_RETURN = new KeywordField("sqlProcedureReturn", "sqlProcedureReturn");
+
+    /** Processes that utilize this procedure. */
+    RelationField SQL_PROCESSES = new RelationField("sqlProcesses");
+
+    /** Version of the language runtime used by the procedure. */
+    KeywordTextField SQL_RUNTIME_VERSION =
+            new KeywordTextField("sqlRuntimeVersion", "sqlRuntimeVersion.keyword", "sqlRuntimeVersion");
+
+    /** Internal ID for the schema containing the procedure. */
+    KeywordField SQL_SCHEMA_ID = new KeywordField("sqlSchemaId", "sqlSchemaId");
+
+    /** Secret variables used by the procedure. */
+    KeywordField SQL_SECRETS = new KeywordField("sqlSecrets", "sqlSecrets");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -104,6 +151,75 @@ public interface IProcedure {
 
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
+
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
 
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
@@ -387,6 +503,12 @@ public interface IProcedure {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Rules that are applied on this dataset. */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** Rules where this dataset is referenced. */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 
@@ -597,11 +719,50 @@ public interface IProcedure {
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     String getSqlAIModelContextQualifiedName();
 
+    /** List of procedure arguments with name and type information. */
+    List<SQLProcedureArgument> getSqlArguments();
+
+    /** Internal ID for the database containing the procedure. */
+    String getSqlCatalogId();
+
     /** Sources related to this asset. */
     SortedSet<IDbtSource> getSqlDBTSources();
 
     /** Assets related to the model. */
     SortedSet<IDbtModel> getSqlDbtModels();
+
+    /** Names of external access integrations used by the procedure. */
+    String getSqlExternalAccessIntegrations();
+
+    /** Packages actually installed for the procedure. */
+    String getSqlInstalledPackages();
+
+    /** Whether this asset is secure (true) or not (false). */
+    Boolean getSqlIsSecure();
+
+    /** Programming language used for the procedure (e.g., SQL, JavaScript, Python, Scala). */
+    String getSqlLanguage();
+
+    /** Type of role that owns the procedure. */
+    String getSqlOwnerRoleType();
+
+    /** Packages requested by the procedure. */
+    String getSqlPackages();
+
+    /** Detailed information about the procedure's return type. */
+    SQLProcedureReturn getSqlProcedureReturn();
+
+    /** Processes that utilize this procedure. */
+    SortedSet<ILineageProcess> getSqlProcesses();
+
+    /** Version of the language runtime used by the procedure. */
+    String getSqlRuntimeVersion();
+
+    /** Internal ID for the schema containing the procedure. */
+    String getSqlSchemaId();
+
+    /** Secret variables used by the procedure. */
+    String getSqlSecrets();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

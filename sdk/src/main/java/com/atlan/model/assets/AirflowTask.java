@@ -190,6 +190,11 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Attribute
     ILineageProcess process;
 
+    /** Spark assets that are executed by this airflow asset. */
+    @Attribute
+    @Singular
+    SortedSet<ISpark> sparkOrchestratedAssets;
+
     /**
      * Builds the minimal object necessary to create a relationship to a AirflowTask, from a potentially
      * more-complete AirflowTask object.

@@ -71,6 +71,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     String ast;
 
+    /** Routines used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
     /** Code that ran within the process. */
     @Attribute
     String code;
@@ -120,6 +125,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
+
+    /** Procedures used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IProcedure> sqlProcedures;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BIProcess, from a potentially

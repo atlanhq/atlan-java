@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.S3ObjectLockMode;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -163,6 +164,19 @@ public class S3Object extends Asset
     @Attribute
     @Date
     Long s3ObjectLastModifiedTime;
+
+    /** Whether the object lock legal hold is enabled (true) or not (false). */
+    @Attribute
+    Boolean s3ObjectLockLegalHoldEnabled;
+
+    /** Mode of the object lock retention. */
+    @Attribute
+    S3ObjectLockMode s3ObjectLockMode;
+
+    /** Time (epoch) when the object lock retention will expire. */
+    @Attribute
+    @Date
+    Long s3ObjectLockRetainUntil;
 
     /** Object size in bytes. */
     @Attribute

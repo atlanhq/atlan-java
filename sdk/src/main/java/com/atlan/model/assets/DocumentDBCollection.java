@@ -346,6 +346,10 @@ public class DocumentDBCollection extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
+
     /** Definition of the table. */
     @Attribute
     String tableDefinition;

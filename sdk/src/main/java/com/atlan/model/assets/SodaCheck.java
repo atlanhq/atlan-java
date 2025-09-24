@@ -123,6 +123,10 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     @Date
     Long sodaCheckLastScanAt;
 
+    /** QualifiedName of the asset associated with the check. */
+    @Attribute
+    String sodaCheckLinkedAssetQualifiedName;
+
     /**
      * Builds the minimal object necessary to create a relationship to a SodaCheck, from a potentially
      * more-complete SodaCheck object.

@@ -227,6 +227,10 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    Boolean sqlIsSecure;
+
+    /** TBC */
+    @Attribute
     String tableName;
 
     /** TBC */

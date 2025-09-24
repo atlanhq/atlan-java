@@ -227,6 +227,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    Boolean sqlIsSecure;
+
+    /** TBC */
+    @Attribute
     @Date
     Long staleSinceDate;
 

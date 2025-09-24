@@ -195,6 +195,10 @@ public class DocumentDBDatabase extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
