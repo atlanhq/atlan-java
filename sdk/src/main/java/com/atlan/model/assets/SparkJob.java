@@ -111,6 +111,11 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
     @Attribute
     String sparkMaster;
 
+    /** Airflow assets that execute this spark asset. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflow> sparkOrchestratedByAirflowAssets;
+
     /** End time of the Spark Job eg. 1695673598218 */
     @Attribute
     @Date

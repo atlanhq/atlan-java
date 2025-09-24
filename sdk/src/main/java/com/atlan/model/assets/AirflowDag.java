@@ -137,6 +137,11 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Spark assets that are executed by this airflow asset. */
+    @Attribute
+    @Singular
+    SortedSet<ISpark> sparkOrchestratedAssets;
+
     /**
      * Builds the minimal object necessary to create a relationship to a AirflowDag, from a potentially
      * more-complete AirflowDag object.

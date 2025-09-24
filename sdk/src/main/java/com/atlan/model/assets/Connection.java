@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.ConnectionDQEnvironmentSetupStatus;
 import com.atlan.model.enums.QueryUsernameStrategy;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -67,10 +68,35 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     AtlanConnectionCategory category;
 
+    /** Unique identifier (GUID) for the data quality credentials to use for this connection. */
+    @Attribute
+    String connectionDQCredentialGuid;
+
+    /** Error message if data quality environment setup failed for this connection. */
+    @Attribute
+    String connectionDQEnvironmentSetupErrorMessage;
+
+    /** Status of the data quality environment setup for this connection. */
+    @Attribute
+    ConnectionDQEnvironmentSetupStatus connectionDQEnvironmentSetupStatus;
+
+    /** Timestamp when the data quality environment setup status was last updated. */
+    @Attribute
+    @Date
+    Long connectionDQEnvironmentSetupStatusUpdatedAt;
+
+    /** Name of the database in the source environment for data quality. */
+    @Attribute
+    String connectionDQEnvironmentSourceDatabaseName;
+
     /** TBC */
     @Attribute
     @Singular
     SortedSet<String> connectionDbtEnvironments;
+
+    /** Whether data quality is enabled for this connection (true) or not (false). */
+    @Attribute
+    Boolean connectionIsDQEnabled;
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     @Attribute

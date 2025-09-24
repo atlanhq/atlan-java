@@ -8,6 +8,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
@@ -50,6 +54,9 @@ public interface ILineageProcess {
     TextField AST = new TextField("ast", "ast");
 
     /** TBC */
+    RelationField BIGQUERY_ROUTINES = new RelationField("bigqueryRoutines");
+
+    /** TBC */
     TextField CODE = new TextField("code", "code");
 
     /** TBC */
@@ -82,6 +89,9 @@ public interface ILineageProcess {
 
     /** TBC */
     TextField SQL = new TextField("sql", "sql");
+
+    /** TBC */
+    RelationField SQL_PROCEDURES = new RelationField("sqlProcedures");
 
     /** TBC */
     String getAdditionalEtlContext();
@@ -160,6 +170,75 @@ public interface ILineageProcess {
 
     /** TBC */
     String getAssetCoverImage();
+
+    /** TBC */
+    Long getAssetDQFreshnessExpectation();
+
+    /** TBC */
+    Long getAssetDQFreshnessValue();
+
+    /** TBC */
+    DataQualityResult getAssetDQResult();
+
+    /** TBC */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** TBC */
+    Long getAssetDQRuleFailedCount();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** TBC */
+    Long getAssetDQRuleLastRunAt();
+
+    /** TBC */
+    Long getAssetDQRulePassedCount();
+
+    /** TBC */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** TBC */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** TBC */
+    Long getAssetDQRuleTotalCount();
+
+    /** TBC */
+    String getAssetDQScheduleCrontab();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** TBC */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** TBC */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** TBC */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** TBC */
+    String getAssetDQScheduleTimeZone();
+
+    /** TBC */
+    DataQualityScheduleType getAssetDQScheduleType();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -381,6 +460,9 @@ public interface ILineageProcess {
     String getAst();
 
     /** TBC */
+    SortedSet<IBigqueryRoutine> getBigqueryRoutines();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -424,6 +506,12 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<String> getDomainGUIDs();
+
+    /** TBC */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** TBC */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
 
     /** TBC */
     SortedSet<IFile> getFiles();
@@ -607,6 +695,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getSql();
+
+    /** TBC */
+    SortedSet<IProcedure> getSqlProcedures();
 
     /** TBC */
     SortedSet<String> getStarredBy();

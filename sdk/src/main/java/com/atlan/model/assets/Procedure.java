@@ -13,6 +13,8 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.SQLProcedureArgument;
+import com.atlan.model.structs.SQLProcedureReturn;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -173,6 +175,15 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     String sqlAIModelContextQualifiedName;
 
+    /** List of procedure arguments with name and type information. */
+    @Attribute
+    @Singular
+    List<SQLProcedureArgument> sqlArguments;
+
+    /** Internal ID for the database containing the procedure. */
+    @Attribute
+    String sqlCatalogId;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular
@@ -182,6 +193,51 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Names of external access integrations used by the procedure. */
+    @Attribute
+    String sqlExternalAccessIntegrations;
+
+    /** Packages actually installed for the procedure. */
+    @Attribute
+    String sqlInstalledPackages;
+
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
+
+    /** Programming language used for the procedure (e.g., SQL, JavaScript, Python, Scala). */
+    @Attribute
+    String sqlLanguage;
+
+    /** Type of role that owns the procedure. */
+    @Attribute
+    String sqlOwnerRoleType;
+
+    /** Packages requested by the procedure. */
+    @Attribute
+    String sqlPackages;
+
+    /** Detailed information about the procedure's return type. */
+    @Attribute
+    SQLProcedureReturn sqlProcedureReturn;
+
+    /** Processes that utilize this procedure. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> sqlProcesses;
+
+    /** Version of the language runtime used by the procedure. */
+    @Attribute
+    String sqlRuntimeVersion;
+
+    /** Internal ID for the schema containing the procedure. */
+    @Attribute
+    String sqlSchemaId;
+
+    /** Secret variables used by the procedure. */
+    @Attribute
+    String sqlSecrets;
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
