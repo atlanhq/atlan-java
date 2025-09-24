@@ -205,10 +205,10 @@
      * Builds the minimal object necessary to create a domain policy for a Persona.
      *
      * @param name of the policy
-     * @param personaId unique identifier (GUID) of the persona for which to create this metadata policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this domain policy
      * @param actions to include in the policy
      * @param resources against which to apply the policy, given in the form {@code entity:qualifiedName} where the qualifiedName is for a domain or subdomain
-     * @return the minimal request necessary to create the metadata policy for the Persona, as a builder
+     * @return the minimal request necessary to create the domain policy for the Persona, as a builder
      */
     public static AuthPolicy.AuthPolicyBuilder<?, ?> createDomainPolicy(
         String name,
@@ -224,6 +224,33 @@
             .policyServiceName("atlas")
             .policySubCategory("domain")
             .accessControl(Persona.refByGuid(personaId));
+    }
+
+    /**
+     * Builds the minimal object necessary to create an AI policy for a Persona.
+     *
+     * @param name of the policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this AI policy
+     * @param actions to include in the policy
+     * @param resourceTypes against which to apply the policy, either AIApplication or AIModel (or both)
+     * @return the minimal request necessary to create the AI policy for the Persona, as a builder
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createAIPolicy(
+        String name, String personaId, Collection<PersonaAIAction> actions, Collection<String> resourceTypes) {
+        AuthPolicy.AuthPolicyBuilder<?, ?> builder = AuthPolicy.creator(name)
+                .policyActions(actions)
+                .policyCategory(AuthPolicyCategory.PERSONA)
+                .policyType(AuthPolicyType.ALLOW)
+                .policyResource("entity:*")
+                .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
+                .policyServiceName("atlas")
+                .policySubCategory("ai")
+                .policyFilterCriteria("")
+                .accessControl(Persona.refByGuid(personaId));
+        for (String resourceType : resourceTypes) {
+            builder.policyResource("entity-type:" + resourceType);
+        }
+        return builder;
     }
 
     /**
