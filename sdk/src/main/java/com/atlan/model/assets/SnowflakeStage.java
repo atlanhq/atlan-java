@@ -189,6 +189,10 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
+
     /** Reference to the parent schema that contains this Snowflake stage, establishing the stage's position in the database hierarchy. */
     @Attribute
     ISchema sqlStageSchema;

@@ -77,6 +77,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
+    /** TBC */
+    @Attribute
     String code;
 
     /** TBC */
@@ -124,6 +129,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     /** TBC */
     @Attribute
     String sql;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IProcedure> sqlProcedures;
 
     /**
      * Builds the minimal object necessary to create a relationship to a LineageProcess, from a potentially

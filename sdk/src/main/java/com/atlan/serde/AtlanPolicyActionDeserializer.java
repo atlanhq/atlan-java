@@ -58,6 +58,8 @@ public class AtlanPolicyActionDeserializer extends StdDeserializer<AtlanPolicyAc
                 return PersonaGlossaryAction.fromValue(value);
             } else if (value.startsWith("persona-domain")) {
                 return PersonaDomainAction.fromValue(value);
+            } else if (value.startsWith("persona-ai")) {
+                return PersonaAIAction.fromValue(value);
             } else {
                 return PersonaMetadataAction.fromValue(value);
             }

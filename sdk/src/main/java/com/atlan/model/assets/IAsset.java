@@ -7,6 +7,10 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
@@ -107,6 +111,88 @@ public interface IAsset {
 
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     TextField ASSET_COVER_IMAGE = new TextField("assetCoverImage", "assetCoverImage");
+
+    /** Expectation of data freshness from Source. */
+    NumericField ASSET_DQ_FRESHNESS_EXPECTATION =
+            new NumericField("assetDQFreshnessExpectation", "assetDQFreshnessExpectation");
+
+    /** Value of data freshness from Source. */
+    NumericField ASSET_DQ_FRESHNESS_VALUE = new NumericField("assetDQFreshnessValue", "assetDQFreshnessValue");
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    KeywordField ASSET_DQ_RESULT = new KeywordField("assetDQResult", "assetDQResult");
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    KeywordField ASSET_DQ_ROW_SCOPE_FILTER_COLUMN_QUALIFIED_NAME =
+            new KeywordField("assetDQRowScopeFilterColumnQualifiedName", "assetDQRowScopeFilterColumnQualifiedName");
+
+    /** List of all the dimensions of attached rules. */
+    KeywordField ASSET_DQ_RULE_ATTACHED_DIMENSIONS =
+            new KeywordField("assetDQRuleAttachedDimensions", "assetDQRuleAttachedDimensions");
+
+    /** List of all the types of attached rules. */
+    KeywordField ASSET_DQ_RULE_ATTACHED_RULE_TYPES =
+            new KeywordField("assetDQRuleAttachedRuleTypes", "assetDQRuleAttachedRuleTypes");
+
+    /** Count of failed DQ rules attached to this asset. */
+    NumericField ASSET_DQ_RULE_FAILED_COUNT = new NumericField("assetDQRuleFailedCount", "assetDQRuleFailedCount");
+
+    /** List of all the dimensions of failed rules. */
+    KeywordField ASSET_DQ_RULE_FAILED_DIMENSIONS =
+            new KeywordField("assetDQRuleFailedDimensions", "assetDQRuleFailedDimensions");
+
+    /** List of all the types of failed rules. */
+    KeywordField ASSET_DQ_RULE_FAILED_RULE_TYPES =
+            new KeywordField("assetDQRuleFailedRuleTypes", "assetDQRuleFailedRuleTypes");
+
+    /** Time (epoch) at which the last dq rule ran. */
+    NumericField ASSET_DQ_RULE_LAST_RUN_AT = new NumericField("assetDQRuleLastRunAt", "assetDQRuleLastRunAt");
+
+    /** Count of passed DQ rules attached to this asset. */
+    NumericField ASSET_DQ_RULE_PASSED_COUNT = new NumericField("assetDQRulePassedCount", "assetDQRulePassedCount");
+
+    /** List of all the dimensions for which all the rules passed. */
+    KeywordField ASSET_DQ_RULE_PASSED_DIMENSIONS =
+            new KeywordField("assetDQRulePassedDimensions", "assetDQRulePassedDimensions");
+
+    /** List of all the types of rules for which all the rules passed. */
+    KeywordField ASSET_DQ_RULE_PASSED_RULE_TYPES =
+            new KeywordField("assetDQRulePassedRuleTypes", "assetDQRulePassedRuleTypes");
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    KeywordField ASSET_DQ_RULE_RESULT_TAGS = new KeywordField("assetDQRuleResultTags", "assetDQRuleResultTags");
+
+    /** Count of DQ rules attached to this asset. */
+    NumericField ASSET_DQ_RULE_TOTAL_COUNT = new NumericField("assetDQRuleTotalCount", "assetDQRuleTotalCount");
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    KeywordField ASSET_DQ_SCHEDULE_CRONTAB = new KeywordField("assetDQScheduleCrontab", "assetDQScheduleCrontab");
+
+    /** Error code in the case of sync state being "error". */
+    KeywordField ASSET_DQ_SCHEDULE_SOURCE_SYNC_ERROR_CODE =
+            new KeywordField("assetDQScheduleSourceSyncErrorCode", "assetDQScheduleSourceSyncErrorCode");
+
+    /** Error message in the case of sync state being "error". */
+    TextField ASSET_DQ_SCHEDULE_SOURCE_SYNC_ERROR_MESSAGE =
+            new TextField("assetDQScheduleSourceSyncErrorMessage", "assetDQScheduleSourceSyncErrorMessage");
+
+    /** Raw error message from the source. */
+    TextField ASSET_DQ_SCHEDULE_SOURCE_SYNC_RAW_ERROR =
+            new TextField("assetDQScheduleSourceSyncRawError", "assetDQScheduleSourceSyncRawError");
+
+    /** Latest sync status of the schedule to the source. */
+    KeywordField ASSET_DQ_SCHEDULE_SOURCE_SYNC_STATUS =
+            new KeywordField("assetDQScheduleSourceSyncStatus", "assetDQScheduleSourceSyncStatus");
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    NumericField ASSET_DQ_SCHEDULE_SOURCE_SYNCED_AT =
+            new NumericField("assetDQScheduleSourceSyncedAt", "assetDQScheduleSourceSyncedAt");
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    KeywordField ASSET_DQ_SCHEDULE_TIME_ZONE = new KeywordField("assetDQScheduleTimeZone", "assetDQScheduleTimeZone");
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    KeywordField ASSET_DQ_SCHEDULE_TYPE = new KeywordField("assetDQScheduleType", "assetDQScheduleType");
 
     /** Name of the account in which this asset exists in dbt. */
     KeywordTextField ASSET_DBT_ACCOUNT_NAME =
@@ -409,6 +495,12 @@ public interface IAsset {
     /** Array of domain guids linked to this asset */
     KeywordField DOMAIN_GUIDS = new KeywordField("domainGUIDs", "domainGUIDs");
 
+    /** Rules that are applied on this dataset. */
+    RelationField DQ_BASE_DATASET_RULES = new RelationField("dqBaseDatasetRules");
+
+    /** Rules where this dataset is referenced. */
+    RelationField DQ_REFERENCE_DATASET_RULES = new RelationField("dqReferenceDatasetRules");
+
     /** TBC */
     RelationField FILES = new RelationField("files");
 
@@ -680,6 +772,75 @@ public interface IAsset {
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
 
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
+
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
 
@@ -934,6 +1095,12 @@ public interface IAsset {
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
+
+    /** Rules that are applied on this dataset. */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** Rules where this dataset is referenced. */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
 
     /** TBC */
     SortedSet<IFile> getFiles();

@@ -30,6 +30,7 @@ import com.atlan.model.enums.AtlanPolicyAction;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.PersonaAIAction;
 import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PurposeMetadataAction;

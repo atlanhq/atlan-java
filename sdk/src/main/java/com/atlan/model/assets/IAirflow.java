@@ -7,10 +7,15 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -59,6 +64,9 @@ public interface IAirflow {
 
     /** Tags assigned to the asset in Airflow. */
     TextField AIRFLOW_TAGS = new TextField("airflowTags", "airflowTags");
+
+    /** Spark assets that are executed by this airflow asset. */
+    RelationField SPARK_ORCHESTRATED_ASSETS = new RelationField("sparkOrchestratedAssets");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -149,6 +157,75 @@ public interface IAirflow {
 
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
+
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
 
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
@@ -405,6 +482,12 @@ public interface IAirflow {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Rules that are applied on this dataset. */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** Rules where this dataset is referenced. */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+
     /** TBC */
     SortedSet<IFile> getFiles();
 
@@ -584,6 +667,9 @@ public interface IAirflow {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
+
+    /** Spark assets that are executed by this airflow asset. */
+    SortedSet<ISpark> getSparkOrchestratedAssets();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

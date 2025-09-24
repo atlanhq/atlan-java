@@ -49,6 +49,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Routines that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -78,6 +83,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<IDatabricksAIModelContext> databricksAIModelContexts;
+
+    /** Volume contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabricksVolume> databricksVolumes;
 
     /** (Deprecated) Model containing the assets. */
     @Attribute
@@ -241,6 +251,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset is secure (true) or not (false). */
+    @Attribute
+    Boolean sqlIsSecure;
 
     /** Number of tables in this schema. */
     @Attribute

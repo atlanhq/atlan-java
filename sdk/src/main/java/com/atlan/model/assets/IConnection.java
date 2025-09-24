@@ -8,6 +8,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.ConnectionDQEnvironmentSetupStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.QueryUsernameStrategy;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
@@ -47,9 +52,32 @@ public interface IConnection {
     /** Type of connection, for example WAREHOUSE, RDBMS, etc. */
     TextField CATEGORY = new TextField("category", "category");
 
+    /** Unique identifier (GUID) for the data quality credentials to use for this connection. */
+    KeywordField CONNECTION_DQ_CREDENTIAL_GUID =
+            new KeywordField("connectionDQCredentialGuid", "connectionDQCredentialGuid");
+
+    /** Error message if data quality environment setup failed for this connection. */
+    TextField CONNECTION_DQ_ENVIRONMENT_SETUP_ERROR_MESSAGE =
+            new TextField("connectionDQEnvironmentSetupErrorMessage", "connectionDQEnvironmentSetupErrorMessage");
+
+    /** Status of the data quality environment setup for this connection. */
+    KeywordField CONNECTION_DQ_ENVIRONMENT_SETUP_STATUS =
+            new KeywordField("connectionDQEnvironmentSetupStatus", "connectionDQEnvironmentSetupStatus");
+
+    /** Timestamp when the data quality environment setup status was last updated. */
+    NumericField CONNECTION_DQ_ENVIRONMENT_SETUP_STATUS_UPDATED_AT = new NumericField(
+            "connectionDQEnvironmentSetupStatusUpdatedAt", "connectionDQEnvironmentSetupStatusUpdatedAt");
+
+    /** Name of the database in the source environment for data quality. */
+    KeywordField CONNECTION_DQ_ENVIRONMENT_SOURCE_DATABASE_NAME =
+            new KeywordField("connectionDQEnvironmentSourceDatabaseName", "connectionDQEnvironmentSourceDatabaseName");
+
     /** TBC */
     KeywordField CONNECTION_DBT_ENVIRONMENTS =
             new KeywordField("connectionDbtEnvironments", "connectionDbtEnvironments");
+
+    /** Whether data quality is enabled for this connection (true) or not (false). */
+    BooleanField CONNECTION_IS_DQ_ENABLED = new BooleanField("connectionIsDQEnabled", "connectionIsDQEnabled");
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
@@ -207,6 +235,75 @@ public interface IConnection {
 
     /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
     String getAssetCoverImage();
+
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
 
     /** Name of the account in which this asset exists in dbt. */
     String getAssetDbtAccountName();
@@ -439,8 +536,26 @@ public interface IConnection {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
+    /** Unique identifier (GUID) for the data quality credentials to use for this connection. */
+    String getConnectionDQCredentialGuid();
+
+    /** Error message if data quality environment setup failed for this connection. */
+    String getConnectionDQEnvironmentSetupErrorMessage();
+
+    /** Status of the data quality environment setup for this connection. */
+    ConnectionDQEnvironmentSetupStatus getConnectionDQEnvironmentSetupStatus();
+
+    /** Timestamp when the data quality environment setup status was last updated. */
+    Long getConnectionDQEnvironmentSetupStatusUpdatedAt();
+
+    /** Name of the database in the source environment for data quality. */
+    String getConnectionDQEnvironmentSourceDatabaseName();
+
     /** TBC */
     SortedSet<String> getConnectionDbtEnvironments();
+
+    /** Whether data quality is enabled for this connection (true) or not (false). */
+    Boolean getConnectionIsDQEnabled();
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -483,6 +598,12 @@ public interface IConnection {
 
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
+
+    /** Rules that are applied on this dataset. */
+    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+
+    /** Rules where this dataset is referenced. */
+    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
 
     /** TBC */
     SortedSet<IFile> getFiles();
