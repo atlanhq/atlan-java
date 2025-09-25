@@ -14,8 +14,6 @@ import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
-import kotlin.io.path.appendText
-import kotlin.io.path.useLines
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
