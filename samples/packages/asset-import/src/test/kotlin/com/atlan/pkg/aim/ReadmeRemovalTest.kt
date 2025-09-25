@@ -40,15 +40,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 /**
- * Test import of a glossary and its inter-related contents.
+ * Test removal of README after initial import.
  */
-class TermToTermTest : PackageTest("t2t") {
+class ReadmeRemovalTest : PackageTest("rr") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossary1 = makeUnique("g1")
 
     private val testFile = "term-to-term.csv"
-    private val revisedFile = "term-to-term-removed.csv"
+    private val revisedFile = "readmes-removed.csv"
 
     private val files =
         listOf(
@@ -66,6 +66,8 @@ class TermToTermTest : PackageTest("t2t") {
                 val revised =
                     line
                         .replace("{{GLOSSARY1}}", glossary1)
+                        .replace("Term2@@@$glossary1", "")
+                        .replace("Term1@@@$glossary1", "")
                 output.appendText("$revised\n")
             }
         }
@@ -79,8 +81,7 @@ class TermToTermTest : PackageTest("t2t") {
                 val revised =
                     line
                         .replace("<h1>This is term1!</h1>", "")
-                        .replace("Term2@@@$glossary1", "")
-                        .replace("Term1@@@$glossary1", "")
+                        .replace("<h2>This is term2.</h2>", "")
                 output.appendText("$revised\n")
             }
         }
@@ -117,16 +118,16 @@ class TermToTermTest : PackageTest("t2t") {
         removeGlossary(glossary1)
     }
 
-    @Test(groups = ["aim.t2t.create"])
-    fun glossary1Created() {
+    @Test(groups = ["aim.rr.create"])
+    fun glossaryCreated() {
         val g1 = Glossary.findByName(client, glossary1, glossaryAttrs)
         assertNotNull(g1)
         assertEquals(glossary1, g1.name)
         assertEquals("Test glossary for asset import package term-to-term relationships.", g1.userDescription)
     }
 
-    @Test(groups = ["aim.t2t.create"])
-    fun termsCreatedG1() {
+    @Test(groups = ["aim.rr.create"])
+    fun termsWithReadmes() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
             GlossaryTerm
@@ -150,7 +151,7 @@ class TermToTermTest : PackageTest("t2t") {
         }
     }
 
-    @Test(groups = ["aim.t2t.runUpdate"], dependsOnGroups = ["aim.t2t.create"])
+    @Test(groups = ["aim.rr.runUpdate"], dependsOnGroups = ["aim.rr.create"])
     fun upsertIG() {
         modifyFile()
         runCustomPackage(
@@ -159,7 +160,7 @@ class TermToTermTest : PackageTest("t2t") {
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = true,
                 glossariesConfig = "advanced",
-                glossariesAttrToOverwrite = listOf(GlossaryTerm.SEE_ALSO.atlanFieldName, Asset.README.atlanFieldName),
+                glossariesAttrToOverwrite = listOf(Asset.README.atlanFieldName),
             ),
             Importer::main,
         )
@@ -167,8 +168,8 @@ class TermToTermTest : PackageTest("t2t") {
         Thread.sleep(10000)
     }
 
-    @Test(groups = ["aim.t2t.update"], dependsOnGroups = ["aim.t2t.runUpdate"])
-    fun bothTermsStillExist() {
+    @Test(groups = ["aim.rr.update"], dependsOnGroups = ["aim.rr.runUpdate"])
+    fun termsWithoutReadmes() {
         val g1 = Glossary.findByName(client, glossary1)!!
         val request =
             GlossaryTerm
@@ -201,30 +202,27 @@ class TermToTermTest : PackageTest("t2t") {
         } else {
             assertNotNull(term.readme)
             assertEquals("<h1>This is term1!</h1>", term.readme.description)
-            assertEquals(1, term.seeAlso.size)
-            assertEquals(setOf("Term2"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
         }
     }
 
     private fun validateTerm2(term: GlossaryTerm, afterUpdate: Boolean = false) {
         assertEquals("Test term 2 for asset import package term-to-term relationships.", term.userDescription)
         assertEquals(AtlanStatus.ACTIVE, term.status)
-        assertNotNull(term.readme)
-        assertEquals("<h2>This is term2.</h2>", term.readme.description)
         if (afterUpdate) {
+            assertEquals("", term.readme?.description ?: "")
             assertTrue(term.seeAlso.isNullOrEmpty())
         } else {
-            assertEquals(1, term.seeAlso.size)
-            assertEquals(setOf("Term1"), term.seeAlso.map(IGlossaryTerm::getName).toSet())
+            assertNotNull(term.readme)
+            assertEquals("<h2>This is term2.</h2>", term.readme.description)
         }
     }
 
-    @Test(dependsOnGroups = ["aim.t2t.*"])
+    @Test(dependsOnGroups = ["aim.rr.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test(dependsOnGroups = ["aim.t2t.*"])
+    @Test(dependsOnGroups = ["aim.rr.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
