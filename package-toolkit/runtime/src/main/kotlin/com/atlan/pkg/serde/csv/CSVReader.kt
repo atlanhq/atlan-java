@@ -312,7 +312,7 @@ class CSVReader
                         val totalToScan = searchAndDelete.size.toLong()
                         val totalScanned = AtomicLong(0)
                         val totalDeleted = AtomicLong(0)
-                        logger.info { "Scanning $totalToScan total assets in a final pass for possible README removal." }
+                        logger.info { "Scanning $totalToScan total assets in a final pass for orphaned asset removal." }
                         searchAndDelete.entries.parallelStream().forEach { entry ->
                             val guid = entry.key
                             val fields = entry.value
@@ -325,13 +325,16 @@ class CSVReader
                                     val guids = mutableListOf<String>()
                                     for (field in fields) {
                                         val getter = ReflectionCache.getGetter(result.javaClass, field.atlanFieldName)
-                                        val reference = getter.invoke(result)
-                                        if (reference is Asset) {
-                                            guids.add(reference.guid)
-                                        } else if (reference != null && Collection::class.java.isAssignableFrom(reference.javaClass)) {
-                                            for (element in reference as Collection<*>) {
-                                                if (element is Asset) {
-                                                    guids.add(element.guid)
+                                        if (getter != null) {
+                                            // Only proceed if this relationship actually exists for the asset being processed
+                                            val reference = getter.invoke(result)
+                                            if (reference is Asset) {
+                                                guids.add(reference.guid)
+                                            } else if (reference != null && Collection::class.java.isAssignableFrom(reference.javaClass)) {
+                                                for (element in reference as Collection<*>) {
+                                                    if (element is Asset) {
+                                                        guids.add(element.guid)
+                                                    }
                                                 }
                                             }
                                         }
