@@ -181,10 +181,12 @@ abstract class CSVImporter(
                 val identity = AssetBatch.AssetIdentity(candidate.typeName, candidate.qualifiedName)
                 // Then apply any field clearances based on attributes configured in the job
                 for (field in attrsToOverwrite) {
-                    clearField(field, candidate, builder)
-                    // If there are no related assets
-                    if (!assets.related.containsKey(field.atlanFieldName)) {
-                        assets.delete.add(field)
+                    // We should only attempt to clear fields that aren't also being skipped
+                    if (!skipColumns.contains(field.atlanFieldName) && clearField(field, candidate, builder, assets)) {
+                        // If there are no related assets
+                        if (!assets.related.containsKey(field.atlanFieldName)) {
+                            assets.delete.add(field)
+                        }
                     }
                 }
                 return RowDeserialization(identity, builder, assets.related, assets.delete)
@@ -213,6 +215,7 @@ abstract class CSVImporter(
         field: AtlanField,
         candidate: Asset,
         builder: Asset.AssetBuilder<*, *>,
+        assets: RowDeserialization,
     ): Boolean {
         try {
             val getter =
@@ -229,8 +232,14 @@ abstract class CSVImporter(
                 if (value == null ||
                     (Collection::class.java.isAssignableFrom(value.javaClass) && (value as Collection<*>).isEmpty())
                 ) {
-                    builder.nullField(field.atlanFieldName)
-                    return true
+                    // If the value directly on the candidate is empty, then check whether any deferred
+                    // (related hold) for that field is empty
+                    val relatedHold = assets.related.getOrDefault(field.atlanFieldName, emptySet())
+                    if (relatedHold.isEmpty()) {
+                        // Such that only if BOTH are empty do we clear it
+                        builder.nullField(field.atlanFieldName)
+                        return true
+                    }
                 }
             }
         } catch (e: ClassNotFoundException) {

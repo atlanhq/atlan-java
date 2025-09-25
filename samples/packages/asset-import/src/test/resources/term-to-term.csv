@@ -1,0 +1,4 @@
+qualifiedName,typeName,name,anchor,userDescription,readme,seeAlso
+,AtlasGlossary,{{GLOSSARY1}},,Test glossary for asset import package term-to-term relationships.,,
+,AtlasGlossaryTerm,Term1,{{GLOSSARY1}},Test term 1 for asset import package term-to-term relationships.,<h1>This is term1!</h1>,Term2@@@{{GLOSSARY1}}
+,AtlasGlossaryTerm,Term2,{{GLOSSARY1}},Test term 2 for asset import package term-to-term relationships.,<h2>This is term2.</h2>,Term1@@@{{GLOSSARY1}}
