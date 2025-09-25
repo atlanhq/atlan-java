@@ -5,32 +5,14 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Glossary
-import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
-import com.atlan.model.assets.IGlossaryCategory
 import com.atlan.model.assets.IGlossaryTerm
-import com.atlan.model.assets.ILink
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Readme
-import com.atlan.model.core.AtlanTag
-import com.atlan.model.enums.AtlanAnnouncementType
-import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanStatus
-import com.atlan.model.enums.AtlanTagColor
-import com.atlan.model.enums.CertificateStatus
 import com.atlan.model.fields.AtlanField
-import com.atlan.model.typedefs.AtlanTagDef
-import com.atlan.net.RequestOptions
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
-import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.ThreadSafeWriter
-import de.siegmar.fastcsv.reader.CsvReader
-import de.siegmar.fastcsv.reader.CsvRecord
-import de.siegmar.fastcsv.writer.CsvWriter
-import de.siegmar.fastcsv.writer.LineDelimiter
-import de.siegmar.fastcsv.writer.QuoteStrategies
-import org.testng.Assert.assertNull
 import org.testng.Assert.assertTrue
 import java.nio.file.Paths
 import kotlin.io.path.appendText
@@ -192,7 +174,10 @@ class TermToTermTest : PackageTest("t2t") {
         }
     }
 
-    private fun validateTerm1(term: GlossaryTerm, afterUpdate: Boolean = false) {
+    private fun validateTerm1(
+        term: GlossaryTerm,
+        afterUpdate: Boolean = false,
+    ) {
         assertEquals("Test term 1 for asset import package term-to-term relationships.", term.userDescription)
         assertEquals(AtlanStatus.ACTIVE, term.status)
         if (afterUpdate) {
@@ -206,7 +191,10 @@ class TermToTermTest : PackageTest("t2t") {
         }
     }
 
-    private fun validateTerm2(term: GlossaryTerm, afterUpdate: Boolean = false) {
+    private fun validateTerm2(
+        term: GlossaryTerm,
+        afterUpdate: Boolean = false,
+    ) {
         assertEquals("Test term 2 for asset import package term-to-term relationships.", term.userDescription)
         assertEquals(AtlanStatus.ACTIVE, term.status)
         assertNotNull(term.readme)
