@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -85,7 +84,7 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public OAuthClientResponse list(String filter, String sort, int offset, int limit, RequestOptions options)
-        throws AtlanException {
+            throws AtlanException {
         String url = String.format("%s%s?limit=%s&offset=%s&count=true", getBaseUrl(), endpoint, limit, offset);
         if (sort != null) {
             url = String.format("%s&sort=%s", url, sort);
@@ -106,8 +105,8 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
     public OAuthClient get(String displayName) throws AtlanException {
         OAuthClientResponse response = list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
         if (response != null
-            && response.getRecords() != null
-            && !response.getRecords().isEmpty()) {
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;
@@ -124,8 +123,8 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
     public OAuthClient getById(String clientId) throws AtlanException {
         OAuthClientResponse response = list("{\"clientId\":\"" + clientId + "\"}", "-createdAt", 0, 2);
         if (response != null
-            && response.getRecords() != null
-            && !response.getRecords().isEmpty()) {
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;
@@ -142,8 +141,8 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
     public OAuthClient getByGuid(String guid) throws AtlanException {
         OAuthClientResponse response = list("{\"id\":\"" + guid + "\"}", "-createdAt", 0, 2);
         if (response != null
-            && response.getRecords() != null
-            && !response.getRecords().isEmpty()) {
+                && response.getRecords() != null
+                && !response.getRecords().isEmpty()) {
             return response.getRecords().get(0);
         } else {
             return null;
@@ -161,7 +160,7 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public OAuthClient create(String displayName, String description, Set<String> personas, String role)
-        throws AtlanException {
+            throws AtlanException {
         return create(displayName, description, personas, role, null);
     }
 
@@ -177,17 +176,17 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public OAuthClient create(
-        String displayName, String description, Set<String> personas, String role, RequestOptions options)
-        throws AtlanException {
+            String displayName, String description, Set<String> personas, String role, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         OAuthClientRequest ocr = new OAuthClientRequest(displayName, description, personas, role);
         if (options == null) {
             options = RequestOptions.from(client)
-                .readTimeout(client.getReadTimeout() * 3)
-                .build();
+                    .readTimeout(client.getReadTimeout() * 3)
+                    .build();
         }
-        WrappedOAuthClient response =
-            ApiResource.request(client, ApiResource.RequestMethod.POST, url, ocr, WrappedOAuthClient.class, options);
+        WrappedOAuthClient response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, ocr, WrappedOAuthClient.class, options);
         if (response != null) {
             OAuthClient token = response.getToken();
             token.setRawJsonObject(response.getRawJsonObject());
@@ -205,8 +204,7 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @return the updated OAuth client
      * @throws AtlanException on any API communication issue
      */
-    public OAuthClient update(String clientId, String displayName, String description)
-        throws AtlanException {
+    public OAuthClient update(String clientId, String displayName, String description) throws AtlanException {
         return update(clientId, displayName, description, null);
     }
 
@@ -220,13 +218,12 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @return the updated OAuth client
      * @throws AtlanException on any API communication issue
      */
-    public OAuthClient update(
-        String clientId, String displayName, String description, RequestOptions options)
-        throws AtlanException {
+    public OAuthClient update(String clientId, String displayName, String description, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, clientId);
         OAuthClientRequest ocr = new OAuthClientRequest(displayName, description, null, null);
-        WrappedOAuthClient response =
-            ApiResource.request(client, ApiResource.RequestMethod.POST, url, ocr, WrappedOAuthClient.class, options);
+        WrappedOAuthClient response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, ocr, WrappedOAuthClient.class, options);
         if (response != null) {
             OAuthClient token = response.getToken();
             token.setRawJsonObject(response.getRawJsonObject());
@@ -276,10 +273,12 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
      * @param options to override default client settings
      * @throws AtlanException on any API communication issue
      */
-    public OAuthExchangeResponse exchange(String clientId, String clientSecret, RequestOptions options) throws AtlanException {
+    public OAuthExchangeResponse exchange(String clientId, String clientSecret, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), exchangeEndpoint);
         OAuthExchangeRequest oer = new OAuthExchangeRequest(clientId, clientSecret);
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, oer, OAuthExchangeResponse.class, options);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, oer, OAuthExchangeResponse.class, options);
     }
 
     /**
@@ -391,7 +390,7 @@ public class OAuthClientsEndpoint extends HeraclesEndpoint {
          */
         @Override
         public void serialize(WrappedOAuthClient wrappedToken, JsonGenerator gen, SerializerProvider sp)
-            throws IOException, JsonProcessingException {
+                throws IOException, JsonProcessingException {
             OAuthClient token = wrappedToken.getToken();
             client.writeValue(gen, token);
         }

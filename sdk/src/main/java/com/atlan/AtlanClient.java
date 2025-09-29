@@ -3,6 +3,8 @@
 package com.atlan;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
+import static com.atlan.net.HttpClient.waitTime;
+
 import com.atlan.api.*;
 import com.atlan.cache.*;
 import com.atlan.exception.AtlanException;
@@ -28,13 +30,15 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.Getter;
 import lombok.Setter;
-
-import static com.atlan.net.HttpClient.waitTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Configuration for the SDK against a particular Atlan tenant.
  */
 public class AtlanClient implements AtlanCloseable {
+    private final Logger logger = LoggerFactory.getLogger(AtlanClient.class);
+
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
     /** Timeout value that will be used for making new connections to the Atlan API (in milliseconds). */
@@ -84,9 +88,7 @@ public class AtlanClient implements AtlanCloseable {
      * Whether to allow this client to attempt escalating its privileges.
      * (Only possible when running in-tenant, with the appropriate permissions.)
      */
-    @Getter
-    @Setter
-    private volatile Boolean allowEscalation = false;
+    private final Boolean allowEscalation;
 
     /** Proxy to tunnel all Atlan connections. */
     @Getter
@@ -236,7 +238,13 @@ public class AtlanClient implements AtlanCloseable {
      * @param baseURL of the tenant, including {@code https://}
      */
     public AtlanClient(final String baseURL) {
-        this(baseURL, System.getenv("ATLAN_API_KEY"), System.getenv("ATLAN_OAUTH_CLIENT_ID"), System.getenv("ATLAN_OAUTH_CLIENT_SECRET"), null);
+        this(
+                baseURL,
+                System.getenv("ATLAN_API_KEY"),
+                System.getenv("ATLAN_OAUTH_CLIENT_ID"),
+                System.getenv("ATLAN_OAUTH_CLIENT_SECRET"),
+                null,
+                false);
     }
 
     /**
@@ -247,7 +255,7 @@ public class AtlanClient implements AtlanCloseable {
      * @param oauthClientSecret secret for the OAuth client
      */
     public AtlanClient(final String baseURL, final String oauthClientId, final String oauthClientSecret) {
-        this(baseURL, null, oauthClientId, oauthClientSecret, null);
+        this(baseURL, null, oauthClientId, oauthClientSecret, null, false);
     }
 
     /**
@@ -257,7 +265,7 @@ public class AtlanClient implements AtlanCloseable {
      * @param apiToken API token to use for accessing the tenant
      */
     public AtlanClient(final String baseURL, final String apiToken) {
-        this(baseURL, apiToken, null, null, null);
+        this(baseURL, apiToken, null, null, null, false);
     }
 
     /**
@@ -265,12 +273,19 @@ public class AtlanClient implements AtlanCloseable {
      *
      * @param baseURL of the tenant, including {@code https://}
      * @param apiToken API Token to use for accessing the tenant (takes precedence if provided and non-empty)
-     * @param oauthClientId clientId of the OAuth client to use for accessing the tenant
+     * @param oauthClientId clientId of the OAuth client to use for accessing the tenant (second-highest precedence)
      * @param oauthClientSecret secret for the OAuth client to use for accessing the tenant
-     * @param userId unique identifier (GUID) of a user through which to run (lowest precedence)
+     * @param userId unique identifier (GUID) of a user through which to run (second-lowest precedence)
+     * @param allowEscalation whether to allow privilege escalation (lowest precedence, only works in-tenant with appropriate config)
      */
     @SuppressWarnings("this-escape")
-    public AtlanClient(final String baseURL, final String apiToken, final String oauthClientId, final String oauthClientSecret, String userId) {
+    public AtlanClient(
+            final String baseURL,
+            final String apiToken,
+            final String oauthClientId,
+            final String oauthClientSecret,
+            String userId,
+            boolean allowEscalation) {
         extraHeaders = new ConcurrentHashMap<>();
         extraHeaders.putAll(Atlan.EXTRA_HEADERS);
         if (baseURL == null) {
@@ -297,6 +312,18 @@ public class AtlanClient implements AtlanCloseable {
         this.oauthClientId = oauthClientId;
         this.oauthClientSecret = oauthClientSecret;
         this.userId = userId;
+        this.allowEscalation = allowEscalation;
+        if (apiToken != null && !apiToken.isEmpty()) {
+            logger.info("Running using provided API token.");
+        } else if (oauthClientId != null && !oauthClientId.isEmpty() && oauthClientSecret != null && !oauthClientSecret.isEmpty()) {
+            logger.info("Running using provided OAuth client details.");
+        } else if (userId != null && !userId.isEmpty()) {
+            logger.info("Running as user: {}", userId);
+        } else if (allowEscalation) {
+            logger.info("No credentials provided, will attempt to run with escalated privileges.");
+        } else {
+            logger.warn("No credentials provided -- any actions through client will likely fail.");
+        }
         mapper = Serde.createMapper(this);
         typeDefs = new TypeDefsEndpoint(this);
         roles = new RolesEndpoint(this);
@@ -517,8 +544,7 @@ public class AtlanClient implements AtlanCloseable {
     public void addAuthHeader(Map<String, List<String>> headers, boolean validate) throws AtlanException {
         if (isLocal()) {
             // Local credentials use Basic auth
-            String encodedCreds =
-                Base64.getEncoder().encodeToString(basicAuth.getBytes(StandardCharsets.UTF_8));
+            String encodedCreds = Base64.getEncoder().encodeToString(basicAuth.getBytes(StandardCharsets.UTF_8));
             headers.put("Authorization", List.of(String.format("Basic %s", encodedCreds)));
         } else if (!validate) {
             // If we're not validating, just send the API token as-is as a bearer token
@@ -526,7 +552,10 @@ public class AtlanClient implements AtlanCloseable {
         } else {
             // If there is no key at all, attempt to get one...
             if (apiToken == null || apiToken.isEmpty() || StringUtils.containsWhitespace(apiToken)) {
-                if (oauthClientId != null && oauthClientSecret != null && !oauthClientId.isEmpty() && !oauthClientSecret.isEmpty()) {
+                if (oauthClientId != null
+                        && oauthClientSecret != null
+                        && !oauthClientId.isEmpty()
+                        && !oauthClientSecret.isEmpty()) {
                     // First using any available OAuth details
                     OAuthExchangeResponse response = oauthClients.exchange(oauthClientId, oauthClientSecret);
                     this.apiToken = response.getAccessToken();
@@ -556,7 +585,10 @@ public class AtlanClient implements AtlanCloseable {
      * @throws AtlanException on any API communication issue
      */
     public synchronized void refreshToken() throws AtlanException {
-        if (oauthClientId != null && oauthClientSecret != null && !oauthClientId.isEmpty() && !oauthClientSecret.isEmpty()) {
+        if (oauthClientId != null
+                && oauthClientSecret != null
+                && !oauthClientId.isEmpty()
+                && !oauthClientSecret.isEmpty()) {
             OAuthExchangeResponse response = oauthClients.exchange(oauthClientId, oauthClientSecret);
             this.apiToken = response.getAccessToken();
         } else if (userId != null && !userId.isEmpty()) {
@@ -568,15 +600,15 @@ public class AtlanClient implements AtlanCloseable {
             // Before retrying this particular request, first confirm the refreshed token is "active"
             //  (by making and retrying a call that should retrieve details only when truly active)
             while (retryCount < getMaxNetworkRetries()
-                && (td == null
-                || td.getStructDefs() == null
-                || td.getStructDefs().isEmpty())) {
+                    && (td == null
+                            || td.getStructDefs() == null
+                            || td.getStructDefs().isEmpty())) {
                 Thread.sleep(waitTime(retryCount).toMillis());
                 td = typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
                 retryCount++;
             }
         } catch (InterruptedException e) {
-            log.warn(" ... retry loop interrupted.", e);
+            logger.warn(" ... retry loop interrupted.", e);
         }
     }
 

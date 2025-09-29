@@ -7,7 +7,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
-
 import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -82,8 +81,8 @@ public class OAuthClient extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static OAuthClient create(
-        AtlanClient client, String displayName, String description, Set<String> personas, String role)
-        throws AtlanException {
+            AtlanClient client, String displayName, String description, Set<String> personas, String role)
+            throws AtlanException {
         return client.oauthClients.create(displayName, description, personas, role);
     }
 

@@ -242,17 +242,8 @@ object Utils {
         val oauthClientId = getEnvVar("ATLAN_OAUTH_CLIENT_ID", "")
         val oauthClientSecret = getEnvVar("ATLAN_OAUTH_CLIENT_SECRET", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken, oauthClientId, oauthClientSecret, userId)
+        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken, oauthClientId, oauthClientSecret, userId, true)
         if (reuseCtx?.client == null) {
-            when {
-                apiToken.isNotEmpty() -> logger.info { "Running using provided API token." }
-                oauthClientId.isNotEmpty() && oauthClientSecret.isNotEmpty() -> logger.info { "Running using provided OAuth client details." }
-                userId.isNotEmpty() -> logger.info { "Running as user: $userId" }
-                else -> {
-                    logger.info { "No credentials found, will attempt short-lived escalation (if permitted)." }
-                    client.allowEscalation = true
-                }
-            }
             setWorkflowOpts(client, config.runtime)
         }
         return PackageContext(config, client, reuseCtx?.client != null)

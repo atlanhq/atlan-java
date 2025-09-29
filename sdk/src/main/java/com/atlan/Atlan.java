@@ -35,9 +35,9 @@ public abstract class Atlan {
                     + ErrorCode.BLANK_BASE_URL.getMessageDefinition().getUserAction();
 
     static final String NO_CREDENTIALS_MSG =
-        ErrorCode.NO_TOKEN.getMessageDefinition().getErrorId() + " "
-        + ErrorCode.NO_TOKEN.getMessageDefinition().getErrorMessage() + " "
-        + ErrorCode.NO_TOKEN.getMessageDefinition().getUserAction();
+            ErrorCode.NO_TOKEN.getMessageDefinition().getErrorId() + " "
+                    + ErrorCode.NO_TOKEN.getMessageDefinition().getErrorMessage() + " "
+                    + ErrorCode.NO_TOKEN.getMessageDefinition().getUserAction();
 
     static String prepURL(final String baseURL) {
         String prepped = baseURL;
