@@ -315,7 +315,10 @@ public class AtlanClient implements AtlanCloseable {
         this.allowEscalation = allowEscalation;
         if (apiToken != null && !apiToken.isEmpty()) {
             logger.info("Running using provided API token.");
-        } else if (oauthClientId != null && !oauthClientId.isEmpty() && oauthClientSecret != null && !oauthClientSecret.isEmpty()) {
+        } else if (oauthClientId != null
+                && !oauthClientId.isEmpty()
+                && oauthClientSecret != null
+                && !oauthClientSecret.isEmpty()) {
             logger.info("Running using provided OAuth client details.");
         } else if (userId != null && !userId.isEmpty()) {
             logger.info("Running as user: {}", userId);
