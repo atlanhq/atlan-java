@@ -239,23 +239,18 @@ object Utils {
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
         val apiToken = getEnvVar("ATLAN_API_KEY", "")
+        val oauthClientId = getEnvVar("ATLAN_OAUTH_CLIENT_ID", "")
+        val oauthClientSecret = getEnvVar("ATLAN_OAUTH_CLIENT_SECRET", "")
         val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
+        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken, oauthClientId, oauthClientSecret, userId)
         if (reuseCtx?.client == null) {
             when {
-                apiToken.isNotEmpty() -> {
-                    logger.info { "Using provided API token for authentication." }
-                }
-
-                userId.isNotEmpty() -> {
-                    logger.info { "No API token found, attempting to impersonate user: $userId" }
-                    client.userId = userId
-                    client.apiToken = client.impersonate.user(userId)
-                }
-
+                apiToken.isNotEmpty() -> logger.info { "Running using provided API token." }
+                oauthClientId.isNotEmpty() && oauthClientSecret.isNotEmpty() -> logger.info { "Running using provided OAuth client details." }
+                userId.isNotEmpty() -> logger.info { "Running as user: $userId" }
                 else -> {
-                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                    client.apiToken = client.impersonate.escalate()
+                    logger.info { "No credentials found, will attempt short-lived escalation (if permitted)." }
+                    client.allowEscalation = true
                 }
             }
             setWorkflowOpts(client, config.runtime)

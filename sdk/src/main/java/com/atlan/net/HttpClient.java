@@ -8,14 +8,11 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.util.Stopwatch;
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -301,36 +298,14 @@ public abstract class HttpClient {
                 log.debug(" ... redirect received, will retry: {}", response.body());
             } else if (response.code() == 401) {
                 // Retry authentication on an authentication failure (token could have expired)
-                String userId = request.client().getUserId();
-                if (userId != null) {
-                    try {
-                        log.info(" ... authentication failed, attempting to exchange new token for user: {}", userId);
-                        AtlanClient client = request.client();
-                        String token = client.impersonate.user(userId);
-                        client.setApiToken(token);
-                        request.rebuildHeaders();
-                        TypeDefResponse td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
-                        int retryCount = 1;
-                        try {
-                            // Before retrying this particular request, first confirm the refreshed token is "active"
-                            //  (by making and retrying a call that should retrieve details only when truly active)
-                            while (retryCount < client.getMaxNetworkRetries()
-                                    && (td == null
-                                            || td.getStructDefs() == null
-                                            || td.getStructDefs().isEmpty())) {
-                                Thread.sleep(waitTime(retryCount).toMillis());
-                                td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
-                                retryCount++;
-                            }
-                        } catch (InterruptedException e) {
-                            log.warn(" ... retry loop interrupted.", exception);
-                        }
-                        return true;
-                    } catch (AtlanException e) {
-                        log.warn(" ... attempt to impersonate user {} failed, not retrying.", userId, exception);
-                    }
+                try {
+                    request.refreshToken();
+                    return true;
+                } catch (AtlanException e) {
+                    log.warn(" ... attempt to refresh token failed, not retrying.", exception);
+                    log.debug(" ... failed refresh stacktrace:", e);
                 }
-                // If there is no user to impersonate, no need to retry, just short-circuit to failure
+                // If refresh failed, no need to retry, just short-circuit to failure
                 return false;
             } else if (response.code() == 403) {
                 // Retry on permission failure (since these are granted asynchronously)
