@@ -70,7 +70,10 @@ public class Serde {
                 assetMap, builderMap, relationshipAttributesMap, "com.atlan.model.assets", "com.atlan.model.relations");
         String externalPackages = System.getProperty("asset.scan.external", System.getenv("ASSET_SCAN_EXTERNAL"));
         if (externalPackages != null && !externalPackages.isEmpty()) {
-            String[] packages = externalPackages.split(",");
+            String[] packages = Arrays.stream(externalPackages.split(","))
+                    .map(String::trim)
+                    .filter(pkg -> !pkg.isEmpty())
+                    .toArray(String[]::new);
             scanPackages(assetMap, builderMap, relationshipAttributesMap, packages);
         }
         assetClasses = Collections.unmodifiableMap(assetMap);
