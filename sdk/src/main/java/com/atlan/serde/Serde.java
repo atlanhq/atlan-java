@@ -66,58 +66,84 @@ public class Serde {
         Map<String, Class<?>> assetMap = new HashMap<>();
         Map<String, Class<?>> builderMap = new HashMap<>();
         Map<String, Class<?>> relationshipAttributesMap = new HashMap<>();
-        try (ScanResult scanResult = new ClassGraph()
-                .enableExternalClasses()
-                .ignoreClassVisibility()
-                .setMaxBufferedJarRAMSize(16 * 1024 * 1024)
-                .scan()) {
-            for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
-                String fullName = info.getName();
-                if (fullName.endsWith("Impl")) {
-                    try {
-                        Class<?> builderClass = info.loadClass();
-                        Class<?> typeClass = builderClass.getEnclosingClass();
-                        String typeName =
-                                (String) typeClass.getDeclaredField("TYPE_NAME").get(null);
-                        assetMap.put(typeName, typeClass);
-                        builderMap.put(typeName, builderClass);
-                    } catch (NoSuchFieldException e) {
-                        log.debug(
-                                "Asset class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
-                                fullName);
-                    } catch (IllegalAccessException e) {
-                        log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
-                    }
-                }
-            }
-            for (ClassInfo info :
-                    scanResult.getSubclasses(RelationshipAttributes.RelationshipAttributesBuilder.class)) {
-                String fullName = info.getName();
-                if (fullName.endsWith("Impl")) {
-                    try {
-                        Class<?> builderClass = info.loadClass();
-                        Class<?> typeClass = builderClass.getEnclosingClass();
-                        String typeName =
-                                (String) typeClass.getField("TYPE_NAME").get(null);
-                        relationshipAttributesMap.put(typeName, typeClass);
-                        builderMap.put(typeName, builderClass);
-                    } catch (NoSuchFieldException e) {
-                        log.error(
-                                "Relationship attributes class is missing the static TYPE_NAME giving its type: {}",
-                                fullName,
-                                e);
-                    } catch (IllegalAccessException e) {
-                        log.error(
-                                "Unable to access the static TYPE_NAME for the relationship attributes class: {}",
-                                fullName,
-                                e);
-                    }
-                }
-            }
+        scanPackages(
+                assetMap, builderMap, relationshipAttributesMap, "com.atlan.model.assets", "com.atlan.model.relations");
+        String externalPackages = System.getProperty("asset.scan.external", System.getenv("ASSET_SCAN_EXTERNAL"));
+        if (externalPackages != null && !externalPackages.isEmpty()) {
+            String[] packages = Arrays.stream(externalPackages.split(","))
+                    .map(String::trim)
+                    .filter(pkg -> !pkg.isEmpty())
+                    .toArray(String[]::new);
+            scanPackages(assetMap, builderMap, relationshipAttributesMap, packages);
         }
         assetClasses = Collections.unmodifiableMap(assetMap);
         builderClasses = Collections.unmodifiableMap(builderMap);
         relationshipAttributeClasses = Collections.unmodifiableMap(relationshipAttributesMap);
+    }
+
+    private static void scanPackages(
+            Map<String, Class<?>> assetMap,
+            Map<String, Class<?>> builderMap,
+            Map<String, Class<?>> relationshipAttributesMap,
+            String... packages) {
+        try (ScanResult scanResult = new ClassGraph()
+                .acceptPackages(packages)
+                .enableClassInfo()
+                .ignoreClassVisibility()
+                .setMaxBufferedJarRAMSize(2 * 1024 * 1024)
+                .scan()) {
+            processAssets(scanResult, assetMap, builderMap);
+            processRelationships(scanResult, relationshipAttributesMap, builderMap);
+        }
+    }
+
+    private static void processAssets(
+            ScanResult scanResult, Map<String, Class<?>> assetMap, Map<String, Class<?>> builderMap) {
+        for (ClassInfo info : scanResult.getSubclasses(Asset.AssetBuilder.class)) {
+            String fullName = info.getName();
+            if (fullName.endsWith("Impl")) {
+                try {
+                    Class<?> builderClass = info.loadClass();
+                    Class<?> typeClass = builderClass.getEnclosingClass();
+                    String typeName =
+                            (String) typeClass.getDeclaredField("TYPE_NAME").get(null);
+                    assetMap.put(typeName, typeClass);
+                    builderMap.put(typeName, builderClass);
+                } catch (NoSuchFieldException e) {
+                    log.debug(
+                            "Asset class is missing the static TYPE_NAME giving its type (this is fine if this is a relationship): {}",
+                            fullName);
+                } catch (IllegalAccessException e) {
+                    log.error("Unable to access the static TYPE_NAME for the asset class: {}", fullName, e);
+                }
+            }
+        }
+    }
+
+    private static void processRelationships(
+            ScanResult scanResult, Map<String, Class<?>> relationshipAttributesMap, Map<String, Class<?>> builderMap) {
+        for (ClassInfo info : scanResult.getSubclasses(RelationshipAttributes.RelationshipAttributesBuilder.class)) {
+            String fullName = info.getName();
+            if (fullName.endsWith("Impl")) {
+                try {
+                    Class<?> builderClass = info.loadClass();
+                    Class<?> typeClass = builderClass.getEnclosingClass();
+                    String typeName = (String) typeClass.getField("TYPE_NAME").get(null);
+                    relationshipAttributesMap.put(typeName, typeClass);
+                    builderMap.put(typeName, builderClass);
+                } catch (NoSuchFieldException e) {
+                    log.error(
+                            "Relationship attributes class is missing the static TYPE_NAME giving its type: {}",
+                            fullName,
+                            e);
+                } catch (IllegalAccessException e) {
+                    log.error(
+                            "Unable to access the static TYPE_NAME for the relationship attributes class: {}",
+                            fullName,
+                            e);
+                }
+            }
+        }
     }
 
     public static Class<?> getAssetClassForType(String typeName) throws ClassNotFoundException {

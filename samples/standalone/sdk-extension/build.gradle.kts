@@ -20,5 +20,8 @@ tasks {
                 testLogging.showStandardStreams = true
             }
         }
+        // Ensure this extension package is scanned for serde (either should work, you don't need both)
+        systemProperty("asset.scan.external", "com.probable.guacamole.model.assets")
+        environment("ASSET_SCAN_EXTERNAL", "com.probable.guacamole.model.assets")
     }
 }
