@@ -3,6 +3,8 @@
 package com.atlan;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
+import static com.atlan.net.HttpClient.waitTime;
+
 import com.atlan.api.*;
 import com.atlan.auth.APITokenManager;
 import com.atlan.auth.EscalationTokenManager;
@@ -13,6 +15,8 @@ import com.atlan.auth.UserTokenManager;
 import com.atlan.cache.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanCloseable;
+import com.atlan.model.enums.AtlanTypeCategory;
+import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.serde.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -523,8 +527,7 @@ public class AtlanClient implements AtlanCloseable {
      * @throws AtlanException on any API communication issue
      */
     public void addAuthHeader(Map<String, List<String>> headers, boolean validate) throws AtlanException {
-        headers.put("Authorization", List.of(tokenManager.getHeader(this)));
-        tokenManager.validate();
+        headers.put("Authorization", List.of(tokenManager.getHeader(this, validate)));
     }
 
     /**
@@ -534,6 +537,26 @@ public class AtlanClient implements AtlanCloseable {
      */
     public void refreshToken() throws AtlanException {
         tokenManager.refresh(this);
+    }
+
+    /**
+     * Confirm the client is active (able to access information programmatically).
+     *
+     * @throws AtlanException on any API communication issue during the active check
+     */
+    public void validateActive() throws AtlanException, InterruptedException {
+        TypeDefResponse td = typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
+        int retryCount = 1;
+        // Before retrying this particular request, first confirm the refreshed token is "active"
+        //  (by making and retrying a call that should retrieve details only when truly active)
+        while (retryCount < getMaxNetworkRetries()
+                && (td == null
+                        || td.getStructDefs() == null
+                        || td.getStructDefs().isEmpty())) {
+            Thread.sleep(waitTime(retryCount).toMillis());
+            td = typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
+            retryCount++;
+        }
     }
 
     /** {@inheritDoc} */
