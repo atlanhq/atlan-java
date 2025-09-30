@@ -293,6 +293,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-052",
             "No displayName was provided when attempting to update the OAuth client.",
             "You must provide a displayName for the OAuth client when attempting to update it."),
+    CANNOT_REFRESH_API_TOKEN(
+            400,
+            "ATLAN-JAVA-400-053",
+            "API tokens cannot be refreshed programmatically.",
+            "You must create a new API token separately, and then use that for any new AtlanClient."),
+    CANNOT_REFRESH_LOCAL_CREDS(
+            400,
+            "ATLAN-JAVA-400-054",
+            "Local credentials cannot be refreshed programmatically.",
+            "You must create a new AtlanClient with the correct credentials."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
