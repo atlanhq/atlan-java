@@ -114,7 +114,7 @@ public class OAuthClient extends AtlanObject {
         if (this.displayName == null || this.displayName.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.MISSING_CLIENT_NAME);
         }
-        return client.oauthClients.update(this.id, this.displayName, this.description);
+        return client.oauthClients.update(this.clientId, this.displayName, this.description);
     }
 
     /**
