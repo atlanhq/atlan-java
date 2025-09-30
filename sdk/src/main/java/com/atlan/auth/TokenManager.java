@@ -68,8 +68,8 @@ public abstract class TokenManager {
      * @throws AtlanException on any API communication issue during the attempted refresh
      */
     public final boolean refresh(AtlanClient client) throws AtlanException {
-        lock.writeLock().lock();
         boolean success = false;
+        lock.writeLock().lock();
         try {
             success = refreshToken(client);
             while (!success && refreshRetryCount.incrementAndGet() < maxRetries) {
