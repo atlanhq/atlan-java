@@ -4,6 +4,9 @@ package com.atlan.pkg
 
 import com.atlan.AtlanClient
 import com.atlan.BuildInfo
+import com.atlan.auth.APITokenManager
+import com.atlan.auth.OAuthClientManager
+import com.atlan.auth.UserTokenManager
 import com.atlan.cache.OffHeapAssetCache
 import com.atlan.exception.AtlanException
 import com.atlan.exception.NotFoundException
@@ -238,26 +241,12 @@ object Utils {
         if (reuseCtx != null) config.runtime = reuseCtx.config.runtime
         val impersonateUserId = config.runtime.userId ?: ""
         val baseUrl = getEnvVar("ATLAN_BASE_URL", "INTERNAL")
-        val apiToken = getEnvVar("ATLAN_API_KEY", "")
-        val userId = getEnvVar("ATLAN_USER_ID", impersonateUserId)
-        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken)
+        val apiToken = getEnvVar(APITokenManager.ENVIRONMENT_VARIABLE, "")
+        val oauthClientId = getEnvVar(OAuthClientManager.ENV_CLIENT_ID, "")
+        val oauthClientSecret = getEnvVar(OAuthClientManager.ENV_SECRET, "")
+        val userId = getEnvVar(UserTokenManager.ENVIRONMENT_VARIABLE, impersonateUserId)
+        val client = reuseCtx?.client ?: AtlanClient(baseUrl, apiToken, oauthClientId, oauthClientSecret, userId, true)
         if (reuseCtx?.client == null) {
-            when {
-                apiToken.isNotEmpty() -> {
-                    logger.info { "Using provided API token for authentication." }
-                }
-
-                userId.isNotEmpty() -> {
-                    logger.info { "No API token found, attempting to impersonate user: $userId" }
-                    client.userId = userId
-                    client.apiToken = client.impersonate.user(userId)
-                }
-
-                else -> {
-                    logger.info { "No API token or impersonation user, attempting short-lived escalation." }
-                    client.apiToken = client.impersonate.escalate()
-                }
-            }
             setWorkflowOpts(client, config.runtime)
         }
         return PackageContext(config, client, reuseCtx?.client != null)

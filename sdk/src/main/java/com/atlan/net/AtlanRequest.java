@@ -6,13 +6,10 @@ package com.atlan.net;
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.AuthenticationException;
 import com.atlan.exception.ErrorCode;
-import com.atlan.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -215,16 +212,17 @@ public class AtlanRequest {
     }
 
     /**
-     * Rebuild the headers for the request, i.e. to include any revised token details.
+     * Refresh the token used for this request.
      *
-     * @throws AuthenticationException on any issue rebuilding the headers for the request
+     * @throws AtlanException on any issue refreshing the bearer token
      */
-    public void rebuildHeaders() throws AuthenticationException {
+    public void refreshToken() throws AtlanException {
+        client.refreshToken();
         headers = buildHeaders(checkApiToken, options(), acceptType);
     }
 
     private HttpHeaders buildHeaders(boolean checkApiToken, RequestOptions provided, String acceptType)
-            throws AuthenticationException {
+            throws AtlanException {
         Map<String, List<String>> headerMap = new HashMap<>();
 
         // Request-Id + any custom headers (do these first, so they cannot clobber auth, etc)
@@ -246,23 +244,7 @@ public class AtlanRequest {
         headerMap.put("Accept-Charset", List.of(ApiResource.CHARSET.name()));
 
         // Authorization
-        if (client.isLocal()) {
-            String encodedCreds =
-                    Base64.getEncoder().encodeToString(client.getBasicAuth().getBytes(StandardCharsets.UTF_8));
-            headerMap.put("Authorization", List.of(String.format("Basic %s", encodedCreds)));
-        } else {
-            String apiToken = client.getApiToken();
-            if (checkApiToken) {
-                if (apiToken == null) {
-                    throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
-                } else if (apiToken.isEmpty()) {
-                    throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
-                } else if (StringUtils.containsWhitespace(apiToken)) {
-                    throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
-                }
-            }
-            headerMap.put("Authorization", List.of(String.format("Bearer %s", apiToken)));
-        }
+        client.addAuthHeader(headerMap, checkApiToken);
 
         return HttpHeaders.of(headerMap);
     }

@@ -283,6 +283,26 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-050",
             "A placeholder GUID was provided where a resolved GUID is required: {0}.",
             "You must provide a real (resolved) GUID, not a placeholder, when carrying out the requested operation."),
+    MISSING_CLIENT_ID(
+            400,
+            "ATLAN-JAVA-400-051",
+            "No ID was provided when attempting to update the OAuth client.",
+            "You must provide an ID when attempting to update an OAuth client."),
+    MISSING_CLIENT_NAME(
+            400,
+            "ATLAN-JAVA-400-052",
+            "No displayName was provided when attempting to update the OAuth client.",
+            "You must provide a displayName for the OAuth client when attempting to update it."),
+    CANNOT_REFRESH_API_TOKEN(
+            400,
+            "ATLAN-JAVA-400-053",
+            "API tokens cannot be refreshed programmatically.",
+            "You must create a new API token separately, and then use that for any new AtlanClient."),
+    CANNOT_REFRESH_LOCAL_CREDS(
+            400,
+            "ATLAN-JAVA-400-054",
+            "Local credentials cannot be refreshed programmatically.",
+            "You must create a new AtlanClient with the correct credentials."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
@@ -315,6 +335,27 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-401-004",
             "Your API token is no longer valid, it can no longer lookup base Atlan structures.",
             "You can double-check your API token from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
+    NO_TOKEN(
+            401,
+            "ATLAN-JAVA-401-005",
+            "No bearer token provided.",
+            "Set your API token or OAuth credentials. You can generate API tokens and OAuth client details from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
+    EMPTY_TOKEN(
+            401,
+            "ATLAN-JAVA-401-006",
+            "Your bearer token is invalid, as it is an empty string.",
+            "You can double-check your API token or OAuth credentials from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
+    INVALID_TOKEN(
+            401,
+            "ATLAN-JAVA-401-007",
+            "Your bearer token is invalid, as it contains whitespace.",
+            "You can double-check your API token or OAuth credentials from the Atlan Admin Center. See "
                     + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
                     + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
 

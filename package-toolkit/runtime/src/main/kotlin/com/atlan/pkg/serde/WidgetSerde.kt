@@ -133,7 +133,7 @@ object WidgetSerde {
             if (root != null && !root.isNull && root.isTextual) {
                 val value = root.textValue()
                 if (!value.isNullOrEmpty()) {
-                    AtlanClient("INTERNAL").use { client ->
+                    AtlanClient("INTERNAL", "unused").use { client ->
                         return client.readValue(value, Connection::class.java)
                     }
                 }
