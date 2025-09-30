@@ -86,6 +86,11 @@ public class FlowFieldOperation extends Asset
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** Individual Fabric activities contained in the process. */
+    @Attribute
+    @Singular
+    SortedSet<IFabricActivity> fabricActivities;
+
     /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;

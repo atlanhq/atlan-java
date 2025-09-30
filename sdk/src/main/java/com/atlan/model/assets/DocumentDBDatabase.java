@@ -93,6 +93,10 @@ public class DocumentDBDatabase extends Asset
     @Attribute
     Long documentDBDatabaseCollectionCount;
 
+    /** Workspace containing the database. */
+    @Attribute
+    IFabricWorkspace fabricWorkspace;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

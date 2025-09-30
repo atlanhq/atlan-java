@@ -428,6 +428,12 @@ public interface IAtlanQuery {
     String getAssetSourceReadme();
 
     /** TBC */
+    String getAssetSpaceName();
+
+    /** TBC */
+    String getAssetSpaceQualifiedName();
+
+    /** TBC */
     SortedSet<String> getAssetTags();
 
     /** TBC */

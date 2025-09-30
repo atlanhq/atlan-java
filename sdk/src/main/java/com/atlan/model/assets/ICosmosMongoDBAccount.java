@@ -445,6 +445,12 @@ public interface ICosmosMongoDBAccount {
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
 
+    /** Name of the space that contains this asset. */
+    String getAssetSpaceName();
+
+    /** Unique name of the space that contains this asset. */
+    String getAssetSpaceQualifiedName();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
