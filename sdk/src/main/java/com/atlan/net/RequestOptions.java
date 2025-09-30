@@ -31,6 +31,9 @@ public class RequestOptions {
     @Builder.Default
     private final boolean skipLogging = false;
 
+    @Builder.Default
+    private final boolean sendAuthHeader = true;
+
     @Singular
     private final Map<String, List<String>> extraHeaders;
 

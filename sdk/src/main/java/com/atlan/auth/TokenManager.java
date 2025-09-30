@@ -33,19 +33,16 @@ public abstract class TokenManager {
      * Retrieve the header to use for Authorization using this token.
      *
      * @param client through which to retrieve the token (if a refresh is needed)
-     * @param validate whether to validate the token before returning it
      * @return the value for the Authorization header
      * @throws AtlanException on any API communication issue during attempted refresh (if needed)
      */
-    public final String getHeader(AtlanClient client, boolean validate) throws AtlanException {
+    public final String getHeader(AtlanClient client) throws AtlanException {
         if (token == null) {
             refresh(client);
         }
         lock.readLock().lock();
         try {
-            if (validate) {
-                validate();
-            }
+            validate();
             return getAuthHeader();
         } finally {
             lock.readLock().unlock();

@@ -523,11 +523,10 @@ public class AtlanClient implements AtlanCloseable {
      * Add the necessary authorization details to the headers for a request.
      *
      * @param headers to which to add the authorization details
-     * @param validate whether to validate the presence of the credentials
      * @throws AtlanException on any API communication issue
      */
-    public void addAuthHeader(Map<String, List<String>> headers, boolean validate) throws AtlanException {
-        headers.put("Authorization", List.of(tokenManager.getHeader(this, validate)));
+    public void addAuthHeader(Map<String, List<String>> headers) throws AtlanException {
+        headers.put("Authorization", List.of(tokenManager.getHeader(this)));
     }
 
     /**
