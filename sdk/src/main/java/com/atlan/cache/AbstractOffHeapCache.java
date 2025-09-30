@@ -51,6 +51,7 @@ public abstract class AbstractOffHeapCache<K, V> implements AtlanCloseable {
         lock.writeLock().lock();
         try {
             backingStore = Files.createTempDirectory("rdb_" + name + "_");
+            log.debug("Opening off-heap cache ({}): {}", this.name, this.backingStore);
             internal = RocksDB.open(backingStore.toString());
         } catch (IOException | RocksDBException e) {
             throw new RuntimeException("Unable to create off-heap cache for tracking.", e);
