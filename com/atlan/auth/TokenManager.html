@@ -150,8 +150,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Retrieve the header to use for Authorization using this token.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeader(com.atlan.AtlanClient,boolean)" class="member-name-link">getHeader</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- boolean&nbsp;validate)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeader(com.atlan.AtlanClient)" class="member-name-link">getHeader</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve the header to use for Authorization using this token.</div>
 </div>
@@ -217,16 +216,14 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getHeader(com.atlan.AtlanClient,boolean)">
+<section class="detail" id="getHeader(com.atlan.AtlanClient)">
 <h3>getHeader</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getHeader</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- boolean&nbsp;validate)</span>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getHeader</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</span>
                        throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
 <div class="block">Retrieve the header to use for Authorization using this token.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>client</code> - through which to retrieve the token (if a refresh is needed)</dd>
-<dd><code>validate</code> - whether to validate the token before returning it</dd>
 <dt>Returns:</dt>
 <dd>the value for the Authorization header</dd>
 <dt>Throws:</dt>

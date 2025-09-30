@@ -191,17 +191,77 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;personas,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;role)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create a new API token with the provided details.</div>
+<div class="block">Create a new OAuth client with the provided details.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#delete(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">delete</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;clientId)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Delete (purge) the API token with the provided GUID.</div>
+<div class="block">Delete (purge) the OAuth client with the provided clientId.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClientId()" class="member-name-link">getClientId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique client identifier (prefixed GUID) of the OAuth client.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClientSecret()" class="member-name-link">getClientSecret</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique secret used to authorize exchanging for bearer tokens.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCreatedAt()" class="member-name-link">getCreatedAt</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Epoch time, in milliseconds, at which the OAuth client was created.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCreatedBy()" class="member-name-link">getCreatedBy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">User who created the OAuth client.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescription()" class="member-name-link">getDescription</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Explanation of the OAuth client.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDisplayName()" class="member-name-link">getDisplayName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Human-readable name provided when creating the client.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique identifier (GUID) of the OAuth credential.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPersonaQNs()" class="member-name-link">getPersonaQNs</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique names (qualifiedNames) of personas associated with the OAuth client.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRole()" class="member-name-link">getRole</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Name of the workspace role to which the OAuth client is bound.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTokenExpirySeconds()" class="member-name-link">getTokenExpirySeconds</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Lifespan of each exchanged token for the OAuth client.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpdatedAt()" class="member-name-link">getUpdatedAt</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Epoch time, in milliseconds, at which the OAuth client was last updated.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUpdatedBy()" class="member-name-link">getUpdatedBy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">User who last updated the OAuth client.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -209,7 +269,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#retrieveByName(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">retrieveByName</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;displayName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Retrieves the API token with a name that exactly matches the provided string.</div>
+<div class="block">Retrieves the OAuth client with a name that exactly matches the provided string.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OAuthClient.OAuthClientBuilder.html" title="class in com.atlan.model.admin">OAuthClient.OAuthClientBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
@@ -220,7 +280,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OAuthClient.html" title="class in com.atlan.model.admin">OAuthClient</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(com.atlan.AtlanClient)" class="member-name-link">update</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sends this API token to Atlan to update it in Atlan.</div>
+<div class="block">Sends this OAuth client to Atlan to update it in Atlan.</div>
 </div>
 </div>
 </div>
@@ -288,11 +348,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Create a new OAuth client that is not assigned to any personas.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to the Atlan tenant on which to create the new API token</dd>
-<dd><code>displayName</code> - readable name for the API token</dd>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to create the new OAuth client</dd>
+<dd><code>displayName</code> - readable name for the OAuth client</dd>
 <dd><code>role</code> - workspace role the client should be bound to</dd>
 <dt>Returns:</dt>
-<dd>the API token details</dd>
+<dd>the OAuth client details</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
 </dl>
@@ -307,16 +367,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;personas,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;role)</span>
                           throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Create a new API token with the provided details.</div>
+<div class="block">Create a new OAuth client with the provided details.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to the Atlan tenant on which to create the new API token</dd>
-<dd><code>displayName</code> - readable name for the API token</dd>
-<dd><code>description</code> - explanation of the API token</dd>
-<dd><code>personas</code> - unique names (qualifiedNames) of personas that should be linked to the token</dd>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to create the new OAuth client</dd>
+<dd><code>displayName</code> - readable name for the OAuth client</dd>
+<dd><code>description</code> - explanation of the OAuth client</dd>
+<dd><code>personas</code> - unique names (qualifiedNames) of personas that should be linked to the client</dd>
 <dd><code>role</code> - workspace role the client should be bound to</dd>
 <dt>Returns:</dt>
-<dd>the API token details</dd>
+<dd>the OAuth client details</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
 </dl>
@@ -328,13 +388,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="OAuthClient.html" title="class in com.atlan.model.admin">OAuthClient</a></span>&nbsp;<span class="element-name">retrieveByName</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;displayName)</span>
                                   throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Retrieves the API token with a name that exactly matches the provided string.</div>
+<div class="block">Retrieves the OAuth client with a name that exactly matches the provided string.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to the Atlan tenant from which to retrieve the API token</dd>
-<dd><code>displayName</code> - name (as it appears in the UI) by which to retrieve the API token</dd>
+<dd><code>client</code> - connectivity to the Atlan tenant from which to retrieve the OAuth client</dd>
+<dd><code>displayName</code> - name (as it appears in the UI) by which to retrieve the OAuth client</dd>
 <dt>Returns:</dt>
-<dd>the API token whose name (in the UI) contains the provided string, or null if there is none</dd>
+<dd>the OAuth client whose name (in the UI) contains the provided string, or null if there is none</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
 </dl>
@@ -345,14 +405,14 @@ loadScripts(document, 'script');</script>
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OAuthClient.html" title="class in com.atlan.model.admin">OAuthClient</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</span>
                    throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Sends this API token to Atlan to update it in Atlan.
+<div class="block">Sends this OAuth client to Atlan to update it in Atlan.
  Note: only the displayName and description can currently be updated (for anything else,
  you need to create a new OAuth client).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to the Atlan tenant on which to update the API token</dd>
+<dd><code>client</code> - connectivity to the Atlan tenant on which to update the OAuth client</dd>
 <dt>Returns:</dt>
-<dd>the updated API token</dd>
+<dd>the updated OAuth client</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
 </dl>
@@ -362,13 +422,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="delete(com.atlan.AtlanClient,java.lang.String)">
 <h3>delete</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">delete</span><wbr><span class="parameters">(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</span>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;clientId)</span>
                    throws <span class="exceptions"><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
-<div class="block">Delete (purge) the API token with the provided GUID.</div>
+<div class="block">Delete (purge) the OAuth client with the provided clientId.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>client</code> - connectivity to the Atlan tenant from which to remove the API token</dd>
-<dd><code>guid</code> - unique identifier (GUID) of the API token to hard-delete</dd>
+<dd><code>client</code> - connectivity to the Atlan tenant from which to remove the OAuth client</dd>
+<dd><code>clientId</code> - unique identifier of the OAuth client to hard-delete</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues</dd>
 </dl>
@@ -384,6 +444,90 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="toBuilder()">
 <h3>toBuilder</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OAuthClient.OAuthClientBuilder.html" title="class in com.atlan.model.admin">OAuthClient.OAuthClientBuilder</a>&lt;?,<wbr>?&gt;</span>&nbsp;<span class="element-name">toBuilder</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getId()">
+<h3>getId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getId</span>()</div>
+<div class="block">Unique identifier (GUID) of the OAuth credential.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getClientId()">
+<h3>getClientId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getClientId</span>()</div>
+<div class="block">Unique client identifier (prefixed GUID) of the OAuth client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getClientSecret()">
+<h3>getClientSecret</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getClientSecret</span>()</div>
+<div class="block">Unique secret used to authorize exchanging for bearer tokens.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDisplayName()">
+<h3>getDisplayName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDisplayName</span>()</div>
+<div class="block">Human-readable name provided when creating the client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCreatedAt()">
+<h3>getCreatedAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCreatedAt</span>()</div>
+<div class="block">Epoch time, in milliseconds, at which the OAuth client was created.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCreatedBy()">
+<h3>getCreatedBy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCreatedBy</span>()</div>
+<div class="block">User who created the OAuth client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDescription()">
+<h3>getDescription</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDescription</span>()</div>
+<div class="block">Explanation of the OAuth client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPersonaQNs()">
+<h3>getPersonaQNs</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getPersonaQNs</span>()</div>
+<div class="block">Unique names (qualifiedNames) of personas associated with the OAuth client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRole()">
+<h3>getRole</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getRole</span>()</div>
+<div class="block">Name of the workspace role to which the OAuth client is bound.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTokenExpirySeconds()">
+<h3>getTokenExpirySeconds</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">getTokenExpirySeconds</span>()</div>
+<div class="block">Lifespan of each exchanged token for the OAuth client.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getUpdatedAt()">
+<h3>getUpdatedAt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUpdatedAt</span>()</div>
+<div class="block">Epoch time, in milliseconds, at which the OAuth client was last updated.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getUpdatedBy()">
+<h3>getUpdatedBy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUpdatedBy</span>()</div>
+<div class="block">User who last updated the OAuth client.</div>
 </section>
 </li>
 <li>
