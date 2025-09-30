@@ -69,20 +69,23 @@ public abstract class TokenManager {
      */
     public final boolean refresh(AtlanClient client) throws AtlanException {
         lock.writeLock().lock();
+        boolean success = false;
         try {
-            boolean success = refreshToken(client);
+            success = refreshToken(client);
             while (!success && refreshRetryCount.incrementAndGet() < maxRetries) {
-                HttpClient.waitTime(refreshRetryCount.get());
+                Thread.sleep(HttpClient.waitTime(refreshRetryCount.get()).toMillis());
                 success = refreshToken(client);
             }
             refreshRetryCount.set(0);
             if (success) {
                 validateActive(client);
             }
-            return success;
+        } catch (InterruptedException e) {
+            logger.warn("Token refresh retry loop interrupted.", e);
         } finally {
             lock.writeLock().unlock();
         }
+        return success;
     }
 
     /**
@@ -120,22 +123,18 @@ public abstract class TokenManager {
      * @param client through which to test the active nature of the token
      * @throws AtlanException on any API communication issue during the active check
      */
-    private void validateActive(AtlanClient client) throws AtlanException {
+    private void validateActive(AtlanClient client) throws AtlanException, InterruptedException {
         TypeDefResponse td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
         int retryCount = 1;
-        try {
-            // Before retrying this particular request, first confirm the refreshed token is "active"
-            //  (by making and retrying a call that should retrieve details only when truly active)
-            while (retryCount < client.getMaxNetworkRetries()
+        // Before retrying this particular request, first confirm the refreshed token is "active"
+        //  (by making and retrying a call that should retrieve details only when truly active)
+        while (retryCount < client.getMaxNetworkRetries()
                     && (td == null
                             || td.getStructDefs() == null
                             || td.getStructDefs().isEmpty())) {
-                Thread.sleep(waitTime(retryCount).toMillis());
-                td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
-                retryCount++;
-            }
-        } catch (InterruptedException e) {
-            logger.warn("Token active check retry loop interrupted.", e);
+            Thread.sleep(waitTime(retryCount).toMillis());
+            td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
+            retryCount++;
         }
     }
 }

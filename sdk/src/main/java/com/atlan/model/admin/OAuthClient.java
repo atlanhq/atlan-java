@@ -125,6 +125,6 @@ public class OAuthClient extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static void delete(AtlanClient client, String guid) throws AtlanException {
-        client.apiTokens.purge(guid);
+        client.oauthClients.purge(guid);
     }
 }
