@@ -5,10 +5,12 @@ package com.atlan.java.sdk;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertThrows;
 import static org.testng.Assert.assertTrue;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.PermissionException;
 import com.atlan.model.admin.OAuthClient;
 import com.atlan.model.admin.OAuthClientResponse;
 import com.atlan.model.assets.Glossary;
@@ -126,10 +128,9 @@ public class OAuthTest extends AtlanLiveTest {
     @Test(
             groups = {"oauth.use.guest"},
             dependsOnGroups = {"oauth.update.guest"})
-    void createGlossaryAsGuest() throws AtlanException {
+    void cannotCreateGlossaryAsGuest() {
         Glossary toCreate = Glossary.creator(CLIENT_NAME).build();
-        toCreate.save(guestClient);
-        // TODO: find exception here...
+        assertThrows(PermissionException.class, () -> toCreate.save(guestClient));
     }
 
     @Test(
