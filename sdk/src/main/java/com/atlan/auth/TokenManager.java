@@ -71,7 +71,7 @@ public abstract class TokenManager {
         lock.writeLock().lock();
         try {
             success = refreshToken(client);
-            while (!success && refreshRetryCount.incrementAndGet() < maxRetries) {
+            while (!success && refreshRetryCount.incrementAndGet() <= maxRetries) {
                 Thread.sleep(HttpClient.waitTime(refreshRetryCount.get()).toMillis());
                 success = refreshToken(client);
             }
