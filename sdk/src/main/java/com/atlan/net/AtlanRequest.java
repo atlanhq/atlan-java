@@ -244,7 +244,9 @@ public class AtlanRequest {
         headerMap.put("Accept-Charset", List.of(ApiResource.CHARSET.name()));
 
         // Authorization
-        client.addAuthHeader(headerMap, checkApiToken);
+        if (checkApiToken && (provided == null || provided.getSendAuthHeader())) {
+            client.addAuthHeader(headerMap);
+        }
 
         return HttpHeaders.of(headerMap);
     }
