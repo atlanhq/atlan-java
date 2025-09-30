@@ -75,7 +75,6 @@ public abstract class TokenManager {
                 Thread.sleep(HttpClient.waitTime(refreshRetryCount.get()).toMillis());
                 success = refreshToken(client);
             }
-            refreshRetryCount.set(0);
             if (success) {
                 client.validateActive();
             }
@@ -83,6 +82,7 @@ public abstract class TokenManager {
             logger.warn("Token refresh retry loop interrupted.", e);
             success = false;
         } finally {
+            refreshRetryCount.set(0);
             lock.writeLock().unlock();
         }
         return success;

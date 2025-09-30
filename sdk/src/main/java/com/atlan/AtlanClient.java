@@ -540,15 +540,14 @@ public class AtlanClient implements AtlanCloseable {
     }
 
     /**
-     * Confirm the client is active (able to access information programmatically).
+     * Confirm the client is active (able to access information programmatically),
+     * by making and retrying a call that should retrieve details only when truly active.
      *
      * @throws AtlanException on any API communication issue during the active check
      */
     public void validateActive() throws AtlanException, InterruptedException {
         TypeDefResponse td = typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
         int retryCount = 1;
-        // Before retrying this particular request, first confirm the refreshed token is "active"
-        //  (by making and retrying a call that should retrieve details only when truly active)
         while (retryCount < getMaxNetworkRetries()
                 && (td == null
                         || td.getStructDefs() == null
