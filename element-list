@@ -1,5 +1,6 @@
 com.atlan
 com.atlan.api
+com.atlan.auth
 com.atlan.cache
 com.atlan.events
 com.atlan.exception
