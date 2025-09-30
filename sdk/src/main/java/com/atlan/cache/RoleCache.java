@@ -60,7 +60,7 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
             roles = Collections.emptyList();
         }
         for (AtlanRole role : roles) {
-            cache(role.getId(), role.getName(), role);
+            cache(role.getId(), role.getName(), role.getDescription(), role);
         }
     }
 }

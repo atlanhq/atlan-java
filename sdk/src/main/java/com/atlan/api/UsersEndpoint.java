@@ -457,7 +457,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
             cur.user(CreateUser.builder()
                     .email(user.getEmail())
                     .roleName(roleName)
-                    .roleId(client.getRoleCache().getIdForName(roleName))
+                    .roleId(client.getRoleCache().getIdForSid(roleName))
                     .build());
         }
         ApiResource.request(client, ApiResource.RequestMethod.POST, url, cur.build(), options);

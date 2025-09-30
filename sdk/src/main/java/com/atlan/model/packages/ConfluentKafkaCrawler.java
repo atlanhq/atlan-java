@@ -32,7 +32,7 @@ public class ConfluentKafkaCrawler extends AbstractCrawler {
      */
     public static ConfluentKafkaCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName)
             throws AtlanException {
-        return creator(client, connectionName, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+        return creator(client, connectionName, List.of(client.getRoleCache().getIdForSid("$admin")), null, null);
     }
 
     /**

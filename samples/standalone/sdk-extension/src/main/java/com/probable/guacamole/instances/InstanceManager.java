@@ -60,7 +60,7 @@ public class InstanceManager extends ExtendedModelGenerator {
                                 client,
                                 SERVICE_TYPE,
                                 AtlanConnectorType.MONGODB,
-                                List.of(client.getRoleCache().getIdForName("$admin")),
+                                List.of(client.getRoleCache().getIdForSid("$admin")),
                                 null,
                                 null)
                         .build();

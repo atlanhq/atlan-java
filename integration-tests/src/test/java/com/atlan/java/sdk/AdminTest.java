@@ -69,7 +69,7 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(groups = {"admin.read.roles"})
     void retrieveRoles() throws AtlanException {
-        String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
+        String adminRoleGuid = client.getRoleCache().getIdForSid("$admin");
         assertNotNull(adminRoleGuid);
     }
 

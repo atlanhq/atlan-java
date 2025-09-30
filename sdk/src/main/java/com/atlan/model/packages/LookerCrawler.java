@@ -35,7 +35,7 @@ public class LookerCrawler extends AbstractCrawler {
      * @throws AtlanException if there is not at least one connection admin specified, or any specified are invalid
      */
     public static LookerCrawlerBuilder<?, ?> creator(AtlanClient client, String connectionName) throws AtlanException {
-        return creator(client, connectionName, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+        return creator(client, connectionName, List.of(client.getRoleCache().getIdForSid("$admin")), null, null);
     }
 
     /**
