@@ -129,9 +129,9 @@ public abstract class TokenManager {
         // Before retrying this particular request, first confirm the refreshed token is "active"
         //  (by making and retrying a call that should retrieve details only when truly active)
         while (retryCount < client.getMaxNetworkRetries()
-                    && (td == null
-                            || td.getStructDefs() == null
-                            || td.getStructDefs().isEmpty())) {
+                && (td == null
+                        || td.getStructDefs() == null
+                        || td.getStructDefs().isEmpty())) {
             Thread.sleep(waitTime(retryCount).toMillis());
             td = client.typeDefs.list(List.of(AtlanTypeCategory.STRUCT));
             retryCount++;
