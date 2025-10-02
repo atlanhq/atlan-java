@@ -19,15 +19,8 @@ public abstract class KeycloakEndpoint extends AbstractEndpoint {
     }
 
     protected String getBaseUrl() throws ApiConnectionException {
-        return getBaseUrl(false);
-    }
-
-    protected String getBaseUrl(boolean bypassInternalCheck) throws ApiConnectionException {
         if (client.isInternal()) {
             return getBaseUrl(SERVICE, "") + INTERNAL_PREFIX;
-        }
-        if (!bypassInternalCheck) {
-            throw new ApiConnectionException(ErrorCode.INTERNAL_ONLY);
         }
         return getBaseUrl(SERVICE, PREFIX);
     }

@@ -138,7 +138,7 @@ public class ImpersonationEndpoint extends KeycloakEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public KeycloakMappingsResponse getRoleMappings(String userId, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(true), usersEndpoint, userId);
+        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(), usersEndpoint, userId);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
     }
