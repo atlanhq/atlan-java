@@ -4,7 +4,6 @@ package com.atlan.api;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
-import com.atlan.exception.ErrorCode;
 
 /**
  * Base class for all API endpoints that ultimately access Keycloak-backed services.
