@@ -97,7 +97,7 @@
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -185,7 +185,7 @@
                 .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -233,7 +233,7 @@
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
@@ -269,7 +269,7 @@
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
