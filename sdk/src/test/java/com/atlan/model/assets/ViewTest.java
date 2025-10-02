@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ViewTest {
 
-    private static final View full = View._internal()
+    private final View full = View._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -523,55 +523,29 @@ public class ViewTest {
             .sizeBytes(123456789L)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static View frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"View.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"View.serialize"},
-            dependsOnGroups = {"View.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleView() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of View,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(), full, "Unable to converting View via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of View,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"View.deserialize"},
-            dependsOnGroups = {"View.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, View.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"View.equivalency"},
-            dependsOnGroups = {"View.serialize", "View.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final View frodo = MockAtlanTenant.client.readValue(serialized, View.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of View,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"View.equivalency"},
-            dependsOnGroups = {"View.serialize", "View.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -4,15 +4,17 @@ package com.atlan.model.events;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.mock.MockTenant;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import java.io.IOException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AssetCreateTest {
 
-    private static final AtlanEvent full = AtlanEvent.builder()
+    private final AtlanEvent full = AtlanEvent.builder()
             .msgSourceIP("msgSourceIP")
             .msgCreatedBy("msgCreatedBy")
             .msgCreationTime(123456789L)
@@ -24,50 +26,32 @@ public class AssetCreateTest {
                             .build())
                     .build())
             .build();
-    private static AtlanEvent frodo;
-    private static String serialized;
-    private static final int HASH = full.hashCode();
 
-    @Test(groups = {"AssetCreate.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
     }
 
-    @Test(
-            groups = {"AssetCreate.serialize"},
-            dependsOnGroups = {"AssetCreate.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
-        assertNotNull(serialized);
-        assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
-    }
-
-    @Test(
-            groups = {"AssetCreate.deserialize"},
-            dependsOnGroups = {"AssetCreate.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, AtlanEvent.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AssetCreate.equivalency"},
-            dependsOnGroups = {"AssetCreate.serialize", "AssetCreate.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+    @Test
+    void serdeCycleAssetCreateEvent() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AssetCreateEvent,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AssetCreateEvent via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AssetCreateEvent,");
+        assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
+        // Deserialization
+        final AtlanEvent frodo = MockTenant.client.readValue(serialized, AtlanEvent.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AssetCreateEvent,");
+        // Serialization equivalency
         String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AssetCreate.equivalency"},
-            dependsOnGroups = {"AssetCreate.serialize", "AssetCreate.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialization equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

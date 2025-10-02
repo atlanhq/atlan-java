@@ -4,13 +4,15 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.mock.MockTenant;
 import java.io.IOException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AtlanRoleTest {
 
-    private static final AtlanRole full = AtlanRole.builder()
+    private final AtlanRole full = AtlanRole.builder()
             .id("id")
             .description("description")
             .name("name")
@@ -19,41 +21,31 @@ public class AtlanRoleTest {
             .memberCount("memberCount")
             .build();
 
-    private static AtlanRole frodo;
-    private static String serialized;
-
-    @Test(groups = {"AtlanRole.serialize"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
-        assertNotNull(serialized);
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
     }
 
-    @Test(
-            groups = {"AtlanRole.deserialize"},
-            dependsOnGroups = {"AtlanRole.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, AtlanRole.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AtlanRole.equivalency"},
-            dependsOnGroups = {"AtlanRole.serialize", "AtlanRole.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+    @Test
+    void serdeCycleAtlanRole() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AtlanRole,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AtlanRole via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AtlanRole,");
+        assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
+        // Deserialization
+        final AtlanRole frodo = MockTenant.client.readValue(serialized, AtlanRole.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AtlanRole,");
+        // Serialization equivalency
         String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AtlanRole.equivalency"},
-            dependsOnGroups = {"AtlanRole.serialize", "AtlanRole.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialization equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

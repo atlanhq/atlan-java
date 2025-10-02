@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SchemaRegistrySubjectTest {
 
-    private static final SchemaRegistrySubject full = SchemaRegistrySubject._internal()
+    private final SchemaRegistrySubject full = SchemaRegistrySubject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -489,55 +489,31 @@ public class SchemaRegistrySubjectTest {
             .schemaRegistrySubjectSchemaCompatibility(SchemaRegistrySchemaCompatibility.BACKWARD)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SchemaRegistrySubject frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SchemaRegistrySubject.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SchemaRegistrySubject.serialize"},
-            dependsOnGroups = {"SchemaRegistrySubject.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSchemaRegistrySubject() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SchemaRegistrySubject,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SchemaRegistrySubject via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SchemaRegistrySubject,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SchemaRegistrySubject.deserialize"},
-            dependsOnGroups = {"SchemaRegistrySubject.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SchemaRegistrySubject.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SchemaRegistrySubject.equivalency"},
-            dependsOnGroups = {"SchemaRegistrySubject.serialize", "SchemaRegistrySubject.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SchemaRegistrySubject frodo = MockAtlanTenant.client.readValue(serialized, SchemaRegistrySubject.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SchemaRegistrySubject,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SchemaRegistrySubject.equivalency"},
-            dependsOnGroups = {"SchemaRegistrySubject.serialize", "SchemaRegistrySubject.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class CogniteFileTest {
 
-    private static final CogniteFile full = CogniteFile._internal()
+    private final CogniteFile full = CogniteFile._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -479,55 +479,31 @@ public class CogniteFileTest {
             .cogniteAsset(CogniteAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static CogniteFile frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"CogniteFile.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"CogniteFile.serialize"},
-            dependsOnGroups = {"CogniteFile.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleCogniteFile() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of CogniteFile,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting CogniteFile via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of CogniteFile,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"CogniteFile.deserialize"},
-            dependsOnGroups = {"CogniteFile.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CogniteFile.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"CogniteFile.equivalency"},
-            dependsOnGroups = {"CogniteFile.serialize", "CogniteFile.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final CogniteFile frodo = MockAtlanTenant.client.readValue(serialized, CogniteFile.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of CogniteFile,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"CogniteFile.equivalency"},
-            dependsOnGroups = {"CogniteFile.serialize", "CogniteFile.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

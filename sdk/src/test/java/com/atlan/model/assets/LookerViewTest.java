@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class LookerViewTest {
 
-    private static final LookerView full = LookerView._internal()
+    private final LookerView full = LookerView._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -485,55 +485,31 @@ public class LookerViewTest {
             .projectName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static LookerView frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"LookerView.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"LookerView.serialize"},
-            dependsOnGroups = {"LookerView.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleLookerView() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of LookerView,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting LookerView via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of LookerView,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"LookerView.deserialize"},
-            dependsOnGroups = {"LookerView.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, LookerView.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"LookerView.equivalency"},
-            dependsOnGroups = {"LookerView.serialize", "LookerView.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final LookerView frodo = MockAtlanTenant.client.readValue(serialized, LookerView.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of LookerView,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"LookerView.equivalency"},
-            dependsOnGroups = {"LookerView.serialize", "LookerView.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

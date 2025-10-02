@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class CogniteSequenceTest {
 
-    private static final CogniteSequence full = CogniteSequence._internal()
+    private final CogniteSequence full = CogniteSequence._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -479,55 +479,31 @@ public class CogniteSequenceTest {
             .cogniteAsset(CogniteAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static CogniteSequence frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"CogniteSequence.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"CogniteSequence.serialize"},
-            dependsOnGroups = {"CogniteSequence.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleCogniteSequence() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of CogniteSequence,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting CogniteSequence via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of CogniteSequence,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"CogniteSequence.deserialize"},
-            dependsOnGroups = {"CogniteSequence.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CogniteSequence.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"CogniteSequence.equivalency"},
-            dependsOnGroups = {"CogniteSequence.serialize", "CogniteSequence.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final CogniteSequence frodo = MockAtlanTenant.client.readValue(serialized, CogniteSequence.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of CogniteSequence,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"CogniteSequence.equivalency"},
-            dependsOnGroups = {"CogniteSequence.serialize", "CogniteSequence.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightAnalysisVisualTest {
 
-    private static final QuickSightAnalysisVisual full = QuickSightAnalysisVisual._internal()
+    private final QuickSightAnalysisVisual full = QuickSightAnalysisVisual._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -483,55 +483,33 @@ public class QuickSightAnalysisVisualTest {
             .quickSightAnalysisQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static QuickSightAnalysisVisual frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"QuickSightAnalysisVisual.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"QuickSightAnalysisVisual.serialize"},
-            dependsOnGroups = {"QuickSightAnalysisVisual.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleQuickSightAnalysisVisual() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of QuickSightAnalysisVisual,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting QuickSightAnalysisVisual via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of QuickSightAnalysisVisual,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"QuickSightAnalysisVisual.deserialize"},
-            dependsOnGroups = {"QuickSightAnalysisVisual.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, QuickSightAnalysisVisual.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"QuickSightAnalysisVisual.equivalency"},
-            dependsOnGroups = {"QuickSightAnalysisVisual.serialize", "QuickSightAnalysisVisual.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final QuickSightAnalysisVisual frodo =
+                MockAtlanTenant.client.readValue(serialized, QuickSightAnalysisVisual.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of QuickSightAnalysisVisual,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"QuickSightAnalysisVisual.equivalency"},
-            dependsOnGroups = {"QuickSightAnalysisVisual.serialize", "QuickSightAnalysisVisual.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

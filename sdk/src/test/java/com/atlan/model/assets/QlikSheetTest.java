@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QlikSheetTest {
 
-    private static final QlikSheet full = QlikSheet._internal()
+    private final QlikSheet full = QlikSheet._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -492,55 +492,31 @@ public class QlikSheetTest {
             .qlikSheetIsApproved(true)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static QlikSheet frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"QlikSheet.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"QlikSheet.serialize"},
-            dependsOnGroups = {"QlikSheet.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleQlikSheet() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of QlikSheet,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting QlikSheet via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of QlikSheet,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"QlikSheet.deserialize"},
-            dependsOnGroups = {"QlikSheet.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, QlikSheet.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"QlikSheet.equivalency"},
-            dependsOnGroups = {"QlikSheet.serialize", "QlikSheet.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final QlikSheet frodo = MockAtlanTenant.client.readValue(serialized, QlikSheet.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of QlikSheet,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"QlikSheet.equivalency"},
-            dependsOnGroups = {"QlikSheet.serialize", "QlikSheet.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

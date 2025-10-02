@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class CubeHierarchyTest {
 
-    private static final CubeHierarchy full = CubeHierarchy._internal()
+    private final CubeHierarchy full = CubeHierarchy._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -488,55 +488,31 @@ public class CubeHierarchyTest {
             .cubeField(CubeField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static CubeHierarchy frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"CubeHierarchy.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"CubeHierarchy.serialize"},
-            dependsOnGroups = {"CubeHierarchy.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleCubeHierarchy() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of CubeHierarchy,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting CubeHierarchy via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of CubeHierarchy,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"CubeHierarchy.deserialize"},
-            dependsOnGroups = {"CubeHierarchy.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CubeHierarchy.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"CubeHierarchy.equivalency"},
-            dependsOnGroups = {"CubeHierarchy.serialize", "CubeHierarchy.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final CubeHierarchy frodo = MockAtlanTenant.client.readValue(serialized, CubeHierarchy.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of CubeHierarchy,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"CubeHierarchy.equivalency"},
-            dependsOnGroups = {"CubeHierarchy.serialize", "CubeHierarchy.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

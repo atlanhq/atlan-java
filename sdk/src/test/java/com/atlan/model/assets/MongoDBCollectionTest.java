@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MongoDBCollectionTest {
 
-    private static final MongoDBCollection full = MongoDBCollection._internal()
+    private final MongoDBCollection full = MongoDBCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -563,55 +563,31 @@ public class MongoDBCollectionTest {
             .mongoDBDatabase(MongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static MongoDBCollection frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"MongoDBCollection.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"MongoDBCollection.serialize"},
-            dependsOnGroups = {"MongoDBCollection.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleMongoDBCollection() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of MongoDBCollection,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting MongoDBCollection via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of MongoDBCollection,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"MongoDBCollection.deserialize"},
-            dependsOnGroups = {"MongoDBCollection.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, MongoDBCollection.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"MongoDBCollection.equivalency"},
-            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final MongoDBCollection frodo = MockAtlanTenant.client.readValue(serialized, MongoDBCollection.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of MongoDBCollection,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"MongoDBCollection.equivalency"},
-            dependsOnGroups = {"MongoDBCollection.serialize", "MongoDBCollection.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

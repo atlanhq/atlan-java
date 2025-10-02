@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FabricVisualTest {
 
-    private static final FabricVisual full = FabricVisual._internal()
+    private final FabricVisual full = FabricVisual._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -485,55 +485,31 @@ public class FabricVisualTest {
             .fabricVisualType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static FabricVisual frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"FabricVisual.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"FabricVisual.serialize"},
-            dependsOnGroups = {"FabricVisual.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFabricVisual() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of FabricVisual,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting FabricVisual via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of FabricVisual,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"FabricVisual.deserialize"},
-            dependsOnGroups = {"FabricVisual.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FabricVisual.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"FabricVisual.equivalency"},
-            dependsOnGroups = {"FabricVisual.serialize", "FabricVisual.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final FabricVisual frodo = MockAtlanTenant.client.readValue(serialized, FabricVisual.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of FabricVisual,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"FabricVisual.equivalency"},
-            dependsOnGroups = {"FabricVisual.serialize", "FabricVisual.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

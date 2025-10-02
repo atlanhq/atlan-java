@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DynamoDBTableTest {
 
-    private static final DynamoDBTable full = DynamoDBTable._internal()
+    private final DynamoDBTable full = DynamoDBTable._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -564,55 +564,31 @@ public class DynamoDBTableTest {
             .dynamoDBTableLSICount(123)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DynamoDBTable frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DynamoDBTable.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DynamoDBTable.serialize"},
-            dependsOnGroups = {"DynamoDBTable.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDynamoDBTable() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DynamoDBTable,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DynamoDBTable via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DynamoDBTable,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DynamoDBTable.deserialize"},
-            dependsOnGroups = {"DynamoDBTable.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DynamoDBTable.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DynamoDBTable.equivalency"},
-            dependsOnGroups = {"DynamoDBTable.serialize", "DynamoDBTable.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DynamoDBTable frodo = MockAtlanTenant.client.readValue(serialized, DynamoDBTable.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DynamoDBTable,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DynamoDBTable.equivalency"},
-            dependsOnGroups = {"DynamoDBTable.serialize", "DynamoDBTable.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

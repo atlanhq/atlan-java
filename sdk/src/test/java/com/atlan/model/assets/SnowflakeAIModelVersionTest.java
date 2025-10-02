@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SnowflakeAIModelVersionTest {
 
-    private static final SnowflakeAIModelVersion full = SnowflakeAIModelVersion._internal()
+    private final SnowflakeAIModelVersion full = SnowflakeAIModelVersion._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -526,55 +526,33 @@ public class SnowflakeAIModelVersionTest {
             .snowflakeAIModelVersionType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SnowflakeAIModelVersion frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SnowflakeAIModelVersion.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SnowflakeAIModelVersion.serialize"},
-            dependsOnGroups = {"SnowflakeAIModelVersion.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSnowflakeAIModelVersion() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SnowflakeAIModelVersion,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SnowflakeAIModelVersion via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SnowflakeAIModelVersion,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SnowflakeAIModelVersion.deserialize"},
-            dependsOnGroups = {"SnowflakeAIModelVersion.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SnowflakeAIModelVersion.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SnowflakeAIModelVersion.equivalency"},
-            dependsOnGroups = {"SnowflakeAIModelVersion.serialize", "SnowflakeAIModelVersion.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SnowflakeAIModelVersion frodo =
+                MockAtlanTenant.client.readValue(serialized, SnowflakeAIModelVersion.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of SnowflakeAIModelVersion,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SnowflakeAIModelVersion.equivalency"},
-            dependsOnGroups = {"SnowflakeAIModelVersion.serialize", "SnowflakeAIModelVersion.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class WorkflowRunTest {
 
-    private static final WorkflowRun full = WorkflowRun._internal()
+    private final WorkflowRun full = WorkflowRun._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -473,55 +473,31 @@ public class WorkflowRunTest {
             .workflowRunWorkflowGuid("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static WorkflowRun frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"WorkflowRun.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"WorkflowRun.serialize"},
-            dependsOnGroups = {"WorkflowRun.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleWorkflowRun() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of WorkflowRun,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting WorkflowRun via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of WorkflowRun,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"WorkflowRun.deserialize"},
-            dependsOnGroups = {"WorkflowRun.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, WorkflowRun.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"WorkflowRun.equivalency"},
-            dependsOnGroups = {"WorkflowRun.serialize", "WorkflowRun.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final WorkflowRun frodo = MockAtlanTenant.client.readValue(serialized, WorkflowRun.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of WorkflowRun,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"WorkflowRun.equivalency"},
-            dependsOnGroups = {"WorkflowRun.serialize", "WorkflowRun.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

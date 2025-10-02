@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FlowFieldTest {
 
-    private static final FlowField full = FlowField._internal()
+    private final FlowField full = FlowField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -498,55 +498,31 @@ public class FlowFieldTest {
             .flowExpression("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static FlowField frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"FlowField.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"FlowField.serialize"},
-            dependsOnGroups = {"FlowField.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFlowField() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of FlowField,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting FlowField via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of FlowField,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"FlowField.deserialize"},
-            dependsOnGroups = {"FlowField.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowField.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"FlowField.equivalency"},
-            dependsOnGroups = {"FlowField.serialize", "FlowField.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final FlowField frodo = MockAtlanTenant.client.readValue(serialized, FlowField.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of FlowField,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"FlowField.equivalency"},
-            dependsOnGroups = {"FlowField.serialize", "FlowField.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

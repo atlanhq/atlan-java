@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AIApplicationTest {
 
-    private static final AIApplication full = AIApplication._internal()
+    private final AIApplication full = AIApplication._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -489,55 +489,31 @@ public class AIApplicationTest {
             .model(AIModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AIApplication frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AIApplication.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AIApplication.serialize"},
-            dependsOnGroups = {"AIApplication.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAIApplication() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AIApplication,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AIApplication via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AIApplication,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AIApplication.deserialize"},
-            dependsOnGroups = {"AIApplication.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AIApplication.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AIApplication.equivalency"},
-            dependsOnGroups = {"AIApplication.serialize", "AIApplication.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AIApplication frodo = MockAtlanTenant.client.readValue(serialized, AIApplication.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AIApplication,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AIApplication.equivalency"},
-            dependsOnGroups = {"AIApplication.serialize", "AIApplication.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

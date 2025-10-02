@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class CassandraTableTest {
 
-    private static final CassandraTable full = CassandraTable._internal()
+    private final CassandraTable full = CassandraTable._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -511,55 +511,31 @@ public class CassandraTableTest {
             .cassandraTableVirtual(true)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static CassandraTable frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"CassandraTable.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"CassandraTable.serialize"},
-            dependsOnGroups = {"CassandraTable.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleCassandraTable() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of CassandraTable,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting CassandraTable via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of CassandraTable,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"CassandraTable.deserialize"},
-            dependsOnGroups = {"CassandraTable.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CassandraTable.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"CassandraTable.equivalency"},
-            dependsOnGroups = {"CassandraTable.serialize", "CassandraTable.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final CassandraTable frodo = MockAtlanTenant.client.readValue(serialized, CassandraTable.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of CassandraTable,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"CassandraTable.equivalency"},
-            dependsOnGroups = {"CassandraTable.serialize", "CassandraTable.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

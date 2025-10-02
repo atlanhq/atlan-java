@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SparkJobTest {
 
-    private static final SparkJob full = SparkJob._internal()
+    private final SparkJob full = SparkJob._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -493,55 +493,31 @@ public class SparkJobTest {
             .sparkMaster("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SparkJob frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SparkJob.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SparkJob.serialize"},
-            dependsOnGroups = {"SparkJob.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSparkJob() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SparkJob,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SparkJob via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SparkJob,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SparkJob.deserialize"},
-            dependsOnGroups = {"SparkJob.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SparkJob.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SparkJob.equivalency"},
-            dependsOnGroups = {"SparkJob.serialize", "SparkJob.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SparkJob frodo = MockAtlanTenant.client.readValue(serialized, SparkJob.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SparkJob,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SparkJob.equivalency"},
-            dependsOnGroups = {"SparkJob.serialize", "SparkJob.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

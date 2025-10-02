@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ColumnProcessTest {
 
-    private static final ColumnProcess full = ColumnProcess._internal()
+    private final ColumnProcess full = ColumnProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -490,55 +490,31 @@ public class ColumnProcessTest {
             .process(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static ColumnProcess frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"ColumnProcess.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"ColumnProcess.serialize"},
-            dependsOnGroups = {"ColumnProcess.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleColumnProcess() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of ColumnProcess,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting ColumnProcess via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of ColumnProcess,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"ColumnProcess.deserialize"},
-            dependsOnGroups = {"ColumnProcess.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, ColumnProcess.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"ColumnProcess.equivalency"},
-            dependsOnGroups = {"ColumnProcess.serialize", "ColumnProcess.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final ColumnProcess frodo = MockAtlanTenant.client.readValue(serialized, ColumnProcess.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ColumnProcess,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"ColumnProcess.equivalency"},
-            dependsOnGroups = {"ColumnProcess.serialize", "ColumnProcess.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

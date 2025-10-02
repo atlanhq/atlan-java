@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FolderTest {
 
-    private static final Folder full = Folder._internal()
+    private final Folder full = Folder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -468,55 +468,29 @@ public class FolderTest {
             .parentQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static Folder frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"Folder.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"Folder.serialize"},
-            dependsOnGroups = {"Folder.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFolder() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of Folder,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(), full, "Unable to converting Folder via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of Folder,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"Folder.deserialize"},
-            dependsOnGroups = {"Folder.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, Folder.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"Folder.equivalency"},
-            dependsOnGroups = {"Folder.serialize", "Folder.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final Folder frodo = MockAtlanTenant.client.readValue(serialized, Folder.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of Folder,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"Folder.equivalency"},
-            dependsOnGroups = {"Folder.serialize", "Folder.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

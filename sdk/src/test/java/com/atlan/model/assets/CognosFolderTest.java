@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class CognosFolderTest {
 
-    private static final CognosFolder full = CognosFolder._internal()
+    private final CognosFolder full = CognosFolder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -506,55 +506,31 @@ public class CognosFolderTest {
             .cognosSubFolder(CognosFolder.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static CognosFolder frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"CognosFolder.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"CognosFolder.serialize"},
-            dependsOnGroups = {"CognosFolder.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleCognosFolder() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of CognosFolder,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting CognosFolder via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of CognosFolder,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"CognosFolder.deserialize"},
-            dependsOnGroups = {"CognosFolder.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, CognosFolder.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"CognosFolder.equivalency"},
-            dependsOnGroups = {"CognosFolder.serialize", "CognosFolder.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final CognosFolder frodo = MockAtlanTenant.client.readValue(serialized, CognosFolder.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of CognosFolder,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"CognosFolder.equivalency"},
-            dependsOnGroups = {"CognosFolder.serialize", "CognosFolder.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

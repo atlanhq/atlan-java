@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBIMeasureTest {
 
-    private static final PowerBIMeasure full = PowerBIMeasure._internal()
+    private final PowerBIMeasure full = PowerBIMeasure._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -489,55 +489,31 @@ public class PowerBIMeasureTest {
             .workspaceQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static PowerBIMeasure frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"PowerBIMeasure.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"PowerBIMeasure.serialize"},
-            dependsOnGroups = {"PowerBIMeasure.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCyclePowerBIMeasure() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of PowerBIMeasure,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting PowerBIMeasure via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of PowerBIMeasure,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"PowerBIMeasure.deserialize"},
-            dependsOnGroups = {"PowerBIMeasure.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, PowerBIMeasure.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"PowerBIMeasure.equivalency"},
-            dependsOnGroups = {"PowerBIMeasure.serialize", "PowerBIMeasure.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final PowerBIMeasure frodo = MockAtlanTenant.client.readValue(serialized, PowerBIMeasure.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of PowerBIMeasure,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"PowerBIMeasure.equivalency"},
-            dependsOnGroups = {"PowerBIMeasure.serialize", "PowerBIMeasure.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

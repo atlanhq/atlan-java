@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DremioSourceTest {
 
-    private static final DremioSource full = DremioSource._internal()
+    private final DremioSource full = DremioSource._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -531,55 +531,31 @@ public class DremioSourceTest {
             .dremioSourceType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DremioSource frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DremioSource.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DremioSource.serialize"},
-            dependsOnGroups = {"DremioSource.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDremioSource() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DremioSource,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DremioSource via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DremioSource,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DremioSource.deserialize"},
-            dependsOnGroups = {"DremioSource.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DremioSource.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DremioSource.equivalency"},
-            dependsOnGroups = {"DremioSource.serialize", "DremioSource.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DremioSource frodo = MockAtlanTenant.client.readValue(serialized, DremioSource.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DremioSource,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DremioSource.equivalency"},
-            dependsOnGroups = {"DremioSource.serialize", "DremioSource.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

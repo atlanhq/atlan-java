@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.mock.MockTenant;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
@@ -11,12 +12,13 @@ import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import java.io.IOException;
 import java.util.*;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("deprecation")
 public class SourceTagAttachedAssetTest {
 
-    private static final Table full = Table._internal()
+    private final Table full = Table._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -469,50 +471,32 @@ public class SourceTagAttachedAssetTest {
             .sizeBytes(123456789L)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static Table frodo;
-    private static String serialized;
-
-    @Test(groups = {"Table.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
     }
 
-    @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSourceTagAttachedAsset() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SourceTagAttachedAsset,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SourceTagAttachedAsset via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SourceTagAttachedAsset,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, Table.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final Table frodo = MockTenant.client.readValue(serialized, Table.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of SourceTagAttachedAsset,");
+        // Serialization equivalency
         String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialization equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

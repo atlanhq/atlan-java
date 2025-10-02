@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DataStudioAssetTest {
 
-    private static final DataStudioAsset full = DataStudioAsset._internal()
+    private final DataStudioAsset full = DataStudioAsset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -504,55 +504,31 @@ public class DataStudioAssetTest {
             .isTrashedDataStudioAsset(true)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DataStudioAsset frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DataStudioAsset.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DataStudioAsset.serialize"},
-            dependsOnGroups = {"DataStudioAsset.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDataStudioAsset() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DataStudioAsset,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DataStudioAsset via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DataStudioAsset,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DataStudioAsset.deserialize"},
-            dependsOnGroups = {"DataStudioAsset.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DataStudioAsset.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DataStudioAsset.equivalency"},
-            dependsOnGroups = {"DataStudioAsset.serialize", "DataStudioAsset.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DataStudioAsset frodo = MockAtlanTenant.client.readValue(serialized, DataStudioAsset.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DataStudioAsset,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DataStudioAsset.equivalency"},
-            dependsOnGroups = {"DataStudioAsset.serialize", "DataStudioAsset.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

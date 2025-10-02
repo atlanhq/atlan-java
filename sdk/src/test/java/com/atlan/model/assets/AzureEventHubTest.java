@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AzureEventHubTest {
 
-    private static final AzureEventHub full = AzureEventHub._internal()
+    private final AzureEventHub full = AzureEventHub._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -492,55 +492,31 @@ public class AzureEventHubTest {
             .azureEventHubStatus("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AzureEventHub frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AzureEventHub.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AzureEventHub.serialize"},
-            dependsOnGroups = {"AzureEventHub.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAzureEventHub() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AzureEventHub,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AzureEventHub via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AzureEventHub,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AzureEventHub.deserialize"},
-            dependsOnGroups = {"AzureEventHub.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AzureEventHub.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AzureEventHub.equivalency"},
-            dependsOnGroups = {"AzureEventHub.serialize", "AzureEventHub.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AzureEventHub frodo = MockAtlanTenant.client.readValue(serialized, AzureEventHub.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AzureEventHub,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AzureEventHub.equivalency"},
-            dependsOnGroups = {"AzureEventHub.serialize", "AzureEventHub.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

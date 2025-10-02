@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TablePartitionTest {
 
-    private static final TablePartition full = TablePartition._internal()
+    private final TablePartition full = TablePartition._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -531,55 +531,31 @@ public class TablePartitionTest {
             .sizeBytes(123456789L)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static TablePartition frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"TablePartition.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"TablePartition.serialize"},
-            dependsOnGroups = {"TablePartition.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleTablePartition() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of TablePartition,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting TablePartition via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of TablePartition,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"TablePartition.deserialize"},
-            dependsOnGroups = {"TablePartition.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TablePartition.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"TablePartition.equivalency"},
-            dependsOnGroups = {"TablePartition.serialize", "TablePartition.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final TablePartition frodo = MockAtlanTenant.client.readValue(serialized, TablePartition.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of TablePartition,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"TablePartition.equivalency"},
-            dependsOnGroups = {"TablePartition.serialize", "TablePartition.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

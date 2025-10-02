@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetDashboardTest {
 
-    private static final PresetDashboard full = PresetDashboard._internal()
+    private final PresetDashboard full = PresetDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -493,55 +493,31 @@ public class PresetDashboardTest {
             .presetWorkspace(PresetWorkspace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static PresetDashboard frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"PresetDashboard.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"PresetDashboard.serialize"},
-            dependsOnGroups = {"PresetDashboard.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCyclePresetDashboard() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of PresetDashboard,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting PresetDashboard via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of PresetDashboard,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"PresetDashboard.deserialize"},
-            dependsOnGroups = {"PresetDashboard.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, PresetDashboard.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"PresetDashboard.equivalency"},
-            dependsOnGroups = {"PresetDashboard.serialize", "PresetDashboard.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final PresetDashboard frodo = MockAtlanTenant.client.readValue(serialized, PresetDashboard.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of PresetDashboard,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"PresetDashboard.equivalency"},
-            dependsOnGroups = {"PresetDashboard.serialize", "PresetDashboard.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }
