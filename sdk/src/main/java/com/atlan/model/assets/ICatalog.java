@@ -375,6 +375,24 @@ public interface ICatalog {
             case DomoDatasetColumn.TYPE_NAME:
                 ref = DomoDatasetColumn.refByQualifiedName(qualifiedName);
                 break;
+            case DremioColumn.TYPE_NAME:
+                ref = DremioColumn.refByQualifiedName(qualifiedName);
+                break;
+            case DremioFolder.TYPE_NAME:
+                ref = DremioFolder.refByQualifiedName(qualifiedName);
+                break;
+            case DremioPhysicalDataset.TYPE_NAME:
+                ref = DremioPhysicalDataset.refByQualifiedName(qualifiedName);
+                break;
+            case DremioSource.TYPE_NAME:
+                ref = DremioSource.refByQualifiedName(qualifiedName);
+                break;
+            case DremioSpace.TYPE_NAME:
+                ref = DremioSpace.refByQualifiedName(qualifiedName);
+                break;
+            case DremioVirtualDataset.TYPE_NAME:
+                ref = DremioVirtualDataset.refByQualifiedName(qualifiedName);
+                break;
             case DynamoDBGlobalSecondaryIndex.TYPE_NAME:
                 ref = DynamoDBGlobalSecondaryIndex.refByQualifiedName(qualifiedName);
                 break;
