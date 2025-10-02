@@ -4,6 +4,7 @@ package com.atlan.api;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.*;
+import com.atlan.model.admin.KeycloakMappingsResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,20 +18,14 @@ import lombok.extern.jackson.Jacksonized;
  * Note: this will only work when run as part of Atlan's packaged workflow ecosystem
  * (running in the cluster back-end).
  */
-public class ImpersonationEndpoint extends AbstractEndpoint {
+public class ImpersonationEndpoint extends KeycloakEndpoint {
 
-    private static final String SERVICE = "http://keycloak-http.keycloak.svc.cluster.local";
-    private static final String endpoint = "/auth/realms/default/protocol/openid-connect/token";
+    private static final String endpoint = "/realms/default";
+    private static final String exchangeEndpoint = endpoint + "/protocol/openid-connect/token";
+    private static final String usersEndpoint = endpoint + "/users";
 
     public ImpersonationEndpoint(AtlanClient client) {
         super(client);
-    }
-
-    protected String getBaseUrl() throws ApiConnectionException {
-        if (!client.isInternal()) {
-            throw new ApiConnectionException(ErrorCode.INTERNAL_ONLY);
-        }
-        return SERVICE;
     }
 
     /**
@@ -53,7 +48,6 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
      * @throws AtlanException on any API communication or permission issue
      */
     public String escalate(RequestOptions options) throws AtlanException {
-        String tokenUrl = String.format("%s%s", getBaseUrl(), endpoint);
         String clientId = System.getenv("CLIENT_ID");
         String clientSecret = System.getenv("CLIENT_SECRET");
         if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
@@ -68,13 +62,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
                 clientSecret,
                 "scope",
                 "openid");
-        try {
-            AccessTokenResponse clientToken = ApiResource.request(
-                    client, ApiResource.RequestMethod.POST, tokenUrl, argoMap, AccessTokenResponse.class, options);
-            return clientToken.getAccessToken();
-        } catch (AtlanException e) {
-            throw new PermissionException(ErrorCode.UNABLE_TO_ESCALATE, e);
-        }
+        return exchange(argoMap, ErrorCode.UNABLE_TO_ESCALATE, options);
     }
 
     /**
@@ -97,7 +85,6 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public String user(String userId, RequestOptions options) throws AtlanException {
-        String tokenUrl = String.format("%s/auth/realms/default/protocol/openid-connect/token", getBaseUrl());
         String clientId = System.getenv("CLIENT_ID");
         String clientSecret = System.getenv("CLIENT_SECRET");
         if (clientId == null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty()) {
@@ -107,27 +94,53 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
                 "grant_type", "client_credentials",
                 "client_id", clientId,
                 "client_secret", clientSecret);
-        String argoToken;
-        try {
-            AccessTokenResponse clientToken = ApiResource.request(
-                    client, ApiResource.RequestMethod.POST, tokenUrl, argoMap, AccessTokenResponse.class, options);
-            argoToken = clientToken.getAccessToken();
-        } catch (AtlanException e) {
-            throw new PermissionException(ErrorCode.UNABLE_TO_ESCALATE, e);
-        }
+        String argoToken = exchange(argoMap, ErrorCode.UNABLE_TO_ESCALATE, options);
         Map<String, Object> userMap = Map.of(
                 "grant_type", "urn:ietf:params:oauth:grant-type:token-exchange",
                 "client_id", clientId,
                 "client_secret", clientSecret,
                 "subject_token", argoToken,
                 "requested_subject", userId);
+        return exchange(userMap, ErrorCode.UNABLE_TO_IMPERSONATE, options);
+    }
+
+    private String exchange(Map<String, Object> requestMap, ErrorCode onError, RequestOptions options)
+            throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(), exchangeEndpoint);
+        String exchangedToken;
         try {
-            AccessTokenResponse userToken = ApiResource.request(
-                    client, ApiResource.RequestMethod.POST, tokenUrl, userMap, AccessTokenResponse.class, options);
-            return userToken.getAccessToken();
+            AccessTokenResponse clientToken = ApiResource.request(
+                    client, ApiResource.RequestMethod.POST, url, requestMap, AccessTokenResponse.class, options);
+            exchangedToken = clientToken.getAccessToken();
         } catch (AtlanException e) {
-            throw new PermissionException(ErrorCode.UNABLE_TO_IMPERSONATE, e);
+            throw new PermissionException(onError, e);
         }
+        return exchangedToken;
+    }
+
+    /**
+     * Retrieve the role mappings for the specified user.
+     *
+     * @param userId unique identifier of the user for which to retrieve role mappings
+     * @return the role mappings for the specified user
+     * @throws AtlanException on any API communication issue
+     */
+    public KeycloakMappingsResponse getRoleMappings(String userId) throws AtlanException {
+        return getRoleMappings(userId, null);
+    }
+
+    /**
+     * Retrieve the role mappings for the specified user.
+     *
+     * @param userId unique identifier of the user for which to retrieve role mappings
+     * @param options to override default client settings
+     * @return the role mappings for the specified user
+     * @throws AtlanException on any API communication issue
+     */
+    public KeycloakMappingsResponse getRoleMappings(String userId, RequestOptions options) throws AtlanException {
+        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(true), usersEndpoint, userId);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
     }
 
     @Getter

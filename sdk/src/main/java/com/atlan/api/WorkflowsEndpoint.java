@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
+import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,14 +30,24 @@ import lombok.experimental.SuperBuilder;
  */
 public class WorkflowsEndpoint extends HeraclesEndpoint {
 
-    private static final String workflows_endpoint = "/workflows";
-    private static final String workflows_endpoint_run_existing = workflows_endpoint + "/submit";
-    private static final String workflows_search_endpoint = workflows_endpoint + "/indexsearch";
-    private static final String runs_endpoint = "/runs";
-    private static final String runs_search_endpoint = runs_endpoint + "/indexsearch";
+    private static final String workflowsEndpoint = "/workflows";
+    private static final String workflowsSubroleEndpoint = "/package-workflows";
+    private static final String workflowsEndpointRunExisting = "/submit";
+    private static final String workflowsSearchEndpoint = "/indexsearch";
+    private static final String runsEndpoint = "/runs";
+    private static final String runsSearchEndpoint = runsEndpoint + "/indexsearch";
 
     public WorkflowsEndpoint(AtlanClient client) {
         super(client);
+    }
+
+    private String getWorkflowEndpoint() throws AtlanException {
+        Set<String> roles = client.getRoleCache().getRolesForCurrentUser();
+        if (roles.contains("$admin") || roles.contains("$api-token-default-access")) {
+            return workflowsEndpoint;
+        } else {
+            return workflowsSubroleEndpoint;
+        }
     }
 
     /**
@@ -59,7 +70,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowResponse run(Workflow workflow, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), String.format("%s?submit=true", workflows_endpoint));
+        String url = String.format("%s%s", getBaseUrl(), String.format("%s?submit=true", workflowsEndpoint));
         WorkflowResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, options);
         response.setClient(client);
@@ -86,7 +97,8 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse run(WorkflowSearchResultDetail workflow, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), workflows_endpoint_run_existing);
+        final String endpoint = getWorkflowEndpoint() + workflowsEndpointRunExisting;
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         ReRunRequest request = ReRunRequest.builder()
                 .namespace(workflow.getMetadata().getNamespace())
                 .resourceName(workflow.getSpec().getWorkflowTemplateRef().get("name"))
@@ -117,7 +129,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse stop(String runName, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/stop", getBaseUrl(), runs_endpoint, runName);
+        String url = String.format("%s%s/%s/stop", getBaseUrl(), runsEndpoint, runName);
         WorkflowRunResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, "", WorkflowRunResponse.class, options);
         response.setClient(client);
@@ -143,7 +155,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      */
     public void archive(String workflowName, RequestOptions options) throws AtlanException {
         String url =
-                String.format("%s%s", getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
+                String.format("%s%s", getBaseUrl(), String.format("%s/%s/archive", workflowsEndpoint, workflowName));
         ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", options);
     }
 
@@ -168,7 +180,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      */
     public WorkflowSearchResponse searchRuns(WorkflowSearchRequest request, RequestOptions options)
             throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), runs_search_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), runsSearchEndpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, options);
     }
@@ -193,7 +205,8 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowSearchResponse search(WorkflowSearchRequest request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), workflows_search_endpoint);
+        final String endpoint = getWorkflowEndpoint() + workflowsSearchEndpoint;
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, options);
     }
@@ -220,7 +233,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public Workflow update(String workflowName, Workflow request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(), workflows_endpoint, workflowName);
+        String url = String.format("%s%s/%s", getBaseUrl(), workflowsEndpoint, workflowName);
         WrappedWorkflow response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WrappedWorkflow.class, options);
         if (response != null) {
