@@ -8,8 +8,6 @@ import com.atlan.model.admin.KeycloakMappingsResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Collections;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Getter;
@@ -114,12 +112,13 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
         return exchange(userMap, ErrorCode.UNABLE_TO_IMPERSONATE, options);
     }
 
-    private String exchange(Map<String, Object> requestMap, ErrorCode onError, RequestOptions options) throws AtlanException {
+    private String exchange(Map<String, Object> requestMap, ErrorCode onError, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), exchangeEndpoint);
         String exchangedToken;
         try {
             AccessTokenResponse clientToken = ApiResource.request(
-                client, ApiResource.RequestMethod.POST, url, requestMap, AccessTokenResponse.class, options);
+                    client, ApiResource.RequestMethod.POST, url, requestMap, AccessTokenResponse.class, options);
             exchangedToken = clientToken.getAccessToken();
         } catch (AtlanException e) {
             throw new PermissionException(onError, e);
@@ -149,7 +148,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
     public KeycloakMappingsResponse getRoleMappings(String userId, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s/role-mappings", getBaseUrl(), usersEndpoint, userId);
         return ApiResource.request(
-            client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
+                client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
     }
 
     @Getter

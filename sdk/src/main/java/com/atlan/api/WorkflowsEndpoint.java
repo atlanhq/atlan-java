@@ -20,7 +20,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.util.Set;
-
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -13,7 +13,6 @@ import com.atlan.model.admin.KeycloakMappingsResponse;
 import com.atlan.model.admin.RoleResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -70,7 +69,8 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
             cache(role.getId(), role.getName(), role.getDescription(), role);
         }
         try {
-            KeycloakMappingsResponse forUser = impersonationEndpoint.getRoleMappings(client.users.getCurrentUser().getId());
+            KeycloakMappingsResponse forUser = impersonationEndpoint.getRoleMappings(
+                    client.users.getCurrentUser().getId());
             if (forUser != null) {
                 List<KeycloakMappingsResponse.KeycloakRole> list = forUser.getRealmMappings();
                 if (list != null) {

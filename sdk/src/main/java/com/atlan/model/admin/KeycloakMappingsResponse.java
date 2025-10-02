@@ -3,9 +3,8 @@
 package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -13,6 +12,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = true)
+@SuppressWarnings({"serial"})
 public class KeycloakMappingsResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
@@ -28,10 +28,15 @@ public class KeycloakMappingsResponse extends ApiResource {
         String description;
         Boolean scopeParamRequired;
         Boolean composite;
-        @JsonIgnore Object composites;
+
+        @JsonIgnore
+        Object composites;
+
         Boolean clientRole;
         String containerId;
-        @JsonIgnore Object attributes;
+
+        @JsonIgnore
+        Object attributes;
     }
 
     @Getter
