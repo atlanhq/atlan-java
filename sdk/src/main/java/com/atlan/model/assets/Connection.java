@@ -540,7 +540,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -631,7 +631,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -679,7 +679,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
@@ -714,7 +714,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForSid(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
