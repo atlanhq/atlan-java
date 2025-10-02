@@ -41,7 +41,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
         super(client);
     }
 
-    private String getWorkflowEndpoint() {
+    private String getWorkflowEndpoint() throws AtlanException {
         Set<String> roles = client.getRoleCache().getRolesForCurrentUser();
         if (roles.contains("$admin") || roles.contains("$api-token-default-access")) {
             return workflowsEndpoint;

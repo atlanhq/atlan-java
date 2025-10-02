@@ -69,6 +69,7 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
             cache(role.getId(), role.getName(), role.getDescription(), role);
         }
         try {
+            rolesForUser.clear();
             KeycloakMappingsResponse forUser = impersonationEndpoint.getRoleMappings(
                     client.users.getCurrentUser().getId());
             if (forUser != null) {
@@ -88,11 +89,12 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
      * Retrieve the set of roles to which the current user belongs.
      *
      * @return internal IDs of all the roles of the current user
+     * @throws AtlanException on any cache refresh issues, if the cache needs to be refreshed
      */
-    public Set<String> getRolesForCurrentUser() {
+    public Set<String> getRolesForCurrentUser() throws AtlanException {
+        refreshIfNeeded();
         lock.readLock().lock();
         try {
-            // TODO: validate whether this should be keys or names...
             return new HashSet<>(rolesForUser.values());
         } finally {
             lock.readLock().unlock();

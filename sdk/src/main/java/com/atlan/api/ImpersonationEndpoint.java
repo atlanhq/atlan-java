@@ -18,22 +18,14 @@ import lombok.extern.jackson.Jacksonized;
  * Note: this will only work when run as part of Atlan's packaged workflow ecosystem
  * (running in the cluster back-end).
  */
-public class ImpersonationEndpoint extends AbstractEndpoint {
+public class ImpersonationEndpoint extends KeycloakEndpoint {
 
-    private static final String SERVICE = "http://keycloak-http.keycloak.svc.cluster.local";
-    private static final String endpoint = "/auth/realms/default";
+    private static final String endpoint = "/realms/default";
     private static final String exchangeEndpoint = endpoint + "/protocol/openid-connect/token";
     private static final String usersEndpoint = endpoint + "/users";
 
     public ImpersonationEndpoint(AtlanClient client) {
         super(client);
-    }
-
-    protected String getBaseUrl() throws ApiConnectionException {
-        if (!client.isInternal()) {
-            throw new ApiConnectionException(ErrorCode.INTERNAL_ONLY);
-        }
-        return SERVICE;
     }
 
     /**
@@ -146,7 +138,7 @@ public class ImpersonationEndpoint extends AbstractEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public KeycloakMappingsResponse getRoleMappings(String userId, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(), usersEndpoint, userId);
+        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(true), usersEndpoint, userId);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
     }
