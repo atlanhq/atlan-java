@@ -37,6 +37,9 @@ public interface IDatabase {
 
     public static final String TYPE_NAME = "Database";
 
+    /** Workspace containing the database. */
+    RelationField FABRIC_WORKSPACE = new RelationField("fabricWorkspace");
+
     /** Number of schemas in this database. */
     NumericField SCHEMA_COUNT = new NumericField("schemaCount", "schemaCount");
 
@@ -382,6 +385,12 @@ public interface IDatabase {
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
 
+    /** Name of the space that contains this asset. */
+    String getAssetSpaceName();
+
+    /** Unique name of the space that contains this asset. */
+    String getAssetSpaceQualifiedName();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -462,6 +471,9 @@ public interface IDatabase {
 
     /** Rules where this dataset is referenced. */
     SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+
+    /** Workspace containing the database. */
+    IFabricWorkspace getFabricWorkspace();
 
     /** TBC */
     SortedSet<IFile> getFiles();

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FlowDatasetOperationTest {
 
-    private static final FlowDatasetOperation full = FlowDatasetOperation._internal()
+    private final FlowDatasetOperation full = FlowDatasetOperation._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -71,6 +71,8 @@ public class FlowDatasetOperationTest {
             .code("String0")
             .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fabricActivity(FabricActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fabricActivity(FabricActivity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowOrchestratedBy(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -243,6 +245,8 @@ public class FlowDatasetOperationTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -501,55 +505,31 @@ public class FlowDatasetOperationTest {
             .flowReusableUnit(FlowReusableUnit.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static FlowDatasetOperation frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"FlowDatasetOperation.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"FlowDatasetOperation.serialize"},
-            dependsOnGroups = {"FlowDatasetOperation.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFlowDatasetOperation() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of FlowDatasetOperation,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting FlowDatasetOperation via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of FlowDatasetOperation,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"FlowDatasetOperation.deserialize"},
-            dependsOnGroups = {"FlowDatasetOperation.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FlowDatasetOperation.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"FlowDatasetOperation.equivalency"},
-            dependsOnGroups = {"FlowDatasetOperation.serialize", "FlowDatasetOperation.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final FlowDatasetOperation frodo = MockAtlanTenant.client.readValue(serialized, FlowDatasetOperation.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of FlowDatasetOperation,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"FlowDatasetOperation.equivalency"},
-            dependsOnGroups = {"FlowDatasetOperation.serialize", "FlowDatasetOperation.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -85,6 +85,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** Individual Fabric activities contained in the process. */
+    @Attribute
+    @Singular
+    SortedSet<IFabricActivity> fabricActivities;
+
     /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;

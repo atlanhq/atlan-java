@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DatabricksUnityCatalogTagTest {
 
-    private static final DatabricksUnityCatalogTag full = DatabricksUnityCatalogTag._internal()
+    private final DatabricksUnityCatalogTag full = DatabricksUnityCatalogTag._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -264,6 +264,8 @@ public class DatabricksUnityCatalogTagTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -521,55 +523,33 @@ public class DatabricksUnityCatalogTagTest {
             .viewerUser("String1")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DatabricksUnityCatalogTag frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DatabricksUnityCatalogTag.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DatabricksUnityCatalogTag.serialize"},
-            dependsOnGroups = {"DatabricksUnityCatalogTag.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDatabricksUnityCatalogTag() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DatabricksUnityCatalogTag,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DatabricksUnityCatalogTag via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DatabricksUnityCatalogTag,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DatabricksUnityCatalogTag.deserialize"},
-            dependsOnGroups = {"DatabricksUnityCatalogTag.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DatabricksUnityCatalogTag.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DatabricksUnityCatalogTag.equivalency"},
-            dependsOnGroups = {"DatabricksUnityCatalogTag.serialize", "DatabricksUnityCatalogTag.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DatabricksUnityCatalogTag frodo =
+                MockAtlanTenant.client.readValue(serialized, DatabricksUnityCatalogTag.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of DatabricksUnityCatalogTag,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DatabricksUnityCatalogTag.equivalency"},
-            dependsOnGroups = {"DatabricksUnityCatalogTag.serialize", "DatabricksUnityCatalogTag.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

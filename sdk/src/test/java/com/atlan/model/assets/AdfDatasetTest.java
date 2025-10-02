@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AdfDatasetTest {
 
-    private static final AdfDataset full = AdfDataset._internal()
+    private final AdfDataset full = AdfDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -221,6 +221,8 @@ public class AdfDatasetTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -497,55 +499,31 @@ public class AdfDatasetTest {
             .adfPipeline(AdfPipeline.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AdfDataset frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AdfDataset.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AdfDataset.serialize"},
-            dependsOnGroups = {"AdfDataset.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAdfDataset() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AdfDataset,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AdfDataset via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AdfDataset,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AdfDataset.deserialize"},
-            dependsOnGroups = {"AdfDataset.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AdfDataset.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AdfDataset.equivalency"},
-            dependsOnGroups = {"AdfDataset.serialize", "AdfDataset.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AdfDataset frodo = MockAtlanTenant.client.readValue(serialized, AdfDataset.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AdfDataset,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AdfDataset.equivalency"},
-            dependsOnGroups = {"AdfDataset.serialize", "AdfDataset.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ThoughtspotColumnTest {
 
-    private static final ThoughtspotColumn full = ThoughtspotColumn._internal()
+    private final ThoughtspotColumn full = ThoughtspotColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -223,6 +223,8 @@ public class ThoughtspotColumnTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -488,55 +490,31 @@ public class ThoughtspotColumnTest {
             .thoughtspotWorksheetQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static ThoughtspotColumn frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"ThoughtspotColumn.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"ThoughtspotColumn.serialize"},
-            dependsOnGroups = {"ThoughtspotColumn.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleThoughtspotColumn() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of ThoughtspotColumn,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting ThoughtspotColumn via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of ThoughtspotColumn,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"ThoughtspotColumn.deserialize"},
-            dependsOnGroups = {"ThoughtspotColumn.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, ThoughtspotColumn.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"ThoughtspotColumn.equivalency"},
-            dependsOnGroups = {"ThoughtspotColumn.serialize", "ThoughtspotColumn.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final ThoughtspotColumn frodo = MockAtlanTenant.client.readValue(serialized, ThoughtspotColumn.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ThoughtspotColumn,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"ThoughtspotColumn.equivalency"},
-            dependsOnGroups = {"ThoughtspotColumn.serialize", "ThoughtspotColumn.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

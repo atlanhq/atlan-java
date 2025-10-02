@@ -567,6 +567,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetSourceReadme;
 
+    /** Name of the space that contains this asset. */
+    @Attribute
+    String assetSpaceName;
+
+    /** Unique name of the space that contains this asset. */
+    @Attribute
+    String assetSpaceQualifiedName;
+
     /** List of tags attached to this asset. */
     @Attribute
     @Singular

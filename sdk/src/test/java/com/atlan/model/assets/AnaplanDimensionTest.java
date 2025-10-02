@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AnaplanDimensionTest {
 
-    private static final AnaplanDimension full = AnaplanDimension._internal()
+    private final AnaplanDimension full = AnaplanDimension._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -226,6 +226,8 @@ public class AnaplanDimensionTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -492,55 +494,31 @@ public class AnaplanDimensionTest {
             .anaplanRowView(AnaplanView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AnaplanDimension frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AnaplanDimension.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AnaplanDimension.serialize"},
-            dependsOnGroups = {"AnaplanDimension.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAnaplanDimension() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AnaplanDimension,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AnaplanDimension via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AnaplanDimension,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AnaplanDimension.deserialize"},
-            dependsOnGroups = {"AnaplanDimension.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AnaplanDimension.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AnaplanDimension.equivalency"},
-            dependsOnGroups = {"AnaplanDimension.serialize", "AnaplanDimension.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AnaplanDimension frodo = MockAtlanTenant.client.readValue(serialized, AnaplanDimension.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AnaplanDimension,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AnaplanDimension.equivalency"},
-            dependsOnGroups = {"AnaplanDimension.serialize", "AnaplanDimension.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

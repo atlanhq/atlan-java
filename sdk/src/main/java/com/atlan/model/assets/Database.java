@@ -84,6 +84,10 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
+    /** Workspace containing the database. */
+    @Attribute
+    IFabricWorkspace fabricWorkspace;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

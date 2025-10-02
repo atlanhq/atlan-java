@@ -504,7 +504,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     public static ConnectionBuilder<?, ?> creator(AtlanClient client, String name, AtlanConnectorType connectorType)
             throws AtlanException {
         return creator(
-                client, name, connectorType, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+                client, name, connectorType, List.of(client.getRoleCache().getIdForSid("$admin")), null, null);
     }
 
     /**
@@ -540,7 +540,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -591,7 +591,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 name,
                 connectorName,
                 category,
-                List.of(client.getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForSid("$admin")),
                 null,
                 null);
     }
@@ -631,7 +631,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -679,7 +679,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
@@ -714,7 +714,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {

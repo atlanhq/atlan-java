@@ -107,6 +107,10 @@ public class CosmosMongoDBDatabase extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
+    /** Workspace containing the database. */
+    @Attribute
+    IFabricWorkspace fabricWorkspace;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

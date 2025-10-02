@@ -40,7 +40,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
         return creator(
                 client,
                 connectionName,
-                List.of(client.getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForSid("$admin")),
                 null,
                 null,
                 true,

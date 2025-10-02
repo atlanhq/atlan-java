@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class BIProcessTest {
 
-    private static final BIProcess full = BIProcess._internal()
+    private final BIProcess full = BIProcess._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -71,6 +71,8 @@ public class BIProcessTest {
             .code("String0")
             .columnProcess(ColumnProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .columnProcess(ColumnProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fabricActivity(FabricActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fabricActivity(FabricActivity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .fivetranConnector(FivetranConnector.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .flowOrchestratedBy(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .input(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -228,6 +230,8 @@ public class BIProcessTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -485,55 +489,31 @@ public class BIProcessTest {
             .viewerUser("String1")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static BIProcess frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"BIProcess.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"BIProcess.serialize"},
-            dependsOnGroups = {"BIProcess.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleBIProcess() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of BIProcess,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting BIProcess via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of BIProcess,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"BIProcess.deserialize"},
-            dependsOnGroups = {"BIProcess.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, BIProcess.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"BIProcess.equivalency"},
-            dependsOnGroups = {"BIProcess.serialize", "BIProcess.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final BIProcess frodo = MockAtlanTenant.client.readValue(serialized, BIProcess.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of BIProcess,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"BIProcess.equivalency"},
-            dependsOnGroups = {"BIProcess.serialize", "BIProcess.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

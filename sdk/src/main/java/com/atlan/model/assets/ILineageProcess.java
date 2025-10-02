@@ -63,6 +63,9 @@ public interface ILineageProcess {
     RelationField COLUMN_PROCESSES = new RelationField("columnProcesses");
 
     /** TBC */
+    RelationField FABRIC_ACTIVITIES = new RelationField("fabricActivities");
+
+    /** TBC */
     RelationField FIVETRAN_CONNECTOR = new RelationField("fivetranConnector");
 
     /** TBC */
@@ -445,6 +448,12 @@ public interface ILineageProcess {
     String getAssetSourceReadme();
 
     /** TBC */
+    String getAssetSpaceName();
+
+    /** TBC */
+    String getAssetSpaceQualifiedName();
+
+    /** TBC */
     SortedSet<String> getAssetTags();
 
     /** TBC */
@@ -512,6 +521,9 @@ public interface ILineageProcess {
 
     /** TBC */
     SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+
+    /** TBC */
+    SortedSet<IFabricActivity> getFabricActivities();
 
     /** TBC */
     SortedSet<IFile> getFiles();

@@ -444,6 +444,12 @@ public interface IAsset {
     KeywordTextField ASSET_SOURCE_README =
             new KeywordTextField("assetSourceReadme", "assetSourceReadme.keyword", "assetSourceReadme");
 
+    /** Name of the space that contains this asset. */
+    KeywordField ASSET_SPACE_NAME = new KeywordField("assetSpaceName", "assetSpaceName");
+
+    /** Unique name of the space that contains this asset. */
+    KeywordField ASSET_SPACE_QUALIFIED_NAME = new KeywordField("assetSpaceQualifiedName", "assetSpaceQualifiedName");
+
     /** List of tags attached to this asset. */
     KeywordTextField ASSET_TAGS = new KeywordTextField("assetTags", "assetTags", "assetTags.text");
 
@@ -1044,6 +1050,12 @@ public interface IAsset {
 
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
+
+    /** Name of the space that contains this asset. */
+    String getAssetSpaceName();
+
+    /** Unique name of the space that contains this asset. */
+    String getAssetSpaceQualifiedName();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

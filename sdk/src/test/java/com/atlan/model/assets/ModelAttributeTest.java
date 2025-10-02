@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class ModelAttributeTest {
 
-    private static final ModelAttribute full = ModelAttribute._internal()
+    private final ModelAttribute full = ModelAttribute._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -233,6 +233,8 @@ public class ModelAttributeTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -517,55 +519,31 @@ public class ModelAttributeTest {
             .modelAttributeScale(123456789L)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static ModelAttribute frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"ModelAttribute.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"ModelAttribute.serialize"},
-            dependsOnGroups = {"ModelAttribute.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleModelAttribute() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of ModelAttribute,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting ModelAttribute via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of ModelAttribute,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"ModelAttribute.deserialize"},
-            dependsOnGroups = {"ModelAttribute.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, ModelAttribute.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"ModelAttribute.equivalency"},
-            dependsOnGroups = {"ModelAttribute.serialize", "ModelAttribute.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final ModelAttribute frodo = MockAtlanTenant.client.readValue(serialized, ModelAttribute.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ModelAttribute,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"ModelAttribute.equivalency"},
-            dependsOnGroups = {"ModelAttribute.serialize", "ModelAttribute.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

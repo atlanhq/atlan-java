@@ -43,7 +43,7 @@ public class ConnectionTest extends AtlanLiveTest {
      */
     public static Connection createConnection(AtlanClient client, String prefix, AtlanConnectorType type)
             throws AtlanException, InterruptedException {
-        String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
+        String adminRoleGuid = client.getRoleCache().getIdForSid("$admin");
         Connection connection = Connection.creator(client, prefix, type, List.of(adminRoleGuid), null, null)
                 .build();
         AssetMutationResponse response = null;
@@ -92,7 +92,7 @@ public class ConnectionTest extends AtlanLiveTest {
     public static Connection createCustomConnection(
             AtlanClient client, String prefix, String connectorName, AtlanConnectionCategory category)
             throws AtlanException, InterruptedException {
-        String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
+        String adminRoleGuid = client.getRoleCache().getIdForSid("$admin");
         Connection connection = Connection.creator(
                         client, prefix, connectorName, category, List.of(adminRoleGuid), List.of(), List.of())
                 .build();
@@ -197,7 +197,7 @@ public class ConnectionTest extends AtlanLiveTest {
 
     @Test(groups = {"string.connection"})
     void customConnection() throws AtlanException {
-        String adminRoleGuid = client.getRoleCache().getIdForName("$admin");
+        String adminRoleGuid = client.getRoleCache().getIdForSid("$admin");
         Connection connection = Connection.creator(
                         client,
                         PREFIX + "-CUSTOM",

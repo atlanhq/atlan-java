@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SisenseWidgetTest {
 
-    private static final SisenseWidget full = SisenseWidget._internal()
+    private final SisenseWidget full = SisenseWidget._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -219,6 +219,8 @@ public class SisenseWidgetTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -486,55 +488,31 @@ public class SisenseWidgetTest {
             .sisenseWidgetSubType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SisenseWidget frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SisenseWidget.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SisenseWidget.serialize"},
-            dependsOnGroups = {"SisenseWidget.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSisenseWidget() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SisenseWidget,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SisenseWidget via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SisenseWidget,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SisenseWidget.deserialize"},
-            dependsOnGroups = {"SisenseWidget.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SisenseWidget.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SisenseWidget.equivalency"},
-            dependsOnGroups = {"SisenseWidget.serialize", "SisenseWidget.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SisenseWidget frodo = MockAtlanTenant.client.readValue(serialized, SisenseWidget.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SisenseWidget,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SisenseWidget.equivalency"},
-            dependsOnGroups = {"SisenseWidget.serialize", "SisenseWidget.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

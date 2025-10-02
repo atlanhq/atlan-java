@@ -91,6 +91,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IFabricActivity> fabricActivities;
+
+    /** TBC */
+    @Attribute
     IFivetranConnector fivetranConnector;
 
     /** TBC */

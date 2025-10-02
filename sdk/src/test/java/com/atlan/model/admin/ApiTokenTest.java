@@ -4,13 +4,15 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.mock.MockTenant;
 import java.io.IOException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class ApiTokenTest {
 
-    private static final ApiToken full = ApiToken.builder()
+    private final ApiToken full = ApiToken.builder()
             .id("id")
             .clientId("clientId")
             .displayName("displayName")
@@ -29,41 +31,31 @@ public class ApiTokenTest {
                     .build())
             .build();
 
-    private static ApiToken frodo;
-    private static String serialized;
-
-    @Test(groups = {"ApiToken.serialize"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
-        assertNotNull(serialized);
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
     }
 
-    @Test(
-            groups = {"ApiToken.deserialize"},
-            dependsOnGroups = {"ApiToken.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, ApiToken.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"ApiToken.equivalency"},
-            dependsOnGroups = {"ApiToken.serialize", "ApiToken.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+    @Test
+    void serdeCycleApiToken() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of ApiToken,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting ApiToken via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of ApiToken,");
+        assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
+        // Deserialization
+        final ApiToken frodo = MockTenant.client.readValue(serialized, ApiToken.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ApiToken,");
+        // Serialization equivalency
         String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"ApiToken.equivalency"},
-            dependsOnGroups = {"ApiToken.serialize", "ApiToken.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialization equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

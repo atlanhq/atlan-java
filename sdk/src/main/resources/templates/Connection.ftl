@@ -61,7 +61,7 @@
      * @throws AtlanException on any error related to the request, such as an inability to retrieve the existing admins in the system
      */
     public static ConnectionBuilder<?, ?> creator(AtlanClient client, String name, AtlanConnectorType connectorType) throws AtlanException {
-        return creator(client, name, connectorType, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+        return creator(client, name, connectorType, List.of(client.getRoleCache().getIdForSid("$admin")), null, null);
     }
 
     /**
@@ -97,7 +97,7 @@
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -147,7 +147,7 @@
             AtlanConnectionCategory category)
             throws AtlanException {
         return creator(
-                client, name, connectorName, category, List.of(client.getRoleCache().getIdForName("$admin")), null, null);
+                client, name, connectorName, category, List.of(client.getRoleCache().getIdForSid("$admin")), null, null);
     }
 
     /**
@@ -185,7 +185,7 @@
                 .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -233,7 +233,7 @@
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
@@ -269,7 +269,7 @@
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                client.getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForSid(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {

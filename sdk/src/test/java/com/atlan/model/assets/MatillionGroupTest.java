@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MatillionGroupTest {
 
-    private static final MatillionGroup full = MatillionGroup._internal()
+    private final MatillionGroup full = MatillionGroup._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -220,6 +220,8 @@ public class MatillionGroupTest {
             .assetSodaLastSyncRunAt(123456789L)
             .assetSodaSourceURL("String0")
             .assetSourceReadme("String0")
+            .assetSpaceName("String0")
+            .assetSpaceQualifiedName("String0")
             .assetTag("String0")
             .assetTag("String1")
             .assetThemeHex("String0")
@@ -480,55 +482,31 @@ public class MatillionGroupTest {
             .matillionProject(MatillionProject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static MatillionGroup frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"MatillionGroup.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"MatillionGroup.serialize"},
-            dependsOnGroups = {"MatillionGroup.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleMatillionGroup() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of MatillionGroup,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting MatillionGroup via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of MatillionGroup,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"MatillionGroup.deserialize"},
-            dependsOnGroups = {"MatillionGroup.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, MatillionGroup.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"MatillionGroup.equivalency"},
-            dependsOnGroups = {"MatillionGroup.serialize", "MatillionGroup.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final MatillionGroup frodo = MockAtlanTenant.client.readValue(serialized, MatillionGroup.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of MatillionGroup,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"MatillionGroup.equivalency"},
-            dependsOnGroups = {"MatillionGroup.serialize", "MatillionGroup.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

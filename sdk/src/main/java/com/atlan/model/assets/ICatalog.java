@@ -306,6 +306,12 @@ public interface ICatalog {
             case DatabricksAIModelVersion.TYPE_NAME:
                 ref = DatabricksAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
+            case DatabricksExternalLocation.TYPE_NAME:
+                ref = DatabricksExternalLocation.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksExternalLocationPath.TYPE_NAME:
+                ref = DatabricksExternalLocationPath.refByQualifiedName(qualifiedName);
+                break;
             case DatabricksNotebook.TYPE_NAME:
                 ref = DatabricksNotebook.refByQualifiedName(qualifiedName);
                 break;
@@ -369,6 +375,24 @@ public interface ICatalog {
             case DomoDatasetColumn.TYPE_NAME:
                 ref = DomoDatasetColumn.refByQualifiedName(qualifiedName);
                 break;
+            case DremioColumn.TYPE_NAME:
+                ref = DremioColumn.refByQualifiedName(qualifiedName);
+                break;
+            case DremioFolder.TYPE_NAME:
+                ref = DremioFolder.refByQualifiedName(qualifiedName);
+                break;
+            case DremioPhysicalDataset.TYPE_NAME:
+                ref = DremioPhysicalDataset.refByQualifiedName(qualifiedName);
+                break;
+            case DremioSource.TYPE_NAME:
+                ref = DremioSource.refByQualifiedName(qualifiedName);
+                break;
+            case DremioSpace.TYPE_NAME:
+                ref = DremioSpace.refByQualifiedName(qualifiedName);
+                break;
+            case DremioVirtualDataset.TYPE_NAME:
+                ref = DremioVirtualDataset.refByQualifiedName(qualifiedName);
+                break;
             case DynamoDBGlobalSecondaryIndex.TYPE_NAME:
                 ref = DynamoDBGlobalSecondaryIndex.refByQualifiedName(qualifiedName);
                 break;
@@ -377,6 +401,42 @@ public interface ICatalog {
                 break;
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
+                break;
+            case FabricActivity.TYPE_NAME:
+                ref = FabricActivity.refByQualifiedName(qualifiedName);
+                break;
+            case FabricDashboard.TYPE_NAME:
+                ref = FabricDashboard.refByQualifiedName(qualifiedName);
+                break;
+            case FabricDataPipeline.TYPE_NAME:
+                ref = FabricDataPipeline.refByQualifiedName(qualifiedName);
+                break;
+            case FabricDataflow.TYPE_NAME:
+                ref = FabricDataflow.refByQualifiedName(qualifiedName);
+                break;
+            case FabricDataflowEntityColumn.TYPE_NAME:
+                ref = FabricDataflowEntityColumn.refByQualifiedName(qualifiedName);
+                break;
+            case FabricPage.TYPE_NAME:
+                ref = FabricPage.refByQualifiedName(qualifiedName);
+                break;
+            case FabricReport.TYPE_NAME:
+                ref = FabricReport.refByQualifiedName(qualifiedName);
+                break;
+            case FabricSemanticModel.TYPE_NAME:
+                ref = FabricSemanticModel.refByQualifiedName(qualifiedName);
+                break;
+            case FabricSemanticModelTable.TYPE_NAME:
+                ref = FabricSemanticModelTable.refByQualifiedName(qualifiedName);
+                break;
+            case FabricSemanticModelTableColumn.TYPE_NAME:
+                ref = FabricSemanticModelTableColumn.refByQualifiedName(qualifiedName);
+                break;
+            case FabricVisual.TYPE_NAME:
+                ref = FabricVisual.refByQualifiedName(qualifiedName);
+                break;
+            case FabricWorkspace.TYPE_NAME:
+                ref = FabricWorkspace.refByQualifiedName(qualifiedName);
                 break;
             case File.TYPE_NAME:
                 ref = File.refByQualifiedName(qualifiedName);
@@ -1185,6 +1245,12 @@ public interface ICatalog {
 
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
+
+    /** Name of the space that contains this asset. */
+    String getAssetSpaceName();
+
+    /** Unique name of the space that contains this asset. */
+    String getAssetSpaceQualifiedName();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
