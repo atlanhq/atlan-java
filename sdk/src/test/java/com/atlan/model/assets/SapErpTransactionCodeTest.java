@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SapErpTransactionCodeTest {
 
-    private static final SapErpTransactionCode full = SapErpTransactionCode._internal()
+    private final SapErpTransactionCode full = SapErpTransactionCode._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -487,55 +487,31 @@ public class SapErpTransactionCodeTest {
             .sapErpComponent(SapErpComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SapErpTransactionCode frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SapErpTransactionCode.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SapErpTransactionCode.serialize"},
-            dependsOnGroups = {"SapErpTransactionCode.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSapErpTransactionCode() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SapErpTransactionCode,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SapErpTransactionCode via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SapErpTransactionCode,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SapErpTransactionCode.deserialize"},
-            dependsOnGroups = {"SapErpTransactionCode.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SapErpTransactionCode.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SapErpTransactionCode.equivalency"},
-            dependsOnGroups = {"SapErpTransactionCode.serialize", "SapErpTransactionCode.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SapErpTransactionCode frodo = MockAtlanTenant.client.readValue(serialized, SapErpTransactionCode.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SapErpTransactionCode,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SapErpTransactionCode.equivalency"},
-            dependsOnGroups = {"SapErpTransactionCode.serialize", "SapErpTransactionCode.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

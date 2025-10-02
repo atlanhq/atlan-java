@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableTest {
 
-    private static final Table full = Table._internal()
+    private final Table full = Table._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -549,55 +549,29 @@ public class TableTest {
             .tableType(TableType.TEMPORARY)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static Table frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"Table.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleTable() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of Table,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(), full, "Unable to converting Table via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of Table,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, Table.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final Table frodo = MockAtlanTenant.client.readValue(serialized, Table.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of Table,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DataverseEntityTest {
 
-    private static final DataverseEntity full = DataverseEntity._internal()
+    private final DataverseEntity full = DataverseEntity._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -486,55 +486,31 @@ public class DataverseEntityTest {
             .dataverseEntityTableType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DataverseEntity frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DataverseEntity.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DataverseEntity.serialize"},
-            dependsOnGroups = {"DataverseEntity.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDataverseEntity() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DataverseEntity,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DataverseEntity via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DataverseEntity,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DataverseEntity.deserialize"},
-            dependsOnGroups = {"DataverseEntity.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DataverseEntity.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DataverseEntity.equivalency"},
-            dependsOnGroups = {"DataverseEntity.serialize", "DataverseEntity.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DataverseEntity frodo = MockAtlanTenant.client.readValue(serialized, DataverseEntity.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DataverseEntity,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DataverseEntity.equivalency"},
-            dependsOnGroups = {"DataverseEntity.serialize", "DataverseEntity.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

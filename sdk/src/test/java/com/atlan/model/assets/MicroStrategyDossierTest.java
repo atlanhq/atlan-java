@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class MicroStrategyDossierTest {
 
-    private static final MicroStrategyDossier full = MicroStrategyDossier._internal()
+    private final MicroStrategyDossier full = MicroStrategyDossier._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -502,55 +502,31 @@ public class MicroStrategyDossierTest {
                     MicroStrategyVisualization.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static MicroStrategyDossier frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"MicroStrategyDossier.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"MicroStrategyDossier.serialize"},
-            dependsOnGroups = {"MicroStrategyDossier.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleMicroStrategyDossier() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of MicroStrategyDossier,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting MicroStrategyDossier via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of MicroStrategyDossier,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"MicroStrategyDossier.deserialize"},
-            dependsOnGroups = {"MicroStrategyDossier.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, MicroStrategyDossier.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"MicroStrategyDossier.equivalency"},
-            dependsOnGroups = {"MicroStrategyDossier.serialize", "MicroStrategyDossier.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final MicroStrategyDossier frodo = MockAtlanTenant.client.readValue(serialized, MicroStrategyDossier.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of MicroStrategyDossier,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"MicroStrategyDossier.equivalency"},
-            dependsOnGroups = {"MicroStrategyDossier.serialize", "MicroStrategyDossier.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

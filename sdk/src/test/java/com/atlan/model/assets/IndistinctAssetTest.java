@@ -4,17 +4,19 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.mock.MockAtlanTenant;
 import com.atlan.mock.MockTenant;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
 import java.io.IOException;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class IndistinctAssetTest {
 
-    private static final IndistinctAsset full = IndistinctAsset._internal()
+    private final IndistinctAsset full = IndistinctAsset._internal()
             .typeName("typeName")
             .guid("guid")
             .displayText("displayText")
@@ -111,48 +113,31 @@ public class IndistinctAssetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .build();
 
-    private static IndistinctAsset frodo;
-    private static String serialized;
-
-    @Test(groups = {"IndistinctAsset.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
+    @BeforeClass
+    void init() throws InterruptedException {
+        MockAtlanTenant.initializeClient();
     }
 
-    @Test(
-            groups = {"IndistinctAsset.serialize"},
-            dependsOnGroups = {"IndistinctAsset.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockTenant.client);
-        assertNotNull(serialized);
-    }
-
-    @Test(
-            groups = {"IndistinctAsset.deserialize"},
-            dependsOnGroups = {"IndistinctAsset.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockTenant.client.readValue(serialized, IndistinctAsset.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"IndistinctAsset.equivalency"},
-            dependsOnGroups = {"IndistinctAsset.serialize", "IndistinctAsset.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+    @Test
+    void serdeCycleIndistinctAsset() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of IndistinctAsset,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting IndistinctAsset via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of IndistinctAsset,");
+        assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
+        // Deserialization
+        final IndistinctAsset frodo = MockTenant.client.readValue(serialized, IndistinctAsset.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of IndistinctAsset,");
+        // Serialization equivalency
         String backAgain = frodo.toJson(MockTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"IndistinctAsset.equivalency"},
-            dependsOnGroups = {"IndistinctAsset.serialize", "IndistinctAsset.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialization equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

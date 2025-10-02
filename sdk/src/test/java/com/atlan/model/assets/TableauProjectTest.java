@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauProjectTest {
 
-    private static final TableauProject full = TableauProject._internal()
+    private final TableauProject full = TableauProject._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -495,55 +495,31 @@ public class TableauProjectTest {
             .workbook(TableauWorkbook.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static TableauProject frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"TableauProject.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"TableauProject.serialize"},
-            dependsOnGroups = {"TableauProject.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleTableauProject() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of TableauProject,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting TableauProject via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of TableauProject,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"TableauProject.deserialize"},
-            dependsOnGroups = {"TableauProject.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauProject.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"TableauProject.equivalency"},
-            dependsOnGroups = {"TableauProject.serialize", "TableauProject.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final TableauProject frodo = MockAtlanTenant.client.readValue(serialized, TableauProject.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of TableauProject,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"TableauProject.equivalency"},
-            dependsOnGroups = {"TableauProject.serialize", "TableauProject.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

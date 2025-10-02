@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FabricDataPipelineTest {
 
-    private static final FabricDataPipeline full = FabricDataPipeline._internal()
+    private final FabricDataPipeline full = FabricDataPipeline._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -484,55 +484,31 @@ public class FabricDataPipelineTest {
             .fabricWorkspace(FabricWorkspace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static FabricDataPipeline frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"FabricDataPipeline.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"FabricDataPipeline.serialize"},
-            dependsOnGroups = {"FabricDataPipeline.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFabricDataPipeline() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of FabricDataPipeline,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting FabricDataPipeline via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of FabricDataPipeline,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"FabricDataPipeline.deserialize"},
-            dependsOnGroups = {"FabricDataPipeline.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FabricDataPipeline.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"FabricDataPipeline.equivalency"},
-            dependsOnGroups = {"FabricDataPipeline.serialize", "FabricDataPipeline.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final FabricDataPipeline frodo = MockAtlanTenant.client.readValue(serialized, FabricDataPipeline.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of FabricDataPipeline,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"FabricDataPipeline.equivalency"},
-            dependsOnGroups = {"FabricDataPipeline.serialize", "FabricDataPipeline.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

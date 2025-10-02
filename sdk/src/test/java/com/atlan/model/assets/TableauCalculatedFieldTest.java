@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauCalculatedFieldTest {
 
-    private static final TableauCalculatedField full = TableauCalculatedField._internal()
+    private final TableauCalculatedField full = TableauCalculatedField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -497,55 +497,32 @@ public class TableauCalculatedFieldTest {
             .worksheet(TableauWorksheet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static TableauCalculatedField frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"TableauCalculatedField.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"TableauCalculatedField.serialize"},
-            dependsOnGroups = {"TableauCalculatedField.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleTableauCalculatedField() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of TableauCalculatedField,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting TableauCalculatedField via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of TableauCalculatedField,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"TableauCalculatedField.deserialize"},
-            dependsOnGroups = {"TableauCalculatedField.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauCalculatedField.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final TableauCalculatedField frodo = MockAtlanTenant.client.readValue(serialized, TableauCalculatedField.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of TableauCalculatedField,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"TableauCalculatedField.equivalency"},
-            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AtlanCollectionTest {
 
-    private static final AtlanCollection full = AtlanCollection._internal()
+    private final AtlanCollection full = AtlanCollection._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -467,55 +467,31 @@ public class AtlanCollectionTest {
             .iconType(IconType.IMAGE)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AtlanCollection frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AtlanCollection.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AtlanCollection.serialize"},
-            dependsOnGroups = {"AtlanCollection.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAtlanCollection() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AtlanCollection,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AtlanCollection via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AtlanCollection,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AtlanCollection.deserialize"},
-            dependsOnGroups = {"AtlanCollection.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AtlanCollection.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AtlanCollection.equivalency"},
-            dependsOnGroups = {"AtlanCollection.serialize", "AtlanCollection.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AtlanCollection frodo = MockAtlanTenant.client.readValue(serialized, AtlanCollection.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AtlanCollection,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AtlanCollection.equivalency"},
-            dependsOnGroups = {"AtlanCollection.serialize", "AtlanCollection.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

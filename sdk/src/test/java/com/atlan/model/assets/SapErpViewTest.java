@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SapErpViewTest {
 
-    private static final SapErpView full = SapErpView._internal()
+    private final SapErpView full = SapErpView._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -490,55 +490,31 @@ public class SapErpViewTest {
             .sapErpViewType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SapErpView frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SapErpView.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SapErpView.serialize"},
-            dependsOnGroups = {"SapErpView.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSapErpView() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SapErpView,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SapErpView via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SapErpView,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SapErpView.deserialize"},
-            dependsOnGroups = {"SapErpView.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SapErpView.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SapErpView.equivalency"},
-            dependsOnGroups = {"SapErpView.serialize", "SapErpView.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SapErpView frodo = MockAtlanTenant.client.readValue(serialized, SapErpView.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SapErpView,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SapErpView.equivalency"},
-            dependsOnGroups = {"SapErpView.serialize", "SapErpView.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

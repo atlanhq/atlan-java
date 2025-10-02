@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PresetDatasetTest {
 
-    private static final PresetDataset full = PresetDataset._internal()
+    private final PresetDataset full = PresetDataset._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -486,55 +486,31 @@ public class PresetDatasetTest {
             .presetDatasetType("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static PresetDataset frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"PresetDataset.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"PresetDataset.serialize"},
-            dependsOnGroups = {"PresetDataset.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCyclePresetDataset() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of PresetDataset,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting PresetDataset via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of PresetDataset,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"PresetDataset.deserialize"},
-            dependsOnGroups = {"PresetDataset.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, PresetDataset.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"PresetDataset.equivalency"},
-            dependsOnGroups = {"PresetDataset.serialize", "PresetDataset.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final PresetDataset frodo = MockAtlanTenant.client.readValue(serialized, PresetDataset.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of PresetDataset,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"PresetDataset.equivalency"},
-            dependsOnGroups = {"PresetDataset.serialize", "PresetDataset.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

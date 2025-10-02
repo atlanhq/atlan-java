@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SalesforceReportTest {
 
-    private static final SalesforceReport full = SalesforceReport._internal()
+    private final SalesforceReport full = SalesforceReport._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -488,55 +488,31 @@ public class SalesforceReportTest {
             .sourceId("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SalesforceReport frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SalesforceReport.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SalesforceReport.serialize"},
-            dependsOnGroups = {"SalesforceReport.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSalesforceReport() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SalesforceReport,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SalesforceReport via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SalesforceReport,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SalesforceReport.deserialize"},
-            dependsOnGroups = {"SalesforceReport.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SalesforceReport.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SalesforceReport.equivalency"},
-            dependsOnGroups = {"SalesforceReport.serialize", "SalesforceReport.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SalesforceReport frodo = MockAtlanTenant.client.readValue(serialized, SalesforceReport.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SalesforceReport,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SalesforceReport.equivalency"},
-            dependsOnGroups = {"SalesforceReport.serialize", "SalesforceReport.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

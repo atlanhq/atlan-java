@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class AuthPolicyTest {
 
-    private static final AuthPolicy full = AuthPolicy._internal()
+    private final AuthPolicy full = AuthPolicy._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -501,55 +501,31 @@ public class AuthPolicyTest {
                     .build())
             .build();
 
-    private static final int hash = full.hashCode();
-    private static AuthPolicy frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"AuthPolicy.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"AuthPolicy.serialize"},
-            dependsOnGroups = {"AuthPolicy.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleAuthPolicy() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of AuthPolicy,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting AuthPolicy via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of AuthPolicy,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"AuthPolicy.deserialize"},
-            dependsOnGroups = {"AuthPolicy.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, AuthPolicy.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"AuthPolicy.equivalency"},
-            dependsOnGroups = {"AuthPolicy.serialize", "AuthPolicy.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final AuthPolicy frodo = MockAtlanTenant.client.readValue(serialized, AuthPolicy.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AuthPolicy,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"AuthPolicy.equivalency"},
-            dependsOnGroups = {"AuthPolicy.serialize", "AuthPolicy.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

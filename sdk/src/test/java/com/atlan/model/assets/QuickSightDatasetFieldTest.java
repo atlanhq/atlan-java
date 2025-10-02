@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class QuickSightDatasetFieldTest {
 
-    private static final QuickSightDatasetField full = QuickSightDatasetField._internal()
+    private final QuickSightDatasetField full = QuickSightDatasetField._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -484,55 +484,32 @@ public class QuickSightDatasetFieldTest {
             .quickSightDatasetQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static QuickSightDatasetField frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"QuickSightDatasetField.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"QuickSightDatasetField.serialize"},
-            dependsOnGroups = {"QuickSightDatasetField.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleQuickSightDatasetField() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of QuickSightDatasetField,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting QuickSightDatasetField via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of QuickSightDatasetField,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"QuickSightDatasetField.deserialize"},
-            dependsOnGroups = {"QuickSightDatasetField.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, QuickSightDatasetField.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"QuickSightDatasetField.equivalency"},
-            dependsOnGroups = {"QuickSightDatasetField.serialize", "QuickSightDatasetField.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final QuickSightDatasetField frodo = MockAtlanTenant.client.readValue(serialized, QuickSightDatasetField.class);
+        assertNotNull(
+                frodo, "Unable to reverse-read serialized value back into an instance of QuickSightDatasetField,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"QuickSightDatasetField.equivalency"},
-            dependsOnGroups = {"QuickSightDatasetField.serialize", "QuickSightDatasetField.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

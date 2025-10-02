@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class FabricWorkspaceTest {
 
-    private static final FabricWorkspace full = FabricWorkspace._internal()
+    private final FabricWorkspace full = FabricWorkspace._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -495,55 +495,31 @@ public class FabricWorkspaceTest {
                     FabricSemanticModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
-    private static final int hash = full.hashCode();
-    private static FabricWorkspace frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"FabricWorkspace.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"FabricWorkspace.serialize"},
-            dependsOnGroups = {"FabricWorkspace.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleFabricWorkspace() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of FabricWorkspace,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting FabricWorkspace via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of FabricWorkspace,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"FabricWorkspace.deserialize"},
-            dependsOnGroups = {"FabricWorkspace.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, FabricWorkspace.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"FabricWorkspace.equivalency"},
-            dependsOnGroups = {"FabricWorkspace.serialize", "FabricWorkspace.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final FabricWorkspace frodo = MockAtlanTenant.client.readValue(serialized, FabricWorkspace.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of FabricWorkspace,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"FabricWorkspace.equivalency"},
-            dependsOnGroups = {"FabricWorkspace.serialize", "FabricWorkspace.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

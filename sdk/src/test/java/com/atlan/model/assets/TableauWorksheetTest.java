@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class TableauWorksheetTest {
 
-    private static final TableauWorksheet full = TableauWorksheet._internal()
+    private final TableauWorksheet full = TableauWorksheet._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -498,55 +498,31 @@ public class TableauWorksheetTest {
             .workbookQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static TableauWorksheet frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"TableauWorksheet.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"TableauWorksheet.serialize"},
-            dependsOnGroups = {"TableauWorksheet.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleTableauWorksheet() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of TableauWorksheet,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting TableauWorksheet via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of TableauWorksheet,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"TableauWorksheet.deserialize"},
-            dependsOnGroups = {"TableauWorksheet.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, TableauWorksheet.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"TableauWorksheet.equivalency"},
-            dependsOnGroups = {"TableauWorksheet.serialize", "TableauWorksheet.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final TableauWorksheet frodo = MockAtlanTenant.client.readValue(serialized, TableauWorksheet.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of TableauWorksheet,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"TableauWorksheet.equivalency"},
-            dependsOnGroups = {"TableauWorksheet.serialize", "TableauWorksheet.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

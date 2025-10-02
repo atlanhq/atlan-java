@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class BusinessPolicyLogTest {
 
-    private static final BusinessPolicyLog full = BusinessPolicyLog._internal()
+    private final BusinessPolicyLog full = BusinessPolicyLog._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -467,55 +467,31 @@ public class BusinessPolicyLogTest {
             .nonGovernedAssetsCount(123456789L)
             .build();
 
-    private static final int hash = full.hashCode();
-    private static BusinessPolicyLog frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"BusinessPolicyLog.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"BusinessPolicyLog.serialize"},
-            dependsOnGroups = {"BusinessPolicyLog.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleBusinessPolicyLog() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of BusinessPolicyLog,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting BusinessPolicyLog via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of BusinessPolicyLog,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"BusinessPolicyLog.deserialize"},
-            dependsOnGroups = {"BusinessPolicyLog.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, BusinessPolicyLog.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"BusinessPolicyLog.equivalency"},
-            dependsOnGroups = {"BusinessPolicyLog.serialize", "BusinessPolicyLog.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final BusinessPolicyLog frodo = MockAtlanTenant.client.readValue(serialized, BusinessPolicyLog.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of BusinessPolicyLog,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"BusinessPolicyLog.equivalency"},
-            dependsOnGroups = {"BusinessPolicyLog.serialize", "BusinessPolicyLog.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

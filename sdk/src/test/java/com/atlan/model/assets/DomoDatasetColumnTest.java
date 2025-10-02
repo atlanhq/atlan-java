@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class DomoDatasetColumnTest {
 
-    private static final DomoDatasetColumn full = DomoDatasetColumn._internal()
+    private final DomoDatasetColumn full = DomoDatasetColumn._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -483,55 +483,31 @@ public class DomoDatasetColumnTest {
             .domoDatasetQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static DomoDatasetColumn frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"DomoDatasetColumn.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"DomoDatasetColumn.serialize"},
-            dependsOnGroups = {"DomoDatasetColumn.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleDomoDatasetColumn() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DomoDatasetColumn,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting DomoDatasetColumn via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of DomoDatasetColumn,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"DomoDatasetColumn.deserialize"},
-            dependsOnGroups = {"DomoDatasetColumn.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, DomoDatasetColumn.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"DomoDatasetColumn.equivalency"},
-            dependsOnGroups = {"DomoDatasetColumn.serialize", "DomoDatasetColumn.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final DomoDatasetColumn frodo = MockAtlanTenant.client.readValue(serialized, DomoDatasetColumn.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DomoDatasetColumn,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"DomoDatasetColumn.equivalency"},
-            dependsOnGroups = {"DomoDatasetColumn.serialize", "DomoDatasetColumn.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

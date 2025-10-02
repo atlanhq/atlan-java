@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class PowerBITileTest {
 
-    private static final PowerBITile full = PowerBITile._internal()
+    private final PowerBITile full = PowerBITile._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -487,55 +487,31 @@ public class PowerBITileTest {
             .workspaceQualifiedName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static PowerBITile frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"PowerBITile.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"PowerBITile.serialize"},
-            dependsOnGroups = {"PowerBITile.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCyclePowerBITile() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of PowerBITile,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting PowerBITile via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of PowerBITile,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"PowerBITile.deserialize"},
-            dependsOnGroups = {"PowerBITile.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, PowerBITile.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"PowerBITile.equivalency"},
-            dependsOnGroups = {"PowerBITile.serialize", "PowerBITile.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final PowerBITile frodo = MockAtlanTenant.client.readValue(serialized, PowerBITile.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of PowerBITile,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"PowerBITile.equivalency"},
-            dependsOnGroups = {"PowerBITile.serialize", "PowerBITile.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

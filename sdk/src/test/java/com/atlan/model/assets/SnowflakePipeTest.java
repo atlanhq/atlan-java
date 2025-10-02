@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 @SuppressWarnings("deprecation")
 public class SnowflakePipeTest {
 
-    private static final SnowflakePipe full = SnowflakePipe._internal()
+    private final SnowflakePipe full = SnowflakePipe._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -513,55 +513,31 @@ public class SnowflakePipeTest {
             .snowflakePipeNotificationChannelName("String0")
             .build();
 
-    private static final int hash = full.hashCode();
-    private static SnowflakePipe frodo;
-    private static String serialized;
-
     @BeforeClass
     void init() throws InterruptedException {
         MockAtlanTenant.initializeClient();
     }
 
-    @Test(groups = {"SnowflakePipe.builderEquivalency"})
-    void builderEquivalency() {
-        assertEquals(full.toBuilder().build(), full);
-    }
-
-    @Test(
-            groups = {"SnowflakePipe.serialize"},
-            dependsOnGroups = {"SnowflakePipe.builderEquivalency"})
-    void serialization() {
-        assertNotNull(full);
-        serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized);
+    @Test
+    void serdeCycleSnowflakePipe() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SnowflakePipe,");
+        final int hash = full.hashCode();
+        // Builder equivalency
+        assertEquals(
+                full.toBuilder().build(),
+                full,
+                "Unable to converting SnowflakePipe via builder back to its original state,");
+        // Serialization
+        final String serialized = full.toJson(MockAtlanTenant.client);
+        assertNotNull(serialized, "Unable to serialize sample instance of SnowflakePipe,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
-    }
-
-    @Test(
-            groups = {"SnowflakePipe.deserialize"},
-            dependsOnGroups = {"SnowflakePipe.serialize"})
-    void deserialization() throws IOException {
-        assertNotNull(serialized);
-        frodo = MockAtlanTenant.client.readValue(serialized, SnowflakePipe.class);
-        assertNotNull(frodo);
-    }
-
-    @Test(
-            groups = {"SnowflakePipe.equivalency"},
-            dependsOnGroups = {"SnowflakePipe.serialize", "SnowflakePipe.deserialize"})
-    void serializedEquivalency() {
-        assertNotNull(serialized);
-        assertNotNull(frodo);
+        // Deserialization
+        final SnowflakePipe frodo = MockAtlanTenant.client.readValue(serialized, SnowflakePipe.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SnowflakePipe,");
+        // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
-    }
-
-    @Test(
-            groups = {"SnowflakePipe.equivalency"},
-            dependsOnGroups = {"SnowflakePipe.serialize", "SnowflakePipe.deserialize"})
-    void deserializedEquivalency() {
-        assertNotNull(full);
-        assertNotNull(frodo);
+        // Deserialized equivalency
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }
