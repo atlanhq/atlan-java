@@ -22,7 +22,7 @@ public class ImpersonationEndpoint extends KeycloakEndpoint {
 
     private static final String endpoint = "/realms/default";
     private static final String exchangeEndpoint = endpoint + "/protocol/openid-connect/token";
-    private static final String usersEndpoint = endpoint + "/users";
+    private static final String usersEndpoint = "/admin" + endpoint + "/users";
 
     public ImpersonationEndpoint(AtlanClient client) {
         super(client);
@@ -108,6 +108,11 @@ public class ImpersonationEndpoint extends KeycloakEndpoint {
             throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), exchangeEndpoint);
         String exchangedToken;
+        if (options == null) {
+            options = RequestOptions.from(client).sendAuthHeader(false).build();
+        } else {
+            options = options.toBuilder().sendAuthHeader(false).build();
+        }
         try {
             AccessTokenResponse clientToken = ApiResource.request(
                     client, ApiResource.RequestMethod.POST, url, requestMap, AccessTokenResponse.class, options);
