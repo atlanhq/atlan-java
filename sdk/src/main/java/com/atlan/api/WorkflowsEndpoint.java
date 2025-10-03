@@ -33,7 +33,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     private static final String workflowsEndpoint = "/workflows";
     private static final String workflowsSubroleEndpoint = "/package-workflows";
     private static final String workflowsEndpointRunExisting = "/submit";
-    private static final String workflowsSearchEndpoint = "/indexsearch";
+    private static final String workflowsSearchEndpoint = workflowsEndpoint + "/indexsearch";
     private static final String runsEndpoint = "/runs";
     private static final String runsSearchEndpoint = runsEndpoint + "/indexsearch";
 
@@ -41,6 +41,14 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
         super(client);
     }
 
+    /**
+     * Dynamically determine the endpoint path to use.
+     * Note: this only applies to /submit, submit=true, /archive, /{workflow-name}
+     * (and not, for example, to the indexsearch or runs endpoints)
+     *
+     * @return the appropriate API endpoint path to use
+     * @throws AtlanException on any issues retrieving the user's current roles (necessary for determining appropriate path)
+     */
     private String getWorkflowEndpoint() throws AtlanException {
         Set<String> roles = client.getRoleCache().getRolesForCurrentUser();
         if (roles.contains("$admin") || roles.contains("$api-token-default-access")) {
@@ -205,8 +213,7 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowSearchResponse search(WorkflowSearchRequest request, RequestOptions options) throws AtlanException {
-        final String endpoint = getWorkflowEndpoint() + workflowsSearchEndpoint;
-        String url = String.format("%s%s", getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), workflowsSearchEndpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, options);
     }
