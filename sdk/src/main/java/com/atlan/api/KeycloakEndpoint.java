@@ -10,13 +10,13 @@ import com.atlan.exception.ApiConnectionException;
  */
 public abstract class KeycloakEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/auth";
-    private static final String SERVICE = "http://keycloak-http.keycloak.svc.cluster.local/auth";
+    private static final String SERVICE = "http://keycloak-http.keycloak.svc.cluster.local";
 
     protected KeycloakEndpoint(AtlanClient client) {
         super(client);
     }
 
     protected String getBaseUrl() throws ApiConnectionException {
-        return getBaseUrl(SERVICE, PREFIX);
+        return client.isInternal() ? SERVICE + PREFIX : client.getBaseUrl() + PREFIX;
     }
 }
