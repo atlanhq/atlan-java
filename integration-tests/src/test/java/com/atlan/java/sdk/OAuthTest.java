@@ -65,7 +65,7 @@ public class OAuthTest extends AtlanLiveTest {
     }
 
     @Test(groups = {"oauth.create.guest"})
-    void createGuestClient() throws AtlanException, InterruptedException {
+    void createGuestClient() throws AtlanException {
         oauthGuest = createOAuthClient(client, CLIENT_NAME, "Guest client.", Set.of(), "$guest");
         String clientId = oauthGuest.getClientId();
         String secret = oauthGuest.getClientSecret();
