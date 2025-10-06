@@ -492,7 +492,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
-        ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
+        executeWithRetries(
+                () -> ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options), options);
         switch (typeDef.getCategory()) {
             case ATLAN_TAG:
                 client.getAtlanTagCache().forceRefresh();
