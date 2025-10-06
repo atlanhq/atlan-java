@@ -113,6 +113,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Utility class for introspecting raw responses from API endpoints.</div>
 </div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="AbstractEndpoint.ThrowingSupplier.html" class="type-name-link" title="interface in com.atlan.api">AbstractEndpoint.ThrowingSupplier</a>&lt;<a href="AbstractEndpoint.ThrowingSupplier.html" title="type parameter in AbstractEndpoint.ThrowingSupplier">T</a>,<wbr><a href="AbstractEndpoint.ThrowingSupplier.html" title="type parameter in AbstractEndpoint.ThrowingSupplier">E</a> extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -157,15 +160,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseUrl(java.lang.String,java.lang.String)" class="member-name-link">getBaseUrl</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;service,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prefix)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;T extends <a href="../net/ApiResource.html" title="class in com.atlan.net">ApiResource</a>&gt;<br>T</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executeWithRetries(com.atlan.api.AbstractEndpoint.ThrowingSupplier,com.atlan.net.RequestOptions)" class="member-name-link">executeWithRetries</a><wbr>(<a href="AbstractEndpoint.ThrowingSupplier.html" title="interface in com.atlan.api">AbstractEndpoint.ThrowingSupplier</a>&lt;T,<wbr><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a>&gt;&nbsp;apiCall,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Make the API call (including retrying it on any failure) up to the maximum of the client's
+ max retries or the provided options max retries.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseUrl(java.lang.String,java.lang.String)" class="member-name-link">getBaseUrl</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;service,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prefix)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieve the base URL to use to access the endpoint.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClient()" class="member-name-link">getClient</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClient()" class="member-name-link">getClient</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -226,6 +236,27 @@ loadScripts(document, 'script');</script>
 <dd>the base URL (including any prefix) to use to access the API endpoint</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></code> - if no base URL has been defined, and the SDK has not been configured for internal access</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="executeWithRetries(com.atlan.api.AbstractEndpoint.ThrowingSupplier,com.atlan.net.RequestOptions)">
+<h3>executeWithRetries</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="../net/ApiResource.html" title="class in com.atlan.net">ApiResource</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">executeWithRetries</span><wbr><span class="parameters">(<a href="AbstractEndpoint.ThrowingSupplier.html" title="interface in com.atlan.api">AbstractEndpoint.ThrowingSupplier</a>&lt;T,<wbr><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a>&gt;&nbsp;apiCall,
+ <a href="../net/RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</span>
+                                             throws <span class="exceptions"><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></span></div>
+<div class="block">Make the API call (including retrying it on any failure) up to the maximum of the client's
+ max retries or the provided options max retries.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - type of information returned by the API call</dd>
+<dt>Parameters:</dt>
+<dd><code>apiCall</code> - to be made and retried (if needed)</dd>
+<dd><code>options</code> - to override default client settings</dd>
+<dt>Returns:</dt>
+<dd>whatever is returned by the API call</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues (in particular, exhausting the retry limit)</dd>
 </dl>
 </section>
 </li>
