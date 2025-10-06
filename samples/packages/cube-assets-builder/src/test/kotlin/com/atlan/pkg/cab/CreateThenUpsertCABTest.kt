@@ -200,7 +200,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
         val c1 = found[0]
         assertEquals(conn1, c1.name)
         assertEquals(conn1Type, c1.connectorType)
-        val adminRoleId = client.roleCache.getIdForName("\$admin")
+        val adminRoleId = client.roleCache.getIdForSid("\$admin")
         assertEquals(setOf(adminRoleId), c1.adminRoles)
         val apiToken = client.users.currentUser.username
         assertEquals(setOf("chris", apiToken), c1.adminUsers)

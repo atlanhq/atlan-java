@@ -38,11 +38,16 @@ object RoleXformer {
     ): String {
         return when (fieldName) {
             in FIELDS -> {
-                try {
-                    // Try to look up the user reference by username
-                    return ctx.client.roleCache.getIdForName(roleRef)
+                return try {
+                    // Try to look up the role reference by role ID
+                    ctx.client.roleCache.getIdForSid(roleRef)
                 } catch (e: NotFoundException) {
-                    throw NoSuchElementException("Role name is not known to Atlan (in $fieldName): $roleRef", e)
+                    try {
+                        // Try again, this time looking up the role by name
+                        ctx.client.roleCache.getIdForName(roleRef)
+                    } catch (e: NotFoundException) {
+                        throw NoSuchElementException("Role name is not known to Atlan (in $fieldName): $roleRef", e)
+                    }
                 }
             }
             else -> roleRef
