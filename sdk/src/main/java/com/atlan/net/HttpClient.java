@@ -9,6 +9,7 @@ import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.util.Stopwatch;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
@@ -323,6 +324,14 @@ public abstract class HttpClient {
                 }
             }
             return (response.code() == 302 || response.code() == 403 || response.code() >= 500);
+        } else {
+            if (exception != null
+                    && (exception.getCause() instanceof IOException
+                            || exception.getCause() instanceof InterruptedException)) {
+                // Or if the response was null and there is an underlying IOException or InterruptedException cause,
+                // then the network call itself (via HttpURLConnectionClient) likely failed -- and should be retried
+                return true;
+            }
         }
         return false;
     }
