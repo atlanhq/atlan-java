@@ -21,9 +21,8 @@ import lombok.extern.jackson.Jacksonized;
 public class ImpersonationEndpoint extends KeycloakEndpoint {
 
     private static final String realm = "/realms/default";
-    private static final String authPrefix = "/auth";
     private static final String adminPrefix = "/admin";
-    private static final String exchangeEndpoint = authPrefix + realm + "/protocol/openid-connect/token";
+    private static final String exchangeEndpoint = realm + "/protocol/openid-connect/token";
     private static final String usersEndpoint = adminPrefix + realm + "/users";
 
     public ImpersonationEndpoint(AtlanClient client) {
