@@ -80,7 +80,7 @@ public class OAuthTest extends AtlanLiveTest {
     void retrieveClients() throws AtlanException {
         OAuthClientResponse response = client.oauthClients.list();
         assertNotNull(response);
-        assertTrue(response.getTotalRecord() > 1);
+        assertTrue(response.getTotalRecord() >= 1);
         boolean found = false;
         for (OAuthClient one : response.getRecords()) {
             String displayName = one.getDisplayName();

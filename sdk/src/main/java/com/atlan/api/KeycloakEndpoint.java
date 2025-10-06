@@ -17,6 +17,6 @@ public abstract class KeycloakEndpoint extends AbstractEndpoint {
     }
 
     protected String getBaseUrl() throws ApiConnectionException {
-        return getBaseUrl(SERVICE, PREFIX);
+        return client.isInternal() ? SERVICE + PREFIX : client.getBaseUrl() + PREFIX;
     }
 }
