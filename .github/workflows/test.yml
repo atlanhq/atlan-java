@@ -69,7 +69,7 @@ jobs:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir={{ runner.temp }}"
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
@@ -118,7 +118,7 @@ jobs:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir={{ runner.temp }}"
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
