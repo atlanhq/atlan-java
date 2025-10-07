@@ -20,7 +20,7 @@ jobs:
           java-version: 21
           distribution: temurin
       - name: Compile
-        run: ./gradlew assemble shadowJar test
+        run: ./gradlew assemble shadowJar testClasses
       - name: Upload build artifacts
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
@@ -64,20 +64,17 @@ jobs:
         with:
           java-version: 21
           distribution: temurin
+      - name: Setup temp directory
+        run: |
+          mkdir -p /mnt/tmp
+          chmod 1777 /mnt/tmp
       - name: Integration tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble
-      # - name: Integration tests
-      #   uses: burrunan/gradle-cache-action@663fbad34e03c8f12b27f4999ac46e3d90f87eca  # v3.0.1
-      #   env:
-      #     ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
-      #     ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
-      #     NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-      #   with:
-      #     arguments: -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}"
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/mnt/tmp"
+        run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
@@ -127,23 +124,17 @@ jobs:
         with:
           java-version: 21
           distribution: temurin
+      - name: Setup temp directory
+        run: |
+          mkdir -p /mnt/tmp
+          chmod 1777 /mnt/tmp
       - name: Package tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble
-      # - name: Package tests
-      #   env:
-      #     ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
-      #     ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
-      #     NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-      #     JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/mnt"
-      #   uses: burrunan/gradle-cache-action@663fbad34e03c8f12b27f4999ac46e3d90f87eca  # v3.0.1
-      #   with:
-      #     arguments: |
-      #       -PpackageTests
-      #       :samples:packages:${{ matrix.tests }}:test
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/mnt/tmp"
+        run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
         with:
