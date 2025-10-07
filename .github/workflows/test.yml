@@ -64,16 +64,12 @@ jobs:
         with:
           java-version: 21
           distribution: temurin
-      - name: Setup temp directory
-        run: |
-          mkdir -p /mnt/tmp
-          chmod 1777 /mnt/tmp
       - name: Integration tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/mnt/tmp"
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir={{ runner.temp }}"
         run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
@@ -105,16 +101,9 @@ jobs:
       group: ${{ matrix.tests }}
     name: "Packages"
     steps:
-      # - name: Free disk space
-      #   uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
-      #   with:
-      #     tool-cache: false
-      #     android: true
-      #     dotnet: true
-      #     haskell: true
-      #     large-packages: false
-      #     docker-images: false
-      #     swap-storage: true
+      - name: Free disk space
+        if: matrix.tests == 'asset-import'
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
       - name: Download artifacts
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16  # v4.1.8
@@ -124,16 +113,12 @@ jobs:
         with:
           java-version: 21
           distribution: temurin
-      - name: Setup temp directory
-        run: |
-          mkdir -p /mnt/tmp
-          chmod 1777 /mnt/tmp
       - name: Package tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/mnt/tmp"
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir={{ runner.temp }}"
         run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses
       - if: success() || failure()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4.6.2
