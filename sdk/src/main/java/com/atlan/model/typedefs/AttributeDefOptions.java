@@ -571,6 +571,9 @@ public class AttributeDefOptions extends AtlanObject {
     /** TBC */
     String isAppendOnPartialUpdate;
 
+    /** Whether the string attribute supports rich text. */
+    Boolean isRichText;
+
     /**
      * Append the provided set of attribute definition options onto this attribute definition.
      * Note that certain options are ignored by the append, specifically: primitiveType, isEnum,
