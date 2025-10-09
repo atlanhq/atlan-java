@@ -272,5 +272,9 @@ public class FluentSearch extends CompoundQuery {
         public Stream<Asset> stream(boolean parallel) throws AtlanException {
             return build().stream(parallel);
         }
+
+        public Stream<Asset> bulkStream() throws AtlanException {
+            return build().bulkStream();
+        }
     }
 }

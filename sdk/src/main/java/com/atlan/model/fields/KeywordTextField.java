@@ -76,7 +76,7 @@ public class KeywordTextField extends SearchableField implements IKeywordSearcha
     /** {@inheritDoc} */
     @Override
     public Query wildcard(String value, boolean caseInsensitive) {
-        return IKeywordSearchable.wildcard(getKeywordFieldName(), value, caseInsensitive);
+        return IKeywordSearchable.wildcard(getTextFieldName(), value, caseInsensitive);
     }
 
     /** {@inheritDoc} */
