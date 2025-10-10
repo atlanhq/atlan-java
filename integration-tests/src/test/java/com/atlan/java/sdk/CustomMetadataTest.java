@@ -1241,7 +1241,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
         EntityAudit next = audits.previous();
         while (next != null) {
             AuditActionType action = next.getAction();
-            if (action.equals(AuditActionType.ENTITY_UPDATE) || (action.equals(AuditActionType.CUSTOM_METADATA_UPDATE) && next.getDetail() instanceof GlossaryTerm)) {
+            if (action.equals(AuditActionType.ENTITY_UPDATE)
+                    || (action.equals(AuditActionType.CUSTOM_METADATA_UPDATE)
+                            && next.getDetail() instanceof GlossaryTerm)) {
                 assertTrue(next.getDetail() instanceof GlossaryTerm);
                 next = audits.previous();
             } else {
@@ -1265,7 +1267,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
         while (next != null) {
             assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
             AuditDetail detail = next.getDetail();
-            if (detail instanceof GlossaryTerm || (detail instanceof CustomMetadataAttributesAuditDetail && detail.getTypeName().equals(cmToFind))) {
+            if (detail instanceof GlossaryTerm
+                    || (detail instanceof CustomMetadataAttributesAuditDetail
+                            && detail.getTypeName().equals(cmToFind))) {
                 return detail;
             } else {
                 next = consumeEmptyUpdates(audits);
