@@ -1231,7 +1231,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
      * @return the next non-empty update in the log
      */
     private EntityAudit consumeEmptyUpdates(ListIterator<EntityAudit> audits) {
-        if (audits.hasNext()) {
+        if (audits.hasPrevious()) {
             EntityAudit next = audits.previous();
             while (next != null) {
                 AuditActionType action = next.getAction();
@@ -1239,7 +1239,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         || (action.equals(AuditActionType.CUSTOM_METADATA_UPDATE)
                                 && next.getDetail() instanceof GlossaryTerm)) {
                     assertTrue(next.getDetail() instanceof GlossaryTerm);
-                    if (audits.hasNext()) {
+                    if (audits.hasPrevious()) {
                         next = audits.previous();
                     } else {
                         next = null;
