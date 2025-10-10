@@ -888,7 +888,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(
             groups = {"cm.update.term.remove.cm"},
             dependsOnGroups = {"cm.update.term.replaceAll.raci", "cm.search.term.cm"})
-    void removeTermCM() throws AtlanException {
+    void removeTermCM() throws AtlanException, InterruptedException {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
@@ -906,6 +906,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(t.isComplete());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
         assertTrue(t.getCustomMetadataSets().isEmpty());
+        // Add a short delay for audit log to be fully consistent
+        Thread.sleep(2000);
     }
 
     @Test(
