@@ -102,6 +102,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     String connectionSSOCredentialGuid;
 
+    /** Configuration for a workflow run. */
+    @Attribute
+    @Singular("putConnectionWorkflowConfiguration")
+    Map<String, String> connectionWorkflowConfiguration;
+
     /** Unused. Only the value of connectorType impacts icons. */
     @Attribute
     String connectorIcon;

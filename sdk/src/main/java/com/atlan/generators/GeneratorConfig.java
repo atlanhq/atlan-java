@@ -100,7 +100,8 @@ public class GeneratorConfig {
             Map.entry("responseValueArrDate", "addResponseValueDate"),
             Map.entry("tableauProjectHierarchy", "addTableauProjectHierarchy"),
             Map.entry("aiModelVersions", "modelVersion"),
-            Map.entry("dremioFolderHierarchy", "addDremioFolderHierarchy"));
+            Map.entry("dremioFolderHierarchy", "addDremioFolderHierarchy"),
+            Map.entry("connectionWorkflowConfiguration", "putConnectionWorkflowConfiguration"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("__hasLineage", "hasLineage"),

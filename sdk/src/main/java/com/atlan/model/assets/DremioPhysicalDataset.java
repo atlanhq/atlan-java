@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DremioPhysicalDataset extends Asset
-        implements IDremioPhysicalDataset, ITable, IDremio, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDremioPhysicalDataset, IDremio, ITable, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioPhysicalDataset";

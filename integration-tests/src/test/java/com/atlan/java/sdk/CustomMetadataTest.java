@@ -1094,12 +1094,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(audits);
         assertTrue(audits.size() >= 14);
 
-        int numEntries = audits.size();
-        // Last one in the list should always be the creation of the entity
-        EntityAudit one = audits.get(numEntries - 1);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ENTITY_CREATE);
-        AuditDetail detail = one.getDetail();
+        ListIterator<EntityAudit> iterator = audits.listIterator(audits.size());
+
+        // First one in the (reversed) list should always be the creation of the entity
+        EntityAudit next = iterator.previous();
+        assertNotNull(next);
+        assertEquals(next.getAction(), AuditActionType.ENTITY_CREATE);
+        AuditDetail detail = next.getDetail();
         assertTrue(detail instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) detail;
         assertEquals(t.getGuid(), term.getGuid());
@@ -1108,50 +1109,41 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(t.getAnchor());
         assertEquals(t.getAnchor().getGuid(), glossary.getGuid());
 
-        // TODO: there seems to be a (spurious?) entity update here for nothing at all (?)
-        one = audits.get(numEntries - 2);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        detail = one.getDetail();
-        assertTrue(detail instanceof GlossaryTerm);
-        // t = (GlossaryTerm) detail;
-        // log.info("Full change at -2: {}", t.toJson(client));
-
         // Then adding RACI
-        one = audits.get(numEntries - 3);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-        detail = one.getDetail();
+        next = consumeEmptyUpdates(iterator);
+        assertNotNull(next);
+        assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+        detail = next.getDetail();
         assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
         CustomMetadataAttributesAuditDetail cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_RACI);
         validateRACIAttributes(cmad.getAttributes());
 
         // Then adding IPR
-        one = audits.get(numEntries - 4);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-        detail = one.getDetail();
+        next = consumeEmptyUpdates(iterator);
+        assertNotNull(next);
+        assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+        detail = next.getDetail();
         assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
         cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_IPR);
         validateIPRAttributes(cmad.getAttributes(), true);
 
         // Then adding DQ
-        one = audits.get(numEntries - 5);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-        detail = one.getDetail();
+        next = consumeEmptyUpdates(iterator);
+        assertNotNull(next);
+        assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+        detail = next.getDetail();
         assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
         cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_QUALITY);
         validateDQAttributes(cmad.getAttributes());
 
         // Then updating IPR
-        one = audits.get(numEntries - 6);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-        detail = one.getDetail();
+        next = consumeEmptyUpdates(iterator);
+        assertNotNull(next);
+        assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+        detail = next.getDetail();
         assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
         cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_IPR);
@@ -1162,16 +1154,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(attributes.get(CM_ATTR_IPR_MANDATORY), false);
 
         // Then replacing RACI
-        int nextIdx = numEntries - 7;
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_RACI));
+        cmad = consumeOtherCMUpdates(iterator, CM_RACI);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 1);
@@ -1181,15 +1165,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNull(attributes.get(CM_ATTR_RACI_INFORMED));
 
         // Then replacing IPR (with nothing, so removing it)
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_IPR));
+        cmad = consumeOtherCMUpdates(iterator, CM_IPR);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_IPR);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 5);
@@ -1200,15 +1177,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNull(attributes.get(CM_ATTR_IPR_VERSION));
 
         // Then removing RACI
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_RACI));
+        cmad = consumeOtherCMUpdates(iterator, CM_RACI);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 4);
@@ -1220,15 +1190,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         // Note: no entry for removing IPR again, because it was already removed (above)
 
         // Then removing DQ
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_QUALITY));
+        cmad = consumeOtherCMUpdates(iterator, CM_QUALITY);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_QUALITY);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 3);
@@ -1237,15 +1200,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNull(attributes.get(CM_ATTR_QUALITY_TYPE));
 
         // Then update RACI again (with new attribute)
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_RACI));
+        cmad = consumeOtherCMUpdates(iterator, CM_RACI);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 5);
@@ -1253,35 +1209,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(attributes.containsKey(CM_ATTR_RACI_EXTRA));
         assertEquals(attributes.get(CM_ATTR_RACI_EXTRA), "something extra...");
 
-        // Unsure why, but there seems to be a non-custom metadata detail here
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            nextIdx--;
-        } while (!(detail instanceof GlossaryTerm));
-        t = (GlossaryTerm) detail;
-        assertEquals(t.getGuid(), term.getGuid());
-        assertNotNull(t.getCustomMetadataSets());
-        CustomMetadataAttributes cma = t.getCustomMetadataSets().get(CM_RACI);
-        assertNotNull(cma);
-        attributes = cma.getAttributes();
-        assertEquals(attributes.size(), 5);
-        validateRACIAttributes(attributes);
-        assertTrue(attributes.containsKey(CM_ATTR_RACI_EXTRA));
-        assertEquals(attributes.get(CM_ATTR_RACI_EXTRA), "something extra...");
-
         // Then remove all custom metadata (replace)
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
-            cmad = (CustomMetadataAttributesAuditDetail) detail;
-            nextIdx--;
-        } while (!cmad.getTypeName().equals(CM_RACI) && nextIdx >= 0);
+        cmad = consumeOtherCMUpdates(iterator, CM_RACI);
+        assertNotNull(cmad);
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
         assertEquals(attributes.size(), 5);
@@ -1290,19 +1220,61 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNull(attributes.get(CM_ATTR_RACI_CONSULTED));
         assertNull(attributes.get(CM_ATTR_RACI_INFORMED));
         assertNull(attributes.get(CM_ATTR_RACI_EXTRA));
+    }
 
-        // Unsure why, but there seems to be a non-custom metadata detail here
-        do {
-            one = audits.get(nextIdx);
-            assertNotNull(one);
-            assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
-            detail = one.getDetail();
-            nextIdx--;
-        } while (!(detail instanceof GlossaryTerm));
-        t = (GlossaryTerm) detail;
-        assertEquals(t.getGuid(), term.getGuid());
-        assertTrue(
-                t.getCustomMetadataSets() == null || t.getCustomMetadataSets().isEmpty());
+    /**
+     * Drop two (known) cases where there seem to be (spurious) empty updates:
+     * - ENTITY_UPDATE actions
+     * - CUSTOM_METADATA_UPDATE actions, where the details are just a GlossaryTerm as a whole (not the custom metadata)
+     *
+     * @param audits iterator over the audit log
+     * @return the next non-empty update in the log
+     */
+    private EntityAudit consumeEmptyUpdates(ListIterator<EntityAudit> audits) {
+        if (audits.hasPrevious()) {
+            EntityAudit next = audits.previous();
+            while (next != null) {
+                AuditActionType action = next.getAction();
+                if (action.equals(AuditActionType.ENTITY_UPDATE)
+                        || (action.equals(AuditActionType.CUSTOM_METADATA_UPDATE)
+                                && next.getDetail() instanceof GlossaryTerm)) {
+                    assertTrue(next.getDetail() instanceof GlossaryTerm);
+                    if (audits.hasPrevious()) {
+                        next = audits.previous();
+                    } else {
+                        next = null;
+                    }
+                } else {
+                    return next;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Drop any custom metadata updates to CM that is NOT the CM we're looking for.
+     * (It seems unrelated CM entries can also be updated in certain operations (like replaces),
+     * and can therefore be ignored.)
+     *
+     * @param audits iterator over the audit log
+     * @param cmToFind custom metadata on which to stop skipping
+     * @return the next update in the log for the specific CM we're looking for
+     */
+    private CustomMetadataAttributesAuditDetail consumeOtherCMUpdates(
+            ListIterator<EntityAudit> audits, String cmToFind) {
+        EntityAudit next = consumeEmptyUpdates(audits);
+        while (next != null) {
+            assertEquals(next.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+            AuditDetail detail = next.getDetail();
+            if (detail instanceof CustomMetadataAttributesAuditDetail
+                    && detail.getTypeName().equals(cmToFind)) {
+                return (CustomMetadataAttributesAuditDetail) detail;
+            } else {
+                next = consumeEmptyUpdates(audits);
+            }
+        }
+        return null;
     }
 
     @Test(
