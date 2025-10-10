@@ -471,6 +471,8 @@ public class ConnectionTest {
             .connectionDbtEnvironment("String1")
             .connectionIsDQEnabled(true)
             .connectionSSOCredentialGuid("String0")
+            .putConnectionWorkflowConfiguration("key1", "value1")
+            .putConnectionWorkflowConfiguration("key2", "value2")
             .connectorIcon("String0")
             .connectorImage("String0")
             .credentialStrategy("String0")

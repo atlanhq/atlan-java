@@ -83,6 +83,10 @@ public interface IConnection {
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
 
+    /** Configuration for a workflow run. */
+    KeywordField CONNECTION_WORKFLOW_CONFIGURATION =
+            new KeywordField("connectionWorkflowConfiguration", "connectionWorkflowConfiguration");
+
     /** Unused. Only the value of connectorType impacts icons. */
     TextField CONNECTOR_ICON = new TextField("connectorIcon", "connectorIcon");
 
@@ -571,6 +575,9 @@ public interface IConnection {
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     String getConnectionSSOCredentialGuid();
+
+    /** Configuration for a workflow run. */
+    Map<String, String> getConnectionWorkflowConfiguration();
 
     /** Unused. Only the value of connectorType impacts icons. */
     String getConnectorIcon();

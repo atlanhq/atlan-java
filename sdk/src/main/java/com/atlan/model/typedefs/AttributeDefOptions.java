@@ -639,6 +639,15 @@ public class AttributeDefOptions extends AtlanObject {
         if (options.hasTimePrecision != null) {
             this.hasTimePrecision = options.hasTimePrecision;
         }
+        if (options.isSoftReference != null) {
+            this.isSoftReference = options.isSoftReference;
+        }
+        if (options.isAppendOnPartialUpdate != null) {
+            this.isAppendOnPartialUpdate = options.isAppendOnPartialUpdate;
+        }
+        if (options.isRichText != null) {
+            this.isRichText = options.isRichText;
+        }
         return this;
     }
 
