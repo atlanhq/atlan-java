@@ -1363,12 +1363,14 @@ public class SQLAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"asset.update.column.removeTerms"},
             dependsOnGroups = {"asset.update.column.replaceTerms"})
-    void updateColumnRemoveTerms() throws AtlanException {
+    void updateColumnRemoveTerms() throws AtlanException, InterruptedException {
         Column column = Column.replaceTerms(client, column5.getQualifiedName(), COLUMN_NAME5, null);
         validateUpdatedColumn(column);
         column = Column.get(client, column5.getQualifiedName(), true);
         validateCompleteColumn(column);
         validateHasTerms(column, Collections.emptySet());
+        // Add a short delay for audit log to be fully consistent
+        Thread.sleep(2000);
     }
 
     private void validateHasTerms(Column column, Set<GlossaryTerm> terms) {
