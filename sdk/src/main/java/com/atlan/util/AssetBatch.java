@@ -803,10 +803,11 @@ public class AssetBatch implements AtlanCloseable {
          */
         public static AssetIdentity fromString(String combined) {
             String[] tokens = combined.split("::");
-            if (tokens.length != 2) {
+            if (tokens.length < 2) {
                 throw new IllegalArgumentException("Invalid asset identity: " + combined);
             }
-            return new AssetIdentity(tokens[0], tokens[1]);
+            // Return an identity composed of the first token + all remaining text after the first ::
+            return new AssetIdentity(tokens[0], combined.substring(tokens[0].length() + 2));
         }
 
         /**
