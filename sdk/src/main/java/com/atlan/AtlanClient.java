@@ -168,6 +168,9 @@ public class AtlanClient implements AtlanCloseable {
     /** Endpoint with operations to impersonate users. */
     public final ImpersonationEndpoint impersonate;
 
+    /** Endpoint with operations to introspect permissions. */
+    public final PermissionsEndpoint permissions;
+
     /** Endpoint with operations to search details of past searches. */
     public final SearchLogEndpoint searchLog;
 
@@ -326,6 +329,7 @@ public class AtlanClient implements AtlanCloseable {
         assets = new AssetEndpoint(this);
         requests = new RequestsEndpoint(this);
         impersonate = new ImpersonationEndpoint(this);
+        permissions = new PermissionsEndpoint(this);
         searchLog = new SearchLogEndpoint(this);
         credentials = new CredentialsEndpoint(this);
         tasks = new TaskEndpoint(this);
