@@ -4,7 +4,6 @@ package com.atlan.api;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.*;
-import com.atlan.model.admin.KeycloakMappingsResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,9 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 public class ImpersonationEndpoint extends KeycloakEndpoint {
 
     private static final String realm = "/realms/default";
-    private static final String adminPrefix = "/admin";
     private static final String exchangeEndpoint = realm + "/protocol/openid-connect/token";
-    private static final String usersEndpoint = adminPrefix + realm + "/users";
 
     public ImpersonationEndpoint(AtlanClient client) {
         super(client);
@@ -122,31 +119,6 @@ public class ImpersonationEndpoint extends KeycloakEndpoint {
             throw new PermissionException(onError, e);
         }
         return exchangedToken;
-    }
-
-    /**
-     * Retrieve the role mappings for the specified user.
-     *
-     * @param userId unique identifier of the user for which to retrieve role mappings
-     * @return the role mappings for the specified user
-     * @throws AtlanException on any API communication issue
-     */
-    public KeycloakMappingsResponse getRoleMappings(String userId) throws AtlanException {
-        return getRoleMappings(userId, null);
-    }
-
-    /**
-     * Retrieve the role mappings for the specified user.
-     *
-     * @param userId unique identifier of the user for which to retrieve role mappings
-     * @param options to override default client settings
-     * @return the role mappings for the specified user
-     * @throws AtlanException on any API communication issue
-     */
-    public KeycloakMappingsResponse getRoleMappings(String userId, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s/role-mappings", getBaseUrl(), usersEndpoint, userId);
-        return ApiResource.request(
-                client, ApiResource.RequestMethod.GET, url, "", KeycloakMappingsResponse.class, options);
     }
 
     @Getter

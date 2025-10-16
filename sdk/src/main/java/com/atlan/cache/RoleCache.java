@@ -3,13 +3,13 @@
 package com.atlan.cache;
 
 import com.atlan.AtlanClient;
-import com.atlan.api.ImpersonationEndpoint;
+import com.atlan.api.PermissionsEndpoint;
 import com.atlan.api.RolesEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanRole;
-import com.atlan.model.admin.KeycloakMappingsResponse;
+import com.atlan.model.admin.PermissionsResponse;
 import com.atlan.model.admin.RoleResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 public class RoleCache extends AbstractMassCache<AtlanRole> {
 
     private final RolesEndpoint rolesEndpoint;
-    private final ImpersonationEndpoint impersonationEndpoint;
+    private final PermissionsEndpoint permissionsEndpoint;
     private final Map<String, String> rolesForUser = new ConcurrentHashMap<>();
 
     public RoleCache(AtlanClient client) {
         super(client, "role");
         this.rolesEndpoint = client.roles;
-        this.impersonationEndpoint = client.impersonate;
+        this.permissionsEndpoint = client.permissions;
     }
 
     /** {@inheritDoc} */
@@ -70,12 +70,11 @@ public class RoleCache extends AbstractMassCache<AtlanRole> {
         }
         try {
             rolesForUser.clear();
-            KeycloakMappingsResponse forUser = impersonationEndpoint.getRoleMappings(
-                    client.users.getCurrentUser().getId());
+            PermissionsResponse forUser = permissionsEndpoint.get();
             if (forUser != null) {
-                List<KeycloakMappingsResponse.KeycloakRole> list = forUser.getRealmMappings();
+                List<PermissionsResponse.Permission> list = forUser.getRoles();
                 if (list != null) {
-                    for (KeycloakMappingsResponse.KeycloakRole role : list) {
+                    for (PermissionsResponse.Permission role : list) {
                         rolesForUser.put(role.getId(), role.getName());
                     }
                 }
