@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.cell
 
 import java.time.Instant
 import java.time.format.DateTimeFormatter
+import kotlin.math.roundToLong
 
 object TimestampXformer {
     private val FORMATTER = DateTimeFormatter.ISO_INSTANT
@@ -33,15 +34,17 @@ object TimestampXformer {
     fun decode(
         ts: String?,
         fieldName: String,
-    ): Long? {
-        return if (ts.isNullOrBlank()) {
+    ): Long? =
+        if (ts.isNullOrBlank()) {
             null
         } else if (ts.toLongOrNull() != null) {
-            return ts.toLong()
+            ts.toLong()
+        } else if (ts.toDoubleOrNull() != null) {
+            val double = ts.toDouble()
+            double.roundToLong()
         } else {
             FORMATTER.parse(ts, Instant::from).toEpochMilli()
         }
-    }
 
     /**
      * Decodes (deserializes) a numeric timestamp into an epoch-based numeric timestamp.
