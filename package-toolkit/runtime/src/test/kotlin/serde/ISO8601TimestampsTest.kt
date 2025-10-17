@@ -33,6 +33,7 @@ class ISO8601TimestampsTest {
         private val STRING_VALUE = "2024-02-15T20:41:11.565Z"
         private val LONG_VALUE = 1676629271565L
         private val INVALID_VALUE = "02/15/2024 20:41:11.565"
+        private val DOUBLE_VALUE = 1676629271565.0
     }
 
     @Test
@@ -57,6 +58,13 @@ class ISO8601TimestampsTest {
     @Test
     fun testLongValueDecode() {
         val result = CellXformer.decode(ctx, Asset::class.java, LONG_VALUE.toString(), Long::class.java, null, "createTime", logger)
+        assertTrue(result is Long)
+        assertTrue(result > 0)
+    }
+
+    @Test
+    fun testDoubleValueDecode() {
+        val result = CellXformer.decode(ctx, Asset::class.java, DOUBLE_VALUE.toString(), Long::class.java, null, "createTime", logger)
         assertTrue(result is Long)
         assertTrue(result > 0)
     }
