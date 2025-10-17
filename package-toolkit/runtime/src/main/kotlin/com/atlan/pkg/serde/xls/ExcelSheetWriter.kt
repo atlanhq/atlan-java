@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment
 import org.apache.poi.ss.usermodel.IndexedColors
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Workbook
+import java.io.IOException
 import kotlin.math.min
 
 /**
@@ -24,7 +25,7 @@ import kotlin.math.min
 class ExcelSheetWriter(
     private val workbook: Workbook,
     private val name: String,
-) : TabularWriter {
+) : TabularWriter() {
     private val worksheet = workbook.createSheet(name)
     private val headerStyle = createHeaderStyle()
     private val dataStyle = createDataStyle()
@@ -33,64 +34,48 @@ class ExcelSheetWriter(
     /**
      * Create a header row for the worksheet.
      *
-     * @param headers ordered map of header names and descriptions
-     */
-    override fun writeHeader(headers: Map<String, String>) {
-        val header = worksheet.createRow(0)
-        var colIdx = 0
-        for ((name, desc) in headers) {
-            addHeaderCell(header, colIdx, name, desc)
-            worksheet.setColumnWidth(
-                colIdx,
-                min((name.length * 256).toDouble(), (255 * 256).toDouble()).toInt(),
-            )
-            colIdx++
-        }
-    }
-
-    /**
-     * Create a header row for the worksheet.
-     *
      * @param values ordered list of header column names
+     * @throws IOException if a multiple attempts are made to write a header (can be done only once)
      */
+    @Throws(IOException::class)
     override fun writeHeader(values: Iterable<String>) {
-        val header = worksheet.createRow(0)
-        for ((colIdx, name) in values.withIndex()) {
-            addHeaderCell(header, colIdx, name, "")
-            worksheet.setColumnWidth(
-                colIdx,
-                min((name.length * 256).toDouble(), (255 * 256).toDouble()).toInt(),
-            )
+        if (headerWritten.compareAndSet(false, true)) {
+            header.addAll(values)
+            val headerRow = worksheet.createRow(0)
+            for ((colIdx, name) in values.withIndex()) {
+                addHeaderCell(headerRow, colIdx, name, "")
+                worksheet.setColumnWidth(
+                    colIdx,
+                    min((name.length * 256).toDouble(), (255 * 256).toDouble()).toInt(),
+                )
+            }
+        } else {
+            throw IOException("Header can only be written once (multiple attempts made to write a header).")
         }
-    }
-
-    /**
-     * Write a row of data into the worksheet, where key of the map is the column name and the value
-     * is the value to write for that column of the row of data.
-     * Note: be sure you have first called {@code writeHeader} to output the header row.
-     *
-     * @param values map keyed by column name with values for the row of data
-     */
-    override fun writeRecord(values: Map<String, Any?>?) {
-        TODO("Not yet implemented")
     }
 
     /**
      * Add a row of data to the end of a worksheet.
      *
      * @param data the row of data to add
+     * @throws IOException if the data cannot be written
      */
+    @Throws(IOException::class)
     override fun writeRecord(data: Iterable<Any?>?) {
         if (data != null) {
-            val row = worksheet.createRow(worksheet.lastRowNum + 1)
-            for ((i, datum) in data.withIndex()) {
-                when (datum) {
-                    is Double -> addDataCell(row, i, datum)
-                    is Long -> addDataCell(row, i, datum)
-                    is Boolean -> addDataCell(row, i, datum)
-                    is String -> addDataCell(row, i, datum)
-                    is AtlanEnum -> addDataCell(row, i, datum.value)
-                    else -> addDataCell(row, i, datum?.toString() ?: "")
+            if (worksheet.lastRowNum >= MAX_ROWS) {
+                throw IOException("Data is too large to write into Excel (beyond $MAX_ROWS rows).")
+            } else {
+                val row = worksheet.createRow(worksheet.lastRowNum + 1)
+                for ((i, datum) in data.withIndex()) {
+                    when (datum) {
+                        is Double -> addDataCell(row, i, datum)
+                        is Long -> addDataCell(row, i, datum)
+                        is Boolean -> addDataCell(row, i, datum)
+                        is String -> addDataCell(row, i, datum)
+                        is AtlanEnum -> addDataCell(row, i, datum.value)
+                        else -> addDataCell(row, i, datum?.toString() ?: "")
+                    }
                 }
             }
         }
@@ -258,5 +243,14 @@ class ExcelSheetWriter(
         font.color = IndexedColors.BLUE.getIndex()
         style.setFont(font)
         return style
+    }
+
+    /** {@inheritDoc} */
+    override fun close() {
+        // Do nothing (individual sheets are not closed)
+    }
+
+    companion object {
+        private const val MAX_ROWS = 1048575
     }
 }
