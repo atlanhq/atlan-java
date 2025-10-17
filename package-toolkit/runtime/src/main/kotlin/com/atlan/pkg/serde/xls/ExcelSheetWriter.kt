@@ -3,7 +3,6 @@
 package com.atlan.pkg.serde.xls
 
 import com.atlan.model.enums.AtlanEnum
-import com.atlan.pkg.Utils.getLogger
 import com.atlan.pkg.serde.TabularWriter
 import org.apache.poi.common.usermodel.HyperlinkType
 import org.apache.poi.ss.usermodel.BorderStyle
@@ -27,7 +26,6 @@ class ExcelSheetWriter(
     private val workbook: Workbook,
     private val name: String,
 ) : TabularWriter() {
-    private val logger = getLogger(this.javaClass.name)
     private val worksheet = workbook.createSheet(name)
     private val headerStyle = createHeaderStyle()
     private val dataStyle = createDataStyle()
@@ -37,16 +35,22 @@ class ExcelSheetWriter(
      * Create a header row for the worksheet.
      *
      * @param values ordered list of header column names
+     * @throws IOException if a multiple attempts are made to write a header (can be done only once)
      */
+    @Throws(IOException::class)
     override fun writeHeader(values: Iterable<String>) {
-        header.addAll(values)
-        val headerRow = worksheet.createRow(0)
-        for ((colIdx, name) in values.withIndex()) {
-            addHeaderCell(headerRow, colIdx, name, "")
-            worksheet.setColumnWidth(
-                colIdx,
-                min((name.length * 256).toDouble(), (255 * 256).toDouble()).toInt(),
-            )
+        if (headerWritten.compareAndSet(false, true)) {
+            header.addAll(values)
+            val headerRow = worksheet.createRow(0)
+            for ((colIdx, name) in values.withIndex()) {
+                addHeaderCell(headerRow, colIdx, name, "")
+                worksheet.setColumnWidth(
+                    colIdx,
+                    min((name.length * 256).toDouble(), (255 * 256).toDouble()).toInt(),
+                )
+            }
+        } else {
+            throw IOException("Header can only be written once (multiple attempts made to write a header).")
         }
     }
 

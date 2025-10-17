@@ -4,12 +4,14 @@ package com.atlan.pkg.serde
 
 import java.io.Closeable
 import java.io.IOException
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Generic interface through which to write out tabular content.
  */
 abstract class TabularWriter : Closeable {
     protected val header = mutableListOf<String>()
+    protected val headerWritten = AtomicBoolean(false)
 
     /**
      * Create a header row for the tabular output.
@@ -26,10 +28,16 @@ abstract class TabularWriter : Closeable {
      * Create a header row for the tabular output.
      *
      * @param values ordered list of header column names
+     * @throws IOException if a multiple attempts are made to write a header (can be done only once)
      */
+    @Throws(IOException::class)
     open fun writeHeader(values: Iterable<String>) {
-        header.addAll(values)
-        writeRecord(values)
+        if (headerWritten.compareAndSet(false, true)) {
+            header.addAll(values)
+            writeRecord(values)
+        } else {
+            throw IOException("Header can only be written once (multiple attempts made to write a header).")
+        }
     }
 
     /**
