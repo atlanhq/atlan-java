@@ -191,9 +191,6 @@ public abstract class CompoundQuery {
                                 t -> t.field("__classificationsText.text").value(token))
                         ._toSpanQuery());
             }
-            littleSpans.add(
-                    SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentKey"))
-                            ._toSpanQuery());
             List<SpanQuery> bigSpans = new ArrayList<>();
             bigSpans.add(
                     SpanTermQuery.of(t -> t.field("__classificationsText.text").value(tagId))
