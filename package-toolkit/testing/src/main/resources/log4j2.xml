@@ -3,14 +3,14 @@
 <Configuration status="WARN">
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{2} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z'}{UTC} [%t] %-5level %logger{2} - %msg%n"/>
         </Console>
         <OpenTelemetry name="OpenTelemetryAppender" numLogsCapturedBeforeOtelInstall="10000"/>
         <Routing name="Routing">
             <Routes pattern="$${sys:logDirectory}">
                 <Route>
                     <File name="File" fileName="${sys:logDirectory:-logs}/debug.log" append="false">
-                        <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} trace_id: %X{trace_id} span_id: %X{span_id} trace_flags: %X{trace_flags} - %msg%n"/>
+                        <PatternLayout pattern="%d{yyyy-MM-dd'T'HH:mm:ss.SSS'Z'}{UTC} [%t] %-5level %logger{36} trace_id: %X{trace_id} span_id: %X{span_id} trace_flags: %X{trace_flags} - %msg%n"/>
                     </File>
                 </Route>
             </Routes>
