@@ -13,10 +13,10 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @SuppressWarnings("serial")
 public class PermissionsResponse extends ApiResource {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     @Deprecated
-    String assignedRole;
+    AssignedRole assignedRole;
 
     List<DecentralizedRole> decentralizedRoles;
 
@@ -24,7 +24,7 @@ public class PermissionsResponse extends ApiResource {
 
     String designation;
 
-    List<String> groups;
+    List<Group> groups;
 
     List<String> permissions;
 
@@ -51,6 +51,12 @@ public class PermissionsResponse extends ApiResource {
         /** Unique identifier (UUID) of the permission object. */
         String id;
 
+        /** Unique identifier (UUID) of the role for the object. */
+        String roleId;
+
+        /** Internal name of the role for the object. */
+        String roleName;
+
         /** Name of the permission object. */
         String name;
     }
@@ -67,5 +73,39 @@ public class PermissionsResponse extends ApiResource {
 
         /** Privilege within the level. */
         String privilege;
+    }
+
+    @Getter
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static final class AssignedRole {
+        /** Unique identifier (UUID) of the role. */
+        String id;
+
+        /** Internal name of the role. */
+        String name;
+
+        /** Name of the role used in the user interface. */
+        String description;
+
+        /** Level to which the permission applies. */
+        String level;
+
+        /** TBC */
+        String summary;
+    }
+
+    @Getter
+    @EqualsAndHashCode(callSuper = false)
+    @ToString(callSuper = true)
+    public static final class Group {
+        /** Unique identifier (UUID) of the group. */
+        String id;
+
+        /** Internal name of the group. */
+        String name;
+
+        /** TBC */
+        String path;
     }
 }
