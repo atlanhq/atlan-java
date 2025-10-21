@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @SuppressWarnings("serial")
 public class PermissionsResponse extends ApiResource {
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 3L;
 
     @Deprecated
     AssignedRole assignedRole;
