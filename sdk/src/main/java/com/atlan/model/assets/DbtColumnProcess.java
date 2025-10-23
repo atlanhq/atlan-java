@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class DbtColumnProcess extends Asset
         implements IDbtColumnProcess, IDbt, IColumnProcess, ICatalog, IAsset, IReferenceable, ILineageProcess {
     private static final long serialVersionUID = 2L;

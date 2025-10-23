@@ -116,6 +116,11 @@ public class DremioVirtualDataset extends Asset
     @Attribute
     String dremioId;
 
+    /** Dremio Labels associated with this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> dremioLabels;
+
     /** Unique qualified name of the immediate parent folder containing this asset. */
     @Attribute
     String dremioParentFolderQualifiedName;

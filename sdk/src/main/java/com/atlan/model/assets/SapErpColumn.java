@@ -171,6 +171,14 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, IC
     @Attribute
     String sapErpCdsViewQualifiedName;
 
+    /** Defines the SAP ERP table name used as a foreign key reference to validate permissible values for this column. */
+    @Attribute
+    String sapErpColumnCheckTableName;
+
+    /** Unique name of the SAP ERP Table used as a foreign key reference to validate permissible values for this column. */
+    @Attribute
+    String sapErpColumnCheckTableQualifiedName;
+
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     @Attribute
     String sapErpColumnDataElement;

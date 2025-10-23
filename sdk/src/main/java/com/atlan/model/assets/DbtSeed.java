@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Slf4j
-@SuppressWarnings("serial")
+@SuppressWarnings({"cast", "serial"})
 public class DbtSeed extends Asset implements IDbtSeed, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 

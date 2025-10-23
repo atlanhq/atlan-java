@@ -14,6 +14,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetHistogram;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
@@ -295,6 +296,9 @@ public interface IDremioColumn {
 
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     String getAssetDbtWorkflowLastUpdated();
+
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
@@ -623,6 +627,9 @@ public interface IDremioColumn {
     /** Source ID of this asset in Dremio. */
     String getDremioId();
 
+    /** Dremio Labels associated with this asset. */
+    SortedSet<String> getDremioLabels();
+
     /** Unique qualified name of the immediate parent folder containing this asset. */
     String getDremioParentFolderQualifiedName();
 
@@ -827,7 +834,7 @@ public interface IDremioColumn {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Queries that access this column. */

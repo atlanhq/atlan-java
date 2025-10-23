@@ -15,6 +15,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -41,6 +42,9 @@ public interface IDremio {
 
     /** Source ID of this asset in Dremio. */
     KeywordField DREMIO_ID = new KeywordField("dremioId", "dremioId");
+
+    /** Dremio Labels associated with this asset. */
+    KeywordField DREMIO_LABELS = new KeywordField("dremioLabels", "dremioLabels");
 
     /** Unique qualified name of the immediate parent folder containing this asset. */
     KeywordField DREMIO_PARENT_FOLDER_QUALIFIED_NAME =
@@ -317,6 +321,9 @@ public interface IDremio {
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     String getAssetDbtWorkflowLastUpdated();
 
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -491,6 +498,9 @@ public interface IDremio {
     /** Source ID of this asset in Dremio. */
     String getDremioId();
 
+    /** Dremio Labels associated with this asset. */
+    SortedSet<String> getDremioLabels();
+
     /** Unique qualified name of the immediate parent folder containing this asset. */
     String getDremioParentFolderQualifiedName();
 
@@ -611,7 +621,7 @@ public interface IDremio {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */

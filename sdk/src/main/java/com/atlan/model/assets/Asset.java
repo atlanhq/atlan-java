@@ -26,6 +26,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
@@ -440,6 +441,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     @Attribute
     String assetDbtWorkflowLastUpdated;
+
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    @Attribute
+    @Singular
+    Map<String, AssetExternalDQMetadata> assetExternalDQMetadataDetails;
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     @Attribute

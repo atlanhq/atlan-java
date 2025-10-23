@@ -15,6 +15,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.ResponseValue;
 import com.atlan.model.structs.StarredDetails;
@@ -304,6 +305,9 @@ public interface IResponse {
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     String getAssetDbtWorkflowLastUpdated();
 
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -526,7 +530,7 @@ public interface IResponse {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** README that is linked to this asset. */

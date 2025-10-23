@@ -18,6 +18,7 @@ import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -49,6 +50,14 @@ public interface ISapErpColumn {
     /** Unique name of the SAP ERP CDS view in which this column asset exists. */
     KeywordTextField SAP_ERP_CDS_VIEW_QUALIFIED_NAME = new KeywordTextField(
             "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName.text");
+
+    /** Defines the SAP ERP table name used as a foreign key reference to validate permissible values for this column. */
+    KeywordField SAP_ERP_COLUMN_CHECK_TABLE_NAME =
+            new KeywordField("sapErpColumnCheckTableName", "sapErpColumnCheckTableName");
+
+    /** Unique name of the SAP ERP Table used as a foreign key reference to validate permissible values for this column. */
+    KeywordField SAP_ERP_COLUMN_CHECK_TABLE_QUALIFIED_NAME =
+            new KeywordField("sapErpColumnCheckTableQualifiedName", "sapErpColumnCheckTableQualifiedName");
 
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     KeywordField SAP_ERP_COLUMN_DATA_ELEMENT = new KeywordField("sapErpColumnDataElement", "sapErpColumnDataElement");
@@ -352,6 +361,9 @@ public interface ISapErpColumn {
     /** Name of the DBT workflow in Atlan that last updated the asset. */
     String getAssetDbtWorkflowLastUpdated();
 
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -625,7 +637,7 @@ public interface ISapErpColumn {
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    /** TBC */
     String getQualifiedName();
 
     /** Number of times this asset has been queried. */
@@ -660,6 +672,12 @@ public interface ISapErpColumn {
 
     /** Unique name of the SAP ERP CDS view in which this column asset exists. */
     String getSapErpCdsViewQualifiedName();
+
+    /** Defines the SAP ERP table name used as a foreign key reference to validate permissible values for this column. */
+    String getSapErpColumnCheckTableName();
+
+    /** Unique name of the SAP ERP Table used as a foreign key reference to validate permissible values for this column. */
+    String getSapErpColumnCheckTableQualifiedName();
 
     /** Represents the SAP ERP data element, providing semantic information about the column. */
     String getSapErpColumnDataElement();
