@@ -94,6 +94,11 @@ public class DremioFolder extends Asset implements IDremioFolder, IDremio, ISQL,
     @Attribute
     String dremioId;
 
+    /** Dremio Labels associated with this asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> dremioLabels;
+
     /** Type of top level asset that contains this folder. */
     @Attribute
     DremioParentAssetType dremioParentAssetType;

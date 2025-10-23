@@ -18,6 +18,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -25,6 +26,7 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
@@ -365,6 +367,9 @@ public interface ILineageProcess {
 
     /** TBC */
     String getAssetDbtWorkflowLastUpdated();
+
+    /** TBC */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
     /** TBC */
     AtlanIcon getAssetIcon();
