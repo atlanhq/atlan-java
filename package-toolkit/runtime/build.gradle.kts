@@ -1,17 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
-import com.github.jengelman.gradle.plugins.shadow.ShadowStats
-import com.github.jengelman.gradle.plugins.shadow.transformers.CacheableTransformer
 import com.github.jengelman.gradle.plugins.shadow.transformers.DontIncludeResourceTransformer
-import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext
-import com.github.jengelman.gradle.plugins.shadow.transformers.TransformerContext.Companion.getEntryTimestamp
-import org.apache.commons.io.output.CloseShieldOutputStream
 import org.apache.logging.log4j.core.config.plugins.processor.PluginCache
-import org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor
-import org.apache.tools.zip.ZipEntry
-import org.apache.tools.zip.ZipOutputStream
 import java.net.URL
 import java.util.Collections
-import java.util.Enumeration
+import java.util.jar.JarFile
 
 version = providers.gradleProperty("VERSION_NAME").get()
 val jarName = "package-toolkit-runtime"
@@ -66,6 +58,12 @@ java {
 tasks {
     shadowJar {
         dependsOn("genPklConnectors")
+        // Merge log4j plugins ourselves, since shadow seems completely incapable of doing it itself
+        dependsOn(mergeLog4jPlugins)
+        exclude("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat")
+        from(layout.buildDirectory.dir("log4j-plugins")) {
+            into("META-INF/org/apache/logging/log4j/core/config/plugins")
+        }
         isZip64 = true
         archiveBaseName.set(jarName)
         archiveClassifier.set("jar-with-dependencies")
@@ -255,8 +253,9 @@ tasks {
             include(dependency("com.squareup.okio:okio:.*"))
             include(dependency("com.squareup.okio:okio-jvm:.*"))
         }
+        // transform(DebugTransformer())
         mergeServiceFiles()
-        transform(Log4j2PluginsCustomTransformer())
+        // transform(Log4j2PluginsCustomTransformer())
         transform(DontIncludeResourceTransformer::class.java) {
             resource = "LICENSE"
         }
@@ -334,53 +333,48 @@ signing {
     sign(publishing.publications["mavenJavaPkgRun"])
 }
 
-/**
- * Modified from the original, to simplify (and as the original was not working)
- *
- * Modified from [org.apache.logging.log4j.maven.plugins.shade.transformer.Log4j2PluginCacheFileTransformer.java](https://github.com/apache/logging-log4j-transform/blob/main/log4j-transform-maven-shade-plugin-extensions/src/main/java/org/apache/logging/log4j/maven/plugins/shade/transformer/Log4j2PluginCacheFileTransformer.java).
- *
- * @author Christopher Grote
- * @author Paul Nelson Baker
- * @author John Engelman
- */
-@CacheableTransformer
-open class Log4j2PluginsCustomTransformer : com.github.jengelman.gradle.plugins.shadow.transformers.Transformer {
-    private val temporaryFiles = mutableListOf<File>()
-    private var stats: ShadowStats? = null
+val mergeLog4jPlugins by tasks.registering {
+    // Declare that this task needs the resolved classpath first
+    val classpathFiles =
+        configurations.runtimeClasspath
+            .get()
+            .incoming
+            .artifactView {
+                lenient(true) // Optional: allows build to continue even if some artifacts fail
+            }.files
 
-    override fun canTransformResource(element: FileTreeElement): Boolean = PluginProcessor.PLUGIN_CACHE_FILE == element.name
+    inputs.files(classpathFiles)
 
-    override fun transform(context: TransformerContext) {
-        val temporaryFile = File.createTempFile("Log4j2Plugins", ".dat")
-        temporaryFile.deleteOnExit()
-        temporaryFiles.add(temporaryFile)
-        val fos = temporaryFile.outputStream()
-        context.inputStream.use {
-            it.copyTo(fos)
-        }
-        if (stats == null) {
-            stats = context.stats
-        }
-    }
-
-    override fun hasTransformedResource(): Boolean = temporaryFiles.isNotEmpty()
-
-    override fun modifyOutputStream(
-        os: ZipOutputStream,
-        preserveFileTimestamps: Boolean,
-    ) {
+    doLast {
         val pluginCache = PluginCache()
-        pluginCache.loadCacheFiles(urlEnumeration)
-        val entry = ZipEntry(PluginProcessor.PLUGIN_CACHE_FILE)
-        entry.time = getEntryTimestamp(preserveFileTimestamps, entry.time)
-        os.putNextEntry(entry)
-        pluginCache.writeCache(CloseShieldOutputStream.wrap(os))
-        temporaryFiles.clear()
-    }
+        val datFiles = mutableListOf<URL>()
 
-    private val urlEnumeration: Enumeration<URL>
-        get() {
-            val urls = temporaryFiles.map { it.toURI().toURL() }
-            return Collections.enumeration(urls)
+        configurations.runtimeClasspath.get().files.forEach { file ->
+            if (file.extension == "jar") {
+                JarFile(file).use { jar ->
+                    val entry = jar.getEntry("META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat")
+                    if (entry != null) {
+                        println("Found Log4j2Plugins.dat in: ${file.name}")
+                        val tempFile = File.createTempFile("plugins", ".dat")
+                        jar.getInputStream(entry).use { input ->
+                            tempFile.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+                        datFiles.add(tempFile.toURI().toURL())
+                    }
+                }
+            }
         }
+
+        pluginCache.loadCacheFiles(Collections.enumeration(datFiles))
+        val outputFile =
+            layout.buildDirectory
+                .file("log4j-plugins/Log4j2Plugins.dat")
+                .get()
+                .asFile
+        outputFile.parentFile.mkdirs()
+        pluginCache.writeCache(outputFile.outputStream())
+        println("Merged ${datFiles.size} plugin cache files")
+    }
 }
