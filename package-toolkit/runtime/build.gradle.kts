@@ -348,6 +348,7 @@ val mergeLog4jPlugins by tasks.registering {
     doLast {
         val pluginCache = PluginCache()
         val datFiles = mutableListOf<URL>()
+        val tempFiles = mutableListOf<File>()
 
         configurations.runtimeClasspath.get().files.forEach { file ->
             if (file.extension == "jar") {
@@ -362,6 +363,7 @@ val mergeLog4jPlugins by tasks.registering {
                             }
                         }
                         datFiles.add(tempFile.toURI().toURL())
+                        tempFiles.add(tempFile)
                     }
                 }
             }
@@ -376,5 +378,7 @@ val mergeLog4jPlugins by tasks.registering {
         outputFile.parentFile.mkdirs()
         pluginCache.writeCache(outputFile.outputStream())
         println("Merged ${datFiles.size} plugin cache files")
+
+        tempFiles.forEach { it.delete() }
     }
 }
