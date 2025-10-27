@@ -124,8 +124,8 @@ class AssetTransformer(
 
     /** {@inheritDoc} */
     override fun includeRow(inputRow: Map<String, String>): Boolean {
-        // Rows will be limited by the extract, so everything extracted should be imported
-        return true
+        // Rows will be limited by the extract, so everything (non-empty) extracted should be imported
+        return inputRow.values.any { it.trim().isNotBlank() }
     }
 
     private fun mapAsset(
