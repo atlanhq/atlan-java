@@ -396,9 +396,10 @@ class CSVReader
             logger: KLogger,
             totalFailures: AtomicLong,
         ) {
-            if (b.failures?.isNotEmpty() == true) {
+            if (b.failures?.isNotEmpty == true) {
                 for (f in b.failures.entrySet()) {
                     logger.warn { "Failed batch reason: ${f.value.failureReason}" }
+                    logger.debug(f.value.failureReason) { "Full stack trace:" }
                     totalFailures.getAndAdd(
                         f.value.failedAssets.size
                             .toLong(),

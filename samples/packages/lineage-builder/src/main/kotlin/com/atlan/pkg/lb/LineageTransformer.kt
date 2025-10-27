@@ -45,8 +45,10 @@ class LineageTransformer(
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val name = inputRow[XFORM_NAME] ?: ""
-        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, logger, qnMap)
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
+        val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
+        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, logger, qnMap)
+        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, logger, qnMap)
         val source =
             if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
                 FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
@@ -54,8 +56,6 @@ class LineageTransformer(
                 logger.warn { "Unable to translate source into a valid asset reference: $sourceType::$name" }
                 null
             }
-        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, logger, qnMap)
-        val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
         val target =
             if (targetQN.isNotBlank() && targetType.isNotBlank()) {
                 FieldSerde.getRefByQualifiedName(targetType, targetQN)
@@ -108,7 +108,7 @@ class LineageTransformer(
 
     /** {@inheritDoc} */
     override fun includeRow(inputRow: Map<String, String>): Boolean {
-        // Rows will be limited by the extract, so everything extracted should be imported
-        return true
+        // Rows will be limited by the extract, so everything (non-empty) extracted should be imported
+        return inputRow.values.any { it.trim().isNotBlank() }
     }
 }
