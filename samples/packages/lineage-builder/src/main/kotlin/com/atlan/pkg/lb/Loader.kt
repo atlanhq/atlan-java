@@ -2,19 +2,17 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.lb
 
-import AssetImportCfg
 import LineageBuilderCfg
-import com.atlan.model.assets.Asset
-import com.atlan.model.assets.LineageProcess
-import com.atlan.model.enums.AtlanTagHandling
-import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
-import com.atlan.util.AssetBatch.AssetIdentity
+import de.siegmar.fastcsv.writer.CsvWriter
+import de.siegmar.fastcsv.writer.LineDelimiter
+import de.siegmar.fastcsv.writer.QuoteStrategies
 import java.io.File
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import kotlin.system.exitProcess
 
 /**
@@ -45,6 +43,7 @@ object Loader {
             logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
             exitProcess(2)
         }
+        val fieldSeparator = ctx.config.fieldSeparator[0]
 
         val lineageInput =
             Utils.getInputFile(
@@ -56,90 +55,56 @@ object Loader {
             )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors)
-            ctx.connectionCache.preload()
-
-            // 1. Transform the assets, so we can load them prior to creating any lineage relationships
-            logger.info { "=== Processing assets... ===" }
-            val assetsFile = "$outputDirectory${File.separator}CSA_LB_assets.csv"
-            val assetXform =
-                AssetTransformer(
-                    ctx,
-                    lineageInput,
-                    logger,
-                )
-            assetXform.transform(assetsFile)
-
-            // 2. Create the assets
-            val importConfig =
-                AssetImportCfg(
-                    assetsFile = assetsFile,
-                    assetsConfig = "advanced",
-                    assetsUpsertSemantic = ctx.config.lineageUpsertSemantic,
-                    assetsFailOnErrors = ctx.config.lineageFailOnErrors,
-                    assetsCaseSensitive = ctx.config.lineageCaseSensitive,
-                    assetsBatchSize = ctx.config.batchSize,
-                    assetsFieldSeparator = ctx.config.fieldSeparator,
-                    assetsCmHandling = CustomMetadataHandling.IGNORE.value,
-                    assetsTagHandling = AtlanTagHandling.IGNORE.value,
-                )
-            lateinit var qualifiedNameMap: Map<AssetIdentity, String>
-            Utils.initializeContext(importConfig, ctx).use { iCtx ->
-                val results = Importer.import(iCtx, outputDirectory)
-                qualifiedNameMap = results?.primary?.qualifiedNames?.toMap() ?: mapOf()
-                results?.close()
-            }
-
-            // 3. Transform the lineage, only keeping any rows that have both input and output assets in Atlan
-            logger.info { "=== Processing lineage... ===" }
-            val lineageHeaders =
-                mutableListOf(
-                    Asset.TYPE_NAME.atlanFieldName,
-                    Asset.QUALIFIED_NAME.atlanFieldName,
-                    Asset.NAME.atlanFieldName,
-                    Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
-                    Asset.CONNECTOR_NAME.atlanFieldName,
-                    LineageProcess.INPUTS.atlanFieldName,
-                    LineageProcess.OUTPUTS.atlanFieldName,
-                )
-            val lineageFile = "$outputDirectory${File.separator}CSA_LB_lineage.csv"
-            // Determine any non-standard lineage fields in the header and append them to the end of
-            // the list of standard header fields, so they're passed-through to be used as part of
-            // defining the lineage process itself
-            val inputHeaders = getHeader(lineageInput, fieldSeparator = ctx.config.fieldSeparator[0]).toMutableList()
-            inputHeaders.removeAll(AssetTransformer.INPUT_HEADERS)
-            inputHeaders.removeAll(LineageTransformer.INPUT_HEADERS)
-            inputHeaders.forEach { lineageHeaders.add(it) }
-            val lineageXform =
-                LineageTransformer(
-                    ctx,
-                    lineageInput,
-                    lineageHeaders,
-                    qualifiedNameMap,
-                    logger,
-                )
-            lineageXform.transform(lineageFile)
-
-            // 4. Load the lineage processes (note that for these we want a full, not partial, create)
-            val lineageConfig =
-                AssetImportCfg(
-                    assetsFile = lineageFile,
-                    assetsUpsertSemantic = "upsert",
-                    assetsConfig = "advanced",
-                    assetsFailOnErrors = ctx.config.lineageFailOnErrors,
-                    assetsCaseSensitive = ctx.config.lineageCaseSensitive,
-                    assetsBatchSize = ctx.config.batchSize,
-                    assetsFieldSeparator = ctx.config.fieldSeparator,
-                    assetsCmHandling = ctx.config.cmHandling,
-                    assetsTagHandling = ctx.config.tagHandling,
-                )
-            Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
-                Importer.import(iCtx, outputDirectory)?.close()
-            }
-
-            if (ctx.config.lineageFailOnErrors && (assetXform.anyFailures || lineageXform.anyFailures)) {
-                logger.error { "Errors detected during loading -- failing the workflow." }
-                exitProcess(1)
-            }
+            transform(ctx, fieldSeparator, lineageInput, "$outputDirectory${File.separator}transformed.csv")
         }
+    }
+
+    private fun transform(
+        ctx: PackageContext<LineageBuilderCfg>,
+        fieldSeparator: Char,
+        inputFile: String,
+        outputFile: String,
+    ) {
+
+        // Create the set of output headers to use:
+        // 1. Start with the original input headers (to carry through any extras)
+        val originalHeaders = getHeader(inputFile, fieldSeparator).toMutableList()
+        // 2. Remove any headers that are lineage-builder specific (not passthrough to asset import)
+        originalHeaders.removeAll(AssetXformer.INPUT_HEADERS)
+        originalHeaders.removeAll(LineageXformer.INPUT_HEADERS)
+        // 3. Start the target output headers with the base we'll need for all assets
+        val completeHeaders = AssetXformer.BASE_OUTPUT_HEADERS.toMutableList()
+        val leftOverLineage = LineageXformer.BASE_OUTPUT_HEADERS.toMutableList()
+        leftOverLineage.removeAll(completeHeaders)
+        // 4. Remove any overlapping base from the existing original headers
+        originalHeaders.removeAll(completeHeaders)
+        // 5. Then carry through any of the passthrough headers from the original input
+        completeHeaders.addAll(originalHeaders)
+        completeHeaders.addAll(leftOverLineage)
+
+        // Actually write the transformed output into a singular CSV file
+        CsvWriter
+            .builder()
+            .fieldSeparator(fieldSeparator)
+            .quoteCharacter('"')
+            .quoteStrategy(QuoteStrategies.NON_EMPTY)
+            .lineDelimiter(LineDelimiter.PLATFORM)
+            .build(
+                Paths.get(outputFile),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.WRITE,
+            ).use { writer ->
+                writer.writeRecord(completeHeaders)
+
+                logger.info { " --- Transforming assets... ---" }
+                val assetXformer = AssetXformer(ctx, inputFile, completeHeaders, logger)
+                assetXformer.transform(writer)
+
+                logger.info { " --- Transforming lineage processes... ---" }
+                val lineageXformer = LineageXformer(ctx, inputFile, completeHeaders, logger)
+                lineageXformer.transform(writer)
+            }
+
     }
 }
