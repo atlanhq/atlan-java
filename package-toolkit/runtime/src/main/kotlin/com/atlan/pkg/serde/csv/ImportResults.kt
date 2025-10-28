@@ -147,7 +147,7 @@ data class ImportResults(
                 .filterNotNull()
                 .forEach { result ->
                     combined.extendedWith(result.primary.created, closeOriginal)
-                    combined.extendedWith(result.primary.restored, closeOriginal) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
+                    combined.extendedWith(result.primary.restored, closeOriginal)
                     combined.extendedWith(result.primary.updated, closeOriginal) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
                     if (closeOriginal) {
                         result.primary.created?.close()

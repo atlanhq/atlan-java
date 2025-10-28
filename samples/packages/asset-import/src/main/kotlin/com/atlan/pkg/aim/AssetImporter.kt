@@ -321,6 +321,10 @@ class AssetImporter(
             Asset.NAME.atlanFieldName,
             Folder.PARENT_QUALIFIED_NAME.atlanFieldName,
             Folder.COLLECTION_QUALIFIED_NAME.atlanFieldName,
+            Asset.TYPE_NAME.atlanFieldName,
+            Asset.CONNECTION_QUALIFIED_NAME.atlanFieldName,
+            Asset.TENANT_ID.atlanFieldName,
+            Column.ORDER.atlanFieldName,
         )
 
     /** {@inheritDoc} */
