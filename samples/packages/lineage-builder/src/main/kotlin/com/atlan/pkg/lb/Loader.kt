@@ -65,7 +65,6 @@ object Loader {
         inputFile: String,
         outputFile: String,
     ) {
-
         // Create the set of output headers to use:
         // 1. Start with the original input headers (to carry through any extras)
         val originalHeaders = getHeader(inputFile, fieldSeparator).toMutableList()
@@ -105,6 +104,5 @@ object Loader {
                 val lineageXformer = LineageXformer(ctx, inputFile, completeHeaders, logger)
                 lineageXformer.transform(writer)
             }
-
     }
 }

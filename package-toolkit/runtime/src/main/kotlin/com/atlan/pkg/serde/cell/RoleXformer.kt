@@ -6,7 +6,6 @@ import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import kotlin.concurrent.thread
 
 /**
  * Static object to transform (really to validate) role references.

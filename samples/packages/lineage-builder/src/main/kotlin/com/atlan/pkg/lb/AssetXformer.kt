@@ -16,11 +16,11 @@ class AssetXformer(
     private val completeHeaders: List<String>,
     private val logger: KLogger,
 ) : CSVXformer(
-    inputFile = inputFile,
-    targetHeader = completeHeaders,
-    logger = logger,
-    fieldSeparator = ctx.config.fieldSeparator[0],
-) {
+        inputFile = inputFile,
+        targetHeader = completeHeaders,
+        logger = logger,
+        fieldSeparator = ctx.config.fieldSeparator[0],
+    ) {
     var anyFailures = false
 
     /** {@inheritDoc} */
