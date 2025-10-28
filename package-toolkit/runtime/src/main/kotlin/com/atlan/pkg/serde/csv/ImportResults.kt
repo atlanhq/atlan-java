@@ -146,8 +146,12 @@ data class ImportResults(
             results
                 .filterNotNull()
                 .forEach { result ->
+                    // Add restored assets first, since second-pass cyclical processing could indicate
+                    // this state for assets that were only just created in the first pass (and the first
+                    // pass creation will therefore have greater detail and should overwrite the restored
+                    // state)
+                    combined.extendedWith(result.primary.restored, closeOriginal)
                     combined.extendedWith(result.primary.created, closeOriginal)
-                    combined.extendedWith(result.primary.restored, closeOriginal) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
                     combined.extendedWith(result.primary.updated, closeOriginal) { asset -> !asset.connectionQualifiedName.isNullOrBlank() && !asset.qualifiedName.isNullOrBlank() }
                     if (closeOriginal) {
                         result.primary.created?.close()
