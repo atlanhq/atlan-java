@@ -113,7 +113,7 @@ class AssetXformer(
                 RowSerde.getHeaderForField(Asset.QUALIFIED_NAME),
                 RowSerde.getHeaderForField(Asset.TYPE_NAME),
                 RowSerde.getHeaderForField(Asset.NAME),
-                RowSerde.getHeaderForField(Asset.CONNECTOR_TYPE),
+                RowSerde.getHeaderForField(Asset.CONNECTOR_NAME),
                 RowSerde.getHeaderForField(Asset.CONNECTION_QUALIFIED_NAME),
             )
 
