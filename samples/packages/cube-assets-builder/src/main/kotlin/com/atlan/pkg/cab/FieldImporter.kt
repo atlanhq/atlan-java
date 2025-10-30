@@ -118,14 +118,13 @@ class FieldImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Import fields by generation, top-to-bottom, and stop when we hit a generation with no fields
         logger.info { "Loading fields in multiple passes, by generation..." }
-        val individualResults = mutableListOf<ImportResults?>()
         while (generationToProcess < maxFieldGeneration.get()) {
             generationToProcess += 1
             logger.info { "--- Loading generation $generationToProcess fields... ---" }
             val results = super.import(columnsToSkip)
-            individualResults.add(results)
+            if (results != null) ctx.processedResults.add(results)
         }
-        return ImportResults.combineAll(ctx.client, true, *individualResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *ctx.processedResults.toTypedArray())
     }
 
     /** {@inheritDoc} */
