@@ -168,7 +168,7 @@ object AssetRefXformer {
                                 if (matchedQN.isNotBlank()) break
                             }
                             matchedQN.ifBlank {
-                                qualifiedName
+                                resolvedQN
                             }
                         } else {
                             qualifiedName
