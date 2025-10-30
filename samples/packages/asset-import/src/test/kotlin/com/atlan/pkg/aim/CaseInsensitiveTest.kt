@@ -7,7 +7,6 @@ import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Column
 import com.atlan.model.assets.ColumnProcess
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.assets.LineageProcess
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
@@ -21,7 +20,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
