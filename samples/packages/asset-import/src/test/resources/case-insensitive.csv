@@ -1,0 +1,11 @@
+qualifiedName,typeName,name,connectionQualifiedName,inputs,outputs,process,table,view,tableQualifiedName,viewQualifiedName,columnCount,connectorName,adminRoles
+{{{CTYPE}/{CNAME}}},Connection,{CNAME},,,,,,,,,,{CTYPE},$admin
+{{{CTYPE}/{CNAME}}}/db1/schema1/source_table,Table,source_table,{{{CTYPE}/{CNAME}}},,,,,,,,2,,
+{{{CTYPE}/{CNAME}}}/db1/schema1/source_table/col1,Column,col1,{{{CTYPE}/{CNAME}}},,,,Table@{{{CTYPE}/{CNAME}}}/db1/schema1/source_table,,{{{CTYPE}/{CNAME}}}/db1/schema1/source_table,,,,
+{{{CTYPE}/{CNAME}}}/db1/schema1/source_table/col2,Column,col2,{{{CTYPE}/{CNAME}}},,,,Table@{{{CTYPE}/{CNAME}}}/db1/schema1/source_table,,{{{CTYPE}/{CNAME}}}/db1/schema1/source_table,,,,
+{{{CTYPE}/{CNAME}}}/db2/schema2/target_view,View,target_view,{{{CTYPE}/{CNAME}}},,,,,,,,2,,
+{{{CTYPE}/{CNAME}}}/db2/schema2/target_view/col1,Column,col1,{{{CTYPE}/{CNAME}}},,,,,View@{{{CTYPE}/{CNAME}}}/db2/schema2/target_view,,{{{CTYPE}/{CNAME}}}/db2/schema2/target_view,,,
+{{{CTYPE}/{CNAME}}}/db2/schema2/target_view/col2,Column,col2,{{{CTYPE}/{CNAME}}},,,,,View@{{{CTYPE}/{CNAME}}}/db2/schema2/target_view,,{{{CTYPE}/{CNAME}}}/db2/schema2/target_view,,,
+{{{CTYPE}/{CNAME}}}/xform_123,Process,source_table > target_view,{{{CTYPE}/{CNAME}}},Table@{{{CTYPE}/{CNAME}}}/DB1/Schema1/SOURCE_TABLE,View@{{{CTYPE}/{CNAME}}}/db2/Schema2/Target_view,,,,,,,,
+{{{CTYPE}/{CNAME}}}/xform_123/cll1,ColumnProcess,source_table.col1 > target_view.col1,{{{CTYPE}/{CNAME}}},Column@{{{CTYPE}/{CNAME}}}/DB1/Schema1/SOURCE_TABLE/Col1,Column@{{{CTYPE}/{CNAME}}}/db2/Schema2/Target_view/Col1,Process@{{{CTYPE}/{CNAME}}}/xform_123,,,,,,,
+{{{CTYPE}/{CNAME}}}/xform_123/cll2,ColumnProcess,source_table.col2 > target_view.col2,{{{CTYPE}/{CNAME}}},Column@{{{CTYPE}/{CNAME}}}/DB1/Schema1/SOURCE_TABLE/Col2,Column@{{{CTYPE}/{CNAME}}}/db2/Schema2/Target_view/Col2,Process@{{{CTYPE}/{CNAME}}}/xform_123,,,,,,,
