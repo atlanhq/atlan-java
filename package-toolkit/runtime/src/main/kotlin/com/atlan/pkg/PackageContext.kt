@@ -12,6 +12,8 @@ import com.atlan.pkg.cache.GlossaryCache
 import com.atlan.pkg.cache.LinkCache
 import com.atlan.pkg.cache.TermCache
 import com.atlan.pkg.cache.TypeDefCache
+import com.atlan.pkg.serde.csv.ImportResults
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Context for a custom package, including its tenant connectivity (client), package-specific configuration,
@@ -35,6 +37,8 @@ class PackageContext<T : CustomConfig<T>>(
     val dataProductCache = DataProductCache(this)
     val linkCache = LinkCache(this)
     val typeDefCache = TypeDefCache(this)
+    val processedResults = mutableListOf<ImportResults>()
+    val caseSensitive = AtomicBoolean(true)
 
     /** {@inheritDoc} */
     override fun close() {
@@ -48,6 +52,9 @@ class PackageContext<T : CustomConfig<T>>(
         AtlanCloseable.close(typeDefCache)
         if (!reusedClient) {
             AtlanCloseable.close(client)
+        }
+        processedResults.forEach {
+            AtlanCloseable.close(it)
         }
     }
 }

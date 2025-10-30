@@ -20,6 +20,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.util.AssetResolver
 import com.atlan.serde.Serde
+import com.atlan.util.AssetBatch
 import com.atlan.util.ParallelBatch
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicLong
@@ -157,7 +158,22 @@ object AssetRefXformer {
                     val (refOnly, semantic) = getSemantic(refOverride)
                     val typeName = refOnly.substringBefore(TYPE_QN_DELIMITER)
                     val qualifiedName = refOnly.substringAfter(TYPE_QN_DELIMITER)
-                    getRefByQN(ctx, typeName, qualifiedName, semantic)
+                    val qnToUse =
+                        if (!ctx.caseSensitive.get()) {
+                            val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
+                            val candidate = AssetBatch.AssetIdentity(typeName, resolvedQN, true)
+                            var matchedQN = ""
+                            for (result in ctx.processedResults) {
+                                matchedQN = result.primary.qualifiedNames.getOrElse(candidate) { "" }
+                                if (matchedQN.isNotBlank()) break
+                            }
+                            matchedQN.ifBlank {
+                                resolvedQN
+                            }
+                        } else {
+                            qualifiedName
+                        }
+                    getRefByQN(ctx, typeName, qnToUse, semantic)
                 }
             }
         // Extend the baseRef with additional details

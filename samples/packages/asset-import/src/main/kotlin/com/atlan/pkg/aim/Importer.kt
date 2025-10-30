@@ -45,6 +45,8 @@ object Importer {
             exitProcess(1)
         }
 
+        val assetsCaseSensitive = ctx.config.getEffectiveValue(AssetImportCfg::assetsCaseSensitive, AssetImportCfg::assetsConfig)
+        ctx.caseSensitive.set(assetsCaseSensitive)
         val assetsFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::assetsFieldSeparator, AssetImportCfg::assetsConfig)
         val assetsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::assetsFailOnErrors, AssetImportCfg::assetsConfig)
 
