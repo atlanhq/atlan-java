@@ -241,9 +241,8 @@ public class JacksonUtils {
      * @param <T> the type of the object's value
      * @throws JsonProcessingException on any problems parsing the expected value
      */
-    public static<T> T deserializeObject(
-        AtlanClient client, JsonNode node, String path, Class<T> type)
-        throws JsonProcessingException {
+    public static <T> T deserializeObject(AtlanClient client, JsonNode node, String path, Class<T> type)
+            throws JsonProcessingException {
         JsonNode value = node.get(path);
         return value == null || value.isNull() ? null : client.convertValue(value, type);
     }
