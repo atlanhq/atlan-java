@@ -160,11 +160,13 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (immediateDownstream != null) {
             builder.immediateDownstream(immediateDownstream);
         }
-        Map<String, List<Reference>> addedRelationshipAttributes = JacksonUtils.deserializeObject(client, root, "addedRelationshipAttributes", new TypeReference<>() {});
+        Map<String, List<Reference>> addedRelationshipAttributes =
+                JacksonUtils.deserializeObject(client, root, "addedRelationshipAttributes", new TypeReference<>() {});
         if (addedRelationshipAttributes != null) {
             builder.addedRelationshipAttributes(addedRelationshipAttributes);
         }
-        Map<String, List<Reference>> removedRelationshipAttributes = JacksonUtils.deserializeObject(client, root, "removedRelationshipAttributes", new TypeReference<>() {});
+        Map<String, List<Reference>> removedRelationshipAttributes =
+                JacksonUtils.deserializeObject(client, root, "removedRelationshipAttributes", new TypeReference<>() {});
         if (removedRelationshipAttributes != null) {
             builder.removedRelationshipAttributes(removedRelationshipAttributes);
         }
