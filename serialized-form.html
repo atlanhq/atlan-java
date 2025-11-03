@@ -52254,6 +52254,11 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>addedRelationshipAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&gt; addedRelationshipAttributes</pre>
+<div class="block">Relationships that were added to this asset (part of audit logging ONLY).</div>
+</li>
+<li class="block-list">
 <h5>customAttributes</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; customAttributes</pre>
 <div class="block">Attribute(s) that handle custom information direct from source systems. Not to be
@@ -52299,6 +52304,11 @@ loadScripts(document, 'script');</script>
 <h5>relationshipType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> relationshipType</pre>
 <div class="block">Type of the relationship (if this is a related entity).</div>
+</li>
+<li class="block-list">
+<h5>removedRelationshipAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&gt; removedRelationshipAttributes</pre>
+<div class="block">Relationships that were removed from this asset (part of audit logging ONLY).</div>
 </li>
 <li class="block-list">
 <h5>typeName</h5>
