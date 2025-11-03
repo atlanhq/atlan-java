@@ -9,7 +9,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.relations.Reference;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;
@@ -160,13 +159,13 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (immediateDownstream != null) {
             builder.immediateDownstream(immediateDownstream);
         }
-        Map<String, List<Reference>> addedRelationshipAttributes =
-                JacksonUtils.deserializeObject(client, root, "addedRelationshipAttributes", new TypeReference<>() {});
+        Asset addedRelationshipAttributes =
+                (Asset) JacksonUtils.deserializeObject(client, root, "addedRelationshipAttributes", assetClass);
         if (addedRelationshipAttributes != null) {
             builder.addedRelationshipAttributes(addedRelationshipAttributes);
         }
-        Map<String, List<Reference>> removedRelationshipAttributes =
-                JacksonUtils.deserializeObject(client, root, "removedRelationshipAttributes", new TypeReference<>() {});
+        Asset removedRelationshipAttributes =
+                (Asset) JacksonUtils.deserializeObject(client, root, "removedRelationshipAttributes", assetClass);
         if (removedRelationshipAttributes != null) {
             builder.removedRelationshipAttributes(removedRelationshipAttributes);
         }
