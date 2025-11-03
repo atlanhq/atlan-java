@@ -13,6 +13,7 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.search.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -1417,7 +1418,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(client, column5.getGuid(), 50).build();
 
-        AuditSearchResponse response = retrySearchUntil(request, 29L);
+        AuditSearchResponse response = retrySearchUntil(request, 33L);
 
         validateAudits(response.getEntityAudits());
 
@@ -1425,7 +1426,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
                 .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
                 .pageSize(10);
-        assertEquals(builder.count(), 29);
+        assertEquals(builder.count(), 33);
         validateAudits(builder.stream().collect(Collectors.toList()));
     }
 
@@ -1436,14 +1437,14 @@ public class SQLAssetTest extends AtlanLiveTest {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
                 .build();
-        AuditSearchResponse response = retrySearchUntil(request, 29L);
+        AuditSearchResponse response = retrySearchUntil(request, 33L);
         validateAudits(response.getEntityAudits());
     }
 
     private void validateAudits(List<EntityAudit> audits) {
-        assertEquals(audits.size(), 29);
+        assertEquals(audits.size(), 33);
 
-        EntityAudit one = audits.get(28);
+        EntityAudit one = audits.get(32);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_CREATE);
         AuditDetail detail = one.getDetail();
@@ -1459,15 +1460,13 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNull(column.getAnnouncementType());
 
         // TODO: there seems to be a (spurious?) entity update here for nothing at all (?)
-        one = audits.get(27);
+        one = audits.get(31);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
         assertTrue(detail instanceof Column);
-        // column = (Column) detail;
-        // log.info("Full change at 27: {}", column.toJson(client));
 
-        one = audits.get(26);
+        one = audits.get(30);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1476,7 +1475,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         assertEquals(column.getOwnerGroups(), Set.of(ownerGroup.getName()));
 
-        one = audits.get(25);
+        one = audits.get(29);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1485,7 +1484,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         assertTrue(column.getOwnerGroups().isEmpty());
 
-        one = audits.get(24);
+        one = audits.get(28);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1495,7 +1494,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(column.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
 
-        one = audits.get(23);
+        one = audits.get(27);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1506,7 +1505,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(clearedFields.contains("certificateStatus"));
         assertTrue(clearedFields.contains("certificateStatusMessage"));
 
-        one = audits.get(22);
+        one = audits.get(26);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1517,7 +1516,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(column.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
 
-        one = audits.get(21);
+        one = audits.get(25);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1529,7 +1528,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(clearedFields.contains("announcementTitle"));
         assertTrue(clearedFields.contains("announcementMessage"));
 
-        one = audits.get(20);
+        one = audits.get(24);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1539,7 +1538,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getDescription(), DESCRIPTION);
         assertEquals(column.getUserDescription(), DESCRIPTION);
 
-        one = audits.get(19);
+        one = audits.get(23);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1549,7 +1548,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("description"));
 
-        one = audits.get(18);
+        one = audits.get(22);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1559,7 +1558,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("userDescription"));
 
-        one = audits.get(17);
+        one = audits.get(21);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
@@ -1568,7 +1567,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(tag.getTypeName(), ATLAN_TAG_NAME1);
         assertEquals(tag.getEntityGuid(), column5.getGuid());
 
-        one = audits.get(16);
+        one = audits.get(20);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1578,7 +1577,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(column.getAtlanTags());
         assertEquals(column.getAtlanTags().size(), 1);
 
-        one = audits.get(15);
+        one = audits.get(19);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
@@ -1586,7 +1585,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         tag = (AtlanTag) detail;
         assertEquals(tag.getTypeName(), ATLAN_TAG_NAME1);
 
-        one = audits.get(14);
+        one = audits.get(18);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1597,14 +1596,14 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         Set<AtlanTag> tagsAdded = new HashSet<>();
 
-        one = audits.get(13);
+        one = audits.get(17);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
         assertTrue(detail instanceof AtlanTag);
         tagsAdded.add((AtlanTag) detail);
 
-        one = audits.get(12);
+        one = audits.get(16);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
@@ -1622,7 +1621,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME1));
         assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME2));
 
-        one = audits.get(11);
+        one = audits.get(15);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1639,7 +1638,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         Set<AtlanTag> tagsDeleted = new HashSet<>();
 
-        one = audits.get(10);
+        one = audits.get(14);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
@@ -1653,7 +1652,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME2));
 
         // TODO: there seems to be a (spurious?) entity update here for ATLAN_TAG_NAME1
-        one = audits.get(9);
+        one = audits.get(13);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1667,7 +1666,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         tagsAdded = new HashSet<>();
 
-        one = audits.get(8);
+        one = audits.get(12);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
@@ -1682,7 +1681,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(tagsAddedNames.size(), 1);
         assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME2));
 
-        one = audits.get(7);
+        one = audits.get(11);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1698,14 +1697,14 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         tagsDeleted = new HashSet<>();
 
-        one = audits.get(6);
+        one = audits.get(10);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
         assertTrue(detail instanceof AtlanTag);
         tagsDeleted.add((AtlanTag) detail);
 
-        one = audits.get(5);
+        one = audits.get(9);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
@@ -1718,7 +1717,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME1));
         assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME2));
 
-        one = audits.get(4);
+        one = audits.get(8);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1727,7 +1726,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         assertTrue(column.getAtlanTags().isEmpty());
 
-        one = audits.get(3);
+        one = audits.get(7);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1738,7 +1737,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getAssignedTerms().size(), 1);
         assertEquals(column.getAssignedTerms().first().getGuid(), term1.getGuid());
 
-        one = audits.get(2);
+        one = audits.get(6);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1748,20 +1747,70 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(
                 column.getAssignedTerms() == null || column.getAssignedTerms().isEmpty());
 
-        // TODO: this should still be in the audit log -- seems that appending terms isn't recording in audit log
-        // one = audits.get(1);
-        // assertNotNull(one);
-        // assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        // detail = one.getDetail();
-        // assertTrue(detail instanceof Column);
-        // column = (Column) detail;
-        // validateUpdatedColumn(column);
-        // Set<IGlossaryTerm> terms = column.getAssignedTerms();
-        // assertEquals(terms.size(), 2);
-        // Set<String> termGuids = terms.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
+        one = audits.get(5);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getAddedRelationshipAttributes());
+        assertEquals(column.getAddedRelationshipAttributes().size(), 2);
+        List<Reference> terms = column.getAddedRelationshipAttributes().get("meanings");
+        assertEquals(terms.size(), 2);
+        // TODO: at the moment these are just the same GUID and typeName as the logged asset itself
+        // Set<String> termGuids = terms.stream().map(Reference::getGuid).collect(Collectors.toSet());
         // assertEquals(termGuids.size(), 2);
         // assertTrue(termGuids.contains(term1.getGuid()));
         // assertTrue(termGuids.contains(term2.getGuid()));
+
+        one = audits.get(4);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getRemovedRelationshipAttributes());
+        assertEquals(column.getRemovedRelationshipAttributes().size(), 2);
+        terms = column.getRemovedRelationshipAttributes().get("meanings");
+        assertEquals(terms.size(), 1);
+        // TODO: at the moment these are just the same GUID and typeName as the logged asset itself
+        // assertNotNull(column.getAssignedTerms());
+        // assertEquals(column.getAssignedTerms().size(), 1);
+        // assertEquals(column.getAssignedTerms().first().getGuid(), term1.getGuid());
+
+        one = audits.get(3);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getAddedRelationshipAttributes());
+        assertEquals(column.getAddedRelationshipAttributes().size(), 2);
+        terms = column.getAddedRelationshipAttributes().get("meanings");
+        assertEquals(terms.size(), 1);
+        // TODO: at the moment these are just the same GUID and typeName as the logged asset itself
+        // termGuids = terms.stream().map(Reference::getGuid).collect(Collectors.toSet());
+        // assertEquals(termGuids.size(), 2);
+        // assertTrue(termGuids.contains(term1.getGuid()));
+        // assertTrue(termGuids.contains(term2.getGuid()));
+
+        one = audits.get(2);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getRemovedRelationshipAttributes());
+        assertEquals(column.getRemovedRelationshipAttributes().size(), 2);
+        terms = column.getRemovedRelationshipAttributes().getOrDefault("meanings", Collections.emptyList());
+        assertNotNull(terms);
+        assertEquals(terms.size(), 1);
+        // TODO: at the moment these are just the same GUID and typeName as the logged asset itself
+        // assertEquals(terms.get(0).getGuid(), term2.getGuid());
 
         one = audits.get(1);
         assertNotNull(one);
@@ -1770,48 +1819,9 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertNotNull(column.getAssignedTerms());
-        assertEquals(column.getAssignedTerms().size(), 1);
-        assertEquals(column.getAssignedTerms().first().getGuid(), term1.getGuid());
-
-        // TODO: this should still be in the audit log -- again, missing appended terms (?)
-        // one = audits.get(3);
-        // assertNotNull(one);
-        // assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        // detail = one.getDetail();
-        // assertTrue(detail instanceof Column);
-        // column = (Column) detail;
-        // validateUpdatedColumn(column);
-        // terms = column.getAssignedTerms();
-        // assertEquals(terms.size(), 2);
-        // termGuids = terms.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
-        // assertEquals(termGuids.size(), 2);
-        // assertTrue(termGuids.contains(term1.getGuid()));
-        // assertTrue(termGuids.contains(term2.getGuid()));
-
-        // TODO: this should still be in the audit log -- again, missing appended or removed terms (?)
-        // one = audits.get(2);
-        // assertNotNull(one);
-        // assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        // detail = one.getDetail();
-        // assertTrue(detail instanceof Column);
-        // column = (Column) detail;
-        // validateUpdatedColumn(column);
-        // assertNotNull(column.getAssignedTerms());
-        // assertEquals(column.getAssignedTerms().size(), 1);
-        // assertEquals(column.getAssignedTerms().first().getGuid(), term2.getGuid());
-
-        // TODO: this should still be in the audit log -- again, missing appended or removed terms (?)
-        // one = audits.get(1);
-        // assertNotNull(one);
-        // assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        // detail = one.getDetail();
-        // assertTrue(detail instanceof Column);
-        // column = (Column) detail;
-        // validateUpdatedColumn(column);
-        // assertNotNull(column.getAssignedTerms());
-        // assertEquals(column.getAssignedTerms().size(), 1);
-        // assertEquals(column.getAssignedTerms().first().getGuid(), term1.getGuid());
+        Set<IGlossaryTerm> relatedTerms = column.getAssignedTerms();
+        assertEquals(relatedTerms.size(), 1);
+        assertEquals(relatedTerms.stream().map(IGlossaryTerm::getGuid).toList(), List.of(term1.getGuid()));
 
         one = audits.get(0);
         assertNotNull(one);

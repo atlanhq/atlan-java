@@ -221,6 +221,12 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     @Singular("customAttribute")
     Map<String, String> customAttributes;
 
+    /** Relationships that were added to this asset (part of audit logging ONLY). */
+    final Map<String, List<Reference>> addedRelationshipAttributes;
+
+    /** Relationships that were removed from this asset (part of audit logging ONLY). */
+    final Map<String, List<Reference>> removedRelationshipAttributes;
+
     /** {@inheritDoc} */
     @Override
     public int compareTo(Reference o) {
