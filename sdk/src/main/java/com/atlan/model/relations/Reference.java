@@ -222,10 +222,10 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     Map<String, String> customAttributes;
 
     /** Relationships that were added to this asset (part of audit logging ONLY). */
-    final Map<String, List<Reference>> addedRelationshipAttributes;
+    final Reference addedRelationshipAttributes;
 
     /** Relationships that were removed from this asset (part of audit logging ONLY). */
-    final Map<String, List<Reference>> removedRelationshipAttributes;
+    final Reference removedRelationshipAttributes;
 
     /** {@inheritDoc} */
     @Override

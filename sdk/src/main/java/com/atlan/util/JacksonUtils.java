@@ -231,6 +231,24 @@ public class JacksonUtils {
     }
 
     /**
+     * Deserialize the provided path into a full object, or null if there is no value at the path.
+     *
+     * @param client connectivity to Atlan
+     * @param node from which to pull the value
+     * @param path at which to find the value
+     * @param type of the expected value
+     * @return the object value, or null
+     * @param <T> the type of the object's value
+     * @throws JsonProcessingException on any problems parsing the expected value
+     */
+    public static<T> T deserializeObject(
+        AtlanClient client, JsonNode node, String path, Class<T> type)
+        throws JsonProcessingException {
+        JsonNode value = node.get(path);
+        return value == null || value.isNull() ? null : client.convertValue(value, type);
+    }
+
+    /**
      * Serialize the provided field into an object, or leave it out if there is no value.
      *
      * @param gen generator through which to serialize
