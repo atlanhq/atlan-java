@@ -152,58 +152,66 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Deserialize the provided path into a full object, or null if there is no value at the path.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializePrimitive(com.fasterxml.jackson.databind.JsonNode,java.lang.reflect.Method)" class="member-name-link">deserializePrimitive</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;primitive,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializeObject(com.atlan.AtlanClient,com.fasterxml.jackson.databind.JsonNode,java.lang.String,java.lang.Class)" class="member-name-link">deserializeObject</a><wbr>(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ com.fasterxml.jackson.databind.JsonNode&nbsp;node,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Deserialize a primitive JSON value to an object.</div>
+<div class="block">Deserialize the provided path into a full object, or null if there is no value at the path.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializePrimitive(com.fasterxml.jackson.databind.JsonNode,java.lang.reflect.Method,java.lang.Class)" class="member-name-link">deserializePrimitive</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;primitive,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;singularClass)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializePrimitive(com.fasterxml.jackson.databind.JsonNode,java.lang.reflect.Method)" class="member-name-link">deserializePrimitive</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;primitive,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Deserialize a primitive JSON value to an object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializeString(com.fasterxml.jackson.databind.JsonNode,java.lang.String)" class="member-name-link">deserializeString</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;node,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializePrimitive(com.fasterxml.jackson.databind.JsonNode,java.lang.reflect.Method,java.lang.Class)" class="member-name-link">deserializePrimitive</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;primitive,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;singularClass)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Deserialize a primitive JSON value to an object.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializeString(com.fasterxml.jackson.databind.JsonNode,java.lang.String)" class="member-name-link">deserializeString</a><wbr>(com.fasterxml.jackson.databind.JsonNode&nbsp;node,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Deserialize the provided path into a string, or null if there is no value at the path.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeBoolean(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Boolean)" class="member-name-link">serializeBoolean</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeBoolean(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Boolean)" class="member-name-link">serializeBoolean</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Serialize the provided field into a boolean, or leave it out if there is no value.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeDouble(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Double)" class="member-name-link">serializeDouble</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeDouble(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Double)" class="member-name-link">serializeDouble</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Serialize the provided field into a double, or leave it out if there is no value.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeLong(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Long)" class="member-name-link">serializeLong</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeLong(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Long)" class="member-name-link">serializeLong</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Serialize the provided field into a long, or leave it out if there is no value.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeObject(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Object)" class="member-name-link">serializeObject</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeObject(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Object)" class="member-name-link">serializeObject</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Serialize the provided field into an object, or leave it out if there is no value.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeString(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.String)" class="member-name-link">serializeString</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeString(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.String)" class="member-name-link">serializeString</a><wbr>(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Serialize the provided field into a string, or leave it out if there is no value.</div>
 </div>
 </div>
@@ -454,6 +462,30 @@ loadScripts(document, 'script');</script>
 <dd><code>node</code> - from which to pull the value</dd>
 <dd><code>path</code> - at which to find the value</dd>
 <dd><code>typeReference</code> - of the expected value</dd>
+<dt>Returns:</dt>
+<dd>the object value, or null</dd>
+<dt>Throws:</dt>
+<dd><code>com.fasterxml.jackson.core.JsonProcessingException</code> - on any problems parsing the expected value</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="deserializeObject(com.atlan.AtlanClient,com.fasterxml.jackson.databind.JsonNode,java.lang.String,java.lang.Class)">
+<h3>deserializeObject</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">deserializeObject</span><wbr><span class="parameters">(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ com.fasterxml.jackson.databind.JsonNode&nbsp;node,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span>
+                               throws <span class="exceptions">com.fasterxml.jackson.core.JsonProcessingException</span></div>
+<div class="block">Deserialize the provided path into a full object, or null if there is no value at the path.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the type of the object's value</dd>
+<dt>Parameters:</dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>node</code> - from which to pull the value</dd>
+<dd><code>path</code> - at which to find the value</dd>
+<dd><code>type</code> - of the expected value</dd>
 <dt>Returns:</dt>
 <dd>the object value, or null</dd>
 <dt>Throws:</dt>
