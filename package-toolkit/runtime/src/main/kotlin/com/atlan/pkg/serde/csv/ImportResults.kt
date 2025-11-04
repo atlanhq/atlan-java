@@ -27,7 +27,7 @@ data class ImportResults(
         if (other != null) {
             primary.extendWith(other.primary, closeOriginal)
             related.extendWith(other.related, closeOriginal)
-            anyFailures = anyFailures && other.anyFailures
+            anyFailures = anyFailures || other.anyFailures
         }
     }
 
