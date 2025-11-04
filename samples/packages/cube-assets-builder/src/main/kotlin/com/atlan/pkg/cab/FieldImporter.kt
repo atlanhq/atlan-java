@@ -122,9 +122,9 @@ class FieldImporter(
             generationToProcess += 1
             logger.info { "--- Loading generation $generationToProcess fields... ---" }
             val results = super.import(columnsToSkip)
-            if (results != null) ctx.processedResults.add(results)
+            if (results != null) ctx.processedResults.extendWith(results)
         }
-        return ImportResults.combineAll(ctx.client, true, *ctx.processedResults.toTypedArray())
+        return ctx.processedResults
     }
 
     /** {@inheritDoc} */
