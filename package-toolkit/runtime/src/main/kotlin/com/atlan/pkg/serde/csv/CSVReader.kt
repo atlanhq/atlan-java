@@ -349,6 +349,8 @@ class CSVReader
                         logger.info { "Total READMEs deleted: $totalDeleted" }
                         // Note: it looks weird that we combineAll here, but this is necessary to COPY contents of
                         // the details, as the originals will be auto-closed prior to returning
+                        // (And also, we purposefully create separate results per-import so that we can streamline
+                        // the caching of assets (not re-cache the same assets over and over as an import grows)
                         val results =
                             ImportResults(
                                 someFailure,
@@ -356,8 +358,8 @@ class CSVReader
                                     ctx.client,
                                     true,
                                     ImportResults.Details(
-                                        primaryBatch.resolvedGuids.toMap(),
-                                        primaryBatch.resolvedQualifiedNames.toMap(),
+                                        primaryBatch.resolvedGuids.toMutableMap(),
+                                        primaryBatch.resolvedQualifiedNames.toMutableMap(),
                                         primaryBatch.created,
                                         primaryBatch.updated,
                                         primaryBatch.restored,
@@ -372,8 +374,8 @@ class CSVReader
                                     ctx.client,
                                     true,
                                     ImportResults.Details(
-                                        relatedBatch.resolvedGuids.toMap(),
-                                        primaryBatch.resolvedQualifiedNames.toMap(),
+                                        relatedBatch.resolvedGuids.toMutableMap(),
+                                        primaryBatch.resolvedQualifiedNames.toMutableMap(),
                                         relatedBatch.created,
                                         relatedBatch.updated,
                                         relatedBatch.restored,
