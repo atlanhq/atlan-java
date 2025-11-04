@@ -39,30 +39,34 @@ class PackageContext<T : CustomConfig<T>>(
     val dataProductCache = DataProductCache(this)
     val linkCache = LinkCache(this)
     val typeDefCache = TypeDefCache(this)
-    val processedResults = ImportResults(false,
-        ImportResults.Details(
-            mutableMapOf(),
-            mutableMapOf(),
-            OffHeapAssetCache(client, "pp-created"),
-            OffHeapAssetCache(client, "pp-updated"),
-            OffHeapAssetCache(client, "pp-restored"),
-            OffHeapAssetCache(client, "pp-skipped"),
-            OffHeapFailureCache(client, "pp-failed"),
-            0L,
-            0L,
-            0L
-        ), ImportResults.Details(
-            mutableMapOf(),
-            mutableMapOf(),
-            OffHeapAssetCache(client, "pr-created"),
-            OffHeapAssetCache(client, "pr-updated"),
-            OffHeapAssetCache(client, "pr-restored"),
-            OffHeapAssetCache(client, "pr-skipped"),
-            OffHeapFailureCache(client, "pr-failed"),
-            0L,
-            0L,
-            0L
-        ))
+    val processedResults =
+        ImportResults(
+            false,
+            ImportResults.Details(
+                mutableMapOf(),
+                mutableMapOf(),
+                OffHeapAssetCache(client, "pp-created"),
+                OffHeapAssetCache(client, "pp-updated"),
+                OffHeapAssetCache(client, "pp-restored"),
+                OffHeapAssetCache(client, "pp-skipped"),
+                OffHeapFailureCache(client, "pp-failed"),
+                0L,
+                0L,
+                0L,
+            ),
+            ImportResults.Details(
+                mutableMapOf(),
+                mutableMapOf(),
+                OffHeapAssetCache(client, "pr-created"),
+                OffHeapAssetCache(client, "pr-updated"),
+                OffHeapAssetCache(client, "pr-restored"),
+                OffHeapAssetCache(client, "pr-skipped"),
+                OffHeapFailureCache(client, "pr-failed"),
+                0L,
+                0L,
+                0L,
+            ),
+        )
     val caseSensitive = AtomicBoolean(true)
 
     /** {@inheritDoc} */

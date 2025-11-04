@@ -162,7 +162,9 @@ object AssetRefXformer {
                         if (!ctx.caseSensitive.get()) {
                             val resolvedQN = resolveDeferredQN(ctx, qualifiedName)
                             val candidate = AssetBatch.AssetIdentity(typeName, resolvedQN, true)
-                            val matchedQN = ctx.processedResults.primary.qualifiedNames.getOrElse(candidate) { "" }
+                            val matchedQN =
+                                ctx.processedResults.primary.qualifiedNames
+                                    .getOrElse(candidate) { "" }
                             matchedQN.ifBlank {
                                 resolvedQN
                             }

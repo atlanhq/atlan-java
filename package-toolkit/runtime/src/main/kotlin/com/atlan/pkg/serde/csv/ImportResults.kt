@@ -20,7 +20,10 @@ data class ImportResults(
     val primary: Details,
     val related: Details,
 ) : AtlanCloseable {
-    fun extendWith(other: ImportResults?, closeOriginal: Boolean = false) {
+    fun extendWith(
+        other: ImportResults?,
+        closeOriginal: Boolean = false,
+    ) {
         if (other != null) {
             primary.extendWith(other.primary, closeOriginal)
             related.extendWith(other.related, closeOriginal)
@@ -53,7 +56,10 @@ data class ImportResults(
         val numUpdated: Long,
         val numRestored: Long,
     ) : AtlanCloseable {
-        fun extendWith(other: Details?, closeOriginal: Boolean = false) {
+        fun extendWith(
+            other: Details?,
+            closeOriginal: Boolean = false,
+        ) {
             if (other != null) {
                 guidAssignments.putAll(other.guidAssignments)
                 qualifiedNames.putAll(other.qualifiedNames)
