@@ -52,9 +52,9 @@ data class ImportResults(
         val restored: OffHeapAssetCache?,
         val skipped: OffHeapAssetCache?,
         val failed: OffHeapFailureCache?,
-        val numCreated: Long,
-        val numUpdated: Long,
-        val numRestored: Long,
+        var numCreated: Long,
+        var numUpdated: Long,
+        var numRestored: Long,
     ) : AtlanCloseable {
         fun extendWith(
             other: Details?,
@@ -68,6 +68,9 @@ data class ImportResults(
                 restored?.extendedWith(other.restored, closeOriginal)
                 skipped?.extendedWith(other.skipped, closeOriginal)
                 failed?.extendedWith(other.failed, closeOriginal)
+                numCreated += other.numCreated
+                numUpdated += other.numUpdated
+                numRestored += other.numRestored
             }
         }
 
