@@ -347,7 +347,7 @@ class AssetImporter(
         typeLoadingOrder.forEach {
             typeToProcess = it
             val results = super.import(typeToProcess, colsToSkip, secondPassRemain)
-            if (results != null) ctx.processedResults.extendWith(results)
+            if (results != null) ctx.processedResults.extendWith(results, true)
         }
         return ctx.processedResults
     }
