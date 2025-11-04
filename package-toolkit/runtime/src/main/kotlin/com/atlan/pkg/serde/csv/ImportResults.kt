@@ -16,10 +16,21 @@ import com.atlan.util.AssetBatch.AssetIdentity
  * @param related details about the related assets (READMEs, links, etc)
  */
 data class ImportResults(
-    val anyFailures: Boolean,
+    var anyFailures: Boolean,
     val primary: Details,
     val related: Details,
 ) : AtlanCloseable {
+    fun extendWith(
+        other: ImportResults?,
+        closeOriginal: Boolean = false,
+    ) {
+        if (other != null) {
+            primary.extendWith(other.primary, closeOriginal)
+            related.extendWith(other.related, closeOriginal)
+            anyFailures = anyFailures || other.anyFailures
+        }
+    }
+
     /**
      * Details about the import results.
      *
@@ -34,17 +45,35 @@ data class ImportResults(
      * @param numRestored number of assets that were potentially restored (count only)
      */
     class Details(
-        val guidAssignments: Map<String, String>,
-        val qualifiedNames: Map<AssetIdentity, String>,
+        val guidAssignments: MutableMap<String, String>,
+        val qualifiedNames: MutableMap<AssetIdentity, String>,
         val created: OffHeapAssetCache?,
         val updated: OffHeapAssetCache?,
         val restored: OffHeapAssetCache?,
         val skipped: OffHeapAssetCache?,
         val failed: OffHeapFailureCache?,
-        val numCreated: Long,
-        val numUpdated: Long,
-        val numRestored: Long,
+        var numCreated: Long,
+        var numUpdated: Long,
+        var numRestored: Long,
     ) : AtlanCloseable {
+        fun extendWith(
+            other: Details?,
+            closeOriginal: Boolean = false,
+        ) {
+            if (other != null) {
+                guidAssignments.putAll(other.guidAssignments)
+                qualifiedNames.putAll(other.qualifiedNames)
+                created?.extendedWith(other.created, closeOriginal)
+                updated?.extendedWith(other.updated, closeOriginal)
+                restored?.extendedWith(other.restored, closeOriginal)
+                skipped?.extendedWith(other.skipped, closeOriginal)
+                failed?.extendedWith(other.failed, closeOriginal)
+                numCreated += other.numCreated
+                numUpdated += other.numUpdated
+                numRestored += other.numRestored
+            }
+        }
+
         companion object {
             /**
              * Combine multiple sets of details with another.

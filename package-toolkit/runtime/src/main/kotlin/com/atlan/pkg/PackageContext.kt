@@ -3,6 +3,8 @@
 package com.atlan.pkg
 
 import com.atlan.AtlanClient
+import com.atlan.cache.OffHeapAssetCache
+import com.atlan.cache.OffHeapFailureCache
 import com.atlan.model.core.AtlanCloseable
 import com.atlan.pkg.cache.CategoryCache
 import com.atlan.pkg.cache.ConnectionCache
@@ -37,7 +39,34 @@ class PackageContext<T : CustomConfig<T>>(
     val dataProductCache = DataProductCache(this)
     val linkCache = LinkCache(this)
     val typeDefCache = TypeDefCache(this)
-    val processedResults = mutableListOf<ImportResults>()
+    val processedResults =
+        ImportResults(
+            false,
+            ImportResults.Details(
+                mutableMapOf(),
+                mutableMapOf(),
+                OffHeapAssetCache(client, "pp-created"),
+                OffHeapAssetCache(client, "pp-updated"),
+                OffHeapAssetCache(client, "pp-restored"),
+                OffHeapAssetCache(client, "pp-skipped"),
+                OffHeapFailureCache(client, "pp-failed"),
+                0L,
+                0L,
+                0L,
+            ),
+            ImportResults.Details(
+                mutableMapOf(),
+                mutableMapOf(),
+                OffHeapAssetCache(client, "pr-created"),
+                OffHeapAssetCache(client, "pr-updated"),
+                OffHeapAssetCache(client, "pr-restored"),
+                OffHeapAssetCache(client, "pr-skipped"),
+                OffHeapFailureCache(client, "pr-failed"),
+                0L,
+                0L,
+                0L,
+            ),
+        )
     val caseSensitive = AtomicBoolean(true)
 
     /** {@inheritDoc} */
@@ -53,8 +82,6 @@ class PackageContext<T : CustomConfig<T>>(
         if (!reusedClient) {
             AtlanCloseable.close(client)
         }
-        processedResults.forEach {
-            AtlanCloseable.close(it)
-        }
+        AtlanCloseable.close(processedResults)
     }
 }

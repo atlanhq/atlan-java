@@ -98,12 +98,13 @@ abstract class AbstractBaseImporter(
         columnsToAlwaysInclude: Set<String>,
     ): ImportResults? {
         cacheAnyPrereqs()
+        val processedResults = mutableListOf<ImportResults>()
         val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         if (cyclicalForType.isEmpty()) {
             // If there are no cyclical relationships for this type, do everything in one pass
             logger.info { "--- Importing $typeToProcess assets... ---" }
             val results = super.import(columnsToSkip)
-            if (results != null) ctx.processedResults.add(results)
+            if (results != null) processedResults.add(results)
         } else {
             // Otherwise, import assets without any cyclical relationships, first
             logger.info { "--- Importing $typeToProcess assets in a first pass, without any cyclical relationships... ---" }
@@ -111,11 +112,11 @@ abstract class AbstractBaseImporter(
             firstPassSkip.addAll(cyclicalForType)
             val firstPassResults = super.import(firstPassSkip)
             if (firstPassResults != null) {
-                ctx.processedResults.add(firstPassResults)
-                runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, ctx.processedResults)
+                processedResults.add(firstPassResults)
+                runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, processedResults)
             }
         }
-        return ImportResults.combineAll(ctx.client, true, *ctx.processedResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *processedResults.toTypedArray())
     }
 
     /**
@@ -137,6 +138,7 @@ abstract class AbstractBaseImporter(
         maxDepth: AtomicInteger,
     ): ImportResults? {
         cacheAnyPrereqs(cache)
+        val processedResults = mutableListOf<ImportResults>()
         val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.addAll(cyclicalForType)
@@ -147,14 +149,14 @@ abstract class AbstractBaseImporter(
             levelToProcess += 1
             logger.info { "--- Loading level $levelToProcess $typeToProcess... ---" }
             val results = super.import(firstPassSkip)
-            if (results != null) ctx.processedResults.add(results)
+            if (results != null) processedResults.add(results)
         }
         // Now do the second pass with cyclical relationships, which we can do in any order
         // as now all the various levels of the hierarchy should already exist from the first pass...
-        if (cyclicalForType.isNotEmpty() && ctx.processedResults.isNotEmpty()) {
-            runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, ctx.processedResults)
+        if (cyclicalForType.isNotEmpty() && processedResults.isNotEmpty()) {
+            runCyclicalUpdatePass(typeToProcess, columnsToSkip, firstPassSkip, columnsToAlwaysInclude, processedResults)
         }
-        return ImportResults.combineAll(ctx.client, true, *ctx.processedResults.toTypedArray())
+        return ImportResults.combineAll(ctx.client, true, *processedResults.toTypedArray())
     }
 
     private fun cacheAnyPrereqs(cache: AssetCache<*>? = null) {
