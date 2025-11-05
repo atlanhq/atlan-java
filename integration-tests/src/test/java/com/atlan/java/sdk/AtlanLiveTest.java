@@ -260,8 +260,8 @@ public abstract class AtlanLiveTest {
         assertNotNull(response);
         assertFalse(
                 response.getApproximateCount() < expectedSize,
-                "Task search retries overran (" + maxRetries + ") - found "
-                        + response.getApproximateCount() + " results when expecting " + expectedSize + ".");
+                "Task search retries overran (" + maxRetries + ") - found " + response.getApproximateCount()
+                        + " results when expecting " + expectedSize + ".");
         return response;
     }
 }
