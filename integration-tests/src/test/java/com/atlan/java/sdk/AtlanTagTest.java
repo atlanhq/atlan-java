@@ -14,6 +14,7 @@ import com.atlan.model.assets.Connection;
 import com.atlan.model.assets.Database;
 import com.atlan.model.assets.SourceTag;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanAsyncMutator;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.Reference;
@@ -197,7 +198,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(
             groups = {"tag.create.asset"},
             dependsOnGroups = {"tag.create.synced"})
-    void createAssetWithSourceTag() throws AtlanException {
+    void createAssetWithSourceTag() throws AtlanException, InterruptedException {
         Database db = Database.creator(PREFIX, connection.getQualifiedName())
                 .atlanTag(AtlanTag.of(
                         SOURCE_SYNCED,
@@ -267,6 +268,7 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset3"},
             dependsOnGroups = {"tag.manage.append2"})
     void readAssetWithTwoTags() throws AtlanException, InterruptedException {
+        waitForTagsToSync();
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_ICON))
                 .includeOnResults(Asset.ATLAN_TAGS)
@@ -340,11 +342,12 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset5"},
             dependsOnGroups = {"tag.manage.replace"})
     void readAssetWithReplacedTag() throws AtlanException, InterruptedException {
+        waitForTagsToSync();
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_EMOJI))
                 .includeOnResults(Asset.ATLAN_TAGS)
                 .toRequest();
-        IndexSearchResponse response = retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 4);
+        IndexSearchResponse response = retrySearchUntil(request, 1L);
         assertNotNull(response);
         assertEquals(response.getApproximateCount(), 1);
         assertEquals(response.getAssets().size(), 1);
@@ -358,6 +361,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     }
 
     private void validateSingleTag(String value) throws AtlanException, InterruptedException {
+        waitForTagsToSync();
         IndexSearchRequest request = Database.select(client)
                 .taggedWithValue(SOURCE_SYNCED, value, true)
                 .includeOnResults(Asset.ATLAN_TAGS)
@@ -385,6 +389,10 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertEquals(sta.getSourceTagValues().size(), 1);
         assertEquals(sta.getSourceTagValues().get(0).getTagAttachmentValue(), value);
         assertNull(sta.getSourceTagValues().get(0).getTagAttachmentKey());
+    }
+
+    private void waitForTagsToSync() throws AtlanException, InterruptedException {
+        AtlanAsyncMutator.blockForBackgroundTasks(client, List.of(database.getGuid()), client.getMaxNetworkRetries() * 4, log);
     }
 
     @Test(
