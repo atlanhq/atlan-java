@@ -161,8 +161,8 @@ public abstract class AtlanLiveTest {
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
     protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize, int maxRetries)
-        throws AtlanException, InterruptedException {
-        return retrySearchUntil(request, expectedSize, maxRetries, false);
+            throws AtlanException, InterruptedException {
+        return retrySearchUntil(request, expectedSize, false, maxRetries);
     }
 
     /**
@@ -171,13 +171,14 @@ public abstract class AtlanLiveTest {
      *
      * @param request search request to run
      * @param expectedSize expected number of results from the search
-     * @param maxRetries maximum number of times to retry the search
      * @param isDeleteQuery whether to include finding archived (soft-deleted) assets
+     * @param maxRetries maximum number of times to retry the search
      * @return the response, either with the expected number of results or after exceeding the retry limit
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected IndexSearchResponse retrySearchUntil(IndexSearchRequest request, long expectedSize, int maxRetries, boolean isDeleteQuery)
+    protected IndexSearchResponse retrySearchUntil(
+            IndexSearchRequest request, long expectedSize, boolean isDeleteQuery, int maxRetries)
             throws AtlanException, InterruptedException {
         int count = 1;
         IndexSearchResponse response = request.search(client);
@@ -188,8 +189,7 @@ public abstract class AtlanLiveTest {
                     .toList()
                     .isEmpty();
         }
-        while ((response.getApproximateCount() < expectedSize || remainingActive)
-                && count < maxRetries) {
+        while ((response.getApproximateCount() < expectedSize || remainingActive) && count < maxRetries) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search(client);
             if (isDeleteQuery) {
@@ -203,8 +203,8 @@ public abstract class AtlanLiveTest {
         assertNotNull(response);
         assertFalse(
                 response.getApproximateCount() < expectedSize,
-                "Search retries (" + maxRetries + ") overran - found " + response.getApproximateCount() + " results when expecting "
-                        + expectedSize + ".");
+                "Search retries (" + maxRetries + ") overran - found " + response.getApproximateCount()
+                        + " results when expecting " + expectedSize + ".");
         return response;
     }
 
