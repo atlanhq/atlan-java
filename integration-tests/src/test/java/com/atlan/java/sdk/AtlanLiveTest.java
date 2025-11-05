@@ -232,8 +232,8 @@ public abstract class AtlanLiveTest {
         assertNotNull(response);
         assertFalse(
                 response.getCount() < expectedSize,
-                "Audit search retries overran (" + client.getMaxNetworkRetries() + ") - found " + response.getCount() + " results when expecting "
-                        + expectedSize + ".");
+                "Audit search retries overran (" + client.getMaxNetworkRetries() + ") - found " + response.getCount()
+                        + " results when expecting " + expectedSize + ".");
         return response;
     }
 
@@ -243,24 +243,25 @@ public abstract class AtlanLiveTest {
      *
      * @param request search request to run
      * @param expectedSize expected number of results from the search
+     * @param maxRetries maximum number of times to retry
      * @return the response, either with the expected number of results or after exceeding the retry limit
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected TaskSearchResponse retrySearchUntil(TaskSearchRequest request, long expectedSize)
-        throws AtlanException, InterruptedException {
+    protected TaskSearchResponse retrySearchUntil(TaskSearchRequest request, long expectedSize, int maxRetries)
+            throws AtlanException, InterruptedException {
         int count = 1;
         TaskSearchResponse response = request.search(client);
-        while (response.getApproximateCount() < expectedSize && count < client.getMaxNetworkRetries()) {
+        while (response.getApproximateCount() < expectedSize && count < maxRetries) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search(client);
             count++;
         }
         assertNotNull(response);
         assertFalse(
-            response.getApproximateCount() < expectedSize,
-            "Task search retries overran (" + client.getMaxNetworkRetries() + ") - found " + response.getApproximateCount() + " results when expecting "
-                + expectedSize + ".");
+                response.getApproximateCount() < expectedSize,
+                "Task search retries overran (" + maxRetries + ") - found "
+                        + response.getApproximateCount() + " results when expecting " + expectedSize + ".");
         return response;
     }
 }

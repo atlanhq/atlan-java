@@ -9,9 +9,8 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.model.enums.AtlanTaskStatus;
 import com.atlan.model.tasks.AtlanTask;
 import com.atlan.net.HttpClient;
-import org.slf4j.Logger;
-
 import java.util.List;
+import org.slf4j.Logger;
 
 /**
  * Interface implemented by asynchronous operations to allow blocking behavior.
@@ -44,22 +43,22 @@ public interface AtlanAsyncMutator {
      * @throws ApiException if the maximum number of retries is hit without the background tasks being completed
      */
     static void blockForBackgroundTasks(AtlanClient client, List<String> guids, int maxRetries, Logger logger)
-        throws InterruptedException, ApiException {
+            throws InterruptedException, ApiException {
         int retries = 0;
         long openTaskCount;
         Throwable cause = null;
         try {
             do {
                 openTaskCount = client
-                    .tasks
-                    .select()
-                    .where(AtlanTask.ENTITY_GUID.in(guids))
-                    .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.PENDING.getValue()))
-                    .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.IN_PROGRESS.getValue()))
-                    .minSomes(1)
-                    .pageSize(1)
-                    .stream()
-                    .count();
+                        .tasks
+                        .select()
+                        .where(AtlanTask.ENTITY_GUID.in(guids))
+                        .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.PENDING.getValue()))
+                        .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.IN_PROGRESS.getValue()))
+                        .minSomes(1)
+                        .pageSize(1)
+                        .stream()
+                        .count();
                 retries++;
                 if (openTaskCount > 0) {
                     logger.debug("Waiting for {} tasks to complete on the entities", openTaskCount);

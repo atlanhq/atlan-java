@@ -9,8 +9,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.AtlanTaskStatus;
-import com.atlan.model.tasks.AtlanTask;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,7 +45,10 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
             try {
                 retrieveAndCheck(toCheck, 0);
                 AtlanAsyncMutator.blockForBackgroundTasks(
-                        client, toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()), MAX_ASYNC_RETRIES, log);
+                        client,
+                        toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()),
+                        MAX_ASYNC_RETRIES,
+                        log);
             } catch (InterruptedException e) {
                 throw new ApiException(ErrorCode.RETRIES_INTERRUPTED, e);
             }
