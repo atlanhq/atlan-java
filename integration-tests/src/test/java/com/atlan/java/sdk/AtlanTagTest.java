@@ -22,6 +22,8 @@ import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.model.structs.SourceTagAttachment;
 import com.atlan.model.structs.SourceTagAttachmentValue;
+import com.atlan.model.tasks.AtlanTask;
+import com.atlan.model.tasks.TaskSearchRequest;
 import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.AtlanTagOptions;
 import com.atlan.model.typedefs.AttributeDef;
@@ -327,7 +329,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(
             groups = {"tag.manage.replace"},
             dependsOnGroups = {"tag.read.asset4"})
-    void replaceTagOnAsset() throws AtlanException {
+    void replaceTagOnAsset() throws AtlanException, InterruptedException {
         Database db = Database.updater(database.getQualifiedName(), database.getName())
                 .atlanTag(AtlanTag.of(TAG_WITH_EMOJI))
                 .build();
@@ -336,6 +338,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertTrue(one instanceof Database);
         db = (Database) one;
         assertEquals(db.getGuid(), database.getGuid());
+        waitForTagToBeRecorded();
     }
 
     @Test(
@@ -393,6 +396,14 @@ public class AtlanTagTest extends AtlanLiveTest {
 
     private void waitForTagsToSync() throws AtlanException, InterruptedException {
         AtlanAsyncMutator.blockForBackgroundTasks(client, List.of(database.getGuid()), client.getMaxNetworkRetries() * 4, log);
+    }
+
+    private void waitForTagToBeRecorded() throws AtlanException, InterruptedException {
+        TaskSearchRequest request = client.tasks.select()
+            .where(AtlanTask.ENTITY_GUID.eq(database.getGuid()))
+            .where(AtlanTask.STATUS.match("PENDING"))
+            .toRequest();
+        retrySearchUntil(request, 1L);
     }
 
     @Test(
