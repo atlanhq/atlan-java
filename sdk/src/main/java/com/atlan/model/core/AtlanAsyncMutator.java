@@ -45,7 +45,7 @@ public interface AtlanAsyncMutator {
     static void blockForBackgroundTasks(AtlanClient client, List<String> guids, int maxRetries, Logger logger)
             throws InterruptedException, ApiException {
         int retries = 0;
-        long openTaskCount;
+        long openTaskCount = 0;
         Throwable cause = null;
         try {
             do {
@@ -69,9 +69,8 @@ public interface AtlanAsyncMutator {
             } while (openTaskCount > 0 && retries < maxRetries);
         } catch (AtlanException e) {
             cause = e;
-            retries = maxRetries;
         }
-        if (retries == maxRetries) {
+        if (retries >= maxRetries && openTaskCount > 0) {
             throw new ApiException(ErrorCode.RETRY_OVERRUN, cause);
         }
     }
