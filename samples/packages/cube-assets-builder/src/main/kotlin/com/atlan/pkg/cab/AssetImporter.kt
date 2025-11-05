@@ -68,15 +68,16 @@ abstract class AssetImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
         // the creator methods anyway
-        val results = super.import(
-            setOf(
-                Asset.CONNECTION_NAME.atlanFieldName,
-                // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections
-                IMultiDimensionalDataset.CUBE_NAME.atlanFieldName,
-                IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName,
-                IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName,
-            ),
-        )
+        val results =
+            super.import(
+                setOf(
+                    Asset.CONNECTION_NAME.atlanFieldName,
+                    // ConnectionImporter.CONNECTOR_TYPE, // Let this be loaded, for mis-named connections
+                    IMultiDimensionalDataset.CUBE_NAME.atlanFieldName,
+                    IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName,
+                    IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName,
+                ),
+            )
         if (results != null) ctx.processedResults.extendWith(results)
         return results
     }
