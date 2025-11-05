@@ -10,6 +10,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanAsyncMutator;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -17,9 +18,12 @@ import com.atlan.model.search.AuditSearchRequest;
 import com.atlan.model.search.AuditSearchResponse;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.model.tasks.TaskSearchRequest;
+import com.atlan.model.tasks.TaskSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
@@ -230,8 +234,62 @@ public abstract class AtlanLiveTest {
         assertNotNull(response);
         assertFalse(
                 response.getCount() < expectedSize,
-                "Audit search retries overran - found " + response.getCount() + " results when expecting "
-                        + expectedSize + ".");
+                "Audit search retries overran (" + client.getMaxNetworkRetries() + ") - found " + response.getCount()
+                        + " results when expecting " + expectedSize + ".");
         return response;
+    }
+
+    /**
+     * Since search is eventually consistent, retry it until we arrive at the number of results
+     * we expect (or hit the retry limit).
+     *
+     * @param request search request to run
+     * @param expectedSize expected number of results from the search
+     * @param maxRetries maximum number of times to retry
+     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected TaskSearchResponse retrySearchUntil(TaskSearchRequest request, long expectedSize, int maxRetries)
+            throws AtlanException, InterruptedException {
+        int count = 1;
+        TaskSearchResponse response = request.search(client);
+        while (response.getApproximateCount() < expectedSize && count < maxRetries) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search(client);
+            count++;
+        }
+        assertNotNull(response);
+        assertFalse(
+                response.getApproximateCount() < expectedSize,
+                "Task search retries overran (" + maxRetries + ") - found " + response.getApproximateCount()
+                        + " results when expecting " + expectedSize + ".");
+        return response;
+    }
+
+    /**
+     * Block and wait for any pending tags tasks to be completed for the provided GUID.
+     *
+     * @param guids for which to ensure any pending tag tasks are completed
+     * @param logger through which to record progress
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected void waitForTagsToSync(List<String> guids, Logger logger) throws AtlanException, InterruptedException {
+        waitForTagsToSync(guids, logger, client.getMaxNetworkRetries() * 4);
+    }
+
+    /**
+     * Block and wait for any pending tags tasks to be completed for the provided GUID.
+     *
+     * @param guids for which to ensure any pending tag tasks are completed
+     * @param logger through which to record progress
+     * @param maxRetries maximum number of retries to allow before giving up on waiting
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected void waitForTagsToSync(List<String> guids, Logger logger, int maxRetries)
+            throws AtlanException, InterruptedException {
+        AtlanAsyncMutator.blockForBackgroundTasks(client, guids, maxRetries, logger);
     }
 }

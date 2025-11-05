@@ -67,6 +67,8 @@ public class SuggestionsTest extends AtlanLiveTest {
     private static GlossaryTerm term1 = null;
     private static GlossaryTerm term2 = null;
 
+    private static List<String> taggedAssetGuids = new ArrayList<>();
+
     @Test(groups = {"suggestions.create.connection"})
     void createConnection() throws AtlanException, InterruptedException {
         connection = ConnectionTest.createConnection(client, CONNECTION_NAME, CONNECTOR_TYPE);
@@ -129,6 +131,8 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(table3.getDatabaseName(), DATABASE_NAME);
         assertEquals(table3.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(table3.getConnectionQualifiedName(), connection.getQualifiedName());
+        taggedAssetGuids.add(table1.getGuid());
+        taggedAssetGuids.add(table3.getGuid());
     }
 
     @Test(
@@ -189,6 +193,8 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(v2c1.getDatabaseName(), DATABASE_NAME);
         assertEquals(v2c1.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(v2c1.getConnectionQualifiedName(), connection.getQualifiedName());
+        taggedAssetGuids.add(t1c1.getGuid());
+        taggedAssetGuids.add(v1c1.getGuid());
     }
 
     /*@Test(
@@ -382,8 +388,8 @@ public class SuggestionsTest extends AtlanLiveTest {
     @Test(
             groups = {"suggestions.find.wait"},
             dependsOnGroups = {"suggestions.update.column.*"})
-    void awaitConsistency() throws InterruptedException {
-        Thread.sleep(15000);
+    void awaitConsistency() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
     }
 
     @Test(

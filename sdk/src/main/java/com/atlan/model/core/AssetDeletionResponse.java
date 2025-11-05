@@ -9,8 +9,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.AtlanTaskStatus;
-import com.atlan.model.tasks.AtlanTask;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,8 +44,11 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
         if (toCheck != null && !toCheck.isEmpty()) {
             try {
                 retrieveAndCheck(toCheck, 0);
-                blockForBackgroundTasks(
-                        client, toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()), MAX_ASYNC_RETRIES);
+                AtlanAsyncMutator.blockForBackgroundTasks(
+                        client,
+                        toCheck.stream().map(Asset::getGuid).collect(Collectors.toList()),
+                        MAX_ASYNC_RETRIES,
+                        log);
             } catch (InterruptedException e) {
                 throw new ApiException(ErrorCode.RETRIES_INTERRUPTED, e);
             }
@@ -98,49 +99,6 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
                 Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
                 retrieveAndCheck(leftovers, retryCount + 1);
             }
-        }
-    }
-
-    /**
-     * Block until any pending or in-progress background tasks for the given guids are completed.
-     *
-     * @param client connectivity to the Atlan tenant on which to run the task checks
-     * @param guids list of guids to check for background tasks
-     * @param maxRetries maximum number of retries to wait for the background tasks to complete
-     * @throws InterruptedException if the retry loop is interrupted
-     * @throws ApiException if the maximum number of retries is hit without the background tasks being completed
-     */
-    public static void blockForBackgroundTasks(AtlanClient client, List<String> guids, int maxRetries)
-            throws InterruptedException, ApiException {
-        int retries = 0;
-        long openTaskCount;
-        Throwable cause = null;
-        try {
-            do {
-                openTaskCount = client
-                        .tasks
-                        .select()
-                        .where(AtlanTask.ENTITY_GUID.in(guids))
-                        .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.PENDING.getValue()))
-                        .whereSome(AtlanTask.STATUS.match(AtlanTaskStatus.IN_PROGRESS.getValue()))
-                        .minSomes(1)
-                        .pageSize(1)
-                        .stream()
-                        .count();
-                retries++;
-                if (openTaskCount > 0) {
-                    log.debug("Waiting for {} tasks to complete on the entities", openTaskCount);
-                    Thread.sleep(HttpClient.waitTime(retries).toMillis());
-                } else {
-                    log.debug("Task queue clear for entities.");
-                }
-            } while (openTaskCount > 0 && retries < maxRetries);
-        } catch (AtlanException e) {
-            cause = e;
-            retries = maxRetries;
-        }
-        if (retries == maxRetries) {
-            throw new ApiException(ErrorCode.RETRY_OVERRUN, cause);
         }
     }
 }

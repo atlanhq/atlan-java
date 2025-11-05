@@ -27,6 +27,7 @@ import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -49,6 +50,8 @@ public class AtlanTagTest extends AtlanLiveTest {
     private static Connection connection;
     private static SourceTag sourceTag;
     private static Database database;
+
+    private static List<String> taggedAssetGuids = new ArrayList<>();
 
     /**
      * Create a new Atlan tag with a unique name.
@@ -197,7 +200,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(
             groups = {"tag.create.asset"},
             dependsOnGroups = {"tag.create.synced"})
-    void createAssetWithSourceTag() throws AtlanException {
+    void createAssetWithSourceTag() throws AtlanException, InterruptedException {
         Database db = Database.creator(PREFIX, connection.getQualifiedName())
                 .atlanTag(AtlanTag.of(
                         SOURCE_SYNCED,
@@ -213,6 +216,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertNotNull(db.getGuid());
         assertNotNull(db.getQualifiedName());
         assertEquals(db.getName(), PREFIX);
+        taggedAssetGuids.add(database.getGuid());
     }
 
     @Test(
@@ -267,6 +271,7 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset3"},
             dependsOnGroups = {"tag.manage.append2"})
     void readAssetWithTwoTags() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_ICON))
                 .includeOnResults(Asset.ATLAN_TAGS)
@@ -340,10 +345,12 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset5"},
             dependsOnGroups = {"tag.manage.replace"})
     void readAssetWithReplacedTag() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_EMOJI))
                 .includeOnResults(Asset.ATLAN_TAGS)
                 .toRequest();
+        // For some reason this can take a very long time to become consistent in the index
         IndexSearchResponse response = retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 4);
         assertNotNull(response);
         assertEquals(response.getApproximateCount(), 1);
@@ -358,6 +365,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     }
 
     private void validateSingleTag(String value) throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .taggedWithValue(SOURCE_SYNCED, value, true)
                 .includeOnResults(Asset.ATLAN_TAGS)
