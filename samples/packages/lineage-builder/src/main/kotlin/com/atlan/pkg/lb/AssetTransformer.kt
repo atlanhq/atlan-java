@@ -121,11 +121,11 @@ class AssetTransformer(
             listOf(sourceValues, targetValues)
         } else if (sourceValues.isNotEmpty()) {
             anyFailures = true
-            logger.info { "Unable to map and transform the source asset -- skipped." }
+            logger.info { "Unable to map and transform the target asset -- skipped." }
             listOf(sourceValues)
         } else if (targetValues.isNotEmpty()) {
             anyFailures = true
-            logger.info { "Unable to map and transform the target asset -- skipped." }
+            logger.info { "Unable to map and transform the source asset -- skipped." }
             listOf(targetValues)
         } else {
             anyFailures = true
