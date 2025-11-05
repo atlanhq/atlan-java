@@ -13,7 +13,7 @@ import com.atlan.model.assets.Readme
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
-import com.atlan.model.core.AssetDeletionResponse.blockForBackgroundTasks
+import com.atlan.model.core.AtlanAsyncMutator
 import com.atlan.model.core.AtlanTag
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
@@ -364,7 +364,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
         if (columnCount == 2L) {
             assertTrue(colNames.contains("COL2"))
         }
-        blockForBackgroundTasks(client, listOf(tbl.guid), 60)
+        AtlanAsyncMutator.blockForBackgroundTasks(client, listOf(tbl.guid), 60, logger)
     }
 
     @Test(groups = ["rab.ctud.create"])
@@ -482,7 +482,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                     .toList()
             assertTrue(colNames.contains("COL3"))
             assertTrue(colNames.contains("COL4"))
-            blockForBackgroundTasks(client, listOf(view.guid), 60)
+            AtlanAsyncMutator.blockForBackgroundTasks(client, listOf(view.guid), 60, logger)
         }
     }
 
@@ -700,7 +700,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                 .toList()
         assertTrue(colNames.contains("COL5"))
         assertTrue(colNames.contains("COL6"))
-        blockForBackgroundTasks(client, listOf(view.guid), 60)
+        AtlanAsyncMutator.blockForBackgroundTasks(client, listOf(view.guid), 60, logger)
     }
 
     @Test(groups = ["rab.ctud.update"], dependsOnGroups = ["rab.ctud.runUpdate"])

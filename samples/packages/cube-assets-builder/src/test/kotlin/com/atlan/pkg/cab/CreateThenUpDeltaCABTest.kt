@@ -11,7 +11,7 @@ import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.model.assets.Readme
 import com.atlan.model.assets.Schema
-import com.atlan.model.core.AssetDeletionResponse.blockForBackgroundTasks
+import com.atlan.model.core.AtlanAsyncMutator
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanIcon
 import com.atlan.model.enums.AtlanTagColor
@@ -341,7 +341,7 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
         assertTrue(colNames.contains("COL2"))
         assertTrue(colNames.contains("COL3"))
         assertEquals(3, hier.cubeFieldCount)
-        blockForBackgroundTasks(client, listOf(hier.guid), 60)
+        AtlanAsyncMutator.blockForBackgroundTasks(client, listOf(hier.guid), 60, logger)
     }
 
     @Test(groups = ["cab.ctud.create"])
@@ -457,7 +457,7 @@ class CreateThenUpDeltaCABTest : PackageTest("ctud") {
         assertTrue(fieldNames.contains("COL4"))
         assertTrue(fieldNames.contains("COL5"))
         assertEquals(2, hier.cubeFieldCount)
-        blockForBackgroundTasks(client, listOf(hier.guid), 60)
+        AtlanAsyncMutator.blockForBackgroundTasks(client, listOf(hier.guid), 60, logger)
     }
 
     @Test(groups = ["cab.ctud.create"])
