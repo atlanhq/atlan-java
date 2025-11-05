@@ -77,7 +77,7 @@ jakarta-mail = { module = "com.sun.mail:jakarta.mail", version.ref = "jakarta-ma
 angus-mail = { module = "org.eclipse.angus:angus-mail", version.ref = "angus-mail" }
 pkl-config = { module = "org.pkl-lang:pkl-config-kotlin", version.ref = "pkl" }
 pkl-codegen = { module = "org.pkl-lang:pkl-codegen-kotlin", version.ref = "pkl" }
-pkl-config-java = { module = "org.pkl-lang:pkl-config-java", version.ref = "pkl" }
+pkl-config-java-all = { module = "org.pkl-lang:pkl-config-java-all", version.ref = "pkl" }
 openlineage = { module = "io.openlineage:openlineage-java", version.ref = "openlineage" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging-jvm", version.ref = "kotlin-mu" }
