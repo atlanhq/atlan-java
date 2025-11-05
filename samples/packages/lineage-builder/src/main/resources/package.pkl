@@ -30,21 +30,6 @@ keywords {
 }
 preview = true
 
-publishConfig = new AssetImport {
-  versionTag = version.toString()
-  assetsFile = transferFile(outputs, "transformed_file", "current.csv")
-  assetsConfig = "advanced"
-  assetsUpsertSemantic = transferConfigInput(uiConfig, "lineage_upsert_semantic")
-  assetsCaseSensitive = transferConfigInput(uiConfig, "lineage_case_sensitive")
-  assetsFailOnErrors = transferConfigInput(uiConfig, "lineage_fail_on_errors")
-  assetsFieldSeparator = transferConfigInput(uiConfig, "field_separator")
-  assetsBatchSize = transferConfigInput(uiConfig, "batch_size")
-  assetsCmHandling = transferConfigInput(uiConfig, "cm_handling")
-  assetsTagHandling = transferConfigInput(uiConfig, "tag_handling")
-  assetsLinkIdempotency = transferConfigInput(uiConfig, "link_idempotency")
-  trackBatches = transferConfigInput(uiConfig, "track_batches")
-}
-
 uiConfig {
   tasks {
     ["Source"] {
