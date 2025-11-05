@@ -12,9 +12,11 @@ plugins {
 
 dependencies {
     api(libs.pkl.config)
+    api(libs.pkl.codegen)
     implementation(libs.jackson.kotlin)
     implementation(libs.jackson.yaml)
     implementation(project(":package-toolkit:runtime"))
+    testImplementation(libs.pkl.config.java)
 }
 
 pkl {
