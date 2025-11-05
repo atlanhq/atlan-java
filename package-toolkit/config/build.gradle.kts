@@ -12,6 +12,8 @@ plugins {
 
 dependencies {
     api(libs.pkl.config)
+    api(libs.pkl.config.java.all)
+    api(libs.pkl.codegen)
     implementation(libs.jackson.kotlin)
     implementation(libs.jackson.yaml)
     implementation(project(":package-toolkit:runtime"))
@@ -46,6 +48,7 @@ tasks {
         dependencies {
             include(dependency("org.pkl-lang:pkl-config-kotlin:.*"))
             include(dependency("org.pkl-lang:pkl-config-java-all:.*"))
+            include(dependency("org.pkl-lang:pkl-codegen-kotlin:.*"))
             include(dependency("com.fasterxml.jackson.module:jackson-module-kotlin:.*"))
             include(dependency("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:.*"))
             include(dependency("org.jetbrains.kotlin:kotlin-reflect:.*"))
