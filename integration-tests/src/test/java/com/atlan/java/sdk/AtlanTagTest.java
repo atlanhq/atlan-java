@@ -344,7 +344,7 @@ public class AtlanTagTest extends AtlanLiveTest {
                 .tagged(List.of(TAG_WITH_EMOJI))
                 .includeOnResults(Asset.ATLAN_TAGS)
                 .toRequest();
-        IndexSearchResponse response = retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 2);
+        IndexSearchResponse response = retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 4);
         assertNotNull(response);
         assertEquals(response.getApproximateCount(), 1);
         assertEquals(response.getAssets().size(), 1);
