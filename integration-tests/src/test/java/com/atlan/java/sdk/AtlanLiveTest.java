@@ -288,7 +288,8 @@ public abstract class AtlanLiveTest {
      * @throws AtlanException on any API communication issues
      * @throws InterruptedException if the busy-wait loop for retries is interrupted
      */
-    protected void waitForTagsToSync(List<String> guids, Logger logger, int maxRetries) throws AtlanException, InterruptedException {
+    protected void waitForTagsToSync(List<String> guids, Logger logger, int maxRetries)
+            throws AtlanException, InterruptedException {
         AtlanAsyncMutator.blockForBackgroundTasks(client, guids, maxRetries, logger);
     }
 }
