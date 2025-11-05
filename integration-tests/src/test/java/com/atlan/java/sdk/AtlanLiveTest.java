@@ -10,6 +10,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AtlanAsyncMutator;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -22,6 +23,7 @@ import com.atlan.model.tasks.TaskSearchResponse;
 import com.atlan.net.HttpClient;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import org.apache.logging.log4j.ThreadContext;
 import org.slf4j.Logger;
@@ -263,5 +265,30 @@ public abstract class AtlanLiveTest {
                 "Task search retries overran (" + maxRetries + ") - found " + response.getApproximateCount()
                         + " results when expecting " + expectedSize + ".");
         return response;
+    }
+
+    /**
+     * Block and wait for any pending tags tasks to be completed for the provided GUID.
+     *
+     * @param guids for which to ensure any pending tag tasks are completed
+     * @param logger through which to record progress
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected void waitForTagsToSync(List<String> guids, Logger logger) throws AtlanException, InterruptedException {
+        waitForTagsToSync(guids, logger, client.getMaxNetworkRetries() * 4);
+    }
+
+    /**
+     * Block and wait for any pending tags tasks to be completed for the provided GUID.
+     *
+     * @param guids for which to ensure any pending tag tasks are completed
+     * @param logger through which to record progress
+     * @param maxRetries maximum number of retries to allow before giving up on waiting
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected void waitForTagsToSync(List<String> guids, Logger logger, int maxRetries) throws AtlanException, InterruptedException {
+        AtlanAsyncMutator.blockForBackgroundTasks(client, guids, maxRetries, logger);
     }
 }

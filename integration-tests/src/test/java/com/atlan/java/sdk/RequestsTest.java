@@ -16,6 +16,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.net.HttpClient;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -44,6 +45,8 @@ public class RequestsTest extends AtlanLiveTest {
     private static String attributeRequestGuid = null;
     private static String termLinkRequestGuid = null;
     private static String atlanTagRequestGuid = null;
+
+    private static List<String> taggedAssetGuids = new ArrayList<>();
 
     /**
      * Create a new API token with a unique name.
@@ -77,6 +80,7 @@ public class RequestsTest extends AtlanLiveTest {
     void createGlossary() throws AtlanException {
         glossary = GlossaryTest.createGlossary(client, GLOSSARY_NAME);
         term = GlossaryTest.createTerm(client, TERM_NAME, glossary);
+        taggedAssetGuids.add(term.getGuid());
     }
 
     @Test(groups = {"request.create.atlantag"})
@@ -262,7 +266,8 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.read.term"},
             dependsOnGroups = {"request.approve.request"},
             alwaysRun = true)
-    void readTerm() throws AtlanException {
+    void readTerm() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         GlossaryTerm revised = GlossaryTerm.get(client, term.getGuid(), true);
         assertNotNull(revised);
         assertEquals(revised.getUserDescription(), ATTR_VALUE_DESCRIPTION);

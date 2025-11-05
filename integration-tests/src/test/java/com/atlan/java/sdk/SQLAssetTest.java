@@ -76,6 +76,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         select * from `atlanhq.testing_lineage.INSTACART_ALCOHOL_ORDER_TIME`;
         END""";
 
+    private static List<String> taggedAssetGuids = new ArrayList<>();
+
     /**
      * Create a database with the provided characteristics.
      *
@@ -502,6 +504,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column5.getDatabaseName(), DATABASE_NAME);
         assertEquals(column5.getDatabaseQualifiedName(), database.getQualifiedName());
         assertEquals(column5.getConnectionQualifiedName(), connection.getQualifiedName());
+        taggedAssetGuids.add(column5.getGuid());
     }
 
     @Test(
@@ -1099,6 +1102,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchByAnyAtlanTag() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest index = Column.select(client)
                 .where(Column.QUALIFIED_NAME.startsWith(connection.getQualifiedName()))
                 .tagged(true)
@@ -1125,6 +1129,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.byAtlanTag"},
             dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
     void searchBySpecificAtlanTag() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest index = Column.select(client)
                 .tagged(List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2))
                 .includeOnResults(Column.NAME)
@@ -1413,7 +1418,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.audit"},
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByGuid() throws AtlanException, InterruptedException {
-
+        waitForTagsToSync(taggedAssetGuids, log);
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(client, column5.getGuid(), 50).build();
 
@@ -1433,6 +1438,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.search.audit"},
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByQN() throws AtlanException, InterruptedException {
+        waitForTagsToSync(taggedAssetGuids, log);
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
                 .build();

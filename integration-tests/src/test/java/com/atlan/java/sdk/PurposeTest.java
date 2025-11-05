@@ -25,11 +25,15 @@ import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.net.HttpClient;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+@Slf4j
 public class PurposeTest extends AtlanLiveTest {
 
     private static final String PREFIX = makeUnique("Purpose");
@@ -53,6 +57,8 @@ public class PurposeTest extends AtlanLiveTest {
     private static String columnQualifiedName = null;
 
     private static final String REDACTED_NUMBER = "0000000";
+
+    private static List<String> taggedAssetGuids = new ArrayList<>();
 
     @Test(groups = {"purpose.invalid.purpose"})
     void createInvalidPurpose() {
@@ -250,6 +256,7 @@ public class PurposeTest extends AtlanLiveTest {
         // Column result =
         //         Column.appendAtlanTags(client, columnQualifiedName, List.of(ATLAN_TAG_NAME), false, false, false);
         assertNotNull(result);
+        taggedAssetGuids.add(result.getGuid());
     }
 
     @Test(
@@ -294,7 +301,7 @@ public class PurposeTest extends AtlanLiveTest {
                 new AtlanClient(client.getBaseUrl(), token.getAttributes().getAccessToken())) {
             // The policy will take some time to go into effect -- start by waiting a
             // reasonable set amount of time (limit the same query re-running multiple times on data store)
-            Thread.sleep(60000);
+            waitForTagsToSync(taggedAssetGuids, log);
             // Then use a retry loop, just in case
             QueryResponse response = null;
             HekaFlow found = HekaFlow.BYPASS; // As long as Heka was bypassed, policy was not applied

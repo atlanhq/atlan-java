@@ -30,6 +30,8 @@ import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.HttpClient;
 import com.atlan.net.RequestOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,6 +54,8 @@ public class AtlanTagTest extends AtlanLiveTest {
     private static Connection connection;
     private static SourceTag sourceTag;
     private static Database database;
+
+    private static List<String> taggedAssetGuids = new ArrayList<>();
 
     /**
      * Create a new Atlan tag with a unique name.
@@ -216,6 +220,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertNotNull(db.getGuid());
         assertNotNull(db.getQualifiedName());
         assertEquals(db.getName(), PREFIX);
+        taggedAssetGuids.add(database.getGuid());
     }
 
     @Test(
@@ -270,7 +275,7 @@ public class AtlanTagTest extends AtlanLiveTest {
             groups = {"tag.read.asset3"},
             dependsOnGroups = {"tag.manage.append2"})
     void readAssetWithTwoTags() throws AtlanException, InterruptedException {
-        waitForTagsToSync();
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_ICON))
                 .includeOnResults(Asset.ATLAN_TAGS)
@@ -329,8 +334,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     @Test(
             groups = {"tag.manage.replace"},
             dependsOnGroups = {"tag.read.asset4"})
-    void replaceTagOnAsset() throws AtlanException, InterruptedException {
-        long now = System.currentTimeMillis();
+    void replaceTagOnAsset() throws AtlanException {
         Database db = Database.updater(database.getQualifiedName(), database.getName())
                 .atlanTag(AtlanTag.of(TAG_WITH_EMOJI))
                 .build();
@@ -339,19 +343,19 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertTrue(one instanceof Database);
         db = (Database) one;
         assertEquals(db.getGuid(), database.getGuid());
-        waitForTagToBeRecorded(now);
     }
 
     @Test(
             groups = {"tag.read.asset5"},
             dependsOnGroups = {"tag.manage.replace"})
     void readAssetWithReplacedTag() throws AtlanException, InterruptedException {
-        waitForTagsToSync();
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .tagged(List.of(TAG_WITH_EMOJI))
                 .includeOnResults(Asset.ATLAN_TAGS)
                 .toRequest();
-        IndexSearchResponse response = retrySearchUntil(request, 1L);
+        // For some reason this can take a very long time to become consistent in the index
+        IndexSearchResponse response = retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 4);
         assertNotNull(response);
         assertEquals(response.getApproximateCount(), 1);
         assertEquals(response.getAssets().size(), 1);
@@ -365,7 +369,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     }
 
     private void validateSingleTag(String value) throws AtlanException, InterruptedException {
-        waitForTagsToSync();
+        waitForTagsToSync(taggedAssetGuids, log);
         IndexSearchRequest request = Database.select(client)
                 .taggedWithValue(SOURCE_SYNCED, value, true)
                 .includeOnResults(Asset.ATLAN_TAGS)
@@ -393,20 +397,6 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertEquals(sta.getSourceTagValues().size(), 1);
         assertEquals(sta.getSourceTagValues().get(0).getTagAttachmentValue(), value);
         assertNull(sta.getSourceTagValues().get(0).getTagAttachmentKey());
-    }
-
-    private void waitForTagsToSync() throws AtlanException, InterruptedException {
-        AtlanAsyncMutator.blockForBackgroundTasks(
-                client, List.of(database.getGuid()), client.getMaxNetworkRetries() * 4, log);
-    }
-
-    private void waitForTagToBeRecorded(long after) throws AtlanException, InterruptedException {
-        TaskSearchRequest request = client.tasks
-                .select()
-                .where(AtlanTask.ENTITY_GUID.eq(database.getGuid()))
-                .where(AtlanTask.CREATED_TIME.gte(after))
-                .toRequest();
-        retrySearchUntil(request, 1L, client.getMaxNetworkRetries() * 4);
     }
 
     @Test(
