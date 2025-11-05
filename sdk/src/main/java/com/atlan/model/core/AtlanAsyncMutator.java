@@ -69,6 +69,7 @@ public interface AtlanAsyncMutator {
             } while (openTaskCount > 0 && retries < maxRetries);
         } catch (AtlanException e) {
             cause = e;
+            retries = maxRetries;
         }
         if (retries >= maxRetries && openTaskCount > 0) {
             throw new ApiException(ErrorCode.RETRY_OVERRUN, cause);
