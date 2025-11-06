@@ -7,6 +7,9 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Table
 import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
+import com.atlan.model.enums.AtlanIcon
+import com.atlan.model.enums.AtlanTagColor
+import com.atlan.model.enums.TagIconType
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
@@ -261,6 +264,27 @@ class TagManagementTest : PackageTest("tm") {
         val found = response.assets
         assertEquals(1, found.size)
         assertTrue(found.first() is View)
+    }
+
+    @Test
+    fun iconTagExists() {
+        val tag = client.atlanTagCache.getByName(t1)
+        assertNotNull(tag)
+        assertEquals(t1, tag.name)
+        assertEquals("Icon tag with values", tag.description)
+        assertEquals(AtlanTagColor.GREEN.value, tag.options.color)
+        assertEquals(AtlanIcon.RECYCLE, tag.options.iconName)
+        assertEquals(TagIconType.ICON, tag.options.iconType)
+        // TODO: validate source-specific aspects
+    }
+
+    @Test
+    fun imageTagExists() {
+        val tag = client.atlanTagCache.getByName(t2)
+        assertNotNull(tag)
+        assertEquals(t2, tag.name)
+        assertEquals("Image tag", tag.description)
+        assertEquals(TagIconType.IMAGE, tag.options.iconType)
     }
 
     @Test
