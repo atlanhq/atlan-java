@@ -1,5 +1,5 @@
-Atlan tag name,Color,Icon,Synced connection name,Synced connector type,Allowed values for tag,Tag ID in source,Account ID (dbt),Project ID (dbt),Schema path (Snowflake)
+Atlan tag name,Color,Icon,Synced connection name,Synced connector type,Allowed values for tag,Tag ID in source,Account ID (dbt),Project ID (dbt),Schema path (Snowflake),Description
 {{TAG1}},Green,PhRecycle,{{CONNECTION}},{{CTYPE}},"X
 Y
-Z",42,,,
-{{TAG2}},,https://assets.atlan.com/assets/announcement-issue-png.png,,,,,,,
+Z",42,,,,Icon tag with values
+{{TAG2}},,https://assets.atlan.com/assets/announcement-issue-png.png,,,,,,,,Image tag

@@ -111,6 +111,7 @@ class AtlanTagImporter(
                                 row.getOrElse(DBT_ACCOUNT_ID) { "" },
                                 row.getOrElse(DBT_PROJECT_ID) { "" },
                                 row.getOrElse(SNOWFLAKE_PATH) { "" },
+                                row.getOrElse("Description") { row.getOrElse("description") { "" } },
                             )
 
                         // Manage the TypeDefinition for the tag
@@ -145,46 +146,54 @@ class AtlanTagImporter(
     ): TagDefAndOp {
         try {
             val existing = ctx.client.atlanTagCache.getByName(tag.name, false)
-            val builder = existing.toBuilder()
+            val builder = existing.toBuilder().description(tag.description)
             if (tag.sourceSynced) {
-                if (existing.attributeDefs.size < 1 || existing.attributeDefs.first().displayName != "sourceTagAttachment") {
+                if (existing.attributeDefs.isEmpty() || existing.attributeDefs.first().displayName != "sourceTagAttachment") {
                     AtlanTagDef.setupSourceSynced(builder, true)
                 }
-                val optionsBuilder =
-                    if (tag.imageUrl) {
-                        AtlanTagOptions.withImage(ctx.client, tag.icon, true).toBuilder()
-                    } else if (tag.color.isNotBlank()) {
-                        val colorEnum = getEnumValue<AtlanTagColor>(tag.color, TAG_COLOR)
-                        if (tag.icon.isBlank()) {
-                            AtlanTagOptions.of(colorEnum, true).toBuilder()
-                        } else {
-                            val iconEnum = getEnumValue<AtlanIcon>(tag.icon, TAG_ICON)
-                            AtlanTagOptions.withIcon(iconEnum, colorEnum, true).toBuilder()
-                        }
-                    } else {
-                        AtlanTagOptions.of(AtlanTagColor.GRAY, true).toBuilder()
-                    }
+                val optionsBuilder = getTagOptions(tag, true).toBuilder()
                 builder.options(optionsBuilder.hasTag(true).build())
+            } else {
+                builder.options(getTagOptions(tag, false))
             }
             return TagDefAndOp(builder.build(), TagOp.UPDATE)
         } catch (e: NotFoundException) {
-            val tagDef =
+            val tagDefBuilder =
                 if (tag.imageUrl) {
-                    AtlanTagDef.creator(ctx.client, tag.name, tag.icon, tag.sourceSynced).build()
+                    AtlanTagDef.creator(ctx.client, tag.name, tag.icon, tag.sourceSynced)
                 } else if (tag.color.isNotBlank()) {
                     val colorEnum = getEnumValue<AtlanTagColor>(tag.color, TAG_COLOR)
                     if (tag.icon.isBlank()) {
-                        AtlanTagDef.creator(tag.name, colorEnum, tag.sourceSynced).build()
+                        AtlanTagDef.creator(tag.name, colorEnum, tag.sourceSynced)
                     } else {
                         val iconEnum = getEnumValue<AtlanIcon>(tag.icon, TAG_ICON)
-                        AtlanTagDef.creator(tag.name, iconEnum, colorEnum, tag.sourceSynced).build()
+                        AtlanTagDef.creator(tag.name, iconEnum, colorEnum, tag.sourceSynced)
                     }
                 } else {
-                    AtlanTagDef.creator(tag.name, tag.sourceSynced).build()
+                    AtlanTagDef.creator(tag.name, tag.sourceSynced)
                 }
+            val tagDef = tagDefBuilder.description(tag.description).build()
             return TagDefAndOp(tagDef, TagOp.CREATE)
         }
     }
+
+    private fun getTagOptions(
+        tag: TagDetails,
+        sourceSynced: Boolean,
+    ): AtlanTagOptions =
+        if (tag.imageUrl) {
+            AtlanTagOptions.withImage(ctx.client, tag.icon, sourceSynced)
+        } else if (tag.color.isNotBlank()) {
+            val colorEnum = getEnumValue<AtlanTagColor>(tag.color, TAG_COLOR)
+            if (tag.icon.isBlank()) {
+                AtlanTagOptions.of(colorEnum, sourceSynced)
+            } else {
+                val iconEnum = getEnumValue<AtlanIcon>(tag.icon, TAG_ICON)
+                AtlanTagOptions.withIcon(iconEnum, colorEnum, sourceSynced)
+            }
+        } else {
+            AtlanTagOptions.of(AtlanTagColor.GRAY, sourceSynced)
+        }
 
     private fun idempotentTagAsset(tag: TagDetails): Asset? =
         if (tag.sourceSynced) {
@@ -284,6 +293,7 @@ class AtlanTagImporter(
         val dbtAccountId: String,
         val dbtProjectId: String,
         val snowflakeSchemaPath: String,
+        val description: String,
     ) {
         val connectionQualifiedName: String
         val sourceSynced: Boolean
