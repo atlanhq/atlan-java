@@ -147,14 +147,14 @@ class AtlanTagImporter(
         try {
             val existing = ctx.client.atlanTagCache.getByName(tag.name, false)
             val builder = existing.toBuilder().description(tag.description)
-            val optionsBuilder = getTagOptions(tag).toBuilder()
             if (tag.sourceSynced) {
-                if (existing.attributeDefs.size < 1 || existing.attributeDefs.first().displayName != "sourceTagAttachment") {
+                if (existing.attributeDefs.isEmpty() || existing.attributeDefs.first().displayName != "sourceTagAttachment") {
                     AtlanTagDef.setupSourceSynced(builder, true)
                 }
+                val optionsBuilder = getTagOptions(tag, true).toBuilder()
                 builder.options(optionsBuilder.hasTag(true).build())
             } else {
-                builder.options(optionsBuilder.build())
+                builder.options(getTagOptions(tag, false))
             }
             return TagDefAndOp(builder.build(), TagOp.UPDATE)
         } catch (e: NotFoundException) {
@@ -177,19 +177,19 @@ class AtlanTagImporter(
         }
     }
 
-    private fun getTagOptions(tag: TagDetails): AtlanTagOptions {
+    private fun getTagOptions(tag: TagDetails, sourceSynced: Boolean): AtlanTagOptions {
         return if (tag.imageUrl) {
-            AtlanTagOptions.withImage(ctx.client, tag.icon, true)
+            AtlanTagOptions.withImage(ctx.client, tag.icon, sourceSynced)
         } else if (tag.color.isNotBlank()) {
             val colorEnum = getEnumValue<AtlanTagColor>(tag.color, TAG_COLOR)
             if (tag.icon.isBlank()) {
-                AtlanTagOptions.of(colorEnum, true)
+                AtlanTagOptions.of(colorEnum, sourceSynced)
             } else {
                 val iconEnum = getEnumValue<AtlanIcon>(tag.icon, TAG_ICON)
-                AtlanTagOptions.withIcon(iconEnum, colorEnum, true)
+                AtlanTagOptions.withIcon(iconEnum, colorEnum, sourceSynced)
             }
         } else {
-            AtlanTagOptions.of(AtlanTagColor.GRAY, true)
+            AtlanTagOptions.of(AtlanTagColor.GRAY, sourceSynced)
         }
     }
 
