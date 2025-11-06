@@ -270,7 +270,7 @@ class TagManagementTest : PackageTest("tm") {
     fun iconTagExists() {
         val tag = client.atlanTagCache.getByName(t1)
         assertNotNull(tag)
-        assertEquals(t1, tag.name)
+        assertEquals(t1, tag.displayName)
         assertEquals("Icon tag with values", tag.description)
         assertEquals(AtlanTagColor.GREEN.value, tag.options.color)
         assertEquals(AtlanIcon.RECYCLE, tag.options.iconName)
@@ -282,7 +282,7 @@ class TagManagementTest : PackageTest("tm") {
     fun imageTagExists() {
         val tag = client.atlanTagCache.getByName(t2)
         assertNotNull(tag)
-        assertEquals(t2, tag.name)
+        assertEquals(t2, tag.displayName)
         assertEquals("Image tag", tag.description)
         assertEquals(TagIconType.IMAGE, tag.options.iconType)
     }
