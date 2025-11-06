@@ -177,8 +177,11 @@ class AtlanTagImporter(
         }
     }
 
-    private fun getTagOptions(tag: TagDetails, sourceSynced: Boolean): AtlanTagOptions {
-        return if (tag.imageUrl) {
+    private fun getTagOptions(
+        tag: TagDetails,
+        sourceSynced: Boolean,
+    ): AtlanTagOptions =
+        if (tag.imageUrl) {
             AtlanTagOptions.withImage(ctx.client, tag.icon, sourceSynced)
         } else if (tag.color.isNotBlank()) {
             val colorEnum = getEnumValue<AtlanTagColor>(tag.color, TAG_COLOR)
@@ -191,7 +194,6 @@ class AtlanTagImporter(
         } else {
             AtlanTagOptions.of(AtlanTagColor.GRAY, sourceSynced)
         }
-    }
 
     private fun idempotentTagAsset(tag: TagDetails): Asset? =
         if (tag.sourceSynced) {
