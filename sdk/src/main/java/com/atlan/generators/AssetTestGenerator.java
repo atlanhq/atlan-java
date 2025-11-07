@@ -527,7 +527,7 @@ public class AssetTestGenerator extends AssetGenerator {
                                 sb.append("{")
                                         .append(getRawPrimitiveValue(
                                                 "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 0))
-                                        .append(", ")
+                                        .append(": ")
                                         .append(getRawPrimitiveValue(
                                                 "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 1))
                                         .append("}");
