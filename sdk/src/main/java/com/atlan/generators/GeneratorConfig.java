@@ -101,7 +101,8 @@ public class GeneratorConfig {
             Map.entry("tableauProjectHierarchy", "addTableauProjectHierarchy"),
             Map.entry("aiModelVersions", "modelVersion"),
             Map.entry("dremioFolderHierarchy", "addDremioFolderHierarchy"),
-            Map.entry("connectionWorkflowConfiguration", "putConnectionWorkflowConfiguration"));
+            Map.entry("connectionWorkflowConfiguration", "putConnectionWorkflowConfiguration"),
+            Map.entry("s3PrefixHierarchy", "putS3PrefixHierarchy"));
 
     private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
             Map.entry("__hasLineage", "hasLineage"),

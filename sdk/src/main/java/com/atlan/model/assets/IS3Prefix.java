@@ -11,11 +11,8 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
-import com.atlan.model.enums.S3ObjectLockMode;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -34,58 +31,38 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an S3 object in Atlan.
+ * Instance of an S3 prefix in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IS3Object {
+public interface IS3Prefix {
 
-    public static final String TYPE_NAME = "S3Object";
+    public static final String TYPE_NAME = "S3Prefix";
 
-    /** S3 bucket in which the object exists. */
-    RelationField BUCKET = new RelationField("bucket");
+    /** S3 bucket that contains the prefix. */
+    RelationField S3BUCKET = new RelationField("s3Bucket");
 
-    /** Simple name of the bucket in which this object exists. */
-    KeywordTextField S3BUCKET_NAME = new KeywordTextField("s3BucketName", "s3BucketName", "s3BucketName.text");
+    /** Simple name of the bucket in which this prefix exists. */
+    KeywordField S3BUCKET_NAME = new KeywordField("s3BucketName", "s3BucketName");
 
-    /** Unique name of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this prefix exists. */
     KeywordField S3BUCKET_QUALIFIED_NAME = new KeywordField("s3BucketQualifiedName", "s3BucketQualifiedName");
 
-    /** Information about how this object's content should be presented. */
-    KeywordField S3OBJECT_CONTENT_DISPOSITION =
-            new KeywordField("s3ObjectContentDisposition", "s3ObjectContentDisposition");
+    /** S3 child prefixes contained in this parent prefix. */
+    RelationField S3CHILD_PREFIXES = new RelationField("s3ChildPrefixes");
 
-    /** Type of content in this object, for example: text/plain, application/json, etc. */
-    KeywordField S3OBJECT_CONTENT_TYPE = new KeywordField("s3ObjectContentType", "s3ObjectContentType");
+    /** Number of objects immediately contained within the prefix. */
+    NumericField S3OBJECT_COUNT = new NumericField("s3ObjectCount", "s3ObjectCount");
 
-    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
-    KeywordTextField S3OBJECT_KEY = new KeywordTextField("s3ObjectKey", "s3ObjectKey", "s3ObjectKey.text");
+    /** S3 objects contained in this prefix. */
+    RelationField S3OBJECTS = new RelationField("s3Objects");
 
-    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
-    NumericField S3OBJECT_LAST_MODIFIED_TIME = new NumericField("s3ObjectLastModifiedTime", "s3ObjectLastModifiedTime");
+    /** S3 parent prefix containing this child prefix. */
+    RelationField S3PARENT_PREFIX = new RelationField("s3ParentPrefix");
 
-    /** Whether the object lock legal hold is enabled (true) or not (false). */
-    BooleanField S3OBJECT_LOCK_LEGAL_HOLD_ENABLED =
-            new BooleanField("s3ObjectLockLegalHoldEnabled", "s3ObjectLockLegalHoldEnabled");
-
-    /** Mode of the object lock retention. */
-    KeywordField S3OBJECT_LOCK_MODE = new KeywordField("s3ObjectLockMode", "s3ObjectLockMode");
-
-    /** Time (epoch) when the object lock retention will expire. */
-    NumericField S3OBJECT_LOCK_RETAIN_UNTIL = new NumericField("s3ObjectLockRetainUntil", "s3ObjectLockRetainUntil");
-
-    /** Object size in bytes. */
-    NumericField S3OBJECT_SIZE = new NumericField("s3ObjectSize", "s3ObjectSize");
-
-    /** Storage class used for storing this object, for example: standard, intelligent-tiering, glacier, etc. */
-    KeywordField S3OBJECT_STORAGE_CLASS = new KeywordField("s3ObjectStorageClass", "s3ObjectStorageClass");
-
-    /** Version of this object. This is only applicable when versioning is enabled on the bucket in which this object exists. */
-    KeywordField S3OBJECT_VERSION_ID = new KeywordField("s3ObjectVersionId", "s3ObjectVersionId");
-
-    /** S3 prefix that contains the object. */
-    RelationField S3PREFIX = new RelationField("s3Prefix");
+    /** Number of prefixes immediately contained within the prefix. */
+    NumericField S3PREFIX_COUNT = new NumericField("s3PrefixCount", "s3PrefixCount");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -474,9 +451,6 @@ public interface IS3Object {
     /** List of tags that have been applied to the asset in AWS. */
     List<AwsTag> getAwsTags();
 
-    /** S3 bucket in which the object exists. */
-    IS3Bucket getBucket();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -627,11 +601,17 @@ public interface IS3Object {
     /** README that is linked to this asset. */
     IReadme getReadme();
 
-    /** Simple name of the bucket in which this object exists. */
+    /** S3 bucket that contains the prefix. */
+    IS3Bucket getS3Bucket();
+
+    /** Simple name of the bucket in which this prefix exists. */
     String getS3BucketName();
 
-    /** Unique name of the bucket in which this object exists. */
+    /** Unique name of the bucket in which this prefix exists. */
     String getS3BucketQualifiedName();
+
+    /** S3 child prefixes contained in this parent prefix. */
+    SortedSet<IS3Prefix> getS3ChildPrefixes();
 
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     String getS3ETag();
@@ -639,41 +619,20 @@ public interface IS3Object {
     /** TBC */
     String getS3Encryption();
 
-    /** Information about how this object's content should be presented. */
-    String getS3ObjectContentDisposition();
+    /** Number of objects immediately contained within the prefix. */
+    Long getS3ObjectCount();
 
-    /** Type of content in this object, for example: text/plain, application/json, etc. */
-    String getS3ObjectContentType();
+    /** S3 objects contained in this prefix. */
+    SortedSet<IS3Object> getS3Objects();
 
-    /** Unique identity of this object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
-    String getS3ObjectKey();
-
-    /** Time (epoch) at which this object was last updated, in milliseconds, or when it was created if it has never been modified. */
-    Long getS3ObjectLastModifiedTime();
-
-    /** Whether the object lock legal hold is enabled (true) or not (false). */
-    Boolean getS3ObjectLockLegalHoldEnabled();
-
-    /** Mode of the object lock retention. */
-    S3ObjectLockMode getS3ObjectLockMode();
-
-    /** Time (epoch) when the object lock retention will expire. */
-    Long getS3ObjectLockRetainUntil();
-
-    /** Object size in bytes. */
-    Long getS3ObjectSize();
-
-    /** Storage class used for storing this object, for example: standard, intelligent-tiering, glacier, etc. */
-    String getS3ObjectStorageClass();
-
-    /** Version of this object. This is only applicable when versioning is enabled on the bucket in which this object exists. */
-    String getS3ObjectVersionId();
+    /** S3 parent prefix containing this child prefix. */
+    IS3Prefix getS3ParentPrefix();
 
     /** Unique name of the immediate parent prefix in which this asset exists. */
     String getS3ParentPrefixQualifiedName();
 
-    /** S3 prefix that contains the object. */
-    IS3Prefix getS3Prefix();
+    /** Number of prefixes immediately contained within the prefix. */
+    Long getS3PrefixCount();
 
     /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
     List<Map<String, String>> getS3PrefixHierarchy();

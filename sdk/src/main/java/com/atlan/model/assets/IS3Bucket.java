@@ -50,6 +50,9 @@ public interface IS3Bucket {
     /** Number of objects within the bucket. */
     NumericField S3OBJECT_COUNT = new NumericField("s3ObjectCount", "s3ObjectCount");
 
+    /** S3 prefixes contained in this bucket. */
+    RelationField S3PREFIXES = new RelationField("s3Prefixes");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -601,6 +604,15 @@ public interface IS3Bucket {
 
     /** Number of objects within the bucket. */
     Long getS3ObjectCount();
+
+    /** Unique name of the immediate parent prefix in which this asset exists. */
+    String getS3ParentPrefixQualifiedName();
+
+    /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
+    List<Map<String, String>> getS3PrefixHierarchy();
+
+    /** S3 prefixes contained in this bucket. */
+    SortedSet<IS3Prefix> getS3Prefixes();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();

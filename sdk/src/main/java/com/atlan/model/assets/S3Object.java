@@ -190,6 +190,19 @@ public class S3Object extends Asset
     @Attribute
     String s3ObjectVersionId;
 
+    /** Unique name of the immediate parent prefix in which this asset exists. */
+    @Attribute
+    String s3ParentPrefixQualifiedName;
+
+    /** S3 prefix that contains the object. */
+    @Attribute
+    IS3Prefix s3Prefix;
+
+    /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
+    @Attribute
+    @Singular("putS3PrefixHierarchy")
+    List<Map<String, String>> s3PrefixHierarchy;
+
     /**
      * Builds the minimal object necessary to create a relationship to a S3Object, from a potentially
      * more-complete S3Object object.

@@ -62,6 +62,9 @@ public class S3BucketTest {
                             .build())
             .s3ETag("String0")
             .s3Encryption("String0")
+            .s3ParentPrefixQualifiedName("String0")
+            .putS3PrefixHierarchy(Map.of("key1", "value1"))
+            .putS3PrefixHierarchy(Map.of("key2", "value2"))
             .awsAccountId("String0")
             .awsArn("String0")
             .awsOwnerId("String0")
@@ -620,6 +623,8 @@ public class S3BucketTest {
             .object(S3Object.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .s3BucketVersioningEnabled(true)
             .s3ObjectCount(123456789L)
+            .s3Prefix(S3Prefix.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .s3Prefix(S3Prefix.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     @BeforeClass

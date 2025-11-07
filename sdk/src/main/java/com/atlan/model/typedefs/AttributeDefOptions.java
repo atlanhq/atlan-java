@@ -273,6 +273,7 @@ public class AttributeDefOptions extends AtlanObject {
             Response.TYPE_NAME,
             S3Bucket.TYPE_NAME,
             S3Object.TYPE_NAME,
+            S3Prefix.TYPE_NAME,
             SalesforceDashboard.TYPE_NAME,
             SalesforceField.TYPE_NAME,
             SalesforceObject.TYPE_NAME,

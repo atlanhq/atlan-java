@@ -457,7 +457,7 @@ public class AssetTestGenerator extends AssetGenerator {
                     } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
                         sb.append(getEnumValue(fieldType.getSimpleName(), count));
                     } else {
-                        log.error("Type not yet handled for (SDK) structs: {}", fieldType.getCanonicalName());
+                        sb.append(getStructValue(fieldType.getSimpleName(), count));
                     }
                     sb.append(")");
                 }
@@ -512,10 +512,35 @@ public class AssetTestGenerator extends AssetGenerator {
                         } else {
                             log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
                         }
+                    } else if (fieldType == Map.class) {
+                        // Handle non-primitive fields
+                        Type generic = field.getGenericType();
+                        if (generic instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) generic;
+                            Type typeKey = pt.getActualTypeArguments()[0];
+                            Type typeVal = pt.getActualTypeArguments()[1];
+                            try {
+                                Class<?> embeddedKey = Class.forName(typeKey.getTypeName());
+                                String simpleClassNameKey = embeddedKey.getSimpleName();
+                                Class<?> embeddedVal = Class.forName(typeVal.getTypeName());
+                                String simpleClassNameVal = embeddedVal.getSimpleName();
+                                sb.append("{")
+                                        .append(getRawPrimitiveValue(
+                                                "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 0))
+                                        .append(": ")
+                                        .append(getRawPrimitiveValue(
+                                                "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 1))
+                                        .append("}");
+                            } catch (ClassNotFoundException e) {
+                                log.error("Unable to find embedded struct class: {}", pt.getActualTypeArguments(), e);
+                            }
+                        } else {
+                            log.warn("Unable to reflectively identify map-wrapped type: {}", generic.getTypeName());
+                        }
                     } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
                         sb.append(getRawEnumValue(fieldType.getSimpleName(), count));
                     } else {
-                        log.error("Type not yet handled for (raw API) structs: {}", fieldType.getCanonicalName());
+                        sb.append(getRawStructValue(fieldType.getSimpleName(), count));
                     }
                     sb.append(", ");
                 }

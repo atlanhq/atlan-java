@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class DomoDatasetTest {
+public class S3PrefixTest {
 
-    private final DomoDataset full = DomoDataset._internal()
+    private final S3Prefix full = S3Prefix._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,8 +60,21 @@ public class DomoDatasetTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .domoId("String0")
-            .domoOwnerId("String0")
+            .s3ETag("String0")
+            .s3Encryption("String0")
+            .s3ParentPrefixQualifiedName("String0")
+            .putS3PrefixHierarchy(Map.of("key1", "value1"))
+            .putS3PrefixHierarchy(Map.of("key2", "value2"))
+            .awsAccountId("String0")
+            .awsArn("String0")
+            .awsOwnerId("String0")
+            .awsOwnerName("String0")
+            .awsPartition("String0")
+            .awsRegion("String0")
+            .awsResourceId("String0")
+            .awsService("String0")
+            .awsTag(AwsTag.builder().awsTagKey("String0").awsTagValue("String0").build())
+            .awsTag(AwsTag.builder().awsTagKey("String1").awsTagValue("String1").build())
             .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -606,15 +619,16 @@ public class DomoDatasetTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .domoCard(DomoCard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .domoCard(DomoCard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .domoDatasetCardCount(123456789L)
-            .domoDatasetColumnCount(123456789L)
-            .domoDatasetColumn(DomoDatasetColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .domoDatasetColumn(DomoDatasetColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .domoDatasetLastRun("String0")
-            .domoDatasetRowCount(123456789L)
-            .domoDatasetType("String0")
+            .s3Bucket(S3Bucket.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .s3BucketName("String0")
+            .s3BucketQualifiedName("String0")
+            .s3ChildPrefix(S3Prefix.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .s3ChildPrefix(S3Prefix.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .s3ObjectCount(123456789L)
+            .s3Object(S3Object.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .s3Object(S3Object.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .s3ParentPrefix(S3Prefix.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .s3PrefixCount(123456789L)
             .build();
 
     @BeforeClass
@@ -623,21 +637,21 @@ public class DomoDatasetTest {
     }
 
     @Test
-    void serdeCycleDomoDataset() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of DomoDataset,");
+    void serdeCycleS3Prefix() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of S3Prefix,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
                 full.toBuilder().build(),
                 full,
-                "Unable to converting DomoDataset via builder back to its original state,");
+                "Unable to converting S3Prefix via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of DomoDataset,");
+        assertNotNull(serialized, "Unable to serialize sample instance of S3Prefix,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final DomoDataset frodo = MockAtlanTenant.client.readValue(serialized, DomoDataset.class);
-        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DomoDataset,");
+        final S3Prefix frodo = MockAtlanTenant.client.readValue(serialized, S3Prefix.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of S3Prefix,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
