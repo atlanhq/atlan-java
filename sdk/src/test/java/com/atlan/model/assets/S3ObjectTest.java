@@ -62,6 +62,9 @@ public class S3ObjectTest {
                             .build())
             .s3ETag("String0")
             .s3Encryption("String0")
+            .s3ParentPrefixQualifiedName("String0")
+            .putS3PrefixHierarchy(Map.of("key1", "value1"))
+            .putS3PrefixHierarchy(Map.of("key2", "value2"))
             .awsAccountId("String0")
             .awsArn("String0")
             .awsOwnerId("String0")
@@ -629,6 +632,7 @@ public class S3ObjectTest {
             .s3ObjectSize(123456789L)
             .s3ObjectStorageClass("String0")
             .s3ObjectVersionId("String0")
+            .s3Prefix(S3Prefix.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     @BeforeClass

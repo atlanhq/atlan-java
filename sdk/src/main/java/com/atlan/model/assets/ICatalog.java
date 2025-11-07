@@ -719,6 +719,9 @@ public interface ICatalog {
             case S3Object.TYPE_NAME:
                 ref = S3Object.refByQualifiedName(qualifiedName);
                 break;
+            case S3Prefix.TYPE_NAME:
+                ref = S3Prefix.refByQualifiedName(qualifiedName);
+                break;
             case SalesforceDashboard.TYPE_NAME:
                 ref = SalesforceDashboard.refByQualifiedName(qualifiedName);
                 break;

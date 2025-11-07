@@ -45,6 +45,13 @@ public interface IS3 {
     /** TBC */
     KeywordField S3ENCRYPTION = new KeywordField("s3Encryption", "s3Encryption");
 
+    /** Unique name of the immediate parent prefix in which this asset exists. */
+    KeywordField S3PARENT_PREFIX_QUALIFIED_NAME =
+            new KeywordField("s3ParentPrefixQualifiedName", "s3ParentPrefixQualifiedName");
+
+    /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
+    KeywordField S3PREFIX_HIERARCHY = new KeywordField("s3PrefixHierarchy", "s3PrefixHierarchy");
+
     /**
      * Generate a unique S3 name.
      *
@@ -598,6 +605,12 @@ public interface IS3 {
 
     /** TBC */
     String getS3Encryption();
+
+    /** Unique name of the immediate parent prefix in which this asset exists. */
+    String getS3ParentPrefixQualifiedName();
+
+    /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
+    List<Map<String, String>> getS3PrefixHierarchy();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();

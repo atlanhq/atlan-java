@@ -12,6 +12,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
@@ -56,6 +57,10 @@ public interface IDomoDataset {
 
     /** Number of rows in the Domo dataset. */
     NumericField DOMO_DATASET_ROW_COUNT = new NumericField("domoDatasetRowCount", "domoDatasetRowCount");
+
+    /** Type of Domo dataset. */
+    KeywordTextField DOMO_DATASET_TYPE =
+            new KeywordTextField("domoDatasetType", "domoDatasetType.keyword", "domoDatasetType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -473,6 +478,9 @@ public interface IDomoDataset {
 
     /** Number of rows in the Domo dataset. */
     Long getDomoDatasetRowCount();
+
+    /** Type of Domo dataset. */
+    String getDomoDatasetType();
 
     /** Id of the Domo dataset. */
     String getDomoId();

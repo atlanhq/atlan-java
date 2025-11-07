@@ -148,6 +148,20 @@ public class S3Bucket extends Asset
     @Attribute
     Long s3ObjectCount;
 
+    /** Unique name of the immediate parent prefix in which this asset exists. */
+    @Attribute
+    String s3ParentPrefixQualifiedName;
+
+    /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
+    @Attribute
+    @Singular("putS3PrefixHierarchy")
+    List<Map<String, String>> s3PrefixHierarchy;
+
+    /** S3 prefixes contained in this bucket. */
+    @Attribute
+    @Singular
+    SortedSet<IS3Prefix> s3Prefixes;
+
     /**
      * Builds the minimal object necessary to create a relationship to a S3Bucket, from a potentially
      * more-complete S3Bucket object.

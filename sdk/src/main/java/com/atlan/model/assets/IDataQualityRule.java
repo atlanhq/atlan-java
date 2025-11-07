@@ -69,6 +69,9 @@ public interface IDataQualityRule {
     /** Dimension of the data quality rule. */
     KeywordField DQ_RULE_DIMENSION = new KeywordField("dqRuleDimension", "dqRuleDimension");
 
+    /** SQL query used to retrieve failed rows. */
+    KeywordField DQ_RULE_FAILED_ROWS_SQL = new KeywordField("dqRuleFailedRowsSQL", "dqRuleFailedRowsSQL");
+
     /** Last result metrics value of the rule. */
     KeywordField DQ_RULE_LATEST_METRIC_VALUE = new KeywordField("dqRuleLatestMetricValue", "dqRuleLatestMetricValue");
 
@@ -563,6 +566,9 @@ public interface IDataQualityRule {
 
     /** Dimension of the data quality rule. */
     DataQualityDimension getDqRuleDimension();
+
+    /** SQL query used to retrieve failed rows. */
+    String getDqRuleFailedRowsSQL();
 
     /** Last result metrics value of the rule. */
     String getDqRuleLatestMetricValue();

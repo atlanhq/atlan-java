@@ -74,6 +74,10 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     @Attribute
     Long domoDatasetRowCount;
 
+    /** Type of Domo dataset. */
+    @Attribute
+    String domoDatasetType;
+
     /** Id of the Domo dataset. */
     @Attribute
     String domoId;

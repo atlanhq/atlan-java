@@ -457,7 +457,7 @@ public class AssetTestGenerator extends AssetGenerator {
                     } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
                         sb.append(getEnumValue(fieldType.getSimpleName(), count));
                     } else {
-                        log.error("Type not yet handled for (SDK) structs: {}", fieldType.getCanonicalName());
+                        sb.append(getStructValue(fieldType.getSimpleName(), count));
                     }
                     sb.append(")");
                 }

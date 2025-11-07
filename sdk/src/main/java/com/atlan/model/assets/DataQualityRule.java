@@ -90,6 +90,10 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     @Attribute
     DataQualityDimension dqRuleDimension;
 
+    /** SQL query used to retrieve failed rows. */
+    @Attribute
+    String dqRuleFailedRowsSQL;
+
     /** Last result metrics value of the rule. */
     @Attribute
     String dqRuleLatestMetricValue;
