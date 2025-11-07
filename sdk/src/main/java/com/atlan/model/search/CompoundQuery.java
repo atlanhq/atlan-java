@@ -91,14 +91,22 @@ public abstract class CompoundQuery {
     }
 
     private static final List<SpanQuery> SOURCE_SYNCED_LITTLE_ORS = List.of(
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentKey"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagName"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagQualifiedName"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagGuid"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagConnectorName"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("isSourceTagSynced"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagSyncTimestamp"))._toSpanQuery(),
-        SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagValue"))._toSpanQuery());
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("tagAttachmentKey"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagName"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagQualifiedName"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagGuid"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagConnectorName"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("isSourceTagSynced"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagSyncTimestamp"))
+                    ._toSpanQuery(),
+            SpanTermQuery.of(t -> t.field("__classificationsText.text").value("sourceTagValue"))
+                    ._toSpanQuery());
 
     public abstract static class CompoundQueryBuilder<C extends CompoundQuery, B extends CompoundQueryBuilder<C, B>> {
 
@@ -202,7 +210,8 @@ public abstract class CompoundQuery {
                                 t -> t.field("__classificationsText.text").value(token))
                         ._toSpanQuery());
             }
-            littleSpans.add(SpanOrQuery.of(o -> o.clauses(SOURCE_SYNCED_LITTLE_ORS))._toSpanQuery());
+            littleSpans.add(
+                    SpanOrQuery.of(o -> o.clauses(SOURCE_SYNCED_LITTLE_ORS))._toSpanQuery());
             List<SpanQuery> bigSpans = new ArrayList<>();
             bigSpans.add(
                     SpanTermQuery.of(t -> t.field("__classificationsText.text").value(tagId))
