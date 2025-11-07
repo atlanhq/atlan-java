@@ -212,6 +212,12 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearOutputFromSparkJobs()" class="member-name-link">clearOutputFromSparkJobs</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearS3Prefixes()" class="member-name-link">clearS3Prefixes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clearS3PrefixHierarchy()" class="member-name-link">clearS3PrefixHierarchy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputToAirflowTask(com.atlan.model.assets.IAirflowTask)" class="member-name-link">inputToAirflowTask</a><wbr>(<a href="IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&nbsp;inputToAirflowTask)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
@@ -266,34 +272,51 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#outputFromSparkJobs(java.util.Collection)" class="member-name-link">outputFromSparkJobs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt;&nbsp;outputFromSparkJobs)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3BucketVersioningEnabled(java.lang.Boolean)" class="member-name-link">s3BucketVersioningEnabled</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;s3BucketVersioningEnabled)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#putS3PrefixHierarchy(java.util.Map)" class="member-name-link">putS3PrefixHierarchy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;putS3PrefixHierarchy)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3BucketVersioningEnabled(java.lang.Boolean)" class="member-name-link">s3BucketVersioningEnabled</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;s3BucketVersioningEnabled)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether versioning is enabled for the bucket (true) or not (false).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3Encryption(java.lang.String)" class="member-name-link">s3Encryption</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3Encryption)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3Encryption(java.lang.String)" class="member-name-link">s3Encryption</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3Encryption)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3ETag(java.lang.String)" class="member-name-link">s3ETag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3ETag)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3ETag(java.lang.String)" class="member-name-link">s3ETag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3ETag)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Entity tag for the asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3ObjectCount(java.lang.Long)" class="member-name-link">s3ObjectCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;s3ObjectCount)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3ObjectCount(java.lang.Long)" class="member-name-link">s3ObjectCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;s3ObjectCount)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of objects within the bucket.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3ParentPrefixQualifiedName(java.lang.String)" class="member-name-link">s3ParentPrefixQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3ParentPrefixQualifiedName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3Prefix(com.atlan.model.assets.IS3Prefix)" class="member-name-link">s3Prefix</a><wbr>(<a href="IS3Prefix.html" title="interface in com.atlan.model.assets">IS3Prefix</a>&nbsp;s3Prefix)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3Prefixes(java.util.Collection)" class="member-name-link">s3Prefixes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IS3Prefix.html" title="interface in com.atlan.model.assets">IS3Prefix</a>&gt;&nbsp;s3Prefixes)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeName(java.lang.String)" class="member-name-link">typeName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#s3PrefixHierarchy(java.util.Collection)" class="member-name-link">s3PrefixHierarchy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;&nbsp;s3PrefixHierarchy)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#self()" class="member-name-link">self</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeName(java.lang.String)" class="member-name-link">typeName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;typeName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Fixed typeName for S3Buckets.</div>
 </div>
 </div>
@@ -669,6 +692,53 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="s3ParentPrefixQualifiedName(java.lang.String)">
+<h3>s3ParentPrefixQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">s3ParentPrefixQualifiedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s3ParentPrefixQualifiedName)</span></div>
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="putS3PrefixHierarchy(java.util.Map)">
+<h3>putS3PrefixHierarchy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">putS3PrefixHierarchy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;putS3PrefixHierarchy)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="s3PrefixHierarchy(java.util.Collection)">
+<h3>s3PrefixHierarchy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">s3PrefixHierarchy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;&nbsp;s3PrefixHierarchy)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearS3PrefixHierarchy()">
+<h3>clearS3PrefixHierarchy</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">clearS3PrefixHierarchy</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="s3Prefix(com.atlan.model.assets.IS3Prefix)">
+<h3>s3Prefix</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">s3Prefix</span><wbr><span class="parameters">(<a href="IS3Prefix.html" title="interface in com.atlan.model.assets">IS3Prefix</a>&nbsp;s3Prefix)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="s3Prefixes(java.util.Collection)">
+<h3>s3Prefixes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">s3Prefixes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="IS3Prefix.html" title="interface in com.atlan.model.assets">IS3Prefix</a>&gt;&nbsp;s3Prefixes)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="clearS3Prefixes()">
+<h3>clearS3Prefixes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Bucket.S3BucketBuilder.html" title="type parameter in S3Bucket.S3BucketBuilder">B</a></span>&nbsp;<span class="element-name">clearS3Prefixes</span>()</div>
 </section>
 </li>
 <li>

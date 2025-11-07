@@ -88,7 +88,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="S3Bucket.html" title="class in com.atlan.model.assets">S3Bucket</a></code>, <code><a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code></dd>
+<dd><code><a href="S3Bucket.html" title="class in com.atlan.model.assets">S3Bucket</a></code>, <code><a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code>, <code><a href="S3Prefix.html" title="class in com.atlan.model.assets">S3Prefix</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.compiler/javax/annotation/processing/Generated.html" title="class or interface in javax.annotation.processing" class="external-link">@Generated</a>("com.atlan.generators.ModelGeneratorV2")
@@ -115,6 +115,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><a href="#S3ENCRYPTION" class="member-name-link">S3ENCRYPTION</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">TBC</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#S3PARENT_PREFIX_QUALIFIED_NAME" class="member-name-link">S3PARENT_PREFIX_QUALIFIED_NAME</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#S3PREFIX_HIERARCHY" class="member-name-link">S3PREFIX_HIERARCHY</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix.</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#TYPE_NAME" class="member-name-link">TYPE_NAME</a></code></div>
@@ -1095,6 +1105,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Entity tag for the asset.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getS3ParentPrefixQualifiedName()" class="member-name-link">getS3ParentPrefixQualifiedName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getS3PrefixHierarchy()" class="member-name-link">getS3PrefixHierarchy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSampleDataUrl()" class="member-name-link">getSampleDataUrl</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">URL for sample data for this asset.</div>
@@ -1339,6 +1359,20 @@ loadScripts(document, 'script');</script>
 <h3>S3ENCRYPTION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">S3ENCRYPTION</span></div>
 <div class="block">TBC</div>
+</section>
+</li>
+<li>
+<section class="detail" id="S3PARENT_PREFIX_QUALIFIED_NAME">
+<h3>S3PARENT_PREFIX_QUALIFIED_NAME</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">S3PARENT_PREFIX_QUALIFIED_NAME</span></div>
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="S3PREFIX_HIERARCHY">
+<h3>S3PREFIX_HIERARCHY</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">S3PREFIX_HIERARCHY</span></div>
+<div class="block">Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix.</div>
 </section>
 </li>
 </ul>
@@ -2629,6 +2663,20 @@ loadScripts(document, 'script');</script>
 <h3>getS3Encryption</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getS3Encryption</span>()</div>
 <div class="block">TBC</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getS3ParentPrefixQualifiedName()">
+<h3>getS3ParentPrefixQualifiedName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getS3ParentPrefixQualifiedName</span>()</div>
+<div class="block">Unique name of the immediate parent prefix in which this asset exists.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getS3PrefixHierarchy()">
+<h3>getS3PrefixHierarchy</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span>&nbsp;<span class="element-name">getS3PrefixHierarchy</span>()</div>
+<div class="block">Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix.</div>
 </section>
 </li>
 <li>
