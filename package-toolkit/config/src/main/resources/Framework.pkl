@@ -343,6 +343,7 @@ class AssetImport extends PublishConfig {
     when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
     when (assetsLinkIdempotency != null) { ["assets_link_idempotency"] = assetsLinkIdempotency }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
+    when (relaxedCQN != null) { ["relaxed_cqn"] = relaxedCQN.toString() }
 
     when (glossariesFile != null) { ["glossaries_file"] = glossariesFile.path }
     when (glossariesUpsertSemantic != null) { ["glossaries_upsert_semantic"] = glossariesUpsertSemantic }
