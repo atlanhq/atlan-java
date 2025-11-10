@@ -81,6 +81,7 @@ object Loader {
                     assetsFieldSeparator = ctx.config.fieldSeparator,
                     assetsCmHandling = CustomMetadataHandling.IGNORE.value,
                     assetsTagHandling = AtlanTagHandling.IGNORE.value,
+                    relaxedCqn = ctx.config.relaxedCqn,
                 )
             lateinit var qualifiedNameMap: Map<AssetIdentity, String>
             Utils.initializeContext(importConfig, ctx).use { iCtx ->
@@ -131,6 +132,7 @@ object Loader {
                     assetsFieldSeparator = ctx.config.fieldSeparator,
                     assetsCmHandling = ctx.config.cmHandling,
                     assetsTagHandling = ctx.config.tagHandling,
+                    relaxedCqn = ctx.config.relaxedCqn,
                 )
             Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()

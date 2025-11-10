@@ -73,4 +73,5 @@ data class AssetImportCfg(
     @JsonProperty("assets_tag_handling") val assetsTagHandling: String? = null,
     @JsonProperty("assets_link_idempotency") val assetsLinkIdempotency: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
+    @JsonProperty("relaxed_cqn") val relaxedCqn: Boolean = false,
 ) : CustomConfig<AssetImportCfg>()

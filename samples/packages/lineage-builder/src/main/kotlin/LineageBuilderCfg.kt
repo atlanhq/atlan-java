@@ -25,4 +25,5 @@ data class LineageBuilderCfg(
     @JsonProperty("tag_handling") val tagHandling: String? = null,
     @JsonProperty("link_idempotency") val linkIdempotency: String? = null,
     @JsonProperty("track_batches") val trackBatches: Boolean = true,
+    @JsonProperty("relaxed_cqn") val relaxedCqn: Boolean = false,
 ) : CustomConfig<LineageBuilderCfg>()

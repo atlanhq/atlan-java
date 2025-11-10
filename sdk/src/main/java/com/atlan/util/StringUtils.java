@@ -19,8 +19,10 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
     private static final String connectionQualifiedName = "default/[a-z0-9-]+/[0-9]{10}";
+    private static final String connectionQualifiedNameRelaxed = "default/[a-z0-9-]+/[a-zA-Z0-9-._]+";
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQN = Pattern.compile(connectionQualifiedName);
+    private static final Pattern connectionQNRelaxed = Pattern.compile(connectionQualifiedNameRelaxed);
     private static final Pattern connectionQNPrefix = Pattern.compile("(" + connectionQualifiedName + ")/.*");
     private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+/super)/.*");
     private static final Pattern uuidPattern =
@@ -217,8 +219,25 @@ public final class StringUtils {
      * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
      */
     public static boolean isValidConnectionQN(String qn) {
+        return isValidConnectionQN(qn, false);
+    }
+
+    /**
+     * Checks whether a string is a valid connection qualifiedName or not.
+     *
+     * @param qn the string to check.
+     * @param relaxed whether to allow non-standard qualifiedNames (those not using epochs).
+     * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
+     */
+    public static boolean isValidConnectionQN(String qn, boolean relaxed) {
         if (qn == null || qn.isEmpty()) return false;
-        if (connectionQN.matcher(qn).matches()) {
+        Pattern toUse;
+        if (relaxed) {
+            toUse = connectionQNRelaxed;
+        } else {
+            toUse = connectionQN;
+        }
+        if (toUse.matcher(qn).matches()) {
             String type = Connection.getConnectorFromQualifiedName(qn);
             return (type != null && !type.isEmpty());
         }

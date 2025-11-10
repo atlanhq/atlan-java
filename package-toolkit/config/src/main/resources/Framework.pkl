@@ -219,6 +219,9 @@ class AssetImport extends PublishConfig {
   /// Whether to track details about every asset across batches (true) or only counts (false).
   hidden trackBatches: Boolean?|String? = null
 
+  /// Whether to allow non-standard connection qualifiedNames (true) or only standard ones (false).
+  hidden relaxedCQN: Boolean?|String? = null
+
   /// File containing glossaries, categories and terms to import; typically passed through using [transferFile()].
   hidden glossariesFile: FrameworkRenderer.NamePathPair? = null
 
