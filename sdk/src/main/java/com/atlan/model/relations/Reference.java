@@ -182,6 +182,9 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     /** Name of the type that defines the entity. */
     String typeName;
 
+    /** Unique identifier for the record in the search index (for search results). */
+    String docId;
+
     /** Globally-unique identifier for the entity. */
     String guid;
 
