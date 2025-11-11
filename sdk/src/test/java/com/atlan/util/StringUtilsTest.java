@@ -13,6 +13,7 @@ public class StringUtilsTest {
 
     final String qualifiedName1 = "default/s3/1234567890/aws:arn::somewhere/something/many/more/slashes.csv";
     final String qualifiedName2 = "default/sap-hana/1234567890/DATABASE/SCHEMA/table/column";
+    final String qualifiedNameRelaxed1 = "default/custom-connector/custom.example.com:1234/DB/SCH/table/col";
 
     @Test
     void containsWhitespace() {
@@ -34,30 +35,39 @@ public class StringUtilsTest {
 
     @Test
     void getFieldNameFromMethodName() {
-        String t1 = "getAtlanTags";
-        String t2 = "setQualifiedName";
+        final String t1 = "getAtlanTags";
+        final String t2 = "setQualifiedName";
         assertEquals(StringUtils.getFieldNameFromMethodName(t1), "atlanTags");
         assertEquals(StringUtils.getFieldNameFromMethodName(t2), "qualifiedName");
     }
 
     @Test
     void getConnectionQualifiedName() {
-        String t1 = "default/s3/1234567890";
-        String invalid = "default/mongo/someName/and/then/more";
+        final String t1 = "default/s3/1234567890";
+        final String invalid = "default/mongo/someName/and/then/more";
         assertEquals(StringUtils.getConnectionQualifiedName(qualifiedName1), t1);
         assertNull(StringUtils.getConnectionQualifiedName(invalid));
         assertNull(StringUtils.getConnectionQualifiedName(t1));
-        String t2 = "default/sap-hana/1234567890";
+        final String t2 = "default/sap-hana/1234567890";
         assertEquals(StringUtils.getConnectionQualifiedName(qualifiedName2), t2);
+    }
+
+    @Test
+    void getRelaxedConnectionQualifiedName() {
+        final String t1 = "default/custom-connector/custom.example.com:1234";
+        assertEquals(StringUtils.getConnectionQualifiedName(qualifiedNameRelaxed1, true), t1);
+        assertNull(StringUtils.getConnectionQualifiedName(t1, true));
+        final String t2 = "custom-connector";
+        assertEquals(Connection.getConnectorFromQualifiedName(qualifiedNameRelaxed1), t2);
     }
 
     @Test
     void encodeDecodeContent() {
         final String test = "<h1>This is a test</h1><p>With some HTML...</p>";
-        String encoded = StringUtils.encodeContent(test);
+        final String encoded = StringUtils.encodeContent(test);
         assertNotNull(encoded);
         assertNotEquals(test, encoded);
-        String decoded = StringUtils.decodeContent(encoded);
+        final String decoded = StringUtils.decodeContent(encoded);
         assertNotNull(decoded);
         assertEquals(decoded, test);
     }
@@ -65,9 +75,9 @@ public class StringUtilsTest {
     @Test
     void snakeCaseSimple() {
         final String test = "SomeName";
-        String snakeCaseU = StringUtils.getUpperSnakeCase(test);
+        final String snakeCaseU = StringUtils.getUpperSnakeCase(test);
         assertEquals(snakeCaseU, "SOME_NAME");
-        String snakeCaseL = StringUtils.getLowerSnakeCase(test);
+        final String snakeCaseL = StringUtils.getLowerSnakeCase(test);
         assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
     }
 
@@ -93,9 +103,9 @@ public class StringUtilsTest {
     @Test
     void snakeCaseAcronymAtEnd() {
         final String test = "dbtRawSQL";
-        String snakeCaseU = StringUtils.getLowerSnakeCase(test);
+        final String snakeCaseU = StringUtils.getLowerSnakeCase(test);
         assertEquals(snakeCaseU, "dbt_raw_sql");
-        String snakeCaseL = StringUtils.getLowerSnakeCase(test);
+        final String snakeCaseL = StringUtils.getLowerSnakeCase(test);
         assertEquals(snakeCaseL, snakeCaseU.toLowerCase(Locale.ROOT));
     }
 
@@ -122,5 +132,13 @@ public class StringUtilsTest {
     void invalidConnectionQN_justWrong() {
         final String test = "MyConnection";
         assertFalse(StringUtils.isValidConnectionQN(test));
+    }
+
+    @Test
+    void validRelaxedQN() {
+        final String qn = StringUtils.getConnectionQualifiedName(qualifiedNameRelaxed1, true);
+        assertNotNull(qn);
+        assertFalse(qn.isEmpty());
+        assertTrue(StringUtils.isValidConnectionQN(qn, true));
     }
 }
