@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
     private static final String connectionQualifiedName = "default/[a-z0-9-]+/[0-9]{10}";
-    private static final String connectionQualifiedNameRelaxed = "default/[a-z0-9-]+/[a-zA-Z0-9-._]+";
+    private static final String connectionQualifiedNameRelaxed = "default/[a-z0-9-]+/[a-zA-Z0-9-._:|]+";
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQN = Pattern.compile(connectionQualifiedName);
     private static final Pattern connectionQNRelaxed = Pattern.compile(connectionQualifiedNameRelaxed);
