@@ -113,6 +113,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         // Start by deserializing all the non-attribute properties (defined at Asset-level)
         builder.typeName(JacksonUtils.deserializeString(root, "typeName"))
                 .guid(JacksonUtils.deserializeString(root, "guid"))
+                .docId(JacksonUtils.deserializeString(root, "docId"))
                 .displayText(JacksonUtils.deserializeString(root, "displayText"))
                 // Include reference attributes, for related entities
                 .entityStatus(JacksonUtils.deserializeString(root, "entityStatus"))
