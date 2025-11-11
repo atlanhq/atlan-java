@@ -12,6 +12,7 @@ import com.atlan.model.enums.AtlanAnnouncementType
 import com.atlan.model.enums.CertificateStatus
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.validatePathIsSafe
 import com.atlan.pkg.mdir.metrics.AUM
 import com.atlan.pkg.mdir.metrics.AwD
 import com.atlan.pkg.mdir.metrics.AwDC
@@ -38,8 +39,7 @@ import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.util.AssetBatch
-import java.io.File
-import java.nio.file.Paths
+import java.nio.file.Path
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -115,20 +115,21 @@ object Reporter {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<MetadataImpactReportCfg>().use { ctx ->
             val batchSize = 300
 
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            Paths.get(outputDirectory).toFile().mkdirs()
+            val outputDirectory = validatePathIsSafe(od)
+            outputDirectory.toFile().mkdirs()
 
             // Touch every file, just so they exist, to avoid any workflow failures
-            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
-            Paths.get(xlsxFile).toFile().createNewFile()
+            val xlsxFile = validatePathIsSafe(outputDirectory, FILENAME)
+            xlsxFile.toFile().createNewFile()
             CSV_FILES.forEach { (_, filename) ->
-                val filePath = "$outputDirectory${File.separator}$filename"
-                Paths.get(filePath).toFile().createNewFile()
+                val filePath = validatePathIsSafe(outputDirectory, filename)
+                filePath.toFile().createNewFile()
             }
 
             val domain =
@@ -149,7 +150,7 @@ object Reporter {
                             "[Atlan] Metadata Impact Report",
                             emails,
                             "Hi there! As requested, please find attached the Metadata Impact Report.\n\nAll the best!\nAtlan",
-                            fileOutputs.map { File(it) },
+                            fileOutputs.map { it.toFile() },
                         )
                     }
                 }
@@ -157,7 +158,7 @@ object Reporter {
                 "CLOUD" -> {
                     if (xlsxOutput) {
                         Utils.uploadOutputFile(
-                            xlsxFile,
+                            xlsxFile.toString(),
                             ctx.config.targetPrefix,
                             ctx.config.targetKey,
                         )
@@ -165,7 +166,7 @@ object Reporter {
                         fileOutputs.forEach {
                             // When using CSVs, ignore any key specified and use the filename itself
                             Utils.uploadOutputFile(
-                                it,
+                                it.toString(),
                                 ctx.config.targetPrefix,
                             )
                         }
@@ -245,13 +246,13 @@ object Reporter {
 
     private fun runReports(
         ctx: PackageContext<MetadataImpactReportCfg>,
-        outputDirectory: String,
+        outputDirectory: Path,
         batchSize: Int = 300,
         subdomainNameToQualifiedName: Map<String, String>,
-    ): List<String> {
+    ): List<Path> {
         if (ctx.config.fileFormat == "XLSX") {
-            val outputFile = "$outputDirectory${File.separator}mdir.xlsx"
-            ExcelWriter(outputFile).use { xlsx ->
+            val outputFile = validatePathIsSafe(outputDirectory, "mdir.xlsx")
+            ExcelWriter(outputFile.toString()).use { xlsx ->
                 val overview = xlsx.createSheet("Overview")
                 overview.writeHeader(
                     mapOf(
@@ -270,9 +271,9 @@ object Reporter {
             }
             return listOf(outputFile)
         } else {
-            val overviewFile = "$outputDirectory${File.separator}${CSV_FILES["overview"]}"
-            val outputFiles = mutableListOf<String>()
-            CSVWriter(overviewFile).use { overview ->
+            val overviewFile = validatePathIsSafe(outputDirectory, CSV_FILES["overview"] ?: "overview.csv")
+            val outputFiles = mutableListOf<Path>()
+            CSVWriter(overviewFile.toString()).use { overview ->
                 overview.writeHeader(
                     mapOf(
                         "Metric" to "",
@@ -285,8 +286,8 @@ object Reporter {
                 )
                 reports.forEach { repClass ->
                     val metric = Metric.get(repClass, ctx.client, batchSize, logger)
-                    val metricFile = "$outputDirectory${File.separator}${CSV_FILES[metric.getShortName()]}"
-                    CSVWriter(metricFile).use { details ->
+                    val metricFile = validatePathIsSafe(outputDirectory, CSV_FILES[metric.getShortName()] ?: "")
+                    CSVWriter(metricFile.toString()).use { details ->
                         outputReportDomain(ctx, metric, overview, details, subdomainNameToQualifiedName)
                     }
                     outputFiles.add(metricFile)

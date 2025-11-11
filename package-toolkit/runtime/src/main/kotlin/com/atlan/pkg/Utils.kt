@@ -50,6 +50,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.Instant
 import java.time.ZoneId
@@ -1140,22 +1141,43 @@ object Utils {
      *
      * @param baseDirectory within which the path is to be validated
      * @param userProvided location the user has provided
+     * @return the validated path, only if it is safe
+     * @throws IllegalArgumentException if the provided path is unsafe
      */
     @Throws(IllegalArgumentException::class)
     fun validatePathIsSafe(
         baseDirectory: String,
-        userProvided: String,
-    ) {
+        userProvided: String = "",
+    ): Path {
         val base = Paths.get(baseDirectory).toAbsolutePath().normalize()
+        return validatePathIsSafe(base, userProvided)
+    }
+
+    /**
+     * Validates that a user-provided path is safe, within the context
+     * of a defined base directory.
+     *
+     * @param basePath within which the path is to be validated
+     * @param userProvided location the user has provided
+     * @return the validated path, only if it is safe
+     * @throws IllegalArgumentException if the provided path is unsafe
+     */
+    @Throws(IllegalArgumentException::class)
+    fun validatePathIsSafe(
+        basePath: Path,
+        userProvided: String = "",
+    ): Path {
+        val base = basePath.toAbsolutePath().normalize()
         val resolved = base.resolve(userProvided).normalize()
         when {
             !resolved.startsWith(base) ->
-                IllegalArgumentException("Path traversal attempt detected -- will not proceed due to security implications.")
+                throw IllegalArgumentException("Path traversal attempt detected -- will not proceed due to security implications.")
             userProvided.contains('\u0000') ->
-                IllegalArgumentException("Null bytes in the path or filename are not allowed.")
+                throw IllegalArgumentException("Null bytes in the path or filename are not allowed.")
             resolved.toAbsolutePath().toString().length > 800 ->
-                IllegalArgumentException("User-provided path and filename are too long (exceeds maximum length of 800 characters).")
+                throw IllegalArgumentException("User-provided path and filename are too long (exceeds maximum length of 800 characters).")
         }
+        return resolved
     }
 
     private data class CacheUpdates(

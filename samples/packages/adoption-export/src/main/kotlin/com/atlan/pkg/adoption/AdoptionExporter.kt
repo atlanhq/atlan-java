@@ -15,7 +15,6 @@ import com.atlan.pkg.adoption.exports.DetailedUserViews
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import java.io.File
-import java.nio.file.Paths
 import kotlin.math.min
 
 /**
@@ -34,47 +33,42 @@ object AdoptionExporter {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdoptionExportCfg>().use { ctx ->
 
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            val xlsxFile = "$outputDirectory${File.separator}$FILENAME"
-            val changesFile = "$outputDirectory${File.separator}$CHANGES_FILE"
-            val viewsFile = "$outputDirectory${File.separator}$VIEWS_FILE"
-            val userSearchesFile = "$outputDirectory${File.separator}$USER_SEARCHES_FILE"
-            val userChangesFile = "$outputDirectory${File.separator}$USER_CHANGES_FILE"
-            val userViewsFile = "$outputDirectory${File.separator}$USER_VIEWS_FILE"
+            val outputDirectory = validatePathIsSafe(od)
+            outputDirectory.toFile().mkdirs()
 
             // Touch every file, just so they exist, to avoid any workflow failures
-            Paths.get(outputDirectory).toFile().mkdirs()
-            validatePathIsSafe(outputDirectory, FILENAME)
-            Paths.get(xlsxFile).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, CHANGES_FILE)
-            Paths.get(changesFile).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, VIEWS_FILE)
-            Paths.get(viewsFile).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, USER_SEARCHES_FILE)
-            Paths.get(userSearchesFile).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, USER_CHANGES_FILE)
-            Paths.get(userChangesFile).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, USER_VIEWS_FILE)
-            Paths.get(userViewsFile).toFile().createNewFile()
+            val xlsxFile = validatePathIsSafe(outputDirectory, FILENAME)
+            xlsxFile.toFile().createNewFile()
+            val changesFile = validatePathIsSafe(outputDirectory, CHANGES_FILE)
+            changesFile.toFile().createNewFile()
+            val viewsFile = validatePathIsSafe(outputDirectory, VIEWS_FILE)
+            viewsFile.toFile().createNewFile()
+            val userSearchesFile = validatePathIsSafe(outputDirectory, USER_SEARCHES_FILE)
+            userSearchesFile.toFile().createNewFile()
+            val userChangesFile = validatePathIsSafe(outputDirectory, USER_CHANGES_FILE)
+            userChangesFile.toFile().createNewFile()
+            val userViewsFile = validatePathIsSafe(outputDirectory, USER_VIEWS_FILE)
+            userViewsFile.toFile().createNewFile()
 
             val fileOutputs = mutableListOf<String>()
 
-            ExcelWriter(xlsxFile).use { xlsx ->
+            ExcelWriter(xlsxFile.toString()).use { xlsx ->
                 if (ctx.config.includeViews != "NONE") {
                     if (xlsxOutput) {
                         AssetViews(ctx, xlsx.createSheet("Views"), logger).export()
                     } else {
-                        CSVWriter(viewsFile).use { csv -> AssetViews(ctx, csv, logger).export() }
+                        CSVWriter(viewsFile.toString()).use { csv -> AssetViews(ctx, csv, logger).export() }
                     }
                     if (ctx.config.viewsDetails == "YES") {
                         if (xlsxOutput) {
                             DetailedUserViews(ctx, xlsx.createSheet("User views"), logger).export()
                         } else {
-                            CSVWriter(userViewsFile).use { csv -> DetailedUserViews(ctx, csv, logger).export() }
+                            CSVWriter(userViewsFile.toString()).use { csv -> DetailedUserViews(ctx, csv, logger).export() }
                         }
                     }
                 }
@@ -82,13 +76,13 @@ object AdoptionExporter {
                     if (xlsxOutput) {
                         AssetChanges(ctx, xlsx.createSheet("Changes"), logger).export()
                     } else {
-                        CSVWriter(changesFile).use { csv -> AssetChanges(ctx, csv, logger).export() }
+                        CSVWriter(changesFile.toString()).use { csv -> AssetChanges(ctx, csv, logger).export() }
                     }
                     if (ctx.config.changesDetails == "YES") {
                         if (xlsxOutput) {
                             DetailedUserChanges(ctx, xlsx.createSheet("User changes"), logger).export()
                         } else {
-                            CSVWriter(userChangesFile).use { csv -> DetailedUserChanges(ctx, csv, logger).export() }
+                            CSVWriter(userChangesFile.toString()).use { csv -> DetailedUserChanges(ctx, csv, logger).export() }
                         }
                     }
                 }
@@ -96,15 +90,15 @@ object AdoptionExporter {
                     if (xlsxOutput) {
                         DetailedSearches(ctx, xlsx.createSheet("User searches"), logger).export()
                     } else {
-                        CSVWriter(userSearchesFile).use { csv -> DetailedSearches(ctx, csv, logger).export() }
+                        CSVWriter(userSearchesFile.toString()).use { csv -> DetailedSearches(ctx, csv, logger).export() }
                     }
                 }
             }
             if (xlsxOutput) {
-                fileOutputs.add(xlsxFile)
+                fileOutputs.add(xlsxFile.toString())
             } else {
-                File(xlsxFile).delete()
-                File(xlsxFile).createNewFile()
+                xlsxFile.toFile().delete()
+                xlsxFile.toFile().createNewFile()
             }
 
             when (ctx.config.deliveryType) {
@@ -123,7 +117,7 @@ object AdoptionExporter {
                 "CLOUD" -> {
                     if (xlsxOutput) {
                         Utils.uploadOutputFile(
-                            xlsxFile,
+                            xlsxFile.toString(),
                             ctx.config.targetPrefix,
                             ctx.config.targetKey,
                         )

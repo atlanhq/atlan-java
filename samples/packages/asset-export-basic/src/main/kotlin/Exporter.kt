@@ -4,6 +4,7 @@ import com.atlan.AtlanClient
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.validatePathIsSafe
 import java.io.File
 
 /**
@@ -13,46 +14,49 @@ import java.io.File
 object Exporter {
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AssetExportBasicCfg>().use { ctx ->
-            export(ctx, outputDirectory)
+            export(ctx, od)
         }
     }
 
     fun export(
         ctx: PackageContext<AssetExportBasicCfg>,
-        outputDirectory: String,
+        od: String,
     ) {
         val batchSize = 300
         val cmFields = getAllCustomMetadataFields(ctx.client)
 
+        val outputDirectory = validatePathIsSafe(od)
+        outputDirectory.toFile().mkdirs()
+
         val exportedFiles = mutableListOf<File>()
-        val glossaryFile = "$outputDirectory${File.separator}glossary-export.csv"
+        val glossaryFile = validatePathIsSafe(outputDirectory, "glossary-export.csv")
         if ("GLOSSARIES_ONLY" == ctx.config.exportScope || ctx.config.includeGlossaries) {
-            val glossaryExporter = GlossaryExporter(ctx, glossaryFile, batchSize, cmFields)
+            val glossaryExporter = GlossaryExporter(ctx, glossaryFile.toString(), batchSize, cmFields)
             glossaryExporter.export()
-            exportedFiles.add(File(glossaryFile))
+            exportedFiles.add(glossaryFile.toFile())
         } else {
             // Still create an (empty) output file, to avoid errors in Argo
-            File(glossaryFile).createNewFile()
+            glossaryFile.toFile().createNewFile()
         }
-        val meshFile = "$outputDirectory${File.separator}products-export.csv"
+        val meshFile = validatePathIsSafe(outputDirectory, "products-export.csv")
         if ("PRODUCTS_ONLY" == ctx.config.exportScope || ctx.config.includeProducts) {
-            val meshExporter = MeshExporter(ctx, meshFile, batchSize, cmFields)
+            val meshExporter = MeshExporter(ctx, meshFile.toString(), batchSize, cmFields)
             meshExporter.export()
-            exportedFiles.add(File(meshFile))
+            exportedFiles.add(meshFile.toFile())
         } else {
             // Still create an (empty) output file, to avoid errors in Argo
-            File(meshFile).createNewFile()
+            meshFile.toFile().createNewFile()
         }
-        val assetsFile = "$outputDirectory${File.separator}asset-export.csv"
+        val assetsFile = validatePathIsSafe(outputDirectory, "asset-export.csv")
         if ("GLOSSARIES_ONLY" != ctx.config.exportScope && "PRODUCTS_ONLY" != ctx.config.exportScope) {
-            val assetExporter = AssetExporter(ctx, assetsFile, batchSize, cmFields)
+            val assetExporter = AssetExporter(ctx, assetsFile.toString(), batchSize, cmFields)
             assetExporter.export()
-            exportedFiles.add(File(assetsFile))
+            exportedFiles.add(assetsFile.toFile())
         } else {
             // Still create an (empty) output file, to avoid errors in Argo
-            File(assetsFile).createNewFile()
+            assetsFile.toFile().createNewFile()
         }
 
         when (ctx.config.deliveryType) {
