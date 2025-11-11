@@ -46,6 +46,7 @@ publishConfig = new AssetImport {
   assetsTagHandling = transferConfigInput(uiConfig, "assets_tag_handling")
   assetsLinkIdempotency = transferConfigInput(uiConfig, "assets_link_idempotency")
   trackBatches = transferConfigInput(uiConfig, "track_batches")
+  relaxedCQN = transferConfigInput(uiConfig, "relaxed_cqn")
 }
 
 uiConfig {
@@ -233,6 +234,14 @@ uiConfig {
           hide = true
           defaultSelection = true
           helpText = "Whether to track details about every asset across batches (Yes) or only counts (No)."
+          fallback = defaultSelection
+        }
+        ["relaxed_cqn"] = new BooleanInput {
+          title = "Relaxed connection qualifiedNames?"
+          required = false
+          hide = true
+          defaultSelection = false
+          helpText = "Whether to allow non-standard connection qualifiedNames (Yes) or only standard ones (No)."
           fallback = defaultSelection
         }
       }

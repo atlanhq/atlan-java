@@ -19,9 +19,13 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
     private static final String connectionQualifiedName = "default/[a-z0-9-]+/[0-9]{10}";
+    private static final String connectionQualifiedNameRelaxed = "default/[a-z0-9-]+/[a-zA-Z0-9-._]+";
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
     private static final Pattern connectionQN = Pattern.compile(connectionQualifiedName);
+    private static final Pattern connectionQNRelaxed = Pattern.compile(connectionQualifiedNameRelaxed);
     private static final Pattern connectionQNPrefix = Pattern.compile("(" + connectionQualifiedName + ")/.*");
+    private static final Pattern connectionQNPrefixRelaxed =
+            Pattern.compile("(" + connectionQualifiedNameRelaxed + ")/.*");
     private static final Pattern domainQNPrefix = Pattern.compile("(default/domain/[a-zA-Z0-9-]+/super)/.*");
     private static final Pattern uuidPattern =
             Pattern.compile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
@@ -100,8 +104,26 @@ public final class StringUtils {
      * @return the qualifiedName of the connection, or null if none can be determined
      */
     public static String getConnectionQualifiedName(String qualifiedName) {
+        return getConnectionQualifiedName(qualifiedName, false);
+    }
+
+    /**
+     * Retrieve the connection's qualifiedName from the provided asset qualifiedName.
+     * Note that this will also return null if the qualifiedName provided is for a connection (only) already!
+     *
+     * @param qualifiedName of the asset, from which to retrieve the connection's qualifiedName
+     * @param relaxed whether to allow non-standard qualifiedNames (those not using epochs)
+     * @return the qualifiedName of the connection, or null if none can be determined
+     */
+    public static String getConnectionQualifiedName(String qualifiedName, boolean relaxed) {
+        Pattern toUse;
+        if (relaxed) {
+            toUse = connectionQNPrefixRelaxed;
+        } else {
+            toUse = connectionQNPrefix;
+        }
         if (qualifiedName != null) {
-            Matcher m = connectionQNPrefix.matcher(qualifiedName);
+            Matcher m = toUse.matcher(qualifiedName);
             if (m.find() && m.groupCount() > 0) {
                 return m.group(1);
             }
@@ -217,8 +239,25 @@ public final class StringUtils {
      * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
      */
     public static boolean isValidConnectionQN(String qn) {
+        return isValidConnectionQN(qn, false);
+    }
+
+    /**
+     * Checks whether a string is a valid connection qualifiedName or not.
+     *
+     * @param qn the string to check.
+     * @param relaxed whether to allow non-standard qualifiedNames (those not using epochs).
+     * @return {@code true} if the string is a valid connection qualifiedName; otherwise, {@code false}.
+     */
+    public static boolean isValidConnectionQN(String qn, boolean relaxed) {
         if (qn == null || qn.isEmpty()) return false;
-        if (connectionQN.matcher(qn).matches()) {
+        Pattern toUse;
+        if (relaxed) {
+            toUse = connectionQNRelaxed;
+        } else {
+            toUse = connectionQN;
+        }
+        if (toUse.matcher(qn).matches()) {
             String type = Connection.getConnectorFromQualifiedName(qn);
             return (type != null && !type.isEmpty());
         }

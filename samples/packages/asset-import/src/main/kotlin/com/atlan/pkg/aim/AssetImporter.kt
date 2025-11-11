@@ -889,6 +889,8 @@ class AssetImporter(
         ) {
         private val typesInFile = mutableSetOf<String>()
         private val connectionQNs = mutableSetOf<String>()
+        private val aimCtx = ctx as PackageContext<AssetImportCfg>
+        private val relaxedCQN = aimCtx.config.relaxedCqn
 
         /** {@inheritDoc} */
         override fun preprocessRow(
@@ -908,13 +910,13 @@ class AssetImporter(
                 if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
                     throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
                 }
-                val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName)
+                val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName, relaxedCQN)
                 val deferredIdentity = getDeferredIdentity(qualifiedName)
                 if (connectionQNFromAsset != null) {
                     connectionQNs.add(connectionQNFromAsset)
                 } else if (typeName == Connection.TYPE_NAME) {
                     // If the qualifiedName comes back as null and the asset itself is a connection, add it
-                    if (StringUtils.isValidConnectionQN(qualifiedName)) {
+                    if (StringUtils.isValidConnectionQN(qualifiedName, relaxedCQN)) {
                         connectionQNs.add(qualifiedName)
                     } else if (deferredIdentity == null) {
                         throw IllegalStateException(

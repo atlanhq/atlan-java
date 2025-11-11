@@ -43,6 +43,7 @@ publishConfig = new AssetImport {
   assetsCmHandling = transferConfigInput(uiConfig, "cm_handling")
   assetsTagHandling = transferConfigInput(uiConfig, "tag_handling")
   trackBatches = true
+  relaxedCQN = transferConfigInput(uiConfig, "relaxed_cqn")
 }
 
 uiConfig {
@@ -154,6 +155,14 @@ uiConfig {
           }
           default = "replace"
           helpText = "How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets."
+        }
+        ["relaxed_cqn"] = new BooleanInput {
+          title = "Relaxed connection qualifiedNames?"
+          required = false
+          hide = true
+          defaultSelection = false
+          helpText = "Whether to allow non-standard connection qualifiedNames (Yes) or only standard ones (No)."
+          fallback = defaultSelection
         }
       }
     }

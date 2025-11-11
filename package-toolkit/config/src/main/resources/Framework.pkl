@@ -219,6 +219,9 @@ class AssetImport extends PublishConfig {
   /// Whether to track details about every asset across batches (true) or only counts (false).
   hidden trackBatches: Boolean?|String? = null
 
+  /// Whether to allow non-standard connection qualifiedNames (true) or only standard ones (false).
+  hidden relaxedCQN: Boolean?|String? = null
+
   /// File containing glossaries, categories and terms to import; typically passed through using [transferFile()].
   hidden glossariesFile: FrameworkRenderer.NamePathPair? = null
 
@@ -340,6 +343,7 @@ class AssetImport extends PublishConfig {
     when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
     when (assetsLinkIdempotency != null) { ["assets_link_idempotency"] = assetsLinkIdempotency }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
+    when (relaxedCQN != null) { ["relaxed_cqn"] = relaxedCQN.toString() }
 
     when (glossariesFile != null) { ["glossaries_file"] = glossariesFile.path }
     when (glossariesUpsertSemantic != null) { ["glossaries_upsert_semantic"] = glossariesUpsertSemantic }
@@ -428,6 +432,9 @@ class RelationalAssetsBuilder extends PublishConfig {
   /// Whether to track details about every asset across batches (true) or only counts (false).
   hidden trackBatches: Boolean?|String? = null
 
+  /// Whether to allow non-standard connection qualifiedNames (true) or only standard ones (false).
+  hidden relaxedCQN: Boolean?|String? = null
+
   fixed inputArtifacts {
     when (assetsFile != null) { assetsFile }
   }
@@ -466,6 +473,7 @@ class RelationalAssetsBuilder extends PublishConfig {
     when (assetsCmHandling != null) { ["assets_cm_handling"] = assetsCmHandling }
     when (assetsTagHandling != null) { ["assets_tag_handling"] = assetsTagHandling }
     when (trackBatches != null) { ["track_batches"] = trackBatches.toString() }
+    when (relaxedCQN != null) { ["relaxed_cqn"] = relaxedCQN.toString() }
   }.toMap()
 }
 
@@ -493,6 +501,9 @@ class LineageBuilder extends PublishConfig {
   /// How Atlan tags on assets in the input should be handled: ignore them, append them to any existing asset tags, replace the existing asset tags, or remove them from the assets.
   hidden tagHandling: AtlanTagSemantic?|String? = null
 
+  /// Whether to allow non-standard connection qualifiedNames (true) or only standard ones (false).
+  hidden relaxedCQN: Boolean?|String? = null
+
   fixed inputArtifacts {
     when (lineageFile != null) { lineageFile }
   }
@@ -518,6 +529,7 @@ class LineageBuilder extends PublishConfig {
     when (batchSize != null) { ["batch_size"] = batchSize.toString() }
     when (cmHandling != null) { ["cm_handling"] = cmHandling }
     when (tagHandling != null) { ["tag_handling"] = tagHandling }
+    when (relaxedCQN != null) { ["relaxed_cqn"] = relaxedCQN.toString() }
   }.toMap()
 }
 
