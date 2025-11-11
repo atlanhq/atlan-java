@@ -31,6 +31,7 @@ data class EnrichmentMigratorCfg(
     @JsonProperty("batch_size") val batchSize: Number = 20,
     @JsonProperty("cm_handling") val cmHandling: String? = null,
     @JsonProperty("tag_handling") val tagHandling: String? = null,
+    @JsonProperty("relaxed_cqn") val relaxedCqn: Boolean = false,
     @JsonProperty("limit_type") val limitType: String = "EXCLUDE",
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)

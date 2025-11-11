@@ -15,7 +15,11 @@ public enum PersonaMetadataAction implements AtlanEnum, AtlanPolicyAction {
     UPDATE_ATLAN_TAG("persona-entity-update-classification"),
     REMOVE_ATLAN_TAG("persona-entity-remove-classification"),
     ATTACH_TERMS("persona-add-terms"),
-    DETACH_TERMS("persona-remove-terms");
+    DETACH_TERMS("persona-remove-terms"),
+    DQ_CREATE("persona-dq-create"),
+    DQ_READ("persona-dq-read"),
+    DQ_UPDATE("persona-dq-update"),
+    DQ_DELETE("persona-dq-delete");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
