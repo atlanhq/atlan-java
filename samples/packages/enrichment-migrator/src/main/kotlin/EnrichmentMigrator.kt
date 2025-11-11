@@ -10,6 +10,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.fields.CustomMetadataField
 import com.atlan.pkg.Utils
+import com.atlan.pkg.Utils.validatePathIsSafe
 import com.atlan.pkg.serde.RowSerde
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
@@ -29,7 +30,7 @@ object EnrichmentMigrator {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<EnrichmentMigratorCfg>().use { ctx ->
 
             val fieldSeparator = ctx.config.getEffectiveValue(EnrichmentMigratorCfg::fieldSeparator, EnrichmentMigratorCfg::configType)
@@ -48,6 +49,9 @@ object EnrichmentMigrator {
                     "$sourceConnectionQN/$sourcePrefix"
                 }
 
+            val outputDirectory = validatePathIsSafe(od)
+            outputDirectory.toFile().mkdirs()
+
             // 1. Extract the enriched metadata
             val extractConfig =
                 AssetExportBasicCfg(
@@ -57,9 +61,9 @@ object EnrichmentMigrator {
                     includeArchived = ctx.config.includeArchived,
                 )
             Utils.initializeContext(extractConfig, ctx).use { eCtx ->
-                Exporter.export(eCtx, outputDirectory)
+                Exporter.export(eCtx, outputDirectory.toString())
             }
-            val extractFile = "$outputDirectory${File.separator}asset-export.csv"
+            val extractFile = validatePathIsSafe(outputDirectory, "asset-export.csv")
 
             // 2. Transform to the target metadata assets (limiting attributes as requested)
             val attributeLimits = ctx.config.attributesList
@@ -136,7 +140,7 @@ object EnrichmentMigrator {
                             val transformer =
                                 Transformer(
                                     mCtx,
-                                    extractFile,
+                                    extractFile.toString(),
                                     header.toList(),
                                     logger,
                                     fieldSeparator[0],

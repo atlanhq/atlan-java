@@ -17,7 +17,6 @@ import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import com.atlan.pkg.util.AssetResolver
 import java.io.File
-import java.nio.file.Paths
 
 /**
  * Actually run the export of admin objects.
@@ -35,7 +34,7 @@ object AdminExporter {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdminExportCfg>().use { ctx ->
 
             val now = Utils.getNowAsISO8601()
@@ -46,33 +45,28 @@ object AdminExporter {
             val connectionMap = preloadConnectionMap(ctx)
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            // Check for any custom names provided, and only fallback to default names where there aren't any
-            val xlsxFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.targetKey, FILENAME)}"
-            val usersFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.usersFilename, USERS_FILE)}"
-            val groupsFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.groupsFilename, GROUPS_FILE)}"
-            val personasFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.personasFilename, PERSONAS_FILE)}"
-            val purposesFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.purposesFilename, PURPOSES_FILE)}"
-            val policiesFileActual = "$outputDirectory${File.separator}${Utils.getOrDefault(ctx.config.policiesFilename, POLICIES_FILE)}"
+            val outputDirectory = validatePathIsSafe(od)
+            outputDirectory.toFile().mkdirs()
 
             // Touch every file, just so they exist, to avoid any Argo failures
-            Paths.get(outputDirectory).toFile().mkdirs()
-            validatePathIsSafe(outputDirectory, FILENAME)
-            Paths.get(outputDirectory, FILENAME).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, USERS_FILE)
-            Paths.get(outputDirectory, USERS_FILE).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, GROUPS_FILE)
-            Paths.get(outputDirectory, GROUPS_FILE).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, PERSONAS_FILE)
-            Paths.get(outputDirectory, PERSONAS_FILE).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, PURPOSES_FILE)
-            Paths.get(outputDirectory, PURPOSES_FILE).toFile().createNewFile()
-            validatePathIsSafe(outputDirectory, POLICIES_FILE)
-            Paths.get(outputDirectory, POLICIES_FILE).toFile().createNewFile()
+            // (Check for any custom names provided, and only fallback to default names where there aren't any)
+            val xlsxFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.targetKey, FILENAME))
+            xlsxFileActual.toFile().createNewFile()
+            val usersFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.usersFilename, USERS_FILE))
+            usersFileActual.toFile().createNewFile()
+            val groupsFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.groupsFilename, GROUPS_FILE))
+            groupsFileActual.toFile().createNewFile()
+            val personasFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.personasFilename, PERSONAS_FILE))
+            personasFileActual.toFile().createNewFile()
+            val purposesFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.purposesFilename, PURPOSES_FILE))
+            purposesFileActual.toFile().createNewFile()
+            val policiesFileActual = validatePathIsSafe(outputDirectory, Utils.getOrDefault(ctx.config.policiesFilename, POLICIES_FILE))
+            policiesFileActual.toFile().createNewFile()
 
             val fileOutputs = mutableListOf<String>()
 
             if (xlsxOutput) {
-                ExcelWriter(xlsxFileActual).use { xlsx ->
+                ExcelWriter(xlsxFileActual.toString()).use { xlsx ->
                     ctx.config.objectsToInclude.forEach { objectName ->
                         when (objectName) {
                             "users" -> Users(ctx, xlsx.createSheet("Users"), logger).export()
@@ -83,18 +77,18 @@ object AdminExporter {
                         }
                     }
                 }
-                fileOutputs.add(xlsxFileActual)
+                fileOutputs.add(xlsxFileActual.toString())
             } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
-                        "users" -> CSVWriter(usersFileActual).use { csv -> Users(ctx, csv, logger).export() }
-                        "groups" -> CSVWriter(groupsFileActual).use { csv -> Groups(ctx, csv, logger).export() }
-                        "personas" -> CSVWriter(personasFileActual).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
-                        "purposes" -> CSVWriter(purposesFileActual).use { csv -> Purposes(ctx, csv, logger).export() }
-                        "policies" -> CSVWriter(policiesFileActual).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "users" -> CSVWriter(usersFileActual.toString()).use { csv -> Users(ctx, csv, logger).export() }
+                        "groups" -> CSVWriter(groupsFileActual.toString()).use { csv -> Groups(ctx, csv, logger).export() }
+                        "personas" -> CSVWriter(personasFileActual.toString()).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
+                        "purposes" -> CSVWriter(purposesFileActual.toString()).use { csv -> Purposes(ctx, csv, logger).export() }
+                        "policies" -> CSVWriter(policiesFileActual.toString()).use { csv -> Policies(ctx, csv, glossaryMap, connectionMap, logger).export() }
                     }
                 }
-                fileOutputs.addAll(listOf(usersFileActual, groupsFileActual, personasFileActual, purposesFileActual, policiesFileActual))
+                fileOutputs.addAll(listOf(usersFileActual.toString(), groupsFileActual.toString(), personasFileActual.toString(), purposesFileActual.toString(), policiesFileActual.toString()))
             }
 
             when (ctx.config.deliveryType) {
@@ -113,9 +107,9 @@ object AdminExporter {
                 "CLOUD" -> {
                     if (xlsxOutput) {
                         Utils.uploadOutputFile(
-                            xlsxFileActual,
+                            xlsxFileActual.toString(),
                             ctx.config.targetPrefix,
-                            Paths.get(xlsxFileActual).fileName.toString(),
+                            xlsxFileActual.fileName.toString(),
                             now,
                         )
                     } else {

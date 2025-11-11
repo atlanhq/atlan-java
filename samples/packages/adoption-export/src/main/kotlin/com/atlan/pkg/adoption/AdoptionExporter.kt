@@ -33,16 +33,16 @@ object AdoptionExporter {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
+        val od = if (args.isEmpty()) "tmp" else args[0]
         Utils.initializeContext<AdoptionExportCfg>().use { ctx ->
 
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
-            val validatedOutputDir = validatePathIsSafe(outputDirectory)
-            validatedOutputDir.toFile().mkdirs()
+            val outputDirectory = validatePathIsSafe(od)
+            outputDirectory.toFile().mkdirs()
 
             // Touch every file, just so they exist, to avoid any workflow failures
-            val xlsxFile = validatePathIsSafe(validatedOutputDir, FILENAME)
+            val xlsxFile = validatePathIsSafe(outputDirectory, FILENAME)
             xlsxFile.toFile().createNewFile()
             val changesFile = validatePathIsSafe(outputDirectory, CHANGES_FILE)
             changesFile.toFile().createNewFile()
