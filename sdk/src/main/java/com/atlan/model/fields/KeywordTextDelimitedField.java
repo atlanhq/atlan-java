@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Represents any field in Atlan that can be searched by keyword or text-based search operations,
- * including a stemmed variation of the text analyzers.
+ * including a delimited variation of the text analyzers.
  */
 public class KeywordTextDelimitedField extends SearchableField
         implements IKeywordSearchable, ITextSearchable, IDelimitedSearchable {
@@ -105,6 +105,6 @@ public class KeywordTextDelimitedField extends SearchableField
     /** {@inheritDoc} */
     @Override
     public Query matchDelimited(String value) {
-        return IStemmedSearchable.matchStemmed(getDelimitedFieldName(), value);
+        return IDelimitedSearchable.matchDelimited(getDelimitedFieldName(), value);
     }
 }
