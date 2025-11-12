@@ -21,7 +21,6 @@ containerCommand {
 outputs {
   files {
     ["debug-logs"] = "/tmp/debug.log"
-    ["transformed_file"] = "/tmp/transformed.csv"
   }
 }
 keywords {
