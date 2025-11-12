@@ -23,6 +23,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextDelimitedField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.fields.NumericField;

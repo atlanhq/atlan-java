@@ -314,6 +314,9 @@ public interface ICatalog {
             case DatabricksExternalLocationPath.TYPE_NAME:
                 ref = DatabricksExternalLocationPath.refByQualifiedName(qualifiedName);
                 break;
+            case DatabricksMetricView.TYPE_NAME:
+                ref = DatabricksMetricView.refByQualifiedName(qualifiedName);
+                break;
             case DatabricksNotebook.TYPE_NAME:
                 ref = DatabricksNotebook.refByQualifiedName(qualifiedName);
                 break;
