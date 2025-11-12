@@ -127,6 +127,7 @@ public class AttributeDefOptions extends AtlanObject {
             DatabricksAIModelVersion.TYPE_NAME,
             DatabricksExternalLocation.TYPE_NAME,
             DatabricksExternalLocationPath.TYPE_NAME,
+            DatabricksMetricView.TYPE_NAME,
             DatabricksNotebook.TYPE_NAME,
             DatabricksUnityCatalogTag.TYPE_NAME,
             DatabricksVolume.TYPE_NAME,
