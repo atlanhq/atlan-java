@@ -14,6 +14,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextDelimitedField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.KeywordTextStemmedField;
 import com.atlan.model.fields.NumericField;
@@ -502,7 +503,8 @@ public interface IAsset {
     KeywordTextField DESCRIPTION = new KeywordTextField("description", "description.keyword", "description");
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
-    KeywordTextField DISPLAY_NAME = new KeywordTextField("displayName", "displayName.keyword", "displayName");
+    KeywordTextDelimitedField DISPLAY_NAME =
+            new KeywordTextDelimitedField("displayName", "displayName.keyword", "displayName", "displayName.delimiter");
 
     /** Array of domain guids linked to this asset */
     KeywordField DOMAIN_GUIDS = new KeywordField("domainGUIDs", "domainGUIDs");
