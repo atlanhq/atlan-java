@@ -704,6 +704,32 @@ object Utils {
         guid: String,
     ): String = getLink(client, guid, "products")
 
+    /**
+     * Return a URL that will link directly to a term or glossary in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param guid of the asset for which to produce a link
+     * @return a URL that links directly to a term or glossary in Atlan
+     */
+    fun getTermLink(
+        client: AtlanClient,
+        guid: String,
+    ): String = getLink(client, guid, "glossary")
+
+    /**
+     * Return a URL that will link directly to a column in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param tableGuid unique identifier of the table the column is in
+     * @param guid of the column for which to produce a link
+     * @return a URL that links directly to a column in Atlan
+     */
+    fun getColumnLink(
+        client: AtlanClient,
+        tableGuid: String,
+        guid: String,
+    ): String = "${getAssetLink(client, tableGuid)}?column=$guid"
+
     private fun getLink(
         client: AtlanClient,
         guid: String,
