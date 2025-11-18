@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Build"
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165  # v5.0.0
         with:
           java-version: 21
@@ -35,7 +35,7 @@ jobs:
     outputs:
       tests: ${{ steps.test-files.outputs.tests }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - name: List integration tests
         id: test-files
         run: |
@@ -55,7 +55,7 @@ jobs:
       group: ${{ matrix.tests }}
     name: "Integration"
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - name: Download artifacts
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
         with:
@@ -81,7 +81,7 @@ jobs:
     outputs:
       tests: ${{ steps.test-directories.outputs.tests }}
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - name: List package tests
         id: test-directories
         run: |
@@ -104,7 +104,7 @@ jobs:
       - name: Free disk space
         if: matrix.tests == 'asset-import'
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd  # v5.0.1
       - name: Download artifacts
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
         with:
