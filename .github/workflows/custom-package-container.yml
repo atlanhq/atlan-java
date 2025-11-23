@@ -14,13 +14,19 @@ on:
       version:
         required: true
         type: string
+      branch:
+        required: false
+        type: string
+        default: ''
 
 jobs:
   custom-package-container:
     runs-on: ubuntu-latest
     name: "${{inputs.package_name}} container"
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8  # v5.0.0
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3  # v6.0.0
+        with:
+          ref: ${{ inputs.branch != '' && inputs.branch || github.ref }}
       - uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435  # v3.11.1
       - name: Log in to container registry
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef  # v3.6.0
@@ -39,6 +45,17 @@ jobs:
         with:
           name: "${{inputs.package_name}}-arm64"
           path: ./containers/custom-package/arm64/assembly
+      - name: Determine image tags
+        id: tags
+        run: |
+          if [ -n "${{ inputs.branch }}" ]; then
+            # For manual runs with branch specified, use version and branch name (sanitized)
+            BRANCH_NAME=$(echo "${{ inputs.branch }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+            echo "tags=ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          else
+            # For main branch pushes, use version and latest
+            echo "tags=ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}},ghcr.io/atlanhq/csa-${{inputs.package_name}}:latest" >> $GITHUB_OUTPUT
+          fi
       - name: Build and publish container image
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
         with:
@@ -46,6 +63,6 @@ jobs:
             VERSION=${{inputs.version}}
             PKG_NAME=${{inputs.package_name}}
           push: true
-          tags: ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}}, ghcr.io/atlanhq/csa-${{inputs.package_name}}:latest
+          tags: ${{ steps.tags.outputs.tags }}
           context: ./containers/custom-package
           platforms: linux/amd64,linux/arm64
