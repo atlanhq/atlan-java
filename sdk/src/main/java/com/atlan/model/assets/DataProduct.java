@@ -190,6 +190,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     String parentDomainQualifiedName;
 
+    /** AWS SMUS Projects associated with this DataProduct. */
+    @Attribute
+    @Singular
+    SortedSet<ISageMakerUnifiedStudioProject> smusProjects;
+
     /** Unique name of the top-level domain in which this asset exists. */
     @Attribute
     String superDomainQualifiedName;

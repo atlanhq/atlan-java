@@ -25,6 +25,7 @@ import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -428,6 +429,20 @@ public interface IAsset {
 
     /** Array of asset ids that equivalent to this asset. */
     KeywordField ASSET_REDIRECT_GUIDS = new KeywordField("assetRedirectGUIDs", "assetRedirectGUIDs");
+
+    /** AWS SMUS Asset MetadataForm details */
+    KeywordField ASSET_SMUS_METADATA_FORM_DETAILS =
+            new KeywordField("assetSmusMetadataFormDetails", "assetSmusMetadataFormDetails");
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    KeywordTextField ASSET_SMUS_METADATA_FORM_KEY_VALUE_DETAILS = new KeywordTextField(
+            "assetSmusMetadataFormKeyValueDetails",
+            "assetSmusMetadataFormKeyValueDetails.keyword",
+            "assetSmusMetadataFormKeyValueDetails");
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    KeywordTextField ASSET_SMUS_METADATA_FORM_NAMES = new KeywordTextField(
+            "assetSmusMetadataFormNames", "assetSmusMetadataFormNames.keyword", "assetSmusMetadataFormNames");
 
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");
@@ -1040,6 +1055,15 @@ public interface IAsset {
 
     /** Array of asset ids that equivalent to this asset. */
     SortedSet<String> getAssetRedirectGUIDs();
+
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

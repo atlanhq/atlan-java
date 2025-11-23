@@ -20,6 +20,7 @@ import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -406,6 +407,15 @@ public interface IMaterializedView {
 
     /** TBC */
     SortedSet<String> getAssetRedirectGUIDs();
+
+    /** TBC */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** TBC */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** TBC */
+    SortedSet<String> getAssetSmusMetadataFormNames();
 
     /** TBC */
     Long getAssetSodaCheckCount();

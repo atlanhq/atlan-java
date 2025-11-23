@@ -27,6 +27,7 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
@@ -542,6 +543,21 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<String> assetRedirectGUIDs;
+
+    /** AWS SMUS Asset MetadataForm details */
+    @Attribute
+    @Singular
+    List<AssetSmusMetadataFormDetails> assetSmusMetadataFormDetails;
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetSmusMetadataFormKeyValueDetails;
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetSmusMetadataFormNames;
 
     /** Number of checks done via Soda. */
     @Attribute

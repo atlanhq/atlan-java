@@ -12,11 +12,13 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -40,6 +42,14 @@ public interface IDomoDatasetColumn {
 
     /** Domo Dataset that contains this Domo Dataset Column. */
     RelationField DOMO_DATASET = new RelationField("domoDataset");
+
+    /** Expression used to create this calculated column. */
+    KeywordField DOMO_DATASET_COLUMN_EXPRESSION =
+            new KeywordField("domoDatasetColumnExpression", "domoDatasetColumnExpression");
+
+    /** If the column is a calculated column. */
+    BooleanField DOMO_DATASET_COLUMN_IS_CALCULATED =
+            new BooleanField("domoDatasetColumnIsCalculated", "domoDatasetColumnIsCalculated");
 
     /** Type of Domo Dataset Column. */
     KeywordField DOMO_DATASET_COLUMN_TYPE = new KeywordField("domoDatasetColumnType", "domoDatasetColumnType");
@@ -368,6 +378,15 @@ public interface IDomoDatasetColumn {
     /** Array of asset ids that equivalent to this asset. */
     SortedSet<String> getAssetRedirectGUIDs();
 
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -448,6 +467,12 @@ public interface IDomoDatasetColumn {
 
     /** Domo Dataset that contains this Domo Dataset Column. */
     IDomoDataset getDomoDataset();
+
+    /** Expression used to create this calculated column. */
+    String getDomoDatasetColumnExpression();
+
+    /** If the column is a calculated column. */
+    Boolean getDomoDatasetColumnIsCalculated();
 
     /** Type of Domo Dataset Column. */
     String getDomoDatasetColumnType();
