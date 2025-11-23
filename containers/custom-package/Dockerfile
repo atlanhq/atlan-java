@@ -2,7 +2,7 @@
 # Copyright 2023 Atlan Pte. Ltd.
 ARG VERSION
 
-FROM ghcr.io/atlanhq/atlan-java:$VERSION
+FROM ghcr.io/atlanhq/atlan-java:$VERSION-smus
 
 ARG PKG_NAME
 ARG TARGETARCH
