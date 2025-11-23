@@ -45,22 +45,24 @@ jobs:
         with:
           name: "${{inputs.package_name}}-arm64"
           path: ./containers/custom-package/arm64/assembly
-      - name: Determine image tags
+      - name: Determine image tags and version
         id: tags
         run: |
           if [ -n "${{ inputs.branch }}" ]; then
             # For manual runs with branch specified, use version and branch name (sanitized)
             BRANCH_NAME=$(echo "${{ inputs.branch }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
             echo "tags=ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
+            echo "build_version=${{inputs.version}}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
           else
             # For main branch pushes, use version and latest
             echo "tags=ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}},ghcr.io/atlanhq/csa-${{inputs.package_name}}:latest" >> $GITHUB_OUTPUT
+            echo "build_version=${{inputs.version}}" >> $GITHUB_OUTPUT
           fi
       - name: Build and publish container image
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
         with:
           build-args: |
-            VERSION=${{inputs.version}}
+            VERSION=${{ steps.tags.outputs.build_version }}
             PKG_NAME=${{inputs.package_name}}
           push: true
           tags: ${{ steps.tags.outputs.tags }}
