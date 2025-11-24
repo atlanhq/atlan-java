@@ -114,7 +114,20 @@ object CellXformer {
                 else -> throw IOException("Unable to deserialize cell to Java class (in $fieldName): $type")
             }
         } else if (Map::class.java.isAssignableFrom(type)) {
-            MapXformer.decode(ctx.client, value, type as Class<Map<*, *>>)
+            val raw = ctx.client.readValue(value, type as Class<Map<*, *>>)
+            // Note: so far, every map<> type in the typedefs has a string as a key
+            val map = mutableMapOf<String, Any?>()
+            raw.forEach { (key, value) ->
+                val decodedKey = decodeString(ctx, key.toString())
+                val decodedValue =
+                    if (value is String) {
+                        decodeString(ctx, value)
+                    } else {
+                        value
+                    }
+                map[decodedKey] = decodedValue
+            }
+            map
         } else if (Asset::class.java.isAssignableFrom(type)) {
             AssetRefXformer.decode(ctx, value, fieldName)
         } else if (AtlanEnum::class.java.isAssignableFrom(type)) {

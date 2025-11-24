@@ -167,6 +167,7 @@ import com.atlan.model.assets.RedashQuery
 import com.atlan.model.assets.RedashVisualization
 import com.atlan.model.assets.S3Bucket
 import com.atlan.model.assets.S3Object
+import com.atlan.model.assets.S3Prefix
 import com.atlan.model.assets.SalesforceDashboard
 import com.atlan.model.assets.SalesforceField
 import com.atlan.model.assets.SalesforceObject
@@ -478,6 +479,7 @@ class AssetImporter(
                     "S3",
                     listOf(
                         S3Bucket.TYPE_NAME,
+                        S3Prefix.TYPE_NAME,
                         S3Object.TYPE_NAME,
                     ),
                 ),
