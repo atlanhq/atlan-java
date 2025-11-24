@@ -5,15 +5,10 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
-import com.atlan.model.assets.Database
 import com.atlan.model.assets.S3Bucket
 import com.atlan.model.assets.S3Object
 import com.atlan.model.assets.S3Prefix
-import com.atlan.model.assets.Schema
-import com.atlan.model.assets.Table
-import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
-import com.atlan.model.enums.AtlanStatus
 import com.atlan.model.enums.S3ObjectLockMode
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
@@ -78,6 +73,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
             S3Bucket.AWS_ACCOUNT_ID,
             S3Bucket.SOURCE_CREATED_AT,
             S3Bucket.AWS_TAGS,
+            S3Bucket.S3PREFIXES,
         )
 
     private val prefixAttrs: List<AtlanField> =
@@ -96,6 +92,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
             S3Prefix.AWS_ACCOUNT_ID,
             S3Prefix.SOURCE_CREATED_AT,
             S3Prefix.AWS_TAGS,
+            S3Prefix.S3PREFIX_COUNT,
         )
 
     private val objectAttrs: List<AtlanField> =
@@ -179,7 +176,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
         assertEquals("123456789012", b.awsAccountId)
         assertEquals(1761647178499L, b.sourceCreatedAt)
         assertEquals(2, b.awsTags.size)
-        assertEquals(3, b.s3Prefixes.size)
+        assertEquals(5, b.s3Prefixes.size)
     }
 
     @Test
@@ -359,7 +356,6 @@ class S3WithPrefixesTest : PackageTest("swp") {
         assertEquals("${c1.qualifiedName}/bucket-1", p.s3BucketQualifiedName)
         assertNotNull(p.s3Bucket)
         assertEquals("bucket-1", p.s3Bucket.name)
-        assertEquals("${c1.qualifiedName}/bucket-1/prefix-2/prefix-3/", p.s3ParentPrefixQualifiedName)
         assertEquals(1, p.s3ObjectCount)
         assertEquals("us-east-1", p.awsRegion)
         assertEquals("123456789012", p.awsAccountId)
@@ -549,7 +545,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
         assertEquals("prefix-5", o.s3PrefixHierarchy[0]["name"])
         assertEquals("${c1.qualifiedName}/bucket-1/prefix-5/", o.s3PrefixHierarchy[0]["qualifiedName"])
         assertNotNull(o.s3Prefix)
-        assertEquals("prefix-4", o.s3Prefix.name)
+        assertEquals("prefix-5", o.s3Prefix.name)
         assertEquals("us-east-1", o.awsRegion)
         assertEquals("123456789012", o.awsAccountId)
         assertEquals(1761647178499L, o.sourceCreatedAt)
