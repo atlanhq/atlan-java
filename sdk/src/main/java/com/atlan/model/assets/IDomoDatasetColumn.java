@@ -12,6 +12,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -40,6 +41,14 @@ public interface IDomoDatasetColumn {
 
     /** Domo Dataset that contains this Domo Dataset Column. */
     RelationField DOMO_DATASET = new RelationField("domoDataset");
+
+    /** Expression used to create this calculated column. */
+    KeywordField DOMO_DATASET_COLUMN_EXPRESSION =
+            new KeywordField("domoDatasetColumnExpression", "domoDatasetColumnExpression");
+
+    /** If the column is a calculated column. */
+    BooleanField DOMO_DATASET_COLUMN_IS_CALCULATED =
+            new BooleanField("domoDatasetColumnIsCalculated", "domoDatasetColumnIsCalculated");
 
     /** Type of Domo Dataset Column. */
     KeywordField DOMO_DATASET_COLUMN_TYPE = new KeywordField("domoDatasetColumnType", "domoDatasetColumnType");
@@ -448,6 +457,12 @@ public interface IDomoDatasetColumn {
 
     /** Domo Dataset that contains this Domo Dataset Column. */
     IDomoDataset getDomoDataset();
+
+    /** Expression used to create this calculated column. */
+    String getDomoDatasetColumnExpression();
+
+    /** If the column is a calculated column. */
+    Boolean getDomoDatasetColumnIsCalculated();
 
     /** Type of Domo Dataset Column. */
     String getDomoDatasetColumnType();

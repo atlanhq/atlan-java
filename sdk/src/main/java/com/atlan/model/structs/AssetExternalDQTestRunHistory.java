@@ -38,21 +38,27 @@ public class AssetExternalDQTestRunHistory extends AtlanStruct {
     /** Overall status of the last DQ Test run for the asset on the external DQ tool. */
     String assetExternalDQTestRunStatus;
 
+    /** Metric details of each DQ Test run for the asset on the external DQ tool. */
+    AssetExternalDQTestMetric assetExternalDQTestMetricInfo;
+
     /**
      * Quickly create a new AssetExternalDQTestRunHistory.
      * @param assetExternalDQTestRunStartedAt Start timestamp of the last DQ Test run for the asset on the external DQ tool.
      * @param assetExternalDQTestRunEndedAt End timestamp of the last DQ Test run for the asset on the external DQ tool.
      * @param assetExternalDQTestRunStatus Overall status of the last DQ Test run for the asset on the external DQ tool.
+     * @param assetExternalDQTestMetricInfo Metric details of each DQ Test run for the asset on the external DQ tool.
      * @return a AssetExternalDQTestRunHistory with the provided information
      */
     public static AssetExternalDQTestRunHistory of(
             Long assetExternalDQTestRunStartedAt,
             Long assetExternalDQTestRunEndedAt,
-            String assetExternalDQTestRunStatus) {
+            String assetExternalDQTestRunStatus,
+            AssetExternalDQTestMetric assetExternalDQTestMetricInfo) {
         return AssetExternalDQTestRunHistory.builder()
                 .assetExternalDQTestRunStartedAt(assetExternalDQTestRunStartedAt)
                 .assetExternalDQTestRunEndedAt(assetExternalDQTestRunEndedAt)
                 .assetExternalDQTestRunStatus(assetExternalDQTestRunStatus)
+                .assetExternalDQTestMetricInfo(assetExternalDQTestMetricInfo)
                 .build();
     }
 
