@@ -65,14 +65,14 @@ public class ModelCache {
             cache = retryIfNeeded(client, cache, 1);
             cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
-        } catch (AtlanException e) {
+        } catch (AtlanException | InterruptedException e) {
             log.error("Unable to refresh typedef caches.", e);
             return null;
         }
     }
 
     private static ModelCache retryIfNeeded(AtlanClient client, ModelCache cache, int retryAttempt)
-            throws AtlanException {
+            throws AtlanException, InterruptedException {
         EntityDef ref = cache.getEntityDefCache().get("Referenceable");
         boolean retry = true;
         if (ref != null) {
@@ -88,7 +88,7 @@ public class ModelCache {
         }
         if (retry) {
             log.info("Referenceable had empty qualifiedName, retrying (attempt #{})...", retryAttempt);
-            HttpClient.waitTime(retryAttempt);
+            Thread.sleep(HttpClient.waitTime(retryAttempt).toMillis());
             return retryIfNeeded(client, new ModelCache(client), retryAttempt + 1);
         } else {
             return cache;
