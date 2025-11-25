@@ -22085,6 +22085,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Domo Dataset that contains this Domo Dataset Column.</div>
 </li>
 <li class="block-list">
+<h5>domoDatasetColumnExpression</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> domoDatasetColumnExpression</pre>
+<div class="block">Expression used to create this calculated column.</div>
+</li>
+<li class="block-list">
+<h5>domoDatasetColumnIsCalculated</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a> domoDatasetColumnIsCalculated</pre>
+<div class="block">If the column is a calculated column.</div>
+</li>
+<li class="block-list">
 <h5>domoDatasetColumnType</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> domoDatasetColumnType</pre>
 <div class="block">Type of Domo Dataset Column.</div>
@@ -54231,6 +54241,45 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="com.atlan.model.structs.AssetExternalDQTestMetric">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/AssetExternalDQTestMetric.html" title="class in com.atlan.model.structs">com.atlan.model.structs.AssetExternalDQTestMetric</a></h3>
+<div class="type-signature">class AssetExternalDQTestMetric extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>assetExternalDQTestMetricLowerBound</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetExternalDQTestMetricLowerBound</pre>
+<div class="block">Represents the lower threshold of acceptable metric values in the particular run for the asset on the external DQ tool based on historical trends.</div>
+</li>
+<li class="block-list">
+<h5>assetExternalDQTestMetricObservedValue</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetExternalDQTestMetricObservedValue</pre>
+<div class="block">Metric value generated in the particular run for the asset on the external DQ tool.</div>
+</li>
+<li class="block-list">
+<h5>assetExternalDQTestMetricUpperBound</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetExternalDQTestMetricUpperBound</pre>
+<div class="block">Represents the upper threshold of acceptable metric values in the particular run for the asset on the external DQ tool based on historical trends.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for AssetExternalDQTestMetric.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="com.atlan.model.structs.AssetExternalDQTestRunHistory">
 <h3>Class&nbsp;<a href="com/atlan/model/structs/AssetExternalDQTestRunHistory.html" title="class in com.atlan.model.structs">com.atlan.model.structs.AssetExternalDQTestRunHistory</a></h3>
 <div class="type-signature">class AssetExternalDQTestRunHistory extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -54243,6 +54292,11 @@ loadScripts(document, 'script');</script>
 <section class="detail">
 <h4>Serialized Fields</h4>
 <ul class="block-list">
+<li class="block-list">
+<h5>assetExternalDQTestMetricInfo</h5>
+<pre><a href="com/atlan/model/structs/AssetExternalDQTestMetric.html" title="class in com.atlan.model.structs">AssetExternalDQTestMetric</a> assetExternalDQTestMetricInfo</pre>
+<div class="block">Metric details of each DQ Test run for the asset on the external DQ tool.</div>
+</li>
 <li class="block-list">
 <h5>assetExternalDQTestRunEndedAt</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetExternalDQTestRunEndedAt</pre>

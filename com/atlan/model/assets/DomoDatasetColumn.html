@@ -167,7 +167,7 @@ implements <a href="IDomoDatasetColumn.html" title="interface in com.atlan.model
 <code><a href="IDomo.html#DOMO_ID">DOMO_ID</a>, <a href="IDomo.html#DOMO_OWNER_ID">DOMO_OWNER_ID</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IDomoDatasetColumn">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IDomoDatasetColumn.html" title="interface in com.atlan.model.assets">IDomoDatasetColumn</a></h3>
-<code><a href="IDomoDatasetColumn.html#DOMO_DATASET">DOMO_DATASET</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_COLUMN_TYPE">DOMO_DATASET_COLUMN_TYPE</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_QUALIFIED_NAME">DOMO_DATASET_QUALIFIED_NAME</a></code></div>
+<code><a href="IDomoDatasetColumn.html#DOMO_DATASET">DOMO_DATASET</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_COLUMN_EXPRESSION">DOMO_DATASET_COLUMN_EXPRESSION</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_COLUMN_IS_CALCULATED">DOMO_DATASET_COLUMN_IS_CALCULATED</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_COLUMN_TYPE">DOMO_DATASET_COLUMN_TYPE</a>, <a href="IDomoDatasetColumn.html#DOMO_DATASET_QUALIFIED_NAME">DOMO_DATASET_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -270,6 +270,16 @@ implements <a href="IDomoDatasetColumn.html" title="interface in com.atlan.model
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDomoDataset()" class="member-name-link">getDomoDataset</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Domo Dataset that contains this Domo Dataset Column.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDomoDatasetColumnExpression()" class="member-name-link">getDomoDatasetColumnExpression</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Expression used to create this calculated column.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDomoDatasetColumnIsCalculated()" class="member-name-link">getDomoDatasetColumnIsCalculated</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">If the column is a calculated column.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDomoDatasetColumnType()" class="member-name-link">getDomoDatasetColumnType</a>()</code></div>
@@ -1130,6 +1140,28 @@ implements <a href="IDomoDatasetColumn.html" title="interface in com.atlan.model
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IDomoDatasetColumn.html#getDomoDataset()">getDomoDataset</a></code>&nbsp;in interface&nbsp;<code><a href="IDomoDatasetColumn.html" title="interface in com.atlan.model.assets">IDomoDatasetColumn</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDomoDatasetColumnExpression()">
+<h3>getDomoDatasetColumnExpression</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDomoDatasetColumnExpression</span>()</div>
+<div class="block">Expression used to create this calculated column.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IDomoDatasetColumn.html#getDomoDatasetColumnExpression()">getDomoDatasetColumnExpression</a></code>&nbsp;in interface&nbsp;<code><a href="IDomoDatasetColumn.html" title="interface in com.atlan.model.assets">IDomoDatasetColumn</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getDomoDatasetColumnIsCalculated()">
+<h3>getDomoDatasetColumnIsCalculated</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getDomoDatasetColumnIsCalculated</span>()</div>
+<div class="block">If the column is a calculated column.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IDomoDatasetColumn.html#getDomoDatasetColumnIsCalculated()">getDomoDatasetColumnIsCalculated</a></code>&nbsp;in interface&nbsp;<code><a href="IDomoDatasetColumn.html" title="interface in com.atlan.model.assets">IDomoDatasetColumn</a></code></dd>
 </dl>
 </section>
 </li>
