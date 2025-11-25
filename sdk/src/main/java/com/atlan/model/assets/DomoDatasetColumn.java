@@ -53,6 +53,14 @@ public class DomoDatasetColumn extends Asset
     @Attribute
     IDomoDataset domoDataset;
 
+    /** Expression used to create this calculated column. */
+    @Attribute
+    String domoDatasetColumnExpression;
+
+    /** If the column is a calculated column. */
+    @Attribute
+    Boolean domoDatasetColumnIsCalculated;
+
     /** Type of Domo Dataset Column. */
     @Attribute
     String domoDatasetColumnType;

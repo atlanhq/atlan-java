@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
             value = AssetExternalDQScoreBreakdownByDimension.class,
             name = AssetExternalDQScoreBreakdownByDimension.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestDetails.class, name = AssetExternalDQTestDetails.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetExternalDQTestMetric.class, name = AssetExternalDQTestMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestRunHistory.class, name = AssetExternalDQTestRunHistory.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
