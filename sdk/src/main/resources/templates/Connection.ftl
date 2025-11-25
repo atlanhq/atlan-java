@@ -6,6 +6,7 @@
      * @return the connector type, or null if the qualifiedName is not for a connected asset
      */
     public static AtlanConnectorType getConnectorTypeFromQualifiedName(String qualifiedName) {
+        if (qualifiedName == null) return null;
         return getConnectorTypeFromQualifiedName(qualifiedName.split("/"));
     }
 
@@ -29,6 +30,7 @@
      * @return the connector type, or null if the qualifiedName is not for a connected asset
      */
     public static String getConnectorFromQualifiedName(String qualifiedName) {
+        if (qualifiedName == null) return null;
         String[] tokens = qualifiedName.split("/");
         AtlanConnectorType ct = getConnectorTypeFromQualifiedName(tokens);
         if (ct == null || ct == AtlanConnectorType.UNKNOWN_CUSTOM) {
