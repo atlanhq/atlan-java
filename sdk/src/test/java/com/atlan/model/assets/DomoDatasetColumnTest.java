@@ -217,11 +217,29 @@ public class DomoDatasetColumnTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -235,11 +253,29 @@ public class DomoDatasetColumnTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -281,11 +317,29 @@ public class DomoDatasetColumnTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -299,11 +353,29 @@ public class DomoDatasetColumnTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -607,6 +679,8 @@ public class DomoDatasetColumnTest {
             .viewerUser("String0")
             .viewerUser("String1")
             .domoDataset(DomoDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .domoDatasetColumnExpression("String0")
+            .domoDatasetColumnIsCalculated(true)
             .domoDatasetColumnType("String0")
             .domoDatasetQualifiedName("String0")
             .build();

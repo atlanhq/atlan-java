@@ -6,6 +6,7 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
+import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -61,11 +62,36 @@ public class ModelCache {
     private static ModelCache createInstance(AtlanClient client) {
         try {
             ModelCache cache = new ModelCache(client);
+            cache = retryIfNeeded(client, cache, 1);
             cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
-        } catch (AtlanException e) {
+        } catch (AtlanException | InterruptedException e) {
             log.error("Unable to refresh typedef caches.", e);
             return null;
+        }
+    }
+
+    private static ModelCache retryIfNeeded(AtlanClient client, ModelCache cache, int retryAttempt)
+            throws AtlanException, InterruptedException {
+        EntityDef ref = cache.getEntityDefCache().get("Referenceable");
+        boolean retry = true;
+        if (ref != null) {
+            Optional<AttributeDef> qn = ref.getAttributeDefs().stream()
+                    .filter(attr -> attr.getName().equals("qualifiedName"))
+                    .findFirst();
+            if (qn.isPresent()) {
+                String desc = qn.get().getDescription();
+                if (desc != null && !desc.isEmpty()) {
+                    retry = false;
+                }
+            }
+        }
+        if (retry) {
+            log.info("Referenceable had empty qualifiedName, retrying (attempt #{})...", retryAttempt);
+            Thread.sleep(HttpClient.waitTime(retryAttempt).toMillis());
+            return retryIfNeeded(client, new ModelCache(client), retryAttempt + 1);
+        } else {
+            return cache;
         }
     }
 

@@ -229,11 +229,29 @@ public class ModelAttributeAssociationTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -247,11 +265,29 @@ public class ModelAttributeAssociationTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -293,11 +329,29 @@ public class ModelAttributeAssociationTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -311,11 +365,29 @@ public class ModelAttributeAssociationTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
