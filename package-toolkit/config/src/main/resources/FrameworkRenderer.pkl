@@ -1010,7 +1010,14 @@ local class WorkflowInputs {
             configMapName = "atlan-tenant-package-runtime-config"
             configMapKey = "\(pkgName).\(templateName).params.\(k)"
             optional = true
-            default = if (u.fallback != null) "\(getFallbackParam(u))" else "\(u.ui.default)"
+            default = if (u.fallback != null)
+              getFallbackParam(u).toString()
+            else if (u.ui.default != null)
+              u.ui.default.toString()
+            else if (u is Framework.NumericInput || u is Framework.DateInput)
+              "-1"
+            else
+              ""
           }
         } else {
           when (u is Framework.BooleanInput) {
