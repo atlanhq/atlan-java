@@ -20,3 +20,4 @@ indent_size = 2
 [*.{kt,kts}]
 indent_size = 4
 max_line_length = 280
+ktlint_standard_no-unused-imports = enabled
