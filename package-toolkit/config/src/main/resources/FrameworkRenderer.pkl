@@ -1004,21 +1004,31 @@ local class WorkflowInputs {
           }
         }
       } else {
-        when (u is Framework.BooleanInput) {
-          new NameValueBoolPair {
+        when (u.hide) {
+          new ConfigMapEntry {
             name = k
-            value = if (u.fallback != null) getFallbackParam(u) as Boolean else u.ui.default as Boolean
+            configMapName = "atlan-tenant-package-runtime-config"
+            configMapKey = "\(pkgName).\(templateName).params.\(k)"
+            optional = true
+            default = if (u.fallback != null) "\(getFallbackParam(u))" else "\(u.ui.default)"
           }
         } else {
-          when (u is Framework.NumericInput || u is Framework.DateInput) {
-            new NameValuePair {
+          when (u is Framework.BooleanInput) {
+            new NameValueBoolPair {
               name = k
-              value = if (u.fallback != null) getFallbackParam(u).toString() else "-1"
+              value = if (u.fallback != null) getFallbackParam(u) as Boolean else u.ui.default as Boolean
             }
           } else {
-            new NameValuePair {
-              name = k
-              value = if (u.fallback != null) getFallbackParam(u).toString() else ""
+            when (u is Framework.NumericInput || u is Framework.DateInput) {
+              new NameValuePair {
+                name = k
+                value = if (u.fallback != null) getFallbackParam(u).toString() else "-1"
+              }
+            } else {
+              new NameValuePair {
+                name = k
+                value = if (u.fallback != null) getFallbackParam(u).toString() else ""
+              }
             }
           }
         }
