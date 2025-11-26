@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
@@ -45,10 +44,10 @@ class TermImporter(
     override fun validateHeader(header: List<String>?): List<String> {
         val missing = super.validateHeader(header).toMutableList()
         if (header.isNullOrEmpty()) {
-            missing.add(GlossaryCategory.ANCHOR.atlanFieldName)
+            missing.add(GlossaryTerm.ANCHOR.atlanFieldName)
         } else {
-            if (!header.contains(GlossaryCategory.ANCHOR.atlanFieldName)) {
-                missing.add(GlossaryCategory.ANCHOR.atlanFieldName)
+            if (!header.contains(GlossaryTerm.ANCHOR.atlanFieldName)) {
+                missing.add(GlossaryTerm.ANCHOR.atlanFieldName)
             }
         }
         return missing
@@ -65,7 +64,7 @@ class TermImporter(
 
     /** {@inheritDoc} */
     override fun getCacheId(deserializer: RowDeserializer): String {
-        val glossaryIdx = deserializer.heading.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
+        val glossaryIdx = deserializer.heading.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)
         val termName = deserializer.getValue(GlossaryTerm.NAME.atlanFieldName)?.let { it as String } ?: ""
         return if (glossaryIdx >= 0) {
             val glossaryName = CSVXformer.trimWhitespace(deserializer.row[glossaryIdx].ifBlank { "" })
