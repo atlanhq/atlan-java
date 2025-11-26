@@ -49,10 +49,6 @@ abstract class CSVXformer(
         header = getHeader(inputFile, fieldSeparator)
         reader = builder.ofCsvRecord(input)
         counter = builder.ofCsvRecord(input)
-        val missingColumns = validateHeader(header)
-        if (missingColumns.isNotEmpty()) {
-            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
-        }
     }
 
     companion object {
@@ -122,15 +118,6 @@ abstract class CSVXformer(
             return map.toMap()
         }
     }
-
-    /**
-     * Validate the header of the input file contains all the required fields for transformation.
-     * Default implementation will return an empty list, auto-passing validation.
-     *
-     * @param header column names
-     * @return list of any missing required columns
-     */
-    abstract fun validateHeader(header: List<String>?): List<String>
 
     /**
      * Run the transformation and produce the output into the specified file.

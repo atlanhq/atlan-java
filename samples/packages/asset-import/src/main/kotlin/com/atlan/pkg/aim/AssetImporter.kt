@@ -335,7 +335,7 @@ class AssetImporter(
         // Irrespective of update-only or not, multi-pass load (at multiple levels):
         //  - Import assets in tiered order, top-to-bottom
         //  - Stop when we have processed all the types in the file
-        val includes = preprocess(ctx)
+        val includes = preprocess()
         if (includes.hasLinks) {
             ctx.linkCache.preload()
         }
@@ -875,14 +875,11 @@ class AssetImporter(
         ): QualifiedNameDetails = throw IllegalStateException("This method should never be called. Please raise an issue if you discover this in any log file.")
     }
 
-    /** Pre-process the assets import file. */
-    private fun preprocess(ctx: PackageContext<*>): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
-
     /** {@inheritDoc} */
     override fun preprocess(
         outputFile: String?,
         outputHeaders: List<String>?,
-    ): AbstractBaseImporter.Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<AbstractBaseImporter.Results>()
+    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     class Preprocessor(
         override val ctx: PackageContext<*>,
@@ -974,6 +971,7 @@ class AssetImporter(
                 hasDomainRelationship = results.hasDomainRelationship,
                 hasProductRelationship = results.hasProductRelationship,
                 typesInFile = typesInFile,
+                mapToSecondPass = results.mapToSecondPass,
             )
         }
     }
@@ -986,14 +984,16 @@ class AssetImporter(
         outputFile: String,
         hasDomainRelationship: Boolean,
         hasProductRelationship: Boolean,
+        mapToSecondPass: Map<String, Set<String>>,
         val typesInFile: Set<String>,
-    ) : DeltaProcessor.Results(
+    ) : AbstractBaseImporter.Results(
             assetRootName = connectionQN,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
             multipleConnections = multipleConnections,
-            preprocessedFile = outputFile,
+            outputFile = outputFile,
             hasDomainRelationship = hasDomainRelationship,
             hasProductRelationship = hasProductRelationship,
+            mapToSecondPass = mapToSecondPass,
         )
 }

@@ -14,7 +14,6 @@ import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import java.util.stream.Stream
 
@@ -174,7 +173,7 @@ abstract class GTCImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): Results {
             val results = super.finalize(header, outputFile)
             if (nonGlossaryTypes.isNotEmpty()) {
                 throw IllegalStateException("Found non-glossary assets that should be loaded via another file, of types: $nonGlossaryTypes")

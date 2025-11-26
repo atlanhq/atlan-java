@@ -11,7 +11,6 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 
 /**
@@ -127,7 +126,7 @@ abstract class MeshImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): Results {
             val results = super.finalize(header, outputFile)
             if (nonProductTypes.isNotEmpty()) {
                 throw IllegalStateException("Found non-product assets that should be loaded via another file, of types: $nonProductTypes")

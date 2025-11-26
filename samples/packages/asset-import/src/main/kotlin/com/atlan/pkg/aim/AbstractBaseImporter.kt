@@ -16,7 +16,7 @@ import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.pkg.util.DeltaProcessor
 import com.atlan.serde.Serde
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicBoolean
@@ -256,7 +256,7 @@ abstract class AbstractBaseImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): Results {
             val results = super.finalize(header, outputFile)
             if (invalidTypes.isNotEmpty()) {
                 throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")
@@ -300,17 +300,21 @@ abstract class AbstractBaseImporter(
         }
     }
 
-    class Results(
+    open class Results(
         hasLinks: Boolean,
         hasTermAssignments: Boolean,
         outputFile: String,
         hasDomainRelationship: Boolean,
         hasProductRelationship: Boolean,
         val mapToSecondPass: Map<String, Set<String>>,
-    ) : RowPreprocessor.Results(
+        assetRootName: String = "",
+        multipleConnections: Boolean = false,
+    ) : DeltaProcessor.Results(
+            assetRootName = assetRootName,
+            multipleConnections = multipleConnections,
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
-            outputFile = outputFile,
+            preprocessedFile = outputFile,
             hasDomainRelationship = hasDomainRelationship,
             hasProductRelationship = hasProductRelationship,
         )
