@@ -126,7 +126,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
         )
     }
 
-    @Test
+    @Test(dependsOnMethods = ["assetFileFailsWithMeaningfulError"])
     fun filesCreated() {
         validateFilesExist(files)
     }

@@ -36,7 +36,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
     }
 
     @Test
-    fun assetsFileFailsWithMeaningfulError() {
+    fun lineageFileFailsWithMeaningfulError() {
         val exception =
             assertFailsWith<IllegalArgumentException> {
                 runCustomPackage(
@@ -50,13 +50,13 @@ class InvalidFileFormatTest : PackageTest("iff") {
             }
         assertEquals(
             """
-            Invalid input file received. Input CSV is missing required columns: [typeName, connectionName, connectorName, cubeName]
+            Invalid input file received. Input CSV is missing required columns: [Source Type, Source Connector, Source Connection, Source Identity, Source Name, Target Type, Target Connector, Target Connection, Target Identity, Target Name]
             """.trimIndent(),
             exception.message,
         )
     }
 
-    @Test
+    @Test(dependsOnMethods = ["lineageFileFailsWithMeaningfulError"])
     fun filesCreated() {
         validateFilesExist(files)
     }
