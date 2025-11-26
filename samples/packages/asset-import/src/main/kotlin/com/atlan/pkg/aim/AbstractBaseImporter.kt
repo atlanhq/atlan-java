@@ -70,21 +70,7 @@ abstract class AbstractBaseImporter(
     private val hasCachedPrereqs = AtomicBoolean(false)
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = mutableListOf<String>()
-        if (header.isNullOrEmpty()) {
-            missing.add(Asset.TYPE_NAME.atlanFieldName)
-            missing.add(Asset.NAME.atlanFieldName)
-        } else {
-            if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
-                missing.add(Asset.TYPE_NAME.atlanFieldName)
-            }
-            if (!header.contains(Asset.NAME.atlanFieldName)) {
-                missing.add(Asset.NAME.atlanFieldName)
-            }
-        }
-        return missing
-    }
+    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
 
     /** {@inheritDoc} */
     override fun preprocessRow(
@@ -248,5 +234,23 @@ abstract class AbstractBaseImporter(
                     mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
                 }
             }
+    }
+
+    companion object {
+        fun validateHeader(header: List<String>?): List<String> {
+            val missing = mutableListOf<String>()
+            if (header.isNullOrEmpty()) {
+                missing.add(Asset.TYPE_NAME.atlanFieldName)
+                missing.add(Asset.NAME.atlanFieldName)
+            } else {
+                if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
+                    missing.add(Asset.TYPE_NAME.atlanFieldName)
+                }
+                if (!header.contains(Asset.NAME.atlanFieldName)) {
+                    missing.add(Asset.NAME.atlanFieldName)
+                }
+            }
+            return missing
+        }
     }
 }

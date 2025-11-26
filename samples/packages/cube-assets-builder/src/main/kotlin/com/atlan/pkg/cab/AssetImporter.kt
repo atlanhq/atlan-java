@@ -65,6 +65,9 @@ abstract class AssetImporter(
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
+
+    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         // Can skip all of these columns when deserializing a row as they will be set by
         // the creator methods anyway
@@ -83,6 +86,30 @@ abstract class AssetImporter(
     }
 
     companion object : AssetResolver {
+        fun validateHeader(header: List<String>?): List<String> {
+            val missing = mutableListOf<String>()
+            if (header.isNullOrEmpty()) {
+                missing.add(Asset.TYPE_NAME.atlanFieldName)
+                missing.add(Asset.CONNECTION_NAME.atlanFieldName)
+                missing.add(Asset.CONNECTOR_NAME.atlanFieldName)
+                missing.add(Cube.CUBE_NAME.atlanFieldName)
+            } else {
+                if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
+                    missing.add(Asset.TYPE_NAME.atlanFieldName)
+                }
+                if (!header.contains(Asset.CONNECTION_NAME.atlanFieldName)) {
+                    missing.add(Asset.CONNECTION_NAME.atlanFieldName)
+                }
+                if (!header.contains(Asset.CONNECTOR_NAME.atlanFieldName) && !header.contains("connectorType")) {
+                    missing.add(Asset.CONNECTOR_NAME.atlanFieldName)
+                }
+                if (!header.contains(Cube.CUBE_NAME.atlanFieldName)) {
+                    missing.add(Cube.CUBE_NAME.atlanFieldName)
+                }
+            }
+            return missing
+        }
+
         /** {@inheritDoc} */
         override fun getQualifiedNameDetails(
             row: List<String>,

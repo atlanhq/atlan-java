@@ -188,6 +188,7 @@ class ProductImporter(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            validator = Companion::validateHeader,
         ) {
         /** {@inheritDoc} */
         override fun preprocessRow(

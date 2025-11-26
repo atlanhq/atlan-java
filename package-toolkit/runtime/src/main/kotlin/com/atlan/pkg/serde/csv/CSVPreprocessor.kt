@@ -25,6 +25,7 @@ abstract class CSVPreprocessor(
     val fieldSeparator: Char = ',',
     val producesFile: String? = null,
     val usingHeaders: List<String>? = null,
+    val validator: (List<String>?) -> List<String> = { emptyList() },
 ) : RowPreprocessor {
     /**
      * Preprocess the CSV file.
@@ -36,8 +37,13 @@ abstract class CSVPreprocessor(
     inline fun <reified T : RowPreprocessor.Results> preprocess(
         outputFile: String? = producesFile,
         outputHeaders: List<String>? = usingHeaders,
-    ): T =
-        CSVReader(
+    ): T {
+        val header = CSVXformer.getHeader(filename, fieldSeparator)
+        val missingColumns = validator(header)
+        if (missingColumns.isNotEmpty()) {
+            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
+        }
+        return CSVReader(
             filename,
             updateOnly = true,
             trackBatches = false,
@@ -53,4 +59,5 @@ abstract class CSVPreprocessor(
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             results
         }
+    }
 }

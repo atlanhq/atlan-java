@@ -225,6 +225,7 @@ class DomainImporter(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            validator = Companion::validateHeader,
         ) {
         /** {@inheritDoc} */
         override fun preprocessRow(

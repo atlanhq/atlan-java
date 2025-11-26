@@ -329,17 +329,7 @@ class AssetImporter(
         )
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = super.validateHeader(header).toMutableList()
-        if (header.isNullOrEmpty()) {
-            missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-        } else {
-            if (!header.contains(Asset.QUALIFIED_NAME.atlanFieldName)) {
-                missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-            }
-        }
-        return missing
-    }
+    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
@@ -400,6 +390,18 @@ class AssetImporter(
     )
 
     companion object : AssetResolver {
+        fun validateHeader(header: List<String>?): List<String> {
+            val missing = AbstractBaseImporter.validateHeader(header).toMutableList()
+            if (header.isNullOrEmpty()) {
+                missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
+            } else {
+                if (!header.contains(Asset.QUALIFIED_NAME.atlanFieldName)) {
+                    missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
+                }
+            }
+            return missing
+        }
+
         val GLOSSARY_TYPES =
             listOf(
                 Glossary.TYPE_NAME,
@@ -901,6 +903,7 @@ class AssetImporter(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            validator = Companion::validateHeader,
         ) {
         private val typesInFile = mutableSetOf<String>()
         private val connectionQNs = mutableSetOf<String>()

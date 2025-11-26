@@ -38,6 +38,23 @@ class HierarchyImporter(
         logger = logger,
     ) {
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add("cubeDimensionName")
+            missing.add("cubeHierarchyName")
+        } else {
+            if (!header.contains("cubeDimensionName")) {
+                missing.add("cubeDimensionName")
+            }
+            if (!header.contains("cubeHierarchyName")) {
+                missing.add("cubeHierarchyName")
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(CubeHierarchy.CUBE_HIERARCHY_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName

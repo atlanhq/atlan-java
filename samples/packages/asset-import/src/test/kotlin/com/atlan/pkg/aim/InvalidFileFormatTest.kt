@@ -16,8 +16,6 @@ import kotlin.test.assertFailsWith
 class InvalidFileFormatTest : PackageTest("iff") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
-    private val table = makeUnique("t1")
-
     private val assetsFile = "invalid-format-assets.csv"
     private val glossariesFile = "invalid-format-glossaries.csv"
     private val productsFile = "invalid-format-products.csv"

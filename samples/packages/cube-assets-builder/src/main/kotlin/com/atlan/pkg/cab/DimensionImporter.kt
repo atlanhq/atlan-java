@@ -38,6 +38,19 @@ class DimensionImporter(
         logger = logger,
     ) {
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add("cubeDimensionName")
+        } else {
+            if (!header.contains("cubeDimensionName")) {
+                missing.add("cubeDimensionName")
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(CubeDimension.CUBE_DIMENSION_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName

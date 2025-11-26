@@ -58,6 +58,27 @@ class FieldImporter(
     }
 
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add("cubeDimensionName")
+            missing.add("cubeHierarchyName")
+            missing.add("fieldName")
+        } else {
+            if (!header.contains("cubeDimensionName")) {
+                missing.add("cubeDimensionName")
+            }
+            if (!header.contains("cubeHierarchyName")) {
+                missing.add("cubeHierarchyName")
+            }
+            if (!header.contains("fieldName")) {
+                missing.add("fieldName")
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun preprocessRow(
         row: List<String>,
         header: List<String>,

@@ -189,6 +189,7 @@ object Importer {
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
+            validator = AssetImporter::validateHeader,
         ) {
         val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
         var cubeName: String? = null
