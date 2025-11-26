@@ -48,8 +48,7 @@ interface AssetGenerator {
     /**
      * Start a builder for the asset on this row.
      *
-     * @param row of values
-     * @param header column names
+     * @param deserializer for the row
      * @return a builder for the asset on this row
      */
     fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *>
@@ -64,4 +63,12 @@ interface AssetGenerator {
     fun cacheCreated(list: Stream<Asset>) {
         // Do nothing, by default
     }
+
+    /**
+     * Validate that the format of the input file matches the requirements of the package.
+     *
+     * @param header column names
+     * @return the list of names of columns that are required but not present in the file
+     */
+    fun validateHeader(header: List<String>?): List<String>
 }

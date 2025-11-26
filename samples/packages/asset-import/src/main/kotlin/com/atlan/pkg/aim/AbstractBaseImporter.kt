@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
@@ -67,6 +68,23 @@ abstract class AbstractBaseImporter(
             "asset_links",
         )
     private val hasCachedPrereqs = AtomicBoolean(false)
+
+    /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = mutableListOf<String>()
+        if (header.isNullOrEmpty()) {
+            missing.add(Asset.TYPE_NAME.atlanFieldName)
+            missing.add(Asset.NAME.atlanFieldName)
+        } else {
+            if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
+                missing.add(Asset.TYPE_NAME.atlanFieldName)
+            }
+            if (!header.contains(Asset.NAME.atlanFieldName)) {
+                missing.add(Asset.NAME.atlanFieldName)
+            }
+        }
+        return missing
+    }
 
     /** {@inheritDoc} */
     override fun preprocessRow(

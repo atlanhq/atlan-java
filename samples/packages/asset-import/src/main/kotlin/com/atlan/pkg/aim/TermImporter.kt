@@ -42,6 +42,19 @@ class TermImporter(
         )
 
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add(GlossaryCategory.ANCHOR.atlanFieldName)
+        } else {
+            if (!header.contains(GlossaryCategory.ANCHOR.atlanFieldName)) {
+                missing.add(GlossaryCategory.ANCHOR.atlanFieldName)
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         cache.preload()
         val colsToSkip = columnsToSkip.toMutableSet()

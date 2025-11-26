@@ -329,6 +329,19 @@ class AssetImporter(
         )
 
     /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
+        } else {
+            if (!header.contains(Asset.QUALIFIED_NAME.atlanFieldName)) {
+                missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Asset.GUID.atlanFieldName)

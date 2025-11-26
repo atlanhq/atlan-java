@@ -1,0 +1,2 @@
+qualified_name,type_name,name,description
+default/snowflake/1234567890,Connection,production,Production Snowflake connection
