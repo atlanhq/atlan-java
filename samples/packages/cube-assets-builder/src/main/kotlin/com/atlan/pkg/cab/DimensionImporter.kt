@@ -6,6 +6,7 @@ import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeDimension
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.cab.AssetImporter.Preprocessor
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.util.DeltaProcessor
 import mu.KLogger
@@ -27,7 +28,7 @@ import mu.KLogger
 class DimensionImporter(
     ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
-    private val preprocessed: Importer.Results,
+    private val preprocessed: Results,
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
@@ -38,19 +39,6 @@ class DimensionImporter(
         logger = logger,
     ) {
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = super.validateHeader(header).toMutableList()
-        if (header.isNullOrEmpty()) {
-            missing.add("cubeDimensionName")
-        } else {
-            if (!header.contains("cubeDimensionName")) {
-                missing.add("cubeDimensionName")
-            }
-        }
-        return missing
-    }
-
-    /** {@inheritDoc} */
     override fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *> {
         val name = deserializer.getValue(CubeDimension.CUBE_DIMENSION_NAME.atlanFieldName)?.let { it as String } ?: ""
         val connectionQN = connectionImporter.getBuilder(deserializer).build().qualifiedName
@@ -59,5 +47,30 @@ class DimensionImporter(
         return CubeDimension
             .creator(name, cubeQN)
             .cubeHierarchyCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+    }
+
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
+
+    class Preprocessor(
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AssetImporter.Preprocessor(
+            originalFile,
+            fieldSeparator,
+            logger,
+            requiredHeaders = REQUIRED_HEADERS,
+        )
+
+    companion object {
+        val REQUIRED_HEADERS = AssetImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS["cubeDimensionName"] = emptySet()
+        }
     }
 }

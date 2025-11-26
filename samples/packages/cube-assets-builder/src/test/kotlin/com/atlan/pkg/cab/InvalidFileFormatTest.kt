@@ -54,7 +54,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
             }
         assertEquals(
             """
-            Invalid input file received. Input CSV is missing required columns: [typeName, connectionName, connectorName, cubeName]
+            Invalid input file received. Input CSV is missing required columns: [typeName, connectionName, connectorName, cubeName, cubeDimensionName, cubeHierarchyName, fieldName]
             """.trimIndent(),
             exception.message,
         )
@@ -81,7 +81,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
         )
     }
 
-    @Test(dependsOnMethods = ["assetFileFailsWithMeaningfulError"])
+    @Test(dependsOnMethods = ["assetsFileFailsWithMeaningfulError"])
     fun filesCreated() {
         validateFilesExist(files)
     }

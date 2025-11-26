@@ -27,7 +27,7 @@ import mu.KLogger
 class CubeImporter(
     ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
-    private val preprocessed: Importer.Results,
+    private val preprocessed: Results,
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
