@@ -8,6 +8,13 @@ import com.atlan.model.assets.ColumnProcess
 import com.atlan.model.assets.ICatalog
 import com.atlan.model.assets.LineageProcess
 import com.atlan.pkg.PackageContext
+import com.atlan.pkg.lb.AssetTransformer.Companion.CONNECTION
+import com.atlan.pkg.lb.AssetTransformer.Companion.CONNECTOR
+import com.atlan.pkg.lb.AssetTransformer.Companion.IDENTITY
+import com.atlan.pkg.lb.AssetTransformer.Companion.NAME
+import com.atlan.pkg.lb.AssetTransformer.Companion.SOURCE_PREFIX
+import com.atlan.pkg.lb.AssetTransformer.Companion.TARGET_PREFIX
+import com.atlan.pkg.lb.AssetTransformer.Companion.TYPE
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer
@@ -42,6 +49,71 @@ class LineageTransformer(
                 XFORM_IDENTITY,
                 XFORM_NAME,
             )
+    }
+
+    /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = mutableListOf<String>()
+        if (header.isNullOrEmpty()) {
+            missing.add("$SOURCE_PREFIX $TYPE")
+            missing.add("$SOURCE_PREFIX $CONNECTOR")
+            missing.add("$SOURCE_PREFIX $CONNECTION")
+            missing.add("$SOURCE_PREFIX $IDENTITY")
+            missing.add("$SOURCE_PREFIX $NAME")
+            missing.add("$TARGET_PREFIX $TYPE")
+            missing.add("$TARGET_PREFIX $CONNECTOR")
+            missing.add("$TARGET_PREFIX $CONNECTION")
+            missing.add("$TARGET_PREFIX $IDENTITY")
+            missing.add("$TARGET_PREFIX $NAME")
+            missing.add("$XFORM_PREFIX $CONNECTOR")
+            missing.add("$XFORM_PREFIX $CONNECTION")
+            missing.add("$XFORM_PREFIX $IDENTITY")
+            missing.add("$XFORM_PREFIX $NAME")
+        } else {
+            if (!header.contains("$SOURCE_PREFIX $TYPE")) {
+                missing.add("$SOURCE_PREFIX $TYPE")
+            }
+            if (!header.contains("$SOURCE_PREFIX $CONNECTOR")) {
+                missing.add("$SOURCE_PREFIX $CONNECTOR")
+            }
+            if (!header.contains("$SOURCE_PREFIX $CONNECTION")) {
+                missing.add("$SOURCE_PREFIX $CONNECTION")
+            }
+            if (!header.contains("$SOURCE_PREFIX $IDENTITY")) {
+                missing.add("$SOURCE_PREFIX $IDENTITY")
+            }
+            if (!header.contains("$SOURCE_PREFIX $NAME")) {
+                missing.add("$SOURCE_PREFIX $NAME")
+            }
+            if (!header.contains("$TARGET_PREFIX $TYPE")) {
+                missing.add("$TARGET_PREFIX $TYPE")
+            }
+            if (!header.contains("$TARGET_PREFIX $CONNECTOR")) {
+                missing.add("$TARGET_PREFIX $CONNECTOR")
+            }
+            if (!header.contains("$TARGET_PREFIX $CONNECTION")) {
+                missing.add("$TARGET_PREFIX $CONNECTION")
+            }
+            if (!header.contains("$TARGET_PREFIX $IDENTITY")) {
+                missing.add("$TARGET_PREFIX $IDENTITY")
+            }
+            if (!header.contains("$TARGET_PREFIX $NAME")) {
+                missing.add("$TARGET_PREFIX $NAME")
+            }
+            if (!header.contains("$XFORM_PREFIX $CONNECTOR")) {
+                missing.add("$XFORM_PREFIX $CONNECTOR")
+            }
+            if (!header.contains("$XFORM_PREFIX $CONNECTION")) {
+                missing.add("$XFORM_PREFIX $CONNECTION")
+            }
+            if (!header.contains("$XFORM_PREFIX $IDENTITY")) {
+                missing.add("$XFORM_PREFIX $IDENTITY")
+            }
+            if (!header.contains("$XFORM_PREFIX $NAME")) {
+                missing.add("$XFORM_PREFIX $NAME")
+            }
+        }
+        return missing
     }
 
     /** {@inheritDoc} */
