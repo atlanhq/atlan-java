@@ -1,0 +1,12 @@
+typeName,connectionName,connectorType,cubeName,cubeDimensionName,cubeHierarchyName,field_name,parent_field_qualified_name,display_name,description,certificate_status,certificate_status_message,readme,atlan_tags,adminRoles,adminGroups,adminUsers
+Connection,production,essbase,,,,,,,,,,,,$admin,admins,chris
+Cube,production,essbase,TEST_CUBE,,,,,Test cube,,,,,,,,
+CubeDimension,production,essbase,TEST_CUBE,TEST_DIM,,,,Test dimension,,,,,,,,
+CubeHierarchy,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY1,,,Test hierarchy1,,VERIFIED,Ready to use,<h1>Table readme</h1>,"PII>>FULL
+Finance",,,
+CubeField,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY1,COL1,,Test field 1,,,,,,,,
+CubeField,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY1,COL2,COL1,Test field 2,,,,,,,,
+CubeField,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY1,COL3,COL1~COL2,Test field 3,,,,,,,,
+CubeHierarchy,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY2,,,Test hierarchy2,,DRAFT,,<h2>View readme</h2>,PII>>HIERARCHY_ONLY,,,
+CubeField,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY2,COL4,,Test field 4,,,,,,,,
+CubeField,production,essbase,TEST_CUBE,TEST_DIM,TEST_HIERARCHY2,COL5,COL4,Test field 5,,,,,,,,

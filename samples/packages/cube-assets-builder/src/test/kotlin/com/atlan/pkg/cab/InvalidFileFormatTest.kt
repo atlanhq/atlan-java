@@ -17,10 +17,12 @@ class InvalidFileFormatTest : PackageTest("iff") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val assetsFile = "invalid-format-assets.csv"
+    private val fieldsFile = "invalid-format-fields.csv"
 
     private val files =
         listOf(
             assetsFile,
+            fieldsFile,
             "debug.log",
         )
 
@@ -53,6 +55,27 @@ class InvalidFileFormatTest : PackageTest("iff") {
         assertEquals(
             """
             Invalid input file received. Input CSV is missing required columns: [typeName, connectionName, connectorName, cubeName]
+            """.trimIndent(),
+            exception.message,
+        )
+    }
+
+    @Test
+    fun fieldsFileFailsWithMeaningfulError() {
+        val exception =
+            assertFailsWith<IllegalArgumentException> {
+                runCustomPackage(
+                    CubeAssetsBuilderCfg(
+                        assetsFile = Paths.get(testDirectory, fieldsFile).toString(),
+                        assetsUpsertSemantic = "upsert",
+                        assetsFailOnErrors = true,
+                    ),
+                    Importer::main,
+                )
+            }
+        assertEquals(
+            """
+            Invalid input file received. Input CSV is missing required columns: [fieldName]
             """.trimIndent(),
             exception.message,
         )

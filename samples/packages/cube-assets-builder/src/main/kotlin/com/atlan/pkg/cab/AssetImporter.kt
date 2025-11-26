@@ -122,33 +122,33 @@ abstract class AssetImporter(
             val partial: String
             when (typeName) {
                 Connection.TYPE_NAME -> {
-                    val connection = CSVXformer.trimWhitespace(row[header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)])
-                    val connector = CSVXformer.trimWhitespace(row[header.indexOf(ConnectionImporter.CONNECTOR_TYPE)]).lowercase()
+                    val connection = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(Asset.CONNECTION_NAME.atlanFieldName)) { "" })
+                    val connector = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(ConnectionImporter.CONNECTOR_TYPE)) { "" }).lowercase()
                     parent = null
                     unique = ConnectionIdentity(connection, connector).toString()
                     partial = ""
                 }
                 Cube.TYPE_NAME -> {
-                    current = CSVXformer.trimWhitespace(row[header.indexOf(IMultiDimensionalDataset.CUBE_NAME.atlanFieldName)])
+                    current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, Connection.TYPE_NAME)
                     unique = Cube.generateQualifiedName(current, parent.uniqueQN)
                     partial = current
                 }
                 CubeDimension.TYPE_NAME -> {
-                    current = CSVXformer.trimWhitespace(row[header.indexOf(IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName)])
+                    current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, Cube.TYPE_NAME)
                     unique = CubeDimension.generateQualifiedName(current, parent.uniqueQN)
                     partial = CubeDimension.generateQualifiedName(current, parent.partialQN)
                 }
                 CubeHierarchy.TYPE_NAME -> {
-                    current = CSVXformer.trimWhitespace(row[header.indexOf(IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName)])
+                    current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, CubeDimension.TYPE_NAME)
                     unique = CubeHierarchy.generateQualifiedName(current, parent.uniqueQN)
                     partial = CubeHierarchy.generateQualifiedName(current, parent.partialQN)
                 }
                 CubeField.TYPE_NAME -> {
-                    current = CSVXformer.trimWhitespace(row[header.indexOf(FieldImporter.FIELD_NAME)])
-                    val parentField = if (header.indexOf(FieldImporter.PARENT_FIELD_QN) >= 0) CSVXformer.trimWhitespace(row[header.indexOf(FieldImporter.PARENT_FIELD_QN)]) else ""
+                    current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(FieldImporter.FIELD_NAME)) { "" })
+                    val parentField = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(FieldImporter.PARENT_FIELD_QN)) { "" })
                     if (parentField.isBlank()) {
                         parent = getQualifiedNameDetails(row, header, CubeHierarchy.TYPE_NAME)
                         unique = CubeField.generateQualifiedName(current, parent.uniqueQN)

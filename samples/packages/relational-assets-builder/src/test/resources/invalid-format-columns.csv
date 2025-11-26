@@ -1,0 +1,11 @@
+typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,data_type,displayName,description,certificate_status,certificate_status_message,readme,atlan_tags,admin_roles,admin_groups,admin_users
+Connection,production,iceberg,,,,,,,,,,,,$admin,admins,chris
+Database,production,iceberg,TEST_DB,,,,,Test DB,,,,,,,,
+Schema,production,iceberg,TEST_DB,TEST_SCHEMA,,,,Test schema,,,,,,,,
+Table,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,,,Test table,,VERIFIED,Ready to use,<h1>Table readme</h1>,"PII>>FULL
+Finance",,,
+Column,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL1,NVARCHAR(255),Test column 1,,,,,,,,
+Column,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,COL2,BigInt,Test column 2,,,,,,,,
+View,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_VIEW,,,Test view,,DRAFT,,<h2>View readme</h2>,PII>>HIERARCHY_ONLY,,,
+Column,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_VIEW,COL3,Int32,Test column 3,,,,,,,,
+Column,production,iceberg,TEST_DB,TEST_SCHEMA,TEST_VIEW,COL4,"decimal(3,5)",Test column 4,,,,,,,,
