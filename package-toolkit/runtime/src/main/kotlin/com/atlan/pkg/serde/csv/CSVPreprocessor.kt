@@ -6,6 +6,7 @@ import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
 import mu.KLogger
+import kotlin.jvm.Throws
 
 /**
  * Preprocess a CSV file before loading anything to Atlan.
@@ -25,8 +26,10 @@ abstract class CSVPreprocessor(
     val fieldSeparator: Char = ',',
     val producesFile: String? = null,
     val usingHeaders: List<String>? = null,
-    val validator: (List<String>?) -> List<String> = { emptyList() },
+    open val requiredHeaders: Map<String, Set<String>> = emptyMap(),
 ) : RowPreprocessor {
+    val header = CSVXformer.getHeader(filename, fieldSeparator)
+
     /**
      * Preprocess the CSV file.
      *
@@ -38,11 +41,7 @@ abstract class CSVPreprocessor(
         outputFile: String? = producesFile,
         outputHeaders: List<String>? = usingHeaders,
     ): T {
-        val header = CSVXformer.getHeader(filename, fieldSeparator)
-        val missingColumns = validator(header)
-        if (missingColumns.isNotEmpty()) {
-            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
-        }
+        validate()
         return CSVReader(
             filename,
             updateOnly = true,
@@ -58,6 +57,39 @@ abstract class CSVPreprocessor(
             val results = csv.preprocess(this, logger, outputFile, outputHeaders) as T
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
             results
+        }
+    }
+
+    /**
+     * Validate that the format of the input file matches the requirements of the package.
+     *
+     * @param header column names
+     * @return the list of names of columns that are required but not present in the file
+     */
+    fun validateHeader(): List<String> {
+        val missing = mutableListOf<String>()
+        if (header.isEmpty()) {
+            missing.addAll(requiredHeaders.keys)
+        } else {
+            requiredHeaders.forEach { (key, options) ->
+                if (!header.contains(key) && options.none { header.contains(it) }) {
+                    missing.add(key)
+                }
+            }
+        }
+        return missing
+    }
+
+    /**
+     * Validate the contents of the file up-front for any obvious errors.
+     *
+     * @throws IllegalArgumentException on any detected errors that will prevent the file from being processed successfully
+     */
+    @Throws(IllegalArgumentException::class)
+    open fun validate() {
+        val missingColumns = validateHeader()
+        if (missingColumns.isNotEmpty()) {
+            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
         }
     }
 }

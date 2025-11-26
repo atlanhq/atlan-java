@@ -67,19 +67,6 @@ class ConnectionImporter(
         )
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = super.validateHeader(header).toMutableList()
-        if (header.isNullOrEmpty()) {
-            missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-        } else {
-            if (!header.contains(Asset.QUALIFIED_NAME.atlanFieldName)) {
-                missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-            }
-        }
-        return missing
-    }
-
-    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Connection.QUALIFIED_NAME.atlanFieldName)
@@ -134,4 +121,28 @@ class ConnectionImporter(
             ctx.connectionCache.cacheById(asset.guid)
         }
     }
+
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders =
+                mapOf(
+                    Asset.TYPE_NAME.atlanFieldName to emptySet(),
+                    Asset.QUALIFIED_NAME.atlanFieldName to setOf(),
+                    Asset.NAME.atlanFieldName to emptySet(),
+                ),
+        )
 }

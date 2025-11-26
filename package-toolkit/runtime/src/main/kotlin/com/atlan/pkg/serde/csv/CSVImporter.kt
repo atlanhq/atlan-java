@@ -62,13 +62,6 @@ abstract class CSVImporter(
     protected val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
 ) : AssetGenerator,
     RowPreprocessor {
-    init {
-        val missingColumns = validateHeader(CSVXformer.getHeader(filename, fieldSeparator))
-        if (missingColumns.isNotEmpty()) {
-            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
-        }
-    }
-
     /** {@inheritDoc} */
     override fun preprocessRow(
         row: List<String>,

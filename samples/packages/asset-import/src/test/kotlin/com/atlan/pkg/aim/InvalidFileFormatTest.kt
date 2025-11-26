@@ -17,14 +17,18 @@ class InvalidFileFormatTest : PackageTest("iff") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val assetsFile = "invalid-format-assets.csv"
+    private val invalidTypesAssetsFile = "invalid-types-assets.csv"
     private val glossariesFile = "invalid-format-glossaries.csv"
+    private val invalidTypesGlossariesFile = "invalid-types-glossaries.csv"
     private val productsFile = "invalid-format-products.csv"
     private val tagsFile = "invalid-format-tags.csv"
 
     private val files =
         listOf(
             assetsFile,
+            invalidTypesAssetsFile,
             glossariesFile,
+            invalidTypesGlossariesFile,
             productsFile,
             tagsFile,
             "debug.log",
@@ -65,6 +69,27 @@ class InvalidFileFormatTest : PackageTest("iff") {
     }
 
     @Test
+    fun assetsFileFailsWithInvalidTypes() {
+        val exception =
+            assertFailsWith<IllegalArgumentException> {
+                runCustomPackage(
+                    AssetImportCfg(
+                        assetsFile = Paths.get(testDirectory, invalidTypesAssetsFile).toString(),
+                        assetsUpsertSemantic = "upsert",
+                        assetsFailOnErrors = true,
+                    ),
+                    Importer::main,
+                )
+            }
+        assertEquals(
+            """
+            Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: [connection]
+            """.trimIndent(),
+            exception.message,
+        )
+    }
+
+    @Test
     fun glossariesFileFailsWithMeaningfulError() {
         val exception =
             assertFailsWith<IllegalArgumentException> {
@@ -80,6 +105,27 @@ class InvalidFileFormatTest : PackageTest("iff") {
         assertEquals(
             """
             Invalid input file received. Input CSV is missing required columns: [typeName]
+            """.trimIndent(),
+            exception.message,
+        )
+    }
+
+    @Test
+    fun glossariesFileFailsWithInvalidTypes() {
+        val exception =
+            assertFailsWith<IllegalArgumentException> {
+                runCustomPackage(
+                    AssetImportCfg(
+                        glossariesFile = Paths.get(testDirectory, invalidTypesGlossariesFile).toString(),
+                        glossariesUpsertSemantic = "upsert",
+                        glossariesFailOnErrors = true,
+                    ),
+                    Importer::main,
+                )
+            }
+        assertEquals(
+            """
+            Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: [GlossaryTerm]
             """.trimIndent(),
             exception.message,
         )
@@ -126,7 +172,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
         )
     }
 
-    @Test(dependsOnMethods = ["assetFileFailsWithMeaningfulError"])
+    @Test(dependsOnMethods = ["assetsFileFailsWithMeaningfulError"])
     fun filesCreated() {
         validateFilesExist(files)
     }

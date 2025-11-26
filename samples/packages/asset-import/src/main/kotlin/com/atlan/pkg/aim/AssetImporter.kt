@@ -223,7 +223,6 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
 import com.atlan.pkg.serde.cell.AssetRefXformer.resolveDeferredQN
-import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
@@ -329,9 +328,6 @@ class AssetImporter(
         )
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
-
-    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Asset.GUID.atlanFieldName)
@@ -390,18 +386,6 @@ class AssetImporter(
     )
 
     companion object : AssetResolver {
-        fun validateHeader(header: List<String>?): List<String> {
-            val missing = AbstractBaseImporter.validateHeader(header).toMutableList()
-            if (header.isNullOrEmpty()) {
-                missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-            } else {
-                if (!header.contains(Asset.QUALIFIED_NAME.atlanFieldName)) {
-                    missing.add(Asset.QUALIFIED_NAME.atlanFieldName)
-                }
-            }
-            return missing
-        }
-
         val GLOSSARY_TYPES =
             listOf(
                 Glossary.TYPE_NAME,
@@ -894,21 +878,34 @@ class AssetImporter(
     /** Pre-process the assets import file. */
     private fun preprocess(ctx: PackageContext<*>): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): AbstractBaseImporter.Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<AbstractBaseImporter.Results>()
+
     class Preprocessor(
-        private val ctx: PackageContext<*>,
+        override val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
-    ) : CSVPreprocessor(
-            filename = originalFile,
-            logger = logger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
             fieldSeparator = fieldSeparator,
-            validator = Companion::validateHeader,
+            logger = logger,
+            requiredHeaders =
+                mapOf(
+                    Asset.TYPE_NAME.atlanFieldName to emptySet(),
+                    Asset.QUALIFIED_NAME.atlanFieldName to setOf(),
+                    Asset.NAME.atlanFieldName to emptySet(),
+                ),
         ) {
-        private val typesInFile = mutableSetOf<String>()
         private val connectionQNs = mutableSetOf<String>()
         private val aimCtx = ctx as PackageContext<AssetImportCfg>
         private val relaxedCQN = aimCtx.config.relaxedCqn
+        private val glossaryTypes = mutableSetOf<String>()
+        private val productTypes = mutableListOf<String>()
 
         /** {@inheritDoc} */
         override fun preprocessRow(
@@ -917,46 +914,57 @@ class AssetImporter(
             typeIdx: Int,
             qnIdx: Int,
         ): List<String> {
+            val updated = super.preprocessRow(row, header, typeIdx, qnIdx)
             // Keep a running collection of the types that are in the file
             val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-            if (typeName.isNotBlank()) {
-                typesInFile.add(row[typeIdx])
+            if (typeName.isNotBlank() && !invalidTypes.contains(typeName)) {
                 val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
                 if (typeName.isNotBlank() && typeName in GLOSSARY_TYPES) {
-                    throw IllegalStateException("Found an asset that should be loaded via the glossaries file (of type $typeName): $qualifiedName")
+                    glossaryTypes.add(typeName)
                 }
                 if (typeName.isNotBlank() && typeName in DATA_PRODUCT_TYPES) {
-                    throw IllegalStateException("Found an asset that should be loaded via the data products file (of type $typeName): $qualifiedName")
+                    productTypes.add(typeName)
                 }
-                val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName, relaxedCQN)
-                val deferredIdentity = getDeferredIdentity(qualifiedName)
-                if (connectionQNFromAsset != null) {
-                    connectionQNs.add(connectionQNFromAsset)
-                } else if (typeName == Connection.TYPE_NAME) {
-                    // If the qualifiedName comes back as null and the asset itself is a connection, add it
-                    if (StringUtils.isValidConnectionQN(qualifiedName, relaxedCQN)) {
-                        connectionQNs.add(qualifiedName)
+                if (!glossaryTypes.contains(typeName) && !productTypes.contains(typeName)) {
+                    val connectionQNFromAsset = StringUtils.getConnectionQualifiedName(qualifiedName, relaxedCQN)
+                    val deferredIdentity = getDeferredIdentity(qualifiedName)
+                    if (connectionQNFromAsset != null) {
+                        connectionQNs.add(connectionQNFromAsset)
+                    } else if (typeName == Connection.TYPE_NAME) {
+                        // If the qualifiedName comes back as null and the asset itself is a connection, add it
+                        if (StringUtils.isValidConnectionQN(qualifiedName, relaxedCQN)) {
+                            connectionQNs.add(qualifiedName)
+                        } else if (deferredIdentity == null) {
+                            throw IllegalStateException(
+                                "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
+                            )
+                        }
                     } else if (deferredIdentity == null) {
-                        throw IllegalStateException(
-                            "Found a connection without a valid qualifiedName: $qualifiedName -- must be of the form 'default/connectorType/nnnnnnnnnn', where connectorType is a valid connector type (like 'snowflake') and nnnnnnnnnn is an epoch-style timestamp down to seconds granularity.",
-                        )
+                        throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
+                    } else {
+                        val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
+                        connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
                     }
-                } else if (deferredIdentity == null) {
-                    throw IllegalStateException("Found an asset without a valid qualifiedName (of type $typeName): $qualifiedName")
-                } else {
-                    val deferredId = ctx.connectionCache.getIdentityForAsset(deferredIdentity.name, deferredIdentity.type)
-                    connectionQNs.add(ctx.connectionCache.getByIdentity(deferredId)?.qualifiedName ?: NO_CONNECTION_QN)
                 }
             }
-            return row
+            return updated
         }
 
         /** {@inheritDoc} */
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): DeltaProcessor.Results {
+        ): Results {
             val results = super.finalize(header, outputFile)
+            if (invalidTypes.isNotEmpty()) {
+                throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")
+            }
+            if (glossaryTypes.isNotEmpty()) {
+                throw IllegalStateException("Found assets that should be loaded via the glossaries file, of types: $glossaryTypes")
+            }
+            if (productTypes.isNotEmpty()) {
+                throw IllegalStateException("Found assets that should be loaded via the data products file, of types: $productTypes")
+            }
             return Results(
                 connectionQN = if (connectionQNs.isNotEmpty()) connectionQNs.first() else NO_CONNECTION_QN,
                 multipleConnections = connectionQNs.size > 1,

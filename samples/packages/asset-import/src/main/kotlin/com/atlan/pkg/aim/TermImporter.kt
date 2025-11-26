@@ -41,21 +41,7 @@ class TermImporter(
         )
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = super.validateHeader(header).toMutableList()
-        if (header.isNullOrEmpty()) {
-            missing.add(GlossaryTerm.ANCHOR.atlanFieldName)
-        } else {
-            if (!header.contains(GlossaryTerm.ANCHOR.atlanFieldName)) {
-                missing.add(GlossaryTerm.ANCHOR.atlanFieldName)
-            }
-        }
-        return missing
-    }
-
-    /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
@@ -75,6 +61,33 @@ class TermImporter(
             }
         } else {
             ""
+        }
+    }
+
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    open class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders = REQUIRED_HEADERS,
+        )
+
+    companion object {
+        val REQUIRED_HEADERS = AbstractBaseImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS[GlossaryTerm.ANCHOR.atlanFieldName] = emptySet()
         }
     }
 }

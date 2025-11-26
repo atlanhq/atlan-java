@@ -13,8 +13,11 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.cache.TypeDefCache
 import com.atlan.pkg.serde.csv.CSVImporter
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.serde.Serde
 import mu.KLogger
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicInteger
@@ -60,33 +63,8 @@ abstract class AbstractBaseImporter(
         typeNameFilter = typeNameFilter,
     ) {
     protected var header = emptyList<String>()
-    protected val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
     protected var levelToProcess = 0
-    private val alreadyHandled =
-        setOf(
-            "asset_readme",
-            "asset_links",
-        )
     private val hasCachedPrereqs = AtomicBoolean(false)
-
-    /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
-
-    /** {@inheritDoc} */
-    override fun preprocessRow(
-        row: List<String>,
-        header: List<String>,
-        typeIdx: Int,
-        qnIdx: Int,
-    ): List<String> {
-        // Check if the type on this row has any cyclical relationships as headers in the input file
-        val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-        // Short-circuit if we're restricting to certain rows and this is not one of them
-        if (typeNameFilter.isNotEmpty() && typeNameFilter != typeName) return row
-        if (this.header.isEmpty()) this.header = header
-        checkCyclicalRelationships(typeName, ctx.typeDefCache.getCyclicalRelationshipsForType(typeName))
-        return row
-    }
 
     /**
      * Import the assets, handling multiple passes if any cyclical relationships are present
@@ -101,9 +79,10 @@ abstract class AbstractBaseImporter(
         columnsToSkip: Set<String>,
         columnsToAlwaysInclude: Set<String>,
     ): ImportResults? {
-        cacheAnyPrereqs()
+        val preproc = preprocess()
+        cacheAnyPrereqs(preproc)
         val processedResults = mutableListOf<ImportResults>()
-        val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
+        val cyclicalForType = preproc.mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         if (cyclicalForType.isEmpty()) {
             // If there are no cyclical relationships for this type, do everything in one pass
             logger.info { "--- Importing $typeToProcess assets... ---" }
@@ -141,9 +120,10 @@ abstract class AbstractBaseImporter(
         columnsToAlwaysInclude: Set<String>,
         maxDepth: AtomicInteger,
     ): ImportResults? {
-        cacheAnyPrereqs(cache)
+        val preproc = preprocess()
+        cacheAnyPrereqs(preproc, cache)
         val processedResults = mutableListOf<ImportResults>()
-        val cyclicalForType = mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
+        val cyclicalForType = preproc.mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         val firstPassSkip = columnsToSkip.toMutableSet()
         firstPassSkip.addAll(cyclicalForType)
         firstPassSkip.removeAll(columnsToAlwaysInclude) // these must remain for all passes
@@ -163,20 +143,22 @@ abstract class AbstractBaseImporter(
         return ImportResults.combineAll(ctx.client, true, *processedResults.toTypedArray())
     }
 
-    private fun cacheAnyPrereqs(cache: AssetCache<*>? = null) {
+    private fun cacheAnyPrereqs(
+        preproc: Results,
+        cache: AssetCache<*>? = null,
+    ) {
         if (!hasCachedPrereqs.get()) {
             cache?.preload()
-            val results = preprocess()
-            if (results.hasLinks) {
+            if (preproc.hasLinks) {
                 ctx.linkCache.preload()
             }
-            if (results.hasTermAssignments) {
+            if (preproc.hasTermAssignments) {
                 ctx.termCache.preload()
             }
-            if (results.hasDomainRelationship) {
+            if (preproc.hasDomainRelationship) {
                 ctx.dataDomainCache.preload()
             }
-            if (results.hasProductRelationship) {
+            if (preproc.hasProductRelationship) {
                 ctx.dataProductCache.preload()
             }
             hasCachedPrereqs.set(true)
@@ -208,49 +190,128 @@ abstract class AbstractBaseImporter(
         if (secondPassResults != null) passResults.add(secondPassResults)
     }
 
-    private fun checkCyclicalRelationships(
-        typeName: String,
-        relationships: Set<TypeDefCache.RelationshipEnds>,
-    ) {
-        relationships
-            .filter { !alreadyHandled.contains(it.name) }
-            .forEach { relationship ->
-                val one = relationship.end1
-                val two = relationship.end2
-                if (one != two && header.contains(one) && header.contains(two)) {
-                    // If both ends of the same relationship are in the input file, throw an error
-                    // alerting the user that this can't work, and they'll need to pick one end or the other
-                    throw IllegalStateException(
-                        """
-                        Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
-                        You should only use one end of this relationship or the other when importing.
-                        """.trimIndent(),
-                    )
-                }
-                // Retain any of the cyclical relationships that remain so that we can second-pass process them
-                if (header.contains(one)) {
-                    mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
-                } else if (header.contains(two)) {
-                    mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
-                }
-            }
+    companion object {
+        val REQUIRED_HEADERS =
+            mapOf<String, Set<String>>(
+                Asset.TYPE_NAME.atlanFieldName to emptySet(),
+                Asset.NAME.atlanFieldName to emptySet(),
+            )
     }
 
-    companion object {
-        fun validateHeader(header: List<String>?): List<String> {
-            val missing = mutableListOf<String>()
-            if (header.isNullOrEmpty()) {
-                missing.add(Asset.TYPE_NAME.atlanFieldName)
-                missing.add(Asset.NAME.atlanFieldName)
-            } else {
-                if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
-                    missing.add(Asset.TYPE_NAME.atlanFieldName)
+    /** {@inheritDoc} */
+    override fun preprocess(
+        outputFile: String?,
+        outputHeaders: List<String>?,
+    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    open class Preprocessor(
+        open val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+        override val requiredHeaders: Map<String, Set<String>> = REQUIRED_HEADERS,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+            requiredHeaders = requiredHeaders,
+        ) {
+        protected val typesInFile = mutableSetOf<String>()
+        protected val invalidTypes = mutableSetOf<String>()
+        private val alreadyHandled =
+            setOf(
+                "asset_readme",
+                "asset_links",
+            )
+        protected val mapToSecondPass = mutableMapOf<String, MutableSet<String>>()
+
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            // Keep a running collection of the types that are in the file
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank()) {
+                if (!typesInFile.contains(typeName)) {
+                    try {
+                        Serde.getAssetClassForType(typeName)
+                    } catch (e: ClassNotFoundException) {
+                        invalidTypes.add(typeName)
+                    }
+                    typesInFile.add(row[typeIdx])
                 }
-                if (!header.contains(Asset.NAME.atlanFieldName)) {
-                    missing.add(Asset.NAME.atlanFieldName)
+                if (!invalidTypes.contains(typeName)) {
+                    // Check if the type on this row has any cyclical relationships as headers in the input file
+                    // Short-circuit if we're restricting to certain rows and this is not one of them
+                    checkCyclicalRelationships(typeName, ctx.typeDefCache.getCyclicalRelationshipsForType(typeName))
                 }
             }
-            return missing
+            return row
+        }
+
+        /** {@inheritDoc} */
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): RowPreprocessor.Results {
+            val results = super.finalize(header, outputFile)
+            if (invalidTypes.isNotEmpty()) {
+                throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")
+            }
+            return Results(
+                hasLinks = results.hasLinks,
+                hasTermAssignments = results.hasTermAssignments,
+                outputFile = outputFile ?: filename,
+                hasDomainRelationship = results.hasDomainRelationship,
+                hasProductRelationship = results.hasProductRelationship,
+                mapToSecondPass = mapToSecondPass,
+            )
+        }
+
+        private fun checkCyclicalRelationships(
+            typeName: String,
+            relationships: Set<TypeDefCache.RelationshipEnds>,
+        ) {
+            relationships
+                .filter { !alreadyHandled.contains(it.name) }
+                .forEach { relationship ->
+                    val one = relationship.end1
+                    val two = relationship.end2
+                    if (one != two && header.contains(one) && header.contains(two)) {
+                        // If both ends of the same relationship are in the input file, throw an error
+                        // alerting the user that this can't work, and they'll need to pick one end or the other
+                        throw IllegalStateException(
+                            """
+                            Both ends of the same relationship found in the input file for type $typeName: $one <> $two.
+                            You should only use one end of this relationship or the other when importing.
+                            """.trimIndent(),
+                        )
+                    }
+                    // Retain any of the cyclical relationships that remain so that we can second-pass process them
+                    if (header.contains(one)) {
+                        mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(one)
+                    } else if (header.contains(two)) {
+                        mapToSecondPass.getOrPut(typeName) { mutableSetOf() }.add(two)
+                    }
+                }
         }
     }
+
+    class Results(
+        hasLinks: Boolean,
+        hasTermAssignments: Boolean,
+        outputFile: String,
+        hasDomainRelationship: Boolean,
+        hasProductRelationship: Boolean,
+        val mapToSecondPass: Map<String, Set<String>>,
+    ) : RowPreprocessor.Results(
+            hasLinks = hasLinks,
+            hasTermAssignments = hasTermAssignments,
+            outputFile = outputFile,
+            hasDomainRelationship = hasDomainRelationship,
+            hasProductRelationship = hasProductRelationship,
+        )
 }

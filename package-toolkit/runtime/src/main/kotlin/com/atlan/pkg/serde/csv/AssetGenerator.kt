@@ -63,12 +63,4 @@ interface AssetGenerator {
     fun cacheCreated(list: Stream<Asset>) {
         // Do nothing, by default
     }
-
-    /**
-     * Validate that the format of the input file matches the requirements of the package.
-     *
-     * @param header column names
-     * @return the list of names of columns that are required but not present in the file
-     */
-    fun validateHeader(header: List<String>?): List<String>
 }
