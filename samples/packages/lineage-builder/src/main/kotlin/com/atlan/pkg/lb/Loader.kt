@@ -13,6 +13,7 @@ import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
+import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.File
 import kotlin.system.exitProcess
@@ -56,6 +57,16 @@ object Loader {
             )
         if (lineageInput.isNotBlank()) {
             FieldSerde.FAIL_ON_ERRORS.set(ctx.config.lineageFailOnErrors)
+            // Preprocess the input, for validations
+            LineageTransformer
+                .Preprocessor(
+                    ctx,
+                    lineageInput,
+                    fieldSeparator = ctx.config.fieldSeparator[0],
+                    logger,
+                ).preprocess<RowPreprocessor.Results>()
+            // Note: asset import delegation will handle any necessary caching, so no
+            // need to do cache preloads from the preprocessed details here
             ctx.connectionCache.preload()
 
             // 1. Transform the assets, so we can load them prior to creating any lineage relationships

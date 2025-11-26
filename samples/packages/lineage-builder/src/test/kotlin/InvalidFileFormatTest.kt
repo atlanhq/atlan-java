@@ -50,7 +50,7 @@ class InvalidFileFormatTest : PackageTest("iff") {
             }
         assertEquals(
             """
-            Invalid input file received. Input CSV is missing required columns: [Source Type, Source Connector, Source Connection, Source Identity, Source Name, Target Type, Target Connector, Target Connection, Target Identity, Target Name]
+            Invalid input file received. Input CSV is missing required columns: [Source Type, Source Connector, Source Connection, Source Identity, Source Name, Target Type, Target Connector, Target Connection, Target Identity, Target Name, Transformation Connector, Transformation Connection, Transformation Identity, Transformation Name]
             """.trimIndent(),
             exception.message,
         )

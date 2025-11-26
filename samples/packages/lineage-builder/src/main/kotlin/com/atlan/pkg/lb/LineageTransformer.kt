@@ -18,7 +18,10 @@ import com.atlan.pkg.lb.AssetTransformer.Companion.TYPE
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
+import com.atlan.pkg.serde.csv.RowPreprocessor
+import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 
@@ -38,10 +41,10 @@ class LineageTransformer(
 
     companion object {
         const val XFORM_PREFIX = "Transformation"
-        const val XFORM_CONNECTOR = "$XFORM_PREFIX ${AssetTransformer.CONNECTOR}"
-        const val XFORM_CONNECTION = "$XFORM_PREFIX ${AssetTransformer.CONNECTION}"
-        const val XFORM_IDENTITY = "$XFORM_PREFIX ${AssetTransformer.IDENTITY}"
-        const val XFORM_NAME = "$XFORM_PREFIX ${AssetTransformer.NAME}"
+        const val XFORM_CONNECTOR = "$XFORM_PREFIX $CONNECTOR"
+        const val XFORM_CONNECTION = "$XFORM_PREFIX $CONNECTION"
+        const val XFORM_IDENTITY = "$XFORM_PREFIX $IDENTITY"
+        const val XFORM_NAME = "$XFORM_PREFIX $NAME"
         val INPUT_HEADERS =
             listOf(
                 XFORM_CONNECTOR,
@@ -49,71 +52,23 @@ class LineageTransformer(
                 XFORM_IDENTITY,
                 XFORM_NAME,
             )
-    }
-
-    /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = mutableListOf<String>()
-        if (header.isNullOrEmpty()) {
-            missing.add("$SOURCE_PREFIX $TYPE")
-            missing.add("$SOURCE_PREFIX $CONNECTOR")
-            missing.add("$SOURCE_PREFIX $CONNECTION")
-            missing.add("$SOURCE_PREFIX $IDENTITY")
-            missing.add("$SOURCE_PREFIX $NAME")
-            missing.add("$TARGET_PREFIX $TYPE")
-            missing.add("$TARGET_PREFIX $CONNECTOR")
-            missing.add("$TARGET_PREFIX $CONNECTION")
-            missing.add("$TARGET_PREFIX $IDENTITY")
-            missing.add("$TARGET_PREFIX $NAME")
-            missing.add("$XFORM_PREFIX $CONNECTOR")
-            missing.add("$XFORM_PREFIX $CONNECTION")
-            missing.add("$XFORM_PREFIX $IDENTITY")
-            missing.add("$XFORM_PREFIX $NAME")
-        } else {
-            if (!header.contains("$SOURCE_PREFIX $TYPE")) {
-                missing.add("$SOURCE_PREFIX $TYPE")
-            }
-            if (!header.contains("$SOURCE_PREFIX $CONNECTOR")) {
-                missing.add("$SOURCE_PREFIX $CONNECTOR")
-            }
-            if (!header.contains("$SOURCE_PREFIX $CONNECTION")) {
-                missing.add("$SOURCE_PREFIX $CONNECTION")
-            }
-            if (!header.contains("$SOURCE_PREFIX $IDENTITY")) {
-                missing.add("$SOURCE_PREFIX $IDENTITY")
-            }
-            if (!header.contains("$SOURCE_PREFIX $NAME")) {
-                missing.add("$SOURCE_PREFIX $NAME")
-            }
-            if (!header.contains("$TARGET_PREFIX $TYPE")) {
-                missing.add("$TARGET_PREFIX $TYPE")
-            }
-            if (!header.contains("$TARGET_PREFIX $CONNECTOR")) {
-                missing.add("$TARGET_PREFIX $CONNECTOR")
-            }
-            if (!header.contains("$TARGET_PREFIX $CONNECTION")) {
-                missing.add("$TARGET_PREFIX $CONNECTION")
-            }
-            if (!header.contains("$TARGET_PREFIX $IDENTITY")) {
-                missing.add("$TARGET_PREFIX $IDENTITY")
-            }
-            if (!header.contains("$TARGET_PREFIX $NAME")) {
-                missing.add("$TARGET_PREFIX $NAME")
-            }
-            if (!header.contains("$XFORM_PREFIX $CONNECTOR")) {
-                missing.add("$XFORM_PREFIX $CONNECTOR")
-            }
-            if (!header.contains("$XFORM_PREFIX $CONNECTION")) {
-                missing.add("$XFORM_PREFIX $CONNECTION")
-            }
-            if (!header.contains("$XFORM_PREFIX $IDENTITY")) {
-                missing.add("$XFORM_PREFIX $IDENTITY")
-            }
-            if (!header.contains("$XFORM_PREFIX $NAME")) {
-                missing.add("$XFORM_PREFIX $NAME")
-            }
-        }
-        return missing
+        val REQUIRED_HEADERS =
+            mapOf<String, Set<String>>(
+                "$SOURCE_PREFIX $TYPE" to emptySet(),
+                "$SOURCE_PREFIX $CONNECTOR" to emptySet(),
+                "$SOURCE_PREFIX $CONNECTION" to emptySet(),
+                "$SOURCE_PREFIX $IDENTITY" to emptySet(),
+                "$SOURCE_PREFIX $NAME" to emptySet(),
+                "$TARGET_PREFIX $TYPE" to emptySet(),
+                "$TARGET_PREFIX $CONNECTOR" to emptySet(),
+                "$TARGET_PREFIX $CONNECTION" to emptySet(),
+                "$TARGET_PREFIX $IDENTITY" to emptySet(),
+                "$TARGET_PREFIX $NAME" to emptySet(),
+                XFORM_CONNECTOR to emptySet(),
+                XFORM_CONNECTION to emptySet(),
+                XFORM_IDENTITY to emptySet(),
+                XFORM_NAME to emptySet(),
+            )
     }
 
     /** {@inheritDoc} */
@@ -121,8 +76,8 @@ class LineageTransformer(
         val name = inputRow[XFORM_NAME] ?: ""
         val sourceType = inputRow[AssetTransformer.SOURCE_TYPE] ?: ""
         val targetType = inputRow[AssetTransformer.TARGET_TYPE] ?: ""
-        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.SOURCE_PREFIX, logger, qnMap)
-        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, AssetTransformer.TARGET_PREFIX, logger, qnMap)
+        val sourceQN = AssetTransformer.getAssetQN(ctx, inputRow, SOURCE_PREFIX, logger, qnMap)
+        val targetQN = AssetTransformer.getAssetQN(ctx, inputRow, TARGET_PREFIX, logger, qnMap)
         val source =
             if (sourceQN.isNotBlank() && sourceType.isNotBlank()) {
                 FieldSerde.getRefByQualifiedName(sourceType, sourceQN)
@@ -193,5 +148,64 @@ class LineageTransformer(
             RowSerde.getHeaderForField(LineageProcess.OUTPUTS) to AssetRefXformer.encode(ctx, target),
             RowSerde.getHeaderForField(ColumnProcess.PROCESS) to "",
         )
+    }
+
+    class Preprocessor(
+        val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : CSVPreprocessor(
+            filename = originalFile,
+            logger = logger,
+            fieldSeparator = fieldSeparator,
+            requiredHeaders = REQUIRED_HEADERS,
+        ) {
+        private val typesInFile = mutableSetOf<String>()
+        private val invalidTypes = mutableSetOf<String>()
+
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            // Keep a running collection of the types that are in the file
+            checkType(trimWhitespace(row.getOrElse(header.indexOf(AssetTransformer.SOURCE_TYPE)) { "" }))
+            checkType(trimWhitespace(row.getOrElse(header.indexOf(AssetTransformer.TARGET_TYPE)) { "" }))
+            return row
+        }
+
+        private fun checkType(typeName: String) {
+            if (typeName.isNotBlank()) {
+                if (!typesInFile.contains(typeName)) {
+                    try {
+                        Serde.getAssetClassForType(typeName)
+                    } catch (e: ClassNotFoundException) {
+                        invalidTypes.add(typeName)
+                    }
+                    typesInFile.add(typeName)
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): RowPreprocessor.Results {
+            val results = super.finalize(header, outputFile)
+            if (invalidTypes.isNotEmpty()) {
+                throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")
+            }
+            return RowPreprocessor.Results(
+                hasLinks = results.hasLinks,
+                hasTermAssignments = results.hasTermAssignments,
+                outputFile = outputFile ?: filename,
+                hasDomainRelationship = results.hasDomainRelationship,
+                hasProductRelationship = results.hasProductRelationship,
+            )
+        }
     }
 }

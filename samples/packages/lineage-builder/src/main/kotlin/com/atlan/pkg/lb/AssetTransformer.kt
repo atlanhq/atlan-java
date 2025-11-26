@@ -103,55 +103,6 @@ class AssetTransformer(
     }
 
     /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> {
-        val missing = mutableListOf<String>()
-        if (header.isNullOrEmpty()) {
-            missing.add("$SOURCE_PREFIX $TYPE")
-            missing.add("$SOURCE_PREFIX $CONNECTOR")
-            missing.add("$SOURCE_PREFIX $CONNECTION")
-            missing.add("$SOURCE_PREFIX $IDENTITY")
-            missing.add("$SOURCE_PREFIX $NAME")
-            missing.add("$TARGET_PREFIX $TYPE")
-            missing.add("$TARGET_PREFIX $CONNECTOR")
-            missing.add("$TARGET_PREFIX $CONNECTION")
-            missing.add("$TARGET_PREFIX $IDENTITY")
-            missing.add("$TARGET_PREFIX $NAME")
-        } else {
-            if (!header.contains("$SOURCE_PREFIX $TYPE")) {
-                missing.add("$SOURCE_PREFIX $TYPE")
-            }
-            if (!header.contains("$SOURCE_PREFIX $CONNECTOR")) {
-                missing.add("$SOURCE_PREFIX $CONNECTOR")
-            }
-            if (!header.contains("$SOURCE_PREFIX $CONNECTION")) {
-                missing.add("$SOURCE_PREFIX $CONNECTION")
-            }
-            if (!header.contains("$SOURCE_PREFIX $IDENTITY")) {
-                missing.add("$SOURCE_PREFIX $IDENTITY")
-            }
-            if (!header.contains("$SOURCE_PREFIX $NAME")) {
-                missing.add("$SOURCE_PREFIX $NAME")
-            }
-            if (!header.contains("$TARGET_PREFIX $TYPE")) {
-                missing.add("$TARGET_PREFIX $TYPE")
-            }
-            if (!header.contains("$TARGET_PREFIX $CONNECTOR")) {
-                missing.add("$TARGET_PREFIX $CONNECTOR")
-            }
-            if (!header.contains("$TARGET_PREFIX $CONNECTION")) {
-                missing.add("$TARGET_PREFIX $CONNECTION")
-            }
-            if (!header.contains("$TARGET_PREFIX $IDENTITY")) {
-                missing.add("$TARGET_PREFIX $IDENTITY")
-            }
-            if (!header.contains("$TARGET_PREFIX $NAME")) {
-                missing.add("$TARGET_PREFIX $NAME")
-            }
-        }
-        return missing
-    }
-
-    /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val sourceValues = mutableListOf<String>()
         val targetValues = mutableListOf<String>()

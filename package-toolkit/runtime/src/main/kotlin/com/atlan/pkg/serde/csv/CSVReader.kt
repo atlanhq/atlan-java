@@ -70,11 +70,6 @@ class CSVReader
         private val includesTags: Boolean = header.indexOf("atlanTags") != -1
 
         init {
-            if (typeIdx < 0) {
-                throw IOException(
-                    "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
-                )
-            }
             val inputFile = Paths.get(path)
             val builder =
                 CsvReader
