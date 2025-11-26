@@ -4,6 +4,7 @@ package com.atlan.pkg.rab
 
 import RelationalAssetsBuilderCfg
 import com.atlan.model.assets.Asset
+import com.atlan.model.assets.Database
 import com.atlan.model.assets.Table
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowSerde
@@ -22,6 +23,28 @@ abstract class ContainerXformer(
         preprocessedDetails = preprocessedDetails,
         logger = logger,
     ) {
+    /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add(Database.DATABASE_NAME.atlanFieldName)
+            missing.add(Database.SCHEMA_NAME.atlanFieldName)
+            missing.add("entityName")
+        } else {
+            if (!header.contains(Database.DATABASE_NAME.atlanFieldName)) {
+                missing.add(Database.DATABASE_NAME.atlanFieldName)
+            }
+            if (!header.contains(Database.SCHEMA_NAME.atlanFieldName)) {
+                missing.add(Database.SCHEMA_NAME.atlanFieldName)
+            }
+            if (!header.contains("entityName")) {
+                missing.add("entityName")
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)

@@ -199,6 +199,7 @@ object Importer {
             fieldSeparator = fieldSeparator,
             producesFile = outputFile,
             usingHeaders = outputHeaders,
+            validator = AssetXformer::validateHeader,
         ) {
         val entityQualifiedNameToType = mutableMapOf<String, String>()
         val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()

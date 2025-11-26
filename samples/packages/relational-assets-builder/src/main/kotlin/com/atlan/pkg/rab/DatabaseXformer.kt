@@ -21,6 +21,20 @@ class DatabaseXformer(
         preprocessedDetails = preprocessedDetails,
         logger = logger,
     ) {
+    /** {@inheritDoc} */
+    override fun validateHeader(header: List<String>?): List<String> {
+        val missing = super.validateHeader(header).toMutableList()
+        if (header.isNullOrEmpty()) {
+            missing.add(Database.DATABASE_NAME.atlanFieldName)
+        } else {
+            if (!header.contains(Database.DATABASE_NAME.atlanFieldName)) {
+                missing.add(Database.DATABASE_NAME.atlanFieldName)
+            }
+        }
+        return missing
+    }
+
+    /** {@inheritDoc} */
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
