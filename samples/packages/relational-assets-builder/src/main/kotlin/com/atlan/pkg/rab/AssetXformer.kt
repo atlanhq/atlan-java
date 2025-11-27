@@ -22,7 +22,7 @@ abstract class AssetXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
     completeHeaders: List<String>,
     val typeNameFilter: String,
-    val preprocessedDetails: Importer.Results,
+    val preprocessedDetails: ColumnXformer.Results,
     private val logger: KLogger,
 ) : CSVXformer(
         inputFile = preprocessedDetails.preprocessedFile,
@@ -30,9 +30,6 @@ abstract class AssetXformer(
         logger = logger,
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
-    /** {@inheritDoc} */
-    override fun validateHeader(header: List<String>?): List<String> = Companion.validateHeader(header)
-
     /** {@inheritDoc} */
     override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
         val assetMap = mapAsset(inputRow)
@@ -91,26 +88,6 @@ abstract class AssetXformer(
                 RowSerde.getHeaderForField(Column.NUMERIC_SCALE, Column::class.java),
                 RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
             )
-
-        fun validateHeader(header: List<String>?): List<String> {
-            val missing = mutableListOf<String>()
-            if (header.isNullOrEmpty()) {
-                missing.add(Asset.TYPE_NAME.atlanFieldName)
-                missing.add(Asset.CONNECTION_NAME.atlanFieldName)
-                missing.add(Asset.CONNECTOR_NAME.atlanFieldName)
-            } else {
-                if (!header.contains(Asset.TYPE_NAME.atlanFieldName)) {
-                    missing.add(Asset.TYPE_NAME.atlanFieldName)
-                }
-                if (!header.contains(Asset.CONNECTION_NAME.atlanFieldName)) {
-                    missing.add(Asset.CONNECTION_NAME.atlanFieldName)
-                }
-                if (!header.contains(Asset.CONNECTOR_NAME.atlanFieldName) && !header.contains("connectorType")) {
-                    missing.add(Asset.CONNECTOR_NAME.atlanFieldName)
-                }
-            }
-            return missing
-        }
 
         fun getConnectorType(inputRow: Map<String, String>): String =
             trimWhitespace(
