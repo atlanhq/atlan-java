@@ -12,7 +12,7 @@ import mu.KLogger
 class DatabaseXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
     completeHeaders: List<String>,
-    preprocessedDetails: Importer.Results,
+    preprocessedDetails: ColumnXformer.Results,
     private val logger: KLogger,
 ) : AssetXformer(
         ctx = ctx,
@@ -21,6 +21,7 @@ class DatabaseXformer(
         preprocessedDetails = preprocessedDetails,
         logger = logger,
     ) {
+    /** {@inheritDoc} */
     override fun mapAsset(inputRow: Map<String, String>): Map<String, String> {
         val connectionQN = getConnectionQN(inputRow)
         val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)

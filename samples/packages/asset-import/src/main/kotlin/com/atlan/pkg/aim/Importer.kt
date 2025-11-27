@@ -228,12 +228,16 @@ object Importer {
                             "full",
                         ),
                     previousFilePreprocessor =
-                        AssetImporter.Preprocessor(
-                            ctx,
-                            previousFileDirect,
-                            assetsFieldSeparator[0],
-                            logger,
-                        ),
+                        if (previousFileDirect.isNotBlank()) {
+                            AssetImporter.Preprocessor(
+                                ctx,
+                                previousFileDirect,
+                                assetsFieldSeparator[0],
+                                logger,
+                            )
+                        } else {
+                            null
+                        },
                     outputDirectory = outputDirectory,
                 ).use { delta ->
 

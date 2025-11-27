@@ -70,11 +70,6 @@ class CSVReader
         private val includesTags: Boolean = header.indexOf("atlanTags") != -1
 
         init {
-            if (typeIdx < 0) {
-                throw IOException(
-                    "Unable to find the column 'typeName'. This is a mandatory column in the input CSV.",
-                )
-            }
             val inputFile = Paths.get(path)
             val builder =
                 CsvReader
@@ -99,11 +94,11 @@ class CSVReader
          * @return any resulting details captured during the preprocessing
          */
         fun preprocess(
-            csvPreprocessor: RowPreprocessor,
+            csvPreprocessor: CSVPreprocessor,
             logger: KLogger,
             outputFile: String? = null,
             outputHeaders: List<String>? = null,
-        ): RowPreprocessor.Results =
+        ): CSVPreprocessor.Results =
             if (outputFile != null) {
                 logger.info { "Transforming input CSV file to $outputFile..." }
                 CSVWriter(outputFile).use { csv ->

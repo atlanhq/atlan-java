@@ -10,7 +10,7 @@ import mu.KLogger
 class MaterializedViewXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
     completeHeaders: List<String>,
-    preprocessedDetails: Importer.Results,
+    preprocessedDetails: ColumnXformer.Results,
     private val logger: KLogger,
 ) : ContainerXformer(
         ctx = ctx,

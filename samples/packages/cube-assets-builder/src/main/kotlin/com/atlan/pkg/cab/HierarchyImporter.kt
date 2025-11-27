@@ -27,7 +27,7 @@ import mu.KLogger
 class HierarchyImporter(
     ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
-    private val preprocessed: Importer.Results,
+    private val preprocessed: Results,
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
@@ -46,5 +46,13 @@ class HierarchyImporter(
         return CubeHierarchy
             .creator(name, dimensionQN)
             .cubeFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+    }
+
+    companion object {
+        val REQUIRED_HEADERS = DimensionImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS["cubeHierarchyName"] = emptySet()
+        }
     }
 }

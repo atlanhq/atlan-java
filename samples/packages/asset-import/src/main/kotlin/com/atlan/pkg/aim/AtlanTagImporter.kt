@@ -56,6 +56,10 @@ class AtlanTagImporter(
     private val tagIdx: Int = header.indexOf(TAG_NAME)
 
     init {
+        val missingColumns = validateHeader(header)
+        if (missingColumns.isNotEmpty()) {
+            throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
+        }
         if (tagIdx < 0) {
             throw IOException(
                 "Unable to find the column '$TAG_NAME'. This is a mandatory column in the input CSV.",
@@ -72,6 +76,19 @@ class AtlanTagImporter(
                 .allowMissingFields(false)
         reader = builder.ofCsvRecord(inputFile)
         counter = builder.ofCsvRecord(inputFile)
+    }
+
+    /** {@inheritDoc} */
+    fun validateHeader(header: List<String>?): List<String> {
+        val missing = mutableListOf<String>()
+        if (header.isNullOrEmpty()) {
+            missing.add(TAG_NAME)
+        } else {
+            if (!header.contains(TAG_NAME)) {
+                missing.add(TAG_NAME)
+            }
+        }
+        return missing
     }
 
     /**

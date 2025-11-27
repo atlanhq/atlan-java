@@ -40,11 +40,10 @@ class GlossaryImporter(
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         // Also ignore any inbound qualifiedName
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Glossary.QUALIFIED_NAME.atlanFieldName)
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, cache)
     }
 
     /** {@inheritDoc} */

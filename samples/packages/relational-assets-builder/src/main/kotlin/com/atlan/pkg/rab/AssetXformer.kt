@@ -22,7 +22,7 @@ abstract class AssetXformer(
     private val ctx: PackageContext<RelationalAssetsBuilderCfg>,
     completeHeaders: List<String>,
     val typeNameFilter: String,
-    val preprocessedDetails: Importer.Results,
+    val preprocessedDetails: ColumnXformer.Results,
     private val logger: KLogger,
 ) : CSVXformer(
         inputFile = preprocessedDetails.preprocessedFile,

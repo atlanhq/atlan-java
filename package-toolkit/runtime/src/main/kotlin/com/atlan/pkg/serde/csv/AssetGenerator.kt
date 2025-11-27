@@ -48,8 +48,7 @@ interface AssetGenerator {
     /**
      * Start a builder for the asset on this row.
      *
-     * @param row of values
-     * @param header column names
+     * @param deserializer for the row
      * @return a builder for the asset on this row
      */
     fun getBuilder(deserializer: RowDeserializer): Asset.AssetBuilder<*, *>

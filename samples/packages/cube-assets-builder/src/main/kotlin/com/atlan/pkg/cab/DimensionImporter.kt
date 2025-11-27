@@ -27,7 +27,7 @@ import mu.KLogger
 class DimensionImporter(
     ctx: PackageContext<CubeAssetsBuilderCfg>,
     private val delta: DeltaProcessor,
-    private val preprocessed: Importer.Results,
+    private val preprocessed: Results,
     private val connectionImporter: ConnectionImporter,
     logger: KLogger,
 ) : AssetImporter(
@@ -46,5 +46,13 @@ class DimensionImporter(
         return CubeDimension
             .creator(name, cubeQN)
             .cubeHierarchyCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+    }
+
+    companion object {
+        val REQUIRED_HEADERS = AssetImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS["cubeDimensionName"] = emptySet()
+        }
     }
 }

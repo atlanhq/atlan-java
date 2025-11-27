@@ -6,19 +6,11 @@ import AssetImportCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DataDomain
 import com.atlan.model.assets.DataProduct
-import com.atlan.model.enums.AtlanTagHandling
-import com.atlan.model.enums.CustomMetadataHandling
-import com.atlan.model.enums.LinkIdempotencyInvariant
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.Utils
-import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.DataDomainXformer
 import com.atlan.pkg.serde.cell.DataDomainXformer.DATA_PRODUCT_DELIMITER
-import com.atlan.pkg.serde.csv.CSVPreprocessor
-import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 
 /**
@@ -37,60 +29,13 @@ class ProductImporter(
     ctx: PackageContext<AssetImportCfg>,
     filename: String,
     logger: KLogger,
-) : AbstractBaseImporter(
+) : MeshImporter(
         ctx = ctx,
         filename = filename,
+        cache = ctx.dataProductCache,
         logger = logger,
-        attrsToOverwrite =
-            attributesToClear(
-                ctx.config
-                    .getEffectiveValue(
-                        AssetImportCfg::dataProductsAttrToOverwrite,
-                        AssetImportCfg::dataProductsConfig,
-                    ).toMutableList(),
-                "dataProducts",
-                logger,
-            ),
-        updateOnly = ctx.config.dataProductsUpsertSemantic == "update",
-        customMetadataHandling =
-            Utils.getCustomMetadataHandling(
-                ctx.config.getEffectiveValue(
-                    AssetImportCfg::dataProductsCmHandling,
-                    AssetImportCfg::dataProductsConfig,
-                ),
-                CustomMetadataHandling.MERGE,
-            ),
-        atlanTagHandling =
-            Utils.getAtlanTagHandling(
-                ctx.config.getEffectiveValue(
-                    AssetImportCfg::dataProductsTagHandling,
-                    AssetImportCfg::dataProductsConfig,
-                ),
-                AtlanTagHandling.REPLACE,
-            ),
-        batchSize =
-            ctx.config
-                .getEffectiveValue(
-                    AssetImportCfg::dataProductsBatchSize,
-                    AssetImportCfg::dataProductsConfig,
-                ).toInt(),
         typeNameFilter = DataProduct.TYPE_NAME,
-        fieldSeparator =
-            ctx.config.getEffectiveValue(
-                AssetImportCfg::dataProductsFieldSeparator,
-                AssetImportCfg::dataProductsConfig,
-            )[0],
-        trackBatches = ctx.config.trackBatches,
-        linkIdempotency =
-            Utils.getLinkIdempotency(
-                ctx.config.getEffectiveValue(
-                    AssetImportCfg::dataProductsLinkIdempotency,
-                    AssetImportCfg::dataProductsConfig,
-                ),
-                LinkIdempotencyInvariant.URL,
-            ),
     ) {
-    private val cache = ctx.dataProductCache
     private val secondPassRemain =
         setOf(
             Asset.NAME.atlanFieldName,
@@ -111,7 +56,7 @@ class ProductImporter(
         if (includes.hasTermAssignments) {
             ctx.termCache.preload()
         }
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, cache)
     }
 
     /** {@inheritDoc} */
@@ -174,34 +119,6 @@ class ProductImporter(
             "${productName}$DATA_PRODUCT_DELIMITER${DataDomainXformer.encode(ctx, dataDomain)}"
         } else {
             "$productName"
-        }
-    }
-
-    /** Pre-process the assets import file. */
-    private fun preprocess(): RowPreprocessor.Results = Preprocessor(filename, fieldSeparator, logger).preprocess<RowPreprocessor.Results>()
-
-    private class Preprocessor(
-        originalFile: String,
-        fieldSeparator: Char,
-        logger: KLogger,
-    ) : CSVPreprocessor(
-            filename = originalFile,
-            logger = logger,
-            fieldSeparator = fieldSeparator,
-        ) {
-        /** {@inheritDoc} */
-        override fun preprocessRow(
-            row: List<String>,
-            header: List<String>,
-            typeIdx: Int,
-            qnIdx: Int,
-        ): List<String> {
-            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-            if (typeName.isNotBlank() && typeName !in DATA_PRODUCT_TYPES) {
-                val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-                throw IllegalStateException("Found a non-product asset that should be loaded via another file (of type $typeName): $qualifiedName")
-            }
-            return row // No-op
         }
     }
 }

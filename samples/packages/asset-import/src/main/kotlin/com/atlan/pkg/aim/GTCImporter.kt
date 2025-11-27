@@ -4,7 +4,6 @@ package com.atlan.pkg.aim
 
 import AssetImportCfg
 import com.atlan.model.assets.Asset
-import com.atlan.model.assets.GlossaryTerm
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
 import com.atlan.model.enums.LinkIdempotencyInvariant
@@ -15,7 +14,6 @@ import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import mu.KLogger
 import java.util.stream.Stream
 
@@ -134,29 +132,49 @@ abstract class GTCImporter(
      */
     abstract fun getCacheId(deserializer: RowDeserializer): String
 
-    /** {@inheritDoc} */
-    override fun preprocessRow(
-        row: List<String>,
-        header: List<String>,
-        typeIdx: Int,
-        qnIdx: Int,
-    ): List<String> {
-        val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
-        if (typeName.isNotBlank() && typeName !in GLOSSARY_TYPES) {
-            val qualifiedName = CSVXformer.trimWhitespace(row.getOrNull(header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)) ?: "")
-            throw IllegalStateException("Found a non-glossary asset that should be loaded via another file (of type $typeName): $qualifiedName")
-        }
-        return super.preprocessRow(row, header, typeIdx, qnIdx)
-    }
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): RowPreprocessor.Results {
-        if (header.contains(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)) {
-            logger.warn { "Found asset assignments in the glossary input file. Due to the order in which files are loaded, term <> asset assignments should only be provided in the assets file. Any found in the glossary file will be skipped." }
+    open class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+        override val requiredHeaders: Map<String, Set<String>>,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders = requiredHeaders,
+        ) {
+        private val nonGlossaryTypes = mutableSetOf<String>()
+
+        /** {@inheritDoc} */
+        override fun preprocessRow(
+            row: List<String>,
+            header: List<String>,
+            typeIdx: Int,
+            qnIdx: Int,
+        ): List<String> {
+            val updated = super.preprocessRow(row, header, typeIdx, qnIdx)
+            // Keep a running collection of the types that are in the file
+            val typeName = CSVXformer.trimWhitespace(row.getOrElse(typeIdx) { "" })
+            if (typeName.isNotBlank() && !invalidTypes.contains(typeName) && typeName !in GLOSSARY_TYPES) {
+                nonGlossaryTypes.add(typeName)
+            }
+            return updated
         }
-        return super.preprocess(outputFile, outputHeaders)
+
+        /** {@inheritDoc} */
+        override fun finalize(
+            header: List<String>,
+            outputFile: String?,
+        ): AbstractBaseImporter.Results {
+            val results = super.finalize(header, outputFile)
+            if (nonGlossaryTypes.isNotEmpty()) {
+                throw IllegalStateException("Found non-glossary assets that should be loaded via another file, of types: $nonGlossaryTypes")
+            }
+            return results
+        }
     }
 }

@@ -70,7 +70,7 @@ class ConnectionImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Connection.QUALIFIED_NAME.atlanFieldName)
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, ctx.connectionCache)
     }
 
     /** {@inheritDoc} */
@@ -121,4 +121,24 @@ class ConnectionImporter(
             ctx.connectionCache.cacheById(asset.guid)
         }
     }
+
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders =
+                mapOf(
+                    Asset.TYPE_NAME.atlanFieldName to emptySet(),
+                    Asset.QUALIFIED_NAME.atlanFieldName to setOf(),
+                    Asset.NAME.atlanFieldName to emptySet(),
+                ),
+        )
 }

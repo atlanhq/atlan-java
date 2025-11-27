@@ -1,0 +1,4 @@
+source_type,source_connector,source_connection,source_identity,source_name,target_type,target_connector,target_connection,target_identity,target_name,transformation_connector,transformation_connection,transformation_identity,transformation_name,sql,certificate_status,announcement_type,announcement_title,announcement_message
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Table,matillion,production,db1/schema1/source_table,source_table,View,matillion,production,db2/schema2/target_view,target_view,matillion,production,xform_123,source_table > target_view,select * from db1.schema1.source_table,DRAFT,information,Testing lineage builder,Only a test...

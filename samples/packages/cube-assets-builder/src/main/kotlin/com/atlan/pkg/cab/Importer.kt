@@ -3,21 +3,14 @@
 package com.atlan.pkg.cab
 
 import CubeAssetsBuilderCfg
-import com.atlan.model.assets.Cube
 import com.atlan.model.assets.CubeDimension
 import com.atlan.model.assets.CubeField
 import com.atlan.model.assets.CubeHierarchy
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
-import com.atlan.pkg.cab.AssetImporter.Companion.getQualifiedNameDetails
 import com.atlan.pkg.serde.FieldSerde
-import com.atlan.pkg.serde.csv.CSVPreprocessor
-import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
-import com.atlan.pkg.util.AssetResolver
 import com.atlan.pkg.util.DeltaProcessor
-import java.util.concurrent.atomic.AtomicInteger
-import java.util.regex.Pattern
 import kotlin.system.exitProcess
 
 /**
@@ -71,7 +64,7 @@ object Importer {
                 ctx.config.assetsPrefix,
                 ctx.config.assetsKey,
             )
-        val preprocessedDetails = Preprocessor(assetsInput, fieldSeparator).preprocess<Results>()
+        val preprocessedDetails = FieldImporter.Preprocessor(assetsInput, fieldSeparator, logger).preprocess<FieldImporter.Results>()
 
         // Only cache links and terms if there are any in the CSV, otherwise this
         // will be unnecessary work
@@ -133,7 +126,7 @@ object Importer {
                     CubeAssetsBuilderCfg::deltaSemantic,
                     "full",
                 ),
-            previousFilePreprocessor = Preprocessor(ctx.config.previousFileDirect, fieldSeparator),
+            previousFilePreprocessor = if (ctx.config.previousFileDirect.isNotBlank()) FieldImporter.Preprocessor(ctx.config.previousFileDirect, fieldSeparator, logger) else null,
             outputDirectory = outputDirectory,
         ).use { delta ->
 
@@ -165,7 +158,6 @@ object Importer {
 
             logger.info { " --- Importing fields... ---" }
             val fieldImporter = FieldImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            fieldImporter.preprocess()
             val fieldResults = fieldImporter.import()
             if (fieldResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
                 logger.error { "Some errors detected while loading fields, failing the workflow." }
@@ -180,111 +172,5 @@ object Importer {
             delta.uploadStateToBackingStore()
         }
         return cubeQN
-    }
-
-    private class Preprocessor(
-        originalFile: String,
-        fieldSeparator: Char,
-    ) : CSVPreprocessor(
-            filename = originalFile,
-            logger = logger,
-            fieldSeparator = fieldSeparator,
-        ) {
-        val qualifiedNameToChildCount = mutableMapOf<String, AtomicInteger>()
-        var cubeName: String? = null
-        var connectionIdentity: AssetResolver.ConnectionIdentity? = null
-
-        override fun preprocessRow(
-            row: List<String>,
-            header: List<String>,
-            typeIdx: Int,
-            qnIdx: Int,
-        ): List<String> {
-            val cubeNameOnRow = row.getOrNull(header.indexOf(Cube.CUBE_NAME.atlanFieldName)) ?: ""
-            if (cubeName.isNullOrBlank()) {
-                cubeName = cubeNameOnRow
-            }
-            if (cubeName != cubeNameOnRow) {
-                logger.error { "Cube name changed mid-file: $cubeName -> $cubeNameOnRow" }
-                logger.error { "This package is designed to only process a single cube per input file, exiting." }
-                exitProcess(101)
-            }
-            if (connectionIdentity == null) {
-                val name = row.getOrNull(header.indexOf("connectionName"))
-                val type = row.getOrNull(header.indexOf("connectorType"))?.lowercase()
-                if (name != null && type != null) {
-                    connectionIdentity = AssetResolver.ConnectionIdentity(name, type)
-                }
-            }
-            val values = row.toMutableList()
-            val typeName = CSVXformer.trimWhitespace(values.getOrElse(typeIdx) { "" })
-            val qnDetails = getQualifiedNameDetails(values, header, typeName)
-            if (qnDetails.parentUniqueQN.isNotBlank()) {
-                if (!qualifiedNameToChildCount.containsKey(qnDetails.parentUniqueQN)) {
-                    qualifiedNameToChildCount[qnDetails.parentUniqueQN] = AtomicInteger(0)
-                }
-                qualifiedNameToChildCount[qnDetails.parentUniqueQN]?.incrementAndGet()
-                if (typeName == CubeField.TYPE_NAME) {
-                    val hierarchyQN = getHierarchyQualifiedName(qnDetails.parentUniqueQN)
-                    if (hierarchyQN != qnDetails.parentUniqueQN) {
-                        // Only further increment the field count of the hierarchy for nested
-                        // fields (top-level fields are already counted by the logic above)
-                        if (!qualifiedNameToChildCount.containsKey(hierarchyQN)) {
-                            qualifiedNameToChildCount[hierarchyQN] = AtomicInteger(0)
-                        }
-                        qualifiedNameToChildCount[hierarchyQN]?.incrementAndGet()
-                    }
-                }
-            }
-            return row
-        }
-
-        override fun finalize(
-            header: List<String>,
-            outputFile: String?,
-        ): Results {
-            val results = super.finalize(header, outputFile)
-            return Results(
-                cubeName!!,
-                results.hasLinks,
-                results.hasTermAssignments,
-                results.hasDomainRelationship,
-                results.hasProductRelationship,
-                filename,
-                connectionIdentity,
-                qualifiedNameToChildCount,
-            )
-        }
-    }
-
-    class Results(
-        assetRootName: String,
-        hasLinks: Boolean,
-        hasTermAssignments: Boolean,
-        hasDomainRelationship: Boolean,
-        hasProductRelationship: Boolean,
-        preprocessedFile: String,
-        val connectionIdentity: AssetResolver.ConnectionIdentity?,
-        val qualifiedNameToChildCount: Map<String, AtomicInteger>,
-    ) : DeltaProcessor.Results(
-            assetRootName = assetRootName,
-            hasLinks = hasLinks,
-            hasTermAssignments = hasTermAssignments,
-            hasDomainRelationship = hasDomainRelationship,
-            hasProductRelationship = hasProductRelationship,
-            preprocessedFile = preprocessedFile,
-        )
-
-    private val hierarchyQNPrefix: Pattern = Pattern.compile("([^/]*/[a-z0-9-]+/[^/]*(/[^/]*){2}).*")
-
-    /**
-     * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.
-     *
-     * @param parentQualifiedName unique name of the hierarchy or parent field in which this CubeField exists
-     * @return the unique name of the CubeHierarchy in which the field exists
-     */
-    private fun getHierarchyQualifiedName(parentQualifiedName: String): String {
-        val m = hierarchyQNPrefix.matcher(parentQualifiedName)
-        return if (m.find() && m.groupCount() > 0) m.group(1) else ""
     }
 }

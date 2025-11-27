@@ -3,7 +3,6 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
-import com.atlan.model.assets.GlossaryCategory
 import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
@@ -43,16 +42,15 @@ class TermImporter(
 
     /** {@inheritDoc} */
     override fun import(columnsToSkip: Set<String>): ImportResults? {
-        cache.preload()
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, cache)
     }
 
     /** {@inheritDoc} */
     override fun getCacheId(deserializer: RowDeserializer): String {
-        val glossaryIdx = deserializer.heading.indexOf(GlossaryCategory.ANCHOR.atlanFieldName)
+        val glossaryIdx = deserializer.heading.indexOf(GlossaryTerm.ANCHOR.atlanFieldName)
         val termName = deserializer.getValue(GlossaryTerm.NAME.atlanFieldName)?.let { it as String } ?: ""
         return if (glossaryIdx >= 0) {
             val glossaryName = CSVXformer.trimWhitespace(deserializer.row[glossaryIdx].ifBlank { "" })
@@ -63,6 +61,29 @@ class TermImporter(
             }
         } else {
             ""
+        }
+    }
+
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    open class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders = REQUIRED_HEADERS,
+        )
+
+    companion object {
+        val REQUIRED_HEADERS = AbstractBaseImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS[GlossaryTerm.ANCHOR.atlanFieldName] = emptySet()
         }
     }
 }

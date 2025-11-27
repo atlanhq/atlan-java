@@ -28,7 +28,7 @@ import java.util.stream.Stream
  */
 class ConnectionImporter(
     ctx: PackageContext<CubeAssetsBuilderCfg>,
-    private val preprocessed: Importer.Results,
+    private val preprocessed: Results,
     logger: KLogger,
 ) : AssetImporter(
         ctx = ctx,

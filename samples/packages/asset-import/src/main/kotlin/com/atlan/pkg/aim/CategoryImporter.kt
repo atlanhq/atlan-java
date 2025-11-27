@@ -112,4 +112,27 @@ class CategoryImporter(
             ""
         }
     }
+
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+
+    open class Preprocessor(
+        override val ctx: PackageContext<*>,
+        originalFile: String,
+        fieldSeparator: Char,
+        logger: KLogger,
+    ) : AbstractBaseImporter.Preprocessor(
+            ctx = ctx,
+            originalFile = originalFile,
+            fieldSeparator = fieldSeparator,
+            logger = logger,
+            requiredHeaders = REQUIRED_HEADERS,
+        )
+
+    companion object {
+        val REQUIRED_HEADERS = AbstractBaseImporter.REQUIRED_HEADERS.toMutableMap()
+
+        init {
+            REQUIRED_HEADERS[GlossaryCategory.ANCHOR.atlanFieldName] = emptySet()
+        }
+    }
 }
