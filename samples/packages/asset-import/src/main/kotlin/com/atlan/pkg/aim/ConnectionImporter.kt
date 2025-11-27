@@ -70,7 +70,7 @@ class ConnectionImporter(
     override fun import(columnsToSkip: Set<String>): ImportResults? {
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(Connection.QUALIFIED_NAME.atlanFieldName)
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, ctx.connectionCache)
     }
 
     /** {@inheritDoc} */

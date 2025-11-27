@@ -45,7 +45,7 @@ class TermImporter(
         val colsToSkip = columnsToSkip.toMutableSet()
         colsToSkip.add(GlossaryTerm.QUALIFIED_NAME.atlanFieldName)
         colsToSkip.add(GlossaryTerm.ASSIGNED_ENTITIES.atlanFieldName)
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, cache)
     }
 
     /** {@inheritDoc} */

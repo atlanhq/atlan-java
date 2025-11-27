@@ -56,7 +56,7 @@ class ProductImporter(
         if (includes.hasTermAssignments) {
             ctx.termCache.preload()
         }
-        return super.import(typeNameFilter, colsToSkip, secondPassRemain)
+        return super.import(typeNameFilter, colsToSkip, secondPassRemain, cache)
     }
 
     /** {@inheritDoc} */

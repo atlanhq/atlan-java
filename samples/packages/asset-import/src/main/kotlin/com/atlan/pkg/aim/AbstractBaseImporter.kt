@@ -73,14 +73,16 @@ abstract class AbstractBaseImporter(
      * @param typeToProcess name of the asset type to process
      * @param columnsToSkip names of any columns to skip processing
      * @param columnsToAlwaysInclude names of any columns that should always be included (in all passes)
+     * @param cache the cache to keep updated as the levels of the hierarchy are processed
      */
     fun import(
         typeToProcess: String,
         columnsToSkip: Set<String>,
         columnsToAlwaysInclude: Set<String>,
+        cache: AssetCache<*>? = null,
     ): ImportResults? {
         val preproc = preprocess()
-        cacheAnyPrereqs(preproc)
+        cacheAnyPrereqs(preproc, cache)
         val processedResults = mutableListOf<ImportResults>()
         val cyclicalForType = preproc.mapToSecondPass.getOrElse(typeToProcess) { emptySet() }
         if (cyclicalForType.isEmpty()) {
