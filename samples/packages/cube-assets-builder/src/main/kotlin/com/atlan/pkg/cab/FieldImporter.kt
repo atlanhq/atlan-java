@@ -193,12 +193,6 @@ class FieldImporter(
         return preproc.maxLevelByPath[path]?.get() ?: preproc.leafNodeLevel
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
-
     class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
@@ -277,7 +271,7 @@ class FieldImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): FieldImporter.Results {
             val results = super.finalize(header, outputFile)
             return Results(
                 results.assetRootName,

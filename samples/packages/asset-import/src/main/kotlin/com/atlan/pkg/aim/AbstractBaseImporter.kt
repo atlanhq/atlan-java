@@ -198,11 +198,7 @@ abstract class AbstractBaseImporter(
             )
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    open fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     open class Preprocessor(
         open val ctx: PackageContext<*>,
@@ -256,7 +252,7 @@ abstract class AbstractBaseImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): AbstractBaseImporter.Results {
             val results = super.finalize(header, outputFile)
             if (invalidTypes.isNotEmpty()) {
                 throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")

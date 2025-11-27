@@ -875,11 +875,7 @@ class AssetImporter(
         ): QualifiedNameDetails = throw IllegalStateException("This method should never be called. Please raise an issue if you discover this in any log file.")
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     class Preprocessor(
         override val ctx: PackageContext<*>,
@@ -951,7 +947,7 @@ class AssetImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): AssetImporter.Results {
             val results = super.finalize(header, outputFile)
             if (invalidTypes.isNotEmpty()) {
                 throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")

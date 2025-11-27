@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.serde.csv
 
+import com.atlan.model.assets.Asset
 import com.atlan.model.enums.AssetCreationHandling
 import com.atlan.model.enums.AtlanTagHandling
 import com.atlan.model.enums.CustomMetadataHandling
@@ -27,8 +28,24 @@ abstract class CSVPreprocessor(
     val producesFile: String? = null,
     val usingHeaders: List<String>? = null,
     open val requiredHeaders: Map<String, Set<String>> = emptyMap(),
-) : RowPreprocessor {
+) {
     val header = CSVXformer.getHeader(filename, fieldSeparator)
+
+    /**
+     * Preprocess the provided row of CSV.
+     *
+     * @param row of values
+     * @param header column names
+     * @param typeIdx index of the typeName
+     * @param qnIdx index of the qualifiedName
+     * @return the preprocessed row of values for the row of CSV
+     */
+    abstract fun preprocessRow(
+        row: List<String>,
+        header: List<String>,
+        typeIdx: Int,
+        qnIdx: Int,
+    ): List<String>
 
     /**
      * Preprocess the CSV file.
@@ -37,7 +54,7 @@ abstract class CSVPreprocessor(
      * @param outputHeaders (optional) header column names to output into the file containing preprocessed row values, if specified overrides whatever was set as {@code usingHeaders} on the preprocessor itself
      * @return any resulting details captured during the preprocessing
      */
-    inline fun <reified T : RowPreprocessor.Results> preprocess(
+    inline fun <reified T : Results> preprocess(
         outputFile: String? = producesFile,
         outputHeaders: List<String>? = usingHeaders,
     ): T {
@@ -92,4 +109,32 @@ abstract class CSVPreprocessor(
             throw IllegalArgumentException("Invalid input file received. Input CSV is missing required columns: $missingColumns")
         }
     }
+
+    /**
+     * Finalize the preprocessing of the CSV.
+     *
+     * @param header column names
+     * @param (optional) name of the output file from the preprocessing (if any)
+     * @return the finalized results of the preprocessing
+     */
+    open fun finalize(
+        header: List<String>,
+        outputFile: String? = null,
+    ): Results =
+        Results(
+            hasLinks = header.contains(Asset.LINKS.atlanFieldName),
+            hasTermAssignments = header.contains("assignedTerms"),
+            hasDomainRelationship = header.contains(Asset.DOMAIN_GUIDS.atlanFieldName),
+            hasProductRelationship = header.contains(Asset.PRODUCT_GUIDS.atlanFieldName),
+            outputFile = outputFile,
+        )
+
+    /** Extensible class through which to capture details of the pre-processing of a file. */
+    open class Results(
+        val hasLinks: Boolean,
+        val hasTermAssignments: Boolean,
+        val hasDomainRelationship: Boolean,
+        val hasProductRelationship: Boolean,
+        val outputFile: String?,
+    )
 }

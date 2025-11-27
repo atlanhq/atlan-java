@@ -158,7 +158,6 @@ object Importer {
 
             logger.info { " --- Importing fields... ---" }
             val fieldImporter = FieldImporter(ctx, delta, preprocessedDetails, connectionImporter, logger)
-            fieldImporter.preprocess()
             val fieldResults = fieldImporter.import()
             if (fieldResults?.anyFailures == true && ctx.config.assetsFailOnErrors) {
                 logger.error { "Some errors detected while loading fields, failing the workflow." }

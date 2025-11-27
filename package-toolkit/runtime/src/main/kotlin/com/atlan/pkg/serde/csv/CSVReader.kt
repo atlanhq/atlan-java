@@ -94,11 +94,11 @@ class CSVReader
          * @return any resulting details captured during the preprocessing
          */
         fun preprocess(
-            csvPreprocessor: RowPreprocessor,
+            csvPreprocessor: CSVPreprocessor,
             logger: KLogger,
             outputFile: String? = null,
             outputHeaders: List<String>? = null,
-        ): RowPreprocessor.Results =
+        ): CSVPreprocessor.Results =
             if (outputFile != null) {
                 logger.info { "Transforming input CSV file to $outputFile..." }
                 CSVWriter(outputFile).use { csv ->

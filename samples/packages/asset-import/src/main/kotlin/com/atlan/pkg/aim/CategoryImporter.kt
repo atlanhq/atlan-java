@@ -113,11 +113,7 @@ class CategoryImporter(
         }
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,

@@ -87,11 +87,7 @@ abstract class MeshImporter(
                 LinkIdempotencyInvariant.URL,
             ),
     ) {
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,
@@ -126,7 +122,7 @@ abstract class MeshImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): AbstractBaseImporter.Results {
             val results = super.finalize(header, outputFile)
             if (nonProductTypes.isNotEmpty()) {
                 throw IllegalStateException("Found non-product assets that should be loaded via another file, of types: $nonProductTypes")

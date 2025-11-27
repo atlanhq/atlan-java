@@ -48,23 +48,6 @@ class HierarchyImporter(
             .cubeFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
-
-    class Preprocessor(
-        originalFile: String,
-        fieldSeparator: Char,
-        logger: KLogger,
-    ) : AssetImporter.Preprocessor(
-            originalFile,
-            fieldSeparator,
-            logger,
-            requiredHeaders = REQUIRED_HEADERS,
-        )
-
     companion object {
         val REQUIRED_HEADERS = DimensionImporter.REQUIRED_HEADERS.toMutableMap()
 

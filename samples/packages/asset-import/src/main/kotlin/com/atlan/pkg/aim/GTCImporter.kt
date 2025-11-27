@@ -132,11 +132,7 @@ abstract class GTCImporter(
      */
     abstract fun getCacheId(deserializer: RowDeserializer): String
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,
@@ -173,7 +169,7 @@ abstract class GTCImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): AbstractBaseImporter.Results {
             val results = super.finalize(header, outputFile)
             if (nonGlossaryTypes.isNotEmpty()) {
                 throw IllegalStateException("Found non-glossary assets that should be loaded via another file, of types: $nonGlossaryTypes")

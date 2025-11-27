@@ -209,12 +209,6 @@ abstract class AssetImporter(
         return false
     }
 
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
-
     open class Preprocessor(
         originalFile: String,
         fieldSeparator: Char,
@@ -284,7 +278,7 @@ abstract class AssetImporter(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): Results {
+        ): AssetImporter.Results {
             val results = super.finalize(header, outputFile)
             if (invalidTypes.isNotEmpty()) {
                 throw IllegalArgumentException("Found non-dimensional assets supplied in the input file, which cannot be loaded through this utility: $invalidTypes")
@@ -322,7 +316,7 @@ abstract class AssetImporter(
         hasDomainRelationship: Boolean,
         hasProductRelationship: Boolean,
         preprocessedFile: String,
-        val connectionIdentity: AssetResolver.ConnectionIdentity?,
+        val connectionIdentity: ConnectionIdentity?,
         val qualifiedNameToChildCount: Map<String, AtomicInteger>,
     ) : DeltaProcessor.Results(
             assetRootName = assetRootName,

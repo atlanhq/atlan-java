@@ -8,7 +8,6 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.objectstore.ObjectStorageSyncer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
 import java.io.File.separator
@@ -231,7 +230,7 @@ class DeltaProcessor(
         hasProductRelationship: Boolean,
         val preprocessedFile: String,
         val multipleConnections: Boolean = false,
-    ) : RowPreprocessor.Results(
+    ) : CSVPreprocessor.Results(
             hasLinks = hasLinks,
             hasTermAssignments = hasTermAssignments,
             hasDomainRelationship = hasDomainRelationship,

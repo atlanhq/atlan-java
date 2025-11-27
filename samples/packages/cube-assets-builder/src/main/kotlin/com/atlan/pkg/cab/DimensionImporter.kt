@@ -6,7 +6,6 @@ import CubeAssetsBuilderCfg
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.CubeDimension
 import com.atlan.pkg.PackageContext
-import com.atlan.pkg.cab.AssetImporter.Preprocessor
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.util.DeltaProcessor
 import mu.KLogger
@@ -48,23 +47,6 @@ class DimensionImporter(
             .creator(name, cubeQN)
             .cubeHierarchyCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
     }
-
-    /** {@inheritDoc} */
-    override fun preprocess(
-        outputFile: String?,
-        outputHeaders: List<String>?,
-    ): Results = Preprocessor(filename, fieldSeparator, logger).preprocess<Results>()
-
-    class Preprocessor(
-        originalFile: String,
-        fieldSeparator: Char,
-        logger: KLogger,
-    ) : AssetImporter.Preprocessor(
-            originalFile,
-            fieldSeparator,
-            logger,
-            requiredHeaders = REQUIRED_HEADERS,
-        )
 
     companion object {
         val REQUIRED_HEADERS = AssetImporter.REQUIRED_HEADERS.toMutableMap()

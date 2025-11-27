@@ -12,8 +12,8 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
 import com.atlan.pkg.serde.FieldSerde
+import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer.Companion.getHeader
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.util.AssetBatch.AssetIdentity
 import java.io.File
 import kotlin.system.exitProcess
@@ -64,7 +64,7 @@ object Loader {
                     lineageInput,
                     fieldSeparator = ctx.config.fieldSeparator[0],
                     logger,
-                ).preprocess<RowPreprocessor.Results>()
+                ).preprocess<CSVPreprocessor.Results>()
             // Note: asset import delegation will handle any necessary caching, so no
             // need to do cache preloads from the preprocessed details here
             ctx.connectionCache.preload()

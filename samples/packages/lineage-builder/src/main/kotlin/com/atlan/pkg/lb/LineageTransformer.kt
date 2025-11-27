@@ -20,7 +20,6 @@ import com.atlan.pkg.serde.RowSerde
 import com.atlan.pkg.serde.cell.AssetRefXformer
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
-import com.atlan.pkg.serde.csv.RowPreprocessor
 import com.atlan.serde.Serde
 import com.atlan.util.AssetBatch.AssetIdentity
 import mu.KLogger
@@ -194,12 +193,12 @@ class LineageTransformer(
         override fun finalize(
             header: List<String>,
             outputFile: String?,
-        ): RowPreprocessor.Results {
+        ): Results {
             val results = super.finalize(header, outputFile)
             if (invalidTypes.isNotEmpty()) {
                 throw IllegalArgumentException("Invalid types were supplied in the input file, which cannot be loaded. Remove these or replace with a valid typeName: $invalidTypes")
             }
-            return RowPreprocessor.Results(
+            return Results(
                 hasLinks = results.hasLinks,
                 hasTermAssignments = results.hasTermAssignments,
                 outputFile = outputFile ?: filename,
