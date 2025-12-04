@@ -88,14 +88,70 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tests: ${{ steps.test-directories.outputs.tests }}
+      asset-import-chunks: ${{ steps.asset-import-chunks.outputs.chunks }}
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
       - name: List package tests
         id: test-directories
         run: |
-          pkgs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed -E 's|samples/packages/||' | grep -v '^build$' | tr '\n' ' ')
+          pkgs=$(find samples/packages -type d -mindepth 1 -maxdepth 1 | sed -E 's|samples/packages/||' | grep -v '^build$' | grep -v '^asset-import$' | tr '\n' ' ')
           json_pkgs=$(echo "${pkgs[@]}" | jq -R -c 'split(" ")[:-1]')
           echo "tests=$json_pkgs" >> $GITHUB_OUTPUT
+      - name: Create asset-import test chunks
+        id: asset-import-chunks
+        run: |
+          # Find all test classes
+          test_classes=$(find samples/packages/asset-import -name "*Test.kt" -type f | \
+            sed -E 's|samples/packages/asset-import/src/test/kotlin/||' | \
+            sed -E 's|/|.|g' | \
+            sed -E 's|.kt$||' | \
+            sort)
+          # Split into chunks of 10
+          chunks=$(echo "$test_classes" | jq -R -s -c '
+            split("\n")[:-1] |
+            [range(0; length; 10) as $i | .[$i:$i+10]] |
+            to_entries |
+            map({chunk: .key, tests: .value})
+          ')
+          echo "chunks=$chunks" >> $GITHUB_OUTPUT
+  asset-import-test:
+    needs:
+      - build
+      - list-packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{fromJson(needs.list-packages.outputs.asset-import-chunks)}}
+    name: "asset-import: chunk ${{ matrix.chunk }}"
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
+      - name: Download artifacts
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
+        with:
+          name: build-artifacts
+      - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e  # v5.1.0
+        with:
+          java-version: 21
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-read-only: true
+          gradle-home-cache-cleanup: false
+          add-job-summary: on-failure
+      - name: Run test chunk
+        env:
+          ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
+          ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          test_args=$(echo '${{ toJson(matrix.tests) }}' | jq -r '.[] | "--tests \"" + . + "\""' | tr '\n' ' ')
+          ./gradlew :samples:packages:asset-import:test $test_args -x assemble -x testClasses -x buildSrc:jar
+      - if: success() || failure()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4  # v5.0.0
+        with:
+          name: asset-import-chunk-${{ matrix.chunk }}
+          path: samples/packages/asset-import/**/debug.log
   package-test:
     needs:
       - build
@@ -109,9 +165,9 @@ jobs:
       group: ${{ matrix.tests }}
     name: "Packages"
     steps:
-      - name: Free disk space
-        if: matrix.tests == 'asset-import'
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
+      # - name: Free disk space
+      #   if: matrix.tests == 'asset-import'
+      #   uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
       - name: Download artifacts
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
