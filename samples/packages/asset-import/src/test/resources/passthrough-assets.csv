@@ -1,0 +1,6 @@
+qualifiedName,typeName,name,connectorName,connectionQualifiedName,databaseQualifiedName,databaseName,schemaQualifiedName,schemaName,description,database,schema,category,adminRoles
+default/{CTYPE}/{EPOCH}/DB,Database,DB,{CTYPE},default/{CTYPE}/{EPOCH},,,,,,,,,
+default/{CTYPE}/{EPOCH}/DB/SCH,Schema,SCH,{CTYPE},default/{CTYPE}/{EPOCH},default/{CTYPE}/{EPOCH}/DB,DB,,,A schema,Database@default/{CTYPE}/{EPOCH}/DB,,,
+default/{CTYPE}/{EPOCH}/DB/SCH/TBL,Table,TBL,{CTYPE},default/{CTYPE}/{EPOCH},default/{CTYPE}/{EPOCH}/DB,DB,default/{CTYPE}/{EPOCH}/DB/SCH,SCH,,,Schema@default/{CTYPE}/{EPOCH}/DB/SCH,,
+default/{CTYPE}/{EPOCH}/DB/SCH/VIEW,View,VIEW,{CTYPE},default/{CTYPE}/{EPOCH},default/{CTYPE}/{EPOCH}/DB,DB,default/{CTYPE}/{EPOCH}/DB/SCH,SCH,,,Schema@default/{CTYPE}/{EPOCH}/DB/SCH,,
+default/{CTYPE}/{EPOCH},Connection,{CNAME},{CTYPE},,,,,,,,,database,$admin
