@@ -144,9 +144,10 @@ jobs:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: |
-          test_args=$(echo '${{ toJson(matrix.tests) }}' | jq -r '.[] | "--tests \"" + . + "\""' | tr '\n' ' ')
-          ./gradlew :samples:packages:asset-import:test $test_args -x assemble -x testClasses -x buildSrc:jar
+          test_args=$(echo '${{ toJson(matrix.tests) }}' | jq -r '.[] | "--tests " + .')
+          ./gradlew -PpackageTests :samples:packages:asset-import:test $test_args -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
         uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4  # v5.0.0
         with:
