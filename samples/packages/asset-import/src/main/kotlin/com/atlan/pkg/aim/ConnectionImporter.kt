@@ -113,7 +113,7 @@ class ConnectionImporter(
                         .creator(ctx.client, resolvedName, resolvedType, category, roles, groups, users)
                 }
             // If a qualifiedName was sent explicitly, keep it (i.e., for connection widget passthrough or where multiple connections of the same type and name exist)
-            if (qualifiedName.trim().isNotBlank()) {
+            if (deferredIdentity == null && qualifiedName.trim().isNotBlank()) {
                 builder.qualifiedName(qualifiedName)
             }
             builder
