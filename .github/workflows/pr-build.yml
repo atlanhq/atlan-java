@@ -43,7 +43,7 @@ jobs:
           gradle-home-cache-cleanup: false
           add-job-summary: on-failure
       - name: Unit tests
-        run: ./gradlew test
+        run: ./gradlew testClasses test
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
