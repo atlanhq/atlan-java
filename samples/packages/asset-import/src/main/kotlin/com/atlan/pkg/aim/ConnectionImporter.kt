@@ -104,10 +104,14 @@ class ConnectionImporter(
             val roles = deserializer.getValue(Connection.ADMIN_ROLES.atlanFieldName)?.let { it as List<String> }
             val ct = AtlanConnectorType.fromValue(resolvedType)
             if (ct != null && ct != AtlanConnectorType.UNKNOWN_CUSTOM) {
-                Connection.creator(ctx.client, resolvedName, ct, roles, groups, users)
+                Connection
+                    .creator(ctx.client, resolvedName, ct, roles, groups, users)
+                    .qualifiedName(qualifiedName) // If a qualifiedName was sent explicitly, keep it (i.e., for connection widget passthrough or where multiple connections of the same type and name exist)
             } else {
                 val category = deserializer.getValue(Connection.CATEGORY.atlanFieldName)?.let { it as AtlanConnectionCategory }
-                Connection.creator(ctx.client, resolvedName, resolvedType, category, roles, groups, users)
+                Connection
+                    .creator(ctx.client, resolvedName, resolvedType, category, roles, groups, users)
+                    .qualifiedName(qualifiedName) // If a qualifiedName was sent explicitly, keep it (i.e., for connection widget passthrough or where multiple connections of the same type and name exist)
             }
         }
     }
