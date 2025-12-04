@@ -1,4 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0 */
+import com.diffplug.gradle.spotless.SpotlessTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val jarPath = "$rootDir/jars"
@@ -73,6 +74,7 @@ tasks {
     getByName("genCustomPkg") {
         dependsOn(":package-toolkit:config:processResources")
         dependsOn("compileKotlin")
+        finalizedBy("spotlessApply")
     }
     getByName("genCustomPkgGatherImports") {
         dependsOn(":package-toolkit:config:processResources")
@@ -85,6 +87,12 @@ tasks {
     }
     processTestResources {
         dependsOn("genCustomPkg")
+    }
+    withType<SpotlessTask>().configureEach {
+        mustRunAfter("genCustomPkg")
+    }
+    named("spotlessCheck") {
+        dependsOn("classes")
     }
 }
 
