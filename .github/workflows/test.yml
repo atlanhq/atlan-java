@@ -68,6 +68,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
         with:
           cache-read-only: true
+          gradle-home-cache-cleanup: false
       - name: Integration tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
@@ -120,6 +121,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
         with:
           cache-read-only: true
+          gradle-home-cache-cleanup: false
       - name: Package tests
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
