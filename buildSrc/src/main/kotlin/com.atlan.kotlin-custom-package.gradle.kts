@@ -91,6 +91,9 @@ tasks {
     withType<SpotlessTask>().configureEach {
         mustRunAfter("genCustomPkg")
     }
+    named("spotlessCheck") {
+        dependsOn("classes")
+    }
 }
 
 kotlin {
