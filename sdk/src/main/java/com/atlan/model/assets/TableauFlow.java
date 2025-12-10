@@ -103,6 +103,16 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Singular
     List<Map<String, String>> outputSteps;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Project in which this flow exists. */
     @Attribute
     ITableauProject project;

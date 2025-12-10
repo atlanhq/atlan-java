@@ -88,6 +88,16 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Projects that exist within this site. */
     @Attribute
     @Singular

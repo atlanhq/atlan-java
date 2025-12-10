@@ -90,6 +90,16 @@ public class PowerBIDataflowEntityColumn extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** PowerBI Dataflow in which this Dataflow Entity Column exists. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;

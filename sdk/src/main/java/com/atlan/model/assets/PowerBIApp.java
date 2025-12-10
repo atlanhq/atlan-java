@@ -89,6 +89,16 @@ public class PowerBIApp extends Asset implements IPowerBIApp, IPowerBI, IBI, ICa
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** List of groups and their permission access for a PowerBI App. */
     @Attribute
     @Singular

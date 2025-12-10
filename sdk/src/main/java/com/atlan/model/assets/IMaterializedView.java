@@ -630,6 +630,12 @@ public interface IMaterializedView {
     SortedSet<String> getOwnerUsers();
 
     /** TBC */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** TBC */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
+    /** TBC */
     Double getPopularityScore();
 
     /** TBC */

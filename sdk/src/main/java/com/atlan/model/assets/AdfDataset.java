@@ -160,6 +160,16 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a AdfDataset, from a potentially
      * more-complete AdfDataset object.

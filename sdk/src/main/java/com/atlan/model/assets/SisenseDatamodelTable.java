@@ -89,6 +89,16 @@ public class SisenseDatamodelTable extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Datamodel in which this datamodel table exists. */
     @Attribute
     ISisenseDatamodel sisenseDatamodel;

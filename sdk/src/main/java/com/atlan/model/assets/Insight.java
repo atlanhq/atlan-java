@@ -88,6 +88,16 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a Insight, from a potentially
      * more-complete Insight object.

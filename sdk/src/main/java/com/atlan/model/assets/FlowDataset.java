@@ -176,6 +176,16 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a FlowDataset, from a potentially
      * more-complete FlowDataset object.

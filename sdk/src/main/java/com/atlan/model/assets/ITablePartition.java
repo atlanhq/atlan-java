@@ -665,6 +665,12 @@ public interface ITablePartition {
     /** Partition in which this partition exists. */
     ITablePartition getParentTablePartition();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Number of sub-partitions of this partition. */
     Long getPartitionCount();
 

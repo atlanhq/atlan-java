@@ -159,6 +159,16 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Queries that access this view. */
     @Attribute
     @Singular

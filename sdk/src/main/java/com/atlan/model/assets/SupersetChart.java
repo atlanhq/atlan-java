@@ -88,6 +88,16 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Description markdown of the chart. */
     @Attribute
     String supersetChartDescriptionMarkdown;

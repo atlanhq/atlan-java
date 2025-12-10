@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityRuleAlertPriority;
+import com.atlan.model.enums.DataQualityRuleCustomSQLReturnType;
 import com.atlan.model.enums.DataQualityRuleStatus;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
@@ -65,6 +66,10 @@ public interface IDataQualityRule {
 
     /** SQL code for custom SQL rules. */
     KeywordField DQ_RULE_CUSTOM_SQL = new KeywordField("dqRuleCustomSQL", "dqRuleCustomSQL");
+
+    /** Type of result returned by the custom SQL (number of rows or numeric value). */
+    KeywordField DQ_RULE_CUSTOM_SQL_RETURN_TYPE =
+            new KeywordField("dqRuleCustomSQLReturnType", "dqRuleCustomSQLReturnType");
 
     /** Dimension of the data quality rule. */
     KeywordField DQ_RULE_DIMENSION = new KeywordField("dqRuleDimension", "dqRuleDimension");
@@ -564,6 +569,9 @@ public interface IDataQualityRule {
     /** SQL code for custom SQL rules. */
     String getDqRuleCustomSQL();
 
+    /** Type of result returned by the custom SQL (number of rows or numeric value). */
+    DataQualityRuleCustomSQLReturnType getDqRuleCustomSQLReturnType();
+
     /** Dimension of the data quality rule. */
     DataQualityDimension getDqRuleDimension();
 
@@ -716,6 +724,12 @@ public interface IDataQualityRule {
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
+
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
 
     /** Popularity score for this asset. */
     Double getPopularityScore();

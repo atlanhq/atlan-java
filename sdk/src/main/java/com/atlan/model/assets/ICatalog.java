@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -60,6 +61,12 @@ public interface ICatalog {
 
     /** TBC */
     RelationField OUTPUT_FROM_SPARK_JOBS = new RelationField("outputFromSparkJobs");
+
+    /** Partial fields contained in the asset. */
+    RelationField PARTIAL_CHILD_FIELDS = new RelationField("partialChildFields");
+
+    /** Partial objects contained in the asset. */
+    RelationField PARTIAL_CHILD_OBJECTS = new RelationField("partialChildObjects");
 
     /**
      * Reference to an asset by its qualifiedName.
@@ -605,6 +612,12 @@ public interface ICatalog {
             case MongoDBDatabase.TYPE_NAME:
                 ref = MongoDBDatabase.refByQualifiedName(qualifiedName);
                 break;
+            case PartialField.TYPE_NAME:
+                ref = PartialField.refByQualifiedName(qualifiedName);
+                break;
+            case PartialObject.TYPE_NAME:
+                ref = PartialObject.refByQualifiedName(qualifiedName);
+                break;
             case PowerBIApp.TYPE_NAME:
                 ref = PowerBIApp.refByQualifiedName(qualifiedName);
                 break;
@@ -914,6 +927,14 @@ public interface ICatalog {
         }
         return ref;
     }
+
+    /**
+     * Reduce the asset to the minimum set of properties required to relate to it.
+     *
+     * @return an asset containing the minimal set of properties required to relate to this asset
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     */
+    ICatalog trimToReference() throws InvalidRequestException;
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -1412,6 +1433,12 @@ public interface ICatalog {
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
+
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
 
     /** Popularity score for this asset. */
     Double getPopularityScore();

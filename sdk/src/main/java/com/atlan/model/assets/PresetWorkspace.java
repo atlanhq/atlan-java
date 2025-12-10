@@ -88,6 +88,16 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Identifier of the dashboard in which this asset exists, in Preset. */
     @Attribute
     Long presetDashboardId;

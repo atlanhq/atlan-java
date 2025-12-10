@@ -579,6 +579,12 @@ public interface IPowerBIReport {
     /** Pages that exist within this report. */
     SortedSet<IPowerBIPage> getPages();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

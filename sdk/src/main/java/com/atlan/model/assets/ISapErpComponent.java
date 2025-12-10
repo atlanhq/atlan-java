@@ -565,6 +565,12 @@ public interface ISapErpComponent {
     /** Parent SAP ERP Component in which these child SAP ERP Component exist. */
     ISapErpComponent getParentComponent();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

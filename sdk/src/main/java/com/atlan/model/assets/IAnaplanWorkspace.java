@@ -577,6 +577,12 @@ public interface IAnaplanWorkspace {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

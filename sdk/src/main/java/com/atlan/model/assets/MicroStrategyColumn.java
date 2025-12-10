@@ -211,6 +211,16 @@ public class MicroStrategyColumn extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a MicroStrategyColumn, from a potentially
      * more-complete MicroStrategyColumn object.

@@ -88,6 +88,16 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Number of widgets in this dashboard. */
     @Attribute
     Long redashDashboardWidgetCount;

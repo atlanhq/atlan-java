@@ -88,6 +88,16 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Whether this asset is published in Redash (true) or not (false). */
     @Attribute
     Boolean redashIsPublished;

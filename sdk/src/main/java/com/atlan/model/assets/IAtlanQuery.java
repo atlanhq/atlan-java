@@ -648,6 +648,12 @@ public interface IAtlanQuery {
     String getParentQualifiedName();
 
     /** TBC */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** TBC */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
+    /** TBC */
     Double getPopularityScore();
 
     /** TBC */

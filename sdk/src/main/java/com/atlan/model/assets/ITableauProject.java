@@ -584,6 +584,12 @@ public interface ITableauProject {
     /** Project in which this sub-project exists. */
     ITableauProject getParentProject();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

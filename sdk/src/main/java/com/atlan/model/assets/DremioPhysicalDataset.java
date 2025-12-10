@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DremioPhysicalDataset extends Asset
-        implements IDremioPhysicalDataset, IDremio, ITable, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDremioPhysicalDataset, ITable, IDremio, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioPhysicalDataset";
@@ -252,6 +252,16 @@ public class DremioPhysicalDataset extends Asset
     @Attribute
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
 
     /** Number of partitions in this table. */
     @Attribute
