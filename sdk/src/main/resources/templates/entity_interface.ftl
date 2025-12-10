@@ -5,6 +5,7 @@ package ${packageRoot}.assets;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;

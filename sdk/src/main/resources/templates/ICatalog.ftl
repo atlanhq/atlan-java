@@ -20,4 +20,12 @@
         }
         return ref;
     }
+
+    /**
+     * Reduce the asset to the minimum set of properties required to relate to it.
+     *
+     * @return an asset containing the minimal set of properties required to relate to this asset
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     */
+    ICatalog trimToReference() throws InvalidRequestException;
 </#macro>

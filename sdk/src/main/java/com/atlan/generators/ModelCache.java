@@ -6,7 +6,6 @@ import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
-import com.atlan.net.HttpClient;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -62,7 +61,7 @@ public class ModelCache {
     private static ModelCache createInstance(AtlanClient client) {
         try {
             ModelCache cache = new ModelCache(client);
-            cache = retryIfNeeded(client, cache, 1);
+            cache = fixMissingQNDescription(cache);
             cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
         } catch (AtlanException | InterruptedException e) {
@@ -71,28 +70,40 @@ public class ModelCache {
         }
     }
 
-    private static ModelCache retryIfNeeded(AtlanClient client, ModelCache cache, int retryAttempt)
-            throws AtlanException, InterruptedException {
+    private static ModelCache fixMissingQNDescription(ModelCache cache) throws AtlanException, InterruptedException {
         EntityDef ref = cache.getEntityDefCache().get("Referenceable");
-        boolean retry = true;
         if (ref != null) {
             Optional<AttributeDef> qn = ref.getAttributeDefs().stream()
                     .filter(attr -> attr.getName().equals("qualifiedName"))
                     .findFirst();
-            if (qn.isPresent()) {
-                String desc = qn.get().getDescription();
-                if (desc != null && !desc.isEmpty()) {
-                    retry = false;
-                }
+            if (qn.isEmpty()
+                    || qn.get().getDescription() == null
+                    || qn.get().getDescription().isEmpty()) {
+                log.info("Referenceable had empty qualifiedName, overwriting it...");
+                String desc =
+                        "Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type.";
+                List<AttributeDef> fixed = new ArrayList<>();
+                ref.getAttributeDefs().forEach(attr -> {
+                    if (attr.getName().equals("qualifiedName")) {
+                        AttributeDef attrFixed =
+                                attr.toBuilder().description(desc).build();
+                        fixed.add(attrFixed);
+                    } else {
+                        fixed.add(attr);
+                    }
+                });
+                EntityDef refFixed = ref.toBuilder().attributeDefs(fixed).build();
+                cache.getEntityDefCache().put("Referenceable", refFixed);
             }
         }
-        if (retry) {
-            log.info("Referenceable had empty qualifiedName, retrying (attempt #{})...", retryAttempt);
-            Thread.sleep(HttpClient.waitTime(retryAttempt).toMillis());
-            return retryIfNeeded(client, new ModelCache(client), retryAttempt + 1);
-        } else {
-            return cache;
-        }
+        return cache;
+        // if (retry) {
+        //     log.info("Referenceable had empty qualifiedName, retrying (attempt #{})...", retryAttempt);
+        //     Thread.sleep(HttpClient.waitTime(retryAttempt).toMillis());
+        //     return retryIfNeeded(client, new ModelCache(client), retryAttempt + 1);
+        // } else {
+        //     return cache;
+        // }
     }
 
     public static ModelCache getInstance(AtlanClient client) {
