@@ -56,6 +56,7 @@ class DetailedUserChanges(
             builder.where(AuditSearchRequest.CREATED.lt(end))
         }
         builder
+            .pageSize(20)
             .stream()
             .forEach {
                 val agent =
