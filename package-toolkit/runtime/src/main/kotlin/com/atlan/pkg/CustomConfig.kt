@@ -41,9 +41,17 @@ abstract class CustomConfig<T : Any> {
         advancedOptIn: String = "advanced",
     ): R {
         val keepActual = (controller.get(this as T) ?: "") == advancedOptIn
+        val option = property.get(this as T)
         return if (keepActual) {
-            property.get(this as T)
+            option
         } else {
+            val defaultValue = property.get(defaultInstance)
+            if (option != defaultValue) {
+                val logger = Utils.getLogger(this.javaClass.name)
+                logger.warn {
+                    "Found non-default value for configuration parameter '${property.name}' -- but '${controller.name}' not set to \"$advancedOptIn\", so falling back to default."
+                }
+            }
             property.get(defaultInstance)
         }
     }
