@@ -31,6 +31,7 @@ import com.atlan.model.assets.IMaterializedView;
 import com.atlan.model.assets.IMetric;
 import com.atlan.model.assets.IModelAttribute;
 import com.atlan.model.assets.IModelEntity;
+import com.atlan.model.assets.IMongoDBCollection;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISnowflakeDynamicTable;
@@ -440,6 +441,10 @@ public class GuacamoleColumn extends Asset
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Collection in which the columns exist. */
+    @Attribute
+    IMongoDBCollection mongoDBCollection;
 
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
