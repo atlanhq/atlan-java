@@ -8561,6 +8561,21 @@ loadScripts(document, 'script');</script>
 <div class="block">Array of asset ids that equivalent to this asset.</div>
 </li>
 <li class="block-list">
+<h5>assetSmusMetadataFormDetails</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="com/atlan/model/structs/AssetSmusMetadataFormDetails.html" title="class in com.atlan.model.structs">AssetSmusMetadataFormDetails</a>&gt; assetSmusMetadataFormDetails</pre>
+<div class="block">AWS SMUS Asset MetadataForm details</div>
+</li>
+<li class="block-list">
+<h5>assetSmusMetadataFormKeyValueDetails</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetSmusMetadataFormKeyValueDetails</pre>
+<div class="block">List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose.</div>
+</li>
+<li class="block-list">
+<h5>assetSmusMetadataFormNames</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt; assetSmusMetadataFormNames</pre>
+<div class="block">List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose.</div>
+</li>
+<li class="block-list">
 <h5>assetSodaCheckCount</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> assetSodaCheckCount</pre>
 <div class="block">Number of checks done via Soda.</div>
@@ -9117,6 +9132,169 @@ loadScripts(document, 'script');</script>
 <h5>viewScore</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a> viewScore</pre>
 <div class="block">View score for this asset.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.AtlanAppDeployment">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/AtlanAppDeployment.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AtlanAppDeployment</a></h3>
+<div class="type-signature">class AtlanAppDeployment extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>appId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> appId</pre>
+<div class="block">Unique identifier for the application asset from the source system.</div>
+</li>
+<li class="block-list">
+<h5>atlanAppOperation</h5>
+<pre><a href="com/atlan/model/enums/AtlanAppDeploymentOperation.html" title="enum class in com.atlan.model.enums">AtlanAppDeploymentOperation</a> atlanAppOperation</pre>
+<div class="block">Type of operation requested.</div>
+</li>
+<li class="block-list">
+<h5>atlanAppStatus</h5>
+<pre><a href="com/atlan/model/enums/AtlanAppDeploymentStatus.html" title="enum class in com.atlan.model.enums">AtlanAppDeploymentStatus</a> atlanAppStatus</pre>
+<div class="block">Status of deployment.</div>
+</li>
+<li class="block-list">
+<h5>atlanAppVersionId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a> atlanAppVersionId</pre>
+<div class="block">Version identifier for deployment.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for AtlanAppDeployments.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.AtlanAppInstalled">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/AtlanAppInstalled.html" title="class in com.atlan.model.assets">com.atlan.model.assets.AtlanAppInstalled</a></h3>
+<div class="type-signature">class AtlanAppInstalled extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>appId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> appId</pre>
+<div class="block">Unique identifier for the application asset from the source system.</div>
+</li>
+<li class="block-list">
+<h5>atlanAppCurrentVersionId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a> atlanAppCurrentVersionId</pre>
+<div class="block">Current version identifier for the atlan application.</div>
+</li>
+<li class="block-list">
+<h5>atlanAppDeploymentConfig</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> atlanAppDeploymentConfig</pre>
+<div class="block">Configuration settings used by the atlan application.</div>
+</li>
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for AtlanAppInstalleds.</div>
 </li>
 </ul>
 </section>
@@ -14059,6 +14237,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Entities implemented by this asset.</div>
 </li>
 <li class="block-list">
+<h5>mongoDBCollection</h5>
+<pre><a href="com/atlan/model/assets/IMongoDBCollection.html" title="interface in com.atlan.model.assets">IMongoDBCollection</a> mongoDBCollection</pre>
+<div class="block">Collection in which the columns exist.</div>
+</li>
+<li class="block-list">
 <h5>nestedColumnCount</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a> nestedColumnCount</pre>
 <div class="block">Number of columns nested within this (STRUCT or NESTED) column.</div>
@@ -15032,6 +15215,11 @@ loadScripts(document, 'script');</script>
 <h5>mongoDBCollectionTotalIndexSize</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> mongoDBCollectionTotalIndexSize</pre>
 <div class="block">Total size of all indexes.</div>
+</li>
+<li class="block-list">
+<h5>mongoDBColumns</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt; mongoDBColumns</pre>
+<div class="block">Columns that exist within this collection.</div>
 </li>
 <li class="block-list">
 <h5>mongoDBDatabase</h5>
@@ -18617,6 +18805,11 @@ loadScripts(document, 'script');</script>
 <h5>dqRuleCustomSQL</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> dqRuleCustomSQL</pre>
 <div class="block">SQL code for custom SQL rules.</div>
+</li>
+<li class="block-list">
+<h5>dqRuleCustomSQLReturnType</h5>
+<pre><a href="com/atlan/model/enums/DataQualityRuleCustomSQLReturnType.html" title="enum class in com.atlan.model.enums">DataQualityRuleCustomSQLReturnType</a> dqRuleCustomSQLReturnType</pre>
+<div class="block">Type of result returned by the custom SQL (number of rows or numeric value).</div>
 </li>
 <li class="block-list">
 <h5>dqRuleDimension</h5>
@@ -22617,6 +22810,11 @@ loadScripts(document, 'script');</script>
 <h5>modelImplementedEntities</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
 <div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>mongoDBCollection</h5>
+<pre><a href="com/atlan/model/assets/IMongoDBCollection.html" title="interface in com.atlan.model.assets">IMongoDBCollection</a> mongoDBCollection</pre>
+<div class="block">Collection in which the columns exist.</div>
 </li>
 <li class="block-list">
 <h5>nestedColumnCount</h5>
@@ -35556,6 +35754,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Total size of all indexes.</div>
 </li>
 <li class="block-list">
+<h5>mongoDBColumns</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt; mongoDBColumns</pre>
+<div class="block">Columns that exist within this collection.</div>
+</li>
+<li class="block-list">
 <h5>mongoDBDatabase</h5>
 <pre><a href="com/atlan/model/assets/IMongoDBDatabase.html" title="interface in com.atlan.model.assets">IMongoDBDatabase</a> mongoDBDatabase</pre>
 <div class="block">Database in which the collection exists.</div>
@@ -41000,6 +41203,557 @@ loadScripts(document, 'script');</script>
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for S3Prefixs.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.SageMakerUnifiedStudioAssetSchema">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/SageMakerUnifiedStudioAssetSchema.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SageMakerUnifiedStudioAssetSchema</a></h3>
+<div class="type-signature">class SageMakerUnifiedStudioAssetSchema extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>smusAsset</h5>
+<pre><a href="com/atlan/model/assets/ISageMakerUnifiedStudioAsset.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioAsset</a> smusAsset</pre>
+<div class="block">Asset in which this schema exists. The asset can be a published or subscribed asset.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetName</pre>
+<div class="block">Simple name of the Atlan SageMaker Unified Studio published/subscribed asset that contains this schema.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetQualifiedName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetQualifiedName</pre>
+<div class="block">Unique name of the Atlan SageMaker Unified Studio published/subscribed asset that contains this schema.</div>
+</li>
+<li class="block-list">
+<h5>smusDataType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDataType</pre>
+<div class="block">Data type of the schema/column.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusOwningProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusOwningProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project which owns the asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SageMakerUnifiedStudioAssetSchemas.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.SageMakerUnifiedStudioProject">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/SageMakerUnifiedStudioProject.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SageMakerUnifiedStudioProject</a></h3>
+<div class="type-signature">class SageMakerUnifiedStudioProject extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>smusDomainId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusOwningProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusOwningProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project which owns the asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectProfileName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectProfileName</pre>
+<div class="block">Name of the profile of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectRoleArn</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectRoleArn</pre>
+<div class="block">Amazon IAM role ARN of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectS3Location</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectS3Location</pre>
+<div class="block">Amazon S3 location of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectStatus</h5>
+<pre><a href="com/atlan/model/enums/SageMakerUnifiedStudioProjectStatus.html" title="enum class in com.atlan.model.enums">SageMakerUnifiedStudioProjectStatus</a> smusProjectStatus</pre>
+<div class="block">Status of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusPublishedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISageMakerUnifiedStudioPublishedAsset.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioPublishedAsset</a>&gt; smusPublishedAssets</pre>
+<div class="block">Individual published assets contained in the project.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISageMakerUnifiedStudioSubscribedAsset.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioSubscribedAsset</a>&gt; smusSubscribedAssets</pre>
+<div class="block">Individual subscribed assets contained in the project.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SageMakerUnifiedStudioProjects.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.SageMakerUnifiedStudioPublishedAsset">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/SageMakerUnifiedStudioPublishedAsset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SageMakerUnifiedStudioPublishedAsset</a></h3>
+<div class="type-signature">class SageMakerUnifiedStudioPublishedAsset extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>smusAssetRevision</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetRevision</pre>
+<div class="block">Latest published version of the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSchemas</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISageMakerUnifiedStudioAssetSchema.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioAssetSchema</a>&gt; smusAssetSchemas</pre>
+<div class="block">Schemas that exist within this published asset.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSourceIdentifier</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetSourceIdentifier</pre>
+<div class="block">Unique source identifier for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSummary</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetSummary</pre>
+<div class="block">Summary text for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetTechnicalName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetTechnicalName</pre>
+<div class="block">Technical name for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetType</pre>
+<div class="block">Type of asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusOwningProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusOwningProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project which owns the asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProject</h5>
+<pre><a href="com/atlan/model/assets/ISageMakerUnifiedStudioProject.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioProject</a> smusProject</pre>
+<div class="block">Project containing the published asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusPublishedAssetSubscriptionsCount</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> smusPublishedAssetSubscriptionsCount</pre>
+<div class="block">Number of subscriptions for the published asset.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssets</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISageMakerUnifiedStudioSubscribedAsset.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioSubscribedAsset</a>&gt; smusSubscribedAssets</pre>
+<div class="block">Subscribed assets associated with this published asset.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SageMakerUnifiedStudioPublishedAssets.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.assets.SageMakerUnifiedStudioSubscribedAsset">
+<h3>Class&nbsp;<a href="com/atlan/model/assets/SageMakerUnifiedStudioSubscribedAsset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.SageMakerUnifiedStudioSubscribedAsset</a></h3>
+<div class="type-signature">class SageMakerUnifiedStudioSubscribedAsset extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>inputToAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; inputToAirflowTasks</pre>
+<div class="block">Tasks to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; inputToProcesses</pre>
+<div class="block">Processes to which this asset provides input.</div>
+</li>
+<li class="block-list">
+<h5>inputToSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; inputToSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedAttributes</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelAttribute.html" title="interface in com.atlan.model.assets">IModelAttribute</a>&gt; modelImplementedAttributes</pre>
+<div class="block">Attributes implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>modelImplementedEntities</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IModelEntity.html" title="interface in com.atlan.model.assets">IModelEntity</a>&gt; modelImplementedEntities</pre>
+<div class="block">Entities implemented by this asset.</div>
+</li>
+<li class="block-list">
+<h5>outputFromAirflowTasks</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/IAirflowTask.html" title="interface in com.atlan.model.assets">IAirflowTask</a>&gt; outputFromAirflowTasks</pre>
+<div class="block">Tasks from which this asset is output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromProcesses</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ILineageProcess.html" title="interface in com.atlan.model.assets">ILineageProcess</a>&gt; outputFromProcesses</pre>
+<div class="block">Processes from which this asset is produced as output.</div>
+</li>
+<li class="block-list">
+<h5>outputFromSparkJobs</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a>&gt; outputFromSparkJobs</pre>
+<div class="block">TBC</div>
+</li>
+<li class="block-list">
+<h5>smusAssetRevision</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetRevision</pre>
+<div class="block">Latest published version of the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSchemas</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="com/atlan/model/assets/ISageMakerUnifiedStudioAssetSchema.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioAssetSchema</a>&gt; smusAssetSchemas</pre>
+<div class="block">Schemas that exist within this published asset.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSourceIdentifier</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetSourceIdentifier</pre>
+<div class="block">Unique source identifier for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetSummary</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetSummary</pre>
+<div class="block">Summary text for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetTechnicalName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetTechnicalName</pre>
+<div class="block">Technical name for the asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusAssetType</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusAssetType</pre>
+<div class="block">Type of asset in SageMaker Unified Studio.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusDomainUnitName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusDomainUnitName</pre>
+<div class="block">Name of the SageMaker Unified Studio domain unit.</div>
+</li>
+<li class="block-list">
+<h5>smusOwningProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusOwningProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project which owns the asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProject</h5>
+<pre><a href="com/atlan/model/assets/ISageMakerUnifiedStudioProject.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioProject</a> smusProject</pre>
+<div class="block">Project containing the subscribed asset.</div>
+</li>
+<li class="block-list">
+<h5>smusProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusProjectId</pre>
+<div class="block">Unique identifier of the SageMaker Unified Studio project.</div>
+</li>
+<li class="block-list">
+<h5>smusPublishedAsset</h5>
+<pre><a href="com/atlan/model/assets/ISageMakerUnifiedStudioPublishedAsset.html" title="interface in com.atlan.model.assets">ISageMakerUnifiedStudioPublishedAsset</a> smusPublishedAsset</pre>
+<div class="block">Published asset associated with this subscribed asset.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetApprovalDate</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> smusSubscribedAssetApprovalDate</pre>
+<div class="block">Date when the subscription request was approved.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetApprovedReason</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetApprovedReason</pre>
+<div class="block">Reason provided by the approver for approving the subscription.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetApproverName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetApproverName</pre>
+<div class="block">Name of the user who approved the subscription request.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetColumnAccessInfo</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetColumnAccessInfo</pre>
+<div class="block">Number of Columns provided access grant for this subscribed asset (for example: 3 out of 23).</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetProjectName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetProjectName</pre>
+<div class="block">Name of the SageMaker Unified Studio project from which this asset is subscribed.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetRequestDate</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a> smusSubscribedAssetRequestDate</pre>
+<div class="block">Date when the subscription request was submitted.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetRequestorName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetRequestorName</pre>
+<div class="block">Name of the user who requested access to this subscribed asset.</div>
+</li>
+<li class="block-list">
+<h5>smusSubscribedAssetRequestReason</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> smusSubscribedAssetRequestReason</pre>
+<div class="block">Reason provided by the requestor for this subscribed asset.</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for SageMakerUnifiedStudioSubscribedAssets.</div>
 </li>
 </ul>
 </section>
@@ -54350,6 +55104,65 @@ loadScripts(document, 'script');</script>
 <h5>typeName</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
 <div class="block">Fixed typeName for AssetHistogram.</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="com.atlan.model.structs.AssetSmusMetadataFormDetails">
+<h3>Class&nbsp;<a href="com/atlan/model/structs/AssetSmusMetadataFormDetails.html" title="class in com.atlan.model.structs">com.atlan.model.structs.AssetSmusMetadataFormDetails</a></h3>
+<div class="type-signature">class AssetSmusMetadataFormDetails extends <a href="com/atlan/model/structs/AtlanStruct.html" title="class in com.atlan.model.structs">AtlanStruct</a> implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>2L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>assetMetadataFormDescription</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetMetadataFormDescription</pre>
+<div class="block">Description of the Metadata Form</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormDomainId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetMetadataFormDomainId</pre>
+<div class="block">Domain ID of the MetadataForm to which it belongs</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormFields</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt; assetMetadataFormFields</pre>
+<div class="block">List of Key: Value pairs defining the fields of the MetadataForm</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetMetadataFormName</pre>
+<div class="block">Technical name of the Metadata Form</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormProjectId</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetMetadataFormProjectId</pre>
+<div class="block">Owning Project ID of the MetadataForm to which it belongs</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormRevision</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> assetMetadataFormRevision</pre>
+<div class="block">Version of the MetadatForm published</div>
+</li>
+<li class="block-list">
+<h5>assetMetadataFormStatus</h5>
+<pre><a href="com/atlan/model/enums/AssetSmusMetadataFormStatus.html" title="enum class in com.atlan.model.enums">AssetSmusMetadataFormStatus</a> assetMetadataFormStatus</pre>
+<div class="block">Usability status of the MetadataForm</div>
+</li>
+<li class="block-list">
+<h5>typeName</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> typeName</pre>
+<div class="block">Fixed typeName for AssetSmusMetadataFormDetails.</div>
 </li>
 </ul>
 </section>
