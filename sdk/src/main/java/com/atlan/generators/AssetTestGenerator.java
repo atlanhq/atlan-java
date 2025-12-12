@@ -503,12 +503,9 @@ public class AssetTestGenerator extends AssetGenerator {
                             Type type = pt.getActualTypeArguments()[0];
                             if (type.getTypeName().equals("java.util.Map<java.lang.String, java.lang.String>")) {
                                 sb.append("[")
-                                        .append("{")
                                         .append(getRawPrimitiveValue("Map<", "String, String", 0))
-                                        .append("}, ")
-                                        .append("{")
+                                        .append(", ")
                                         .append(getRawPrimitiveValue("Map<", "String, String", 1))
-                                        .append("}")
                                         .append("]");
                             } else {
                                 try {
