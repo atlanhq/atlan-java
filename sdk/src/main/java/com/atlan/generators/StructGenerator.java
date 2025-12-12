@@ -79,7 +79,9 @@ public class StructGenerator extends TypeGenerator {
             super.resolveType(attributeDef);
             if (attributeDef.getTypeName().startsWith("array<")) {
                 // Always use lists in structs, not sorted sets
-                setType(getType().toBuilder().container("List<").build());
+                String originalContainer = getType().getContainer();
+                String revisedContainer = originalContainer.replaceAll("SortedSet<", "List<");
+                setType(getType().toBuilder().container(revisedContainer).build());
             }
         }
     }

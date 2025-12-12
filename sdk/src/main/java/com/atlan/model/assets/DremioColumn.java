@@ -430,6 +430,10 @@ public class DremioColumn extends Asset
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
+    /** Collection in which the columns exist. */
+    @Attribute
+    IMongoDBCollection mongoDBCollection;
+
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;

@@ -12,6 +12,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityRuleAlertPriority;
+import com.atlan.model.enums.DataQualityRuleCustomSQLReturnType;
 import com.atlan.model.enums.DataQualityRuleStatus;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.fields.AtlanField;
@@ -85,6 +86,10 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     /** SQL code for custom SQL rules. */
     @Attribute
     String dqRuleCustomSQL;
+
+    /** Type of result returned by the custom SQL (number of rows or numeric value). */
+    @Attribute
+    DataQualityRuleCustomSQLReturnType dqRuleCustomSQLReturnType;
 
     /** Dimension of the data quality rule. */
     @Attribute
