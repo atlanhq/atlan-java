@@ -407,24 +407,35 @@ public class AssetTestGenerator extends AssetGenerator {
                         if (generic instanceof ParameterizedType) {
                             ParameterizedType pt = (ParameterizedType) generic;
                             Type type = pt.getActualTypeArguments()[0];
-                            try {
-                                Class<?> embedded = Class.forName(type.getTypeName());
-                                String simpleClassName = embedded.getSimpleName();
-                                if (isPrimitive(embedded)) {
-                                    sb.append("List.of(")
-                                            .append(getPrimitiveValue("List<", simpleClassName, 0))
-                                            .append(", ")
-                                            .append(getPrimitiveValue("List<", simpleClassName, 1))
-                                            .append(")");
-                                } else {
-                                    sb.append("List.of(")
-                                            .append(getStructValue(simpleClassName, 0))
-                                            .append(", ")
-                                            .append(getStructValue(simpleClassName, 1))
-                                            .append(")");
+                            if (type.getTypeName().equals("java.util.Map<java.lang.String, java.lang.String>")) {
+                                sb.append("List.of(")
+                                        .append("Map.of(")
+                                        .append(getPrimitiveValue("Map<", "String, String", 0))
+                                        .append("), ")
+                                        .append("Map.of(")
+                                        .append(getPrimitiveValue("Map<", "String, String", 1))
+                                        .append(")")
+                                        .append(")");
+                            } else {
+                                try {
+                                    Class<?> embedded = Class.forName(type.getTypeName());
+                                    String simpleClassName = embedded.getSimpleName();
+                                    if (isPrimitive(embedded)) {
+                                        sb.append("List.of(")
+                                                .append(getPrimitiveValue("List<", simpleClassName, 0))
+                                                .append(", ")
+                                                .append(getPrimitiveValue("List<", simpleClassName, 1))
+                                                .append(")");
+                                    } else {
+                                        sb.append("List.of(")
+                                                .append(getStructValue(simpleClassName, 0))
+                                                .append(", ")
+                                                .append(getStructValue(simpleClassName, 1))
+                                                .append(")");
+                                    }
+                                } catch (ClassNotFoundException e) {
+                                    log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                                 }
-                            } catch (ClassNotFoundException e) {
-                                log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }
                         } else {
                             log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
@@ -490,24 +501,35 @@ public class AssetTestGenerator extends AssetGenerator {
                         if (generic instanceof ParameterizedType) {
                             ParameterizedType pt = (ParameterizedType) generic;
                             Type type = pt.getActualTypeArguments()[0];
-                            try {
-                                Class<?> embedded = Class.forName(type.getTypeName());
-                                String simpleClassName = embedded.getSimpleName();
-                                if (isPrimitive(embedded)) {
-                                    sb.append("[")
-                                            .append(getRawPrimitiveValue("List<", simpleClassName, 0))
-                                            .append(", ")
-                                            .append(getRawPrimitiveValue("List<", simpleClassName, 1))
-                                            .append("]");
-                                } else {
-                                    sb.append("[")
-                                            .append(getRawStructValue(simpleClassName, 0))
-                                            .append(", ")
-                                            .append(getRawStructValue(simpleClassName, 1))
-                                            .append("]");
+                            if (type.getTypeName().equals("java.util.Map<java.lang.String, java.lang.String>")) {
+                                sb.append("[")
+                                        .append("{")
+                                        .append(getRawPrimitiveValue("Map<", "String, String", 0))
+                                        .append("}, ")
+                                        .append("{")
+                                        .append(getRawPrimitiveValue("Map<", "String, String", 1))
+                                        .append("}")
+                                        .append("]");
+                            } else {
+                                try {
+                                    Class<?> embedded = Class.forName(type.getTypeName());
+                                    String simpleClassName = embedded.getSimpleName();
+                                    if (isPrimitive(embedded)) {
+                                        sb.append("[")
+                                                .append(getRawPrimitiveValue("List<", simpleClassName, 0))
+                                                .append(", ")
+                                                .append(getRawPrimitiveValue("List<", simpleClassName, 1))
+                                                .append("]");
+                                    } else {
+                                        sb.append("[")
+                                                .append(getRawStructValue(simpleClassName, 0))
+                                                .append(", ")
+                                                .append(getRawStructValue(simpleClassName, 1))
+                                                .append("]");
+                                    }
+                                } catch (ClassNotFoundException e) {
+                                    log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                                 }
-                            } catch (ClassNotFoundException e) {
-                                log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
                             }
                         } else {
                             log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());

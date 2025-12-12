@@ -244,6 +244,11 @@ public class MongoDBCollection extends Asset
     @Attribute
     Long mongoDBCollectionTotalIndexSize;
 
+    /** Columns that exist within this collection. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> mongoDBColumns;
+
     /** Database in which the collection exists. */
     @Attribute
     IMongoDBDatabase mongoDBDatabase;

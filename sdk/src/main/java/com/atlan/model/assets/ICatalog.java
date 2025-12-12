@@ -16,6 +16,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -163,6 +164,12 @@ public interface ICatalog {
                 break;
             case ApplicationField.TYPE_NAME:
                 ref = ApplicationField.refByQualifiedName(qualifiedName);
+                break;
+            case AtlanAppDeployment.TYPE_NAME:
+                ref = AtlanAppDeployment.refByQualifiedName(qualifiedName);
+                break;
+            case AtlanAppInstalled.TYPE_NAME:
+                ref = AtlanAppInstalled.refByQualifiedName(qualifiedName);
                 break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
@@ -725,6 +732,18 @@ public interface ICatalog {
             case S3Prefix.TYPE_NAME:
                 ref = S3Prefix.refByQualifiedName(qualifiedName);
                 break;
+            case SageMakerUnifiedStudioAssetSchema.TYPE_NAME:
+                ref = SageMakerUnifiedStudioAssetSchema.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerUnifiedStudioProject.TYPE_NAME:
+                ref = SageMakerUnifiedStudioProject.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerUnifiedStudioPublishedAsset.TYPE_NAME:
+                ref = SageMakerUnifiedStudioPublishedAsset.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerUnifiedStudioSubscribedAsset.TYPE_NAME:
+                ref = SageMakerUnifiedStudioSubscribedAsset.refByQualifiedName(qualifiedName);
+                break;
             case SalesforceDashboard.TYPE_NAME:
                 ref = SalesforceDashboard.refByQualifiedName(qualifiedName);
                 break;
@@ -1235,6 +1254,15 @@ public interface ICatalog {
 
     /** Array of asset ids that equivalent to this asset. */
     SortedSet<String> getAssetRedirectGUIDs();
+
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
 
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();

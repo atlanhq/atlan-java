@@ -22,6 +22,7 @@ import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetHistogram;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.model.structs.PopularityInsights;
@@ -251,6 +252,9 @@ public interface IColumn {
 
     /** TBC */
     RelationField METRIC_TIMESTAMPS = new RelationField("metricTimestamps");
+
+    /** Collection in which the columns exist. */
+    RelationField MONGO_DB_COLLECTION = new RelationField("mongoDBCollection");
 
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     NumericField NESTED_COLUMN_COUNT = new NumericField("nestedColumnCount", "nestedColumnCount");
@@ -643,6 +647,15 @@ public interface IColumn {
     /** Array of asset ids that equivalent to this asset. */
     SortedSet<String> getAssetRedirectGUIDs();
 
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -1017,6 +1030,9 @@ public interface IColumn {
 
     /** Entities implemented by this asset. */
     SortedSet<IModelEntity> getModelImplementedEntities();
+
+    /** Collection in which the columns exist. */
+    IMongoDBCollection getMongoDBCollection();
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();

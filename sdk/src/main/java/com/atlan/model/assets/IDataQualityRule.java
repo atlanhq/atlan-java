@@ -10,6 +10,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityRuleAlertPriority;
+import com.atlan.model.enums.DataQualityRuleCustomSQLReturnType;
 import com.atlan.model.enums.DataQualityRuleStatus;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
@@ -21,6 +22,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.DataQualityRuleConfigArguments;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -65,6 +67,10 @@ public interface IDataQualityRule {
 
     /** SQL code for custom SQL rules. */
     KeywordField DQ_RULE_CUSTOM_SQL = new KeywordField("dqRuleCustomSQL", "dqRuleCustomSQL");
+
+    /** Type of result returned by the custom SQL (number of rows or numeric value). */
+    KeywordField DQ_RULE_CUSTOM_SQL_RETURN_TYPE =
+            new KeywordField("dqRuleCustomSQLReturnType", "dqRuleCustomSQLReturnType");
 
     /** Dimension of the data quality rule. */
     KeywordField DQ_RULE_DIMENSION = new KeywordField("dqRuleDimension", "dqRuleDimension");
@@ -456,6 +462,15 @@ public interface IDataQualityRule {
     /** Array of asset ids that equivalent to this asset. */
     SortedSet<String> getAssetRedirectGUIDs();
 
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
+
     /** Number of checks done via Soda. */
     Long getAssetSodaCheckCount();
 
@@ -563,6 +578,9 @@ public interface IDataQualityRule {
 
     /** SQL code for custom SQL rules. */
     String getDqRuleCustomSQL();
+
+    /** Type of result returned by the custom SQL (number of rows or numeric value). */
+    DataQualityRuleCustomSQLReturnType getDqRuleCustomSQLReturnType();
 
     /** Dimension of the data quality rule. */
     DataQualityDimension getDqRuleDimension();

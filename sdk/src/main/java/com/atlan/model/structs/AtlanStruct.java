@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = AssetExternalDQTestMetric.class, name = AssetExternalDQTestMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestRunHistory.class, name = AssetExternalDQTestRunHistory.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetSmusMetadataFormDetails.class, name = AssetSmusMetadataFormDetails.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyValiditySchedule.class, name = AuthPolicyValiditySchedule.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsCloudWatchMetric.class, name = AwsCloudWatchMetric.TYPE_NAME),
