@@ -37,7 +37,7 @@ netty = "4.2.8.Final"
 rhino = "1.8.1"
 nimbus = "10.6"
 otel = "1.56.0"
-otel-instrumentation = "2.22.0-alpha"
+otel-instrumentation = "2.23.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
