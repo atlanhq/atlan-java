@@ -62,6 +62,9 @@ public class DataQualityRuleTemplateConfig extends AtlanStruct {
     /** Configuration for Rule conditions of the template. */
     String dqRuleTemplateConfigRuleConditions;
 
+    /** Configuration for preflight check of the template. */
+    String dqRuleTemplateConfigPreflightCheck;
+
     /**
      * Quickly create a new DataQualityRuleTemplateConfig.
      * @param dqRuleTemplateConfigBaseDatasetQualifiedName Config for selecting base dataset for the rule.
@@ -75,6 +78,7 @@ public class DataQualityRuleTemplateConfig extends AtlanStruct {
      * @param dqRuleTemplateConfigUserDescription Config for entering description of the rule by user.
      * @param dqRuleTemplateConfigAdvancedSettings Advanced settings for the rule template.
      * @param dqRuleTemplateConfigRuleConditions Configuration for Rule conditions of the template.
+     * @param dqRuleTemplateConfigPreflightCheck Configuration for preflight check of the template.
      * @return a DataQualityRuleTemplateConfig with the provided information
      */
     public static DataQualityRuleTemplateConfig of(
@@ -88,7 +92,8 @@ public class DataQualityRuleTemplateConfig extends AtlanStruct {
             String dqRuleTemplateConfigDimension,
             String dqRuleTemplateConfigUserDescription,
             String dqRuleTemplateConfigAdvancedSettings,
-            String dqRuleTemplateConfigRuleConditions) {
+            String dqRuleTemplateConfigRuleConditions,
+            String dqRuleTemplateConfigPreflightCheck) {
         return DataQualityRuleTemplateConfig.builder()
                 .dqRuleTemplateConfigBaseDatasetQualifiedName(dqRuleTemplateConfigBaseDatasetQualifiedName)
                 .dqRuleTemplateConfigBaseColumnQualifiedName(dqRuleTemplateConfigBaseColumnQualifiedName)
@@ -101,6 +106,7 @@ public class DataQualityRuleTemplateConfig extends AtlanStruct {
                 .dqRuleTemplateConfigUserDescription(dqRuleTemplateConfigUserDescription)
                 .dqRuleTemplateConfigAdvancedSettings(dqRuleTemplateConfigAdvancedSettings)
                 .dqRuleTemplateConfigRuleConditions(dqRuleTemplateConfigRuleConditions)
+                .dqRuleTemplateConfigPreflightCheck(dqRuleTemplateConfigPreflightCheck)
                 .build();
     }
 
