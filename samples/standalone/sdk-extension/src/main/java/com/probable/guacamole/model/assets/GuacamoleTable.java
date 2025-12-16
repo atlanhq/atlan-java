@@ -24,6 +24,8 @@ import com.atlan.model.assets.IGlossaryTerm;
 import com.atlan.model.assets.ILineageProcess;
 import com.atlan.model.assets.IModelAttribute;
 import com.atlan.model.assets.IModelEntity;
+import com.atlan.model.assets.IPartialField;
+import com.atlan.model.assets.IPartialObject;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISchema;
@@ -251,6 +253,16 @@ public class GuacamoleTable extends Asset implements IGuacamoleTable, ITable, IS
     @Attribute
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
 
     /** Number of partitions in this table. */
     @Attribute
