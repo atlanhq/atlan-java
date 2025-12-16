@@ -88,6 +88,16 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Charts that exist within this dashboard. */
     @Attribute
     @Singular

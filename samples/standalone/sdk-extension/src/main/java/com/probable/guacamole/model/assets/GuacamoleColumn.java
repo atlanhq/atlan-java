@@ -32,6 +32,8 @@ import com.atlan.model.assets.IMetric;
 import com.atlan.model.assets.IModelAttribute;
 import com.atlan.model.assets.IModelEntity;
 import com.atlan.model.assets.IMongoDBCollection;
+import com.atlan.model.assets.IPartialField;
+import com.atlan.model.assets.IPartialObject;
 import com.atlan.model.assets.IReferenceable;
 import com.atlan.model.assets.ISQL;
 import com.atlan.model.assets.ISnowflakeDynamicTable;
@@ -501,6 +503,16 @@ public class GuacamoleColumn extends Asset
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnQualifiedName;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
 
     /** Order (position) of this partition column in the table. */
     @Attribute

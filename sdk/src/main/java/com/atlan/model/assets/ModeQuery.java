@@ -141,6 +141,16 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a ModeQuery, from a potentially
      * more-complete ModeQuery object.

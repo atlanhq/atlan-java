@@ -199,6 +199,16 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** (Deprecated) Columns related to this model column. */
     @Attribute
     IColumn sqlColumn;

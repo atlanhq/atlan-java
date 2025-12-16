@@ -88,6 +88,16 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Identifier of the app in which this asset belongs, from Qlik. */
     @Attribute
     String qlikAppId;

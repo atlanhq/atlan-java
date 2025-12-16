@@ -97,6 +97,16 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     @Attribute
     @Singular

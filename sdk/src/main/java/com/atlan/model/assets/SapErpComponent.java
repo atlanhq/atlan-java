@@ -97,6 +97,16 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
     @Attribute
     ISapErpComponent parentComponent;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Name of the SAP component, representing a specific functional area in SAP. */
     @Attribute
     String sapComponentName;

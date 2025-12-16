@@ -88,6 +88,16 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Identifier of the app in which this asset belongs, from Qlik. */
     @Attribute
     String qlikAppId;

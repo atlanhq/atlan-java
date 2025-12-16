@@ -101,6 +101,16 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a MatillionGroup, from a potentially
      * more-complete MatillionGroup object.

@@ -234,6 +234,8 @@ public class AttributeDefOptions extends AtlanObject {
             ModelVersion.TYPE_NAME,
             MongoDBCollection.TYPE_NAME,
             MongoDBDatabase.TYPE_NAME,
+            PartialField.TYPE_NAME,
+            PartialObject.TYPE_NAME,
             Persona.TYPE_NAME,
             PowerBIApp.TYPE_NAME,
             PowerBIColumn.TYPE_NAME,

@@ -135,6 +135,16 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a AnaplanView, from a potentially
      * more-complete AnaplanView object.

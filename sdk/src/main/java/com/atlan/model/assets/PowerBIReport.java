@@ -106,6 +106,16 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Singular
     SortedSet<IPowerBIPage> pages;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** PowerBI App that is associated with this PowerBI Report. */
     @Attribute
     @Singular

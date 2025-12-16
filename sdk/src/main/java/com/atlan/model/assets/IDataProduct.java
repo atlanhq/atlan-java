@@ -678,6 +678,12 @@ public interface IDataProduct {
     /** Unique name of the parent domain in which this asset exists. */
     String getParentDomainQualifiedName();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

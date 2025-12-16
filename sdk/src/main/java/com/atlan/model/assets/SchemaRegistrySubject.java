@@ -96,6 +96,16 @@ public class SchemaRegistrySubject extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Unique identifier for schema definition set by the schema registry. */
     @Attribute
     String schemaRegistrySchemaId;

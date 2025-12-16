@@ -62,6 +62,12 @@ public interface ICatalog {
     /** TBC */
     RelationField OUTPUT_FROM_SPARK_JOBS = new RelationField("outputFromSparkJobs");
 
+    /** Partial fields contained in the asset. */
+    RelationField PARTIAL_CHILD_FIELDS = new RelationField("partialChildFields");
+
+    /** Partial objects contained in the asset. */
+    RelationField PARTIAL_CHILD_OBJECTS = new RelationField("partialChildObjects");
+
     /**
      * Reference to an asset by its qualifiedName.
      *
@@ -611,6 +617,12 @@ public interface ICatalog {
                 break;
             case MongoDBDatabase.TYPE_NAME:
                 ref = MongoDBDatabase.refByQualifiedName(qualifiedName);
+                break;
+            case PartialField.TYPE_NAME:
+                ref = PartialField.refByQualifiedName(qualifiedName);
+                break;
+            case PartialObject.TYPE_NAME:
+                ref = PartialObject.refByQualifiedName(qualifiedName);
                 break;
             case PowerBIApp.TYPE_NAME:
                 ref = PowerBIApp.refByQualifiedName(qualifiedName);
@@ -1440,6 +1452,12 @@ public interface ICatalog {
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
+
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
 
     /** Popularity score for this asset. */
     Double getPopularityScore();

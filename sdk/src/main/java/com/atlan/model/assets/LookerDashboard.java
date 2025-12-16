@@ -110,6 +110,16 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Timestamp (epoch) when the dashboard was last accessed by a user, in milliseconds. */
     @Attribute
     @Date

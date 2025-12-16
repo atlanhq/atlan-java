@@ -133,6 +133,16 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a ModeWorkspace, from a potentially
      * more-complete ModeWorkspace object.

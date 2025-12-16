@@ -186,6 +186,16 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     @Singular
     SortedSet<ICatalog> outputs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Process in which this task exists. */
     @Attribute
     ILineageProcess process;

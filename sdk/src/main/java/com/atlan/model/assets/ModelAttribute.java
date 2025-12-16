@@ -210,6 +210,16 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a ModelAttribute, from a potentially
      * more-complete ModelAttribute object.
