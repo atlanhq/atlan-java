@@ -37,11 +37,11 @@ jobs:
       - name: Create assembly area
         run: |
           mkdir -p ./containers/custom-package/assembly
-      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
         with:
           name: "${{inputs.package_name}}-amd64"
           path: ./containers/custom-package/amd64/assembly
-      - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53  # v6.0.0
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
         with:
           name: "${{inputs.package_name}}-arm64"
           path: ./containers/custom-package/arm64/assembly
