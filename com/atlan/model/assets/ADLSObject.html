@@ -170,7 +170,7 @@ implements <a href="IADLSObject.html" title="interface in com.atlan.model.assets
 <code><a href="IAzure.html#ADLS_ACCOUNT_SECONDARY_LOCATION">ADLS_ACCOUNT_SECONDARY_LOCATION</a>, <a href="IAzure.html#AZURE_LOCATION">AZURE_LOCATION</a>, <a href="IAzure.html#AZURE_RESOURCE_ID">AZURE_RESOURCE_ID</a>, <a href="IAzure.html#AZURE_TAGS">AZURE_TAGS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.ICatalog">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></h3>
-<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></div>
+<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a>, <a href="ICatalog.html#PARTIAL_CHILD_FIELDS">PARTIAL_CHILD_FIELDS</a>, <a href="ICatalog.html#PARTIAL_CHILD_OBJECTS">PARTIAL_CHILD_OBJECTS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -464,6 +464,16 @@ implements <a href="IADLSObject.html" title="interface in com.atlan.model.assets
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputFromSparkJobs()" class="member-name-link">getOutputFromSparkJobs</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildFields()" class="member-name-link">getPartialChildFields</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial fields contained in the asset.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildObjects()" class="member-name-link">getPartialChildObjects</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial objects contained in the asset.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
@@ -1769,6 +1779,40 @@ implements <a href="IADLSObject.html" title="interface in com.atlan.model.assets
 <dd><code><a href="ICatalog.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="IObjectStore.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="IObjectStore.html" title="interface in com.atlan.model.assets">IObjectStore</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildFields()">
+<h3>getPartialChildFields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildFields</span>()</div>
+<div class="block">Partial fields contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IADLS.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="IADLS.html" title="interface in com.atlan.model.assets">IADLS</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IADLSObject.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSObject.html" title="interface in com.atlan.model.assets">IADLSObject</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IObjectStore.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="IObjectStore.html" title="interface in com.atlan.model.assets">IObjectStore</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildObjects()">
+<h3>getPartialChildObjects</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildObjects</span>()</div>
+<div class="block">Partial objects contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IADLS.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="IADLS.html" title="interface in com.atlan.model.assets">IADLS</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IADLSObject.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="IADLSObject.html" title="interface in com.atlan.model.assets">IADLSObject</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IObjectStore.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="IObjectStore.html" title="interface in com.atlan.model.assets">IObjectStore</a></code></dd>
 </dl>
 </section>
 </li>

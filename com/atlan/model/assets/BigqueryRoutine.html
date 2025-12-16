@@ -164,7 +164,7 @@ implements <a href="IBigqueryRoutine.html" title="interface in com.atlan.model.a
 <code><a href="IBigqueryRoutine.html#BIGQUERY_ATLAN_SCHEMA">BIGQUERY_ATLAN_SCHEMA</a>, <a href="IBigqueryRoutine.html#BIGQUERY_PROCESSES">BIGQUERY_PROCESSES</a>, <a href="IBigqueryRoutine.html#BIGQUERY_ROUTINE_ARGUMENTS">BIGQUERY_ROUTINE_ARGUMENTS</a>, <a href="IBigqueryRoutine.html#BIGQUERY_ROUTINE_DDL">BIGQUERY_ROUTINE_DDL</a>, <a href="IBigqueryRoutine.html#BIGQUERY_ROUTINE_RETURN_TYPE">BIGQUERY_ROUTINE_RETURN_TYPE</a>, <a href="IBigqueryRoutine.html#BIGQUERY_ROUTINE_SECURITY_TYPE">BIGQUERY_ROUTINE_SECURITY_TYPE</a>, <a href="IBigqueryRoutine.html#BIGQUERY_ROUTINE_TYPE">BIGQUERY_ROUTINE_TYPE</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.ICatalog">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></h3>
-<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></div>
+<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a>, <a href="ICatalog.html#PARTIAL_CHILD_FIELDS">PARTIAL_CHILD_FIELDS</a>, <a href="ICatalog.html#PARTIAL_CHILD_OBJECTS">PARTIAL_CHILD_OBJECTS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IProcedure">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></h3>
 <code><a href="IProcedure.html#DEFINITION">DEFINITION</a>, <a href="IProcedure.html#SCHEMA">SCHEMA</a>, <a href="IProcedure.html#SQL_ARGUMENTS">SQL_ARGUMENTS</a>, <a href="IProcedure.html#SQL_CATALOG_ID">SQL_CATALOG_ID</a>, <a href="IProcedure.html#SQL_EXTERNAL_ACCESS_INTEGRATIONS">SQL_EXTERNAL_ACCESS_INTEGRATIONS</a>, <a href="IProcedure.html#SQL_INSTALLED_PACKAGES">SQL_INSTALLED_PACKAGES</a>, <a href="IProcedure.html#SQL_LANGUAGE">SQL_LANGUAGE</a>, <a href="IProcedure.html#SQL_OWNER_ROLE_TYPE">SQL_OWNER_ROLE_TYPE</a>, <a href="IProcedure.html#SQL_PACKAGES">SQL_PACKAGES</a>, <a href="IProcedure.html#SQL_PROCEDURE_RETURN">SQL_PROCEDURE_RETURN</a>, <a href="IProcedure.html#SQL_PROCESSES">SQL_PROCESSES</a>, <a href="IProcedure.html#SQL_RUNTIME_VERSION">SQL_RUNTIME_VERSION</a>, <a href="IProcedure.html#SQL_SCHEMA_ID">SQL_SCHEMA_ID</a>, <a href="IProcedure.html#SQL_SECRETS">SQL_SECRETS</a></code></div>
@@ -398,6 +398,16 @@ implements <a href="IBigqueryRoutine.html" title="interface in com.atlan.model.a
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputFromSparkJobs()" class="member-name-link">getOutputFromSparkJobs</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildFields()" class="member-name-link">getPartialChildFields</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial fields contained in the asset.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildObjects()" class="member-name-link">getPartialChildObjects</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial objects contained in the asset.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getQueryCount()" class="member-name-link">getQueryCount</a>()</code></div>
@@ -1698,6 +1708,40 @@ implements <a href="IBigqueryRoutine.html" title="interface in com.atlan.model.a
 <dd><code><a href="IProcedure.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="ISQL.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildFields()">
+<h3>getPartialChildFields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildFields</span>()</div>
+<div class="block">Partial fields contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IBigqueryRoutine.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IProcedure.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ISQL.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildObjects()">
+<h3>getPartialChildObjects</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildObjects</span>()</div>
+<div class="block">Partial objects contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IBigqueryRoutine.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="IBigqueryRoutine.html" title="interface in com.atlan.model.assets">IBigqueryRoutine</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="IProcedure.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="IProcedure.html" title="interface in com.atlan.model.assets">IProcedure</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ISQL.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></code></dd>
 </dl>
 </section>
 </li>

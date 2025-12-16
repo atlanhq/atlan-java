@@ -167,7 +167,7 @@ implements <a href="ICassandraTable.html" title="interface in com.atlan.model.as
 <code><a href="ICassandraTable.html#CASSANDRA_COLUMNS">CASSANDRA_COLUMNS</a>, <a href="ICassandraTable.html#CASSANDRA_INDEXES">CASSANDRA_INDEXES</a>, <a href="ICassandraTable.html#CASSANDRA_KEYSPACE">CASSANDRA_KEYSPACE</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_BLOOM_FILTER_FP_CHANCE">CASSANDRA_TABLE_BLOOM_FILTER_FP_CHANCE</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_CACHING">CASSANDRA_TABLE_CACHING</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_COMMENT">CASSANDRA_TABLE_COMMENT</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_COMPACTION">CASSANDRA_TABLE_COMPACTION</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_COMPRESSION">CASSANDRA_TABLE_COMPRESSION</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_CRC_CHECK_CHANCE">CASSANDRA_TABLE_CRC_CHECK_CHANCE</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_DC_LOCAL_READ_REPAIR_CHANCE">CASSANDRA_TABLE_DC_LOCAL_READ_REPAIR_CHANCE</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_DEFAULT_TTL">CASSANDRA_TABLE_DEFAULT_TTL</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_FLAGS">CASSANDRA_TABLE_FLAGS</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_GC_GRACE_SECONDS">CASSANDRA_TABLE_GC_GRACE_SECONDS</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_ID">CASSANDRA_TABLE_ID</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_MAX_INDEX_INTERVAL">CASSANDRA_TABLE_MAX_INDEX_INTERVAL</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_MEMTABLE_FLUSH_PERIOD_IN_MS">CASSANDRA_TABLE_MEMTABLE_FLUSH_PERIOD_IN_MS</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_MIN_INDEX_INTERVAL">CASSANDRA_TABLE_MIN_INDEX_INTERVAL</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_QUERY">CASSANDRA_TABLE_QUERY</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_READ_REPAIR_CHANCE">CASSANDRA_TABLE_READ_REPAIR_CHANCE</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_SPECULATIVE_RETRY">CASSANDRA_TABLE_SPECULATIVE_RETRY</a>, <a href="ICassandraTable.html#CASSANDRA_TABLE_VIRTUAL">CASSANDRA_TABLE_VIRTUAL</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.ICatalog">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></h3>
-<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a></code></div>
+<code><a href="ICatalog.html#INPUT_TO_AIRFLOW_TASKS">INPUT_TO_AIRFLOW_TASKS</a>, <a href="ICatalog.html#INPUT_TO_PROCESSES">INPUT_TO_PROCESSES</a>, <a href="ICatalog.html#INPUT_TO_SPARK_JOBS">INPUT_TO_SPARK_JOBS</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ATTRIBUTES">MODEL_IMPLEMENTED_ATTRIBUTES</a>, <a href="ICatalog.html#MODEL_IMPLEMENTED_ENTITIES">MODEL_IMPLEMENTED_ENTITIES</a>, <a href="ICatalog.html#OUTPUT_FROM_AIRFLOW_TASKS">OUTPUT_FROM_AIRFLOW_TASKS</a>, <a href="ICatalog.html#OUTPUT_FROM_PROCESSES">OUTPUT_FROM_PROCESSES</a>, <a href="ICatalog.html#OUTPUT_FROM_SPARK_JOBS">OUTPUT_FROM_SPARK_JOBS</a>, <a href="ICatalog.html#PARTIAL_CHILD_FIELDS">PARTIAL_CHILD_FIELDS</a>, <a href="ICatalog.html#PARTIAL_CHILD_OBJECTS">PARTIAL_CHILD_OBJECTS</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.INoSQL">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="INoSQL.html" title="interface in com.atlan.model.assets">INoSQL</a></h3>
 <code><a href="INoSQL.html#NO_SQL_SCHEMA_DEFINITION">NO_SQL_SCHEMA_DEFINITION</a></code></div>
@@ -443,6 +443,16 @@ implements <a href="ICassandraTable.html" title="interface in com.atlan.model.as
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputFromSparkJobs()" class="member-name-link">getOutputFromSparkJobs</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">TBC</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildFields()" class="member-name-link">getPartialChildFields</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial fields contained in the asset.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPartialChildObjects()" class="member-name-link">getPartialChildObjects</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Partial objects contained in the asset.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
@@ -1679,6 +1689,40 @@ implements <a href="ICassandraTable.html" title="interface in com.atlan.model.as
 <dd><code><a href="ICatalog.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="INoSQL.html#getOutputFromSparkJobs()">getOutputFromSparkJobs</a></code>&nbsp;in interface&nbsp;<code><a href="INoSQL.html" title="interface in com.atlan.model.assets">INoSQL</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildFields()">
+<h3>getPartialChildFields</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialField.html" title="interface in com.atlan.model.assets">IPartialField</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildFields</span>()</div>
+<div class="block">Partial fields contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ICassandra.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ICassandra.html" title="interface in com.atlan.model.assets">ICassandra</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICassandraTable.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ICassandraTable.html" title="interface in com.atlan.model.assets">ICassandraTable</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="INoSQL.html#getPartialChildFields()">getPartialChildFields</a></code>&nbsp;in interface&nbsp;<code><a href="INoSQL.html" title="interface in com.atlan.model.assets">INoSQL</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPartialChildObjects()">
+<h3>getPartialChildObjects</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IPartialObject.html" title="interface in com.atlan.model.assets">IPartialObject</a>&gt;</span>&nbsp;<span class="element-name">getPartialChildObjects</span>()</div>
+<div class="block">Partial objects contained in the asset.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ICassandra.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ICassandra.html" title="interface in com.atlan.model.assets">ICassandra</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICassandraTable.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ICassandraTable.html" title="interface in com.atlan.model.assets">ICassandraTable</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="ICatalog.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="ICatalog.html" title="interface in com.atlan.model.assets">ICatalog</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="INoSQL.html#getPartialChildObjects()">getPartialChildObjects</a></code>&nbsp;in interface&nbsp;<code><a href="INoSQL.html" title="interface in com.atlan.model.assets">INoSQL</a></code></dd>
 </dl>
 </section>
 </li>
