@@ -89,6 +89,16 @@ public class TableauWorksheetField extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Calculated field this worksheet field uses. */
     @Attribute
     ITableauCalculatedField tableauCalculatedField;

@@ -132,6 +132,16 @@ public class S3Bucket extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Whether versioning is enabled for the bucket (true) or not (false). */
     @Attribute
     Boolean s3BucketVersioningEnabled;

@@ -829,6 +829,12 @@ public interface IDremioColumn {
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
     String getParentColumnQualifiedName();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Order (position) of this partition column in the table. */
     Integer getPartitionOrder();
 

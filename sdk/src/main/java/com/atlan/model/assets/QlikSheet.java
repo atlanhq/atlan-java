@@ -88,6 +88,16 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** App in which this sheet exists. */
     @Attribute
     IQlikApp qlikApp;

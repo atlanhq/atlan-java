@@ -121,6 +121,16 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Deprecated. */
     @Attribute
     ILookerQuery query;

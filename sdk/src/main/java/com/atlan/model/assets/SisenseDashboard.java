@@ -89,6 +89,16 @@ public class SisenseDashboard extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Unique name of the folder in which this dashboard exists. */
     @Attribute
     String sisenseDashboardFolderQualifiedName;

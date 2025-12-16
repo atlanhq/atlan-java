@@ -88,6 +88,16 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Name of the SAP component, representing a specific functional area in SAP. */
     @Attribute
     String sapComponentName;

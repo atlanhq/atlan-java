@@ -111,6 +111,16 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Number of subfolders in this folder. */
     @Attribute
     Integer sourceChildCount;

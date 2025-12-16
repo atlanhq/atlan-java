@@ -133,6 +133,16 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /**
      * Builds the minimal object necessary to create a relationship to a CognosPackage, from a potentially
      * more-complete CognosPackage object.

@@ -94,6 +94,16 @@ public class SageMakerUnifiedStudioAssetSchema extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Asset in which this schema exists. The asset can be a published or subscribed asset. */
     @Attribute
     ISageMakerUnifiedStudioAsset smusAsset;

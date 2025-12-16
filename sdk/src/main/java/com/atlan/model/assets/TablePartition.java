@@ -187,6 +187,16 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     ITablePartition parentTablePartition;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Number of sub-partitions of this partition. */
     @Attribute
     Long partitionCount;

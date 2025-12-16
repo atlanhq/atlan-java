@@ -198,6 +198,16 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Lineage process that associates this ADF Activity. */
     @Attribute
     @Singular

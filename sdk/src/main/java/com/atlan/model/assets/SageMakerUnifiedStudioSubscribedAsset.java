@@ -95,6 +95,16 @@ public class SageMakerUnifiedStudioSubscribedAsset extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Latest published version of the asset in SageMaker Unified Studio. */
     @Attribute
     String smusAssetRevision;

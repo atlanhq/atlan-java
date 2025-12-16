@@ -190,6 +190,16 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Attribute
     String parentDomainQualifiedName;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Unique name of the top-level domain in which this asset exists. */
     @Attribute
     String superDomainQualifiedName;

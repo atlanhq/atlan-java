@@ -216,6 +216,16 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Assets related to this test. */
     @Attribute
     @Singular

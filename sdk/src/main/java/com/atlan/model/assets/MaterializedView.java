@@ -161,6 +161,16 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
+    /** TBC */
+    @Attribute
     Long queryCount;
 
     /** TBC */

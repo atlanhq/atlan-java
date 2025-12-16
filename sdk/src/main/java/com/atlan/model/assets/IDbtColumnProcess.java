@@ -656,6 +656,12 @@ public interface IDbtColumnProcess {
     /** TBC */
     SortedSet<String> getParentConnectionProcessQualifiedNames();
 
+    /** Partial fields contained in the asset. */
+    SortedSet<IPartialField> getPartialChildFields();
+
+    /** Partial objects contained in the asset. */
+    SortedSet<IPartialObject> getPartialChildObjects();
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

@@ -88,6 +88,16 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Sub-folders that exist within this folder. */
     @Attribute
     @Singular

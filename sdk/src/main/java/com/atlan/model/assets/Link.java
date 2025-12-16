@@ -107,6 +107,16 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Reference to the resource. */
     @Attribute
     String reference;

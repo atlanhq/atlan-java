@@ -247,6 +247,16 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** (Deprecated) Assets related to the model. */
     @Attribute
     @JsonProperty("sqlAsset")

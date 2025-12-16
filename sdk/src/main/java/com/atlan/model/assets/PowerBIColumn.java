@@ -93,6 +93,16 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Data category that describes the data in this column. */
     @Attribute
     String powerBIColumnDataCategory;

@@ -490,6 +490,16 @@ public class DremioColumn extends Asset
     @Attribute
     String parentColumnQualifiedName;
 
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
     /** Order (position) of this partition column in the table. */
     @Attribute
     Integer partitionOrder;
