@@ -95,6 +95,9 @@ preview: Boolean = false
 /// (Optional) If the package needs to configure a connector, specify its type here.
 connectorType: Connectors.Type?
 
+/// (Optional) Whether the package should mount additional ephemeral storage (and if so, how much (in GB)).
+ephemeralVolumeInGB: Int?
+
 /// Name of the pill under which the package should be categorized in the marketplace in the UI.
 category: String = "custom"
 

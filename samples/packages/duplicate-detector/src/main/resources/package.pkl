@@ -28,6 +28,7 @@ keywords {
   "utility"
 }
 preview = true
+ephemeralVolumeInGB = 70
 
 uiConfig {
   tasks {
