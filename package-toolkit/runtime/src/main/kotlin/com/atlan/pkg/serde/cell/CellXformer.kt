@@ -86,7 +86,7 @@ object CellXformer {
             }
         } else if (Boolean::class.java.isAssignableFrom(type) || java.lang.Boolean::class.java.isAssignableFrom(type)) {
             decodeBoolean(value)
-        } else if (Integer::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
+        } else if (Int::class.java.isAssignableFrom(type) || java.lang.Integer::class.java.isAssignableFrom(type)) {
             decodeInt(value)
         } else if (Long::class.java.isAssignableFrom(type) || java.lang.Long::class.java.isAssignableFrom(type)) {
             if (ReflectionCache.isDate(assetClass, fieldName)) {
