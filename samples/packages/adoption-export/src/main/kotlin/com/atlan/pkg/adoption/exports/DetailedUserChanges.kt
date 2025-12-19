@@ -44,9 +44,9 @@ class DetailedUserChanges(
             builder.where(AuditSearchRequest.ACTION.`in`(ctx.config.changesTypes))
         }
         when (ctx.config.changesAutomations) {
-            "NONE" -> builder.whereNot(AuditSearchRequest.AGENT.`in`(listOf("sdk", "workflow")))
-            "WFL" -> builder.whereNot(AuditSearchRequest.AGENT.eq("sdk"))
-            "SDK" -> builder.whereNot(AuditSearchRequest.AGENT.eq("workflow"))
+            "NONE" -> builder.where(AuditSearchRequest.CLIENT_ORIGIN.eq("product_webapp"))
+            "WFL" -> builder.where(AuditSearchRequest.AGENT.eq("workflow"))
+            "SDK" -> builder.where(AuditSearchRequest.AGENT.eq("sdk"))
             else -> logger.info { " ... including ALL automations -- this could be a large amount of data (and take a LONG time)." }
         }
         if (start > 0) {
