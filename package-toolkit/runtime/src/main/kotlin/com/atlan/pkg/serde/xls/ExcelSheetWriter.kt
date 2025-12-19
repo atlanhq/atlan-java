@@ -138,10 +138,17 @@ class ExcelSheetWriter(
                 cell.setCellValue(value)
             }
             if (value.startsWith("https://")) {
-                val link = workbook.creationHelper.createHyperlink(HyperlinkType.URL)
-                link.address = value
-                cell.hyperlink = link
-                cell.cellStyle = linkStyle
+                try {
+                    val link = workbook.creationHelper.createHyperlink(HyperlinkType.URL)
+                    link.address = value
+                    cell.hyperlink = link
+                    cell.cellStyle = linkStyle
+                } catch (e: Exception) {
+                    // Fallback to setting a hyperlink formula, even if the URL appears invalid
+                    val escapedUrl = value.replace("\"", "\"\"")
+                    cell.cellFormula = "HYPERLINK(\"$escapedUrl\")"
+                    cell.cellStyle = linkStyle
+                }
             } else {
                 cell.cellStyle = dataStyle
             }
