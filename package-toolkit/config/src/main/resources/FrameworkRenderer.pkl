@@ -54,10 +54,19 @@ local const function getProcessTemplate(
     imagePullPolicy = pullPolicy
     volumeMounts = if (credVariable != null) new Listing {
       new VolumeMount {
+        name = "atlan-wf-workdir"
+        mountPath = "/tmp"
+      }
+      new VolumeMount {
         name = "credentials"
         mountPath = "/tmp/credentials"
       }
-    } else null
+    } else new Listing {
+      new VolumeMount {
+        name = "atlan-wf-workdir"
+        mountPath = "/tmp"
+      }
+    }
     passthroughParams = params
   }
   outputs = outs
@@ -65,16 +74,35 @@ local const function getProcessTemplate(
   credVariable = let (creds = cfg.properties.filter((_, u) -> u is Framework.CredentialInput))
       if (creds.isEmpty) null else creds.keys.first
   volumes = if (credVariable != null) new Listing {
+    new EphemeralVolume {
+      name = "atlan-wf-workdir"
+      initSizeGB = 70
+      maxSizeGB = 2000
+    }
     new EmptyDirVolume {
       name = "credentials"
     }
-  } else null
+  } else new Listing {
+    new EphemeralVolume {
+      name = "atlan-wf-workdir"
+      initSizeGB = 70
+      maxSizeGB = 2000
+    }
+  }
   podSpecPatch = """
     containers:
       - name: main
         resources:
           requests:
             memory: "{{inputs.parameters.requests_memory}}"
+    volumes:
+      - name: atlan-wf-workdir
+        ephemeral:
+          volumeClaimTemplate:
+            spec:
+              resources:
+                requests:
+                  storage: "{{inputs.parameters.volume_size}}"
     """
   tolerations = new Listing {
     new Toleration {
@@ -654,6 +682,29 @@ class EmptyDirVolume extends WorkflowVolume {
   fixed emptyDir: Map<String, String> = new Mapping {}.toMap()
 }
 
+class EphemeralVolume extends WorkflowVolume {
+  name: String
+  hidden initSizeGB: Int
+  hidden maxSizeGB: Int = 2000
+  fixed ephemeral: Map<String, Any> = new Mapping {
+    ["volumeClaimTemplate"] = new Mapping {
+      ["metadata"] = new Mapping {
+        ["annotations"] = new Mapping {
+          ["resize.topolvm.io/storage_limit"] = "\(maxSizeGB)Gi"
+        }
+      }
+      ["spec"] = new Mapping {
+        ["accessModes"] = List("ReadWriteOnce")
+        ["resources"] = new Mapping {
+          ["requests"] = new Mapping {
+            ["storage"] = "\(initSizeGB)Gi"
+          }
+        }
+      }
+    }
+  }.toMap()
+}
+
 abstract class NamedPair {
   name: String
 }
@@ -939,6 +990,13 @@ local class WorkflowInputs {
       configMapKey = "\(pkgName).\(templateName).params.requests_memory"
       optional = true
       default = "0"
+    }
+    new ConfigMapEntry {
+      name = "volume_size"
+      configMapName = "atlan-tenant-package-runtime-config"
+      configMapKey = "\(pkgName).\(templateName).params.volume_size"
+      optional = true
+      default = "70Gi"
     }
   }.toList()
   fixed artifacts: List<NamedPair>? = if (fileInputSetup) null else arts.toList()
