@@ -147,6 +147,7 @@ class ExcelSheetWriter(
                     cell.cellStyle = linkStyle
                 } catch (e: Exception) {
                     // Fallback to just storing as a string (not a hyperlink)
+                    cell.cellStyle = dataStyle
                     logger.warn { "Unable to validate hyperlink, leaving as text: $value" }
                     logger.debug(e) { "Detailed error: " }
                 }
