@@ -74,6 +74,11 @@ local const function getProcessTemplate(
   credVariable = let (creds = cfg.properties.filter((_, u) -> u is Framework.CredentialInput))
       if (creds.isEmpty) null else creds.keys.first
   volumes = if (credVariable != null) new Listing {
+    new EphemeralVolume {
+      name = "atlan-wf-workdir"
+      initSizeGB = 70
+      maxSizeGB = 2000
+    }
     new EmptyDirVolume {
       name = "credentials"
     }
