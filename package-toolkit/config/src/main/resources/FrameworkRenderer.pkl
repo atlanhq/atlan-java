@@ -46,6 +46,7 @@ local const function getProcessTemplate(
   cfg = uiCfg
   pub = publish
   f = inputFiles
+  ephSize = ephemeralSizeInGB
   directInputFiles = inputArtifacts
   container = new WorkflowContainer {
     config = cfg
@@ -100,13 +101,13 @@ local const function getProcessTemplate(
     when (ephemeralSizeInGB != null) {
         """
         volumes:
-        - name: atlan-wf-workdir
-          ephemeral:
-            volumeClaimTemplate:
-              spec:
-                resources:
-                  requests:
-                    storage: "{{inputs.parameters.volume_size}}"
+          - name: atlan-wf-workdir
+            ephemeral:
+              volumeClaimTemplate:
+                spec:
+                  resources:
+                    requests:
+                      storage: "{{inputs.parameters.volume_size}}"
         """
     }
   }.join("\n")
@@ -186,7 +187,8 @@ const function getWorkflowTemplate(m: Framework): FileOutput = new FileOutput {
       m.args,
       null, // Only include UI-based parameters at the top-most level
       true, // Always include file details at the top-most level (?)
-      List() // Do not passthrough any non-UI-provided artifacts as inputs at the top-most level
+      List(), // Do not passthrough any non-UI-provided artifacts as inputs at the top-most level
+      m.ephemeralVolumeInGB
     )
   }
   renderer = new YamlRenderer {}
@@ -920,6 +922,7 @@ local class WorkflowTemplateSpec {
       name = "process"
       // Ensures input artifacts for files are included as part of template's arguments
       f = move == null
+      ephSize = package.ephSize
     }
     when (move != null) { move }
     when (package.pub != null) {
@@ -935,7 +938,8 @@ local class WorkflowTemplateSpec {
         package.pub.args,
         package.pub.parameters, // Always passthrough non-UI parameters
         false, // Always passthrough direct input files (from previous step(s))
-        package.pub.inputArtifacts.toList()
+        package.pub.inputArtifacts.toList(),
+        null
       )
     }
   }
@@ -971,6 +975,7 @@ local class WorkflowTemplateDefinition {
     credentialInjection = (credVariable != null)
     passthroughFiles = directInputFiles
     templateName = name
+    ephemeralSizeInGB = ephSize
   }
   outputs: Framework.WorkflowOutputs?
   volumes: Listing<WorkflowVolume>?
@@ -985,6 +990,7 @@ local class WorkflowTemplateDefinition {
   hidden f: Boolean = false
   hidden credVariable: String? = null
   hidden directInputFiles: List<NamedPair>? = null
+  hidden ephSize: Int? = null
 }
 
 local class WorkflowInputs {
@@ -997,12 +1003,14 @@ local class WorkflowInputs {
       optional = true
       default = "0"
     }
-    new ConfigMapEntry {
-      name = "volume_size"
-      configMapName = "atlan-tenant-package-runtime-config"
-      configMapKey = "\(pkgName).\(templateName).params.volume_size"
-      optional = true
-      default = "70Gi"
+    when (ephemeralSizeInGB != null) {
+      new ConfigMapEntry {
+        name = "volume_size"
+        configMapName = "atlan-tenant-package-runtime-config"
+        configMapKey = "\(pkgName).\(templateName).params.volume_size"
+        optional = true
+        default = "70Gi"
+      }
     }
   }.toList()
   fixed artifacts: List<NamedPair>? = if (fileInputSetup) null else arts.toList()
@@ -1012,6 +1020,7 @@ local class WorkflowInputs {
   hidden fileInputSetup: Boolean = false
   hidden credentialInjection: Boolean = false
   hidden passthroughFiles: List<NamedPair>? = null
+  hidden ephemeralSizeInGB: Int? = null
 
   hidden arts: Listing<NamedPair> = new Listing {
     for (k, u in config.properties) {
