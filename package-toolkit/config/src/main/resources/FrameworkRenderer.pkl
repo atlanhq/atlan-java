@@ -39,7 +39,8 @@ local const function getProcessTemplate(
   arguments: List<String>,
   params: Map<String, String>?,
   inputFiles: Boolean,
-  inputArtifacts: List<NamedPair>
+  inputArtifacts: List<NamedPair>,
+  ephemeralSizeInGB: Int?,
 ) = new WorkflowTemplateDefinition {
   name = templateName
   cfg = uiCfg
@@ -52,58 +53,63 @@ local const function getProcessTemplate(
     command = cmd
     args = arguments
     imagePullPolicy = pullPolicy
-    volumeMounts = if (credVariable != null) new Listing {
-      new VolumeMount {
-        name = "atlan-wf-workdir"
-        mountPath = "/tmp"
+    local volumesPrep = new Listing {
+      when (ephemeralSizeInGB != null) {
+        new VolumeMount {
+          name = "atlan-wf-workdir"
+          mountPath = "/tmp"
+        }
       }
-      new VolumeMount {
-        name = "credentials"
-        mountPath = "/tmp/credentials"
-      }
-    } else new Listing {
-      new VolumeMount {
-        name = "atlan-wf-workdir"
-        mountPath = "/tmp"
+      when (credVariable != null) {
+        new VolumeMount {
+          name = "credentials"
+          mountPath = "/tmp/credentials"
+        }
       }
     }
+    volumeMounts = if (volumesPrep.isEmpty) null else volumesPrep
     passthroughParams = params
   }
   outputs = outs
   pkg = package
   credVariable = let (creds = cfg.properties.filter((_, u) -> u is Framework.CredentialInput))
       if (creds.isEmpty) null else creds.keys.first
-  volumes = if (credVariable != null) new Listing {
-    new EphemeralVolume {
-      name = "atlan-wf-workdir"
-      initSizeGB = 70
-      maxSizeGB = 2000
+  local volumesPrep = new Listing {
+    when (credVariable != null) {
+      new EmptyDirVolume {
+        name = "credentials"
+      }
     }
-    new EmptyDirVolume {
-      name = "credentials"
-    }
-  } else new Listing {
-    new EphemeralVolume {
-      name = "atlan-wf-workdir"
-      initSizeGB = 70
-      maxSizeGB = 2000
+    when (ephemeralSizeInGB != null) {
+      new EphemeralVolume {
+        name = "atlan-wf-workdir"
+        initSizeGB = ephemeralSizeInGB
+        maxSizeGB = 2000
+      }
     }
   }
-  podSpecPatch = """
-    containers:
-      - name: main
-        resources:
-          requests:
-            memory: "{{inputs.parameters.requests_memory}}"
-    volumes:
-      - name: atlan-wf-workdir
-        ephemeral:
-          volumeClaimTemplate:
-            spec:
-              resources:
-                requests:
-                  storage: "{{inputs.parameters.volume_size}}"
-    """
+  volumes = if (volumesPrep.isEmpty) null else volumesPrep
+  podSpecPatch = new Listing {
+      """
+      containers:
+        - name: main
+          resources:
+            requests:
+              memory: "{{inputs.parameters.requests_memory}}"
+      """
+    when (ephemeralSizeInGB != null) {
+        """
+        volumes:
+        - name: atlan-wf-workdir
+          ephemeral:
+            volumeClaimTemplate:
+              spec:
+                resources:
+                  requests:
+                    storage: "{{inputs.parameters.volume_size}}"
+        """
+    }
+  }.join("\n")
   tolerations = new Listing {
     new Toleration {
       key = "archtype"
