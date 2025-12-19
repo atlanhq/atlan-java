@@ -3,6 +3,7 @@
 package com.atlan.pkg.serde.xls
 
 import com.atlan.model.enums.AtlanEnum
+import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.TabularWriter
 import org.apache.poi.common.usermodel.HyperlinkType
 import org.apache.poi.ss.usermodel.BorderStyle
@@ -26,6 +27,7 @@ class ExcelSheetWriter(
     private val workbook: Workbook,
     private val name: String,
 ) : TabularWriter() {
+    private val logger = Utils.getLogger(this.javaClass.name)
     private val worksheet = workbook.createSheet(name)
     private val headerStyle = createHeaderStyle()
     private val dataStyle = createDataStyle()
@@ -144,10 +146,10 @@ class ExcelSheetWriter(
                     cell.hyperlink = link
                     cell.cellStyle = linkStyle
                 } catch (e: Exception) {
-                    // Fallback to setting a hyperlink formula, even if the URL appears invalid
-                    val escapedUrl = value.replace("\"", "\"\"")
-                    cell.cellFormula = "HYPERLINK(\"$escapedUrl\")"
-                    cell.cellStyle = linkStyle
+                    // Fallback to just storing as a string (not a hyperlink)
+                    cell.cellStyle = dataStyle
+                    logger.warn { "Unable to validate hyperlink, leaving as text: $value" }
+                    logger.debug(e) { "Detailed error: " }
                 }
             } else {
                 cell.cellStyle = dataStyle
