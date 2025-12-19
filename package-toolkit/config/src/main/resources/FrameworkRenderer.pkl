@@ -1009,7 +1009,7 @@ local class WorkflowInputs {
         configMapName = "atlan-tenant-package-runtime-config"
         configMapKey = "\(pkgName).\(templateName).params.volume_size"
         optional = true
-        default = "70Gi"
+        default = "\(ephemeralSizeInGB)Gi"
       }
     }
   }.toList()
