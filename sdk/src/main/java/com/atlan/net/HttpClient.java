@@ -271,6 +271,24 @@ public abstract class HttpClient {
             return true;
         }
 
+        // Continue retrying in case of ephemeral outages (ignore max retries in this case)
+        if (response != null && response.code() == 502) {
+            if (exception != null) {
+                log.debug(
+                        " ... ephemeral outage encountered, will retry with a long delay: {}",
+                        response.body(),
+                        exception);
+            } else {
+                log.debug(" ... ephemeral outage encountered, will retry with a long delay: {}", response.body());
+            }
+            try {
+                Thread.sleep(waitLongTime(numRetries).toMillis());
+            } catch (InterruptedException e) {
+                log.warn(" ... wait interrupted.", exception);
+            }
+            return true;
+        }
+
         // Otherwise, do not retry if we are out of retries.
         if (numRetries >= request.options().getMaxNetworkRetries()) {
             if (exception != null) {
