@@ -79,7 +79,7 @@ class UpdateSubdomainTest : PackageTest("usd") {
     }
 
     override fun teardown() {
-        removeProduct(subDomain)
+        removeDomain(subDomain)
         removeDomain(dataDomain)
     }
 
@@ -124,12 +124,12 @@ class UpdateSubdomainTest : PackageTest("usd") {
         return dataDomains[0] as DataDomain
     }
 
-    @Test
+    @Test(dependsOnGroups = ["aim.usd.*"])
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(dependsOnGroups = ["aim.usd.*"])
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
