@@ -1,0 +1,2 @@
+typeName,name,assetIcon,assetThemeHex,assetCoverImage,parentDomain,dataDomain,dataProductAssetsDSL,displayName,description,userDescription,ownerUsers,ownerGroups
+DataDomain,{{SUBDOMAIN}},,,,{{DATADOMAIN}},,,,,Test subdomain,chris,admins
