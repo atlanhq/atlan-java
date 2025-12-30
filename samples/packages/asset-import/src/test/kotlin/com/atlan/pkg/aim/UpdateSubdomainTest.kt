@@ -11,6 +11,7 @@ import com.atlan.pkg.Utils
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class UpdateSubdomainTest : PackageTest("usd") {
@@ -87,6 +88,7 @@ class UpdateSubdomainTest : PackageTest("usd") {
     fun exactlyTwoDomains() {
         val d1 = findDataDomain(dataDomain)
         assertEquals(dataDomain, d1.name)
+        assertFalse(d1.subDomains.isNullOrEmpty())
         assertEquals(1, d1.subDomains.size)
         val d2 = findDataDomain(subDomain)
         assertEquals(subDomain, d2.name)
