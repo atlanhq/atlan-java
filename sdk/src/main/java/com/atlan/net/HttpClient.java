@@ -28,6 +28,15 @@ public abstract class HttpClient {
     /** Minimum sleep time between tries to send HTTP requests after network failure. */
     public static final Duration minNetworkRetriesDelay = Duration.ofMillis(500);
 
+    enum RetryDecision {
+        RETRY_SHORT,
+        RETRY_LONG,
+        RETRY_SHORT_AND_RESET,
+        RETRY_LONG_AND_RESET,
+        RETRY_RATE_LIMITED,
+        NO_RETRY,
+    }
+
     /** A value indicating whether the client should sleep between automatic request retries. */
     boolean networkRetriesSleep = true;
 
@@ -108,6 +117,7 @@ public abstract class HttpClient {
         AtlanException requestException = null;
         T response = null;
         int retry = 0;
+        int attempts = 0;
 
         while (true) {
             requestException = null;
@@ -118,14 +128,47 @@ public abstract class HttpClient {
                 requestException = e;
             }
 
-            if (!this.shouldRetry(retry, requestException, request, response)) {
+            RetryDecision decision = this.shouldRetry(retry, requestException, request, response);
+            if (decision == RetryDecision.NO_RETRY) {
                 break;
+            } else if (decision == RetryDecision.RETRY_SHORT || decision == RetryDecision.RETRY_LONG) {
+                retry += 1;
+            } else if (decision == RetryDecision.RETRY_SHORT_AND_RESET
+                    || decision == RetryDecision.RETRY_LONG_AND_RESET
+                    || decision == RetryDecision.RETRY_RATE_LIMITED) {
+                retry = 0;
             }
 
-            retry += 1;
+            attempts += 1;
 
             try {
-                Thread.sleep(this.sleepTime(retry).toMillis());
+                if (RetryDecision.RETRY_RATE_LIMITED == decision) {
+                    Optional<String> retryAfter = response.headers.firstValue("Retry-After");
+                    if (retryAfter.isPresent()) {
+                        try {
+                            String retryInSeconds = retryAfter.get();
+                            long waitTime = Long.parseLong(retryInSeconds);
+                            if (waitTime > 0) {
+                                rateLimit(waitTime * 1000);
+                            } else {
+                                rateLimit(waitTime(attempts).toMillis());
+                            }
+                        } catch (NumberFormatException e) {
+                            log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
+                            rateLimit(waitTime(attempts).toMillis());
+                        }
+                    } else {
+                        log.debug(
+                                " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
+                        rateLimit(waitTime(attempts).toMillis());
+                    }
+                } else {
+                    Thread.sleep(this.sleepTime(
+                                    attempts,
+                                    RetryDecision.RETRY_LONG == decision
+                                            || RetryDecision.RETRY_LONG_AND_RESET == decision)
+                            .toMillis());
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -216,11 +259,11 @@ public abstract class HttpClient {
         return str;
     }
 
-    private <T extends AbstractAtlanResponse<?>> boolean shouldRetry(
+    private <T extends AbstractAtlanResponse<?>> RetryDecision shouldRetry(
             int numRetries, AtlanException exception, AtlanRequest request, T response) {
         // Continue (without retrying) in case of a successful response
         if (response != null && response.code() >= 200 && response.code() < 300) {
-            return false;
+            return RetryDecision.NO_RETRY;
         }
 
         // Continue retrying in case of connection errors (ignore max retries in these cases)
@@ -229,31 +272,12 @@ public abstract class HttpClient {
                 && (exception.getCause() instanceof ConnectException
                         || exception.getCause() instanceof SocketTimeoutException)) {
             log.debug(" ... network issue, will retry.", exception);
-            return true;
+            return RetryDecision.RETRY_SHORT_AND_RESET;
         }
 
         // Continue retrying in case of rate limiting (ignore max retries in this case)
         if (response != null && response.code() == 429) {
-            Optional<String> retryAfter = response.headers.firstValue("Retry-After");
-            if (retryAfter.isPresent()) {
-                try {
-                    String retryInSeconds = retryAfter.get();
-                    long waitTime = Long.parseLong(retryInSeconds);
-                    if (waitTime > 0) {
-                        rateLimit(waitTime * 1000);
-                    } else {
-                        rateLimit(waitTime(numRetries).toMillis());
-                    }
-                } catch (NumberFormatException e) {
-                    log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
-                    rateLimit(waitTime(numRetries).toMillis());
-                }
-            } else {
-                log.debug(
-                        " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
-                rateLimit(waitTime(numRetries).toMillis());
-            }
-            return true;
+            return RetryDecision.RETRY_RATE_LIMITED;
         }
 
         // Continue retrying in case of locking (ignore max retries in this case)
@@ -263,12 +287,7 @@ public abstract class HttpClient {
             } else {
                 log.debug(" ... lock encountered, will retry with a long delay: {}", response.body());
             }
-            try {
-                Thread.sleep(waitLongTime(numRetries).toMillis());
-            } catch (InterruptedException e) {
-                log.warn(" ... wait interrupted.", exception);
-            }
-            return true;
+            return RetryDecision.RETRY_LONG_AND_RESET;
         }
 
         // Continue retrying in case of ephemeral outages (ignore max retries in this case)
@@ -281,12 +300,7 @@ public abstract class HttpClient {
             } else {
                 log.debug(" ... ephemeral outage encountered, will retry with a long delay: {}", response.body());
             }
-            try {
-                Thread.sleep(waitLongTime(numRetries).toMillis());
-            } catch (InterruptedException e) {
-                log.warn(" ... wait interrupted.", exception);
-            }
-            return true;
+            return RetryDecision.RETRY_LONG_AND_RESET;
         }
 
         // Otherwise, do not retry if we are out of retries.
@@ -301,14 +315,14 @@ public abstract class HttpClient {
                         " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
                         request.options().getMaxNetworkRetries());
             }
-            return false;
+            return RetryDecision.NO_RETRY;
         }
 
         // There can be ephemeral network routing problems, which we should retry on
         // (but only up to the maximum retry limit, otherwise if they are not ephemeral
         // we will cause an infinite loop)
         if ((exception != null) && (exception.getCause() instanceof NoRouteToHostException)) {
-            return true;
+            return RetryDecision.RETRY_LONG;
         }
 
         if (response != null) {
@@ -319,13 +333,13 @@ public abstract class HttpClient {
                 // Retry authentication on an authentication failure (token could have expired)
                 try {
                     request.refreshToken();
-                    return true;
+                    return RetryDecision.RETRY_SHORT;
                 } catch (AtlanException e) {
                     log.warn(" ... attempt to refresh token failed, not retrying.", exception);
                     log.debug(" ... failed refresh stacktrace:", e);
                 }
                 // If refresh failed, no need to retry, just short-circuit to failure
-                return false;
+                return RetryDecision.NO_RETRY;
             } else if (response.code() == 403) {
                 // Retry on permission failure (since these are granted asynchronously)
                 if (exception != null) {
@@ -341,17 +355,21 @@ public abstract class HttpClient {
                     log.debug(" ... internal server error, will retry: {}", response.body());
                 }
             }
-            return (response.code() == 302 || response.code() == 403 || response.code() >= 500);
+            RetryDecision fallback = RetryDecision.NO_RETRY;
+            if (response.code() == 302 || response.code() == 403 || response.code() >= 500) {
+                fallback = RetryDecision.RETRY_SHORT;
+            }
+            return fallback;
         } else {
             if (exception != null
                     && (exception.getCause() instanceof IOException
                             || exception.getCause() instanceof InterruptedException)) {
                 // Or if the response was null and there is an underlying IOException or InterruptedException cause,
                 // then the network call itself (via HttpURLConnectionClient) likely failed -- and should be retried
-                return true;
+                return RetryDecision.RETRY_SHORT;
             }
         }
-        return false;
+        return RetryDecision.NO_RETRY;
     }
 
     private void rateLimit(long waitTime) {
@@ -359,12 +377,16 @@ public abstract class HttpClient {
         limiter.setRateLimit(waitTime);
     }
 
-    private Duration sleepTime(int numRetries) {
+    private Duration sleepTime(int numRetries, boolean longTime) {
         // We disable sleeping in some cases for tests.
         if (!this.networkRetriesSleep) {
             return Duration.ZERO;
         }
-        return waitTime(numRetries);
+        if (longTime) {
+            return waitLongTime(numRetries);
+        } else {
+            return waitTime(numRetries);
+        }
     }
 
     /**
