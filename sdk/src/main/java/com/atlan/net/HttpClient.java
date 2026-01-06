@@ -132,14 +132,18 @@ public abstract class HttpClient {
                 break;
             } else if (decision == RetryDecision.RETRY_SHORT || decision == RetryDecision.RETRY_LONG) {
                 retry += 1;
-            } else if (decision == RetryDecision.RETRY_SHORT_AND_RESET || decision == RetryDecision.RETRY_LONG_AND_RESET) {
+            } else if (decision == RetryDecision.RETRY_SHORT_AND_RESET
+                    || decision == RetryDecision.RETRY_LONG_AND_RESET) {
                 retry = 0;
             }
 
             attempts += 1;
 
             try {
-                Thread.sleep(this.sleepTime(attempts, RetryDecision.RETRY_LONG == decision || RetryDecision.RETRY_LONG_AND_RESET == decision).toMillis());
+                Thread.sleep(this.sleepTime(
+                                attempts,
+                                RetryDecision.RETRY_LONG == decision || RetryDecision.RETRY_LONG_AND_RESET == decision)
+                        .toMillis());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
