@@ -33,6 +33,7 @@ public abstract class HttpClient {
         RETRY_LONG,
         RETRY_SHORT_AND_RESET,
         RETRY_LONG_AND_RESET,
+        RETRY_RATE_LIMITED,
         NO_RETRY,
     }
 
@@ -133,17 +134,41 @@ public abstract class HttpClient {
             } else if (decision == RetryDecision.RETRY_SHORT || decision == RetryDecision.RETRY_LONG) {
                 retry += 1;
             } else if (decision == RetryDecision.RETRY_SHORT_AND_RESET
-                    || decision == RetryDecision.RETRY_LONG_AND_RESET) {
+                    || decision == RetryDecision.RETRY_LONG_AND_RESET
+                    || decision == RetryDecision.RETRY_RATE_LIMITED) {
                 retry = 0;
             }
 
             attempts += 1;
 
             try {
-                Thread.sleep(this.sleepTime(
-                                attempts,
-                                RetryDecision.RETRY_LONG == decision || RetryDecision.RETRY_LONG_AND_RESET == decision)
-                        .toMillis());
+                if (RetryDecision.RETRY_RATE_LIMITED == decision) {
+                    Optional<String> retryAfter = response.headers.firstValue("Retry-After");
+                    if (retryAfter.isPresent()) {
+                        try {
+                            String retryInSeconds = retryAfter.get();
+                            long waitTime = Long.parseLong(retryInSeconds);
+                            if (waitTime > 0) {
+                                rateLimit(waitTime * 1000);
+                            } else {
+                                rateLimit(waitTime(attempts).toMillis());
+                            }
+                        } catch (NumberFormatException e) {
+                            log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
+                            rateLimit(waitTime(attempts).toMillis());
+                        }
+                    } else {
+                        log.debug(
+                                " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
+                        rateLimit(waitTime(attempts).toMillis());
+                    }
+                } else {
+                    Thread.sleep(this.sleepTime(
+                                    attempts,
+                                    RetryDecision.RETRY_LONG == decision
+                                            || RetryDecision.RETRY_LONG_AND_RESET == decision)
+                            .toMillis());
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -252,26 +277,7 @@ public abstract class HttpClient {
 
         // Continue retrying in case of rate limiting (ignore max retries in this case)
         if (response != null && response.code() == 429) {
-            Optional<String> retryAfter = response.headers.firstValue("Retry-After");
-            if (retryAfter.isPresent()) {
-                try {
-                    String retryInSeconds = retryAfter.get();
-                    long waitTime = Long.parseLong(retryInSeconds);
-                    if (waitTime > 0) {
-                        rateLimit(waitTime * 1000);
-                    } else {
-                        rateLimit(waitTime(numRetries).toMillis());
-                    }
-                } catch (NumberFormatException e) {
-                    log.warn(" ... unable to parse retry-after header value: {}", retryAfter.get(), e);
-                    rateLimit(waitTime(numRetries).toMillis());
-                }
-            } else {
-                log.debug(
-                        " ... rate limit had no Retry-After header in its response, so only exponentially backing-off retries");
-                rateLimit(waitTime(numRetries).toMillis());
-            }
-            return RetryDecision.RETRY_SHORT_AND_RESET;
+            return RetryDecision.RETRY_RATE_LIMITED;
         }
 
         // Continue retrying in case of locking (ignore max retries in this case)
