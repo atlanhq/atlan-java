@@ -179,42 +179,48 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 <div class="block">Returns the name of the text field index for this attribute in Elastic.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#in(java.util.Collection)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;values)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasAnyValue()" class="member-name-link">hasAnyValue</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a query that will only match assets that have some non-null, non-empty value
+ (no matter what actual value) for the field.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#in(java.util.Collection)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will match all assets whose provided field has a value that exactly equals
  at least one of the provided string values.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#in(java.util.List,int)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;values,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#in(java.util.List,int)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;values,
  int&nbsp;minMustMatch)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will match all assets whose provided field has multiple values that exactly equal
  a specified number of the provided string values.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#match(java.lang.String)" class="member-name-link">match</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#match(java.lang.String)" class="member-name-link">match</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will textually match the provided value against the field.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#regex(java.lang.String,java.util.Collection,boolean)" class="member-name-link">regex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regexp,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#regex(java.lang.String,java.util.Collection,boolean)" class="member-name-link">regex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;regexp,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../enums/ElasticRegexOperator.html" title="enum class in com.atlan.model.enums">ElasticRegexOperator</a>&gt;&nbsp;flags,
  boolean&nbsp;caseInsensitive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will match all assets whose provided field has a value that matches the
  regular expression provided.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startsWith(java.lang.String,boolean)" class="member-name-link">startsWith</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startsWith(java.lang.String,boolean)" class="member-name-link">startsWith</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  boolean&nbsp;caseInsensitive)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will match all assets whose provided field has a value that starts with
  the provided value.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wildcard(java.lang.String,boolean)" class="member-name-link">wildcard</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#wildcard(java.lang.String,boolean)" class="member-name-link">wildcard</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value,
  boolean&nbsp;caseInsensitive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a query that will match all assets whose provided field has a value that matches the
  wildcard expression provided.</div>
 </div>
@@ -223,7 +229,7 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.atlan.model.fields.SearchableField">Methods inherited from class&nbsp;com.atlan.model.fields.<a href="SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a></h3>
-<code><a href="SearchableField.html#bucketBy(int,boolean)">bucketBy</a>, <a href="SearchableField.html#bucketBy(int,java.util.Map,java.util.List)">bucketBy</a>, <a href="SearchableField.html#count()">count</a>, <a href="SearchableField.html#distinct()">distinct</a>, <a href="SearchableField.html#distinct(int)">distinct</a>, <a href="SearchableField.html#getElasticFieldName()">getElasticFieldName</a>, <a href="SearchableField.html#hasAnyValue()">hasAnyValue</a>, <a href="SearchableField.html#order(co.elastic.clients.elasticsearch._types.SortOrder)">order</a></code></div>
+<code><a href="SearchableField.html#bucketBy(int,boolean)">bucketBy</a>, <a href="SearchableField.html#bucketBy(int,java.util.Map,java.util.List)">bucketBy</a>, <a href="SearchableField.html#count()">count</a>, <a href="SearchableField.html#distinct()">distinct</a>, <a href="SearchableField.html#distinct(int)">distinct</a>, <a href="SearchableField.html#getElasticFieldName()">getElasticFieldName</a>, <a href="SearchableField.html#order(co.elastic.clients.elasticsearch._types.SortOrder)">order</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-com.atlan.model.fields.AtlanField">Methods inherited from class&nbsp;com.atlan.model.fields.<a href="AtlanField.html" title="class in com.atlan.model.fields">AtlanField</a></h3>
 <code><a href="AtlanField.html#getAtlanFieldName()">getAtlanFieldName</a></code></div>
@@ -449,6 +455,25 @@ implements <a href="IKeywordSearchable.html" title="interface in com.atlan.model
 <dd><code>value</code> - the string value to match against</dd>
 <dt>Returns:</dt>
 <dd>a query that will only match assets whose analyzed value for the field matches the value provided (which will also be analyzed)</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hasAnyValue()">
+<h3>hasAnyValue</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">co.elastic.clients.elasticsearch._types.query_dsl.Query</span>&nbsp;<span class="element-name">hasAnyValue</span>()</div>
+<div class="block">Returns a query that will only match assets that have some non-null, non-empty value
+ (no matter what actual value) for the field.
+ For KeywordTextField, checks if either the keyword or text field has a value,
+ since the keyword field may be empty for values exceeding Elasticsearch's keyword limit.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISearchable.html#hasAnyValue()">hasAnyValue</a></code>&nbsp;in interface&nbsp;<code><a href="ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="SearchableField.html#hasAnyValue()">hasAnyValue</a></code>&nbsp;in class&nbsp;<code><a href="SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a></code></dd>
+<dt>Returns:</dt>
+<dd>a query that will only match assets that have some non-null, non-empty value
+         (no matter what actual value) for the field</dd>
 </dl>
 </section>
 </li>
