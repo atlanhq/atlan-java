@@ -2,6 +2,8 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.fields;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.ExistsQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.enums.ElasticRegexOperator;
@@ -89,5 +91,19 @@ public class KeywordTextField extends SearchableField implements IKeywordSearcha
     @Override
     public Query match(String value) {
         return ITextSearchable.match(getTextFieldName(), value);
+    }
+
+    /**
+     * {@inheritDoc}
+     * For KeywordTextField, checks if either the keyword or text field has a value,
+     * since the keyword field may be empty for values exceeding Elasticsearch's keyword limit.
+     */
+    @Override
+    public Query hasAnyValue() {
+        Query keywordExists =
+                ExistsQuery.of(e -> e.field(getKeywordFieldName()))._toQuery();
+        Query textExists = ExistsQuery.of(e -> e.field(getTextFieldName()))._toQuery();
+        return BoolQuery.of(b -> b.should(keywordExists, textExists).minimumShouldMatch("1"))
+                ._toQuery();
     }
 }
