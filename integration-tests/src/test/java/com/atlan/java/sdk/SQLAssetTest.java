@@ -1703,29 +1703,24 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(column.getAssignedTerms());
         assertTrue(column.getAssignedTerms().size() >= 1);
 
-        // Consume remaining term updates until we reach the final state (terms cleared)
-        // Use a loop to handle variable numbers of intermediate audits
+        // Consume ALL remaining term updates to find the FINAL "terms cleared" state.
+        // The term sequence includes multiple states (set, cleared, set again, cleared again),
+        // so we must consume all of them and verify the last one is "terms cleared".
+        Column lastTermColumn = column;
         EntityAudit termAudit = scanner.peekNext();
         while (termAudit != null
                 && termAudit.getAction() == AuditActionType.ENTITY_UPDATE
                 && termAudit.getDetail() instanceof Column) {
-            Column c = (Column) termAudit.getDetail();
-            // Stop if we find the final "terms cleared" state
-            if (c.getAssignedTerms() == null || c.getAssignedTerms().isEmpty()) {
-                break;
-            }
-            // Consume this intermediate term update
+            lastTermColumn = (Column) termAudit.getDetail();
+            // Consume this term update and continue to the next
             scanner.advance();
             termAudit = scanner.peekNext();
         }
 
-        // Final state: terms cleared
-        one = scanner.nextColumnUpdateMatching(
-                col -> col.getAssignedTerms() == null || col.getAssignedTerms().isEmpty());
-        column = (Column) one.getDetail();
-        validateUpdatedColumn(column);
-        assertTrue(
-                column.getAssignedTerms() == null || column.getAssignedTerms().isEmpty());
+        // Final state: terms cleared - validate the LAST term update we consumed
+        validateUpdatedColumn(lastTermColumn);
+        assertTrue(lastTermColumn.getAssignedTerms() == null
+                || lastTermColumn.getAssignedTerms().isEmpty());
     }
 
     /**
