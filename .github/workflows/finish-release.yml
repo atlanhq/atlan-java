@@ -150,13 +150,33 @@ jobs:
           # Force push snapshot branch
           git push --force origin snapshot
 
-          # Create PR with auto-merge
-          pr_url=$(gh pr create \
+          # Check if PR already exists from snapshot to main
+          existing_pr=$(gh pr list \
             --repo ${{ github.repository }} \
-            --base main \
             --head snapshot \
-            --title "Bump version to ${NEXT_VERSION}" \
-            --body "Automated version bump after release v${RELEASE_VERSION}")
+            --base main \
+            --state open \
+            --json number \
+            --jq '.[0].number // empty')
+
+          if [ -n "$existing_pr" ]; then
+            # Update existing PR title and body
+            gh pr edit "$existing_pr" \
+              --repo ${{ github.repository }} \
+              --title "Bump version to ${NEXT_VERSION}" \
+              --body "Automated version bump after release v${RELEASE_VERSION}"
+            pr_url="https://github.com/${{ github.repository }}/pull/${existing_pr}"
+            pr_action="Updated existing"
+          else
+            # Create new PR
+            pr_url=$(gh pr create \
+              --repo ${{ github.repository }} \
+              --base main \
+              --head snapshot \
+              --title "Bump version to ${NEXT_VERSION}" \
+              --body "Automated version bump after release v${RELEASE_VERSION}")
+            pr_action="Created"
+          fi
 
           # Enable auto-merge
           gh pr merge "$pr_url" --auto --squash
@@ -164,6 +184,6 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Snapshot Version Bump" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Created PR to bump version to \`${NEXT_VERSION}\`" >> $GITHUB_STEP_SUMMARY
+          echo "${pr_action} PR to bump version to \`${NEXT_VERSION}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Auto-merge enabled - PR will merge after checks pass." >> $GITHUB_STEP_SUMMARY
