@@ -20,6 +20,7 @@ jobs:
     outputs:
       release_branch: ${{ steps.validate.outputs.branch }}
       next_version: ${{ steps.validate.outputs.next }}
+      release_sha: ${{ steps.verify_tests.outputs.sha }}
     steps:
       - name: Validate release branch exists
         id: validate
@@ -42,6 +43,7 @@ jobs:
           echo "next=$next_version" >> $GITHUB_OUTPUT
 
       - name: Verify tests passed
+        id: verify_tests
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_VERSION: ${{ inputs.release_version }}
@@ -86,7 +88,9 @@ jobs:
             exit 1
           fi
 
-          echo "Tests passed on branch $branch (commit ${test_sha:0:7})"
+          # Output the validated SHA for use in release creation
+          echo "sha=$branch_head" >> $GITHUB_OUTPUT
+          echo "Tests passed on branch $branch (commit ${branch_head:0:7})"
 
   create-release:
     needs: validate
@@ -94,23 +98,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ needs.validate.outputs.release_branch }}
+          ref: ${{ needs.validate.outputs.release_sha }}
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_VERSION: ${{ inputs.release_version }}
-          RELEASE_BRANCH: ${{ needs.validate.outputs.release_branch }}
+          RELEASE_SHA: ${{ needs.validate.outputs.release_sha }}
         run: |
           gh release create "v${RELEASE_VERSION}" \
             --repo ${{ github.repository }} \
-            --target "$RELEASE_BRANCH" \
+            --target "$RELEASE_SHA" \
             --title "v${RELEASE_VERSION}" \
             --generate-notes
 
           echo "## Release Created" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Created release **v${RELEASE_VERSION}**" >> $GITHUB_STEP_SUMMARY
+          echo "Created release **v${RELEASE_VERSION}** at commit ${RELEASE_SHA:0:7}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "The **Release** workflow will now run automatically to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
 
