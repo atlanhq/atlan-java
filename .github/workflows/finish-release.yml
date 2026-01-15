@@ -1,0 +1,143 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2022 Atlan Pte. Ltd.
+name: "Finish Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version (e.g., 6.2.6)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      release_branch: ${{ steps.validate.outputs.branch }}
+      next_version: ${{ steps.validate.outputs.next }}
+    steps:
+      - name: Validate release branch exists
+        id: validate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="release-${{ inputs.release_version }}"
+          echo "branch=$branch" >> $GITHUB_OUTPUT
+
+          # Check branch exists
+          if ! gh api repos/${{ github.repository }}/branches/$branch > /dev/null 2>&1; then
+            echo "::error::Release branch $branch does not exist. Run 'Prepare Release' first."
+            exit 1
+          fi
+
+          # Calculate next snapshot version
+          IFS='.' read -r major minor patch <<< "${{ inputs.release_version }}"
+          next_version="${major}.${minor}.$((patch + 1))-SNAPSHOT"
+          echo "next=$next_version" >> $GITHUB_OUTPUT
+
+      - name: Verify tests passed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="release-${{ inputs.release_version }}"
+
+          # Get the most recent test workflow run on this branch
+          result=$(gh run list \
+            --repo ${{ github.repository }} \
+            --workflow test.yml \
+            --branch $branch \
+            --limit 1 \
+            --json conclusion,status \
+            --jq '.[0]')
+
+          status=$(echo "$result" | jq -r '.status')
+          conclusion=$(echo "$result" | jq -r '.conclusion')
+
+          if [ "$status" != "completed" ]; then
+            echo "::error::Test workflow is still running ($status). Wait for it to complete."
+            exit 1
+          fi
+
+          if [ "$conclusion" != "success" ]; then
+            echo "::error::Test workflow did not succeed (conclusion: $conclusion). Rerun tests before finishing release."
+            exit 1
+          fi
+
+          echo "Tests passed on branch $branch"
+
+  create-release:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.release_branch }}
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ inputs.release_version }}" \
+            --repo ${{ github.repository }} \
+            --target ${{ needs.validate.outputs.release_branch }} \
+            --title "v${{ inputs.release_version }}" \
+            --generate-notes
+
+          echo "## Release Created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Created release **v${{ inputs.release_version }}**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The **Release** workflow will now run automatically to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
+
+  bump-snapshot:
+    needs: [validate, create-release]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update snapshot branch and create PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Update snapshot branch from main
+          git fetch origin snapshot:snapshot 2>/dev/null || git checkout -b snapshot
+          git checkout snapshot
+          git reset --hard origin/main
+
+          # Bump to next snapshot version
+          sed -i "s/^VERSION_NAME=.*/VERSION_NAME=${{ needs.validate.outputs.next_version }}/" gradle.properties
+          git add gradle.properties
+          git commit -m "Bump version to ${{ needs.validate.outputs.next_version }}"
+
+          # Force push snapshot branch
+          git push --force origin snapshot
+
+          # Create PR with auto-merge
+          pr_url=$(gh pr create \
+            --repo ${{ github.repository }} \
+            --base main \
+            --head snapshot \
+            --title "Bump version to ${{ needs.validate.outputs.next_version }}" \
+            --body "Automated version bump after release v${{ inputs.release_version }}")
+
+          # Enable auto-merge
+          gh pr merge "$pr_url" --auto --squash
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Snapshot Version Bump" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Created PR to bump version to \`${{ needs.validate.outputs.next_version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Auto-merge enabled - PR will merge after checks pass." >> $GITHUB_STEP_SUMMARY

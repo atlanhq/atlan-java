@@ -1,0 +1,104 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2022 Atlan Pte. Ltd.
+name: "Prepare Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate versions
+        id: version
+        run: |
+          # Extract current snapshot version
+          current=$(grep '^VERSION_NAME=' gradle.properties | cut -d'=' -f2)
+          # Remove -SNAPSHOT suffix
+          base_version=${current%-SNAPSHOT}
+
+          # Parse version components
+          IFS='.' read -r major minor patch <<< "$base_version"
+
+          # Calculate release version based on bump type
+          case "${{ inputs.bump_type }}" in
+            major)
+              release_version="$((major + 1)).0.0"
+              next_version="$((major + 1)).0.1-SNAPSHOT"
+              ;;
+            minor)
+              release_version="${major}.$((minor + 1)).0"
+              next_version="${major}.$((minor + 1)).1-SNAPSHOT"
+              ;;
+            patch)
+              release_version="${base_version}"
+              next_version="${major}.${minor}.$((patch + 1))-SNAPSHOT"
+              ;;
+          esac
+
+          echo "release=$release_version" >> $GITHUB_OUTPUT
+          echo "next=$next_version" >> $GITHUB_OUTPUT
+          branch="release-$release_version"
+          echo "branch=$branch" >> $GITHUB_OUTPUT
+
+          echo "## Release Preparation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Release Version | \`$release_version\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Next Snapshot | \`$next_version\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release Branch | \`$branch\` |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check if release branch already exists
+        id: check_branch
+        run: |
+          if git ls-remote --exit-code --heads origin ${{ steps.version.outputs.branch }} > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "::notice::Release branch ${{ steps.version.outputs.branch }} already exists. Skipping branch creation."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create release branch
+        if: steps.check_branch.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ steps.version.outputs.branch }}
+          sed -i "s/^VERSION_NAME=.*/VERSION_NAME=${{ steps.version.outputs.release }}/" gradle.properties
+          git add gradle.properties
+          git commit -m "Release ${{ steps.version.outputs.release }}"
+          git push origin ${{ steps.version.outputs.branch }}
+
+      - name: Trigger test workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Triggering test workflow on branch ${{ steps.version.outputs.branch }}..."
+          gh workflow run test.yml \
+            --repo ${{ github.repository }} \
+            --ref ${{ steps.version.outputs.branch }}
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Wait for the **Test** workflow to complete on branch \`${{ steps.version.outputs.branch }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "2. If tests fail ephemerally, rerun them manually" >> $GITHUB_STEP_SUMMARY
+          echo "3. Once tests pass, run **Finish Release** workflow with version \`${{ steps.version.outputs.release }}\`" >> $GITHUB_STEP_SUMMARY
