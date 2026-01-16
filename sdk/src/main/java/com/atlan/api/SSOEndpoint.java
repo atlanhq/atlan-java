@@ -193,7 +193,9 @@ public class SSOEndpoint extends HeraclesEndpoint {
      * @param ssoGroupName name of the SSO group
      * @return created SSO group mapping
      * @throws AtlanException on any API communication issue
+     * @deprecated see {@link #updateGroupMapping(SSOMapping, AtlanGroup, String)}
      */
+    @Deprecated
     public SSOMapping updateGroupMapping(String ssoAlias, AtlanGroup group, String groupMapId, String ssoGroupName)
             throws AtlanException {
         return updateGroupMapping(ssoAlias, group, groupMapId, ssoGroupName, null);
@@ -209,7 +211,9 @@ public class SSOEndpoint extends HeraclesEndpoint {
      * @param options to override default client settings
      * @return created SSO group mapping
      * @throws AtlanException on any API communication issue
+     * @deprecated see {@link #updateGroupMapping(SSOMapping, AtlanGroup, String, RequestOptions)}
      */
+    @Deprecated
     public SSOMapping updateGroupMapping(
             String ssoAlias, AtlanGroup group, String groupMapId, String ssoGroupName, RequestOptions options)
             throws AtlanException {
@@ -226,6 +230,50 @@ public class SSOEndpoint extends HeraclesEndpoint {
                 .identityProviderMapper(IDP_GROUP_MAPPER)
                 .build();
         String url = String.format("%s%s/%s/mappers/%s", getBaseUrl(), endpoint, ssoAlias, groupMapId);
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, SSOMapping.class, options);
+    }
+
+    /**
+     * Updates an existing Atlan SSO group mapping.
+     *
+     * @param mapping the mapping to update
+     * @param group existing Atlan group
+     * @param ssoGroupName name of the SSO group
+     * @return updated SSO group mapping
+     * @throws AtlanException on any API communication issue
+     */
+    public SSOMapping updateGroupMapping(SSOMapping mapping, AtlanGroup group, String ssoGroupName)
+            throws AtlanException {
+        return updateGroupMapping(mapping, group, ssoGroupName, null);
+    }
+
+    /**
+     * Updates an existing Atlan SSO group mapping.
+     *
+     * @param mapping the mapping to update
+     * @param group existing Atlan group
+     * @param ssoGroupName existing SSO group mapping identifier
+     * @param options to override default client settings
+     * @return updated SSO group mapping
+     * @throws AtlanException on any API communication issue
+     */
+    public SSOMapping updateGroupMapping(
+            SSOMapping mapping, AtlanGroup group, String ssoGroupName, RequestOptions options) throws AtlanException {
+        SSOMapping request = SSOMapping.builder()
+                .id(mapping.getId())
+                .name(mapping.getName())
+                .config(SSOMapping.Config.builder()
+                        .attributes("[]")
+                        .syncMode(GROUP_MAPPER_SYNC_MODE)
+                        .attributeName(GROUP_MAPPER_ATTRIBUTE)
+                        .attributeValue(ssoGroupName)
+                        .groupName(group.getName())
+                        .build())
+                .identityProviderAlias(mapping.getIdentityProviderAlias())
+                .identityProviderMapper(IDP_GROUP_MAPPER)
+                .build();
+        String url = String.format(
+                "%s%s/%s/mappers/%s", getBaseUrl(), endpoint, mapping.getIdentityProviderAlias(), mapping.getId());
         return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, SSOMapping.class, options);
     }
 
