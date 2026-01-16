@@ -70,8 +70,7 @@ public class SSOTest extends AtlanLiveTest {
             groups = {"sso.update.mapping"},
             dependsOnGroups = {"sso.create.mapping.again"})
     void updateSsoMapping() throws AtlanException {
-        SSOMapping updated =
-                client.sso.updateGroupMapping(SSO_TYPE, group1, groupMapping.getId(), SSO_GROUP_NAME_UPDATED);
+        SSOMapping updated = client.sso.updateGroupMapping(groupMapping, group1, SSO_GROUP_NAME_UPDATED);
         validateSsoMapping(group1, updated, true);
     }
 
@@ -106,11 +105,10 @@ public class SSOTest extends AtlanLiveTest {
         assertNull(mapping.getConfig().getAttributeFriendlyName());
         assertEquals(mapping.getConfig().getSyncMode(), SSOEndpoint.GROUP_MAPPER_SYNC_MODE);
         assertEquals(mapping.getConfig().getAttributeName(), SSOEndpoint.GROUP_MAPPER_ATTRIBUTE);
+        assertTrue(mapping.getName().contains(group.getId()));
         if (isUpdated) {
-            assertNull(mapping.getName());
             assertEquals(mapping.getConfig().getAttributeValue(), SSO_GROUP_NAME_UPDATED);
         } else {
-            assertTrue(mapping.getName().contains(group.getId()));
             assertEquals(mapping.getConfig().getAttributeValue(), SSO_GROUP_NAME);
         }
     }
