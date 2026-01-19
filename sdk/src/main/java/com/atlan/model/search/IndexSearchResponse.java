@@ -218,7 +218,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                     MASS_EXTRACT_THRESHOLD);
             return bulkStream();
         } else {
-            return StreamSupport.stream(Spliterators.spliterator(iterator(), approximateCount, CHARACTERISTICS), false);
+            return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator(), CHARACTERISTICS), false);
         }
     }
 
@@ -230,7 +230,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
      * @return a lazily-loaded stream of results from the search
      */
     public Stream<Asset> bulkStream() {
-        return StreamSupport.stream(Spliterators.spliterator(biterator(), approximateCount, CHARACTERISTICS), false);
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(biterator(), CHARACTERISTICS), false);
     }
 
     /**
