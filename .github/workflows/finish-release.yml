@@ -13,6 +13,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 jobs:
   validate:
@@ -99,6 +100,8 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
         with:
           ref: ${{ needs.validate.outputs.release_sha }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Create GitHub Release
         env:
@@ -106,17 +109,45 @@ jobs:
           RELEASE_VERSION: ${{ inputs.release_version }}
           RELEASE_SHA: ${{ needs.validate.outputs.release_sha }}
         run: |
-          gh release create "v${RELEASE_VERSION}" \
-            --repo ${{ github.repository }} \
-            --target "$RELEASE_SHA" \
-            --title "v${RELEASE_VERSION}" \
+          # Find the previous release tag (highest version that isn't the current release)
+          # This assumes strictly incrementing versions (no backport releases to older branches)
+          previous_tag=$(git tag -l 'v*' --sort=-v:refname | grep -Fxv "v${RELEASE_VERSION}" | head -1)
+
+          # Build release command with optional --notes-start-tag
+          release_args=(
+            "v${RELEASE_VERSION}"
+            --repo "${{ github.repository }}"
+            --target "$RELEASE_SHA"
+            --title "v${RELEASE_VERSION}"
             --generate-notes
+          )
+
+          if [ -n "$previous_tag" ]; then
+            release_args+=(--notes-start-tag "$previous_tag")
+            echo "Generating release notes from $previous_tag to v${RELEASE_VERSION}"
+          fi
+
+          gh release create "${release_args[@]}"
 
           echo "## Release Created" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Created release **v${RELEASE_VERSION}** at commit ${RELEASE_SHA:0:7}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Trigger Release workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
+        run: |
+          # Releases created with GITHUB_TOKEN don't trigger other workflows,
+          # so we manually trigger the Release workflow on the release tag
+          gh workflow run release.yml \
+            --repo ${{ github.repository }} \
+            --ref "v${RELEASE_VERSION}"
+
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The **Release** workflow will now run automatically to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
+          echo "## Release Workflow" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Triggered **Release** workflow on tag \`v${RELEASE_VERSION}\` to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
 
   bump-snapshot:
     needs: [validate, create-release]
@@ -178,12 +209,18 @@ jobs:
             pr_action="Created"
           fi
 
-          # Enable auto-merge
-          gh pr merge "$pr_url" --auto --squash
+          # Try to enable auto-merge (may fail if token lacks permission on protected branch)
+          if gh pr merge "$pr_url" --auto --squash 2>/dev/null; then
+            auto_merge_status="Auto-merge enabled - PR will merge after checks pass."
+          else
+            auto_merge_status="⚠️ Could not enable auto-merge (requires manual merge or admin permissions)."
+          fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Snapshot Version Bump" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "${pr_action} PR to bump version to \`${NEXT_VERSION}\`" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Auto-merge enabled - PR will merge after checks pass." >> $GITHUB_STEP_SUMMARY
+          echo "$auto_merge_status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "PR: $pr_url" >> $GITHUB_STEP_SUMMARY
