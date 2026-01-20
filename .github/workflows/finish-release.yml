@@ -133,15 +133,18 @@ jobs:
       - name: Trigger Release workflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_VERSION: ${{ inputs.release_version }}
         run: |
           # Releases created with GITHUB_TOKEN don't trigger other workflows,
-          # so we manually trigger the Release workflow
-          gh workflow run release.yml --repo ${{ github.repository }}
+          # so we manually trigger the Release workflow on the release tag
+          gh workflow run release.yml \
+            --repo ${{ github.repository }} \
+            --ref "v${RELEASE_VERSION}"
 
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Release Workflow" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Triggered **Release** workflow to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
+          echo "Triggered **Release** workflow on tag \`v${RELEASE_VERSION}\` to publish to Maven Central and build containers." >> $GITHUB_STEP_SUMMARY
 
   bump-snapshot:
     needs: [validate, create-release]
