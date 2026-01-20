@@ -111,7 +111,7 @@ jobs:
         run: |
           # Find the previous release tag (highest version that isn't the current release)
           # This assumes strictly incrementing versions (no backport releases to older branches)
-          previous_tag=$(git tag -l 'v*' --sort=-v:refname | grep -v "^v${RELEASE_VERSION}$" | head -1)
+          previous_tag=$(git tag -l 'v*' --sort=-v:refname | grep -Fxv "v${RELEASE_VERSION}" | head -1)
 
           # Build release command with optional --notes-start-tag
           release_args=(
