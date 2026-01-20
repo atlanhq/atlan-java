@@ -100,6 +100,8 @@ jobs:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8  # v6.0.1
         with:
           ref: ${{ needs.validate.outputs.release_sha }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Create GitHub Release
         env:
@@ -107,8 +109,9 @@ jobs:
           RELEASE_VERSION: ${{ inputs.release_version }}
           RELEASE_SHA: ${{ needs.validate.outputs.release_sha }}
         run: |
-          # Find the previous release tag to generate notes from
-          previous_tag=$(gh release list --repo ${{ github.repository }} --limit 1 --json tagName --jq '.[0].tagName // empty')
+          # Find the previous release tag using git (semantic version sort)
+          # This is more reliable than gh release list which sorts by creation date
+          previous_tag=$(git tag -l 'v*' --sort=-v:refname | head -1)
 
           # Build release command with optional --notes-start-tag
           release_args=(
