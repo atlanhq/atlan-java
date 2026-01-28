@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:2.3.0")
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.1.0")
+    implementation("com.diffplug.spotless:spotless-plugin-gradle:8.2.1")
     implementation("io.freefair.gradle:lombok-plugin:9.2.0")
     implementation("net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin:4.3.0")
     implementation("com.adarshr:gradle-test-logger-plugin:4.0.0")
