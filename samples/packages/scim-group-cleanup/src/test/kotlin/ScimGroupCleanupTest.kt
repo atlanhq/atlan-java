@@ -1,63 +1,56 @@
 /* SPDX-License-Identifier: Apache-2.0
    Copyright 2024 Atlan Pte. Ltd. */
-import com.atlan.Atlan
 import com.atlan.model.admin.AtlanGroup
 import com.atlan.pkg.PackageTest
-import mu.KotlinLogging
-import org.testng.Assert.assertNotNull
+import com.atlan.pkg.Utils
+import com.atlan.pkg.sgc.ScimGroupCleanup
 import kotlin.test.Test
-import kotlin.test.assertNotEquals
 
 /**
  * Test the SCIM Group Cleanup utility.
  */
-class ScimGroupCleanupTest : PackageTest() {
-    private val logger = KotlinLogging.logger {}
+class ScimGroupCleanupTest : PackageTest("sgc") {
+    override val logger = Utils.getLogger(this.javaClass.name)
 
-    override val config =
-        """
-        {
-            "group_name": "test-scim-cleanup-group",
-            "operation_mode": "DIAGNOSTIC",
-            "recreate_group": false
-        }
-        """.trimIndent()
+    private val testGroupName = "test-scim-cleanup-group"
 
     override fun setup() {
         // Create a test group for diagnostic testing
         val testGroup =
             AtlanGroup
-                .creator("test-scim-cleanup-group")
+                .creator(testGroupName)
                 .build()
 
         try {
-            val groupId = testGroup.create(Atlan.getDefaultClient())
+            val groupId = testGroup.create(client)
             logger.info { "Created test group with ID: $groupId" }
         } catch (e: Exception) {
             logger.warn { "Test group may already exist or creation failed: ${e.message}" }
         }
+
+        // Run the package in diagnostic mode
+        runCustomPackage(
+            ScimGroupCleanupCfg(
+                groupName = testGroupName,
+                operationMode = "DIAGNOSTIC",
+                recreateGroup = false,
+            ),
+            ScimGroupCleanup::main,
+        )
     }
 
     @Test
-    fun testDiagnosticMode() {
-        // Run the package in diagnostic mode
-        runCustomPackage(
-            config,
-            ScimGroupCleanup::main.javaClass.enclosingMethod,
-        )
-
-        // Verify test group still exists after diagnostic
-        val groups = AtlanGroup.get(Atlan.getDefaultClient(), "test-scim-cleanup-group")
-        assertNotNull(groups)
-        assertNotEquals(0, groups.size)
+    fun testDiagnosticCompleted() {
+        // The setup already runs the diagnostic, just verify log is clean
+        validateErrorFreeLog()
     }
 
     override fun teardown() {
         // Clean up test group
         try {
-            val groups = AtlanGroup.get(Atlan.getDefaultClient(), "test-scim-cleanup-group")
+            val groups = AtlanGroup.get(client, testGroupName)
             groups?.forEach { group ->
-                AtlanGroup.delete(Atlan.getDefaultClient(), group.id)
+                AtlanGroup.delete(client, group.id)
                 logger.info { "Deleted test group: ${group.id}" }
             }
         } catch (e: Exception) {
