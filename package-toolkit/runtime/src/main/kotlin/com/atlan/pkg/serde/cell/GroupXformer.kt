@@ -55,7 +55,10 @@ object GroupXformer {
                     }
                 }
             }
-            else -> groupRef
+
+            else -> {
+                groupRef
+            }
         }
     }
 }

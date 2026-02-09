@@ -122,24 +122,28 @@ abstract class AssetImporter(
                     unique = ConnectionIdentity(connection, connector).toString()
                     partial = ""
                 }
+
                 Cube.TYPE_NAME -> {
                     current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, Connection.TYPE_NAME)
                     unique = Cube.generateQualifiedName(current, parent.uniqueQN)
                     partial = current
                 }
+
                 CubeDimension.TYPE_NAME -> {
                     current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_DIMENSION_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, Cube.TYPE_NAME)
                     unique = CubeDimension.generateQualifiedName(current, parent.uniqueQN)
                     partial = CubeDimension.generateQualifiedName(current, parent.partialQN)
                 }
+
                 CubeHierarchy.TYPE_NAME -> {
                     current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(IMultiDimensionalDataset.CUBE_HIERARCHY_NAME.atlanFieldName)) { "" })
                     parent = getQualifiedNameDetails(row, header, CubeDimension.TYPE_NAME)
                     unique = CubeHierarchy.generateQualifiedName(current, parent.uniqueQN)
                     partial = CubeHierarchy.generateQualifiedName(current, parent.partialQN)
                 }
+
                 CubeField.TYPE_NAME -> {
                     current = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(FieldImporter.FIELD_NAME)) { "" })
                     val parentField = CSVXformer.trimWhitespace(row.getOrElse(header.indexOf(FieldImporter.PARENT_FIELD_QN)) { "" })
@@ -165,7 +169,10 @@ abstract class AssetImporter(
                         partial = CubeField.generateQualifiedName(current, parent.partialQN)
                     }
                 }
-                else -> throw IllegalStateException("Unknown multi-dimensional dataset type: $typeName")
+
+                else -> {
+                    throw IllegalStateException("Unknown multi-dimensional dataset type: $typeName")
+                }
             }
             return QualifiedNameDetails(
                 unique,

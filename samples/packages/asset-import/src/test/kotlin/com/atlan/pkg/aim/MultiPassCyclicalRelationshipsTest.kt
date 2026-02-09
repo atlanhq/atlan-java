@@ -205,6 +205,7 @@ class MultiPassCyclicalRelationshipsTest : PackageTest("mpcr") {
                     assertTrue(entity.modelEntityMappedFromEntities.isNullOrEmpty())
                     assertEquals("P_E2", entity.modelEntityMappedToEntities.first().name)
                 }
+
                 "P_E2" -> {
                     assertTrue(entity.modelEntityMappedToEntities.isNullOrEmpty())
                     assertEquals(1, entity.modelEntityMappedFromEntities.size)

@@ -50,7 +50,10 @@ object GlossaryTermXformer {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
     }
 
@@ -79,6 +82,9 @@ object GlossaryTermXformer {
                     ?.build()
                     ?: throw NoSuchElementException("Term not found (in $fieldName): $assetRef")
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
 }

@@ -67,10 +67,12 @@ class TLAxQ(
                 size = (sql.sizeBytes ?: 0) / BYTES_IN_GB
                 rows = sql.rowCount ?: 0
             }
+
             is MaterializedView -> {
                 size = (sql.sizeBytes ?: 0) / BYTES_IN_GB
                 rows = sql.rowCount ?: 0
             }
+
             else -> {
                 size = 0.0
                 rows = 0

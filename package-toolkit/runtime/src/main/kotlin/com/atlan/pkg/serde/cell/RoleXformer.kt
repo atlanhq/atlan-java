@@ -53,7 +53,10 @@ object RoleXformer {
                     }
                 }
             }
-            else -> roleRef
+
+            else -> {
+                roleRef
+            }
         }
     }
 }

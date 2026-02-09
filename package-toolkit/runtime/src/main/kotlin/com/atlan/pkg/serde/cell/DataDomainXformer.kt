@@ -37,7 +37,10 @@ object DataDomainXformer {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
 
     /**
@@ -77,6 +80,7 @@ object DataDomainXformer {
                 val (ref, _) = getSemantic(assetRef)
                 getDomainByIdentity(ctx, ref, fieldName)
             }
+
             Asset.DOMAIN_GUIDS.atlanFieldName -> {
                 val (ref, _) = getSemantic(assetRef)
                 if (StringUtils.isUUID(ref)) {
@@ -86,7 +90,10 @@ object DataDomainXformer {
                     getDomainByIdentity(ctx, ref, fieldName)
                 }
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
 
     /**

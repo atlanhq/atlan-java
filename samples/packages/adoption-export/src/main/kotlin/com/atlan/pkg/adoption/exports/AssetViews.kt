@@ -34,6 +34,7 @@ class AssetViews(
                     )
                     SearchLog.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), false).associateBy { it.guid }
                 }
+
                 "BY_USERS" -> {
                     writer.writeHeader(
                         mapOf(
@@ -47,7 +48,10 @@ class AssetViews(
                     )
                     SearchLog.mostViewedAssets(ctx.client, ctx.config.viewsMax.toInt(), true).associateBy { it.guid }
                 }
-                else -> mapOf()
+
+                else -> {
+                    mapOf()
+                }
             }
 
         // Then iterate through the unique assets

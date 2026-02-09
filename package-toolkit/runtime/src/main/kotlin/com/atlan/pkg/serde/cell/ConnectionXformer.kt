@@ -32,7 +32,10 @@ object ConnectionXformer {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
     }
 
@@ -66,6 +69,9 @@ object ConnectionXformer {
                 ctx.connectionCache.getByIdentity(assetRef)
                     ?: throw NoSuchElementException("Connection not found (in $fieldName): $assetRef")
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
 }

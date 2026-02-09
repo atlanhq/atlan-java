@@ -232,16 +232,19 @@ class ImportGlossariesTest : PackageTest("ig") {
                     assertTrue(category.ownerUsers.isNullOrEmpty())
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
+
                 "Cat2" -> {
                     assertEquals("Test category 2 for asset import package.", category.userDescription)
                     assertEquals(setOf("chris", chris), category.ownerUsers)
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
+
                 "Cat1.a" -> {
                     assertEquals("Test category 1.a for asset import package (unordered).", category.userDescription)
                     assertEquals(setOf("chris"), category.ownerUsers)
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
+
                 "Cat1.a.i" -> {
                     assertEquals("Test category 1.a.i for asset import package (unordered).", category.userDescription)
                     assertTrue(category.ownerUsers.isNullOrEmpty())
@@ -273,11 +276,13 @@ class ImportGlossariesTest : PackageTest("ig") {
                     assertTrue(category.ownerUsers.isNullOrEmpty())
                     assertEquals(setOf("admins"), category.ownerGroups)
                 }
+
                 "Cat4" -> {
                     assertEquals("Test category 4 for asset import package.", category.userDescription)
                     assertTrue(category.ownerUsers.isNullOrEmpty())
                     assertTrue(category.ownerGroups.isNullOrEmpty())
                 }
+
                 "Cat4.a" -> {
                     assertEquals("Test category 4.a for asset import package (unordered).", category.userDescription)
                     assertTrue(category.ownerUsers.isNullOrEmpty())
@@ -358,6 +363,7 @@ class ImportGlossariesTest : PackageTest("ig") {
                     assertTrue(term.validValuesFor.isNullOrEmpty())
                     assertTrue(term.classifies.isNullOrEmpty())
                 }
+
                 "TermB" -> {
                     assertEquals(1, term.categories.size)
                     assertEquals(setOf("Cat3"), term.categories.map(IGlossaryCategory::getName).toSet())
@@ -384,6 +390,7 @@ class ImportGlossariesTest : PackageTest("ig") {
                     assertEquals(1, term.classifies.size)
                     assertEquals(setOf("Term3"), term.classifies.map(IGlossaryTerm::getName).toSet())
                 }
+
                 "TermD" -> {
                     assertEquals(1, term.categories.size)
                     assertEquals(setOf("Cat4"), term.categories.map(IGlossaryCategory::getName).toSet())

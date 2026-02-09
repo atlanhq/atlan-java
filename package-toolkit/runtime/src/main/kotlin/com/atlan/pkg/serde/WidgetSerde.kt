@@ -179,7 +179,10 @@ object WidgetSerde {
                             gen?.writeString(value.toJson(client))
                         }
                     }
-                    else -> gen?.writeString(mapper.writeValueAsString(value))
+
+                    else -> {
+                        gen?.writeString(mapper.writeValueAsString(value))
+                    }
                 }
             }
         }

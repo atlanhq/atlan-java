@@ -111,7 +111,9 @@ class Policies(
                 } ?: ""
             }
 
-            else -> ""
+            else -> {
+                ""
+            }
         }
     }
 }

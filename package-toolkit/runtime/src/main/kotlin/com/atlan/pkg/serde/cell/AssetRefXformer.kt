@@ -66,7 +66,10 @@ object AssetRefXformer {
         // Handle some assets as direct embeds
         val baseEncoding =
             when (asset) {
-                is Readme -> asset.description ?: ""
+                is Readme -> {
+                    asset.description ?: ""
+                }
+
                 is Link -> {
                     // Transform to a set of useful, non-overlapping info
                     Link
@@ -76,11 +79,27 @@ object AssetRefXformer {
                         .build()
                         .toJson(ctx.client)
                 }
-                is Glossary -> GlossaryXformer.encode(ctx, asset)
-                is GlossaryCategory -> GlossaryCategoryXformer.encode(ctx, asset)
-                is GlossaryTerm -> GlossaryTermXformer.encode(ctx, asset)
-                is DataDomain -> DataDomainXformer.encode(ctx, asset)
-                is IModel -> ModelAssetXformer.encode(ctx, asset)
+
+                is Glossary -> {
+                    GlossaryXformer.encode(ctx, asset)
+                }
+
+                is GlossaryCategory -> {
+                    GlossaryCategoryXformer.encode(ctx, asset)
+                }
+
+                is GlossaryTerm -> {
+                    GlossaryTermXformer.encode(ctx, asset)
+                }
+
+                is DataDomain -> {
+                    DataDomainXformer.encode(ctx, asset)
+                }
+
+                is IModel -> {
+                    ModelAssetXformer.encode(ctx, asset)
+                }
+
                 else -> {
                     var qualifiedName = asset.qualifiedName
                     if (asset.qualifiedName.isNullOrEmpty() && asset.uniqueAttributes != null) {
@@ -123,14 +142,17 @@ object AssetRefXformer {
                         fieldOverrideForType = "assignedTerms"
                         refOverride = remainder
                     }
+
                     "CATEGORY" -> {
                         fieldOverrideForType = GlossaryTerm.CATEGORIES.atlanFieldName
                         refOverride = remainder
                     }
+
                     "GLOSSARY" -> {
                         fieldOverrideForType = GlossaryCategory.ANCHOR.atlanFieldName
                         refOverride = remainder
                     }
+
                     "DOMAIN" -> {
                         fieldOverrideForType = DataProduct.DATA_DOMAIN.atlanFieldName
                         refOverride = remainder
@@ -141,19 +163,38 @@ object AssetRefXformer {
         }
         val baseRef =
             when (fieldOverrideForType) {
-                Asset.README.atlanFieldName -> Readme._internal().description(refOverride).build()
+                Asset.README.atlanFieldName -> {
+                    Readme._internal().description(refOverride).build()
+                }
+
                 Asset.LINKS.atlanFieldName -> {
                     val (linkJson, semantic) = getSemantic(refOverride)
                     val link = ctx.client.readValue(linkJson, Link::class.java)
                     link.toBuilder().semantic(semantic).build()
                 }
+
                 GlossaryCategory.PARENT_CATEGORY.atlanFieldName,
                 GlossaryTerm.CATEGORIES.atlanFieldName,
-                -> GlossaryCategoryXformer.decode(ctx, refOverride, fieldOverrideForType)
-                GlossaryCategory.ANCHOR.atlanFieldName -> GlossaryXformer.decode(ctx, refOverride, fieldOverrideForType)
-                "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> GlossaryTermXformer.decode(ctx, refOverride, fieldOverrideForType)
-                DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> DataDomainXformer.decode(ctx, refOverride, fieldOverrideForType)
-                in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> ModelAssetXformer.decode(ctx, refOverride, fieldOverrideForType)
+                -> {
+                    GlossaryCategoryXformer.decode(ctx, refOverride, fieldOverrideForType)
+                }
+
+                GlossaryCategory.ANCHOR.atlanFieldName -> {
+                    GlossaryXformer.decode(ctx, refOverride, fieldOverrideForType)
+                }
+
+                "assignedTerms", in GlossaryTermXformer.TERM_TO_TERM_FIELDS -> {
+                    GlossaryTermXformer.decode(ctx, refOverride, fieldOverrideForType)
+                }
+
+                DataDomain.PARENT_DOMAIN.atlanFieldName, DataProduct.DATA_DOMAIN.atlanFieldName -> {
+                    DataDomainXformer.decode(ctx, refOverride, fieldOverrideForType)
+                }
+
+                in ModelAssetXformer.MODEL_ASSET_REF_FIELDS -> {
+                    ModelAssetXformer.decode(ctx, refOverride, fieldOverrideForType)
+                }
+
                 else -> {
                     val (refOnly, semantic) = getSemantic(refOverride)
                     val typeName = refOnly.substringBefore(TYPE_QN_DELIMITER)
@@ -180,7 +221,10 @@ object AssetRefXformer {
                 val (_, semantic) = getSemantic(refOverride)
                 UserDefRelationshipXformer.decode(ctx, baseRef, semantic, properties)
             }
-            else -> baseRef
+
+            else -> {
+                baseRef
+            }
         }
     }
 
@@ -271,6 +315,7 @@ object AssetRefXformer {
                                         }
                                     }
                                 }
+
                                 LinkIdempotencyInvariant.NAME -> {
                                     if (link.name == related.name) {
                                         logger.debug { "Found matching name for: ${link.name}" }

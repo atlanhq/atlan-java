@@ -66,6 +66,7 @@ class Purposes(
                             groups.addAll(policy.policyGroups)
                             users.addAll(policy.policyUsers)
                         }
+
                         "data" -> {
                             dataPolicyCount += 1
                             groups.addAll(policy.policyGroups)

@@ -65,6 +65,7 @@ class DetailedUserChanges(
                         AuditActionType.PROPAGATED_ATLAN_TAG_UPDATE,
                         AuditActionType.PROPAGATED_ATLAN_TAG_DELETE,
                         -> "background"
+
                         else -> it.headers?.get("x-atlan-agent") ?: "UI"
                     }
                 writer.writeRecord(

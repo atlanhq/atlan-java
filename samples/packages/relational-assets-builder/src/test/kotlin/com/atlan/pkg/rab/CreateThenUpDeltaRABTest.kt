@@ -348,6 +348,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                     assertTrue(tag.removePropagationsOnEntityDelete)
                     assertFalse(tag.restrictPropagationThroughLineage)
                 }
+
                 tag2 -> {
                     assertFalse(tag.propagate)
                 }
@@ -413,6 +414,7 @@ class CreateThenUpDeltaRABTest : PackageTest("ctud") {
                     assertEquals(255, col.maxLength)
                     assertEquals("NVARCHAR(255)", col.rawDataTypeDefinition)
                 }
+
                 "COL2" -> {
                     assertEquals("BIGINT", col.dataType)
                     assertEquals(2, col.order)

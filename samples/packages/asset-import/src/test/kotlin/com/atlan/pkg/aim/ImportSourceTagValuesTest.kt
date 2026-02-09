@@ -111,6 +111,7 @@ class ImportSourceTagValuesTest : PackageTest("istv") {
                     assertTrue(attachments[0].sourceTagValues[0].tagAttachmentKey.isNullOrBlank())
                     assertEquals("Not Restricted", attachments[0].sourceTagValues[0].tagAttachmentValue)
                 }
+
                 // "Hourly" -> {
                 //     assertEquals("hourly", attachments[0].sourceTagName)
                 //     assertEquals("$dbtQN/account/24670/project/211208/tag/hourly", attachments[0].sourceTagQualifiedName)
