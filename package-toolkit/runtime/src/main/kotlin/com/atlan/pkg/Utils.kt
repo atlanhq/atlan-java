@@ -395,7 +395,10 @@ object Utils {
         }
         return when (default) {
             // TODO: likely need to extend to other types
-            is List<*> -> getOrDefault(null, default as List<String>) as T
+            is List<*> -> {
+                getOrDefault(null, default as List<String>) as T
+            }
+
             else -> {
                 // Recognize the default file location, and if found treat it as
                 // a blank value
@@ -1101,9 +1104,18 @@ object Utils {
      */
     fun getBackingStore(directory: String = Paths.get(separator, "tmp").toString()): ObjectStorageSyncer =
         when (val cloud = getEnvVar("CLOUD_PROVIDER", "local")) {
-            "aws" -> S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
-            "gcp" -> GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
-            "azure" -> ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
+            "aws" -> {
+                S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
+            }
+
+            "gcp" -> {
+                GCSSync(getEnvVar("GCP_PROJECT_ID"), getEnvVar("GCP_STORAGE_BUCKET"), logger, "")
+            }
+
+            "azure" -> {
+                ADLSSync(getEnvVar("AZURE_STORAGE_ACCOUNT"), getEnvVar("AZURE_STORAGE_CONTAINER_NAME"), logger, "", "", getEnvVar("AZURE_STORAGE_ACCESS_KEY"))
+            }
+
             "local" -> {
                 if (getEnvVar("AWS_S3_BUCKET_NAME").isNotBlank()) {
                     S3Sync(getEnvVar("AWS_S3_BUCKET_NAME"), getEnvVar("AWS_S3_REGION"), logger)
@@ -1111,7 +1123,10 @@ object Utils {
                     LocalSync(directory, logger)
                 }
             }
-            else -> throw IllegalStateException("Unable to determine cloud provider: $cloud")
+
+            else -> {
+                throw IllegalStateException("Unable to determine cloud provider: $cloud")
+            }
         }
 
     /**
@@ -1196,12 +1211,17 @@ object Utils {
         val base = basePath.toAbsolutePath().normalize()
         val resolved = base.resolve(userProvided).normalize()
         when {
-            !resolved.startsWith(base) ->
+            !resolved.startsWith(base) -> {
                 throw IllegalArgumentException("Path traversal attempt detected -- will not proceed due to security implications.")
-            userProvided.contains('\u0000') ->
+            }
+
+            userProvided.contains('\u0000') -> {
                 throw IllegalArgumentException("Null bytes in the path or filename are not allowed.")
-            resolved.toAbsolutePath().toString().length > 800 ->
+            }
+
+            resolved.toAbsolutePath().toString().length > 800 -> {
                 throw IllegalArgumentException("User-provided path and filename are too long (exceeds maximum length of 800 characters).")
+            }
         }
         return resolved
     }

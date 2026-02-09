@@ -57,7 +57,10 @@ object UserXformer {
                     }
                 }
             }
-            else -> userRef
+
+            else -> {
+                userRef
+            }
         }
     }
 }

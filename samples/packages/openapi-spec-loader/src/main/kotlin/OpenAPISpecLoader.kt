@@ -49,8 +49,11 @@ object OpenAPISpecLoader {
 
             val sourceFiles =
                 when (ctx.config.importType) {
-                    "DIRECT" -> listOf(Paths.get(outputDirectory, ctx.config.specFile).toString())
-                    "CLOUD" ->
+                    "DIRECT" -> {
+                        listOf(Paths.get(outputDirectory, ctx.config.specFile).toString())
+                    }
+
+                    "CLOUD" -> {
                         when {
                             ctx.config.specKey.isBlank() && ctx.config.specPrefix.isNotBlank() -> {
                                 Utils.getInputFiles(
@@ -60,6 +63,7 @@ object OpenAPISpecLoader {
                                     ctx.config.specPrefix,
                                 )
                             }
+
                             else -> {
                                 listOf(
                                     Utils.getInputFile(
@@ -72,7 +76,12 @@ object OpenAPISpecLoader {
                                 )
                             }
                         }
-                    "URL" -> listOf(ctx.config.specUrl)
+                    }
+
+                    "URL" -> {
+                        listOf(ctx.config.specUrl)
+                    }
+
                     else -> {
                         logger.error { "Unsupported import type: ${ctx.config.importType}" }
                         exitProcess(5)
@@ -102,11 +111,13 @@ object OpenAPISpecLoader {
                 logger.info { "Loading OpenAPI specification from $sourceFile into: $connectionQN" }
                 loadOpenAPISpec(ctx.client, connectionQN, OpenAPISpecReader(sourceFile), batchSize)
             }
+
             "zip" -> {
                 logger.info { "Extracting and processing ZIP file: $sourceFile" }
                 val extractedFiles = Utils.unzipFiles(sourceFile, outputDirectory)
                 processExtractedFiles(ctx, connectionQN, extractedFiles, batchSize)
             }
+
             else -> {
                 logger.error { "Invalid file type. Please provide a JSON, YAML or ZIP file." }
                 exitProcess(1)

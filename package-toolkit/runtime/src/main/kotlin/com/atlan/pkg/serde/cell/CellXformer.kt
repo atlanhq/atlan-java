@@ -33,6 +33,7 @@ object CellXformer {
                     encodeString(value)
                 }
             }
+
             is Collection<*> -> {
                 val list = mutableListOf<String>()
                 for (element in value) {
@@ -41,6 +42,7 @@ object CellXformer {
                 }
                 return getDelimitedList(list)
             }
+
             is Map<*, *> -> {
                 val list = mutableListOf<String>()
                 for ((key, embeddedValue) in value) {
@@ -48,10 +50,23 @@ object CellXformer {
                 }
                 return getDelimitedList(list)
             }
-            is Asset -> AssetRefXformer.encode(ctx, value)
-            is AtlanEnum -> EnumXformer.encode(value)
-            is AtlanStruct -> StructXformer.encode(ctx.client, value)
-            is AtlanTag -> AtlanTagXformer.encode(ctx.client, guid!!, value)
+
+            is Asset -> {
+                AssetRefXformer.encode(ctx, value)
+            }
+
+            is AtlanEnum -> {
+                EnumXformer.encode(value)
+            }
+
+            is AtlanStruct -> {
+                StructXformer.encode(ctx.client, value)
+            }
+
+            is AtlanTag -> {
+                AtlanTagXformer.encode(ctx.client, guid!!, value)
+            }
+
             is Long -> {
                 if (dates) {
                     TimestampXformer.encode(value)
@@ -59,8 +74,14 @@ object CellXformer {
                     value.toString()
                 }
             }
-            is Any -> value.toString()
-            else -> ""
+
+            is Any -> {
+                value.toString()
+            }
+
+            else -> {
+                ""
+            }
         }
     }
 

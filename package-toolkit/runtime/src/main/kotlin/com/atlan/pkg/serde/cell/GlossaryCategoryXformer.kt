@@ -34,7 +34,10 @@ object GlossaryCategoryXformer {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
 
     /**
@@ -61,6 +64,7 @@ object GlossaryCategoryXformer {
                     ?.build()
                     ?: throw NoSuchElementException("Parent category not found (in $fieldName): $assetRef")
             }
+
             GlossaryTerm.CATEGORIES.atlanFieldName -> {
                 val (ref, semantic) = getSemantic(assetRef)
                 ctx.categoryCache
@@ -71,6 +75,9 @@ object GlossaryCategoryXformer {
                     ?.build()
                     ?: throw NoSuchElementException("Category relationship not found (in $fieldName): $assetRef")
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
 }

@@ -93,6 +93,7 @@ object CustomMetadataExtender {
                 logger.info { "Extending custom metadata to all domains." }
                 domainQNs.addAll(AttributeDefOptions.ALL_DOMAINS)
             }
+
             "SOME" -> {
                 try {
                     val found = DataDomain.findByName(client, domainName)
@@ -106,7 +107,10 @@ object CustomMetadataExtender {
                     logger.error(e) { "Error attempting to lookup domain with name $domainName" }
                 }
             }
-            else -> logger.info { "Not extending custom metadata to any additional domains." }
+
+            else -> {
+                logger.info { "Not extending custom metadata to any additional domains." }
+            }
         }
         val cm = client.customMetadataCache.getByName(cmName)
         if (cm == null) {

@@ -71,6 +71,7 @@ object Exporter {
                     )
                 }
             }
+
             "CLOUD" -> {
                 for (exportFile in exportedFiles) {
                     Utils.uploadOutputFile(

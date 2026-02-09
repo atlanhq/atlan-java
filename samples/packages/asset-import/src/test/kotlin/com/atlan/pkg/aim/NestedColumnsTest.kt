@@ -172,6 +172,7 @@ class NestedColumnsTest : PackageTest("nc") {
                     assertEquals(1, col.order)
                     assertEquals(2, col.nestedColumns.size)
                 }
+
                 "child_1" -> {
                     assertEquals("RECORD", col.dataType)
                     assertEquals(2, col.order)
@@ -181,6 +182,7 @@ class NestedColumnsTest : PackageTest("nc") {
                     assertEquals("parent_column", col.parentColumn.name)
                     assertEquals(1, col.columnHierarchy.size)
                 }
+
                 "child_2" -> {
                     assertEquals("VARCHAR", col.dataType)
                     assertEquals(3, col.order)
@@ -190,6 +192,7 @@ class NestedColumnsTest : PackageTest("nc") {
                     assertEquals("parent_column", col.parentColumn.name)
                     assertEquals(1, col.columnHierarchy.size)
                 }
+
                 "child_2.1" -> {
                     assertEquals("INT", col.dataType)
                     assertEquals(4, col.order)

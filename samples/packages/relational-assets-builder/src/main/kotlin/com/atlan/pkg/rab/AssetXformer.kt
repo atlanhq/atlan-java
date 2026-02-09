@@ -122,14 +122,17 @@ abstract class AssetXformer(
                     current = ConnectionIdentity(connection, connector).toString()
                     parent = null
                 }
+
                 Database.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ISQL.DATABASE_NAME.atlanFieldName) { "" })
                     parent = getSQLHierarchyDetails(row, Connection.TYPE_NAME, entityQualifiedNameToType)
                 }
+
                 Schema.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ISQL.SCHEMA_NAME.atlanFieldName) { "" })
                     parent = getSQLHierarchyDetails(row, Database.TYPE_NAME, entityQualifiedNameToType)
                 }
+
                 "CONTAINER", Table.TYPE_NAME, View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ENTITY_NAME) { "" })
                     parent = getSQLHierarchyDetails(row, Schema.TYPE_NAME, entityQualifiedNameToType)
@@ -142,11 +145,15 @@ abstract class AssetXformer(
                             }
                     }
                 }
+
                 Column.TYPE_NAME -> {
                     current = trimWhitespace(row.getOrElse(ColumnXformer.COLUMN_NAME) { "" })
                     parent = getSQLHierarchyDetails(row, "CONTAINER", entityQualifiedNameToType)
                 }
-                else -> throw IllegalStateException("Unknown SQL type: $typeName")
+
+                else -> {
+                    throw IllegalStateException("Unknown SQL type: $typeName")
+                }
             }
             val unique =
                 parent?.let {
@@ -169,24 +176,28 @@ abstract class AssetXformer(
                     databaseName = parent?.name ?: ""
                     databasePQN = parent?.partialQN ?: ""
                 }
+
                 Table.TYPE_NAME -> {
                     databaseName = parent?.databaseName ?: ""
                     databasePQN = parent?.databasePQN ?: ""
                     schemaName = parent?.name ?: ""
                     schemaPQN = parent?.partialQN ?: ""
                 }
+
                 View.TYPE_NAME -> {
                     databaseName = parent?.databaseName ?: ""
                     databasePQN = parent?.databasePQN ?: ""
                     schemaName = parent?.name ?: ""
                     schemaPQN = parent?.partialQN ?: ""
                 }
+
                 MaterializedView.TYPE_NAME -> {
                     databaseName = parent?.databaseName ?: ""
                     databasePQN = parent?.databasePQN ?: ""
                     schemaName = parent?.name ?: ""
                     schemaPQN = parent?.partialQN ?: ""
                 }
+
                 Column.TYPE_NAME -> {
                     databaseName = parent?.databaseName ?: ""
                     databasePQN = parent?.databasePQN ?: ""
@@ -198,6 +209,7 @@ abstract class AssetXformer(
                             tableName = parent?.name ?: ""
                             tablePQN = parent?.partialQN ?: ""
                         }
+
                         View.TYPE_NAME, MaterializedView.TYPE_NAME -> {
                             viewName = parent?.name ?: ""
                             viewPQN = parent?.partialQN ?: ""

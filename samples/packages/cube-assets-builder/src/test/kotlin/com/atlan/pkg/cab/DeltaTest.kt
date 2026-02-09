@@ -103,7 +103,10 @@ class DeltaTest : PackageTest("cd") {
     fun specificAssetsToDelete() {
         delta!!.assetsToDelete.entrySet().forEach {
             when (it.key.typeName) {
-                CubeHierarchy.TYPE_NAME -> assertEquals("$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2", it.key.qualifiedName)
+                CubeHierarchy.TYPE_NAME -> {
+                    assertEquals("$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2", it.key.qualifiedName)
+                }
+
                 CubeField.TYPE_NAME -> {
                     assertTrue(
                         "$conn1QN/TEST_CUBE/TEST_DIM/TEST_HIERARCHY2/COL4" == it.key.qualifiedName ||

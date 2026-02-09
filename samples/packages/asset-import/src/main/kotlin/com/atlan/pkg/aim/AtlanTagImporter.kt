@@ -225,6 +225,7 @@ class AtlanTagImporter(
                             tag.allowedValues,
                         )
                     }
+
                     "databricks" -> {
                         DatabricksUnityCatalogTag.creator(
                             tag.name,
@@ -234,6 +235,7 @@ class AtlanTagImporter(
                             tag.allowedValues,
                         )
                     }
+
                     "dbt" -> {
                         DbtTag.creator(
                             tag.name,
@@ -245,9 +247,11 @@ class AtlanTagImporter(
                             tag.allowedValues,
                         )
                     }
+
                     "bigquery" -> {
                         throw IllegalArgumentException("Creation and management of tags for BigQuery is not currently supported.")
                     }
+
                     else -> {
                         SourceTag.creator(
                             tag.name,

@@ -68,7 +68,10 @@ object ModelAssetXformer {
                 val ma = asset as IModel
                 "${ma.typeName}$TYPE_QN_DELIMITER${ma.modelVersionAgnosticQualifiedName}"
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
     }
 
@@ -98,6 +101,7 @@ object ModelAssetXformer {
                     throw NoSuchElementException("Model asset not found (in $fieldName): $assetRef")
                 }
             }
+
             in MODEL_ASSET_REF_FIELDS -> {
                 if (typeName.isNotBlank() && qualifiedName.isNotBlank()) {
                     getModelRefByQN(ctx, typeName, qualifiedName)
@@ -107,7 +111,10 @@ object ModelAssetXformer {
                     throw NoSuchElementException("Model asset not found (in $fieldName): $assetRef")
                 }
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
     }
 

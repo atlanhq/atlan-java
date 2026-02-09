@@ -104,28 +104,36 @@ object AtlanTagXformer {
     ) {
         if (atlanTagTokens.size > 1) {
             when (atlanTagTokens[1].uppercase()) {
-                PropagationType.FULL.name ->
+                PropagationType.FULL.name -> {
                     builder
                         .propagate(
                             true,
                         ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(false)
                         .restrictPropagationThroughHierarchy(false)
-                PropagationType.HIERARCHY_ONLY.name ->
+                }
+
+                PropagationType.HIERARCHY_ONLY.name -> {
                     builder
                         .propagate(
                             true,
                         ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(true)
                         .restrictPropagationThroughHierarchy(false)
-                PropagationType.LINEAGE_ONLY.name ->
+                }
+
+                PropagationType.LINEAGE_ONLY.name -> {
                     builder
                         .propagate(
                             true,
                         ).removePropagationsOnEntityDelete(true)
                         .restrictPropagationThroughLineage(false)
                         .restrictPropagationThroughHierarchy(true)
-                else -> builder.propagate(false)
+                }
+
+                else -> {
+                    builder.propagate(false)
+                }
             }
         } else {
             // If there is no propagation option specified, turn off propagation

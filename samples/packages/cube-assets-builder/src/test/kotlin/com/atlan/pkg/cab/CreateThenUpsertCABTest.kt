@@ -318,6 +318,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                     assertTrue(tag.removePropagationsOnEntityDelete)
                     assertFalse(tag.restrictPropagationThroughLineage)
                 }
+
                 tag2 -> {
                     assertFalse(tag.propagate)
                 }
@@ -386,6 +387,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
                 }
+
                 "COL2" -> {
                     assertEquals(displayCol2, field.displayName)
                     assertNotNull(field.cubeParentField)
@@ -396,6 +398,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
                 }
+
                 "COL3" -> {
                     assertEquals(displayCol3, field.displayName)
                     assertNotNull(field.cubeParentField)
@@ -497,6 +500,7 @@ class CreateThenUpsertCABTest : PackageTest("ctu") {
                     assertEquals(1, field.cubeNestedFields.size)
                     assertEquals(1, field.cubeSubFieldCount)
                 }
+
                 "COL2" -> {
                     assertEquals("Test field 5", field.displayName)
                     assertNotNull(field.cubeParentField)

@@ -39,7 +39,10 @@ abstract class AbstractRelationshipAttributesXformer {
                         propertyMap,
                     )
                 }
-                else -> Pair(extendedRef, emptyMap())
+
+                else -> {
+                    Pair(extendedRef, emptyMap())
+                }
             }
     }
 

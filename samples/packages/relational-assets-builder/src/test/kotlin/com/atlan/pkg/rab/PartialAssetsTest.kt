@@ -317,6 +317,7 @@ class PartialAssetsTest : PackageTest("pa") {
                     assertEquals(1, col.order)
                     assertEquals(displayCol1, col.displayName)
                 }
+
                 "COL2" -> {
                     assertEquals("BIGINT", col.dataType)
                     assertEquals(2, col.order)
@@ -403,6 +404,7 @@ class PartialAssetsTest : PackageTest("pa") {
                     assertEquals(1, col.order)
                     assertEquals("Test column 3", col.displayName)
                 }
+
                 "COL4" -> {
                     assertEquals("DECIMAL", col.dataType)
                     assertEquals(2, col.order)

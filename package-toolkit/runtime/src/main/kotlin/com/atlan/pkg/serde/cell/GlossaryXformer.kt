@@ -34,7 +34,10 @@ object GlossaryXformer {
                     ""
                 }
             }
-            else -> AssetRefXformer.encode(ctx, asset)
+
+            else -> {
+                AssetRefXformer.encode(ctx, asset)
+            }
         }
 
     /**
@@ -61,6 +64,9 @@ object GlossaryXformer {
                     ?.build()
                     ?: throw NoSuchElementException("Parent glossary not found (in $fieldName): $assetRef")
             }
-            else -> AssetRefXformer.decode(ctx, assetRef, fieldName)
+
+            else -> {
+                AssetRefXformer.decode(ctx, assetRef, fieldName)
+            }
         }
 }

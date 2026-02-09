@@ -110,10 +110,22 @@ object ApiTokenConnectionAdmin {
                     .build()
                     .save(client)
             when (val result = response?.getMutation(connection)) {
-                AssetMutationResponse.MutationType.UPDATED -> logger.info { " ... successfully updated the connection with API token as a new admin." }
-                AssetMutationResponse.MutationType.NOOP -> logger.info { " ... API token is already an admin on the connection - no changes made." }
-                AssetMutationResponse.MutationType.CREATED -> logger.error { " ... somehow created the connection - that should not have happened." }
-                AssetMutationResponse.MutationType.DELETED -> logger.error { " ... somehow deleted the connection - that should not have happened." }
+                AssetMutationResponse.MutationType.UPDATED -> {
+                    logger.info { " ... successfully updated the connection with API token as a new admin." }
+                }
+
+                AssetMutationResponse.MutationType.NOOP -> {
+                    logger.info { " ... API token is already an admin on the connection - no changes made." }
+                }
+
+                AssetMutationResponse.MutationType.CREATED -> {
+                    logger.error { " ... somehow created the connection - that should not have happened." }
+                }
+
+                AssetMutationResponse.MutationType.DELETED -> {
+                    logger.error { " ... somehow deleted the connection - that should not have happened." }
+                }
+
                 else -> {
                     logger.warn { "Unexpected connection change result: $result" }
                 }

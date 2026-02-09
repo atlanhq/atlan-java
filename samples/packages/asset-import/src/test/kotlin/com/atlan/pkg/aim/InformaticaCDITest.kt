@@ -128,6 +128,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                 "${connection.qualifiedName}/MultiMap" -> {
                     assertEquals(4, v.size)
                 }
+
                 "${connection.qualifiedName}/Complex" -> {
                     assertEquals(1, v.size)
                 }
@@ -181,6 +182,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals("${connection.qualifiedName}/MultiMap_mapping", task.flowReusableUnitQualifiedName)
                     assertEquals("MultiMap (mapping)", task.flowReusableUnitName)
                 }
+
                 "Complex" -> {
                     // 3 here when we may e2s and t2e to the task-level (otherwise 1)
                     // When the task-level is a control flow op, this should just be the 1 resolved lineage process
@@ -222,6 +224,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(12, mapping.flowDataFlows.size)
                     assertEquals(8, mapping.flowDatasetCount)
                 }
+
                 "Complex (mapping)" -> {
                     // 2 here when we only map the inside lineage portions, otherwise 4
                     assertEquals(4, mapping.flowDataFlows.size)
@@ -323,13 +326,17 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "TARGETTABLE", "CUSTOMER_RESULTANT_JOINER", "MOVIE_DETAILS", "Routersimple02", "Routersimple01" -> {
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
                             .stream()
                             .toList()
                     }
-                    else -> emptyList<Asset>()
+
+                    else -> {
+                        emptyList<Asset>()
+                    }
                 }
             val filtered = lineage.filter { it.connectionQualifiedName == connection.qualifiedName || it.connectionQualifiedName == iics.qualifiedName }
             validateLineage(filtered, 1)
@@ -362,13 +369,17 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Target", "Target1", "Target2", "Target3" -> {
                         builder
                             .direction(AtlanLineageDirection.UPSTREAM)
                             .stream()
                             .toList()
                     }
-                    else -> emptyList<Asset>()
+
+                    else -> {
+                        emptyList<Asset>()
+                    }
                 }
             validateLineage(lineage, 2)
         }
@@ -416,6 +427,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Mapplet" -> {
                         totalExpected = 2
                         builder
@@ -423,6 +435,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Target" -> {
                         totalExpected = 3
                         builder
@@ -430,6 +443,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     else -> {
                         totalExpected = 0
                         emptyList<Asset>()
@@ -467,6 +481,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Expression" -> {
                         totalExpected = 2
                         builder
@@ -474,6 +489,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Aggregator" -> {
                         totalExpected = 1
                         builder
@@ -481,6 +497,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     "Output" -> {
                         totalExpected = 3
                         builder
@@ -488,6 +505,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                             .stream()
                             .toList()
                     }
+
                     else -> {
                         totalExpected = 0
                         emptyList<Asset>()
@@ -580,6 +598,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals("MOVIE_ID = MOVIE_ID", id.flowExpression)
                     assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.MOVIE_DETAILS", id.flowQuery)
                 }
+
                 "Target2" -> {
                     assertEquals("TARGET", id.flowType)
                     assertEquals("MultiMap (mapping)", id.flowReusableUnitName)
@@ -587,6 +606,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(3, id.flowFieldCount)
                     assertEquals(3, id.flowFields.size)
                 }
+
                 "Source3" -> {
                     assertEquals("SOURCE", id.flowType)
                     assertEquals("MultiMap (mapping)", id.flowReusableUnitName)
@@ -595,6 +615,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(3, id.flowFields.size)
                     assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.CUSTOMERS01", id.flowQuery)
                 }
+
                 "Source" -> {
                     assertEquals("SOURCE", id.flowType)
                     when (id.flowReusableUnitName) {
@@ -604,11 +625,13 @@ class InformaticaCDITest : PackageTest("cdi") {
                             assertEquals(4, id.flowFields.size)
                             assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.EMPLOYEES_SR1", id.flowQuery)
                         }
+
                         "Complex (mapping)" -> {
                             assertTrue(id.flowReusableUnitQualifiedName.endsWith("Complex_mapping"))
                         }
                     }
                 }
+
                 "Target3" -> {
                     assertEquals("TARGET", id.flowType)
                     assertEquals("MultiMap (mapping)", id.flowReusableUnitName)
@@ -616,6 +639,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(6, id.flowFieldCount)
                     assertEquals(6, id.flowFields.size)
                 }
+
                 "Target" -> {
                     assertEquals("TARGET", id.flowType)
                     when (id.flowReusableUnitName) {
@@ -624,11 +648,13 @@ class InformaticaCDITest : PackageTest("cdi") {
                             assertEquals(4, id.flowFieldCount)
                             assertEquals(4, id.flowFields.size)
                         }
+
                         "Complex (mapping)" -> {
                             assertTrue(id.flowReusableUnitQualifiedName.endsWith("Complex_mapping"))
                         }
                     }
                 }
+
                 "Source1" -> {
                     assertEquals("SOURCE", id.flowType)
                     assertEquals("MultiMap (mapping)", id.flowReusableUnitName)
@@ -637,6 +663,7 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(4, id.flowFields.size)
                     assertEquals("SELECT * FROM LOGAN_DATA.INFORMATICA_CDI.EMPLOYEES_SR1", id.flowQuery)
                 }
+
                 "Target1" -> {
                     assertEquals("TARGET", id.flowType)
                     assertEquals("MultiMap (mapping)", id.flowReusableUnitName)
@@ -644,26 +671,31 @@ class InformaticaCDITest : PackageTest("cdi") {
                     assertEquals(4, id.flowFieldCount)
                     assertEquals(4, id.flowFields.size)
                 }
+
                 "Mapplet" -> {
                     assertEquals("MAPPLET", id.flowType)
                     assertEquals("Complex (mapping)", id.flowReusableUnitName)
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("Complex_mapping"))
                 }
+
                 "Input" -> {
                     assertEquals("INPUT", id.flowType)
                     assertEquals("Mapplet", id.flowReusableUnitName)
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("Mapplet"))
                 }
+
                 "Expression" -> {
                     assertEquals("EXPRESSION", id.flowType)
                     assertEquals("Mapplet", id.flowReusableUnitName)
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("Mapplet"))
                 }
+
                 "Aggregator" -> {
                     assertEquals("AGGREGATION", id.flowType)
                     assertEquals("Mapplet", id.flowReusableUnitName)
                     assertTrue(id.flowReusableUnitQualifiedName.endsWith("Mapplet"))
                 }
+
                 "Output" -> {
                     assertEquals("OUTPUT", id.flowType)
                     assertEquals("Mapplet", id.flowReusableUnitName)
@@ -712,12 +744,15 @@ class InformaticaCDITest : PackageTest("cdi") {
                 "MOVIE_ID", "RELEASE_YEAR", "CUSTOMER_ID", "EMP_ID", "ORDER_ID", "AMOUNT" -> {
                     assertEquals("decimal", field.flowDataType)
                 }
+
                 "TITLE", "RATING", "STUDIO_NAME", "CHARACTER_NAME", "CUSTOMER_NAME", "COUNTRY", "EMP_NAME", "DEPARTMENT" -> {
                     assertEquals("string", field.flowDataType)
                 }
+
                 "SALARY" -> {
                     assertTrue(field.flowDataType == "decimal" || field.flowDataType == "double")
                 }
+
                 "ORDER_DATE" -> {
                     assertEquals("date/time", field.flowDataType)
                 }
