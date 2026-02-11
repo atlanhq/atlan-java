@@ -6,7 +6,7 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    branches: [main, tag-importer-addl-attributes]
   workflow_dispatch:
     inputs:
       branch:
@@ -230,9 +230,13 @@ jobs:
             # For manual runs, use version and branch name (sanitized)
             BRANCH_NAME=$(echo "${{ github.event.inputs.branch }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
             echo "tags=ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
-          else
+          elif [ "${{ github.ref }}" = "refs/heads/main" ]; then
             # For main branch pushes, use version and latest
             echo "tags=ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }},ghcr.io/atlanhq/atlan-java:latest" >> $GITHUB_OUTPUT
+          else
+            # For non-main branch pushes, use version-SNAPSHOT-branch name
+            BRANCH_NAME=$(echo "${{ github.ref_name }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+            echo "tags=ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}-SNAPSHOT-${BRANCH_NAME}" >> $GITHUB_OUTPUT
           fi
       - name: Build and publish container image
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83  # v6.18.0
@@ -271,4 +275,4 @@ jobs:
     with:
       package_name: ${{ matrix.package_name }}
       version: ${{ needs.merge-build.outputs.version }}
-      branch: ${{ github.event.inputs.branch || '' }}
+      branch: ${{ github.event.inputs.branch || (github.ref != 'refs/heads/main' && format('SNAPSHOT-{0}', github.ref_name)) || '' }}
