@@ -183,7 +183,7 @@ jobs:
           name: package-toolkit-runtime-arm64
           path: ./containers/base/arm64/assembly
       - name: Build and publish container image
-        uses: docker/build-push-action@601a80b39c9405e50806ae38af30926f9d957c47  # v6.19.1
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8  # v6.19.2
         with:
           push: true
           tags: ghcr.io/atlanhq/atlan-java:${{ needs.merge-build.outputs.version }}
