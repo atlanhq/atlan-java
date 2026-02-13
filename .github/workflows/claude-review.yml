@@ -1,0 +1,38 @@
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  claude-review:
+    if: |
+      (github.event_name == 'pull_request') ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       contains(github.event.comment.body, '@claude'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Connect to VPN
+        uses: atlanhq/github-actions/globalprotect-connect-action@main
+        with:
+          portal-url: "vpn2.atlan.app"
+          username: ${{ secrets.GLOBALPROTECT_USERNAME }}
+          password: ${{ secrets.GLOBALPROTECT_PASSWORD }}
+
+      - name: Run Claude Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.AI_GATEWAY_KEY }}
+          model: claude-sonnet-4-20250514
+          prompt: |
+            Review this PR for code quality, potential bugs, and adherence
+            to best practices. Be concise and actionable.
+        env:
+          ANTHROPIC_BASE_URL: "https://aigateway.atlan.dev"
