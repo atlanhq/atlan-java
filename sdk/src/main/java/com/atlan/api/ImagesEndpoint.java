@@ -52,7 +52,8 @@ public class ImagesEndpoint extends HeraclesEndpoint {
     public AtlanImage upload(String fromUrl, RequestOptions options)
             throws AtlanException, MalformedURLException, IOException {
         URL url = new URL(fromUrl);
-        File path = new File(url.getFile());
+        // Use getPath() to exclude query parameters from the filename
+        File path = new File(url.getPath());
         return upload(url.openStream(), path.getName(), options);
     }
 
