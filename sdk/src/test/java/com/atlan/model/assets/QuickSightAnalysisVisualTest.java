@@ -101,6 +101,10 @@ public class QuickSightAnalysisVisualTest {
             .applicationField(ApplicationField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .applicationFieldQualifiedName("String0")
             .applicationQualifiedName("String0")
+            .assetAiGeneratedDescription("String0")
+            .assetAiGeneratedDescriptionConfidence(123.456)
+            .assetAiGeneratedMetadata(AssetAiGeneratedMetadata.of(
+                    AssetAiGeneratedField.of("String0", 123456789L, 0.95, "String0")))
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
             .assetAnomaloCheckCount(123456789L)

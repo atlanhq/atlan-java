@@ -26,6 +26,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.structs.AssetAiGeneratedMetadata;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
@@ -129,6 +130,18 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Qualified name of the Application that contains this asset. */
     @Attribute
     String applicationQualifiedName;
+
+    /** AI-generated description for this asset, used for filtering purposes. */
+    @Attribute
+    String assetAiGeneratedDescription;
+
+    /** Confidence score of the AI-generated description for this asset, used for filtering purposes. */
+    @Attribute
+    Double assetAiGeneratedDescriptionConfidence;
+
+    /** AI-generated metadata suggestions for this asset, including descriptions, tags, and other enrichments. */
+    @Attribute
+    AssetAiGeneratedMetadata assetAiGeneratedMetadata;
 
     /** All associated Anomalo check types. */
     @Attribute

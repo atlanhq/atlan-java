@@ -24,6 +24,7 @@ import com.atlan.model.fields.SearchableRelationship;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetAiGeneratedMetadata;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
@@ -84,6 +85,14 @@ public interface IAsset {
 
     /** Qualified name of the Application that contains this asset. */
     KeywordField APPLICATION_QUALIFIED_NAME = new KeywordField("applicationQualifiedName", "applicationQualifiedName");
+
+    /** AI-generated description for this asset, used for filtering purposes. */
+    KeywordField ASSET_AI_GENERATED_DESCRIPTION =
+            new KeywordField("assetAiGeneratedDescription", "assetAiGeneratedDescription");
+
+    /** Confidence score of the AI-generated description for this asset, used for filtering purposes. */
+    NumericField ASSET_AI_GENERATED_DESCRIPTION_CONFIDENCE =
+            new NumericField("assetAiGeneratedDescriptionConfidence", "assetAiGeneratedDescriptionConfidence");
 
     /** All associated Anomalo check types. */
     KeywordField ASSET_ANOMALO_APPLIED_CHECK_TYPES =
@@ -773,6 +782,15 @@ public interface IAsset {
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
+
+    /** AI-generated description for this asset, used for filtering purposes. */
+    String getAssetAiGeneratedDescription();
+
+    /** Confidence score of the AI-generated description for this asset, used for filtering purposes. */
+    Double getAssetAiGeneratedDescriptionConfidence();
+
+    /** AI-generated metadata suggestions for this asset. */
+    AssetAiGeneratedMetadata getAssetAiGeneratedMetadata();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();

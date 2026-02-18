@@ -25,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Action.class, name = Action.TYPE_NAME),
     @JsonSubTypes.Type(value = AppWorkflowRunStep.class, name = AppWorkflowRunStep.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetAiGeneratedField.class, name = AssetAiGeneratedField.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetAiGeneratedMetadata.class, name = AssetAiGeneratedMetadata.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQMetadata.class, name = AssetExternalDQMetadata.TYPE_NAME),
     @JsonSubTypes.Type(
             value = AssetExternalDQScoreBreakdownByDimension.class,

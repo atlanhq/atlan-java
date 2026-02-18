@@ -1137,6 +1137,18 @@
             return self();
         }
 
+        /** Remove the AI-generated description from the asset, if any is set on the asset. */
+        public B removeAssetAiGeneratedDescription() {
+            nullField("assetAiGeneratedDescription");
+            return self();
+        }
+
+        /** Remove the AI-generated metadata from the asset, if any is set on the asset. */
+        public B removeAssetAiGeneratedMetadata() {
+            nullField("assetAiGeneratedMetadata");
+            return self();
+        }
+
         /** Remove the system description from the asset, if any is set on the asset. */
         public B removeDescription() {
             nullField("description");
