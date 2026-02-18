@@ -102,8 +102,8 @@ public class SupersetDashboardTest {
             .applicationQualifiedName("String0")
             .assetAiGeneratedDescription("String0")
             .assetAiGeneratedDescriptionConfidence(123.456)
-            .assetAiGeneratedMetadata(AssetAiGeneratedMetadata.of(
-                    AssetAiGeneratedField.of("String0", 123456789L, 0.95, "String0")))
+            .assetAiGeneratedMetadata(
+                    AssetAiGeneratedMetadata.of(AssetAiGeneratedField.of("String0", 123456789L, 0.95, "String0")))
             .assetAnomaloAppliedCheckType("String0")
             .assetAnomaloAppliedCheckType("String1")
             .assetAnomaloCheckCount(123456789L)
