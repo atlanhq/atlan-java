@@ -3,6 +3,7 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.cache.ReflectionCache
 import com.atlan.exception.NotFoundException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.DatabricksUnityCatalogTag
@@ -17,6 +18,7 @@ import com.atlan.model.typedefs.AtlanTagOptions
 import com.atlan.model.typedefs.TypeDef
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
+import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.serde.cell.EnumXformer
@@ -54,6 +56,7 @@ class AtlanTagImporter(
     private val counter: CsvReader<CsvRecord>
     private val header: List<String> = CSVXformer.getHeader(filename, fieldSeparator)
     private val tagIdx: Int = header.indexOf(TAG_NAME)
+    private val extraColumns: List<String> = header.filter { !KNOWN_COLUMNS.contains(it) && it.isNotBlank() }
 
     init {
         val missingColumns = validateHeader(header)
@@ -140,7 +143,7 @@ class AtlanTagImporter(
                         count.getAndIncrement()
 
                         // Manage the asset, for any source-synced tags
-                        val asset = idempotentTagAsset(details)
+                        val asset = idempotentTagAsset(details, row)
                         if (asset != null) {
                             assets.add(asset)
                         }
@@ -212,7 +215,10 @@ class AtlanTagImporter(
             AtlanTagOptions.of(AtlanTagColor.GRAY, sourceSynced)
         }
 
-    private fun idempotentTagAsset(tag: TagDetails): Asset? =
+    private fun idempotentTagAsset(
+        tag: TagDetails,
+        row: Map<String, String>,
+    ): Asset? =
         if (tag.sourceSynced) {
             val assetBuilder =
                 when (tag.connectorType) {
@@ -262,10 +268,41 @@ class AtlanTagImporter(
                         )
                     }
                 }
+            // Apply any extra columns as attributes on the SourceTag asset
+            applyExtraAttributes(assetBuilder, row)
             assetBuilder.build()
         } else {
             null
         }
+
+    /**
+     * Apply extra columns from the CSV row as attributes on the asset builder using reflection.
+     * This allows any SourceTag attribute to be set via CSV columns without explicit handling.
+     *
+     * @param builder the asset builder to apply attributes to
+     * @param row the CSV row data as a map of column name to value
+     */
+    private fun applyExtraAttributes(
+        builder: Asset.AssetBuilder<*, *>,
+        row: Map<String, String>,
+    ) {
+        // Get the builder class from the actual builder instance to handle SnowflakeTag, DbtTag, etc.
+        val builderClass = builder.javaClass
+        for (columnName in extraColumns) {
+            val rawValue = CSVXformer.trimWhitespace(row.getOrElse(columnName) { "" })
+            if (rawValue.isNotBlank()) {
+                val setter = ReflectionCache.getSetter(builderClass, columnName)
+                if (setter != null) {
+                    val value = FieldSerde.getValueFromCell(ctx, rawValue, setter, logger)
+                    if (value != null) {
+                        ReflectionCache.setValue(builder, columnName, value)
+                    }
+                } else {
+                    logger.warn { "Unknown column '$columnName' in tags CSV - no matching attribute found on SourceTag, skipping." }
+                }
+            }
+        }
+    }
 
     companion object {
         const val TAG_NAME = "Atlan tag name"
@@ -278,6 +315,23 @@ class AtlanTagImporter(
         const val DBT_ACCOUNT_ID = "Account ID (dbt)"
         const val DBT_PROJECT_ID = "Project ID (dbt)"
         const val SNOWFLAKE_PATH = "Schema path (Snowflake)"
+
+        /** Set of known columns that are handled explicitly by the importer. */
+        val KNOWN_COLUMNS =
+            setOf(
+                TAG_NAME,
+                TAG_COLOR,
+                TAG_ICON,
+                TAG_CONNECTION,
+                TAG_CONNECTOR,
+                TAG_SRC_ID,
+                ALLOWED_VALUES,
+                DBT_ACCOUNT_ID,
+                DBT_PROJECT_ID,
+                SNOWFLAKE_PATH,
+                "Description",
+                "description",
+            )
 
         fun getTagName(
             row: List<String>,

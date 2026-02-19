@@ -1,0 +1,4 @@
+Atlan tag name,Color,Icon,Synced connection name,Synced connector type,Allowed values for tag,Tag ID in source,Account ID (dbt),Project ID (dbt),Schema path (Snowflake),Description,tagCustomConfiguration
+{{TAG1}},Green,PhRecycle,{{CONNECTION}},{{CTYPE}},"X
+Y
+Z",42,,,,Icon tag with extra config,"{""customKey"": ""customValue""}"
