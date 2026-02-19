@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Map;
 
 /**
@@ -54,7 +55,12 @@ public class ImagesEndpoint extends HeraclesEndpoint {
         URL url = new URL(fromUrl);
         // Use getPath() to exclude query parameters from the filename
         File path = new File(url.getPath());
-        return upload(url.openStream(), path.getName(), options);
+        // Set Accept header to indicate we expect an image, so CDNs that
+        // use content negotiation (e.g. Brandfetch/CloudFront) serve the
+        // actual image instead of redirecting to an HTML page
+        URLConnection connection = url.openConnection();
+        connection.setRequestProperty("Accept", "image/*,*/*;q=0.8");
+        return upload(connection.getInputStream(), path.getName(), options);
     }
 
     /**
