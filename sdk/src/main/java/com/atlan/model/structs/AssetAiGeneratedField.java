@@ -30,7 +30,7 @@ public class AssetAiGeneratedField extends AtlanStruct {
     String typeName = TYPE_NAME;
 
     /** The AI-generated value. */
-    String assetFieldValue;
+    String assetValue;
 
     /** Epoch ms when the value was generated. */
     Long assetGeneratedAt;
@@ -43,16 +43,16 @@ public class AssetAiGeneratedField extends AtlanStruct {
 
     /**
      * Quickly create a new AssetAiGeneratedField.
-     * @param assetFieldValue The AI-generated value.
+     * @param assetValue The AI-generated value.
      * @param assetGeneratedAt Epoch ms when the value was generated.
      * @param assetConfidence Confidence score (0.0 to 1.0).
      * @param assetModel Identifier of the AI model used.
      * @return an AssetAiGeneratedField with the provided information
      */
     public static AssetAiGeneratedField of(
-            String assetFieldValue, Long assetGeneratedAt, Double assetConfidence, String assetModel) {
+            String assetValue, Long assetGeneratedAt, Double assetConfidence, String assetModel) {
         return AssetAiGeneratedField.builder()
-                .assetFieldValue(assetFieldValue)
+                .assetValue(assetValue)
                 .assetGeneratedAt(assetGeneratedAt)
                 .assetConfidence(assetConfidence)
                 .assetModel(assetModel)
