@@ -109,6 +109,11 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String announcementUpdatedBy;
 
+    /** Time (epoch) at which the announcement expires, in milliseconds. */
+    @Attribute
+    @Date
+    Long announcementExpiredAt;
+
     /** Checks that run on this asset. */
     @Attribute
     @Singular
@@ -1824,12 +1829,42 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             String title,
             String message)
             throws AtlanException {
+        return updateAnnouncement(client, builder, typeName, qualifiedName, type, title, message, null);
+    }
+
+    /**
+     * Update the announcement on an asset, with an optional expiration date.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the asset's announcement
+     * @param builder the builder to use for updating the announcement
+     * @param typeName type of the asset
+     * @param qualifiedName for the asset
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @param expiredAt (optional) epoch milliseconds at which the announcement should expire (or null for no expiry)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Asset updateAnnouncement(
+            AtlanClient client,
+            AssetBuilder<?, ?> builder,
+            String typeName,
+            String qualifiedName,
+            AtlanAnnouncementType type,
+            String title,
+            String message,
+            Long expiredAt)
+            throws AtlanException {
         builder.qualifiedName(qualifiedName).announcementType(type);
         if (title != null && title.length() > 1) {
             builder.announcementTitle(title);
         }
         if (message != null && message.length() > 1) {
             builder.announcementMessage(message);
+        }
+        if (expiredAt != null) {
+            builder.announcementExpiredAt(expiredAt);
         }
         return updateAttributes(client, typeName, qualifiedName, builder.build());
     }
@@ -2100,6 +2135,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             nullField("announcementType");
             nullField("announcementTitle");
             nullField("announcementMessage");
+            nullField("announcementExpiredAt");
             return self();
         }
 

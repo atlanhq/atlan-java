@@ -529,6 +529,23 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     }
 
     /**
+     * Update the announcement on a ${className}, with an optional expiration date.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the ${className}'s announcement
+     * @param qualifiedName of the ${className}
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @param expiredAt (optional) epoch milliseconds at which the announcement should expire (or null for no expiry)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message, Long expiredAt) throws AtlanException {
+        return (${className}) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message, expiredAt);
+    }
+
+    /**
      * Remove the announcement from a ${className}.
      *
      * @param client connectivity to the Atlan client from which to remove the ${className}'s announcement
