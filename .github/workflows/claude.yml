@@ -41,7 +41,7 @@ jobs:
           fetch-depth: 0
 
       - name: Connect to VPN
-        uses: atlanhq/github-actions/globalprotect-connect-action@main
+        uses: ./.github/actions/globalprotect-connect
         with:
           portal-url: vpn2.atlan.app
           username: ${{ secrets.GLOBALPROTECT_USERNAME }}
