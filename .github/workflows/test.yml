@@ -25,7 +25,7 @@ jobs:
       - name: Compile
         run: ./gradlew assemble shadowJar testClasses
       - name: Upload build artifacts
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
         with:
           name: build-artifacts
           path: |
@@ -60,7 +60,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Download artifacts
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3  # v8.0.0
         with:
           name: build-artifacts
       - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5.2.0
@@ -80,7 +80,7 @@ jobs:
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
         with:
           name: ${{ matrix.tests }}
           path: integration-tests/${{ matrix.tests }}.log
@@ -127,7 +127,7 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Download artifacts
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3  # v8.0.0
         with:
           name: build-artifacts
       - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5.2.0
@@ -149,7 +149,7 @@ jobs:
           test_args=$(echo '${{ toJson(matrix.tests) }}' | jq -r '.[] | "--tests " + .')
           ./gradlew -PpackageTests :samples:packages:asset-import:test $test_args -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
         with:
           name: asset-import-chunk-${{ matrix.chunk }}
           path: samples/packages/asset-import/**/debug.log
@@ -171,7 +171,7 @@ jobs:
       #   uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be  # v1.3.1
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
       - name: Download artifacts
-        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131  # v7.0.0
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3  # v8.0.0
         with:
           name: build-artifacts
       - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5.2.0
@@ -191,7 +191,7 @@ jobs:
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f  # v6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
         with:
           name: ${{ matrix.tests }}
           path: samples/packages/${{ matrix.tests }}/**/debug.log
