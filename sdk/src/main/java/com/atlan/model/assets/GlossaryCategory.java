@@ -66,6 +66,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     /** Child categories organized within this category. */
     @Attribute
     @Singular("childCategory")
+    @Setter(AccessLevel.PACKAGE)
     SortedSet<IGlossaryCategory> childrenCategories;
 
     /** Unused. Detailed description of the category. See 'readme' instead. */
