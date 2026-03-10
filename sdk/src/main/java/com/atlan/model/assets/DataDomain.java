@@ -392,6 +392,69 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     }
 
     /**
+     * Find a DataDomain by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
+     * @param name of the DataDomain
+     * @return the DataDomain, if found
+     * @throws AtlanException on any API problems, or if the DataDomain does not exist
+     */
+    public static List<DataDomain> findByName(AtlanClient client, String name) throws AtlanException {
+        return findByName(client, name, (List<AtlanField>) null);
+    }
+
+    /**
+     * Find a DataDomain by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
+     * @param name of the DataDomain
+     * @param attributes an optional collection of attributes (unchecked) to retrieve for the DataDomain
+     * @return the DataDomain, if found
+     * @throws AtlanException on any API problems, or if the DataDomain does not exist
+     */
+    public static List<DataDomain> findByName(AtlanClient client, String name, Collection<String> attributes)
+            throws AtlanException {
+        List<DataDomain> results = new ArrayList<>();
+        DataDomain.select(client)
+                .where(DataDomain.NAME.eq(name))
+                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof DataDomain)
+                .forEach(d -> results.add((DataDomain) d));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        }
+        return results;
+    }
+
+    /**
+     * Find a DataDomain by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
+     * @param name of the DataDomain
+     * @param attributes an optional collection of attributes (checked) to retrieve for the DataDomain
+     * @return the DataDomain, if found
+     * @throws AtlanException on any API problems, or if the DataDomain does not exist
+     */
+    public static List<DataDomain> findByName(AtlanClient client, String name, List<AtlanField> attributes)
+            throws AtlanException {
+        List<DataDomain> results = new ArrayList<>();
+        DataDomain.select(client)
+                .where(DataDomain.NAME.eq(name))
+                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
+                .stream()
+                .filter(a -> a instanceof DataDomain)
+                .forEach(d -> results.add((DataDomain) d));
+        if (results.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
+        }
+        return results;
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataDomain.
      *
      * @param qualifiedName of the DataDomain

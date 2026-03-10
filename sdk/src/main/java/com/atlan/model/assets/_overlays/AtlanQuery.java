@@ -2,6 +2,8 @@
 // IMPORT: import java.util.Base64;
 // IMPORT: import com.atlan.model.enums.AtlanAnnouncementType;
 // IMPORT: import com.atlan.model.enums.CertificateStatus;
+// IMPORT: import com.atlan.AtlanClient;
+// IMPORT: import com.atlan.exception.AtlanException;
 
     /**
      * Builds the minimal object necessary to create a Query.
@@ -122,6 +124,111 @@
                 this.getName(),
                 this.getCollectionQualifiedName(),
                 this.getParentQualifiedName());
+    }
+
+    /**
+     * Update the certificate on a AtlanQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the AtlanQuery's certificate
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
+     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated AtlanQuery, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery updateCertificate(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            String collectionQualifiedName,
+            String parentQualifiedName,
+            CertificateStatus certificate,
+            String message)
+            throws AtlanException {
+        return (AtlanQuery) Asset.updateCertificate(
+                client,
+                updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName),
+                certificate,
+                message);
+    }
+
+    /**
+     * Remove the certificate from a AtlanQuery.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's certificate
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
+     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
+     * @return the updated AtlanQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery removeCertificate(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            String collectionQualifiedName,
+            String parentQualifiedName)
+            throws AtlanException {
+        return (AtlanQuery) Asset.removeCertificate(
+                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+    }
+
+    /**
+     * Update the announcement on a AtlanQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the AtlanQuery's announcement
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
+     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the updated AtlanQuery, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery updateAnnouncement(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            String collectionQualifiedName,
+            String parentQualifiedName,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        return (AtlanQuery) Asset.updateAnnouncement(
+                client,
+                updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName),
+                type,
+                title,
+                message);
+    }
+
+    /**
+     * Remove the announcement from a AtlanQuery.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's announcement
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
+     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
+     * @return the updated AtlanQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery removeAnnouncement(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            String collectionQualifiedName,
+            String parentQualifiedName)
+            throws AtlanException {
+        return (AtlanQuery) Asset.removeAnnouncement(
+                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
     }
 
     public abstract static class AtlanQueryBuilder<C extends AtlanQuery, B extends AtlanQueryBuilder<C, B>>
