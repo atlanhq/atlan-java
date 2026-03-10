@@ -1,6 +1,7 @@
 // IMPORT: import com.atlan.model.enums.AtlanAnnouncementType;
 // IMPORT: import com.atlan.model.enums.AtlasGlossaryTermType;
 // IMPORT: import com.atlan.model.enums.CertificateStatus;
+// IMPORT: import java.util.ArrayList;
 
     /**
      * Builds the minimal object necessary for creating a term.

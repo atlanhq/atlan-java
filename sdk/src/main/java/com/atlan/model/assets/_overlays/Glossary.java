@@ -1,6 +1,20 @@
+// IMPORT: import co.elastic.clients.elasticsearch._types.SortOrder;
+// IMPORT: import com.atlan.exception.ErrorCode;
+// IMPORT: import com.atlan.exception.InvalidRequestException;
+// IMPORT: import com.atlan.exception.NotFoundException;
 // IMPORT: import com.atlan.model.enums.AtlanAnnouncementType;
 // IMPORT: import com.atlan.model.enums.AtlasGlossaryType;
 // IMPORT: import com.atlan.model.enums.CertificateStatus;
+// IMPORT: import com.atlan.model.fields.AtlanField;
+// IMPORT: import java.util.ArrayList;
+// IMPORT: import java.util.Collection;
+// IMPORT: import java.util.Collections;
+// IMPORT: import java.util.HashMap;
+// IMPORT: import java.util.LinkedHashMap;
+// IMPORT: import java.util.LinkedHashSet;
+// IMPORT: import java.util.Set;
+// IMPORT: import java.util.TreeSet;
+// IMPORT: import java.util.stream.Collectors;
 
     /**
      * Builds the minimal object necessary for creating a Glossary.

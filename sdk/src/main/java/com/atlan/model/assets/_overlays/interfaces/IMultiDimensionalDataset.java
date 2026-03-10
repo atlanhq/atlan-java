@@ -1,3 +1,5 @@
+// IMPORT: import com.fasterxml.jackson.annotation.JsonIgnore;
+
     /**
      * Generate a unique name that does not include any path delimiters.
      *

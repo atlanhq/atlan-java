@@ -5,6 +5,9 @@
 // IMPORT: import com.atlan.model.enums.DataProductSensitivity;
 // IMPORT: import com.atlan.model.enums.DataProductStatus;
 // IMPORT: import com.atlan.model.enums.DataProductVisibility;
+// IMPORT: import com.atlan.model.search.IndexSearchDSL;
+// IMPORT: import com.atlan.model.search.IndexSearchResponse;
+// IMPORT: import java.util.ArrayList;
 
     /**
      * Builds the minimal object necessary for creating a DataProduct.
