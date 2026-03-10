@@ -18,7 +18,6 @@ dependencies {
     api(libs.jackson.yaml)
     api(libs.slf4j)
     api(libs.elasticsearch.java)
-    api(libs.freemarker)
     api(libs.openlineage)
     implementation(libs.classgraph)
     implementation(libs.rocksdb)
@@ -90,6 +89,7 @@ tasks.register<Copy>("generateJava") {
 
 tasks.compileJava {
     sourceSets["main"].java.srcDir("${layout.buildDirectory.get()}/generated/java")
+    sourceSets["main"].java.exclude("com/atlan/model/assets/_overlays/**")
     dependsOn(tasks.getByName("generateJava"))
 }
 

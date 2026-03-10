@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 rootProject.name = "atlan-java"
 include("sdk")
-include("generate")
 include("integration-tests")
 include("mocks")
 include("package-toolkit:config")
@@ -20,7 +19,6 @@ include("samples:packages:openapi-spec-loader")
 include("samples:packages:owner-propagator")
 include("samples:packages:relational-assets-builder")
 include("samples:packages:tests-cleanup")
-include("samples:standalone:sdk-extension")
 include("samples:packages:adoption-export")
 include("samples:packages:enrichment-migrator")
 include("samples:packages:lineage-builder")
