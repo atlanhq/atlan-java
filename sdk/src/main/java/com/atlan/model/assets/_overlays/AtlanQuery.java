@@ -1,3 +1,5 @@
+// IMPORT: import java.nio.charset.StandardCharsets;
+// IMPORT: import java.util.Base64;
 // IMPORT: import com.atlan.model.enums.AtlanAnnouncementType;
 // IMPORT: import com.atlan.model.enums.CertificateStatus;
 

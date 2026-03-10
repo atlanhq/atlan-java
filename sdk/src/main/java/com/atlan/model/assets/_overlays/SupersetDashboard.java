@@ -12,3 +12,7 @@
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName);
     }
+
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
+    }
