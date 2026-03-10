@@ -91,13 +91,19 @@ public interface IDbtMetric {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
@@ -460,10 +466,14 @@ public interface IDbtMetric {
     String getAssetUserDefinedType();
 
     /** Assets associated with this metric. */
-    SortedSet<IAsset> getAssets();
+    default SortedSet<IAsset> getAssets() {
+        return null;
+    }
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -487,10 +497,14 @@ public interface IDbtMetric {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Name of the account in which this asset exists in dbt. */
     String getDbtAccountName();
@@ -544,7 +558,9 @@ public interface IDbtMetric {
     String getDbtMetricFilter();
 
     /** Model columns related to this metric. */
-    SortedSet<IColumn> getDbtMetricFilterColumns();
+    default SortedSet<IColumn> getDbtMetricFilterColumns() {
+        return null;
+    }
 
     /** Filters applied to the dbt metric. */
     List<DbtMetricFilter> getDbtMetricFilters();
@@ -553,7 +569,9 @@ public interface IDbtMetric {
     String getDbtMetricWindow();
 
     /** Model in which this metric exists. */
-    IDbtModel getDbtModel();
+    default IDbtModel getDbtModel() {
+        return null;
+    }
 
     /** Name of the package in which this asset exists in dbt. */
     String getDbtPackageName();
@@ -583,16 +601,22 @@ public interface IDbtMetric {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Whether this data quality is part of contract (true) or not (false). */
     Boolean getDqIsPartOfContract();
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -601,16 +625,24 @@ public interface IDbtMetric {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
+    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
+        return null;
+    }
 
     /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
+    default SortedSet<ILineageProcess> getInputToProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
+    default SortedSet<ISparkJob> getInputToSparkJobs() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -640,16 +672,24 @@ public interface IDbtMetric {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** Dimension columns for this metric. */
-    SortedSet<IColumn> getMetricDimensionColumns();
+    default SortedSet<IColumn> getMetricDimensionColumns() {
+        return null;
+    }
 
     /** Filters to be applied to the metric query. */
     String getMetricFilters();
@@ -661,19 +701,27 @@ public interface IDbtMetric {
     SortedSet<String> getMetricTimeGrains();
 
     /** Column used as timestamp for this metric. */
-    IColumn getMetricTimestampColumn();
+    default IColumn getMetricTimestampColumn() {
+        return null;
+    }
 
     /** Type of the metric. */
     String getMetricType();
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
+    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
+        return null;
+    }
 
     /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
+    default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -682,16 +730,24 @@ public interface IDbtMetric {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
+        return null;
+    }
 
     /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
+    default SortedSet<ILineageProcess> getOutputFromProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
+    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
+        return null;
+    }
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -703,10 +759,14 @@ public interface IDbtMetric {
     SortedSet<String> getOwnerUsers();
 
     /** Partial fields contained in the asset. */
-    SortedSet<IPartialField> getPartialChildFields();
+    default SortedSet<IPartialField> getPartialChildFields() {
+        return null;
+    }
 
     /** Partial objects contained in the asset. */
-    SortedSet<IPartialObject> getPartialChildObjects();
+    default SortedSet<IPartialObject> getPartialChildObjects() {
+        return null;
+    }
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
@@ -718,16 +778,22 @@ public interface IDbtMetric {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -811,10 +877,14 @@ public interface IDbtMetric {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

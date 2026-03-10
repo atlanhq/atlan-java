@@ -45,7 +45,9 @@ public interface IFlowFieldOperation {
     String getAdditionalEtlContext();
 
     /** TBC */
-    IAdfActivity getAdfActivity();
+    default IAdfActivity getAdfActivity() {
+        return null;
+    }
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -60,7 +62,9 @@ public interface IFlowFieldOperation {
     AIDatasetType getAiDatasetType();
 
     /** TBC */
-    SortedSet<IAirflowTask> getAirflowTasks();
+    default SortedSet<IAirflowTask> getAirflowTasks() {
+        return null;
+    }
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -78,13 +82,19 @@ public interface IFlowFieldOperation {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
@@ -447,13 +457,17 @@ public interface IFlowFieldOperation {
     String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     String getAst();
 
     /** TBC */
-    SortedSet<IBigqueryRoutine> getBigqueryRoutines();
+    default SortedSet<IBigqueryRoutine> getBigqueryRoutines() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -471,7 +485,9 @@ public interface IFlowFieldOperation {
     String getCode();
 
     /** Column-level processes that are part of this process. */
-    SortedSet<IColumnProcess> getColumnProcesses();
+    default SortedSet<IColumnProcess> getColumnProcesses() {
+        return null;
+    }
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -483,10 +499,14 @@ public interface IFlowFieldOperation {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -501,19 +521,29 @@ public interface IFlowFieldOperation {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFabricActivity> getFabricActivities();
+    default SortedSet<IFabricActivity> getFabricActivities() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** TBC */
-    IFivetranConnector getFivetranConnector();
+    default IFivetranConnector getFivetranConnector() {
+        return null;
+    }
 
     /** Optional error message of the flow run. */
     String getFlowErrorMessage();
@@ -534,7 +564,9 @@ public interface IFlowFieldOperation {
     Map<String, String> getFlowInputParameters();
 
     /** Orchestrated control operation that ran these data flows (process). */
-    IFlowControlOperation getFlowOrchestratedBy();
+    default IFlowControlOperation getFlowOrchestratedBy() {
+        return null;
+    }
 
     /** Simple name of the project in which this asset is contained. */
     String getFlowProjectName();
@@ -567,10 +599,14 @@ public interface IFlowFieldOperation {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** Assets that are inputs to this process. */
-    SortedSet<ICatalog> getInputs();
+    default SortedSet<ICatalog> getInputs() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -600,19 +636,29 @@ public interface IFlowFieldOperation {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** TBC */
-    IMatillionComponent getMatillionComponent();
+    default IMatillionComponent getMatillionComponent() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -621,13 +667,17 @@ public interface IFlowFieldOperation {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
     /** Assets that are outputs from this process. */
-    SortedSet<ICatalog> getOutputs();
+    default SortedSet<ICatalog> getOutputs() {
+        return null;
+    }
 
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
@@ -642,10 +692,14 @@ public interface IFlowFieldOperation {
     Double getPopularityScore();
 
     /** TBC */
-    IPowerBIDataflow getPowerBIDataflow();
+    default IPowerBIDataflow getPowerBIDataflow() {
+        return null;
+    }
 
     /** Parent process for this column-level process. */
-    ILineageProcess getProcess();
+    default ILineageProcess getProcess() {
+        return null;
+    }
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
@@ -654,16 +708,22 @@ public interface IFlowFieldOperation {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -732,13 +792,17 @@ public interface IFlowFieldOperation {
     String getSourceUpdatedBy();
 
     /** TBC */
-    SortedSet<ISparkJob> getSparkJobs();
+    default SortedSet<ISparkJob> getSparkJobs() {
+        return null;
+    }
 
     /** SQL query that ran to produce the outputs. */
     String getSql();
 
     /** TBC */
-    SortedSet<IProcedure> getSqlProcedures();
+    default SortedSet<IProcedure> getSqlProcedures() {
+        return null;
+    }
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
@@ -756,10 +820,14 @@ public interface IFlowFieldOperation {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

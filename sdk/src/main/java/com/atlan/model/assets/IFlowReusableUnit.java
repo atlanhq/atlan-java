@@ -82,13 +82,19 @@ public interface IFlowReusableUnit {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
@@ -451,7 +457,9 @@ public interface IFlowReusableUnit {
     String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -475,10 +483,14 @@ public interface IFlowReusableUnit {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -493,28 +505,40 @@ public interface IFlowReusableUnit {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Ephemeral datasets that abstract the sub-processing carried out by the reusable unit. */
-    SortedSet<IFlowDataset> getFlowAbstracts();
+    default SortedSet<IFlowDataset> getFlowAbstracts() {
+        return null;
+    }
 
     /** Count of the number of control flow operations that execute this reusable unit. */
     Long getFlowControlOperationCount();
 
     /** Individual dataset operations contained in this reusable unit. */
-    SortedSet<IFlowDatasetOperation> getFlowDataFlows();
+    default SortedSet<IFlowDatasetOperation> getFlowDataFlows() {
+        return null;
+    }
 
     /** Count of the number of ephemeral datasets contained within this reusable unit. */
     Long getFlowDatasetCount();
 
     /** Ephemeral datasets that are contained within the reusable unit. */
-    SortedSet<IFlowDataset> getFlowDatasets();
+    default SortedSet<IFlowDataset> getFlowDatasets() {
+        return null;
+    }
 
     /** Optional error message of the flow run. */
     String getFlowErrorMessage();
@@ -565,7 +589,9 @@ public interface IFlowReusableUnit {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -595,16 +621,24 @@ public interface IFlowReusableUnit {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -613,7 +647,9 @@ public interface IFlowReusableUnit {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -634,16 +670,22 @@ public interface IFlowReusableUnit {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -727,10 +769,14 @@ public interface IFlowReusableUnit {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

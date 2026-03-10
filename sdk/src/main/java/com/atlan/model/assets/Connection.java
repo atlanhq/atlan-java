@@ -780,6 +780,17 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
+     * Extract the epoch component from a connection's qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the epoch component of the qualifiedName
+     */
+    @JsonIgnore
+    public static String getEpochFromQualifiedName(String qualifiedName) {
+        return qualifiedName.substring(qualifiedName.lastIndexOf("/") + 1);
+    }
+
+    /**
      * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
      * relationships will be retrieved for the connection, if found.
      *
@@ -882,8 +893,8 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
      * @throws AtlanException on any API problems
      * @throws NotFoundException if the connection does not exist
      */
-    public static List<Connection> findByName(AtlanClient client, String name, String type, List<AtlanField> attributes)
-            throws AtlanException {
+    public static List<Connection> findByName(
+            AtlanClient client, String name, String type, List<AtlanField> attributes) throws AtlanException {
         List<Connection> results = new ArrayList<>();
         Connection.select(client)
                 .where(Connection.NAME.eq(name))

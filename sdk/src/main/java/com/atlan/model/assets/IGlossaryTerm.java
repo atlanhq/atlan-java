@@ -128,7 +128,9 @@ public interface IGlossaryTerm {
     SortedSet<String> getAdminUsers();
 
     /** Glossary in which this term is contained. */
-    IGlossary getAnchor();
+    default IGlossary getAnchor() {
+        return null;
+    }
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -146,16 +148,24 @@ public interface IGlossaryTerm {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Terms that have the opposite (or near opposite) meaning, in the same language. */
-    SortedSet<IGlossaryTerm> getAntonyms();
+    default SortedSet<IGlossaryTerm> getAntonyms() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
@@ -518,13 +528,19 @@ public interface IGlossaryTerm {
     String getAssetUserDefinedType();
 
     /** Assets assigned this term. */
-    SortedSet<IAsset> getAssignedEntities();
+    default SortedSet<IAsset> getAssignedEntities() {
+        return null;
+    }
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Categories within which this term is organized. */
-    SortedSet<IGlossaryCategory> getCategories();
+    default SortedSet<IGlossaryCategory> getCategories() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -539,7 +555,9 @@ public interface IGlossaryTerm {
     String getCertificateUpdatedBy();
 
     /** More general term that defines a group of terms, for example: 'animal'. */
-    SortedSet<IGlossaryTerm> getClassifies();
+    default SortedSet<IGlossaryTerm> getClassifies() {
+        return null;
+    }
 
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
@@ -551,10 +569,14 @@ public interface IGlossaryTerm {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -569,16 +591,22 @@ public interface IGlossaryTerm {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** Unused. Exmaples of the term. */
     SortedSet<String> getExamples();
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -587,10 +615,14 @@ public interface IGlossaryTerm {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** More specific term that is a sub-class of another term, for example: 'cat'. */
-    SortedSet<IGlossaryTerm> getIsA();
+    default SortedSet<IGlossaryTerm> getIsA() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -620,19 +652,27 @@ public interface IGlossaryTerm {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** Unused. Detailed definition of the term. See 'readme' instead. */
     String getLongDescription();
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -641,7 +681,9 @@ public interface IGlossaryTerm {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -656,10 +698,14 @@ public interface IGlossaryTerm {
     Double getPopularityScore();
 
     /** Preferred term(s) to use instead of this term. */
-    SortedSet<IGlossaryTerm> getPreferredTerms();
+    default SortedSet<IGlossaryTerm> getPreferredTerms() {
+        return null;
+    }
 
     /** Other term(s) that are less common or less preferred than this term. */
-    SortedSet<IGlossaryTerm> getPreferredToTerms();
+    default SortedSet<IGlossaryTerm> getPreferredToTerms() {
+        return null;
+    }
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
@@ -668,28 +714,40 @@ public interface IGlossaryTerm {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** Term(s) that must no longer be used. */
-    SortedSet<IGlossaryTerm> getReplacedBy();
+    default SortedSet<IGlossaryTerm> getReplacedBy() {
+        return null;
+    }
 
     /** Term(s) that must be used instead. */
-    SortedSet<IGlossaryTerm> getReplacementTerms();
+    default SortedSet<IGlossaryTerm> getReplacementTerms() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** Linked terms that may also be of interest. */
-    SortedSet<IGlossaryTerm> getSeeAlso();
+    default SortedSet<IGlossaryTerm> getSeeAlso() {
+        return null;
+    }
 
     /** Unused. Brief summary of the term. See 'description' and 'userDescription' instead. */
     String getShortDescription();
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -770,7 +828,9 @@ public interface IGlossaryTerm {
     String getSubType();
 
     /** Terms that have the same (or a very similar) meaning, in the same language. */
-    SortedSet<IGlossaryTerm> getSynonyms();
+    default SortedSet<IGlossaryTerm> getSynonyms() {
+        return null;
+    }
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
@@ -779,28 +839,40 @@ public interface IGlossaryTerm {
     AtlasGlossaryTermType getTermType();
 
     /** Term(s) that are a translation of this term. */
-    SortedSet<IGlossaryTerm> getTranslatedTerms();
+    default SortedSet<IGlossaryTerm> getTranslatedTerms() {
+        return null;
+    }
 
     /** Term(s) for which this term is a translation. */
-    SortedSet<IGlossaryTerm> getTranslationTerms();
+    default SortedSet<IGlossaryTerm> getTranslationTerms() {
+        return null;
+    }
 
     /** Unused. Intended usage for the term. */
     String getUsage();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
 
     /** Valid values for this term. */
-    SortedSet<IGlossaryTerm> getValidValues();
+    default SortedSet<IGlossaryTerm> getValidValues() {
+        return null;
+    }
 
     /** Term for which this is a valid value. */
-    SortedSet<IGlossaryTerm> getValidValuesFor();
+    default SortedSet<IGlossaryTerm> getValidValuesFor() {
+        return null;
+    }
 
     /** View score for this asset. */
     Double getViewScore();

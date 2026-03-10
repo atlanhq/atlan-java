@@ -353,13 +353,19 @@ public interface IColumn {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
@@ -722,10 +728,14 @@ public interface IColumn {
     String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Calculate view in which this column exists. */
-    ICalculationView getCalculationView();
+    default ICalculationView getCalculationView() {
+        return null;
+    }
 
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewName();
@@ -761,7 +771,9 @@ public interface IColumn {
     String getColumnCompression();
 
     /** Model columns related to this column. */
-    SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
+    default SortedSet<IDbtModelColumn> getColumnDbtModelColumns() {
+        return null;
+    }
 
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     Integer getColumnDepthLevel();
@@ -881,16 +893,24 @@ public interface IColumn {
     String getConnectorName();
 
     /** Cosmos collection in which this column exists. */
-    ICosmosMongoDBCollection getCosmosMongoDBCollection();
+    default ICosmosMongoDBCollection getCosmosMongoDBCollection() {
+        return null;
+    }
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getDataQualityMetricDimensions();
+    default SortedSet<IMetric> getDataQualityMetricDimensions() {
+        return null;
+    }
 
     /** Data type of values in this column. */
     String getDataType();
@@ -902,25 +922,37 @@ public interface IColumn {
     String getDatabaseQualifiedName();
 
     /** Metrics related to this model column. */
-    SortedSet<IDbtMetric> getDbtMetrics();
+    default SortedSet<IDbtMetric> getDbtMetrics() {
+        return null;
+    }
 
     /** (Deprecated) Model columns related to this model column. */
-    SortedSet<IDbtModelColumn> getDbtModelColumns();
+    default SortedSet<IDbtModelColumn> getDbtModelColumns() {
+        return null;
+    }
 
     /** (Deprecated) Model containing the assets. */
-    SortedSet<IDbtModel> getDbtModels();
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
     /** DBT seeds that materialize the SQL asset. */
-    SortedSet<IDbtSeed> getDbtSeedAssets();
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
 
     /** Source containing the assets. */
-    SortedSet<IDbtSource> getDbtSources();
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
 
     /** Tests related to this asset. */
-    SortedSet<IDbtTest> getDbtTests();
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
 
     /** Default value for this column. */
     String getDefaultValue();
@@ -935,25 +967,39 @@ public interface IColumn {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this column. */
-    SortedSet<IDataQualityRule> getDqBaseColumnRules();
+    default SortedSet<IDataQualityRule> getDqBaseColumnRules() {
+        return null;
+    }
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this column is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceColumnRules();
+    default SortedSet<IDataQualityRule> getDqReferenceColumnRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Column this foreign key column refers to. */
-    IColumn getForeignKeyFrom();
+    default IColumn getForeignKeyFrom() {
+        return null;
+    }
 
     /** Columns that use this column as a foreign key. */
-    SortedSet<IColumn> getForeignKeyTo();
+    default SortedSet<IColumn> getForeignKeyTo() {
+        return null;
+    }
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -962,16 +1008,24 @@ public interface IColumn {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
+    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
+        return null;
+    }
 
     /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
+    default SortedSet<ILineageProcess> getInputToProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
+    default SortedSet<ISparkJob> getInputToSparkJobs() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -1034,34 +1088,52 @@ public interface IColumn {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** Materialized view in which this column exists. */
-    IMaterializedView getMaterializedView();
+    default IMaterializedView getMaterializedView() {
+        return null;
+    }
 
     /** Maximum length of a value in this column. */
     Long getMaxLength();
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetricTimestamps();
+    default SortedSet<IMetric> getMetricTimestamps() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
+    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
+        return null;
+    }
 
     /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
+    default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
 
     /** Collection in which the columns exist. */
-    IMongoDBCollection getMongoDBCollection();
+    default IMongoDBCollection getMongoDBCollection() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -1073,7 +1145,9 @@ public interface IColumn {
     String getNestedColumnOrder();
 
     /** Nested columns that exist within this column. */
-    SortedSet<IColumn> getNestedColumns();
+    default SortedSet<IColumn> getNestedColumns() {
+        return null;
+    }
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
@@ -1091,16 +1165,24 @@ public interface IColumn {
     Integer getOrder();
 
     /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
+        return null;
+    }
 
     /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
+    default SortedSet<ILineageProcess> getOutputFromProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
+    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
+        return null;
+    }
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -1112,7 +1194,9 @@ public interface IColumn {
     SortedSet<String> getOwnerUsers();
 
     /** Column in which this sub-column is nested. */
-    IColumn getParentColumn();
+    default IColumn getParentColumn() {
+        return null;
+    }
 
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     String getParentColumnName();
@@ -1121,10 +1205,14 @@ public interface IColumn {
     String getParentColumnQualifiedName();
 
     /** Partial fields contained in the asset. */
-    SortedSet<IPartialField> getPartialChildFields();
+    default SortedSet<IPartialField> getPartialChildFields() {
+        return null;
+    }
 
     /** Partial objects contained in the asset. */
-    SortedSet<IPartialObject> getPartialChildObjects();
+    default SortedSet<IPartialObject> getPartialChildObjects() {
+        return null;
+    }
 
     /** Order (position) of this partition column in the table. */
     Integer getPartitionOrder();
@@ -1148,7 +1236,9 @@ public interface IColumn {
     String getQualifiedName();
 
     /** Queries that access this column. */
-    SortedSet<IAtlanQuery> getQueries();
+    default SortedSet<IAtlanQuery> getQueries() {
+        return null;
+    }
 
     /** Number of times this asset has been queried. */
     Long getQueryCount();
@@ -1166,7 +1256,9 @@ public interface IColumn {
     String getRawDataTypeDefinition();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
@@ -1178,13 +1270,19 @@ public interface IColumn {
     String getSchemaQualifiedName();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** Snowflake dynamic table in which this column exists. */
-    ISnowflakeDynamicTable getSnowflakeDynamicTable();
+    default ISnowflakeDynamicTable getSnowflakeDynamicTable() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -1256,10 +1354,14 @@ public interface IColumn {
     String getSqlAIModelContextQualifiedName();
 
     /** Sources related to this asset. */
-    SortedSet<IDbtSource> getSqlDBTSources();
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
 
     /** Assets related to the model. */
-    SortedSet<IDbtModel> getSqlDbtModels();
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
 
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
@@ -1280,13 +1382,17 @@ public interface IColumn {
     String getSubType();
 
     /** Table in which this column exists. */
-    ITable getTable();
+    default ITable getTable() {
+        return null;
+    }
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
 
     /** Table partition that contains this column. */
-    ITablePartition getTablePartition();
+    default ITablePartition getTablePartition() {
+        return null;
+    }
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();
@@ -1295,10 +1401,14 @@ public interface IColumn {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
@@ -1307,7 +1417,9 @@ public interface IColumn {
     Map<String, String> getValidations();
 
     /** View in which this column exists. */
-    IView getView();
+    default IView getView() {
+        return null;
+    }
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     String getViewName();

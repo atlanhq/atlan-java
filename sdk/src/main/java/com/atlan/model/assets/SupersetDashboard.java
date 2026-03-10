@@ -387,6 +387,10 @@ public class SupersetDashboard extends Asset implements ISupersetDashboard, ISup
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
+    }
+
     /**
      * Builds the minimal object necessary to update a SupersetDashboard.
      *
