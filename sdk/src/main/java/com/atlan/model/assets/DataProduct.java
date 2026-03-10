@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataProductSensitivity;
 import com.atlan.model.enums.DataProductStatus;
 import com.atlan.model.enums.DataProductVisibility;
 import com.atlan.model.fields.AtlanField;
+import com.atlan.model.mesh.DataProductAssetsDSL;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;

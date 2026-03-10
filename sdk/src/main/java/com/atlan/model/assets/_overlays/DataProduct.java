@@ -1,3 +1,4 @@
+// IMPORT: import com.atlan.model.mesh.DataProductAssetsDSL;
 // IMPORT: import com.atlan.model.search.IndexSearchDSL;
 // IMPORT: import com.atlan.model.search.IndexSearchResponse;
 // IMPORT: import java.util.ArrayList;

@@ -3,7 +3,7 @@
 // IMPORT: import com.atlan.exception.AtlanException;
 // IMPORT: import com.atlan.exception.NotFoundException;
 // IMPORT: import com.atlan.model.assets.Connection;
-// IMPORT: import com.atlan.model.interfaces.ITag;
+// IMPORT: import com.atlan.model.assets.ITag;
 
     /**
      * Create a source-synced tag attachment with a particular value, when the attachment is

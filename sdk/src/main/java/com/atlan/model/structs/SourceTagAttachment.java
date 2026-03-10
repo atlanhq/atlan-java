@@ -7,7 +7,7 @@ import com.atlan.cache.SourceTagCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Connection;
-import com.atlan.model.interfaces.ITag;
+import com.atlan.model.assets.ITag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
