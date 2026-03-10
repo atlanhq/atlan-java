@@ -240,6 +240,26 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     String databaseQualifiedName;
 
+    /** (Deprecated) Model containing the assets. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** DBT seeds that materialize the SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSeed> dbtSeedAssets;
+
+    /** Source containing the assets. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** Tests related to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
     /** Default value for this column. */
     @Attribute
     String defaultValue;
@@ -453,6 +473,16 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
+
+    /** Sources related to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** Assets related to the model. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** Whether this asset is secure (true) or not (false). */
     @Attribute

@@ -620,8 +620,28 @@ public interface IDynamoDBAttribute {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
+    /** (Deprecated) Model containing the assets. */
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** DBT seeds that materialize the SQL asset. */
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
+
+    /** Source containing the assets. */
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
+
+    /** Tests related to this asset. */
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
 
     /** Default value for this column. */
     String getDefaultValue();
@@ -989,6 +1009,16 @@ public interface IDynamoDBAttribute {
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     String getSqlAIModelContextQualifiedName();
+
+    /** Sources related to this asset. */
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Assets related to the model. */
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
 
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();

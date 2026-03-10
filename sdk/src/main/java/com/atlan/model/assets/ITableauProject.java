@@ -625,8 +625,8 @@ public interface ITableauProject {
         return null;
     }
 
-    /** Metrics that exist within this project. */
-    default SortedSet<ITableauMetric> getMetrics() {
+    /** TBC */
+    default SortedSet<IMetric> getMetrics() {
         return null;
     }
 

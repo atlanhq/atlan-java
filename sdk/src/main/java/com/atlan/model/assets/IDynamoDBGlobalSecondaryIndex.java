@@ -474,6 +474,11 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Number of columns in this table. */
     Long getColumnCount();
 
+    /** Columns that exist within this table. */
+    default SortedSet<IColumn> getColumns() {
+        return null;
+    }
+
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
@@ -499,11 +504,36 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
+    /** (Deprecated) Model containing the assets. */
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
 
+    /** DBT seeds that materialize the SQL asset. */
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
+
+    /** Source containing the assets. */
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
+
+    /** Tests related to this asset. */
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
+
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
+
+    /** Dimension tables related to this table. */
+    default SortedSet<ITable> getDimensions() {
+        return null;
+    }
 
     /** Human-readable name of this asset used for display purposes (in user interface). */
     String getDisplayName();
@@ -552,6 +582,11 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** Region of the external location of this table, for example: S3 region. */
     String getExternalLocationRegion();
+
+    /** Fact tables related to this table. */
+    default SortedSet<ITable> getFacts() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<IFile> getFiles() {
@@ -734,6 +769,11 @@ public interface IDynamoDBGlobalSecondaryIndex {
     /** Partition strategy for this table. */
     String getPartitionStrategy();
 
+    /** Partitions that exist within this table. */
+    default SortedSet<ITablePartition> getPartitions() {
+        return null;
+    }
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
@@ -742,6 +782,11 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
+
+    /** Queries that access this table. */
+    default SortedSet<IAtlanQuery> getQueries() {
+        return null;
+    }
 
     /** Number of times this asset has been queried. */
     Long getQueryCount();
@@ -768,6 +813,11 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Schema in which this table exists. */
+    default ISchema getSchema() {
+        return null;
+    }
 
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     String getSchemaName();
@@ -856,6 +906,16 @@ public interface IDynamoDBGlobalSecondaryIndex {
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     String getSqlAIModelContextQualifiedName();
+
+    /** Sources related to this asset. */
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Assets related to the model. */
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
 
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();

@@ -308,6 +308,11 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
 
 
 
+    /** Package-private setter used internally for hierarchy traversal. */
+    void setChildrenCategories(SortedSet<IGlossaryCategory> childrenCategories) {
+        this.childrenCategories = childrenCategories;
+    }
+
     /**
      * Builds the minimal object necessary for creating a category.
      *
