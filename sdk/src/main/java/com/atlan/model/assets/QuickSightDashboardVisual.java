@@ -372,11 +372,11 @@ public class QuickSightDashboardVisual extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QuickSightDashboardVisual, from a potentially
-     * more-complete QuickSightDashboardVisual object.
+     * Builds the minimal object necessary to apply an update to a QuickSightDashboardVisual,
+     * from a potentially more-complete QuickSightDashboardVisual object.
      *
      * @return the minimal object necessary to update the QuickSightDashboardVisual, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QuickSightDashboardVisual are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QuickSightDashboardVisual are not present in the initial object
      */
     @Override
     public QuickSightDashboardVisualBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DremioPhysicalDataset extends Asset
-        implements IDremioPhysicalDataset, IDremio, ITable, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDremioPhysicalDataset, ITable, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioPhysicalDataset";
@@ -638,11 +638,11 @@ public class DremioPhysicalDataset extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DremioPhysicalDataset, from a potentially
-     * more-complete DremioPhysicalDataset object.
+     * Builds the minimal object necessary to apply an update to a DremioPhysicalDataset,
+     * from a potentially more-complete DremioPhysicalDataset object.
      *
      * @return the minimal object necessary to update the DremioPhysicalDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DremioPhysicalDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DremioPhysicalDataset are not present in the initial object
      */
     @Override
     public DremioPhysicalDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -371,11 +371,11 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SisenseFolder, from a potentially
-     * more-complete SisenseFolder object.
+     * Builds the minimal object necessary to apply an update to a SisenseFolder,
+     * from a potentially more-complete SisenseFolder object.
      *
      * @return the minimal object necessary to update the SisenseFolder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SisenseFolder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SisenseFolder are not present in the initial object
      */
     @Override
     public SisenseFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

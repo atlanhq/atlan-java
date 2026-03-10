@@ -388,11 +388,11 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosReport, from a potentially
-     * more-complete CognosReport object.
+     * Builds the minimal object necessary to apply an update to a CognosReport,
+     * from a potentially more-complete CognosReport object.
      *
      * @return the minimal object necessary to update the CognosReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosReport are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosReport are not present in the initial object
      */
     @Override
     public CognosReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {

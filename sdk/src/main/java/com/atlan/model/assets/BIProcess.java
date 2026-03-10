@@ -54,7 +54,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -71,7 +71,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -85,16 +85,16 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -103,7 +103,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -118,7 +118,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -131,7 +131,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     String sql;
 
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -385,11 +385,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BIProcess, from a potentially
-     * more-complete BIProcess object.
+     * Builds the minimal object necessary to apply an update to a BIProcess,
+     * from a potentially more-complete BIProcess object.
      *
      * @return the minimal object necessary to update the BIProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BIProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BIProcess are not present in the initial object
      */
     @Override
     public BIProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

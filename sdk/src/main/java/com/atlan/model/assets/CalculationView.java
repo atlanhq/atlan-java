@@ -485,11 +485,11 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CalculationView, from a potentially
-     * more-complete CalculationView object.
+     * Builds the minimal object necessary to apply an update to a CalculationView,
+     * from a potentially more-complete CalculationView object.
      *
      * @return the minimal object necessary to update the CalculationView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CalculationView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CalculationView are not present in the initial object
      */
     @Override
     public CalculationViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

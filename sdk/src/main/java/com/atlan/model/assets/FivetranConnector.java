@@ -523,11 +523,11 @@ public class FivetranConnector extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FivetranConnector, from a potentially
-     * more-complete FivetranConnector object.
+     * Builds the minimal object necessary to apply an update to a FivetranConnector,
+     * from a potentially more-complete FivetranConnector object.
      *
      * @return the minimal object necessary to update the FivetranConnector, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FivetranConnector are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FivetranConnector are not present in the initial object
      */
     @Override
     public FivetranConnectorBuilder<?, ?> trimToRequired() throws InvalidRequestException {

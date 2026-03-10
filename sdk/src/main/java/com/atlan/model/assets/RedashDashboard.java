@@ -356,11 +356,11 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a RedashDashboard, from a potentially
-     * more-complete RedashDashboard object.
+     * Builds the minimal object necessary to apply an update to a RedashDashboard,
+     * from a potentially more-complete RedashDashboard object.
      *
      * @return the minimal object necessary to update the RedashDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for RedashDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a RedashDashboard are not present in the initial object
      */
     @Override
     public RedashDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

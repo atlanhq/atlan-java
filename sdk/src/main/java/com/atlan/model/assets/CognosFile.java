@@ -392,11 +392,11 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosFile, from a potentially
-     * more-complete CognosFile object.
+     * Builds the minimal object necessary to apply an update to a CognosFile,
+     * from a potentially more-complete CognosFile object.
      *
      * @return the minimal object necessary to update the CognosFile, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosFile are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosFile are not present in the initial object
      */
     @Override
     public CognosFileBuilder<?, ?> trimToRequired() throws InvalidRequestException {

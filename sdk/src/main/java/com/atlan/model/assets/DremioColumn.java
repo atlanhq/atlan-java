@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DremioColumn extends Asset
-        implements IDremioColumn, IDremio, IColumn, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDremioColumn, IColumn, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioColumn";
@@ -861,11 +861,11 @@ public class DremioColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DremioColumn, from a potentially
-     * more-complete DremioColumn object.
+     * Builds the minimal object necessary to apply an update to a DremioColumn,
+     * from a potentially more-complete DremioColumn object.
      *
      * @return the minimal object necessary to update the DremioColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DremioColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DremioColumn are not present in the initial object
      */
     @Override
     public DremioColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -377,11 +377,11 @@ public class FabricSemanticModelTableColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricSemanticModelTableColumn, from a potentially
-     * more-complete FabricSemanticModelTableColumn object.
+     * Builds the minimal object necessary to apply an update to a FabricSemanticModelTableColumn,
+     * from a potentially more-complete FabricSemanticModelTableColumn object.
      *
      * @return the minimal object necessary to update the FabricSemanticModelTableColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricSemanticModelTableColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricSemanticModelTableColumn are not present in the initial object
      */
     @Override
     public FabricSemanticModelTableColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

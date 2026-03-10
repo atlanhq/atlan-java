@@ -40,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DatabricksMetricView extends Asset
-        implements IDatabricksMetricView, IDatabricks, IView, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDatabricksMetricView, IView, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksMetricView";
@@ -503,11 +503,11 @@ public class DatabricksMetricView extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksMetricView, from a potentially
-     * more-complete DatabricksMetricView object.
+     * Builds the minimal object necessary to apply an update to a DatabricksMetricView,
+     * from a potentially more-complete DatabricksMetricView object.
      *
      * @return the minimal object necessary to update the DatabricksMetricView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksMetricView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksMetricView are not present in the initial object
      */
     @Override
     public DatabricksMetricViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

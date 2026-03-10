@@ -389,11 +389,11 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APIObject, from a potentially
-     * more-complete APIObject object.
+     * Builds the minimal object necessary to apply an update to a APIObject,
+     * from a potentially more-complete APIObject object.
      *
      * @return the minimal object necessary to update the APIObject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for APIObject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APIObject are not present in the initial object
      */
     @Override
     public APIObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

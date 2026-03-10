@@ -32,7 +32,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Atlan DynamoDB Table Asset
+ * Represents a DynamoDB table asset in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DynamoDBTable extends Asset
-        implements IDynamoDBTable, ITable, IDynamoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
+        implements IDynamoDBTable, ITable, IDynamoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DynamoDBTable";
@@ -101,34 +101,39 @@ public class DynamoDBTable extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Dimension tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** DynamoDB table containing global secondary indexes */
+    /** Columns (attributes) that exist within this DynamoDB table. */
+    @Attribute
+    @Singular
+    SortedSet<IDynamoDBAttribute> dynamoDBColumns;
+
+    /** DynamoDB table containing global secondary indexes. */
     @Attribute
     @Singular
     SortedSet<IDynamoDBGlobalSecondaryIndex> dynamoDBGlobalSecondaryIndexes;
 
-    /** DynamoDB table containing local secondary indexes */
+    /** DynamoDB table containing local secondary indexes. */
     @Attribute
     @Singular
     SortedSet<IDynamoDBLocalSecondaryIndex> dynamoDBLocalSecondaryIndexes;
 
-    /** Specifies the partition key of the DynamoDB Table/Index */
+    /** Specifies the partition key of the DynamoDB table or index. */
     @Attribute
     String dynamoDBPartitionKey;
 
-    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException. */
     @Attribute
     Long dynamoDBReadCapacityUnits;
 
-    /** Specifies the sort key of the DynamoDB Table/Index */
+    /** Specifies the sort key of the DynamoDB table or index. */
     @Attribute
     String dynamoDBSortKey;
 
-    /** Status of the DynamoDB Asset */
+    /** Status of the DynamoDB asset. */
     @Attribute
     DynamoDBStatus dynamoDBStatus;
 
@@ -140,7 +145,7 @@ public class DynamoDBTable extends Asset
     @Attribute
     Integer dynamoDBTableLSICount;
 
-    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException. */
     @Attribute
     Long dynamoDBWriteCapacityUnits;
 
@@ -156,7 +161,7 @@ public class DynamoDBTable extends Asset
     @Attribute
     String externalLocationRegion;
 
-    /** TBC */
+    /** Fact tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> facts;
@@ -639,11 +644,11 @@ public class DynamoDBTable extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DynamoDBTable, from a potentially
-     * more-complete DynamoDBTable object.
+     * Builds the minimal object necessary to apply an update to a DynamoDBTable,
+     * from a potentially more-complete DynamoDBTable object.
      *
      * @return the minimal object necessary to update the DynamoDBTable, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DynamoDBTable are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DynamoDBTable are not present in the initial object
      */
     @Override
     public DynamoDBTableBuilder<?, ?> trimToRequired() throws InvalidRequestException {

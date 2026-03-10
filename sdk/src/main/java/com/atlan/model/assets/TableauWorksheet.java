@@ -399,11 +399,11 @@ public class TableauWorksheet extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauWorksheet, from a potentially
-     * more-complete TableauWorksheet object.
+     * Builds the minimal object necessary to apply an update to a TableauWorksheet,
+     * from a potentially more-complete TableauWorksheet object.
      *
      * @return the minimal object necessary to update the TableauWorksheet, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauWorksheet are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauWorksheet are not present in the initial object
      */
     @Override
     public TableauWorksheetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

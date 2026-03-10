@@ -416,11 +416,11 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AirflowDag, from a potentially
-     * more-complete AirflowDag object.
+     * Builds the minimal object necessary to apply an update to a AirflowDag,
+     * from a potentially more-complete AirflowDag object.
      *
      * @return the minimal object necessary to update the AirflowDag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AirflowDag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AirflowDag are not present in the initial object
      */
     @Override
     public AirflowDagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

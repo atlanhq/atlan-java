@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DataStudioAsset extends Asset
-        implements IDataStudioAsset, IDataStudio, IGoogle, IBI, ICloud, IAsset, IReferenceable, ICatalog {
+        implements IDataStudioAsset, IGoogle, IDataStudio, IBI, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DataStudioAsset";
@@ -52,6 +52,10 @@ public class DataStudioAsset extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
+    @Attribute
+    String cloudUniformResourceName;
 
     /** Owner of the asset, from Google Data Studio. */
     @Attribute
@@ -447,11 +451,11 @@ public class DataStudioAsset extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DataStudioAsset, from a potentially
-     * more-complete DataStudioAsset object.
+     * Builds the minimal object necessary to apply an update to a DataStudioAsset,
+     * from a potentially more-complete DataStudioAsset object.
      *
      * @return the minimal object necessary to update the DataStudioAsset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataStudioAsset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataStudioAsset are not present in the initial object
      */
     @Override
     public DataStudioAssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

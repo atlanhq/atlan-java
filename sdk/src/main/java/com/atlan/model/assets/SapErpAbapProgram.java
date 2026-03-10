@@ -394,11 +394,11 @@ public class SapErpAbapProgram extends Asset implements ISapErpAbapProgram, ISAP
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpAbapProgram, from a potentially
-     * more-complete SapErpAbapProgram object.
+     * Builds the minimal object necessary to apply an update to a SapErpAbapProgram,
+     * from a potentially more-complete SapErpAbapProgram object.
      *
      * @return the minimal object necessary to update the SapErpAbapProgram, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpAbapProgram are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpAbapProgram are not present in the initial object
      */
     @Override
     public SapErpAbapProgramBuilder<?, ?> trimToRequired() throws InvalidRequestException {

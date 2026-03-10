@@ -409,11 +409,11 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikDataset, from a potentially
-     * more-complete QlikDataset object.
+     * Builds the minimal object necessary to apply an update to a QlikDataset,
+     * from a potentially more-complete QlikDataset object.
      *
      * @return the minimal object necessary to update the QlikDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikDataset are not present in the initial object
      */
     @Override
     public QlikDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

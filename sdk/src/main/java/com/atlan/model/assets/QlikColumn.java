@@ -407,11 +407,11 @@ public class QlikColumn extends Asset implements IQlikColumn, IQlik, IBI, ICatal
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikColumn, from a potentially
-     * more-complete QlikColumn object.
+     * Builds the minimal object necessary to apply an update to a QlikColumn,
+     * from a potentially more-complete QlikColumn object.
      *
      * @return the minimal object necessary to update the QlikColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikColumn are not present in the initial object
      */
     @Override
     public QlikColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

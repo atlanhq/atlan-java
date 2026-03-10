@@ -322,11 +322,11 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AuthService, from a potentially
-     * more-complete AuthService object.
+     * Builds the minimal object necessary to apply an update to a AuthService,
+     * from a potentially more-complete AuthService object.
      *
      * @return the minimal object necessary to update the AuthService, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AuthService are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AuthService are not present in the initial object
      */
     @Override
     public AuthServiceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

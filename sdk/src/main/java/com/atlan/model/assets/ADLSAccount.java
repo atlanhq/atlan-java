@@ -127,6 +127,10 @@ public class ADLSAccount extends Asset
     @Singular
     List<AzureTag> azureTags;
 
+    /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
+    @Attribute
+    String cloudUniformResourceName;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -453,11 +457,11 @@ public class ADLSAccount extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ADLSAccount, from a potentially
-     * more-complete ADLSAccount object.
+     * Builds the minimal object necessary to apply an update to a ADLSAccount,
+     * from a potentially more-complete ADLSAccount object.
      *
      * @return the minimal object necessary to update the ADLSAccount, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ADLSAccount are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ADLSAccount are not present in the initial object
      */
     @Override
     public ADLSAccountBuilder<?, ?> trimToRequired() throws InvalidRequestException {

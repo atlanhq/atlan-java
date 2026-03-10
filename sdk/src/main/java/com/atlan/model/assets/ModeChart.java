@@ -391,11 +391,11 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ModeChart, from a potentially
-     * more-complete ModeChart object.
+     * Builds the minimal object necessary to apply an update to a ModeChart,
+     * from a potentially more-complete ModeChart object.
      *
      * @return the minimal object necessary to update the ModeChart, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModeChart are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModeChart are not present in the initial object
      */
     @Override
     public ModeChartBuilder<?, ?> trimToRequired() throws InvalidRequestException {

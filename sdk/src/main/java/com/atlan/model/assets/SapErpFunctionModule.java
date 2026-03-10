@@ -416,11 +416,11 @@ public class SapErpFunctionModule extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpFunctionModule, from a potentially
-     * more-complete SapErpFunctionModule object.
+     * Builds the minimal object necessary to apply an update to a SapErpFunctionModule,
+     * from a potentially more-complete SapErpFunctionModule object.
      *
      * @return the minimal object necessary to update the SapErpFunctionModule, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpFunctionModule are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpFunctionModule are not present in the initial object
      */
     @Override
     public SapErpFunctionModuleBuilder<?, ?> trimToRequired() throws InvalidRequestException {

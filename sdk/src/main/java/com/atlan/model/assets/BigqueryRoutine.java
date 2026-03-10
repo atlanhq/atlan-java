@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class BigqueryRoutine extends Asset
-        implements IBigqueryRoutine, IProcedure, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IBigqueryRoutine, IProcedure, IBigquery, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BigqueryRoutine";
@@ -547,11 +547,11 @@ public class BigqueryRoutine extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BigqueryRoutine, from a potentially
-     * more-complete BigqueryRoutine object.
+     * Builds the minimal object necessary to apply an update to a BigqueryRoutine,
+     * from a potentially more-complete BigqueryRoutine object.
      *
      * @return the minimal object necessary to update the BigqueryRoutine, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BigqueryRoutine are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BigqueryRoutine are not present in the initial object
      */
     @Override
     public BigqueryRoutineBuilder<?, ?> trimToRequired() throws InvalidRequestException {

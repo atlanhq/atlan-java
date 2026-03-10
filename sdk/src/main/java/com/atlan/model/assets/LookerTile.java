@@ -400,11 +400,11 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerTile, from a potentially
-     * more-complete LookerTile object.
+     * Builds the minimal object necessary to apply an update to a LookerTile,
+     * from a potentially more-complete LookerTile object.
      *
      * @return the minimal object necessary to update the LookerTile, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerTile are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerTile are not present in the initial object
      */
     @Override
     public LookerTileBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -55,7 +55,7 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -63,7 +63,7 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -72,7 +72,7 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -81,17 +81,17 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
+    /** Column-level processes that are part of this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
@@ -167,7 +167,7 @@ public class FlowDatasetOperation extends Asset
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -182,7 +182,7 @@ public class FlowDatasetOperation extends Asset
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -195,7 +195,7 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     String sql;
 
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -450,11 +450,11 @@ public class FlowDatasetOperation extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowDatasetOperation, from a potentially
-     * more-complete FlowDatasetOperation object.
+     * Builds the minimal object necessary to apply an update to a FlowDatasetOperation,
+     * from a potentially more-complete FlowDatasetOperation object.
      *
      * @return the minimal object necessary to update the FlowDatasetOperation, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowDatasetOperation are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FlowDatasetOperation are not present in the initial object
      */
     @Override
     public FlowDatasetOperationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

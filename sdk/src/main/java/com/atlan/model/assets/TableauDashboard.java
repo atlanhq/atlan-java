@@ -399,11 +399,11 @@ public class TableauDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauDashboard, from a potentially
-     * more-complete TableauDashboard object.
+     * Builds the minimal object necessary to apply an update to a TableauDashboard,
+     * from a potentially more-complete TableauDashboard object.
      *
      * @return the minimal object necessary to update the TableauDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauDashboard are not present in the initial object
      */
     @Override
     public TableauDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

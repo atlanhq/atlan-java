@@ -16,7 +16,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,12 +49,12 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes associated with the category. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Glossary in which this category is contained. */
     @Attribute
     IGlossary anchor;
 
@@ -63,25 +62,24 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Attribute
     AtlasGlossaryCategoryType categoryType;
 
-    /** TBC */
+    /** Child categories organized within this category. */
     @Attribute
     @Singular("childCategory")
-    @Setter(AccessLevel.PACKAGE)
     SortedSet<IGlossaryCategory> childrenCategories;
 
-    /** TBC */
+    /** Unused. Detailed description of the category. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Parent category in which this category is located (or empty if this is a root-level category). */
     @Attribute
     IGlossaryCategory parentCategory;
 
-    /** TBC */
+    /** Unused. Brief summary of the category. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms organized within this category. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;
@@ -633,6 +631,111 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     public abstract static class GlossaryCategoryBuilder<
                     C extends GlossaryCategory, B extends GlossaryCategoryBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
+
+    /**
+     * Remove the system description from a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the user's description from a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeUserDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the owners from a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's owners
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeOwners(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the certificate on a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryCategory's certificate
+     * @param qualifiedName of the GlossaryCategory
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated GlossaryCategory, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryCategory)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryCategory's certificate
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeCertificate(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the announcement on a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryCategory's announcement
+     * @param qualifiedName of the GlossaryCategory
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (GlossaryCategory)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a GlossaryCategory.
+     *
+     * @param client connectivity to the Atlan client from which to remove the GlossaryCategory's announcement
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+    }
 
     /**
      * Add Atlan tags to a GlossaryCategory, without replacing existing Atlan tags linked to the GlossaryCategory.

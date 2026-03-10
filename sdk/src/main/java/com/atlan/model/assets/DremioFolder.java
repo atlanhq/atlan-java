@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DremioFolder extends Asset implements IDremioFolder, IDremio, ISQL, ICatalog, IAsset, IReferenceable {
+public class DremioFolder extends Asset implements IDremioFolder, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioFolder";
@@ -519,11 +519,11 @@ public class DremioFolder extends Asset implements IDremioFolder, IDremio, ISQL,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DremioFolder, from a potentially
-     * more-complete DremioFolder object.
+     * Builds the minimal object necessary to apply an update to a DremioFolder,
+     * from a potentially more-complete DremioFolder object.
      *
      * @return the minimal object necessary to update the DremioFolder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DremioFolder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DremioFolder are not present in the initial object
      */
     @Override
     public DremioFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

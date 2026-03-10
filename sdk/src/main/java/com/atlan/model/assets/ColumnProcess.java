@@ -54,7 +54,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -71,7 +71,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -85,16 +85,16 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -103,7 +103,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -118,11 +118,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Process in which this task exists. */
+    /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
 
@@ -135,7 +135,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String sql;
 
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -424,11 +424,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ColumnProcess, from a potentially
-     * more-complete ColumnProcess object.
+     * Builds the minimal object necessary to apply an update to a ColumnProcess,
+     * from a potentially more-complete ColumnProcess object.
      *
      * @return the minimal object necessary to update the ColumnProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ColumnProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ColumnProcess are not present in the initial object
      */
     @Override
     public ColumnProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -479,11 +479,11 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtTest, from a potentially
-     * more-complete DbtTest object.
+     * Builds the minimal object necessary to apply an update to a DbtTest,
+     * from a potentially more-complete DbtTest object.
      *
      * @return the minimal object necessary to update the DbtTest, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtTest are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtTest are not present in the initial object
      */
     @Override
     public DbtTestBuilder<?, ?> trimToRequired() throws InvalidRequestException {

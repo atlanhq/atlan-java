@@ -17,6 +17,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DocumentDBDatabase extends Asset
-        implements IDocumentDBDatabase, IDocumentDB, IDatabase, INoSQL, ICatalog, IAsset, IReferenceable, ISQL {
+        implements IDocumentDBDatabase, IDatabase, IDocumentDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DocumentDBDatabase";
@@ -190,7 +191,7 @@ public class DocumentDBDatabase extends Asset
     @Attribute
     String schemaQualifiedName;
 
-    /** Schemas that exist within this database. */
+    /** Schemas that exist within the database. */
     @Attribute
     @Singular
     SortedSet<ISchema> schemas;
@@ -463,7 +464,6 @@ public class DocumentDBDatabase extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a DocumentDBDatabase.
      *
@@ -494,19 +494,18 @@ public class DocumentDBDatabase extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DocumentDBDatabase, from a potentially
-     * more-complete DocumentDBDatabase object.
+     * Builds the minimal object necessary to apply an update to a DocumentDBDatabase,
+     * from a potentially more-complete DocumentDBDatabase object.
      *
      * @return the minimal object necessary to update the DocumentDBDatabase, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DocumentDBDatabase are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DocumentDBDatabase are not present in the initial object
      */
     @Override
     public DocumentDBDatabaseBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

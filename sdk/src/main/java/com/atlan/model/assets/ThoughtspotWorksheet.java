@@ -370,11 +370,11 @@ public class ThoughtspotWorksheet extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ThoughtspotWorksheet, from a potentially
-     * more-complete ThoughtspotWorksheet object.
+     * Builds the minimal object necessary to apply an update to a ThoughtspotWorksheet,
+     * from a potentially more-complete ThoughtspotWorksheet object.
      *
      * @return the minimal object necessary to update the ThoughtspotWorksheet, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ThoughtspotWorksheet are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ThoughtspotWorksheet are not present in the initial object
      */
     @Override
     public ThoughtspotWorksheetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

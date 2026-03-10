@@ -385,11 +385,11 @@ public class SigmaDatasetColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SigmaDatasetColumn, from a potentially
-     * more-complete SigmaDatasetColumn object.
+     * Builds the minimal object necessary to apply an update to a SigmaDatasetColumn,
+     * from a potentially more-complete SigmaDatasetColumn object.
      *
      * @return the minimal object necessary to update the SigmaDatasetColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDatasetColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SigmaDatasetColumn are not present in the initial object
      */
     @Override
     public SigmaDatasetColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class GCSBucket extends Asset
-        implements IGCSBucket, IGCS, IGoogle, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
+        implements IGCSBucket, IGCS, IObjectStore, IGoogle, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCSBucket";
@@ -50,6 +50,10 @@ public class GCSBucket extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
+    @Attribute
+    String cloudUniformResourceName;
 
     /** Access control list for this asset. */
     @Attribute
@@ -468,11 +472,11 @@ public class GCSBucket extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a GCSBucket, from a potentially
-     * more-complete GCSBucket object.
+     * Builds the minimal object necessary to apply an update to a GCSBucket,
+     * from a potentially more-complete GCSBucket object.
      *
      * @return the minimal object necessary to update the GCSBucket, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for GCSBucket are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a GCSBucket are not present in the initial object
      */
     @Override
     public GCSBucketBuilder<?, ?> trimToRequired() throws InvalidRequestException {

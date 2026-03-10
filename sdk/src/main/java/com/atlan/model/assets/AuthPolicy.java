@@ -51,7 +51,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Policies assigned to this access control entity. */
     @Attribute
     IAccessControl accessControl;
 

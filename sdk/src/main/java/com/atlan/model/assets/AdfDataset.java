@@ -419,11 +419,11 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AdfDataset, from a potentially
-     * more-complete AdfDataset object.
+     * Builds the minimal object necessary to apply an update to a AdfDataset,
+     * from a potentially more-complete AdfDataset object.
      *
      * @return the minimal object necessary to update the AdfDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AdfDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AdfDataset are not present in the initial object
      */
     @Override
     public AdfDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

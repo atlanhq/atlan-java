@@ -31,10 +31,10 @@ public class CustomParentEntityCustomChildEntities extends RelationshipAttribute
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name for the relationship when referring from the parent entity to its children entities. */
     String customEntityChildrenLabel;
 
-    /** TBC */
+    /** Name for the relationship when referring from a child entity to its parent entity. */
     String customEntityParentLabel;
 
     /** {@inheritDoc} */

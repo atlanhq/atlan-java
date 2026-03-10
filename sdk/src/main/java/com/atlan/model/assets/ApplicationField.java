@@ -349,7 +349,6 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a ApplicationField.
      *
@@ -426,11 +425,11 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ApplicationField, from a potentially
-     * more-complete ApplicationField object.
+     * Builds the minimal object necessary to apply an update to a ApplicationField,
+     * from a potentially more-complete ApplicationField object.
      *
      * @return the minimal object necessary to update the ApplicationField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ApplicationField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ApplicationField are not present in the initial object
      */
     @Override
     public ApplicationFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

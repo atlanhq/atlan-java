@@ -414,11 +414,11 @@ public class MicroStrategyFact extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyFact, from a potentially
-     * more-complete MicroStrategyFact object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyFact,
+     * from a potentially more-complete MicroStrategyFact object.
      *
      * @return the minimal object necessary to update the MicroStrategyFact, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyFact are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyFact are not present in the initial object
      */
     @Override
     public MicroStrategyFactBuilder<?, ?> trimToRequired() throws InvalidRequestException {

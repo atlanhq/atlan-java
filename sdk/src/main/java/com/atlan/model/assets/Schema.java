@@ -533,7 +533,6 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a schema.
      *
@@ -613,11 +612,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Schema, from a potentially
-     * more-complete Schema object.
+     * Builds the minimal object necessary to apply an update to a Schema,
+     * from a potentially more-complete Schema object.
      *
      * @return the minimal object necessary to update the Schema, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Schema are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Schema are not present in the initial object
      */
     @Override
     public SchemaBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -358,11 +358,11 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauSite, from a potentially
-     * more-complete TableauSite object.
+     * Builds the minimal object necessary to apply an update to a TableauSite,
+     * from a potentially more-complete TableauSite object.
      *
      * @return the minimal object necessary to update the TableauSite, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauSite are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauSite are not present in the initial object
      */
     @Override
     public TableauSiteBuilder<?, ?> trimToRequired() throws InvalidRequestException {

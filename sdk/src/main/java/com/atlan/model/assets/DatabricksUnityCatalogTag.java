@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DatabricksUnityCatalogTag extends Asset
-        implements IDatabricksUnityCatalogTag, ITag, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDatabricksUnityCatalogTag, ITag, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksUnityCatalogTag";
@@ -502,6 +502,17 @@ public class DatabricksUnityCatalogTag extends Asset
     }
 
     /**
+     * Generate a unique DatabricksUnityCatalogTag name.
+     *
+     * @param name of the DatabricksUnityCatalogTag
+     * @param connectionQualifiedName unique name of the schema in which this DatabricksUnityCatalogTag exists
+     * @return a unique name for the DatabricksUnityCatalogTag
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/tag/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a DatabricksUnityCatalogTag.
      *
      * @param qualifiedName of the DatabricksUnityCatalogTag
@@ -516,22 +527,11 @@ public class DatabricksUnityCatalogTag extends Asset
     }
 
     /**
-     * Generate a unique DatabricksUnityCatalogTag name.
-     *
-     * @param name of the DatabricksUnityCatalogTag
-     * @param connectionQualifiedName unique name of the schema in which this DatabricksUnityCatalogTag exists
-     * @return a unique name for the DatabricksUnityCatalogTag
-     */
-    public static String generateQualifiedName(String name, String connectionQualifiedName) {
-        return connectionQualifiedName + "/tag/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a DatabricksUnityCatalogTag, from a potentially
-     * more-complete DatabricksUnityCatalogTag object.
+     * Builds the minimal object necessary to apply an update to a DatabricksUnityCatalogTag,
+     * from a potentially more-complete DatabricksUnityCatalogTag object.
      *
      * @return the minimal object necessary to update the DatabricksUnityCatalogTag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksUnityCatalogTag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksUnityCatalogTag are not present in the initial object
      */
     @Override
     public DatabricksUnityCatalogTagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

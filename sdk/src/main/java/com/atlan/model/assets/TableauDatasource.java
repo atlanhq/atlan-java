@@ -65,7 +65,7 @@ public class TableauDatasource extends Asset
     /** Fields that exist within this datasource. */
     @Attribute
     @Singular
-    SortedSet<ITableauField> fields;
+    SortedSet<ITableauDatasourceField> fields;
 
     /** Whether this datasource has extracts (true) or not (false). */
     @Attribute
@@ -423,11 +423,11 @@ public class TableauDatasource extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauDatasource, from a potentially
-     * more-complete TableauDatasource object.
+     * Builds the minimal object necessary to apply an update to a TableauDatasource,
+     * from a potentially more-complete TableauDatasource object.
      *
      * @return the minimal object necessary to update the TableauDatasource, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDatasource are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauDatasource are not present in the initial object
      */
     @Override
     public TableauDatasourceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -17,20 +16,14 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -56,12 +49,12 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes associated with this glossary. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Categories contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<IGlossaryCategory> categories;
@@ -70,24 +63,24 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Attribute
     AtlasGlossaryType glossaryType;
 
-    /** TBC */
+    /** Unused. Language of the glossary's contents. */
     @Attribute
     String language;
 
-    /** TBC */
+    /** Unused. A longer description of the glossary. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Unused. A short definition of the glossary. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;
 
-    /** TBC */
+    /** Unused. Inteded usage for the glossary. */
     @Attribute
     String usage;
 
@@ -804,6 +797,108 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
 
     public abstract static class GlossaryBuilder<C extends Glossary, B extends GlossaryBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
+
+    /**
+     * Remove the system description from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the user's description from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeUserDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the owners from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's owners
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (Glossary) Asset.removeOwners(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the certificate on a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the Glossary's certificate
+     * @param qualifiedName of the Glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated Glossary, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Glossary) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's certificate
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeCertificate(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the announcement on a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the Glossary's announcement
+     * @param qualifiedName of the Glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (Glossary) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a Glossary.
+     *
+     * @param client connectivity to the Atlan client from which to remove the Glossary's announcement
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+    }
 
     /**
      * Add Atlan tags to a Glossary, without replacing existing Atlan tags linked to the Glossary.

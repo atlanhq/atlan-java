@@ -56,7 +56,7 @@ public class SnowflakeAIModelVersion extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Model containing the versions. */
+    /** AI model containing this version. */
     @Attribute
     IAIModel aiModel;
 
@@ -215,7 +215,7 @@ public class SnowflakeAIModelVersion extends Asset
 
     /** The aliases for the model version. */
     @Attribute
-    @Singular
+    @Singular("snowflakeAIModelVersionAlias")
     SortedSet<String> snowflakeAIModelVersionAliases;
 
     /** Functions used in the model version. */
@@ -520,11 +520,11 @@ public class SnowflakeAIModelVersion extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SnowflakeAIModelVersion, from a potentially
-     * more-complete SnowflakeAIModelVersion object.
+     * Builds the minimal object necessary to apply an update to a SnowflakeAIModelVersion,
+     * from a potentially more-complete SnowflakeAIModelVersion object.
      *
      * @return the minimal object necessary to update the SnowflakeAIModelVersion, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SnowflakeAIModelVersion are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SnowflakeAIModelVersion are not present in the initial object
      */
     @Override
     public SnowflakeAIModelVersionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -436,11 +436,11 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowDataset, from a potentially
-     * more-complete FlowDataset object.
+     * Builds the minimal object necessary to apply an update to a FlowDataset,
+     * from a potentially more-complete FlowDataset object.
      *
      * @return the minimal object necessary to update the FlowDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FlowDataset are not present in the initial object
      */
     @Override
     public FlowDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -17,6 +17,7 @@ import com.atlan.model.structs.DbtJobRun;
 import com.atlan.model.structs.DbtMetricFilter;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DbtMetric extends Asset
-        implements IDbtMetric, IDbt, IMetric, ICatalog, IAsset, IReferenceable, IDataQuality {
+        implements IDbtMetric, IMetric, IDbt, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtMetric";
@@ -51,9 +52,10 @@ public class DbtMetric extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Assets associated with this metric. */
     @Attribute
     @Singular
+    @JsonProperty("metric_assets")
     SortedSet<IAsset> assets;
 
     /** Name of the account in which this asset exists in dbt. */
@@ -115,6 +117,18 @@ public class DbtMetric extends Asset
     @Attribute
     String dbtMeta;
 
+    /** Calculation type for conversion metrics. */
+    @Attribute
+    String dbtMetricConversionCalculation;
+
+    /** Aggregation function for cumulative metrics within each period. */
+    @Attribute
+    String dbtMetricCumulativePeriodAgg;
+
+    /** Top-level filter applied to the entire metric query. */
+    @Attribute
+    String dbtMetricFilter;
+
     /** Model columns related to this metric. */
     @Attribute
     @Singular
@@ -124,6 +138,10 @@ public class DbtMetric extends Asset
     @Attribute
     @Singular
     List<DbtMetricFilter> dbtMetricFilters;
+
+    /** Time window for cumulative/conversion metrics. */
+    @Attribute
+    String dbtMetricWindow;
 
     /** Model in which this metric exists. */
     @Attribute
@@ -169,9 +187,10 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Dimension columns for this metric. */
     @Attribute
     @Singular
+    @JsonProperty("metric_metricDimensionColumns")
     SortedSet<IColumn> metricDimensionColumns;
 
     /** Filters to be applied to the metric query. */
@@ -187,8 +206,9 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<String> metricTimeGrains;
 
-    /** TBC */
+    /** Column used as timestamp for this metric. */
     @Attribute
+    @JsonProperty("metric_metricTimestampColumn")
     IColumn metricTimestampColumn;
 
     /** Type of the metric. */
@@ -479,11 +499,11 @@ public class DbtMetric extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtMetric, from a potentially
-     * more-complete DbtMetric object.
+     * Builds the minimal object necessary to apply an update to a DbtMetric,
+     * from a potentially more-complete DbtMetric object.
      *
      * @return the minimal object necessary to update the DbtMetric, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtMetric are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtMetric are not present in the initial object
      */
     @Override
     public DbtMetricBuilder<?, ?> trimToRequired() throws InvalidRequestException {

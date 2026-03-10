@@ -15,9 +15,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,65 +48,65 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
 
-    /** TBC */
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewQualifiedName;
 
-    /** TBC */
+    /** Unique name of the collection in which this query exists. */
     @Attribute
     String collectionQualifiedName;
 
-    /** TBC */
+    /** Columns this query accesses. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** DBT seeds that materialize the SQL asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSeed> dbtSeedAssets;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Unique name of the default database to use for this query. */
     @Attribute
     String defaultDatabaseQualifiedName;
 
-    /** TBC */
+    /** Unique name of the default schema to use for this query. */
     @Attribute
     String defaultSchemaQualifiedName;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -119,47 +116,47 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Whether this query is private (true) or shared (false). */
     @Attribute
     Boolean isPrivate;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether this query is a SQL snippet (true) or not (false). */
     @Attribute
     Boolean isSqlSnippet;
 
-    /** TBC */
+    /** Whether this query is a visual query (true) or not (false). */
     @Attribute
     Boolean isVisualQuery;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     @Date
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Raw SQL query string. */
     @Attribute
     String longRawQuery;
 
-    /** TBC */
+    /** Attributes implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelAttribute> modelImplementedAttributes;
 
-    /** TBC */
+    /** Entities implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -169,43 +166,43 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** TBC */
+    /** Namespace in which this query exists. */
     @Attribute
     INamespace parent;
 
-    /** TBC */
+    /** Unique name of the parent collection or folder in which this query exists. */
     @Attribute
     String parentQualifiedName;
 
-    /** TBC */
+    /** Partial fields contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialField> partialChildFields;
 
-    /** TBC */
+    /** Partial objects contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     @Date
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Deprecated. See 'longRawQuery' instead. */
     @Attribute
     String rawQuery;
 
@@ -213,63 +210,63 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Attribute
     String rawQueryText;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Whether this asset is secure (true) or not (false). */
     @Attribute
     Boolean sqlIsSecure;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Tables this query accesses. */
     @Attribute
     @Singular
     SortedSet<ITable> tables;
 
-    /** TBC */
+    /** Base64-encoded string of the variables to use in this query. */
     @Attribute
     String variablesSchemaBase64;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 
-    /** TBC */
+    /** Views this query accesses. */
     @Attribute
     @Singular
     SortedSet<IView> views;
 
-    /** TBC */
+    /** Base64-encoded string for the visual query builder. */
     @Attribute
     String visualBuilderSchemaBase64;
 
@@ -649,111 +646,31 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     }
 
     /**
-     * Find a query by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the query, if found.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @param attributes an optional collection of attributes to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name, Collection<String> attributes)
-            throws AtlanException {
-        List<AtlanQuery> results = new ArrayList<>();
-        AtlanQuery.select(client)
-                .where(NAME.eq(name))
-                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof AtlanQuery)
-                .forEach(q -> results.add((AtlanQuery) q));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.QUERY_NOT_FOUND_BY_NAME, name);
-        }
-        return results;
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @param attributes an optional collection of attributes (checked) to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name, List<AtlanField> attributes)
-            throws AtlanException {
-        List<AtlanQuery> results = new ArrayList<>();
-        AtlanQuery.select(client)
-                .where(NAME.eq(name))
-                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof AtlanQuery)
-                .forEach(q -> results.add((AtlanQuery) q));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.QUERY_NOT_FOUND_BY_NAME, name);
-        }
-        return results;
-    }
-
-    /**
      * Remove the system description from a AtlanQuery.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's description
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeDescription(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
+    public static AtlanQuery removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (AtlanQuery) Asset.removeDescription(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+        return (AtlanQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
      * Remove the user's description from a AtlanQuery.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's description
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeUserDescription(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
+    public static AtlanQuery removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (AtlanQuery) Asset.removeUserDescription(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+        return (AtlanQuery) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -762,20 +679,11 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's owners
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeOwners(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
-            throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeOwners(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+    public static AtlanQuery removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (AtlanQuery) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -783,28 +691,16 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      *
      * @param client connectivity to the Atlan tenant on which to update the AtlanQuery's certificate
      * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @param certificate to use
      * @param message (optional) message, or null if no message
      * @return the updated AtlanQuery, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery updateCertificate(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName,
-            CertificateStatus certificate,
-            String message)
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AtlanQuery) Asset.updateCertificate(
-                client,
-                updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName),
-                certificate,
-                message);
+        return (AtlanQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -813,20 +709,12 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's certificate
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeCertificate(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
+    public static AtlanQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (AtlanQuery) Asset.removeCertificate(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+        return (AtlanQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -834,53 +722,82 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      *
      * @param client connectivity to the Atlan tenant on which to update the AtlanQuery's announcement
      * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the updated AtlanQuery, or null if the update failed
+     * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery updateAnnouncement(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName,
-            AtlanAnnouncementType type,
-            String title,
-            String message)
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AtlanQuery) Asset.updateAnnouncement(
-                client,
-                updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName),
-                type,
-                title,
-                message);
+        return (AtlanQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
      * Remove the announcement from a AtlanQuery.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's announcement
+     * @param client connectivity to the Atlan client from which to remove the AtlanQuery's announcement
      * @param qualifiedName of the AtlanQuery
      * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeAnnouncement(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
+    public static AtlanQuery removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (AtlanQuery) Asset.removeAnnouncement(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+        return (AtlanQuery) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the AtlanQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the AtlanQuery's assigned terms
+     * @param qualifiedName for the AtlanQuery
+     * @param name human-readable name of the AtlanQuery
+     * @param terms the list of terms to replace on the AtlanQuery, or null to remove all terms from the AtlanQuery
+     * @return the AtlanQuery that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (AtlanQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the AtlanQuery, without replacing existing terms linked to the AtlanQuery.
+     * Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the AtlanQuery
+     * @param qualifiedName for the AtlanQuery
+     * @param terms the list of terms to append to the AtlanQuery
+     * @return the AtlanQuery that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
+     */
+    @Deprecated
+    public static AtlanQuery appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (AtlanQuery) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a AtlanQuery, without replacing all existing terms linked to the AtlanQuery.
+     * Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the AtlanQuery
+     * @param qualifiedName for the AtlanQuery
+     * @param terms the list of terms to remove from the AtlanQuery, which must be referenced by GUID
+     * @return the AtlanQuery that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
+     */
+    @Deprecated
+    public static AtlanQuery removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (AtlanQuery) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**

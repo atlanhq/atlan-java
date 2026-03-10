@@ -380,11 +380,11 @@ public class QuickSightDataset extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QuickSightDataset, from a potentially
-     * more-complete QuickSightDataset object.
+     * Builds the minimal object necessary to apply an update to a QuickSightDataset,
+     * from a potentially more-complete QuickSightDataset object.
      *
      * @return the minimal object necessary to update the QuickSightDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QuickSightDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QuickSightDataset are not present in the initial object
      */
     @Override
     public QuickSightDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

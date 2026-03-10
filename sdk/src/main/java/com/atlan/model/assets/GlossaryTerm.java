@@ -16,7 +16,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,83 +49,83 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Abbreviation of the term. */
     @Attribute
     String abbreviation;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes for the terrm. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Glossary in which this term is contained. */
     @Attribute
     IGlossary anchor;
 
-    /** TBC */
+    /** Terms that have the opposite (or near opposite) meaning, in the same language. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> antonyms;
 
-    /** TBC */
+    /** Assets assigned this term. */
     @Attribute
     @Singular
     SortedSet<IAsset> assignedEntities;
 
-    /** TBC */
+    /** Categories within which this term is organized. */
     @Attribute
     @Singular
     SortedSet<IGlossaryCategory> categories;
 
-    /** TBC */
+    /** More general term that defines a group of terms, for example: 'animal'. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> classifies;
 
-    /** TBC */
+    /** Unused. Exmaples of the term. */
     @Attribute
     @Singular
     SortedSet<String> examples;
 
-    /** TBC */
+    /** More specific term that is a sub-class of another term, for example: 'cat'. */
     @Attribute
     @Singular("isATerm")
     SortedSet<IGlossaryTerm> isA;
 
-    /** TBC */
+    /** Unused. Detailed definition of the term. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Preferred term(s) to use instead of this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> preferredTerms;
 
-    /** TBC */
+    /** Other term(s) that are less common or less preferred than this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> preferredToTerms;
 
-    /** TBC */
+    /** Term(s) that must no longer be used. */
     @Attribute
     @Singular("replacedByTerm")
     SortedSet<IGlossaryTerm> replacedBy;
 
-    /** TBC */
+    /** Term(s) that must be used instead. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> replacementTerms;
 
-    /** TBC */
+    /** Linked terms that may also be of interest. */
     @Attribute
     @Singular("seeAlsoOne")
     SortedSet<IGlossaryTerm> seeAlso;
 
-    /** TBC */
+    /** Unused. Brief summary of the term. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms that have the same (or a very similar) meaning, in the same language. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> synonyms;
@@ -135,26 +134,26 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Attribute
     AtlasGlossaryTermType termType;
 
-    /** TBC */
+    /** Term(s) that are a translation of this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> translatedTerms;
 
-    /** TBC */
+    /** Term(s) for which this term is a translation. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> translationTerms;
 
-    /** TBC */
+    /** Unused. Intended usage for the term. */
     @Attribute
     String usage;
 
-    /** TBC */
+    /** Valid values for this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> validValues;
 
-    /** TBC */
+    /** Term for which this is a valid value. */
     @Attribute
     @Singular("validValueFor")
     SortedSet<IGlossaryTerm> validValuesFor;
@@ -729,6 +728,111 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
 
     public abstract static class GlossaryTermBuilder<C extends GlossaryTerm, B extends GlossaryTermBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
+
+    /**
+     * Remove the system description from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the user's description from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeUserDescription(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the owners from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's owners
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeOwners(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the certificate on a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryTerm's certificate
+     * @param qualifiedName of the GlossaryTerm
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated GlossaryTerm, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryTerm)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's certificate
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeCertificate(client, updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the announcement on a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryTerm's announcement
+     * @param qualifiedName of the GlossaryTerm
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (GlossaryTerm)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan client from which to remove the GlossaryTerm's announcement
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+    }
 
     /**
      * Add Atlan tags to a GlossaryTerm, without replacing existing Atlan tags linked to the GlossaryTerm.

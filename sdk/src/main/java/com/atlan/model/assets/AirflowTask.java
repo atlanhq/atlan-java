@@ -492,11 +492,11 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AirflowTask, from a potentially
-     * more-complete AirflowTask object.
+     * Builds the minimal object necessary to apply an update to a AirflowTask,
+     * from a potentially more-complete AirflowTask object.
      *
      * @return the minimal object necessary to update the AirflowTask, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AirflowTask are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AirflowTask are not present in the initial object
      */
     @Override
     public AirflowTaskBuilder<?, ?> trimToRequired() throws InvalidRequestException {

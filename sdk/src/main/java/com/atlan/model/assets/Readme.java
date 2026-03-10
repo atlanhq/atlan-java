@@ -353,7 +353,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a README.
      * Note that the provided asset must have a real (not a placeholder) GUID.

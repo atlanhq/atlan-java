@@ -425,11 +425,11 @@ public class CosmosMongoDBAccount extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CosmosMongoDBAccount, from a potentially
-     * more-complete CosmosMongoDBAccount object.
+     * Builds the minimal object necessary to apply an update to a CosmosMongoDBAccount,
+     * from a potentially more-complete CosmosMongoDBAccount object.
      *
      * @return the minimal object necessary to update the CosmosMongoDBAccount, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CosmosMongoDBAccount are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CosmosMongoDBAccount are not present in the initial object
      */
     @Override
     public CosmosMongoDBAccountBuilder<?, ?> trimToRequired() throws InvalidRequestException {

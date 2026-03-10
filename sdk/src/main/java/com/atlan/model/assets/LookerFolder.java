@@ -387,11 +387,11 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerFolder, from a potentially
-     * more-complete LookerFolder object.
+     * Builds the minimal object necessary to apply an update to a LookerFolder,
+     * from a potentially more-complete LookerFolder object.
      *
      * @return the minimal object necessary to update the LookerFolder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerFolder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerFolder are not present in the initial object
      */
     @Override
     public LookerFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -374,7 +374,6 @@ public class AnaplanWorkspace extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create an Anaplan workspace.
      *
@@ -405,11 +404,11 @@ public class AnaplanWorkspace extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AnaplanWorkspace, from a potentially
-     * more-complete AnaplanWorkspace object.
+     * Builds the minimal object necessary to apply an update to a AnaplanWorkspace,
+     * from a potentially more-complete AnaplanWorkspace object.
      *
      * @return the minimal object necessary to update the AnaplanWorkspace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AnaplanWorkspace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AnaplanWorkspace are not present in the initial object
      */
     @Override
     public AnaplanWorkspaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

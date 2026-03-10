@@ -389,11 +389,11 @@ public class CognosDatasource extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosDatasource, from a potentially
-     * more-complete CognosDatasource object.
+     * Builds the minimal object necessary to apply an update to a CognosDatasource,
+     * from a potentially more-complete CognosDatasource object.
      *
      * @return the minimal object necessary to update the CognosDatasource, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosDatasource are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosDatasource are not present in the initial object
      */
     @Override
     public CognosDatasourceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

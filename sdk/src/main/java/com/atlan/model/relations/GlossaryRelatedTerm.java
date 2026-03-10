@@ -32,19 +32,19 @@ public class GlossaryRelatedTerm extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Explains why the linked term is of interest. */
     String description;
 
-    /** TBC */
+    /** Expression used to set the related term. */
     String expression;
 
-    /** TBC */
+    /** Source of the related term assignment. */
     String source;
 
-    /** TBC */
+    /** Status of the related term assignment, typically used by discovery engines. */
     AtlasGlossaryTermRelationshipStatus status;
 
-    /** TBC */
+    /** User responsible for assessing the relationship and deciding if it should be approved or not. */
     String steward;
 
     /** {@inheritDoc} */

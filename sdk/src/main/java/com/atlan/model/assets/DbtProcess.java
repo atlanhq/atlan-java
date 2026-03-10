@@ -14,6 +14,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.DbtInputContext;
 import com.atlan.model.structs.DbtJobRun;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProcess, ICatalog, IAsset, IReferenceable {
+public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtProcess";
@@ -55,7 +56,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -63,7 +64,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -72,7 +73,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -81,7 +82,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
+    /** Column-level processes that are part of this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -170,16 +171,21 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String dbtUniqueId;
 
-    /** Individual Fabric activities contained in the process. */
+    /** Context for inputs to this Process. */
+    @Attribute
+    @Singular
+    List<DbtInputContext> dbtUpstreamContexts;
+
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -198,12 +204,12 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** Assets that are inputs to this task. */
+    /** Assets that are inputs to this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -232,7 +238,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** Assets that are outputs from this task. */
+    /** Assets that are outputs from this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
@@ -253,7 +259,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -266,7 +272,7 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     String sql;
 
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -520,11 +526,11 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtProcess, from a potentially
-     * more-complete DbtProcess object.
+     * Builds the minimal object necessary to apply an update to a DbtProcess,
+     * from a potentially more-complete DbtProcess object.
      *
      * @return the minimal object necessary to update the DbtProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtProcess are not present in the initial object
      */
     @Override
     public DbtProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

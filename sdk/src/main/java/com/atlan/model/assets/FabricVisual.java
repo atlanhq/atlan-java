@@ -376,11 +376,11 @@ public class FabricVisual extends Asset implements IFabricVisual, IFabric, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricVisual, from a potentially
-     * more-complete FabricVisual object.
+     * Builds the minimal object necessary to apply an update to a FabricVisual,
+     * from a potentially more-complete FabricVisual object.
      *
      * @return the minimal object necessary to update the FabricVisual, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricVisual are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricVisual are not present in the initial object
      */
     @Override
     public FabricVisualBuilder<?, ?> trimToRequired() throws InvalidRequestException {

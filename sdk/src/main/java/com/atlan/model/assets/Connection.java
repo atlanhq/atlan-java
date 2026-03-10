@@ -21,7 +21,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -93,6 +91,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     @Singular
     SortedSet<String> connectionDbtEnvironments;
+
+    /** Whether cookie based OAuth is enabled in Insights for this connection (true) or not (false). */
+    @Attribute
+    Boolean connectionInsightsViaOAuthCookie;
 
     /** Whether data quality is enabled for this connection (true) or not (false). */
     @Attribute
@@ -791,11 +793,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Connection, from a potentially
-     * more-complete Connection object.
+     * Builds the minimal object necessary to apply an update to a Connection,
+     * from a potentially more-complete Connection object.
      *
      * @return the minimal object necessary to update the Connection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Connection are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Connection are not present in the initial object
      */
     @Override
     public ConnectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -804,149 +806,6 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieve the epoch component of the connection name from its qualifiedName.
-     *
-     * @param qualifiedName of the connection
-     * @return the epoch component of the qualifiedName
-     */
-    @JsonIgnore
-    public static String getEpochFromQualifiedName(String qualifiedName) {
-        return qualifiedName.substring(qualifiedName.lastIndexOf("/") + 1);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the connection, if found.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(AtlanClient client, String name, AtlanConnectorType type)
-            throws AtlanException {
-        return findByName(client, name, type, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(
-            AtlanClient client, String name, AtlanConnectorType type, Collection<String> attributes)
-            throws AtlanException {
-        return findByName(client, name, type == null ? "" : type.getValue(), attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(
-            AtlanClient client, String name, AtlanConnectorType type, List<AtlanField> attributes)
-            throws AtlanException {
-        return findByName(client, name, type == null ? "" : type.getValue(), attributes);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the connection, if found.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(AtlanClient client, String name, String type) throws AtlanException {
-        return findByName(client, name, type, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(
-            AtlanClient client, String name, String type, Collection<String> attributes) throws AtlanException {
-        List<Connection> results = new ArrayList<>();
-        Connection.select(client)
-                .where(Connection.NAME.eq(name))
-                .where(Connection.CONNECTOR_NAME.eq(type))
-                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof Connection)
-                .forEach(c -> results.add((Connection) c));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type);
-        }
-        return results;
-    }
-
-    /**
-     * Find a connection by its human-readable name and type.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the connection
-     * @param name of the connection
-     * @param type of the connection
-     * @param attributes an optional collection of attributes (checked) to retrieve for the connection
-     * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the connection does not exist
-     */
-    public static List<Connection> findByName(AtlanClient client, String name, String type, List<AtlanField> attributes)
-            throws AtlanException {
-        List<Connection> results = new ArrayList<>();
-        Connection.select(client)
-                .where(Connection.NAME.eq(name))
-                .where(Connection.CONNECTOR_NAME.eq(type))
-                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof Connection)
-                .forEach(c -> results.add((Connection) c));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type);
-        }
-        return results;
-    }
-
-    /**
-     * Retrieve the qualifiedNames of all connections that exist in Atlan.
-     *
-     * @param client connectivity to the Atlan tenant from which to retrieve the qualifiedNames
-     * @return list of all connection qualifiedNames
-     * @throws AtlanException on any API problems
-     */
-    public static List<String> getAllQualifiedNames(AtlanClient client) throws AtlanException {
-        return Connection.select(client).includeOnResults(Connection.QUALIFIED_NAME).pageSize(50).stream()
-                .map(Asset::getQualifiedName)
-                .collect(Collectors.toList());
     }
 
     public abstract static class ConnectionBuilder<C extends Connection, B extends ConnectionBuilder<C, B>>

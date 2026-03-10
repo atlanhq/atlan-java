@@ -577,7 +577,6 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a table.
      *
@@ -652,6 +651,17 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     }
 
     /**
+     * Generate a unique table name.
+     *
+     * @param name of the table
+     * @param schemaQualifiedName unique name of the schema in which this table exists
+     * @return a unique name for the table
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a Table.
      *
      * @param qualifiedName of the Table
@@ -666,22 +676,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     }
 
     /**
-     * Generate a unique table name.
-     *
-     * @param name of the table
-     * @param schemaQualifiedName unique name of the schema in which this table exists
-     * @return a unique name for the table
-     */
-    public static String generateQualifiedName(String name, String schemaQualifiedName) {
-        return schemaQualifiedName + "/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Table, from a potentially
-     * more-complete Table object.
+     * Builds the minimal object necessary to apply an update to a Table,
+     * from a potentially more-complete Table object.
      *
      * @return the minimal object necessary to update the Table, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Table are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Table are not present in the initial object
      */
     @Override
     public TableBuilder<?, ?> trimToRequired() throws InvalidRequestException {

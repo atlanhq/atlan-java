@@ -437,11 +437,11 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AdfLinkedservice, from a potentially
-     * more-complete AdfLinkedservice object.
+     * Builds the minimal object necessary to apply an update to a AdfLinkedservice,
+     * from a potentially more-complete AdfLinkedservice object.
      *
      * @return the minimal object necessary to update the AdfLinkedservice, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AdfLinkedservice are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AdfLinkedservice are not present in the initial object
      */
     @Override
     public AdfLinkedserviceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

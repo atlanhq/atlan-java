@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AppWorkflowRunStatus;
+import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -13,13 +14,17 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AppWorkflowRunStep;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -41,9 +46,42 @@ public interface IAppWorkflowRun {
 
     public static final String TYPE_NAME = "AppWorkflowRun";
 
+    /** Name of the application this workflow run belongs to. */
+    KeywordField APP_WORKFLOW_RUN_APP_NAME = new KeywordField("appWorkflowRunAppName", "appWorkflowRunAppName");
+
+    /** Qualified name of the application this workflow run belongs to. */
+    KeywordField APP_WORKFLOW_RUN_APP_QUALIFIED_NAME =
+            new KeywordField("appWorkflowRunAppQualifiedName", "appWorkflowRunAppQualifiedName");
+
+    /** Name of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_NAME =
+            new KeywordField("appWorkflowRunAppWorkflowName", "appWorkflowRunAppWorkflowName");
+
+    /** Qualified name of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_QUALIFIED_NAME =
+            new KeywordField("appWorkflowRunAppWorkflowQualifiedName", "appWorkflowRunAppWorkflowQualifiedName");
+
+    /** Slug of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_SLUG =
+            new KeywordField("appWorkflowRunAppWorkflowSlug", "appWorkflowRunAppWorkflowSlug");
+
+    /** Version of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_VERSION =
+            new KeywordField("appWorkflowRunAppWorkflowVersion", "appWorkflowRunAppWorkflowVersion");
+
     /** Timestamp when the workflow run finished execution. */
     NumericField APP_WORKFLOW_RUN_COMPLETED_AT =
             new NumericField("appWorkflowRunCompletedAt", "appWorkflowRunCompletedAt");
+
+    /** Map of all activity steps for the workflow run (escaped JSON string). */
+    TextField APP_WORKFLOW_RUN_DAG = new TextField("appWorkflowRunDag", "appWorkflowRunDag");
+
+    /** Error handling strategy for the workflow run. */
+    KeywordField APP_WORKFLOW_RUN_ERROR_HANDLING =
+            new KeywordField("appWorkflowRunErrorHandling", "appWorkflowRunErrorHandling");
+
+    /** Whether the workflow run is a test run. */
+    BooleanField APP_WORKFLOW_RUN_IS_TEST_RUN = new BooleanField("appWorkflowRunIsTestRun", "appWorkflowRunIsTestRun");
 
     /** Root name for the workflow run. */
     KeywordField APP_WORKFLOW_RUN_LABEL = new KeywordField("appWorkflowRunLabel", "appWorkflowRunLabel");
@@ -54,11 +92,18 @@ public interface IAppWorkflowRun {
     /** Timestamp when the workflow run began execution. */
     NumericField APP_WORKFLOW_RUN_STARTED_AT = new NumericField("appWorkflowRunStartedAt", "appWorkflowRunStartedAt");
 
+    /** Username of the user who started the workflow run. */
+    KeywordField APP_WORKFLOW_RUN_STARTED_BY = new KeywordField("appWorkflowRunStartedBy", "appWorkflowRunStartedBy");
+
     /** Overall execution status of the entire workflow run. */
     KeywordField APP_WORKFLOW_RUN_STATUS = new KeywordField("appWorkflowRunStatus", "appWorkflowRunStatus");
 
     /** Collection of individual workflow steps in this run. */
     KeywordField APP_WORKFLOW_RUN_STEPS = new KeywordField("appWorkflowRunSteps", "appWorkflowRunSteps");
+
+    /** Unique identifier for the temporal run associated with this workflow execution. */
+    KeywordField APP_WORKFLOW_RUN_TEMPORAL_RUN_ID =
+            new KeywordField("appWorkflowRunTemporalRunId", "appWorkflowRunTemporalRunId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -87,8 +132,35 @@ public interface IAppWorkflowRun {
     /** Checks that run on this asset. */
     SortedSet<IAnomaloCheck> getAnomaloChecks();
 
+    /** Name of the application this workflow run belongs to. */
+    String getAppWorkflowRunAppName();
+
+    /** Qualified name of the application this workflow run belongs to. */
+    String getAppWorkflowRunAppQualifiedName();
+
+    /** Name of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowName();
+
+    /** Qualified name of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowQualifiedName();
+
+    /** Slug of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowSlug();
+
+    /** Version of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowVersion();
+
     /** Timestamp when the workflow run finished execution. */
     Long getAppWorkflowRunCompletedAt();
+
+    /** Map of all activity steps for the workflow run (escaped JSON string). */
+    String getAppWorkflowRunDag();
+
+    /** Error handling strategy for the workflow run. */
+    AtlanAppErrorHandling getAppWorkflowRunErrorHandling();
+
+    /** Whether the workflow run is a test run. */
+    Boolean getAppWorkflowRunIsTestRun();
 
     /** Root name for the workflow run. */
     String getAppWorkflowRunLabel();
@@ -99,11 +171,17 @@ public interface IAppWorkflowRun {
     /** Timestamp when the workflow run began execution. */
     Long getAppWorkflowRunStartedAt();
 
+    /** Username of the user who started the workflow run. */
+    String getAppWorkflowRunStartedBy();
+
     /** Overall execution status of the entire workflow run. */
     AppWorkflowRunStatus getAppWorkflowRunStatus();
 
     /** Collection of individual workflow steps in this run. */
     List<AppWorkflowRunStep> getAppWorkflowRunSteps();
+
+    /** Unique identifier for the temporal run associated with this workflow execution. */
+    String getAppWorkflowRunTemporalRunId();
 
     /** Application owning the Asset. */
     IApplication getApplication();
@@ -116,6 +194,18 @@ public interface IAppWorkflowRun {
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
+
+    /** Description of this asset, generated by AI based on the asset's context. Displayed separately in the UI and can be used to overwrite existing descriptions. */
+    String getAssetAiGeneratedDescription();
+
+    /** Confidence score of the AI-generated description, ranging from 0.0 to 1.0. */
+    Double getAssetAiGeneratedDescriptionConfidence();
+
+    /** Reasoning behind the AI-generated description, explaining how the description was derived from the asset's context. */
+    String getAssetAiGeneratedDescriptionReasoning();
+
+    /** Time (epoch) at which the announcement expires, in milliseconds. When set, the announcement will no longer be displayed after this time. */
+    Long getAssetAnnouncementExpiredAt();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -149,6 +239,9 @@ public interface IAppWorkflowRun {
 
     /** Value of data freshness from Source. */
     Long getAssetDQFreshnessValue();
+
+    /** Status of the latest manual DQ run triggered for this asset. */
+    AssetDQRunStatus getAssetDQManualRunStatus();
 
     /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
     DataQualityResult getAssetDQResult();
@@ -339,6 +432,15 @@ public interface IAppWorkflowRun {
     /** DQ metadata captured for asset from external DQ tool(s). */
     Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
+    /** List of field key-values associated with all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectFieldList();
+
+    /** List of names of all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectList();
+
+    /** Metrics captured by GCP Dataplex for objects associated with GCP services. */
+    AssetGCPDataplexMetadata getAssetGCPDataplexMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -425,6 +527,9 @@ public interface IAppWorkflowRun {
 
     /** TBC */
     String getAssetSodaSourceURL();
+
+    /** Unique identifier for this asset in the system from which it was sourced. */
+    String getAssetSourceId();
 
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();

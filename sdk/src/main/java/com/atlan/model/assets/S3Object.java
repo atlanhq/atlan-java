@@ -55,7 +55,7 @@ public class S3Object extends Asset
     @Attribute
     String awsAccountId;
 
-    /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
+    /** DEPRECATED: This legacy attribute must be unique across all AWS asset instances. This can create non-obvious edge cases for creating / updating assets, and we therefore recommended NOT using it. See and use cloudResourceName instead. */
     @Attribute
     String awsArn;
 
@@ -91,6 +91,10 @@ public class S3Object extends Asset
     /** S3 bucket in which the object exists. */
     @Attribute
     IS3Bucket bucket;
+
+    /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
+    @Attribute
+    String cloudUniformResourceName;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -552,11 +556,11 @@ public class S3Object extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a S3Object, from a potentially
-     * more-complete S3Object object.
+     * Builds the minimal object necessary to apply an update to a S3Object,
+     * from a potentially more-complete S3Object object.
      *
      * @return the minimal object necessary to update the S3Object, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for S3Object are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a S3Object are not present in the initial object
      */
     @Override
     public S3ObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

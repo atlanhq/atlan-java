@@ -302,7 +302,6 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Folder.
      *
@@ -388,11 +387,11 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Folder, from a potentially
-     * more-complete Folder object.
+     * Builds the minimal object necessary to apply an update to a Folder,
+     * from a potentially more-complete Folder object.
      *
      * @return the minimal object necessary to update the Folder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Folder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Folder are not present in the initial object
      */
     @Override
     public FolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

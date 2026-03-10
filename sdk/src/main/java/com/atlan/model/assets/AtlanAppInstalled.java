@@ -57,9 +57,39 @@ public class AtlanAppInstalled extends Asset
     @Attribute
     Integer atlanAppCurrentVersionId;
 
+    /** Current version uuid for the atlan application. This is externally exposed information. */
+    @Attribute
+    String atlanAppCurrentVersionUUID;
+
     /** Configuration settings used by the atlan application. */
     @Attribute
     String atlanAppDeploymentConfig;
+
+    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    @Attribute
+    String atlanAppDeploymentName;
+
+    /** Metadata for the Atlan application (escaped JSON string). */
+    @Attribute
+    String atlanAppMetadata;
+
+    /** Name of the Atlan application this asset belongs to. */
+    @Attribute
+    String atlanAppName;
+
+    /** Qualified name of the Atlan application this asset belongs to. */
+    @Attribute
+    String atlanAppQualifiedName;
+
+    /** Tools that exist within this Atlan application. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanAppTool> atlanAppTools;
+
+    /** Workflows that exist within this Atlan application. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -361,11 +391,11 @@ public class AtlanAppInstalled extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AtlanAppInstalled, from a potentially
-     * more-complete AtlanAppInstalled object.
+     * Builds the minimal object necessary to apply an update to a AtlanAppInstalled,
+     * from a potentially more-complete AtlanAppInstalled object.
      *
      * @return the minimal object necessary to update the AtlanAppInstalled, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AtlanAppInstalled are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AtlanAppInstalled are not present in the initial object
      */
     @Override
     public AtlanAppInstalledBuilder<?, ?> trimToRequired() throws InvalidRequestException {

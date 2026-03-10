@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class TableauDatasourceField extends Asset
-        implements ITableauField, ITableauDatasourceField, ITableau, IBI, ICatalog, IAsset, IReferenceable {
+        implements ITableauDatasourceField, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDatasourceField";
@@ -435,11 +435,11 @@ public class TableauDatasourceField extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauDatasourceField, from a potentially
-     * more-complete TableauDatasourceField object.
+     * Builds the minimal object necessary to apply an update to a TableauDatasourceField,
+     * from a potentially more-complete TableauDatasourceField object.
      *
      * @return the minimal object necessary to update the TableauDatasourceField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDatasourceField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauDatasourceField are not present in the initial object
      */
     @Override
     public TableauDatasourceFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

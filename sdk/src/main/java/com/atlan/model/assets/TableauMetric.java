@@ -374,11 +374,11 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauMetric, from a potentially
-     * more-complete TableauMetric object.
+     * Builds the minimal object necessary to apply an update to a TableauMetric,
+     * from a potentially more-complete TableauMetric object.
      *
      * @return the minimal object necessary to update the TableauMetric, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauMetric are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauMetric are not present in the initial object
      */
     @Override
     public TableauMetricBuilder<?, ?> trimToRequired() throws InvalidRequestException {

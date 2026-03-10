@@ -7,6 +7,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AssetFilterGroup;
+import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
@@ -29,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a stakeholder title for Domains in Atlan
+ * Atlan Type representing Stakeholder Titles. Bootstrapped into all tenants.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -38,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset, IReferenceable {
+public class StakeholderTitle extends Asset
+        implements IStakeholderTitle, IAccessControl, IDataMesh, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "StakeholderTitle";
@@ -48,15 +51,134 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** qualified name array representing the Domains for which this StakeholderTitle is applicable */
+    /** TBC */
+    @Attribute
+    String channelLink;
+
+    /** TBC */
+    @Attribute
+    String defaultNavigation;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> stakeholderTitleDomainQualifiedNames;
+    SortedSet<AssetFilterGroup> denyAssetFilters;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyAssetMetadataTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<AssetSidebarTab> denyAssetTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyAssetTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyCustomMetadataGuids;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyNavigationPages;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denySidebarTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> displayPreferences;
+
+    /** Tasks to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** Processes to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** TBC */
+    @Attribute
+    Boolean isAccessControlEnabled;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Tasks from which this asset is output. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
+
+    /** Processes from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Unique name of the parent domain in which this asset exists. */
+    @Attribute
+    String parentDomainQualifiedName;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> personaGroups;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> personaUsers;
+
+    /** TBC */
+    @Attribute
+    String roleId;
 
     /** Stakeholder-Personas created for this Stakeholder-title */
     @Attribute
     @Singular
     SortedSet<IStakeholder> stakeholders;
+
+    /** Unique name of the top-level domain in which this asset exists. */
+    @Attribute
+    String superDomainQualifiedName;
 
     /**
      * Builds the minimal object necessary to create a relationship to a StakeholderTitle, from a potentially
@@ -308,11 +430,11 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a StakeholderTitle, from a potentially
-     * more-complete StakeholderTitle object.
+     * Builds the minimal object necessary to apply an update to a StakeholderTitle,
+     * from a potentially more-complete StakeholderTitle object.
      *
      * @return the minimal object necessary to update the StakeholderTitle, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for StakeholderTitle are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a StakeholderTitle are not present in the initial object
      */
     @Override
     public StakeholderTitleBuilder<?, ?> trimToRequired() throws InvalidRequestException {

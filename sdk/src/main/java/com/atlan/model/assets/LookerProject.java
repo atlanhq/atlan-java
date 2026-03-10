@@ -382,11 +382,11 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerProject, from a potentially
-     * more-complete LookerProject object.
+     * Builds the minimal object necessary to apply an update to a LookerProject,
+     * from a potentially more-complete LookerProject object.
      *
      * @return the minimal object necessary to update the LookerProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerProject are not present in the initial object
      */
     @Override
     public LookerProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

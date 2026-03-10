@@ -386,11 +386,11 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SodaCheck, from a potentially
-     * more-complete SodaCheck object.
+     * Builds the minimal object necessary to apply an update to a SodaCheck,
+     * from a potentially more-complete SodaCheck object.
      *
      * @return the minimal object necessary to update the SodaCheck, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SodaCheck are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SodaCheck are not present in the initial object
      */
     @Override
     public SodaCheckBuilder<?, ?> trimToRequired() throws InvalidRequestException {

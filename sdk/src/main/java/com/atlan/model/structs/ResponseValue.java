@@ -55,32 +55,32 @@ public class ResponseValue extends AtlanStruct {
     Long responseValueDate;
 
     /** Response type array of 'string'. */
-    @Singular("addResponseValueString")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<String> responseValueArrString;
 
     /** Response type array of 'int'. */
-    @Singular("addResponseValueInt")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Integer> responseValueArrInt;
 
     /** Response type array of 'boolean'. */
-    @Singular("addResponseValueBoolean")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Boolean> responseValueArrBoolean;
 
     /** Response type array of 'json'. */
-    @Singular("addResponseValueJson")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<String> responseValueArrJson;
 
     /** Response type array of 'long'. */
-    @Singular("addResponseValueLong")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Long> responseValueArrLong;
 
     /** Response type array of 'date'. */
-    @Singular("addResponseValueDate")
+    @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<Long> responseValueArrDate;
 

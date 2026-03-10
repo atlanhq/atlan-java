@@ -356,11 +356,11 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowProject, from a potentially
-     * more-complete FlowProject object.
+     * Builds the minimal object necessary to apply an update to a FlowProject,
+     * from a potentially more-complete FlowProject object.
      *
      * @return the minimal object necessary to update the FlowProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FlowProject are not present in the initial object
      */
     @Override
     public FlowProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -49,65 +49,65 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Alias for this materialized view. */
     @Attribute
     String alias;
 
-    /** TBC */
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
 
-    /** TBC */
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewQualifiedName;
 
-    /** TBC */
+    /** Number of columns in this materialized view. */
     @Attribute
     Long columnCount;
 
-    /** TBC */
+    /** Columns that exist within this materialized view. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** DBT seeds that materialize the SQL asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSeed> dbtSeedAssets;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** SQL definition of this materialized view. */
     @Attribute
     String definition;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -117,39 +117,39 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether it's possible to run a preview query on this materialized view (true) or not (false). */
     @Attribute
     Boolean isQueryPreview;
 
-    /** TBC */
+    /** Whether this materialized view is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     @Date
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Attributes implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelAttribute> modelImplementedAttributes;
 
-    /** TBC */
+    /** Entities implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -159,108 +159,108 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** TBC */
+    /** Partial fields contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialField> partialChildFields;
 
-    /** TBC */
+    /** Partial objects contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     @Date
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Configuration for the query preview of this materialized view. */
     @Attribute
     @Singular("putQueryPreviewConfig")
     Map<String, String> queryPreviewConfig;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Refresh method for this materialized view. */
     @Attribute
     String refreshMethod;
 
-    /** TBC */
+    /** Refresh mode for this materialized view. */
     @Attribute
     String refreshMode;
 
-    /** TBC */
+    /** Number of rows in this materialized view. */
     @Attribute
     Long rowCount;
 
-    /** TBC */
+    /** Schema in which this materialized view exists. */
     @Attribute
     @JsonProperty("atlanSchema")
     ISchema schema;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Size of this materialized view, in bytes. */
     @Attribute
     Long sizeBytes;
 
-    /** TBC */
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Whether this asset is secure (true) or not (false). */
     @Attribute
     Boolean sqlIsSecure;
 
-    /** TBC */
+    /** Time (epoch) from which this materialized view is stale, in milliseconds. */
     @Attribute
     @Date
     Long staleSinceDate;
 
-    /** TBC */
+    /** Staleness of this materialized view. */
     @Attribute
     String staleness;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 
@@ -498,7 +498,6 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a materialized view.
      *
@@ -598,11 +597,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MaterializedView, from a potentially
-     * more-complete MaterializedView object.
+     * Builds the minimal object necessary to apply an update to a MaterializedView,
+     * from a potentially more-complete MaterializedView object.
      *
      * @return the minimal object necessary to update the MaterializedView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MaterializedView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MaterializedView are not present in the initial object
      */
     @Override
     public MaterializedViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

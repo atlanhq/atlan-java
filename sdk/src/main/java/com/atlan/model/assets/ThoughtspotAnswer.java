@@ -365,11 +365,11 @@ public class ThoughtspotAnswer extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ThoughtspotAnswer, from a potentially
-     * more-complete ThoughtspotAnswer object.
+     * Builds the minimal object necessary to apply an update to a ThoughtspotAnswer,
+     * from a potentially more-complete ThoughtspotAnswer object.
      *
      * @return the minimal object necessary to update the ThoughtspotAnswer, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ThoughtspotAnswer are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ThoughtspotAnswer are not present in the initial object
      */
     @Override
     public ThoughtspotAnswerBuilder<?, ?> trimToRequired() throws InvalidRequestException {

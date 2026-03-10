@@ -393,11 +393,11 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpTable, from a potentially
-     * more-complete SapErpTable object.
+     * Builds the minimal object necessary to apply an update to a SapErpTable,
+     * from a potentially more-complete SapErpTable object.
      *
      * @return the minimal object necessary to update the SapErpTable, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpTable are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpTable are not present in the initial object
      */
     @Override
     public SapErpTableBuilder<?, ?> trimToRequired() throws InvalidRequestException {

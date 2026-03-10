@@ -394,11 +394,11 @@ public class CognosExploration extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosExploration, from a potentially
-     * more-complete CognosExploration object.
+     * Builds the minimal object necessary to apply an update to a CognosExploration,
+     * from a potentially more-complete CognosExploration object.
      *
      * @return the minimal object necessary to update the CognosExploration, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosExploration are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosExploration are not present in the initial object
      */
     @Override
     public CognosExplorationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

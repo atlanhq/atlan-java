@@ -383,11 +383,11 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a RedashQuery, from a potentially
-     * more-complete RedashQuery object.
+     * Builds the minimal object necessary to apply an update to a RedashQuery,
+     * from a potentially more-complete RedashQuery object.
      *
      * @return the minimal object necessary to update the RedashQuery, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for RedashQuery are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a RedashQuery are not present in the initial object
      */
     @Override
     public RedashQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {

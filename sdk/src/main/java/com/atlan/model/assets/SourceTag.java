@@ -396,6 +396,17 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     }
 
     /**
+     * Generate a unique SourceTag name.
+     *
+     * @param name of the SourceTag
+     * @param connectionQualifiedName unique name of the schema in which this SourceTag exists
+     * @return a unique name for the SourceTag
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a SourceTag.
      *
      * @param qualifiedName of the SourceTag
@@ -410,22 +421,11 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     }
 
     /**
-     * Generate a unique SourceTag name.
-     *
-     * @param name of the SourceTag
-     * @param connectionQualifiedName unique name of the schema in which this SourceTag exists
-     * @return a unique name for the SourceTag
-     */
-    public static String generateQualifiedName(String name, String connectionQualifiedName) {
-        return connectionQualifiedName + "/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a SourceTag, from a potentially
-     * more-complete SourceTag object.
+     * Builds the minimal object necessary to apply an update to a SourceTag,
+     * from a potentially more-complete SourceTag object.
      *
      * @return the minimal object necessary to update the SourceTag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SourceTag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SourceTag are not present in the initial object
      */
     @Override
     public SourceTagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

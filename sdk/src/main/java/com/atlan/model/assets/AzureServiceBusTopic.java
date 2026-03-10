@@ -370,11 +370,11 @@ public class AzureServiceBusTopic extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AzureServiceBusTopic, from a potentially
-     * more-complete AzureServiceBusTopic object.
+     * Builds the minimal object necessary to apply an update to a AzureServiceBusTopic,
+     * from a potentially more-complete AzureServiceBusTopic object.
      *
      * @return the minimal object necessary to update the AzureServiceBusTopic, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AzureServiceBusTopic are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AzureServiceBusTopic are not present in the initial object
      */
     @Override
     public AzureServiceBusTopicBuilder<?, ?> trimToRequired() throws InvalidRequestException {

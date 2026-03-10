@@ -353,11 +353,11 @@ public class Cognite3DModel extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Cognite3DModel, from a potentially
-     * more-complete Cognite3DModel object.
+     * Builds the minimal object necessary to apply an update to a Cognite3DModel,
+     * from a potentially more-complete Cognite3DModel object.
      *
      * @return the minimal object necessary to update the Cognite3DModel, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Cognite3DModel are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Cognite3DModel are not present in the initial object
      */
     @Override
     public Cognite3DModelBuilder<?, ?> trimToRequired() throws InvalidRequestException {

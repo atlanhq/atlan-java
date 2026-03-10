@@ -375,7 +375,6 @@ public class SupersetDashboard extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Superset dashboard.
      *
@@ -406,11 +405,11 @@ public class SupersetDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SupersetDashboard, from a potentially
-     * more-complete SupersetDashboard object.
+     * Builds the minimal object necessary to apply an update to a SupersetDashboard,
+     * from a potentially more-complete SupersetDashboard object.
      *
      * @return the minimal object necessary to update the SupersetDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SupersetDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SupersetDashboard are not present in the initial object
      */
     @Override
     public SupersetDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -419,17 +418,6 @@ public class SupersetDashboard extends Asset
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique Preset workspace name.
-     *
-     * @param connectionQualifiedName unique name of the connection
-     * @param name for the workspace
-     * @return a unique name for the workspace
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String name) {
-        return connectionQualifiedName + "/" + name;
     }
 
     public abstract static class SupersetDashboardBuilder<

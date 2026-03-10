@@ -358,7 +358,6 @@ public class DataverseEntity extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Dataverse entity.
      *
@@ -389,11 +388,11 @@ public class DataverseEntity extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DataverseEntity, from a potentially
-     * more-complete DataverseEntity object.
+     * Builds the minimal object necessary to apply an update to a DataverseEntity,
+     * from a potentially more-complete DataverseEntity object.
      *
      * @return the minimal object necessary to update the DataverseEntity, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataverseEntity are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataverseEntity are not present in the initial object
      */
     @Override
     public DataverseEntityBuilder<?, ?> trimToRequired() throws InvalidRequestException {

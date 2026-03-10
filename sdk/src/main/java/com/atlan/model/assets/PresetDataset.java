@@ -364,7 +364,6 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Preset dataset.
      *
@@ -441,11 +440,11 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PresetDataset, from a potentially
-     * more-complete PresetDataset object.
+     * Builds the minimal object necessary to apply an update to a PresetDataset,
+     * from a potentially more-complete PresetDataset object.
      *
      * @return the minimal object necessary to update the PresetDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PresetDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PresetDataset are not present in the initial object
      */
     @Override
     public PresetDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

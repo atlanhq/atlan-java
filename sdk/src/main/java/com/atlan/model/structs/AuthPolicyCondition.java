@@ -33,7 +33,7 @@ public class AuthPolicyCondition extends AtlanStruct {
     String typeName = TYPE_NAME;
 
     /** TBC */
-    String policyConditionType;
+    String accessControlPolicyConditionType;
 
     /** TBC */
     @Singular
@@ -42,13 +42,13 @@ public class AuthPolicyCondition extends AtlanStruct {
 
     /**
      * Quickly create a new AuthPolicyCondition.
-     * @param policyConditionType TBC
+     * @param accessControlPolicyConditionType TBC
      * @param policyConditionValues TBC
      * @return a AuthPolicyCondition with the provided information
      */
-    public static AuthPolicyCondition of(String policyConditionType, List<String> policyConditionValues) {
+    public static AuthPolicyCondition of(String accessControlPolicyConditionType, List<String> policyConditionValues) {
         return AuthPolicyCondition.builder()
-                .policyConditionType(policyConditionType)
+                .accessControlPolicyConditionType(accessControlPolicyConditionType)
                 .policyConditionValues(policyConditionValues)
                 .build();
     }

@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, ICatalog, IAsset, IReferenceable {
+public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SapErpColumn";
@@ -553,11 +553,11 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISAP, ISQL, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpColumn, from a potentially
-     * more-complete SapErpColumn object.
+     * Builds the minimal object necessary to apply an update to a SapErpColumn,
+     * from a potentially more-complete SapErpColumn object.
      *
      * @return the minimal object necessary to update the SapErpColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpColumn are not present in the initial object
      */
     @Override
     public SapErpColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

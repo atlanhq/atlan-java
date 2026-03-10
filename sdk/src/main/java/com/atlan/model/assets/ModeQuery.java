@@ -400,11 +400,11 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ModeQuery, from a potentially
-     * more-complete ModeQuery object.
+     * Builds the minimal object necessary to apply an update to a ModeQuery,
+     * from a potentially more-complete ModeQuery object.
      *
      * @return the minimal object necessary to update the ModeQuery, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModeQuery are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModeQuery are not present in the initial object
      */
     @Override
     public ModeQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {

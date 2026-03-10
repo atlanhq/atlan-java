@@ -115,6 +115,15 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Attribute
     String powerBIColumnSummarizeBy;
 
+    /** Time at which this asset was endorsed in Power BI. */
+    @Attribute
+    @Date
+    Long powerBIEndorsedAt;
+
+    /** User who endorsed this asset in Power BI. */
+    @Attribute
+    String powerBIEndorsedBy;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -398,11 +407,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PowerBIColumn, from a potentially
-     * more-complete PowerBIColumn object.
+     * Builds the minimal object necessary to apply an update to a PowerBIColumn,
+     * from a potentially more-complete PowerBIColumn object.
      *
      * @return the minimal object necessary to update the PowerBIColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PowerBIColumn are not present in the initial object
      */
     @Override
     public PowerBIColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

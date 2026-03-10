@@ -390,11 +390,11 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricWorkspace, from a potentially
-     * more-complete FabricWorkspace object.
+     * Builds the minimal object necessary to apply an update to a FabricWorkspace,
+     * from a potentially more-complete FabricWorkspace object.
      *
      * @return the minimal object necessary to update the FabricWorkspace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricWorkspace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricWorkspace are not present in the initial object
      */
     @Override
     public FabricWorkspaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

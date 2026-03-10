@@ -394,11 +394,11 @@ public class SigmaDataElement extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SigmaDataElement, from a potentially
-     * more-complete SigmaDataElement object.
+     * Builds the minimal object necessary to apply an update to a SigmaDataElement,
+     * from a potentially more-complete SigmaDataElement object.
      *
      * @return the minimal object necessary to update the SigmaDataElement, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDataElement are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SigmaDataElement are not present in the initial object
      */
     @Override
     public SigmaDataElementBuilder<?, ?> trimToRequired() throws InvalidRequestException {

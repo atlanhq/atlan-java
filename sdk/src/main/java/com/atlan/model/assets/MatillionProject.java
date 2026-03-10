@@ -383,11 +383,11 @@ public class MatillionProject extends Asset implements IMatillionProject, IMatil
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MatillionProject, from a potentially
-     * more-complete MatillionProject object.
+     * Builds the minimal object necessary to apply an update to a MatillionProject,
+     * from a potentially more-complete MatillionProject object.
      *
      * @return the minimal object necessary to update the MatillionProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MatillionProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MatillionProject are not present in the initial object
      */
     @Override
     public MatillionProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

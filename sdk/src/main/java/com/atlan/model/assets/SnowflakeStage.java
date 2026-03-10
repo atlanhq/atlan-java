@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICatalog, IAsset, IReferenceable {
+public class SnowflakeStage extends Asset
+        implements ISnowflakeStage, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeStage";
@@ -168,6 +169,11 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** The URL or cloud storage path specifying the external location where the stage data files are stored. This is NULL for internal stages. */
     @Attribute
@@ -473,11 +479,11 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISQL, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SnowflakeStage, from a potentially
-     * more-complete SnowflakeStage object.
+     * Builds the minimal object necessary to apply an update to a SnowflakeStage,
+     * from a potentially more-complete SnowflakeStage object.
      *
      * @return the minimal object necessary to update the SnowflakeStage, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SnowflakeStage are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SnowflakeStage are not present in the initial object
      */
     @Override
     public SnowflakeStageBuilder<?, ?> trimToRequired() throws InvalidRequestException {

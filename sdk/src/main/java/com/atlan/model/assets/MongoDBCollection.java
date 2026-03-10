@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class MongoDBCollection extends Asset
-        implements IMongoDBCollection, ITable, IMongoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
+        implements IMongoDBCollection, ITable, IMongoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MongoDBCollection";
@@ -100,7 +100,7 @@ public class MongoDBCollection extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Dimension tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> dimensions;
@@ -117,7 +117,7 @@ public class MongoDBCollection extends Asset
     @Attribute
     String externalLocationRegion;
 
-    /** TBC */
+    /** Fact tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> facts;
@@ -657,11 +657,11 @@ public class MongoDBCollection extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MongoDBCollection, from a potentially
-     * more-complete MongoDBCollection object.
+     * Builds the minimal object necessary to apply an update to a MongoDBCollection,
+     * from a potentially more-complete MongoDBCollection object.
      *
      * @return the minimal object necessary to update the MongoDBCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MongoDBCollection are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MongoDBCollection are not present in the initial object
      */
     @Override
     public MongoDBCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

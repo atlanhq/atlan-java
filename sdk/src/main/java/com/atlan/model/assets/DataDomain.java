@@ -15,7 +15,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -407,11 +406,11 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DataDomain, from a potentially
-     * more-complete DataDomain object.
+     * Builds the minimal object necessary to apply an update to a DataDomain,
+     * from a potentially more-complete DataDomain object.
      *
      * @return the minimal object necessary to update the DataDomain, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataDomain are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataDomain are not present in the initial object
      */
     @Override
     public DataDomainBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -420,69 +419,6 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Find a DataDomain by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the domain, if found.
-     *
-     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
-     * @param name of the DataDomain
-     * @return the DataDomain, if found
-     * @throws AtlanException on any API problems, or if the DataDomain does not exist
-     */
-    public static List<DataDomain> findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a DataDomain by its human-readable name.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
-     * @param name of the DataDomain
-     * @param attributes an optional collection of attributes (unchecked) to retrieve for the DataDomain
-     * @return the DataDomain, if found
-     * @throws AtlanException on any API problems, or if the DataDomain does not exist
-     */
-    public static List<DataDomain> findByName(AtlanClient client, String name, Collection<String> attributes)
-            throws AtlanException {
-        List<DataDomain> results = new ArrayList<>();
-        DataDomain.select(client)
-                .where(DataDomain.NAME.eq(name))
-                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof DataDomain)
-                .forEach(d -> results.add((DataDomain) d));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
-        }
-        return results;
-    }
-
-    /**
-     * Find a DataDomain by its human-readable name.
-     * Note that domains are not unique by name, so there may be multiple results.
-     *
-     * @param client connectivity to the Atlan tenant on which to search for the DataDomain
-     * @param name of the DataDomain
-     * @param attributes an optional collection of attributes (checked) to retrieve for the DataDomain
-     * @return the DataDomain, if found
-     * @throws AtlanException on any API problems, or if the DataDomain does not exist
-     */
-    public static List<DataDomain> findByName(AtlanClient client, String name, List<AtlanField> attributes)
-            throws AtlanException {
-        List<DataDomain> results = new ArrayList<>();
-        DataDomain.select(client)
-                .where(DataDomain.NAME.eq(name))
-                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof DataDomain)
-                .forEach(d -> results.add((DataDomain) d));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
-        }
-        return results;
     }
 
     public abstract static class DataDomainBuilder<C extends DataDomain, B extends DataDomainBuilder<C, B>>

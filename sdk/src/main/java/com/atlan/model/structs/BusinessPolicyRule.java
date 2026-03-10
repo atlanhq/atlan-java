@@ -3,7 +3,6 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import java.util.List;
@@ -51,8 +50,7 @@ public class BusinessPolicyRule extends AtlanStruct {
     /** value to validate for the operand against the operator for business policy rule. */
     @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
-    @JsonProperty("bprValue")
-    List<String> bprValues;
+    List<String> bprValue;
 
     /** es query for business policy rule in combination with filter DSL of policy */
     String bprQuery;
@@ -64,7 +62,7 @@ public class BusinessPolicyRule extends AtlanStruct {
      * @param bprSequence business policy rule to make the ordering easier
      * @param bprOperand operand in rule for business policy rule these can be attributes like certificateStatus, tags etc.
      * @param bprOperator operator to apply in rule for business policy rule this can be must_be, must_not_be etc
-     * @param bprValues value to validate for the operand against the operator for business policy rule.
+     * @param bprValue value to validate for the operand against the operator for business policy rule.
      * @param bprQuery es query for business policy rule in combination with filter DSL of policy
      * @return a BusinessPolicyRule with the provided information
      */
@@ -74,7 +72,7 @@ public class BusinessPolicyRule extends AtlanStruct {
             String bprSequence,
             String bprOperand,
             String bprOperator,
-            List<String> bprValues,
+            List<String> bprValue,
             String bprQuery) {
         return BusinessPolicyRule.builder()
                 .bprId(bprId)
@@ -82,7 +80,7 @@ public class BusinessPolicyRule extends AtlanStruct {
                 .bprSequence(bprSequence)
                 .bprOperand(bprOperand)
                 .bprOperator(bprOperator)
-                .bprValues(bprValues)
+                .bprValue(bprValue)
                 .bprQuery(bprQuery)
                 .build();
     }

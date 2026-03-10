@@ -405,7 +405,6 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a ModelVersion.
      *
@@ -460,6 +459,17 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     }
 
     /**
+     * Generate a unique ModelVersion name.
+     *
+     * @param name of the ModelVersion
+     * @param modelQualifiedName unique name of the model in which this ModelVersion exists
+     * @return a unique name for the ModelVersion
+     */
+    public static String generateQualifiedName(String name, String modelQualifiedName) {
+        return modelQualifiedName + "/" + IModel.getSlugForName(name);
+    }
+
+    /**
      * Builds the minimal object necessary to update a ModelVersion.
      *
      * @param qualifiedName of the ModelVersion
@@ -474,22 +484,11 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     }
 
     /**
-     * Generate a unique ModelVersion name.
-     *
-     * @param name of the ModelVersion
-     * @param modelQualifiedName unique name of the model in which this ModelVersion exists
-     * @return a unique name for the ModelVersion
-     */
-    public static String generateQualifiedName(String name, String modelQualifiedName) {
-        return modelQualifiedName + "/" + IModel.getSlugForName(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a ModelVersion, from a potentially
-     * more-complete ModelVersion object.
+     * Builds the minimal object necessary to apply an update to a ModelVersion,
+     * from a potentially more-complete ModelVersion object.
      *
      * @return the minimal object necessary to update the ModelVersion, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModelVersion are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModelVersion are not present in the initial object
      */
     @Override
     public ModelVersionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

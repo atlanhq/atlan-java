@@ -516,7 +516,6 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a table partition.
      *
@@ -618,11 +617,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TablePartition, from a potentially
-     * more-complete TablePartition object.
+     * Builds the minimal object necessary to apply an update to a TablePartition,
+     * from a potentially more-complete TablePartition object.
      *
      * @return the minimal object necessary to update the TablePartition, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TablePartition are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TablePartition are not present in the initial object
      */
     @Override
     public TablePartitionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

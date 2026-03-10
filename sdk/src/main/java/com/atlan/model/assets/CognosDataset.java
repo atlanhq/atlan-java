@@ -393,11 +393,11 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosDataset, from a potentially
-     * more-complete CognosDataset object.
+     * Builds the minimal object necessary to apply an update to a CognosDataset,
+     * from a potentially more-complete CognosDataset object.
      *
      * @return the minimal object necessary to update the CognosDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosDataset are not present in the initial object
      */
     @Override
     public CognosDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

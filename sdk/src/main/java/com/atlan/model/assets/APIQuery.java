@@ -396,11 +396,11 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APIQuery, from a potentially
-     * more-complete APIQuery object.
+     * Builds the minimal object necessary to apply an update to a APIQuery,
+     * from a potentially more-complete APIQuery object.
      *
      * @return the minimal object necessary to update the APIQuery, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for APIQuery are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APIQuery are not present in the initial object
      */
     @Override
     public APIQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {

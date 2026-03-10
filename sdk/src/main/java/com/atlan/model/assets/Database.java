@@ -448,7 +448,6 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a database.
      *
@@ -490,11 +489,11 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Database, from a potentially
-     * more-complete Database object.
+     * Builds the minimal object necessary to apply an update to a Database,
+     * from a potentially more-complete Database object.
      *
      * @return the minimal object necessary to update the Database, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Database are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Database are not present in the initial object
      */
     @Override
     public DatabaseBuilder<?, ?> trimToRequired() throws InvalidRequestException {

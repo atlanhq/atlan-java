@@ -15,6 +15,7 @@ import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AppWorkflowRunStep;
+import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -50,10 +51,46 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Name of the application this workflow run belongs to. */
+    @Attribute
+    String appWorkflowRunAppName;
+
+    /** Qualified name of the application this workflow run belongs to. */
+    @Attribute
+    String appWorkflowRunAppQualifiedName;
+
+    /** Name of the parent workflow. */
+    @Attribute
+    String appWorkflowRunAppWorkflowName;
+
+    /** Qualified name of the parent workflow. */
+    @Attribute
+    String appWorkflowRunAppWorkflowQualifiedName;
+
+    /** Slug of the parent workflow. */
+    @Attribute
+    String appWorkflowRunAppWorkflowSlug;
+
+    /** Version of the parent workflow. */
+    @Attribute
+    String appWorkflowRunAppWorkflowVersion;
+
     /** Timestamp when the workflow run finished execution. */
     @Attribute
     @Date
     Long appWorkflowRunCompletedAt;
+
+    /** Map of all activity steps for the workflow run (escaped JSON string). */
+    @Attribute
+    String appWorkflowRunDag;
+
+    /** Error handling strategy for the workflow run. */
+    @Attribute
+    AtlanAppErrorHandling appWorkflowRunErrorHandling;
+
+    /** Whether the workflow run is a test run. */
+    @Attribute
+    Boolean appWorkflowRunIsTestRun;
 
     /** Root name for the workflow run. */
     @Attribute
@@ -69,6 +106,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Date
     Long appWorkflowRunStartedAt;
 
+    /** Username of the user who started the workflow run. */
+    @Attribute
+    String appWorkflowRunStartedBy;
+
     /** Overall execution status of the entire workflow run. */
     @Attribute
     AppWorkflowRunStatus appWorkflowRunStatus;
@@ -77,6 +118,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Attribute
     @Singular
     List<AppWorkflowRunStep> appWorkflowRunSteps;
+
+    /** Unique identifier for the temporal run associated with this workflow execution. */
+    @Attribute
+    String appWorkflowRunTemporalRunId;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -378,11 +423,11 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AppWorkflowRun, from a potentially
-     * more-complete AppWorkflowRun object.
+     * Builds the minimal object necessary to apply an update to a AppWorkflowRun,
+     * from a potentially more-complete AppWorkflowRun object.
      *
      * @return the minimal object necessary to update the AppWorkflowRun, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AppWorkflowRun are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AppWorkflowRun are not present in the initial object
      */
     @Override
     public AppWorkflowRunBuilder<?, ?> trimToRequired() throws InvalidRequestException {

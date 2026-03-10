@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DocumentDBCollection extends Asset
-        implements IDocumentDBCollection, ITable, IDocumentDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
+        implements IDocumentDBCollection, ITable, IDocumentDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DocumentDBCollection";
@@ -99,7 +100,7 @@ public class DocumentDBCollection extends Asset
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Dimension tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> dimensions;
@@ -168,7 +169,7 @@ public class DocumentDBCollection extends Asset
     @Attribute
     String externalLocationRegion;
 
-    /** TBC */
+    /** Fact tables related to this table. */
     @Attribute
     @Singular
     SortedSet<ITable> facts;
@@ -722,19 +723,18 @@ public class DocumentDBCollection extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DocumentDBCollection, from a potentially
-     * more-complete DocumentDBCollection object.
+     * Builds the minimal object necessary to apply an update to a DocumentDBCollection,
+     * from a potentially more-complete DocumentDBCollection object.
      *
      * @return the minimal object necessary to update the DocumentDBCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DocumentDBCollection are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DocumentDBCollection are not present in the initial object
      */
     @Override
     public DocumentDBCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        validateRequired(
-                TYPE_NAME,
-                Map.of(
-                        "qualifiedName", this.getQualifiedName(),
-                        "name", this.getName()));
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
     }
 

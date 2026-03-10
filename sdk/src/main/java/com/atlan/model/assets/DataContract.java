@@ -364,7 +364,6 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a DataContract.
      *
@@ -410,6 +409,16 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     }
 
     /**
+     * Generate a unique DataContract name.
+     *
+     * @param assetQualifiedName unique name of the asset for which this DataContract exists
+     * @return a unique name for the DataContract
+     */
+    public static String generateQualifiedName(String assetQualifiedName) {
+        return assetQualifiedName + "/contract";
+    }
+
+    /**
      * Builds the minimal object necessary to update a DataContract.
      *
      * @param qualifiedName of the DataContract
@@ -424,21 +433,11 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     }
 
     /**
-     * Generate a unique DataContract name.
-     *
-     * @param assetQualifiedName unique name of the asset for which this DataContract exists
-     * @return a unique name for the DataContract
-     */
-    public static String generateQualifiedName(String assetQualifiedName) {
-        return assetQualifiedName + "/contract";
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a DataContract, from a potentially
-     * more-complete DataContract object.
+     * Builds the minimal object necessary to apply an update to a DataContract,
+     * from a potentially more-complete DataContract object.
      *
      * @return the minimal object necessary to update the DataContract, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataContract are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataContract are not present in the initial object
      */
     @Override
     public DataContractBuilder<?, ?> trimToRequired() throws InvalidRequestException {

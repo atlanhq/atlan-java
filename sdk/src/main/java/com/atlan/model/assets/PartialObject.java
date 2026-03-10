@@ -98,7 +98,7 @@ public class PartialObject extends Asset implements IPartialObject, IPartial, IC
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** Parent asset containing partial field. */
+    /** Parent asset containing partial object. */
     @Attribute
     ICatalog partialParentAsset;
 
@@ -372,11 +372,11 @@ public class PartialObject extends Asset implements IPartialObject, IPartial, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PartialObject, from a potentially
-     * more-complete PartialObject object.
+     * Builds the minimal object necessary to apply an update to a PartialObject,
+     * from a potentially more-complete PartialObject object.
      *
      * @return the minimal object necessary to update the PartialObject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PartialObject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PartialObject are not present in the initial object
      */
     @Override
     public PartialObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -369,11 +369,11 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricDataflow, from a potentially
-     * more-complete FabricDataflow object.
+     * Builds the minimal object necessary to apply an update to a FabricDataflow,
+     * from a potentially more-complete FabricDataflow object.
      *
      * @return the minimal object necessary to update the FabricDataflow, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricDataflow are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricDataflow are not present in the initial object
      */
     @Override
     public FabricDataflowBuilder<?, ?> trimToRequired() throws InvalidRequestException {

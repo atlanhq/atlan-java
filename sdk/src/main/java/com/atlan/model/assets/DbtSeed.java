@@ -445,11 +445,11 @@ public class DbtSeed extends Asset implements IDbtSeed, IDbt, ICatalog, IAsset, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtSeed, from a potentially
-     * more-complete DbtSeed object.
+     * Builds the minimal object necessary to apply an update to a DbtSeed,
+     * from a potentially more-complete DbtSeed object.
      *
      * @return the minimal object necessary to update the DbtSeed, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtSeed are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtSeed are not present in the initial object
      */
     @Override
     public DbtSeedBuilder<?, ?> trimToRequired() throws InvalidRequestException {

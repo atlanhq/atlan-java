@@ -361,11 +361,11 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MatillionGroup, from a potentially
-     * more-complete MatillionGroup object.
+     * Builds the minimal object necessary to apply an update to a MatillionGroup,
+     * from a potentially more-complete MatillionGroup object.
      *
      * @return the minimal object necessary to update the MatillionGroup, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MatillionGroup are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MatillionGroup are not present in the initial object
      */
     @Override
     public MatillionGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {

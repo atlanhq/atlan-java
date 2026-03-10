@@ -30,29 +30,29 @@ public class AuthPolicyValiditySchedule extends AtlanStruct {
     String typeName = TYPE_NAME;
 
     /** TBC */
-    String policyValidityScheduleStartTime;
+    String accessControlPolicyValidityScheduleStartTime;
 
     /** TBC */
-    String policyValidityScheduleEndTime;
+    String accessControlPolicyValidityScheduleEndTime;
 
     /** TBC */
-    String policyValidityScheduleTimezone;
+    String accessControlPolicyValidityScheduleTimezone;
 
     /**
      * Quickly create a new AuthPolicyValiditySchedule.
-     * @param policyValidityScheduleStartTime TBC
-     * @param policyValidityScheduleEndTime TBC
-     * @param policyValidityScheduleTimezone TBC
+     * @param accessControlPolicyValidityScheduleStartTime TBC
+     * @param accessControlPolicyValidityScheduleEndTime TBC
+     * @param accessControlPolicyValidityScheduleTimezone TBC
      * @return a AuthPolicyValiditySchedule with the provided information
      */
     public static AuthPolicyValiditySchedule of(
-            String policyValidityScheduleStartTime,
-            String policyValidityScheduleEndTime,
-            String policyValidityScheduleTimezone) {
+            String accessControlPolicyValidityScheduleStartTime,
+            String accessControlPolicyValidityScheduleEndTime,
+            String accessControlPolicyValidityScheduleTimezone) {
         return AuthPolicyValiditySchedule.builder()
-                .policyValidityScheduleStartTime(policyValidityScheduleStartTime)
-                .policyValidityScheduleEndTime(policyValidityScheduleEndTime)
-                .policyValidityScheduleTimezone(policyValidityScheduleTimezone)
+                .accessControlPolicyValidityScheduleStartTime(accessControlPolicyValidityScheduleStartTime)
+                .accessControlPolicyValidityScheduleEndTime(accessControlPolicyValidityScheduleEndTime)
+                .accessControlPolicyValidityScheduleTimezone(accessControlPolicyValidityScheduleTimezone)
                 .build();
     }
 

@@ -376,11 +376,11 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DomoCard, from a potentially
-     * more-complete DomoCard object.
+     * Builds the minimal object necessary to apply an update to a DomoCard,
+     * from a potentially more-complete DomoCard object.
      *
      * @return the minimal object necessary to update the DomoCard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DomoCard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DomoCard are not present in the initial object
      */
     @Override
     public DomoCardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

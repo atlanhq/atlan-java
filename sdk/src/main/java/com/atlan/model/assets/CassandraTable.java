@@ -463,11 +463,11 @@ public class CassandraTable extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CassandraTable, from a potentially
-     * more-complete CassandraTable object.
+     * Builds the minimal object necessary to apply an update to a CassandraTable,
+     * from a potentially more-complete CassandraTable object.
      *
      * @return the minimal object necessary to update the CassandraTable, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CassandraTable are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CassandraTable are not present in the initial object
      */
     @Override
     public CassandraTableBuilder<?, ?> trimToRequired() throws InvalidRequestException {

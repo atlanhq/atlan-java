@@ -462,11 +462,11 @@ public class DatabricksNotebook extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksNotebook, from a potentially
-     * more-complete DatabricksNotebook object.
+     * Builds the minimal object necessary to apply an update to a DatabricksNotebook,
+     * from a potentially more-complete DatabricksNotebook object.
      *
      * @return the minimal object necessary to update the DatabricksNotebook, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksNotebook are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksNotebook are not present in the initial object
      */
     @Override
     public DatabricksNotebookBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -361,7 +361,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Preset chart.
      *
@@ -438,11 +437,11 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PresetChart, from a potentially
-     * more-complete PresetChart object.
+     * Builds the minimal object necessary to apply an update to a PresetChart,
+     * from a potentially more-complete PresetChart object.
      *
      * @return the minimal object necessary to update the PresetChart, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PresetChart are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PresetChart are not present in the initial object
      */
     @Override
     public PresetChartBuilder<?, ?> trimToRequired() throws InvalidRequestException {

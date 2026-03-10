@@ -372,11 +372,11 @@ public class FabricPage extends Asset implements IFabricPage, IFabric, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricPage, from a potentially
-     * more-complete FabricPage object.
+     * Builds the minimal object necessary to apply an update to a FabricPage,
+     * from a potentially more-complete FabricPage object.
      *
      * @return the minimal object necessary to update the FabricPage, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricPage are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricPage are not present in the initial object
      */
     @Override
     public FabricPageBuilder<?, ?> trimToRequired() throws InvalidRequestException {

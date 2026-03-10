@@ -418,11 +418,11 @@ public class MicroStrategyVisualization extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyVisualization, from a potentially
-     * more-complete MicroStrategyVisualization object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyVisualization,
+     * from a potentially more-complete MicroStrategyVisualization object.
      *
      * @return the minimal object necessary to update the MicroStrategyVisualization, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyVisualization are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyVisualization are not present in the initial object
      */
     @Override
     public MicroStrategyVisualizationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

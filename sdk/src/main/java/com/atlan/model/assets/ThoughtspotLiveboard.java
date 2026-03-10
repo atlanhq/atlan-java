@@ -370,11 +370,11 @@ public class ThoughtspotLiveboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ThoughtspotLiveboard, from a potentially
-     * more-complete ThoughtspotLiveboard object.
+     * Builds the minimal object necessary to apply an update to a ThoughtspotLiveboard,
+     * from a potentially more-complete ThoughtspotLiveboard object.
      *
      * @return the minimal object necessary to update the ThoughtspotLiveboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ThoughtspotLiveboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ThoughtspotLiveboard are not present in the initial object
      */
     @Override
     public ThoughtspotLiveboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

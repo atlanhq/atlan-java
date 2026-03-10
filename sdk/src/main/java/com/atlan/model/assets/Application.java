@@ -346,7 +346,6 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create an Application asset.
      *
@@ -363,20 +362,6 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to update an Application.
-     *
-     * @param qualifiedName of the application
-     * @param name of the application
-     * @return the minimal request necessary to update the application, as a builder
-     */
-    public static ApplicationBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Application._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
      * Generate a unique application name.
      *
      * @param name of the application
@@ -388,11 +373,25 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to an application, from a potentially
-     * more-complete application object.
+     * Builds the minimal object necessary to update a Application.
      *
-     * @return the minimal object necessary to update the application, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for application are not found in the initial object
+     * @param qualifiedName of the Application
+     * @param name of the Application
+     * @return the minimal request necessary to update the Application, as a builder
+     */
+    public static ApplicationBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Application._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Application,
+     * from a potentially more-complete Application object.
+     *
+     * @return the minimal object necessary to update the Application, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Application are not present in the initial object
      */
     @Override
     public ApplicationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

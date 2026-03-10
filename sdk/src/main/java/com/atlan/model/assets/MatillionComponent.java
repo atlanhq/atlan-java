@@ -395,11 +395,11 @@ public class MatillionComponent extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MatillionComponent, from a potentially
-     * more-complete MatillionComponent object.
+     * Builds the minimal object necessary to apply an update to a MatillionComponent,
+     * from a potentially more-complete MatillionComponent object.
      *
      * @return the minimal object necessary to update the MatillionComponent, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MatillionComponent are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MatillionComponent are not present in the initial object
      */
     @Override
     public MatillionComponentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

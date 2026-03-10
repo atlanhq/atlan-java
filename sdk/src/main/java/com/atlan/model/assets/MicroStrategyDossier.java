@@ -414,11 +414,11 @@ public class MicroStrategyDossier extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyDossier, from a potentially
-     * more-complete MicroStrategyDossier object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyDossier,
+     * from a potentially more-complete MicroStrategyDossier object.
      *
      * @return the minimal object necessary to update the MicroStrategyDossier, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyDossier are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyDossier are not present in the initial object
      */
     @Override
     public MicroStrategyDossierBuilder<?, ?> trimToRequired() throws InvalidRequestException {

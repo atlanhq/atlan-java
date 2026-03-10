@@ -468,11 +468,11 @@ public class MicroStrategyMetric extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyMetric, from a potentially
-     * more-complete MicroStrategyMetric object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyMetric,
+     * from a potentially more-complete MicroStrategyMetric object.
      *
      * @return the minimal object necessary to update the MicroStrategyMetric, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyMetric are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyMetric are not present in the initial object
      */
     @Override
     public MicroStrategyMetricBuilder<?, ?> trimToRequired() throws InvalidRequestException {

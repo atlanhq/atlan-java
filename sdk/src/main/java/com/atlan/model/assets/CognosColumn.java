@@ -420,11 +420,11 @@ public class CognosColumn extends Asset implements ICognosColumn, ICognos, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosColumn, from a potentially
-     * more-complete CognosColumn object.
+     * Builds the minimal object necessary to apply an update to a CognosColumn,
+     * from a potentially more-complete CognosColumn object.
      *
      * @return the minimal object necessary to update the CognosColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosColumn are not present in the initial object
      */
     @Override
     public CognosColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

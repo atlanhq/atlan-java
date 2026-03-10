@@ -463,11 +463,11 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtModelColumn, from a potentially
-     * more-complete DbtModelColumn object.
+     * Builds the minimal object necessary to apply an update to a DbtModelColumn,
+     * from a potentially more-complete DbtModelColumn object.
      *
      * @return the minimal object necessary to update the DbtModelColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtModelColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtModelColumn are not present in the initial object
      */
     @Override
     public DbtModelColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

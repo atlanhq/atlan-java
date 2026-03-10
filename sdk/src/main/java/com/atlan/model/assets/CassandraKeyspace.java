@@ -400,11 +400,11 @@ public class CassandraKeyspace extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CassandraKeyspace, from a potentially
-     * more-complete CassandraKeyspace object.
+     * Builds the minimal object necessary to apply an update to a CassandraKeyspace,
+     * from a potentially more-complete CassandraKeyspace object.
      *
      * @return the minimal object necessary to update the CassandraKeyspace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CassandraKeyspace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CassandraKeyspace are not present in the initial object
      */
     @Override
     public CassandraKeyspaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

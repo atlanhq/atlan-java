@@ -377,11 +377,11 @@ public class DomoDatasetColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DomoDatasetColumn, from a potentially
-     * more-complete DomoDatasetColumn object.
+     * Builds the minimal object necessary to apply an update to a DomoDatasetColumn,
+     * from a potentially more-complete DomoDatasetColumn object.
      *
      * @return the minimal object necessary to update the DomoDatasetColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DomoDatasetColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DomoDatasetColumn are not present in the initial object
      */
     @Override
     public DomoDatasetColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -115,6 +115,15 @@ public class PowerBIDatasource extends Asset
     @Singular
     SortedSet<IPowerBIDataflow> powerBIDataflows;
 
+    /** Time at which this asset was endorsed in Power BI. */
+    @Attribute
+    @Date
+    Long powerBIEndorsedAt;
+
+    /** User who endorsed this asset in Power BI. */
+    @Attribute
+    String powerBIEndorsedBy;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -381,11 +390,11 @@ public class PowerBIDatasource extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PowerBIDatasource, from a potentially
-     * more-complete PowerBIDatasource object.
+     * Builds the minimal object necessary to apply an update to a PowerBIDatasource,
+     * from a potentially more-complete PowerBIDatasource object.
      *
      * @return the minimal object necessary to update the PowerBIDatasource, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDatasource are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PowerBIDatasource are not present in the initial object
      */
     @Override
     public PowerBIDatasourceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

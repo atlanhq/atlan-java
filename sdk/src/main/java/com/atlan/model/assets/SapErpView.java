@@ -392,11 +392,11 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpView, from a potentially
-     * more-complete SapErpView object.
+     * Builds the minimal object necessary to apply an update to a SapErpView,
+     * from a potentially more-complete SapErpView object.
      *
      * @return the minimal object necessary to update the SapErpView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpView are not present in the initial object
      */
     @Override
     public SapErpViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

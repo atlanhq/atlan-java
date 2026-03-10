@@ -370,11 +370,11 @@ public class FabricDataPipeline extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricDataPipeline, from a potentially
-     * more-complete FabricDataPipeline object.
+     * Builds the minimal object necessary to apply an update to a FabricDataPipeline,
+     * from a potentially more-complete FabricDataPipeline object.
      *
      * @return the minimal object necessary to update the FabricDataPipeline, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricDataPipeline are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricDataPipeline are not present in the initial object
      */
     @Override
     public FabricDataPipelineBuilder<?, ?> trimToRequired() throws InvalidRequestException {

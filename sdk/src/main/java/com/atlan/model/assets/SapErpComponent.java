@@ -415,11 +415,11 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpComponent, from a potentially
-     * more-complete SapErpComponent object.
+     * Builds the minimal object necessary to apply an update to a SapErpComponent,
+     * from a potentially more-complete SapErpComponent object.
      *
      * @return the minimal object necessary to update the SapErpComponent, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpComponent are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpComponent are not present in the initial object
      */
     @Override
     public SapErpComponentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

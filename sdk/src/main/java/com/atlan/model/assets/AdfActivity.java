@@ -463,11 +463,11 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AdfActivity, from a potentially
-     * more-complete AdfActivity object.
+     * Builds the minimal object necessary to apply an update to a AdfActivity,
+     * from a potentially more-complete AdfActivity object.
      *
      * @return the minimal object necessary to update the AdfActivity, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AdfActivity are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AdfActivity are not present in the initial object
      */
     @Override
     public AdfActivityBuilder<?, ?> trimToRequired() throws InvalidRequestException {

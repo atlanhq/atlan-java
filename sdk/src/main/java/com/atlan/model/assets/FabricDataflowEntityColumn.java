@@ -376,11 +376,11 @@ public class FabricDataflowEntityColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricDataflowEntityColumn, from a potentially
-     * more-complete FabricDataflowEntityColumn object.
+     * Builds the minimal object necessary to apply an update to a FabricDataflowEntityColumn,
+     * from a potentially more-complete FabricDataflowEntityColumn object.
      *
      * @return the minimal object necessary to update the FabricDataflowEntityColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricDataflowEntityColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricDataflowEntityColumn are not present in the initial object
      */
     @Override
     public FabricDataflowEntityColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -31,10 +31,10 @@ public class CustomRelatedFromEntitiesCustomRelatedToEntities extends Relationsh
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Name for the relationship when referring from endDef2 entity to endDef1 entity. */
     String customEntityFromLabel;
 
-    /** TBC */
+    /** Name for the relationship when referring from endDef1 entity to endDef2 entity. */
     String customEntityToLabel;
 
     /** {@inheritDoc} */

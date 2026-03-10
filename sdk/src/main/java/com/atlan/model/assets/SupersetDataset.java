@@ -357,7 +357,6 @@ public class SupersetDataset extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Superset dataset.
      *
@@ -423,11 +422,11 @@ public class SupersetDataset extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SupersetDataset, from a potentially
-     * more-complete SupersetDataset object.
+     * Builds the minimal object necessary to apply an update to a SupersetDataset,
+     * from a potentially more-complete SupersetDataset object.
      *
      * @return the minimal object necessary to update the SupersetDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SupersetDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SupersetDataset are not present in the initial object
      */
     @Override
     public SupersetDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -111,6 +111,15 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Time at which this asset was endorsed in Power BI. */
+    @Attribute
+    @Date
+    Long powerBIEndorsedAt;
+
+    /** User who endorsed this asset in Power BI. */
+    @Attribute
+    String powerBIEndorsedBy;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -385,11 +394,11 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PowerBITile, from a potentially
-     * more-complete PowerBITile object.
+     * Builds the minimal object necessary to apply an update to a PowerBITile,
+     * from a potentially more-complete PowerBITile object.
      *
      * @return the minimal object necessary to update the PowerBITile, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBITile are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PowerBITile are not present in the initial object
      */
     @Override
     public PowerBITileBuilder<?, ?> trimToRequired() throws InvalidRequestException {

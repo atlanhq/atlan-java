@@ -378,11 +378,11 @@ public class MetabaseQuestion extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MetabaseQuestion, from a potentially
-     * more-complete MetabaseQuestion object.
+     * Builds the minimal object necessary to apply an update to a MetabaseQuestion,
+     * from a potentially more-complete MetabaseQuestion object.
      *
      * @return the minimal object necessary to update the MetabaseQuestion, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseQuestion are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MetabaseQuestion are not present in the initial object
      */
     @Override
     public MetabaseQuestionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

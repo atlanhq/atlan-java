@@ -385,11 +385,11 @@ public class SapErpTransactionCode extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpTransactionCode, from a potentially
-     * more-complete SapErpTransactionCode object.
+     * Builds the minimal object necessary to apply an update to a SapErpTransactionCode,
+     * from a potentially more-complete SapErpTransactionCode object.
      *
      * @return the minimal object necessary to update the SapErpTransactionCode, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpTransactionCode are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpTransactionCode are not present in the initial object
      */
     @Override
     public SapErpTransactionCodeBuilder<?, ?> trimToRequired() throws InvalidRequestException {

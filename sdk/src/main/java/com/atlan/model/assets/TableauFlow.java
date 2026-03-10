@@ -389,11 +389,11 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauFlow, from a potentially
-     * more-complete TableauFlow object.
+     * Builds the minimal object necessary to apply an update to a TableauFlow,
+     * from a potentially more-complete TableauFlow object.
      *
      * @return the minimal object necessary to update the TableauFlow, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauFlow are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauFlow are not present in the initial object
      */
     @Override
     public TableauFlowBuilder<?, ?> trimToRequired() throws InvalidRequestException {

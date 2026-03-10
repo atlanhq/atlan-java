@@ -389,11 +389,11 @@ public class SchemaRegistrySubject extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SchemaRegistrySubject, from a potentially
-     * more-complete SchemaRegistrySubject object.
+     * Builds the minimal object necessary to apply an update to a SchemaRegistrySubject,
+     * from a potentially more-complete SchemaRegistrySubject object.
      *
      * @return the minimal object necessary to update the SchemaRegistrySubject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SchemaRegistrySubject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SchemaRegistrySubject are not present in the initial object
      */
     @Override
     public SchemaRegistrySubjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -381,11 +381,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SigmaDataset, from a potentially
-     * more-complete SigmaDataset object.
+     * Builds the minimal object necessary to apply an update to a SigmaDataset,
+     * from a potentially more-complete SigmaDataset object.
      *
      * @return the minimal object necessary to update the SigmaDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SigmaDataset are not present in the initial object
      */
     @Override
     public SigmaDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

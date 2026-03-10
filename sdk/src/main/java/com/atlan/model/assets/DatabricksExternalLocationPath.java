@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DatabricksExternalLocationPath extends Asset
-        implements IDatabricksExternalLocationPath, IDatabricks, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDatabricksExternalLocationPath, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksExternalLocationPath";
@@ -474,11 +474,11 @@ public class DatabricksExternalLocationPath extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksExternalLocationPath, from a potentially
-     * more-complete DatabricksExternalLocationPath object.
+     * Builds the minimal object necessary to apply an update to a DatabricksExternalLocationPath,
+     * from a potentially more-complete DatabricksExternalLocationPath object.
      *
      * @return the minimal object necessary to update the DatabricksExternalLocationPath, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksExternalLocationPath are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksExternalLocationPath are not present in the initial object
      */
     @Override
     public DatabricksExternalLocationPathBuilder<?, ?> trimToRequired() throws InvalidRequestException {

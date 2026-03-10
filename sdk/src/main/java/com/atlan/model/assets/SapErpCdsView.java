@@ -397,11 +397,11 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SapErpCdsView, from a potentially
-     * more-complete SapErpCdsView object.
+     * Builds the minimal object necessary to apply an update to a SapErpCdsView,
+     * from a potentially more-complete SapErpCdsView object.
      *
      * @return the minimal object necessary to update the SapErpCdsView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SapErpCdsView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SapErpCdsView are not present in the initial object
      */
     @Override
     public SapErpCdsViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

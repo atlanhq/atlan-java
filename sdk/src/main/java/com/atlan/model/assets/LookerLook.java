@@ -418,11 +418,11 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerLook, from a potentially
-     * more-complete LookerLook object.
+     * Builds the minimal object necessary to apply an update to a LookerLook,
+     * from a potentially more-complete LookerLook object.
      *
      * @return the minimal object necessary to update the LookerLook, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerLook are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerLook are not present in the initial object
      */
     @Override
     public LookerLookBuilder<?, ?> trimToRequired() throws InvalidRequestException {

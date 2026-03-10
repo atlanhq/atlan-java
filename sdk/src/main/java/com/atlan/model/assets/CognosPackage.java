@@ -393,11 +393,11 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosPackage, from a potentially
-     * more-complete CognosPackage object.
+     * Builds the minimal object necessary to apply an update to a CognosPackage,
+     * from a potentially more-complete CognosPackage object.
      *
      * @return the minimal object necessary to update the CognosPackage, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosPackage are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosPackage are not present in the initial object
      */
     @Override
     public CognosPackageBuilder<?, ?> trimToRequired() throws InvalidRequestException {

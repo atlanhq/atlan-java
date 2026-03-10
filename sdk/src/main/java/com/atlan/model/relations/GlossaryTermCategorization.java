@@ -34,10 +34,10 @@ public class GlossaryTermCategorization extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Details about the term categorization. */
     String description;
 
-    /** TBC */
+    /** Status of the term categorization, typically used by discovery engines. */
     AtlasGlossaryTermRelationshipStatus status;
 
     /** {@inheritDoc} */

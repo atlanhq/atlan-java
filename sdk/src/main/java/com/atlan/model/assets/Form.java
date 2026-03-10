@@ -306,11 +306,11 @@ public class Form extends Asset implements IForm, IAsset, IReferenceable {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Form, from a potentially
-     * more-complete Form object.
+     * Builds the minimal object necessary to apply an update to a Form,
+     * from a potentially more-complete Form object.
      *
      * @return the minimal object necessary to update the Form, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Form are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Form are not present in the initial object
      */
     @Override
     public FormBuilder<?, ?> trimToRequired() throws InvalidRequestException {

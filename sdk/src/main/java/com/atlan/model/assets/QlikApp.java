@@ -407,11 +407,11 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikApp, from a potentially
-     * more-complete QlikApp object.
+     * Builds the minimal object necessary to apply an update to a QlikApp,
+     * from a potentially more-complete QlikApp object.
      *
      * @return the minimal object necessary to update the QlikApp, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikApp are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikApp are not present in the initial object
      */
     @Override
     public QlikAppBuilder<?, ?> trimToRequired() throws InvalidRequestException {

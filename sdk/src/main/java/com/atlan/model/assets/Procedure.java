@@ -586,6 +586,17 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     }
 
     /**
+     * Generate a unique table name.
+     *
+     * @param name of the table
+     * @param schemaQualifiedName unique name of the schema in which this table exists
+     * @return a unique name for the table
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/_procedures_/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a Procedure.
      *
      * @param qualifiedName of the Procedure
@@ -600,22 +611,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     }
 
     /**
-     * Generate a unique table name.
-     *
-     * @param name of the table
-     * @param schemaQualifiedName unique name of the schema in which this table exists
-     * @return a unique name for the table
-     */
-    public static String generateQualifiedName(String name, String schemaQualifiedName) {
-        return schemaQualifiedName + "/_procedures_/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Procedure, from a potentially
-     * more-complete Procedure object.
+     * Builds the minimal object necessary to apply an update to a Procedure,
+     * from a potentially more-complete Procedure object.
      *
      * @return the minimal object necessary to update the Procedure, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Procedure are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Procedure are not present in the initial object
      */
     @Override
     public ProcedureBuilder<?, ?> trimToRequired() throws InvalidRequestException {

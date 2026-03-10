@@ -13,14 +13,17 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.SourceTagAttribute;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -37,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class TagAttachment extends Asset implements ITagAttachment, IAsset, IReferenceable {
+public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TagAttachment";
@@ -47,9 +50,78 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Tasks to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** Processes to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Name of the classification in Atlan that is mapped to this tag. */
+    @Attribute
+    @JsonProperty("mappedClassificationName")
+    String mappedAtlanTagName;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Tasks from which this asset is output. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
+
+    /** Processes from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
+    /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
+    @Attribute
+    @Singular
+    SortedSet<String> tagAllowedValues;
+
     /** Represents associated tag value. */
     @Attribute
     String tagAttachmentStringValue;
+
+    /** Attributes associated with the tag in the source system. */
+    @Attribute
+    @Singular
+    List<SourceTagAttribute> tagAttributes;
+
+    /** Unique identifier of the tag in the source system. */
+    @Attribute
+    String tagId;
 
     /** Represents associated source tag's qualified name. */
     @Attribute
@@ -305,11 +377,11 @@ public class TagAttachment extends Asset implements ITagAttachment, IAsset, IRef
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TagAttachment, from a potentially
-     * more-complete TagAttachment object.
+     * Builds the minimal object necessary to apply an update to a TagAttachment,
+     * from a potentially more-complete TagAttachment object.
      *
      * @return the minimal object necessary to update the TagAttachment, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TagAttachment are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TagAttachment are not present in the initial object
      */
     @Override
     public TagAttachmentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

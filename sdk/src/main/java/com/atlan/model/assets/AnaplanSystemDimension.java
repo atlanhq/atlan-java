@@ -361,7 +361,6 @@ public class AnaplanSystemDimension extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create an Anaplan System Dimension.
      *
@@ -393,11 +392,11 @@ public class AnaplanSystemDimension extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AnaplanSystemDimension, from a potentially
-     * more-complete AnaplanSystemDimension object.
+     * Builds the minimal object necessary to apply an update to a AnaplanSystemDimension,
+     * from a potentially more-complete AnaplanSystemDimension object.
      *
      * @return the minimal object necessary to update the AnaplanSystemDimension, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AnaplanSystemDimension are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AnaplanSystemDimension are not present in the initial object
      */
     @Override
     public AnaplanSystemDimensionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -354,11 +354,11 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Task, from a potentially
-     * more-complete Task object.
+     * Builds the minimal object necessary to apply an update to a Task,
+     * from a potentially more-complete Task object.
      *
      * @return the minimal object necessary to update the Task, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Task are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Task are not present in the initial object
      */
     @Override
     public TaskBuilder<?, ?> trimToRequired() throws InvalidRequestException {

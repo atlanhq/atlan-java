@@ -17,10 +17,6 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -54,7 +50,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
     @Attribute
     String additionalEtlContext;
 
@@ -62,7 +58,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     IAdfActivity adfActivity;
 
-    /** TBC */
+    /** Dataset type for AI Model - dataset process. */
     @Attribute
     AIDatasetType aiDatasetType;
 
@@ -71,7 +67,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
 
@@ -80,11 +76,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
 
-    /** TBC */
+    /** Code that ran within the process. */
     @Attribute
     String code;
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -102,7 +98,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
@@ -111,7 +107,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     IMatillionComponent matillionComponent;
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
@@ -131,7 +127,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<ISparkJob> sparkJobs;
 
-    /** TBC */
+    /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
 
@@ -417,11 +413,11 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LineageProcess, from a potentially
-     * more-complete LineageProcess object.
+     * Builds the minimal object necessary to apply an update to a LineageProcess,
+     * from a potentially more-complete LineageProcess object.
      *
      * @return the minimal object necessary to update the LineageProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LineageProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LineageProcess are not present in the initial object
      */
     @Override
     public LineageProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -430,77 +426,6 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique qualifiedName for a process.
-     *
-     * @param name of the process
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that ran the process
-     * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
-     * @param inputs sources of data the process reads from
-     * @param outputs targets of data the process writes to
-     * @param parent (optional) parent process in which this sub-process ran
-     * @return unique name for the process
-     */
-    public static String generateQualifiedName(
-            String name,
-            String connectionQualifiedName,
-            String id,
-            List<ICatalog> inputs,
-            List<ICatalog> outputs,
-            LineageProcess parent) {
-        // If an ID was provided, use that as the unique name for the process
-        if (id != null && id.length() > 0) {
-            return connectionQualifiedName + "/" + id;
-        } else {
-            // Otherwise, hash all the relationships to arrive at a consistent
-            // generated qualifiedName
-            StringBuilder sb = new StringBuilder();
-            sb.append(name).append(connectionQualifiedName);
-            if (parent != null) {
-                appendRelationship(sb, parent);
-            }
-            appendRelationships(sb, inputs);
-            appendRelationships(sb, outputs);
-            try {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
-                String hashed = String.format("%032x", new BigInteger(1, md.digest()));
-                return connectionQualifiedName + "/" + hashed;
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(
-                        "Unable to generate the qualifiedName for the process: MD5 algorithm does not exist on your platform!");
-            }
-        }
-    }
-
-    /**
-     * Append all the relationships into the provided string builder.
-     * @param sb into which to append
-     * @param relationships to append
-     */
-    private static void appendRelationships(StringBuilder sb, List<ICatalog> relationships) {
-        for (ICatalog relationship : relationships) {
-            appendRelationship(sb, (IAsset) relationship);
-        }
-    }
-
-    /**
-     * Append a single relationship into the provided string builder.
-     * @param sb into which to append
-     * @param relationship to append
-     */
-    private static void appendRelationship(StringBuilder sb, IAsset relationship) {
-        // TODO: if two calls are made for the same process, but one uses GUIDs for
-        //  its references and the other uses qualifiedName, we'll end up with different
-        //  hashes (duplicate processes)
-        if (relationship.getGuid() != null) {
-            sb.append(relationship.getGuid());
-        } else if (relationship.getUniqueAttributes() != null
-                && relationship.getUniqueAttributes().getQualifiedName() != null) {
-            sb.append(relationship.getUniqueAttributes().getQualifiedName());
-        }
     }
 
     public abstract static class LineageProcessBuilder<C extends LineageProcess, B extends LineageProcessBuilder<C, B>>
