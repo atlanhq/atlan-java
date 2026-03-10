@@ -1,0 +1,989 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.model.assets;
+
+import com.atlan.model.enums.AdfActivityState;
+import com.atlan.model.enums.AssetDQRunStatus;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanIcon;
+import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataQualityDimension;
+import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityScheduleType;
+import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
+import com.atlan.model.relations.RelationshipAttributes;
+import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetGCPDataplexMetadata;
+import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.StarredDetails;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import javax.annotation.processing.Generated;
+
+/**
+ * Base class for ADF Activities. It is a processing or transformation step that performs a specific task within a pipeline to manipulate or move data
+ */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
+public interface IAdfActivity {
+
+    public static final String TYPE_NAME = "AdfActivity";
+
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    NumericField ADF_ACTIVITY_BATCH_COUNT = new NumericField("adfActivityBatchCount", "adfActivityBatchCount");
+
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    BooleanField ADF_ACTIVITY_FIRST_ROW_ONLY = new BooleanField("adfActivityFirstRowOnly", "adfActivityFirstRowOnly");
+
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    BooleanField ADF_ACTIVITY_IS_SEQUENTIAL = new BooleanField("adfActivityIsSequential", "adfActivityIsSequential");
+
+    /** Defines the main class of the databricks spark activity. */
+    TextField ADF_ACTIVITY_MAIN_CLASS_NAME = new TextField("adfActivityMainClassName", "adfActivityMainClassName");
+
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    TextField ADF_ACTIVITY_NOTEBOOK_PATH = new TextField("adfActivityNotebookPath", "adfActivityNotebookPath");
+
+    /** The retry interval in seconds for the ADF activity. */
+    NumericField ADF_ACTIVITY_POLICT_RETRY_INTERVAL =
+            new NumericField("adfActivityPolictRetryInterval", "adfActivityPolictRetryInterval");
+
+    /** The timout defined for the ADF activity. */
+    TextField ADF_ACTIVITY_POLICY_TIMEOUT = new TextField("adfActivityPolicyTimeout", "adfActivityPolicyTimeout");
+
+    /** The list of ADF activities on which this ADF activity depends on. */
+    TextField ADF_ACTIVITY_PRECEDING_DEPENDENCIES =
+            new TextField("adfActivityPrecedingDependency", "adfActivityPrecedingDependency");
+
+    /** Defines the python file path for databricks python activity. */
+    TextField ADF_ACTIVITY_PYTHON_FILE_PATH = new TextField("adfActivityPythonFilePath", "adfActivityPythonFilePath");
+
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    TextField ADF_ACTIVITY_REFERENCE_DATAFLOW =
+            new TextField("adfActivityReferenceDataflow", "adfActivityReferenceDataflow");
+
+    /** List of objects of activity runs for a particular activity. */
+    KeywordField ADF_ACTIVITY_RUNS = new KeywordField("adfActivityRuns", "adfActivityRuns");
+
+    /** Defines the type of the sink of the ADF activtity. */
+    TextField ADF_ACTIVITY_SINK_TYPE = new TextField("adfActivitySinkType", "adfActivitySinkType");
+
+    /** The list of names of sinks for the ADF activity. */
+    TextField ADF_ACTIVITY_SINKS = new TextField("adfActivitySinks", "adfActivitySinks");
+
+    /** Defines the type of the source of the ADF activtity. */
+    TextField ADF_ACTIVITY_SOURCE_TYPE = new TextField("adfActivitySourceType", "adfActivitySourceType");
+
+    /** The list of names of sources for the ADF activity. */
+    TextField ADF_ACTIVITY_SOURCES = new TextField("adfActivitySources", "adfActivitySources");
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    KeywordField ADF_ACTIVITY_STATE = new KeywordField("adfActivityState", "adfActivityState");
+
+    /** The list of activities to be run inside a ForEach activity. */
+    TextField ADF_ACTIVITY_SUB_ACTIVITIES = new TextField("adfActivitySubActivities", "adfActivitySubActivities");
+
+    /** The type of the ADF activity. */
+    KeywordField ADF_ACTIVITY_TYPE = new KeywordField("adfActivityType", "adfActivityType");
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    RelationField ADF_DATAFLOW = new RelationField("adfDataflow");
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    RelationField ADF_DATASETS = new RelationField("adfDatasets");
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    RelationField ADF_LINKEDSERVICES = new RelationField("adfLinkedservices");
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    RelationField ADF_PIPELINE = new RelationField("adfPipeline");
+
+    /** Unique name of the pipeline in which this activity exists. */
+    KeywordTextField ADF_PIPELINE_QUALIFIED_NAME =
+            new KeywordTextField("adfPipelineQualifiedName", "adfPipelineQualifiedName", "adfPipelineQualifiedName.text");
+
+    /** Lineage process that associates this ADF Activity. */
+    RelationField PROCESSES = new RelationField("processes");
+
+    /** Defines the batch count of activity to runs in ForEach activity. */
+    Integer getAdfActivityBatchCount();
+
+    /** Indicates whether to import only first row only or not in Lookup activity. */
+    Boolean getAdfActivityFirstRowOnly();
+
+    /** Indicates whether the activity processing is sequential or not inside the ForEach activity. */
+    Boolean getAdfActivityIsSequential();
+
+    /** Defines the main class of the databricks spark activity. */
+    String getAdfActivityMainClassName();
+
+    /** Defines the path of the notebook in the databricks notebook activity. */
+    String getAdfActivityNotebookPath();
+
+    /** The retry interval in seconds for the ADF activity. */
+    Integer getAdfActivityPolictRetryInterval();
+
+    /** The timout defined for the ADF activity. */
+    String getAdfActivityPolicyTimeout();
+
+    /** The list of ADF activities on which this ADF activity depends on. */
+    SortedSet<String> getAdfActivityPrecedingDependencies();
+
+    /** Defines the python file path for databricks python activity. */
+    String getAdfActivityPythonFilePath();
+
+    /** Defines the dataflow that is to be used in dataflow activity. */
+    String getAdfActivityReferenceDataflow();
+
+    /** List of objects of activity runs for a particular activity. */
+    Map<String, String> getAdfActivityRuns();
+
+    /** Defines the type of the sink of the ADF activtity. */
+    String getAdfActivitySinkType();
+
+    /** The list of names of sinks for the ADF activity. */
+    SortedSet<String> getAdfActivitySinks();
+
+    /** Defines the type of the source of the ADF activtity. */
+    String getAdfActivitySourceType();
+
+    /** The list of names of sources for the ADF activity. */
+    SortedSet<String> getAdfActivitySources();
+
+    /** Defines the state (Active or Inactive) of an ADF activity whether it is active or not. */
+    AdfActivityState getAdfActivityState();
+
+    /** The list of activities to be run inside a ForEach activity. */
+    SortedSet<String> getAdfActivitySubActivities();
+
+    /** The type of the ADF activity. */
+    String getAdfActivityType();
+
+    /** Defines the folder path in which this ADF asset exists. */
+    String getAdfAssetFolderPath();
+
+    /** ADF activities that are associated with this ADF Dataflow. */
+    default IAdfDataflow getAdfDataflow() {
+        return null;
+    }
+
+    /** ADF activities that are associated with this ADF Dataset. */
+    default SortedSet<IAdfDataset> getAdfDatasets() {
+        return null;
+    }
+
+    /** Defines the name of the factory in which this asset exists. */
+    String getAdfFactoryName();
+
+    /** ADF activities that are associated with this ADF Linkedservice. */
+    default SortedSet<IAdfLinkedservice> getAdfLinkedservices() {
+        return null;
+    }
+
+    /** ADF Activity that is associated with this ADF Pipeline. */
+    default IAdfPipeline getAdfPipeline() {
+        return null;
+    }
+
+    /** Unique name of the pipeline in which this activity exists. */
+    String getAdfPipelineQualifiedName();
+
+    /** List of groups who administer this asset. (This is only used for certain asset types.) */
+    SortedSet<String> getAdminGroups();
+
+    /** List of roles who administer this asset. (This is only used for Connection assets.) */
+    SortedSet<String> getAdminRoles();
+
+    /** List of users who administer this asset. (This is only used for certain asset types.) */
+    SortedSet<String> getAdminUsers();
+
+    /** Detailed message to include in the announcement on this asset. */
+    String getAnnouncementMessage();
+
+    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
+    String getAnnouncementTitle();
+
+    /** Type of announcement on this asset. */
+    AtlanAnnouncementType getAnnouncementType();
+
+    /** Time (epoch) at which the announcement was last updated, in milliseconds. */
+    Long getAnnouncementUpdatedAt();
+
+    /** Name of the user who last updated the announcement. */
+    String getAnnouncementUpdatedBy();
+
+    /** Checks that run on this asset. */
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
+
+    /** Application owning the Asset. */
+    default IApplication getApplication() {
+        return null;
+    }
+
+    /** ApplicationField owning the Asset. */
+    default IApplicationField getApplicationField() {
+        return null;
+    }
+
+    /** Qualified name of the ApplicationField that contains this asset. */
+    String getApplicationFieldQualifiedName();
+
+    /** Qualified name of the Application that contains this asset. */
+    String getApplicationQualifiedName();
+
+    /** Description of this asset, generated by AI based on the asset's context. Displayed separately in the UI and can be used to overwrite existing descriptions. */
+    String getAssetAiGeneratedDescription();
+
+    /** Confidence score of the AI-generated description, ranging from 0.0 to 1.0. */
+    Double getAssetAiGeneratedDescriptionConfidence();
+
+    /** Reasoning behind the AI-generated description, explaining how the description was derived from the asset's context. */
+    String getAssetAiGeneratedDescriptionReasoning();
+
+    /** Time (epoch) at which the announcement expires, in milliseconds. When set, the announcement will no longer be displayed after this time. */
+    Long getAssetAnnouncementExpiredAt();
+
+    /** All associated Anomalo check types. */
+    SortedSet<String> getAssetAnomaloAppliedCheckTypes();
+
+    /** Total number of checks present in Anomalo for this asset. */
+    Long getAssetAnomaloCheckCount();
+
+    /** Stringified JSON object containing status of all Anomalo checks associated to this asset. */
+    String getAssetAnomaloCheckStatuses();
+
+    /** Status of data quality from Anomalo. */
+    String getAssetAnomaloDQStatus();
+
+    /** Total number of checks failed in Anomalo for this asset. */
+    Long getAssetAnomaloFailedCheckCount();
+
+    /** All associated Anomalo failed check types. */
+    SortedSet<String> getAssetAnomaloFailedCheckTypes();
+
+    /** Time (epoch) at which the last check was run via Anomalo. */
+    Long getAssetAnomaloLastCheckRunAt();
+
+    /** URL of the source in Anomalo. */
+    String getAssetAnomaloSourceUrl();
+
+    /** Cover image to use for this asset in the UI (applicable to only a few asset types). */
+    String getAssetCoverImage();
+
+    /** Expectation of data freshness from Source. */
+    Long getAssetDQFreshnessExpectation();
+
+    /** Value of data freshness from Source. */
+    Long getAssetDQFreshnessValue();
+
+    /** Status of the latest manual DQ run triggered for this asset. */
+    AssetDQRunStatus getAssetDQManualRunStatus();
+
+    /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
+    DataQualityResult getAssetDQResult();
+
+    /** Qualified name of the column used for row scope filtering in DQ rules for this asset. */
+    String getAssetDQRowScopeFilterColumnQualifiedName();
+
+    /** List of all the dimensions of attached rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleAttachedDimensions();
+
+    /** List of all the types of attached rules. */
+    SortedSet<String> getAssetDQRuleAttachedRuleTypes();
+
+    /** Count of failed DQ rules attached to this asset. */
+    Long getAssetDQRuleFailedCount();
+
+    /** List of all the dimensions of failed rules. */
+    SortedSet<DataQualityDimension> getAssetDQRuleFailedDimensions();
+
+    /** List of all the types of failed rules. */
+    SortedSet<String> getAssetDQRuleFailedRuleTypes();
+
+    /** Time (epoch) at which the last dq rule ran. */
+    Long getAssetDQRuleLastRunAt();
+
+    /** Count of passed DQ rules attached to this asset. */
+    Long getAssetDQRulePassedCount();
+
+    /** List of all the dimensions for which all the rules passed. */
+    SortedSet<DataQualityDimension> getAssetDQRulePassedDimensions();
+
+    /** List of all the types of rules for which all the rules passed. */
+    SortedSet<String> getAssetDQRulePassedRuleTypes();
+
+    /** Tag for the result of the DQ rules. Eg, rule_pass:completeness:null_count. */
+    SortedSet<String> getAssetDQRuleResultTags();
+
+    /** Count of DQ rules attached to this asset. */
+    Long getAssetDQRuleTotalCount();
+
+    /** Crontab of the DQ rule that will run at datasource. */
+    String getAssetDQScheduleCrontab();
+
+    /** Error code in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorCode();
+
+    /** Error message in the case of sync state being "error". */
+    String getAssetDQScheduleSourceSyncErrorMessage();
+
+    /** Raw error message from the source. */
+    String getAssetDQScheduleSourceSyncRawError();
+
+    /** Latest sync status of the schedule to the source. */
+    DataQualitySourceSyncStatus getAssetDQScheduleSourceSyncStatus();
+
+    /** Time (epoch) at which the schedule synced to the source. */
+    Long getAssetDQScheduleSourceSyncedAt();
+
+    /** Timezone of the DQ rule schedule that will run at datasource */
+    String getAssetDQScheduleTimeZone();
+
+    /** Type of schedule of the DQ rule that will run at datasource. */
+    DataQualityScheduleType getAssetDQScheduleType();
+
+    /** Name of the account in which this asset exists in dbt. */
+    String getAssetDbtAccountName();
+
+    /** Alias of this asset in dbt. */
+    String getAssetDbtAlias();
+
+    /** Version of the environment in which this asset is materialized in dbt. */
+    String getAssetDbtEnvironmentDbtVersion();
+
+    /** Name of the environment in which this asset is materialized in dbt. */
+    String getAssetDbtEnvironmentName();
+
+    /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
+    Long getAssetDbtJobLastRun();
+
+    /** Path in S3 to the artifacts saved from the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunArtifactS3Path();
+
+    /** Whether artifacts were saved from the last run of the job that materialized this asset in dbt (true) or not (false). */
+    Boolean getAssetDbtJobLastRunArtifactsSaved();
+
+    /** Time (epoch) at which the job that materialized this asset in dbt was last created, in milliseconds. */
+    Long getAssetDbtJobLastRunCreatedAt();
+
+    /** Time (epoch) at which the job that materialized this asset in dbt was dequeued, in milliseconds. */
+    Long getAssetDbtJobLastRunDequedAt();
+
+    /** Thread ID of the user who executed the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunExecutedByThreadId();
+
+    /** Branch in git from which the last run of the job that materialized this asset in dbt ran. */
+    String getAssetDbtJobLastRunGitBranch();
+
+    /** SHA hash in git for the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunGitSha();
+
+    /** Whether docs were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
+    Boolean getAssetDbtJobLastRunHasDocsGenerated();
+
+    /** Whether sources were generated from the last run of the job that materialized this asset in dbt (true) or not (false). */
+    Boolean getAssetDbtJobLastRunHasSourcesGenerated();
+
+    /** Whether notifications were sent from the last run of the job that materialized this asset in dbt (true) or not (false). */
+    Boolean getAssetDbtJobLastRunNotificationsSent();
+
+    /** Thread ID of the owner of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunOwnerThreadId();
+
+    /** Total duration the job that materialized this asset in dbt spent being queued. */
+    String getAssetDbtJobLastRunQueuedDuration();
+
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt spend being queued. */
+    String getAssetDbtJobLastRunQueuedDurationHumanized();
+
+    /** Run duration of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunRunDuration();
+
+    /** Human-readable run duration of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunRunDurationHumanized();
+
+    /** Time (epoch) at which the job that materialized this asset in dbt was started running, in milliseconds. */
+    Long getAssetDbtJobLastRunStartedAt();
+
+    /** Status message of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunStatusMessage();
+
+    /** Total duration of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunTotalDuration();
+
+    /** Human-readable total duration of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunTotalDurationHumanized();
+
+    /** Time (epoch) at which the job that materialized this asset in dbt was last updated, in milliseconds. */
+    Long getAssetDbtJobLastRunUpdatedAt();
+
+    /** URL of the last run of the job that materialized this asset in dbt. */
+    String getAssetDbtJobLastRunUrl();
+
+    /** Name of the job that materialized this asset in dbt. */
+    String getAssetDbtJobName();
+
+    /** Time (epoch) when the next run of the job that materializes this asset in dbt is scheduled. */
+    Long getAssetDbtJobNextRun();
+
+    /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
+    String getAssetDbtJobNextRunHumanized();
+
+    /** Schedule of the job that materialized this asset in dbt. */
+    String getAssetDbtJobSchedule();
+
+    /** Human-readable cron schedule of the job that materialized this asset in dbt. */
+    String getAssetDbtJobScheduleCronHumanized();
+
+    /** Status of the job that materialized this asset in dbt. */
+    String getAssetDbtJobStatus();
+
+    /** Metadata for this asset in dbt, specifically everything under the 'meta' key in the dbt object. */
+    String getAssetDbtMeta();
+
+    /** Name of the package in which this asset exists in dbt. */
+    String getAssetDbtPackageName();
+
+    /** Name of the project in which this asset exists in dbt. */
+    String getAssetDbtProjectName();
+
+    /** URL of the semantic layer proxy for this asset in dbt. */
+    String getAssetDbtSemanticLayerProxyUrl();
+
+    /** Freshness criteria for the source of this asset in dbt. */
+    String getAssetDbtSourceFreshnessCriteria();
+
+    /** List of tags attached to this asset in dbt. */
+    SortedSet<String> getAssetDbtTags();
+
+    /** All associated dbt test statuses. */
+    String getAssetDbtTestStatus();
+
+    /** Unique identifier of this asset in dbt. */
+    String getAssetDbtUniqueId();
+
+    /** Name of the DBT workflow in Atlan that last updated the asset. */
+    String getAssetDbtWorkflowLastUpdated();
+
+    /** DQ metadata captured for asset from external DQ tool(s). */
+    Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
+
+    /** List of field key-values associated with all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectFieldList();
+
+    /** List of names of all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectList();
+
+    /** Metrics captured by GCP Dataplex for objects associated with GCP services. */
+    AssetGCPDataplexMetadata getAssetGCPDataplexMetadataDetails();
+
+    /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
+    AtlanIcon getAssetIcon();
+
+    /** Internal Popularity score for this asset. */
+    Double getAssetInternalPopularityScore();
+
+    /** List of unique Monte Carlo alert names attached to this asset. */
+    SortedSet<String> getAssetMcAlertQualifiedNames();
+
+    /** List of Monte Carlo incident names attached to this asset. */
+    SortedSet<String> getAssetMcIncidentNames();
+
+    /** List of Monte Carlo incident priorities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentPriorities();
+
+    /** List of unique Monte Carlo incident names attached to this asset. */
+    SortedSet<String> getAssetMcIncidentQualifiedNames();
+
+    /** List of Monte Carlo incident severities associated with this asset. */
+    SortedSet<String> getAssetMcIncidentSeverities();
+
+    /** List of Monte Carlo incident states associated with this asset. */
+    SortedSet<String> getAssetMcIncidentStates();
+
+    /** List of Monte Carlo incident sub-types associated with this asset. */
+    SortedSet<String> getAssetMcIncidentSubTypes();
+
+    /** List of Monte Carlo incident types associated with this asset. */
+    SortedSet<String> getAssetMcIncidentTypes();
+
+    /** Tracks whether this asset is monitored by MC or not */
+    Boolean getAssetMcIsMonitored();
+
+    /** Time (epoch) at which this asset was last synced from Monte Carlo. */
+    Long getAssetMcLastSyncRunAt();
+
+    /** List of Monte Carlo monitor names attached to this asset. */
+    SortedSet<String> getAssetMcMonitorNames();
+
+    /** List of unique Monte Carlo monitor names attached to this asset. */
+    SortedSet<String> getAssetMcMonitorQualifiedNames();
+
+    /** Schedules of all associated Monte Carlo monitors. */
+    SortedSet<String> getAssetMcMonitorScheduleTypes();
+
+    /** Statuses of all associated Monte Carlo monitors. */
+    SortedSet<String> getAssetMcMonitorStatuses();
+
+    /** Types of all associated Monte Carlo monitors. */
+    SortedSet<String> getAssetMcMonitorTypes();
+
+    /** Count of policies inside the asset */
+    Long getAssetPoliciesCount();
+
+    /** Array of policy ids governing this asset */
+    SortedSet<String> getAssetPolicyGUIDs();
+
+    /** Array of asset ids that equivalent to this asset. */
+    SortedSet<String> getAssetRedirectGUIDs();
+
+    /** AWS SMUS Asset MetadataForm details */
+    List<AssetSmusMetadataFormDetails> getAssetSmusMetadataFormDetails();
+
+    /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormKeyValueDetails();
+
+    /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
+    SortedSet<String> getAssetSmusMetadataFormNames();
+
+    /** Number of checks done via Soda. */
+    Long getAssetSodaCheckCount();
+
+    /** All associated Soda check statuses. */
+    String getAssetSodaCheckStatuses();
+
+    /** Status of data quality from Soda. */
+    String getAssetSodaDQStatus();
+
+    /** TBC */
+    Long getAssetSodaLastScanAt();
+
+    /** TBC */
+    Long getAssetSodaLastSyncRunAt();
+
+    /** TBC */
+    String getAssetSodaSourceURL();
+
+    /** Unique identifier for this asset in the system from which it was sourced. */
+    String getAssetSourceId();
+
+    /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
+    String getAssetSourceReadme();
+
+    /** Name of the space that contains this asset. */
+    String getAssetSpaceName();
+
+    /** Unique name of the space that contains this asset. */
+    String getAssetSpaceQualifiedName();
+
+    /** List of tags attached to this asset. */
+    SortedSet<String> getAssetTags();
+
+    /** Color (in hexadecimal RGB) to use to represent this asset. */
+    String getAssetThemeHex();
+
+    /** Name to use for this type of asset, as a subtype of the actual typeName. */
+    String getAssetUserDefinedType();
+
+    /** Glossary terms that are linked to this asset. */
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
+
+    /** Status of this asset's certification. */
+    CertificateStatus getCertificateStatus();
+
+    /** Human-readable descriptive message used to provide further detail to certificateStatus. */
+    String getCertificateStatusMessage();
+
+    /** Time (epoch) at which the certification was last updated, in milliseconds. */
+    Long getCertificateUpdatedAt();
+
+    /** Name of the user who last updated the certification of this asset. */
+    String getCertificateUpdatedBy();
+
+    /** Simple name of the connection through which this asset is accessible. */
+    String getConnectionName();
+
+    /** Unique name of the connection through which this asset is accessible. */
+    String getConnectionQualifiedName();
+
+    /** Type of the connector through which this asset is accessible. */
+    String getConnectorName();
+
+    /** Latest version of the data contract (in any status) for this asset. */
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
+
+    /** Latest certified version of the data contract for this asset. */
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
+
+    /** Unique name of this asset in dbt. */
+    String getDbtQualifiedName();
+
+    /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
+    String getDescription();
+
+    /** Human-readable name of this asset used for display purposes (in user interface). */
+    String getDisplayName();
+
+    /** Array of domain guids linked to this asset */
+    SortedSet<String> getDomainGUIDs();
+
+    /** Rules that are applied on this dataset. */
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
+
+    /** Rules where this dataset is referenced. */
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
+
+    /** Whether this asset has contract (true) or not (false). */
+    Boolean getHasContract();
+
+    /** Whether this asset has lineage (true) or not (false). */
+    Boolean getHasLineage();
+
+    /** Data products for which this asset is an input port. */
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
+
+    /** Tasks to which this asset provides input. */
+    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
+        return null;
+    }
+
+    /** Processes to which this asset provides input. */
+    default SortedSet<ILineageProcess> getInputToProcesses() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<ISparkJob> getInputToSparkJobs() {
+        return null;
+    }
+
+    /** TBC */
+    Boolean getIsAIGenerated();
+
+    /** Whether this asset is discoverable through the UI (true) or not (false). */
+    Boolean getIsDiscoverable();
+
+    /** Whether this asset can be edited in the UI (true) or not (false). */
+    Boolean getIsEditable();
+
+    /** Indicates this asset is not fully-known, if true. */
+    Boolean getIsPartial();
+
+    /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
+    Long getLastRowChangedAt();
+
+    /** Name of the last run of the crawler that last synchronized this asset. */
+    String getLastSyncRun();
+
+    /** Time (epoch) at which this asset was last crawled, in milliseconds. */
+    Long getLastSyncRunAt();
+
+    /** Name of the crawler that last synchronized this asset. */
+    String getLastSyncWorkflowName();
+
+    /** Custom order for sorting purpose, managed by client */
+    String getLexicographicalSortOrder();
+
+    /** Links that are attached to this asset. */
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
+
+    /** Monitors that observe this asset. */
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
+
+    /** Attributes implemented by this asset. */
+    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
+        return null;
+    }
+
+    /** Entities implemented by this asset. */
+    default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
+
+    /** Name of this asset. Fallback for display purposes, if displayName is empty. */
+    String getName();
+
+    /** Array of policy ids non-compliant to this asset */
+    SortedSet<String> getNonCompliantAssetPolicyGUIDs();
+
+    /** Tasks from which this asset is output. */
+    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
+        return null;
+    }
+
+    /** Processes from which this asset is produced as output. */
+    default SortedSet<ILineageProcess> getOutputFromProcesses() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
+        return null;
+    }
+
+    /** Data products for which this asset is an output port. */
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
+
+    /** Array of product guids which have this asset as outputPort */
+    SortedSet<String> getOutputProductGUIDs();
+
+    /** List of groups who own this asset. */
+    SortedSet<String> getOwnerGroups();
+
+    /** List of users who own this asset. */
+    SortedSet<String> getOwnerUsers();
+
+    /** Partial fields contained in the asset. */
+    default SortedSet<IPartialField> getPartialChildFields() {
+        return null;
+    }
+
+    /** Partial objects contained in the asset. */
+    default SortedSet<IPartialObject> getPartialChildObjects() {
+        return null;
+    }
+
+    /** Popularity score for this asset. */
+    Double getPopularityScore();
+
+    /** Lineage process that associates this ADF Activity. */
+    default SortedSet<ILineageProcess> getProcesses() {
+        return null;
+    }
+
+    /** Array of product guids linked to this asset */
+    SortedSet<String> getProductGUIDs();
+
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
+    String getQualifiedName();
+
+    /** README that is linked to this asset. */
+    default IReadme getReadme() {
+        return null;
+    }
+
+    /** URL for sample data for this asset. */
+    String getSampleDataUrl();
+
+    /** TBC */
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
+
+    /** The unit of measure for sourceTotalCost. */
+    SourceCostUnitType getSourceCostUnit();
+
+    /** Time (epoch) at which this asset was created in the source system, in milliseconds. */
+    Long getSourceCreatedAt();
+
+    /** Name of the user who created this asset, in the source system. */
+    String getSourceCreatedBy();
+
+    /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
+    String getSourceEmbedURL();
+
+    /** Timestamp of most recent read operation. */
+    Long getSourceLastReadAt();
+
+    /** List of owners of this asset, in the source system. */
+    String getSourceOwners();
+
+    /** List of most expensive warehouses with extra insights. */
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
+
+    /** List of most expensive warehouse names. */
+    SortedSet<String> getSourceQueryComputeCosts();
+
+    /** Total count of all read operations at source. */
+    Long getSourceReadCount();
+
+    /** List of the most expensive queries that accessed this asset. */
+    List<PopularityInsights> getSourceReadExpensiveQueryRecords();
+
+    /** List of the most popular queries that accessed this asset. */
+    List<PopularityInsights> getSourceReadPopularQueryRecords();
+
+    /** Total cost of read queries at source. */
+    Double getSourceReadQueryCost();
+
+    /** List of usernames with extra insights for the most recent users who read this asset. */
+    List<PopularityInsights> getSourceReadRecentUserRecords();
+
+    /** List of usernames of the most recent users who read this asset. */
+    SortedSet<String> getSourceReadRecentUsers();
+
+    /** List of the slowest queries that accessed this asset. */
+    List<PopularityInsights> getSourceReadSlowQueryRecords();
+
+    /** List of usernames with extra insights for the users who read this asset the most. */
+    List<PopularityInsights> getSourceReadTopUserRecords();
+
+    /** List of usernames of the users who read this asset the most. */
+    SortedSet<String> getSourceReadTopUsers();
+
+    /** Total number of unique users that read data from asset. */
+    Long getSourceReadUserCount();
+
+    /** Total cost of all operations at source. */
+    Double getSourceTotalCost();
+
+    /** URL to the resource within the source application, used to create a button to view this asset in the source application. */
+    String getSourceURL();
+
+    /** Time (epoch) at which this asset was last updated in the source system, in milliseconds. */
+    Long getSourceUpdatedAt();
+
+    /** Name of the user who last updated this asset, in the source system. */
+    String getSourceUpdatedBy();
+
+    /** Users who have starred this asset. */
+    SortedSet<String> getStarredBy();
+
+    /** Number of users who have starred this asset. */
+    Integer getStarredCount();
+
+    /** List of usernames with extra information of the users who have starred an asset. */
+    List<StarredDetails> getStarredDetails();
+
+    /** Subtype of this asset. */
+    String getSubType();
+
+    /** Name of the Atlan workspace in which this asset exists. */
+    String getTenantId();
+
+    /** TBC */
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
+
+    /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
+    String getUserDescription();
+
+    /** View score for this asset. */
+    Double getViewScore();
+
+    /** List of groups who can view assets contained in a collection. (This is only used for certain asset types.) */
+    SortedSet<String> getViewerGroups();
+
+    /** List of users who can view assets contained in a collection. (This is only used for certain asset types.) */
+    SortedSet<String> getViewerUsers();
+
+    /** URL of an icon to use for this asset. (Only applies to CustomEntity and Fivetran Catalog assets, currently.) */
+    String getIconUrl();
+
+    /** Built-in connector type through which this asset is accessible. */
+    AtlanConnectorType getConnectorType();
+
+    /** Custom connector type through which this asset is accessible. */
+    String getCustomConnectorType();
+
+    /** Name of the type that defines the asset. */
+    String getTypeName();
+
+    /** Globally-unique identifier for the asset. */
+    String getGuid();
+
+    /** Human-readable name of the asset. */
+    String getDisplayText();
+
+    /** Status of the asset (if this is a related asset). */
+    String getEntityStatus();
+
+    /** Type of the relationship (if this is a related asset). */
+    String getRelationshipType();
+
+    /** Unique identifier of the relationship (when this is a related asset). */
+    String getRelationshipGuid();
+
+    /** Status of the relationship (when this is a related asset). */
+    AtlanStatus getRelationshipStatus();
+
+    /** Attributes specific to the relationship (unused). */
+    RelationshipAttributes getRelationshipAttributes();
+
+    /**
+     * Attribute(s) that uniquely identify the asset (when this is a related asset).
+     * If the guid is not provided, these must be provided.
+     */
+    UniqueAttributes getUniqueAttributes();
+
+    /**
+     * When true, indicates that this object represents a complete view of the entity.
+     * When false, this object is only a reference or some partial view of the entity.
+     */
+    boolean isComplete();
+
+    /**
+     * Indicates whether this object can be used as a valid reference by GUID.
+     * @return true if it is a valid GUID reference, false otherwise
+     */
+    boolean isValidReferenceByGuid();
+
+    /**
+     * Indicates whether this object can be used as a valid reference by qualifiedName.
+     * @return true if it is a valid qualifiedName reference, false otherwise
+     */
+    boolean isValidReferenceByQualifiedName();
+}

@@ -657,8 +657,6 @@ public class GlossaryCategoryTest {
             .dqBaseDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqReferenceDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dqReferenceDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .term(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .term(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anchor(Glossary.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -669,10 +667,6 @@ public class GlossaryCategoryTest {
             .mcMonitor(MCMonitor.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mcIncident(MCIncident.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcIncident(MCIncident.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .userDefRelationshipTo(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipTo(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .userDefRelationshipFrom(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipFrom(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .link(Link.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -682,6 +676,12 @@ public class GlossaryCategoryTest {
             .schemaRegistrySubject(SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sodaCheck(SodaCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sodaCheck(SodaCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipFrom(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .userDefRelationshipFrom(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipTo(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .userDefRelationshipTo(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     @BeforeClass

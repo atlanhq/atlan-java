@@ -1,4 +1,4 @@
 /**
- * Unit test classes for the main objects in the SDK, primarily to confirm serde behaves as expected.
+ * Atlan metadata objects of varying types.
  */
 package com.atlan.model.assets;
