@@ -14,7 +14,6 @@ This repository houses the Java-based utilities for interacting with [Atlan](htt
 - `sdk` the Atlan Java SDK (client library), that ultimately calls through to Atlan's REST APIs
 - `package-toolkit` for configuring, running and testing custom packages
 - `integration-tests` for automated regression-testing
-- `generate` to generate components of the SDK that are model-driven
 - `samples` illustrating how the other components can be used for real automations and integrations
 - `mocks` bundle wire mocks that are reused in unit tests across different projects
 
