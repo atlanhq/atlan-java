@@ -716,7 +716,7 @@ public interface IMicroStrategyColumn {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    Map<String, String> getMicroStrategyLocation();
+    List<Map<String, String>> getMicroStrategyLocation();
 
     /** Metric containing the column. */
     default IMicroStrategyMetric getMicroStrategyMetric() {

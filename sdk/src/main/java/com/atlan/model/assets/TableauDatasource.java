@@ -135,7 +135,7 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
     /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    Map<String, String> projectHierarchy;
+    List<Map<String, String>> projectHierarchy;
 
     /** Unique name of the project in which this datasource exists. */
     @Attribute
@@ -157,12 +157,12 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
     /** List of datasources that are upstream of this datasource. */
     @Attribute
     @Singular
-    Map<String, String> upstreamDatasources;
+    List<Map<String, String>> upstreamDatasources;
 
     /** List of tables that are upstream of this datasource. */
     @Attribute
     @Singular
-    Map<String, String> upstreamTables;
+    List<Map<String, String>> upstreamTables;
 
     /** Workbook in which this datasource exists. */
     @Attribute

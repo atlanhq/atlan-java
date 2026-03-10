@@ -425,9 +425,6 @@ public interface ICatalog {
             case DynamoDBAttribute.TYPE_NAME:
                 ref = DynamoDBAttribute.refByQualifiedName(qualifiedName);
                 break;
-            case DynamoDBSecondaryIndex.TYPE_NAME:
-                ref = DynamoDBSecondaryIndex.refByQualifiedName(qualifiedName);
-                break;
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
                 break;

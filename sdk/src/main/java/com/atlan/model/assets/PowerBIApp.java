@@ -102,7 +102,7 @@ public class PowerBIApp extends Asset implements IPowerBIApp, IPowerBI, IBI, ICa
     /** List of groups and their permission access for a PowerBI App. */
     @Attribute
     @Singular
-    Map<String, String> powerBIAppGroups;
+    List<Map<String, String>> powerBIAppGroups;
 
     /** Unique ID of the PowerBI App in the PowerBI Assets Ecosystem. */
     @Attribute
@@ -111,7 +111,7 @@ public class PowerBIApp extends Asset implements IPowerBIApp, IPowerBI, IBI, ICa
     /** List of users and their permission access for a PowerBI App. */
     @Attribute
     @Singular
-    Map<String, String> powerBIAppUsers;
+    List<Map<String, String>> powerBIAppUsers;
 
     /** PowerBI Dashboards that associates with this PowerBI App. */
     @Attribute

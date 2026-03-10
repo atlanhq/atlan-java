@@ -627,7 +627,7 @@ public interface IMicroStrategyCube {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    Map<String, String> getMicroStrategyLocation();
+    List<Map<String, String>> getMicroStrategyLocation();
 
     /** Metrics that use this cube. */
     default SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics() {

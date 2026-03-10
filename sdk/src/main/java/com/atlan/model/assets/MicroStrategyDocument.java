@@ -94,7 +94,7 @@ public class MicroStrategyDocument extends Asset implements IMicroStrategyDocume
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    Map<String, String> microStrategyLocation;
+    List<Map<String, String>> microStrategyLocation;
 
     /** Project in which this document exists. */
     @Attribute

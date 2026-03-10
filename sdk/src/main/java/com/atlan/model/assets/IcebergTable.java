@@ -149,7 +149,7 @@ public class IcebergTable extends Asset implements IIcebergTable, ITable, IIcebe
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    Map<String, String> icebergNamespaceHierarchy;
+    List<Map<String, String>> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     @Attribute
@@ -158,7 +158,7 @@ public class IcebergTable extends Asset implements IIcebergTable, ITable, IIcebe
     /** Snapshot information for the Iceberg table. */
     @Attribute
     @Singular
-    Map<String, String> icebergSnapshots;
+    List<Map<String, String>> icebergSnapshots;
 
     /** Iceberg table base location inside the external volume. */
     @Attribute

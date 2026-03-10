@@ -456,7 +456,7 @@ public interface IBigqueryTag {
     }
 
     /** List of top-level upstream nested bigquery tags. */
-    Map<String, String> getBigqueryTagHierarchy();
+    List<Map<String, String>> getBigqueryTagHierarchy();
 
     /** Properties of the bigquery tag taxonomy attribute. */
     Map<String, String> getBigqueryTagTaxonomyProperties();

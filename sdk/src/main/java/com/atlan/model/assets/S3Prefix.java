@@ -189,7 +189,7 @@ public class S3Prefix extends Asset implements IS3Prefix, IS3, IObjectStore, IAW
     /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
     @Attribute
     @Singular("putS3PrefixHierarchy")
-    Map<String, String> s3PrefixHierarchy;
+    List<Map<String, String>> s3PrefixHierarchy;
 
     /**
      * Builds the minimal object necessary to create a relationship to a S3Prefix, from a potentially

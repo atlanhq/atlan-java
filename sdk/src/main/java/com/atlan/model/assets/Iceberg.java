@@ -87,7 +87,7 @@ public class Iceberg extends Asset implements IIceberg, ICatalog, IAsset, IRefer
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    Map<String, String> icebergNamespaceHierarchy;
+    List<Map<String, String>> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     @Attribute

@@ -115,7 +115,7 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
     /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    Map<String, String> projectHierarchy;
+    List<Map<String, String>> projectHierarchy;
 
     /** Unique name of the project in which this workbook exists. */
     @Attribute

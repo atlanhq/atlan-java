@@ -120,7 +120,7 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
     /** List of top-level upstream nested columns. */
     @Attribute
     @Singular("putColumnHierarchy")
-    Map<String, String> columnHierarchy;
+    List<Map<String, String>> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
@@ -305,7 +305,7 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
     @Attribute
     @Singular("addDremioFolderHierarchy")
-    Map<String, String> dremioFolderHierarchy;
+    List<Map<String, String>> dremioFolderHierarchy;
 
     /** Source ID of this asset in Dremio. */
     @Attribute

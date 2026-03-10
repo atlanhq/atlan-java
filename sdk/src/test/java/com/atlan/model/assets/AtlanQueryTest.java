@@ -679,7 +679,7 @@ public class AtlanQueryTest {
             .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .parent(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .parent(Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .table(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .view(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

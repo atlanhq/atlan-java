@@ -99,7 +99,7 @@ public class MicroStrategyDossier extends Asset implements IMicroStrategyDossier
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    Map<String, String> microStrategyLocation;
+    List<Map<String, String>> microStrategyLocation;
 
     /** Project in which this dossier exists. */
     @Attribute

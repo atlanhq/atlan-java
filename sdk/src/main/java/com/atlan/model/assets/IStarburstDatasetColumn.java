@@ -515,7 +515,7 @@ public interface IStarburstDatasetColumn {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    Map<String, String> getColumnHierarchy();
+    List<Map<String, String>> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();

@@ -512,7 +512,7 @@ public interface IDremioColumn {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    Map<String, String> getColumnHierarchy();
+    List<Map<String, String>> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
@@ -702,7 +702,7 @@ public interface IDremioColumn {
     }
 
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
-    Map<String, String> getDremioFolderHierarchy();
+    List<Map<String, String>> getDremioFolderHierarchy();
 
     /** Source ID of this asset in Dremio. */
     String getDremioId();

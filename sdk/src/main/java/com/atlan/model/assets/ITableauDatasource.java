@@ -719,7 +719,7 @@ public interface ITableauDatasource {
     }
 
     /** List of top-level projects with their nested child projects. */
-    Map<String, String> getProjectHierarchy();
+    List<Map<String, String>> getProjectHierarchy();
 
     /** Unique name of the project in which this datasource exists. */
     String getProjectQualifiedName();
@@ -836,10 +836,10 @@ public interface ITableauDatasource {
     String getTopLevelProjectQualifiedName();
 
     /** List of datasources that are upstream of this datasource. */
-    Map<String, String> getUpstreamDatasources();
+    List<Map<String, String>> getUpstreamDatasources();
 
     /** List of tables that are upstream of this datasource. */
-    Map<String, String> getUpstreamTables();
+    List<Map<String, String>> getUpstreamTables();
 
     /** TBC */
     default SortedSet<IAsset> getUserDefRelationshipFroms() {

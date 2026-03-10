@@ -117,7 +117,7 @@ public class TableauDatasourceField extends Asset implements ITableauDatasourceF
     /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    Map<String, String> projectHierarchy;
+    List<Map<String, String>> projectHierarchy;
 
     /** Unique name of the project in which this datasource field exists. */
     @Attribute
@@ -163,17 +163,17 @@ public class TableauDatasourceField extends Asset implements ITableauDatasourceF
     /** Columns upstream to this field. */
     @Attribute
     @Singular
-    Map<String, String> upstreamColumns;
+    List<Map<String, String>> upstreamColumns;
 
     /** Fields upstream to this field. */
     @Attribute
     @Singular
-    Map<String, String> upstreamFields;
+    List<Map<String, String>> upstreamFields;
 
     /** Tables upstream to this datasource field. */
     @Attribute
     @Singular
-    Map<String, String> upstreamTables;
+    List<Map<String, String>> upstreamTables;
 
     /** Unique name of the workbook in which this datasource field exists. */
     @Attribute

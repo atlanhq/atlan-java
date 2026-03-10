@@ -101,7 +101,7 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
     /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    Map<String, String> projectHierarchy;
+    List<Map<String, String>> projectHierarchy;
 
     /** Unique name of the project in which this dashboard exists. */
     @Attribute

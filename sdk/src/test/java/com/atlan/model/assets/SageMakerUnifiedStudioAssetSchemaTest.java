@@ -645,7 +645,7 @@ public class SageMakerUnifiedStudioAssetSchemaTest {
             .smusDataType("String0")
             .smusAssetQualifiedName("String0")
             .smusAssetName("String0")
-            .smusAsset(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .smusAsset(SageMakerUnifiedStudioAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

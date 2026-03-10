@@ -651,13 +651,13 @@ public interface IPowerBIApp {
     Double getPopularityScore();
 
     /** List of groups and their permission access for a PowerBI App. */
-    Map<String, String> getPowerBIAppGroups();
+    List<Map<String, String>> getPowerBIAppGroups();
 
     /** Unique ID of the PowerBI App in the PowerBI Assets Ecosystem. */
     String getPowerBIAppId();
 
     /** List of users and their permission access for a PowerBI App. */
-    Map<String, String> getPowerBIAppUsers();
+    List<Map<String, String>> getPowerBIAppUsers();
 
     /** PowerBI Dashboards that associates with this PowerBI App. */
     default SortedSet<IPowerBIDashboard> getPowerBIDashboards() {

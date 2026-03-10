@@ -711,7 +711,7 @@ public interface IS3Bucket {
     String getS3ParentPrefixQualifiedName();
 
     /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
-    Map<String, String> getS3PrefixHierarchy();
+    List<Map<String, String>> getS3PrefixHierarchy();
 
     /** S3 prefixes contained in this bucket. */
     default SortedSet<IS3Prefix> getS3Prefixes() {

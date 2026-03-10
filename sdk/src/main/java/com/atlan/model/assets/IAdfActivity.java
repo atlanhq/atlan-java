@@ -153,7 +153,7 @@ public interface IAdfActivity {
     String getAdfActivityReferenceDataflow();
 
     /** List of objects of activity runs for a particular activity. */
-    Map<String, String> getAdfActivityRuns();
+    List<Map<String, String>> getAdfActivityRuns();
 
     /** Defines the type of the sink of the ADF activtity. */
     String getAdfActivitySinkType();

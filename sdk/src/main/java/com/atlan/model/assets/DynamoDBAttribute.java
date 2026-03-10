@@ -121,7 +121,7 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** List of top-level upstream nested columns. */
     @Attribute
     @Singular("putColumnHierarchy")
-    Map<String, String> columnHierarchy;
+    List<Map<String, String>> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute

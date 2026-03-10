@@ -662,7 +662,7 @@ public interface ITableauMetric {
     }
 
     /** List of top-level projects with their nested child projects. */
-    Map<String, String> getProjectHierarchy();
+    List<Map<String, String>> getProjectHierarchy();
 
     /** Unique name of the project in which this metric exists. */
     String getProjectQualifiedName();

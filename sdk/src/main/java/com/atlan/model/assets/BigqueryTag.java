@@ -53,7 +53,7 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, IBigquery,
     /** List of top-level upstream nested bigquery tags. */
     @Attribute
     @Singular("putBigqueryTagHierarchy")
-    Map<String, String> bigqueryTagHierarchy;
+    List<Map<String, String>> bigqueryTagHierarchy;
 
     /** Properties of the bigquery tag taxonomy attribute. */
     @Attribute

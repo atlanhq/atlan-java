@@ -120,7 +120,7 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** List of top-level upstream nested columns. */
     @Attribute
     @Singular("putColumnHierarchy")
-    Map<String, String> columnHierarchy;
+    List<Map<String, String>> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
@@ -314,7 +314,7 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    Map<String, String> icebergNamespaceHierarchy;
+    List<Map<String, String>> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     @Attribute

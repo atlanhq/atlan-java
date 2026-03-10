@@ -87,7 +87,7 @@ public class DremioSource extends Asset implements IDremioSource, IDremio, ICata
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
     @Attribute
     @Singular("addDremioFolderHierarchy")
-    Map<String, String> dremioFolderHierarchy;
+    List<Map<String, String>> dremioFolderHierarchy;
 
     /** Folders directly contained within the Dremio Source. */
     @Attribute

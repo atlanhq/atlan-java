@@ -624,7 +624,7 @@ public interface IMicroStrategyAttribute {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    Map<String, String> getMicroStrategyLocation();
+    List<Map<String, String>> getMicroStrategyLocation();
 
     /** Metrics that use this attribute. */
     default SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics() {

@@ -562,7 +562,7 @@ public interface IIcebergCatalog {
     String getIcebergCatalogType();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    Map<String, String> getIcebergNamespaceHierarchy();
+    List<Map<String, String>> getIcebergNamespaceHierarchy();
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     String getIcebergParentNamespaceQualifiedName();

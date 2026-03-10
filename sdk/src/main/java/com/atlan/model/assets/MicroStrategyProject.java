@@ -114,7 +114,7 @@ public class MicroStrategyProject extends Asset implements IMicroStrategyProject
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    Map<String, String> microStrategyLocation;
+    List<Map<String, String>> microStrategyLocation;
 
     /** Metrics that exist within this project. */
     @Attribute

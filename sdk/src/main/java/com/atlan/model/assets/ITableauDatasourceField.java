@@ -717,7 +717,7 @@ public interface ITableauDatasourceField {
     SortedSet<String> getProductGUIDs();
 
     /** List of top-level projects and their nested child projects. */
-    Map<String, String> getProjectHierarchy();
+    List<Map<String, String>> getProjectHierarchy();
 
     /** Unique name of the project in which this datasource field exists. */
     String getProjectQualifiedName();
@@ -854,13 +854,13 @@ public interface ITableauDatasourceField {
     String getTopLevelProjectQualifiedName();
 
     /** Columns upstream to this field. */
-    Map<String, String> getUpstreamColumns();
+    List<Map<String, String>> getUpstreamColumns();
 
     /** Fields upstream to this field. */
-    Map<String, String> getUpstreamFields();
+    List<Map<String, String>> getUpstreamFields();
 
     /** Tables upstream to this datasource field. */
-    Map<String, String> getUpstreamTables();
+    List<Map<String, String>> getUpstreamTables();
 
     /** TBC */
     default SortedSet<IAsset> getUserDefRelationshipFroms() {

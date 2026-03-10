@@ -657,7 +657,7 @@ public class AtlanAppWorkflowTest {
             .atlanAppTool(AtlanAppTool.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .atlanAppWorkflow(AtlanAppWorkflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .atlanAppWorkflow(AtlanAppWorkflow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .atlanApp(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .atlanApp(AtlanAppWorkflow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .atlanAppWorkflowRun(AppWorkflowRun.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .atlanAppWorkflowRun(AppWorkflowRun.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

@@ -559,7 +559,7 @@ public interface IDremioSource {
     }
 
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
-    Map<String, String> getDremioFolderHierarchy();
+    List<Map<String, String>> getDremioFolderHierarchy();
 
     /** Folders directly contained within the Dremio Source. */
     default SortedSet<IDremioFolder> getDremioFolders() {

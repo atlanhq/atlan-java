@@ -822,10 +822,10 @@ public interface ITableauDashboardField {
     String getTableauDashboardFieldType();
 
     /** Columns upstream to this field. */
-    Map<String, String> getTableauDashboardFieldUpstreamColumns();
+    List<Map<String, String>> getTableauDashboardFieldUpstreamColumns();
 
     /** Fields upstream to this field. */
-    Map<String, String> getTableauDashboardFieldUpstreamFields();
+    List<Map<String, String>> getTableauDashboardFieldUpstreamFields();
 
     /** Unique name of the datasource in which this dashboard field exists. */
     String getTableauDashboardQualifiedName();
@@ -834,7 +834,7 @@ public interface ITableauDashboardField {
     String getTableauFullyQualifiedName();
 
     /** List of top-level projects and their nested child projects. */
-    Map<String, String> getTableauProjectHierarchy();
+    List<Map<String, String>> getTableauProjectHierarchy();
 
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     SortedSet<String> getTableauProjectHierarchyQualifiedNames();
@@ -849,7 +849,7 @@ public interface ITableauDashboardField {
     String getTableauTopLevelProjectQualifiedName();
 
     /** Tables upstream to this worksheet field. */
-    Map<String, String> getTableauUpstreamTables();
+    List<Map<String, String>> getTableauUpstreamTables();
 
     /** Dashboard fields that use this worksheet field. */
     default ITableauWorksheetField getTableauWorksheetField() {

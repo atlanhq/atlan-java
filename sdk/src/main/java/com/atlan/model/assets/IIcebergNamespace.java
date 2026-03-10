@@ -562,7 +562,7 @@ public interface IIcebergNamespace {
     Boolean getHasLineage();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    Map<String, String> getIcebergNamespaceHierarchy();
+    List<Map<String, String>> getIcebergNamespaceHierarchy();
 
     /** Parent Iceberg Namespace containing the sub-namespaces. */
     default IIcebergNamespace getIcebergParentNamespace() {

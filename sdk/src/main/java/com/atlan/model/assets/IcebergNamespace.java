@@ -112,7 +112,7 @@ public class IcebergNamespace extends Asset implements IIcebergNamespace, ISchem
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    Map<String, String> icebergNamespaceHierarchy;
+    List<Map<String, String>> icebergNamespaceHierarchy;
 
     /** Parent Iceberg Namespace containing the sub-namespaces. */
     @Attribute

@@ -111,7 +111,7 @@ public class DremioPhysicalDataset extends Asset implements IDremioPhysicalDatas
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
     @Attribute
     @Singular("addDremioFolderHierarchy")
-    Map<String, String> dremioFolderHierarchy;
+    List<Map<String, String>> dremioFolderHierarchy;
 
     /** Source ID of this asset in Dremio. */
     @Attribute

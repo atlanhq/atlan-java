@@ -677,7 +677,7 @@ public interface IMicroStrategyMetric {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    Map<String, String> getMicroStrategyLocation();
+    List<Map<String, String>> getMicroStrategyLocation();
 
     /** Child metrics of this metric. */
     default SortedSet<IMicroStrategyMetric> getMicroStrategyMetricChildren() {

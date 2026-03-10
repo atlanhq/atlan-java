@@ -129,7 +129,7 @@ public class MicroStrategyMetric extends Asset implements IMicroStrategyMetric, 
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    Map<String, String> microStrategyLocation;
+    List<Map<String, String>> microStrategyLocation;
 
     /** Child metrics of this metric. */
     @Attribute
