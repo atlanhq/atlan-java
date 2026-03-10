@@ -129,12 +129,12 @@ public class TableauDashboardField extends Asset implements ITableauDashboardFie
     /** Columns upstream to this field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauDashboardFieldUpstreamColumns;
+    Map<String, String> tableauDashboardFieldUpstreamColumns;
 
     /** Fields upstream to this field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauDashboardFieldUpstreamFields;
+    Map<String, String> tableauDashboardFieldUpstreamFields;
 
     /** Unique name of the datasource in which this dashboard field exists. */
     @Attribute
@@ -147,7 +147,7 @@ public class TableauDashboardField extends Asset implements ITableauDashboardFie
     /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addTableauProjectHierarchy")
-    List<Map<String, String>> tableauProjectHierarchy;
+    Map<String, String> tableauProjectHierarchy;
 
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     @Attribute
@@ -169,7 +169,7 @@ public class TableauDashboardField extends Asset implements ITableauDashboardFie
     /** Tables upstream to this worksheet field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauUpstreamTables;
+    Map<String, String> tableauUpstreamTables;
 
     /** Dashboard fields that use this worksheet field. */
     @Attribute

@@ -100,7 +100,7 @@ public class DynamoDBTable extends Asset implements IDynamoDBTable, ITable, IDyn
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** Dimension tables related to this table. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ITable> dimensions;
@@ -160,7 +160,7 @@ public class DynamoDBTable extends Asset implements IDynamoDBTable, ITable, IDyn
     @Attribute
     String externalLocationRegion;
 
-    /** Fact tables related to this table. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ITable> facts;
@@ -333,6 +333,11 @@ public class DynamoDBTable extends Asset implements IDynamoDBTable, ITable, IDyn
     /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

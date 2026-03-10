@@ -54,7 +54,7 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @Attribute
     String additionalEtlContext;
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -80,17 +80,17 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @Attribute
     String code;
 
-    /** Column-level processes that are part of this process. */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 
@@ -166,7 +166,7 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -181,7 +181,7 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -194,7 +194,12 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     @Attribute
     String sql;
 
-    /** TBC */
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;

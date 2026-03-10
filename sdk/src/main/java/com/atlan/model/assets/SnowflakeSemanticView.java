@@ -169,6 +169,21 @@ public class SnowflakeSemanticView extends Asset implements ISnowflakeSemanticVi
     @Attribute
     String schemaQualifiedName;
 
+    /** Dimensions that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticDimension> semanticDimensions;
+
+    /** Entities that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticEntity> semanticEntities;
+
+    /** Measures that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticMeasure> semanticMeasures;
+
     /** DDL definition of the semantic view (via GET_DDL). */
     @Attribute
     String snowflakeDefinition;

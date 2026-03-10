@@ -149,7 +149,7 @@ public class IcebergTable extends Asset implements IIcebergTable, ITable, IIcebe
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    List<Map<String, String>> icebergNamespaceHierarchy;
+    Map<String, String> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     @Attribute
@@ -158,7 +158,7 @@ public class IcebergTable extends Asset implements IIcebergTable, ITable, IIcebe
     /** Snapshot information for the Iceberg table. */
     @Attribute
     @Singular
-    List<Map<String, String>> icebergSnapshots;
+    Map<String, String> icebergSnapshots;
 
     /** Iceberg table base location inside the external volume. */
     @Attribute
@@ -318,6 +318,11 @@ public class IcebergTable extends Asset implements IIcebergTable, ITable, IIcebe
     /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

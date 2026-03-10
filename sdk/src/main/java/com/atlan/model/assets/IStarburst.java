@@ -718,6 +718,11 @@ public interface IStarburst {
         return null;
     }
 
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
+
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {
         return null;

@@ -55,7 +55,7 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Attribute
     String additionalEtlContext;
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -63,7 +63,7 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -81,7 +81,7 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Attribute
     String code;
 
-    /** Column-level processes that are part of this process. */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -170,16 +170,16 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Attribute
     String dbtUniqueId;
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** TBC */
+    /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -203,7 +203,7 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -253,11 +253,11 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Parent process for this column-level process. */
+    /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
 
@@ -270,7 +270,12 @@ public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColum
     @Attribute
     String sql;
 
-    /** TBC */
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;

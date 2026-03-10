@@ -200,6 +200,10 @@ public class DbtEntity extends Asset implements IDbtEntity, ISemanticEntity, IDb
     @Singular
     SortedSet<String> semanticLabels;
 
+    /** Semantic model in which this entity exists. */
+    @Attribute
+    ISemanticModel semanticModel;
+
     /** Sample values for the semantic field. */
     @Attribute
     @Singular

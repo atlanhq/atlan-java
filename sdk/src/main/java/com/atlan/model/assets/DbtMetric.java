@@ -51,6 +51,11 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> assets;
+
     /** Assets associated with this metric. */
     @Attribute
     @Singular
@@ -186,6 +191,11 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> metricDimensionColumns;
+
     /** Dimension columns for this metric. */
     @Attribute
     @Singular
@@ -204,6 +214,10 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
     @Attribute
     @Singular
     SortedSet<String> metricTimeGrains;
+
+    /** TBC */
+    @Attribute
+    IColumn metricTimestampColumn;
 
     /** Column used as timestamp for this metric. */
     @Attribute

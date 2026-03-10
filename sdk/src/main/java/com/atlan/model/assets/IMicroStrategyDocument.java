@@ -602,7 +602,7 @@ public interface IMicroStrategyDocument {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    List<Map<String, String>> getMicroStrategyLocation();
+    Map<String, String> getMicroStrategyLocation();
 
     /** Project in which this document exists. */
     default IMicroStrategyProject getMicroStrategyProject() {

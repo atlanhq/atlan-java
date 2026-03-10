@@ -710,6 +710,21 @@ public interface IDbtSemanticModel {
         return null;
     }
 
+    /** Dimensions that exist within this semantic model. */
+    default SortedSet<ISemanticDimension> getSemanticDimensions() {
+        return null;
+    }
+
+    /** Entities that exist within this semantic model. */
+    default SortedSet<ISemanticEntity> getSemanticEntities() {
+        return null;
+    }
+
+    /** Measures that exist within this semantic model. */
+    default SortedSet<ISemanticMeasure> getSemanticMeasures() {
+        return null;
+    }
+
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {
         return null;

@@ -560,6 +560,11 @@ public interface IAppWorkflowRun {
         return null;
     }
 
+    /** The workflow that contains the workflow run. */
+    default IAtlanAppWorkflow getAtlanAppWorkflow() {
+        return null;
+    }
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

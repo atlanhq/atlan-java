@@ -699,7 +699,7 @@ public interface ITableauCalculatedField {
     SortedSet<String> getProductGUIDs();
 
     /** List of top-level projects and their nested projects. */
-    List<Map<String, String>> getProjectHierarchy();
+    Map<String, String> getProjectHierarchy();
 
     /** Unique name of the project in which this calculated field exists. */
     String getProjectQualifiedName();
@@ -827,7 +827,7 @@ public interface ITableauCalculatedField {
     String getTopLevelProjectQualifiedName();
 
     /** List of fields that are upstream to this calculated field. */
-    List<Map<String, String>> getUpstreamFields();
+    Map<String, String> getUpstreamFields();
 
     /** TBC */
     default SortedSet<IAsset> getUserDefRelationshipFroms() {

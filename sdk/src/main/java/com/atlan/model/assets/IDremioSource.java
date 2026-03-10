@@ -559,7 +559,7 @@ public interface IDremioSource {
     }
 
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
-    List<Map<String, String>> getDremioFolderHierarchy();
+    Map<String, String> getDremioFolderHierarchy();
 
     /** Folders directly contained within the Dremio Source. */
     default SortedSet<IDremioFolder> getDremioFolders() {
@@ -786,6 +786,11 @@ public interface IDremioSource {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

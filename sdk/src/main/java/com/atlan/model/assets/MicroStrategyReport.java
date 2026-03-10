@@ -99,7 +99,7 @@ public class MicroStrategyReport extends Asset implements IMicroStrategyReport, 
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    Map<String, String> microStrategyLocation;
 
     /** Metrics used by this report. */
     @Attribute

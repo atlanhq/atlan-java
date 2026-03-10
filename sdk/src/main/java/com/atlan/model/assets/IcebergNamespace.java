@@ -74,6 +74,16 @@ public class IcebergNamespace extends Asset implements IIcebergNamespace, ISchem
     @Attribute
     String databaseQualifiedName;
 
+    /** Contexts contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabricksAIModelContext> databricksAIModelContexts;
+
+    /** Volume contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabricksVolume> databricksVolumes;
+
     /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
@@ -102,7 +112,7 @@ public class IcebergNamespace extends Asset implements IIcebergNamespace, ISchem
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    List<Map<String, String>> icebergNamespaceHierarchy;
+    Map<String, String> icebergNamespaceHierarchy;
 
     /** Parent Iceberg Namespace containing the sub-namespaces. */
     @Attribute
@@ -220,6 +230,46 @@ public class IcebergNamespace extends Asset implements IIcebergNamespace, ISchem
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Contexts contained within the schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeAIModelContext> snowflakeAIModelContexts;
+
+    /** Snowflake dynamic tables that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeDynamicTable> snowflakeDynamicTables;
+
+    /** Snowflake pipes that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakePipe> snowflakePipes;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
+    /** Snowflake semantic views contained in the schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticView> snowflakeSemanticViews;
+
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeStage> snowflakeStages;
+
+    /** Snowflake streams that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeStream> snowflakeStreams;
+
+    /** Snowflake tags that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeTag> snowflakeTags;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

@@ -97,7 +97,7 @@ public interface IAdfPipeline {
     SortedSet<String> getAdfPipelineAnnotations();
 
     /** List of objects of pipeline runs for a particular pipeline. */
-    List<Map<String, String>> getAdfPipelineRuns();
+    Map<String, String> getAdfPipelineRuns();
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

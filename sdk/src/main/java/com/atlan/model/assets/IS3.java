@@ -709,7 +709,7 @@ public interface IS3 {
     String getS3ParentPrefixQualifiedName();
 
     /** Ordered array of prefix assets with qualified name and name representing the complete prefix hierarchy path for this asset, from immediate parent to root prefix. */
-    List<Map<String, String>> getS3PrefixHierarchy();
+    Map<String, String> getS3PrefixHierarchy();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();

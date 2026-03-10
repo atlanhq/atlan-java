@@ -465,6 +465,11 @@ public interface IDbtMetric {
     /** Name to use for this type of asset, as a subtype of the actual typeName. */
     String getAssetUserDefinedType();
 
+    /** TBC */
+    default SortedSet<IAsset> getAssets() {
+        return null;
+    }
+
     /** Assets associated with this metric. */
     default SortedSet<IAsset> getAssets() {
         return null;
@@ -686,6 +691,11 @@ public interface IDbtMetric {
         return null;
     }
 
+    /** TBC */
+    default SortedSet<IColumn> getMetricDimensionColumns() {
+        return null;
+    }
+
     /** Dimension columns for this metric. */
     default SortedSet<IColumn> getMetricDimensionColumns() {
         return null;
@@ -699,6 +709,11 @@ public interface IDbtMetric {
 
     /** List of time grains to be applied to the metric query. */
     SortedSet<String> getMetricTimeGrains();
+
+    /** TBC */
+    default IColumn getMetricTimestampColumn() {
+        return null;
+    }
 
     /** Column used as timestamp for this metric. */
     default IColumn getMetricTimestampColumn() {

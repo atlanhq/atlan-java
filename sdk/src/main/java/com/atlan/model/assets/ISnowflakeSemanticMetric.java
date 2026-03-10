@@ -471,6 +471,11 @@ public interface ISnowflakeSemanticMetric {
     /** Name to use for this type of asset, as a subtype of the actual typeName. */
     String getAssetUserDefinedType();
 
+    /** TBC */
+    default SortedSet<IAsset> getAssets() {
+        return null;
+    }
+
     /** Glossary terms that are linked to this asset. */
     default SortedSet<IGlossaryTerm> getAssignedTerms() {
         return null;
@@ -643,6 +648,11 @@ public interface ISnowflakeSemanticMetric {
         return null;
     }
 
+    /** TBC */
+    default SortedSet<IColumn> getMetricDimensionColumns() {
+        return null;
+    }
+
     /** Filters to be applied to the metric query. */
     String getMetricFilters();
 
@@ -651,6 +661,11 @@ public interface ISnowflakeSemanticMetric {
 
     /** List of time grains to be applied to the metric query. */
     SortedSet<String> getMetricTimeGrains();
+
+    /** TBC */
+    default IColumn getMetricTimestampColumn() {
+        return null;
+    }
 
     /** Type of the metric. */
     String getMetricType();
@@ -766,6 +781,11 @@ public interface ISnowflakeSemanticMetric {
 
     /** Logical table containing the metric. */
     default ISnowflakeSemanticLogicalTable getSnowflakeSemanticLogicalTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

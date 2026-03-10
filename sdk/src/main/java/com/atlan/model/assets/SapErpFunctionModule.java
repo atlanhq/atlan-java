@@ -117,7 +117,7 @@ public class SapErpFunctionModule extends Asset implements ISapErpFunctionModule
     /** List of exceptions raised by the SAP ERP function module, defined as key-value pairs. */
     @Attribute
     @Singular("sapErpFunctionException")
-    List<Map<String, String>> sapErpFunctionExceptionList;
+    Map<String, String> sapErpFunctionExceptionList;
 
     /** Represents the total number of Exceptions in a given SAP ERP Function Module. */
     @Attribute
@@ -126,7 +126,7 @@ public class SapErpFunctionModule extends Asset implements ISapErpFunctionModule
     /** Parameters exported by the SAP ERP function module, defined as key-value pairs. */
     @Attribute
     @Singular
-    List<Map<String, String>> sapErpFunctionModuleExportParams;
+    Map<String, String> sapErpFunctionModuleExportParams;
 
     /** Represents the total number of Export Parameters in a given SAP ERP Function Module. */
     @Attribute
@@ -139,7 +139,7 @@ public class SapErpFunctionModule extends Asset implements ISapErpFunctionModule
     /** Parameters imported by the SAP ERP function module, defined as key-value pairs. */
     @Attribute
     @Singular
-    List<Map<String, String>> sapErpFunctionModuleImportParams;
+    Map<String, String> sapErpFunctionModuleImportParams;
 
     /** Represents the total number of Import Parameters in a given SAP ERP Function Module. */
     @Attribute

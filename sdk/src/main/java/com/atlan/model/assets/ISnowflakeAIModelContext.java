@@ -72,7 +72,7 @@ public interface ISnowflakeAIModelContext {
     /** Version of the AI model. */
     String getAiModelVersion();
 
-    /** AI model versions linked to this context. */
+    /** Versions contained within the model. */
     default SortedSet<IAIModelVersion> getAiModelVersions() {
         return null;
     }
@@ -113,7 +113,7 @@ public interface ISnowflakeAIModelContext {
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
-    /** Applications linked to this context. */
+    /** AI applications that are created using this AI model. */
     default SortedSet<IAIApplication> getApplications() {
         return null;
     }
@@ -769,6 +769,11 @@ public interface ISnowflakeAIModelContext {
 
     /** Versions contained within the context. */
     default SortedSet<ISnowflakeAIModelVersion> getSnowflakeAIModelVersions() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

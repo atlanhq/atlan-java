@@ -640,7 +640,7 @@ public interface IMicroStrategyProject {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    List<Map<String, String>> getMicroStrategyLocation();
+    Map<String, String> getMicroStrategyLocation();
 
     /** Metrics that exist within this project. */
     default SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics() {

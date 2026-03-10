@@ -68,12 +68,12 @@ public class SnowflakeAIModelContext extends Asset implements ISnowflakeAIModelC
     @Attribute
     String aiModelVersion;
 
-    /** AI model versions linked to this context. */
+    /** Versions contained within the model. */
     @Attribute
     @Singular("modelVersion")
     SortedSet<IAIModelVersion> aiModelVersions;
 
-    /** Applications linked to this context. */
+    /** AI applications that are created using this AI model. */
     @Attribute
     @Singular("aiApplication")
     SortedSet<IAIApplication> applications;
@@ -235,6 +235,11 @@ public class SnowflakeAIModelContext extends Asset implements ISnowflakeAIModelC
     @Attribute
     @Singular
     SortedSet<ISnowflakeAIModelVersion> snowflakeAIModelVersions;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

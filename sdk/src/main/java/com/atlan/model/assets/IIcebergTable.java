@@ -607,13 +607,13 @@ public interface IIcebergTable {
     Integer getIcebergFormatVersion();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    List<Map<String, String>> getIcebergNamespaceHierarchy();
+    Map<String, String> getIcebergNamespaceHierarchy();
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     String getIcebergParentNamespaceQualifiedName();
 
     /** Snapshot information for the Iceberg table. */
-    List<Map<String, String>> getIcebergSnapshots();
+    Map<String, String> getIcebergSnapshots();
 
     /** Iceberg table base location inside the external volume. */
     String getIcebergTableBaseLocation();
@@ -839,6 +839,11 @@ public interface IIcebergTable {
 
     /** Size of this table, in bytes. */
     Long getSizeBytes();
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {

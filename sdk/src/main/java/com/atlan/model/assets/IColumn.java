@@ -797,7 +797,7 @@ public interface IColumn {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    List<Map<String, String>> getColumnHierarchy();
+    Map<String, String> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
@@ -1276,6 +1276,11 @@ public interface IColumn {
 
     /** Snowflake dynamic table in which this column exists. */
     default ISnowflakeDynamicTable getSnowflakeDynamicTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

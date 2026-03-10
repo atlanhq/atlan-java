@@ -549,7 +549,7 @@ public interface IIceberg {
     Boolean getHasLineage();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    List<Map<String, String>> getIcebergNamespaceHierarchy();
+    Map<String, String> getIcebergNamespaceHierarchy();
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     String getIcebergParentNamespaceQualifiedName();
@@ -719,6 +719,11 @@ public interface IIceberg {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

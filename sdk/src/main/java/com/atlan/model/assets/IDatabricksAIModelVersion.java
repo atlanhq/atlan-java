@@ -110,7 +110,7 @@ public interface IDatabricksAIModelVersion {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
-    /** AI model containing this version. */
+    /** Model containing the versions. */
     default IAIModel getAiModel() {
         return null;
     }
@@ -833,6 +833,11 @@ public interface IDatabricksAIModelVersion {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

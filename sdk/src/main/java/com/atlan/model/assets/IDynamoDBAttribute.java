@@ -451,6 +451,11 @@ public interface IDynamoDBAttribute {
         return null;
     }
 
+    /** Calculate view in which this column exists. */
+    default ICalculationView getCalculationView() {
+        return null;
+    }
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewName();
 
@@ -484,6 +489,11 @@ public interface IDynamoDBAttribute {
     /** Compression type of this column. */
     String getColumnCompression();
 
+    /** Model columns related to this column. */
+    default SortedSet<IDbtModelColumn> getColumnDbtModelColumns() {
+        return null;
+    }
+
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     Integer getColumnDepthLevel();
 
@@ -506,7 +516,7 @@ public interface IDynamoDBAttribute {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    List<Map<String, String>> getColumnHierarchy();
+    Map<String, String> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
@@ -601,6 +611,11 @@ public interface IDynamoDBAttribute {
     /** Type of the connector through which this asset is accessible. */
     String getConnectorName();
 
+    /** Cosmos collection in which this column exists. */
+    default ICosmosMongoDBCollection getCosmosMongoDBCollection() {
+        return null;
+    }
+
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {
         return null;
@@ -608,6 +623,11 @@ public interface IDynamoDBAttribute {
 
     /** Latest certified version of the data contract for this asset. */
     default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IMetric> getDataQualityMetricDimensions() {
         return null;
     }
 
@@ -619,6 +639,16 @@ public interface IDynamoDBAttribute {
 
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
+
+    /** Metrics related to this model column. */
+    default SortedSet<IDbtMetric> getDbtMetrics() {
+        return null;
+    }
+
+    /** (Deprecated) Model columns related to this model column. */
+    default SortedSet<IDbtModelColumn> getDbtModelColumns() {
+        return null;
+    }
 
     /** (Deprecated) Model containing the assets. */
     default SortedSet<IDbtModel> getDbtModels() {
@@ -655,8 +685,18 @@ public interface IDynamoDBAttribute {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Rules that are applied on this column. */
+    default SortedSet<IDataQualityRule> getDqBaseColumnRules() {
+        return null;
+    }
+
     /** Rules that are applied on this dataset. */
     default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
+
+    /** Rules where this column is referenced. */
+    default SortedSet<IDataQualityRule> getDqReferenceColumnRules() {
         return null;
     }
 
@@ -687,6 +727,16 @@ public interface IDynamoDBAttribute {
 
     /** TBC */
     default SortedSet<IFile> getFiles() {
+        return null;
+    }
+
+    /** Column this foreign key column refers to. */
+    default IColumn getForeignKeyFrom() {
+        return null;
+    }
+
+    /** Columns that use this column as a foreign key. */
+    default SortedSet<IColumn> getForeignKeyTo() {
         return null;
     }
 
@@ -781,6 +831,11 @@ public interface IDynamoDBAttribute {
         return null;
     }
 
+    /** Materialized view in which this column exists. */
+    default IMaterializedView getMaterializedView() {
+        return null;
+    }
+
     /** Maximum length of a value in this column. */
     Long getMaxLength();
 
@@ -791,6 +846,11 @@ public interface IDynamoDBAttribute {
 
     /** Monitors that observe this asset. */
     default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IMetric> getMetricTimestamps() {
         return null;
     }
 
@@ -809,6 +869,11 @@ public interface IDynamoDBAttribute {
         return null;
     }
 
+    /** Collection in which the columns exist. */
+    default IMongoDBCollection getMongoDBCollection() {
+        return null;
+    }
+
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
@@ -817,6 +882,11 @@ public interface IDynamoDBAttribute {
 
     /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
     String getNestedColumnOrder();
+
+    /** Nested columns that exist within this column. */
+    default SortedSet<IColumn> getNestedColumns() {
+        return null;
+    }
 
     /** Represents attributes for describing the key schema for the table and indexes. */
     String getNoSQLSchemaDefinition();
@@ -865,6 +935,11 @@ public interface IDynamoDBAttribute {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
+    /** Column in which this sub-column is nested. */
+    default IColumn getParentColumn() {
+        return null;
+    }
+
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     String getParentColumnName();
 
@@ -902,6 +977,11 @@ public interface IDynamoDBAttribute {
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
+    /** Queries that access this column. */
+    default SortedSet<IAtlanQuery> getQueries() {
+        return null;
+    }
+
     /** Number of times this asset has been queried. */
     Long getQueryCount();
 
@@ -933,6 +1013,16 @@ public interface IDynamoDBAttribute {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Snowflake dynamic table in which this column exists. */
+    default ISnowflakeDynamicTable getSnowflakeDynamicTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 
@@ -1038,8 +1128,18 @@ public interface IDynamoDBAttribute {
     /** Subtype of this asset. */
     String getSubType();
 
+    /** Table in which this column exists. */
+    default ITable getTable() {
+        return null;
+    }
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableName();
+
+    /** Table partition that contains this column. */
+    default ITablePartition getTablePartition() {
+        return null;
+    }
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     String getTableQualifiedName();
@@ -1062,6 +1162,11 @@ public interface IDynamoDBAttribute {
 
     /** Validations for this column. */
     Map<String, String> getValidations();
+
+    /** View in which this column exists. */
+    default IView getView() {
+        return null;
+    }
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     String getViewName();

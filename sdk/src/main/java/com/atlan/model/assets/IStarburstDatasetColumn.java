@@ -493,6 +493,11 @@ public interface IStarburstDatasetColumn {
     /** Compression type of this column. */
     String getColumnCompression();
 
+    /** Model columns related to this column. */
+    default SortedSet<IDbtModelColumn> getColumnDbtModelColumns() {
+        return null;
+    }
+
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     Integer getColumnDepthLevel();
 
@@ -515,7 +520,7 @@ public interface IStarburstDatasetColumn {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    List<Map<String, String>> getColumnHierarchy();
+    Map<String, String> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
@@ -610,6 +615,11 @@ public interface IStarburstDatasetColumn {
     /** Type of the connector through which this asset is accessible. */
     String getConnectorName();
 
+    /** Cosmos collection in which this column exists. */
+    default ICosmosMongoDBCollection getCosmosMongoDBCollection() {
+        return null;
+    }
+
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {
         return null;
@@ -617,6 +627,11 @@ public interface IStarburstDatasetColumn {
 
     /** Latest certified version of the data contract for this asset. */
     default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
+
+    /** TBC */
+    default SortedSet<IMetric> getDataQualityMetricDimensions() {
         return null;
     }
 
@@ -628,6 +643,16 @@ public interface IStarburstDatasetColumn {
 
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
+
+    /** Metrics related to this model column. */
+    default SortedSet<IDbtMetric> getDbtMetrics() {
+        return null;
+    }
+
+    /** (Deprecated) Model columns related to this model column. */
+    default SortedSet<IDbtModelColumn> getDbtModelColumns() {
+        return null;
+    }
 
     /** (Deprecated) Model containing the assets. */
     default SortedSet<IDbtModel> getDbtModels() {
@@ -664,8 +689,18 @@ public interface IStarburstDatasetColumn {
     /** Array of domain guids linked to this asset */
     SortedSet<String> getDomainGUIDs();
 
+    /** Rules that are applied on this column. */
+    default SortedSet<IDataQualityRule> getDqBaseColumnRules() {
+        return null;
+    }
+
     /** Rules that are applied on this dataset. */
     default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
+
+    /** Rules where this column is referenced. */
+    default SortedSet<IDataQualityRule> getDqReferenceColumnRules() {
         return null;
     }
 
@@ -799,6 +834,11 @@ public interface IStarburstDatasetColumn {
     }
 
     /** TBC */
+    default SortedSet<IMetric> getMetricTimestamps() {
+        return null;
+    }
+
+    /** TBC */
     default SortedSet<IMetric> getMetrics() {
         return null;
     }
@@ -810,6 +850,11 @@ public interface IStarburstDatasetColumn {
 
     /** Entities implemented by this asset. */
     default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
+
+    /** Collection in which the columns exist. */
+    default IMongoDBCollection getMongoDBCollection() {
         return null;
     }
 
@@ -949,6 +994,16 @@ public interface IStarburstDatasetColumn {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Snowflake dynamic table in which this column exists. */
+    default ISnowflakeDynamicTable getSnowflakeDynamicTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

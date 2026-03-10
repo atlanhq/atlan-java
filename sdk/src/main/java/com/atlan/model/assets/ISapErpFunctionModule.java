@@ -700,13 +700,13 @@ public interface ISapErpFunctionModule {
     }
 
     /** List of exceptions raised by the SAP ERP function module, defined as key-value pairs. */
-    List<Map<String, String>> getSapErpFunctionExceptionList();
+    Map<String, String> getSapErpFunctionExceptionList();
 
     /** Represents the total number of Exceptions in a given SAP ERP Function Module. */
     Long getSapErpFunctionExceptionListCount();
 
     /** Parameters exported by the SAP ERP function module, defined as key-value pairs. */
-    List<Map<String, String>> getSapErpFunctionModuleExportParams();
+    Map<String, String> getSapErpFunctionModuleExportParams();
 
     /** Represents the total number of Export Parameters in a given SAP ERP Function Module. */
     Long getSapErpFunctionModuleExportParamsCount();
@@ -715,7 +715,7 @@ public interface ISapErpFunctionModule {
     String getSapErpFunctionModuleGroup();
 
     /** Parameters imported by the SAP ERP function module, defined as key-value pairs. */
-    List<Map<String, String>> getSapErpFunctionModuleImportParams();
+    Map<String, String> getSapErpFunctionModuleImportParams();
 
     /** Represents the total number of Import Parameters in a given SAP ERP Function Module. */
     Long getSapErpFunctionModuleImportParamsCount();

@@ -56,7 +56,7 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** AI model containing this version. */
+    /** Model containing the versions. */
     @Attribute
     IAIModel aiModel;
 
@@ -265,6 +265,11 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

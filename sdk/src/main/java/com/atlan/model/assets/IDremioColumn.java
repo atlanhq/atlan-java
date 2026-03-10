@@ -512,7 +512,7 @@ public interface IDremioColumn {
     String getColumnEncoding();
 
     /** List of top-level upstream nested columns. */
-    List<Map<String, String>> getColumnHierarchy();
+    Map<String, String> getColumnHierarchy();
 
     /** List of values in a histogram that represents the contents of this column. */
     Histogram getColumnHistogram();
@@ -702,7 +702,7 @@ public interface IDremioColumn {
     }
 
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
-    List<Map<String, String>> getDremioFolderHierarchy();
+    Map<String, String> getDremioFolderHierarchy();
 
     /** Source ID of this asset in Dremio. */
     String getDremioId();
@@ -1015,6 +1015,11 @@ public interface IDremioColumn {
 
     /** Snowflake dynamic table in which this column exists. */
     default ISnowflakeDynamicTable getSnowflakeDynamicTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

@@ -47,7 +47,7 @@ public interface IColumnProcess {
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     default IAdfActivity getAdfActivity() {
         return null;
     }
@@ -64,7 +64,7 @@ public interface IColumnProcess {
     /** Dataset type for AI Model - dataset process. */
     AIDatasetType getAiDatasetType();
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     default SortedSet<IAirflowTask> getAirflowTasks() {
         return null;
     }
@@ -533,7 +533,7 @@ public interface IColumnProcess {
         return null;
     }
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     default SortedSet<IFabricActivity> getFabricActivities() {
         return null;
     }
@@ -543,12 +543,12 @@ public interface IColumnProcess {
         return null;
     }
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     default IFivetranConnector getFivetranConnector() {
         return null;
     }
 
-    /** TBC */
+    /** Orchestrated control operation that ran these data flows (process). */
     default IFlowControlOperation getFlowOrchestratedBy() {
         return null;
     }
@@ -601,7 +601,7 @@ public interface IColumnProcess {
         return null;
     }
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     default IMatillionComponent getMatillionComponent() {
         return null;
     }
@@ -652,7 +652,7 @@ public interface IColumnProcess {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     default IPowerBIDataflow getPowerBIDataflow() {
         return null;
     }
@@ -760,7 +760,12 @@ public interface IColumnProcess {
     /** SQL query that ran to produce the outputs. */
     String getSql();
 
-    /** TBC */
+    /** Functions used by this process. */
+    default SortedSet<IFunction> getSqlFunctions() {
+        return null;
+    }
+
+    /** Procedures used by this process. */
     default SortedSet<IProcedure> getSqlProcedures() {
         return null;
     }

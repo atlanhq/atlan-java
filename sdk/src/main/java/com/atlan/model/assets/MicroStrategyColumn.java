@@ -153,7 +153,7 @@ public class MicroStrategyColumn extends Asset implements IMicroStrategyColumn, 
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    Map<String, String> microStrategyLocation;
 
     /** Metric containing the column. */
     @Attribute

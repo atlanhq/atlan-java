@@ -84,6 +84,11 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     @Attribute
     String columnCompression;
 
+    /** Model columns related to this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> columnDbtModelColumns;
+
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     @Attribute
     Integer columnDepthLevel;
@@ -115,7 +120,7 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** List of top-level upstream nested columns. */
     @Attribute
     @Singular("putColumnHierarchy")
-    List<Map<String, String>> columnHierarchy;
+    Map<String, String> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
@@ -232,6 +237,15 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     @Attribute
     Double columnVarianceValue;
 
+    /** Cosmos collection in which this column exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> dataQualityMetricDimensions;
+
     /** Data type of values in this column. */
     @Attribute
     String dataType;
@@ -243,6 +257,16 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
+
+    /** Metrics related to this model column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtMetric> dbtMetrics;
+
+    /** (Deprecated) Model columns related to this model column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> dbtModelColumns;
 
     /** (Deprecated) Model containing the assets. */
     @Attribute
@@ -268,6 +292,16 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     @Attribute
     String defaultValue;
 
+    /** Rules that are applied on this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqBaseColumnRules;
+
+    /** Rules where this column is referenced. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqReferenceColumnRules;
+
     /** Column this foreign key column refers to. */
     @Attribute
     IColumn foreignKeyFrom;
@@ -280,7 +314,7 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
     @Singular("addIcebergNamespaceHierarchy")
-    List<Map<String, String>> icebergNamespaceHierarchy;
+    Map<String, String> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     @Attribute
@@ -355,6 +389,11 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     @Attribute
     Long maxLength;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> metricTimestamps;
+
     /** Attributes implemented by this asset. */
     @Attribute
     @Singular
@@ -364,6 +403,10 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Collection in which the columns exist. */
+    @Attribute
+    IMongoDBCollection mongoDBCollection;
 
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
@@ -482,6 +525,15 @@ public class IcebergColumn extends Asset implements IIcebergColumn, IColumn, IIc
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Snowflake dynamic table in which this column exists. */
+    @Attribute
+    ISnowflakeDynamicTable snowflakeDynamicTable;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute

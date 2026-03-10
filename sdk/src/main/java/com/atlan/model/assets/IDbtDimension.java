@@ -736,6 +736,11 @@ public interface IDbtDimension {
     /** Labels associated with the semantic field. */
     SortedSet<String> getSemanticLabels();
 
+    /** Semantic model in which this dimension exists. */
+    default ISemanticModel getSemanticModel() {
+        return null;
+    }
+
     /** Sample values for the semantic field. */
     SortedSet<String> getSemanticSampleValues();
 

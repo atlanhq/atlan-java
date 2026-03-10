@@ -688,6 +688,11 @@ public interface IStakeholder {
     /** TBC */
     SortedSet<String> getPersonaUsers();
 
+    /** Access control entity to which this policy applies. */
+    default SortedSet<IAuthPolicy> getPolicies() {
+        return null;
+    }
+
     /** Popularity score for this asset. */
     Double getPopularityScore();
 

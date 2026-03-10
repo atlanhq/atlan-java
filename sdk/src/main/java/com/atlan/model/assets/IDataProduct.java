@@ -862,6 +862,11 @@ public interface IDataProduct {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
+    /** Starburst datasets published by this data product. */
+    default SortedSet<IStarburstDataset> getStarburstDatasets() {
+        return null;
+    }
+
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 

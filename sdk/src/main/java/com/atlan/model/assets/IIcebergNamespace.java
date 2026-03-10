@@ -503,6 +503,16 @@ public interface IIcebergNamespace {
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     String getDatabaseQualifiedName();
 
+    /** Contexts contained within the schema. */
+    default SortedSet<IDatabricksAIModelContext> getDatabricksAIModelContexts() {
+        return null;
+    }
+
+    /** Volume contained within the schema. */
+    default SortedSet<IDatabricksVolume> getDatabricksVolumes() {
+        return null;
+    }
+
     /** (Deprecated) Model containing the assets. */
     default SortedSet<IDbtModel> getDbtModels() {
         return null;
@@ -562,7 +572,7 @@ public interface IIcebergNamespace {
     Boolean getHasLineage();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    List<Map<String, String>> getIcebergNamespaceHierarchy();
+    Map<String, String> getIcebergNamespaceHierarchy();
 
     /** Parent Iceberg Namespace containing the sub-namespaces. */
     default IIcebergNamespace getIcebergParentNamespace() {
@@ -758,6 +768,46 @@ public interface IIcebergNamespace {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Contexts contained within the schema. */
+    default SortedSet<ISnowflakeAIModelContext> getSnowflakeAIModelContexts() {
+        return null;
+    }
+
+    /** Snowflake dynamic tables that exist within this schema. */
+    default SortedSet<ISnowflakeDynamicTable> getSnowflakeDynamicTables() {
+        return null;
+    }
+
+    /** Snowflake pipes that exist within this schema. */
+    default SortedSet<ISnowflakePipe> getSnowflakePipes() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
+
+    /** Snowflake semantic views contained in the schema. */
+    default SortedSet<ISnowflakeSemanticView> getSnowflakeSemanticViews() {
+        return null;
+    }
+
+    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
+    default SortedSet<ISnowflakeStage> getSnowflakeStages() {
+        return null;
+    }
+
+    /** Snowflake streams that exist within this schema. */
+    default SortedSet<ISnowflakeStream> getSnowflakeStreams() {
+        return null;
+    }
+
+    /** Snowflake tags that exist within this schema. */
+    default SortedSet<ISnowflakeTag> getSnowflakeTags() {
         return null;
     }
 

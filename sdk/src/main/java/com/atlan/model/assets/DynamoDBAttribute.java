@@ -19,6 +19,7 @@ import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -52,6 +53,10 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Calculate view in which this column exists. */
+    @Attribute
+    ICalculationView calculationView;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -79,6 +84,11 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** Compression type of this column. */
     @Attribute
     String columnCompression;
+
+    /** Model columns related to this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> columnDbtModelColumns;
 
     /** Level of nesting of this column, used for STRUCT and NESTED columns. */
     @Attribute
@@ -111,7 +121,7 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** List of top-level upstream nested columns. */
     @Attribute
     @Singular("putColumnHierarchy")
-    List<Map<String, String>> columnHierarchy;
+    Map<String, String> columnHierarchy;
 
     /** List of values in a histogram that represents the contents of this column. */
     @Attribute
@@ -228,6 +238,15 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     Double columnVarianceValue;
 
+    /** Cosmos collection in which this column exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> dataQualityMetricDimensions;
+
     /** Data type of values in this column. */
     @Attribute
     String dataType;
@@ -239,6 +258,16 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
+
+    /** Metrics related to this model column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtMetric> dbtMetrics;
+
+    /** (Deprecated) Model columns related to this model column. */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> dbtModelColumns;
 
     /** (Deprecated) Model containing the assets. */
     @Attribute
@@ -264,6 +293,16 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     String defaultValue;
 
+    /** Rules that are applied on this column. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqBaseColumnRules;
+
+    /** Rules where this column is referenced. */
+    @Attribute
+    @Singular
+    SortedSet<IDataQualityRule> dqReferenceColumnRules;
+
     /** Specifies the partition key of the DynamoDB table or index. */
     @Attribute
     String dynamoDBPartitionKey;
@@ -287,6 +326,15 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException. */
     @Attribute
     Long dynamoDBWriteCapacityUnits;
+
+    /** Column this foreign key column refers to. */
+    @Attribute
+    IColumn foreignKeyFrom;
+
+    /** Columns that use this column as a foreign key. */
+    @Attribute
+    @Singular("addForeignKeyTo")
+    SortedSet<IColumn> foreignKeyTo;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -348,9 +396,19 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Date
     Long lastProfiledAt;
 
+    /** Materialized view in which this column exists. */
+    @Attribute
+    @JsonProperty("materialisedView")
+    IMaterializedView materializedView;
+
     /** Maximum length of a value in this column. */
     @Attribute
     Long maxLength;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> metricTimestamps;
 
     /** Attributes implemented by this asset. */
     @Attribute
@@ -362,6 +420,10 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
+    /** Collection in which the columns exist. */
+    @Attribute
+    IMongoDBCollection mongoDBCollection;
+
     /** Number of columns nested within this (STRUCT or NESTED) column. */
     @Attribute
     Integer nestedColumnCount;
@@ -369,6 +431,11 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     /** Order (position) in which this column appears in the nested Column (nest level starts at 1). */
     @Attribute
     String nestedColumnOrder;
+
+    /** Nested columns that exist within this column. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> nestedColumns;
 
     /** Represents attributes for describing the key schema for the table and indexes. */
     @Attribute
@@ -405,6 +472,10 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
+    /** Column in which this sub-column is nested. */
+    @Attribute
+    IColumn parentColumn;
+
     /** Simple name of the column this column is nested within, for STRUCT and NESTED columns. */
     @Attribute
     String parentColumnName;
@@ -440,6 +511,11 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     Integer precision;
 
+    /** Queries that access this column. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> queries;
+
     /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
@@ -470,6 +546,15 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     String schemaQualifiedName;
 
+    /** Snowflake dynamic table in which this column exists. */
+    @Attribute
+    ISnowflakeDynamicTable snowflakeDynamicTable;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -492,9 +577,17 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     String subDataType;
 
+    /** Table in which this column exists. */
+    @Attribute
+    ITable table;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
+
+    /** Table partition that contains this column. */
+    @Attribute
+    ITablePartition tablePartition;
 
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
@@ -504,6 +597,10 @@ public class DynamoDBAttribute extends Asset implements IDynamoDBAttribute, ICol
     @Attribute
     @Singular
     Map<String, String> validations;
+
+    /** View in which this column exists. */
+    @Attribute
+    IView view;
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute

@@ -544,6 +544,11 @@ public interface IIcebergCatalog {
         return null;
     }
 
+    /** Workspace containing the database. */
+    default IFabricWorkspace getFabricWorkspace() {
+        return null;
+    }
+
     /** TBC */
     default SortedSet<IFile> getFiles() {
         return null;
@@ -562,7 +567,7 @@ public interface IIcebergCatalog {
     String getIcebergCatalogType();
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    List<Map<String, String>> getIcebergNamespaceHierarchy();
+    Map<String, String> getIcebergNamespaceHierarchy();
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
     String getIcebergParentNamespaceQualifiedName();
@@ -749,6 +754,11 @@ public interface IIcebergCatalog {
 
     /** Schemas that exist within this database. */
     default SortedSet<ISchema> getSchemas() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

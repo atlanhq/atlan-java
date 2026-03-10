@@ -200,6 +200,10 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
     @Singular
     SortedSet<String> semanticLabels;
 
+    /** Semantic model in which this measure exists. */
+    @Attribute
+    ISemanticModel semanticModel;
+
     /** Sample values for the semantic field. */
     @Attribute
     @Singular

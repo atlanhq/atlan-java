@@ -77,7 +77,7 @@ public interface IDatabricksAIModelContext {
     /** Version of the AI model. */
     String getAiModelVersion();
 
-    /** AI model versions linked to this context. */
+    /** Versions contained within the model. */
     default SortedSet<IAIModelVersion> getAiModelVersions() {
         return null;
     }
@@ -118,7 +118,7 @@ public interface IDatabricksAIModelContext {
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
-    /** Applications linked to this context. */
+    /** AI applications that are created using this AI model. */
     default SortedSet<IAIApplication> getApplications() {
         return null;
     }
@@ -777,6 +777,11 @@ public interface IDatabricksAIModelContext {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

@@ -584,7 +584,7 @@ public interface IMongoDBCollection {
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
 
-    /** Dimension tables related to this table. */
+    /** TBC */
     default SortedSet<ITable> getDimensions() {
         return null;
     }
@@ -614,7 +614,7 @@ public interface IMongoDBCollection {
     /** Region of the external location of this table, for example: S3 region. */
     String getExternalLocationRegion();
 
-    /** Fact tables related to this table. */
+    /** TBC */
     default SortedSet<ITable> getFacts() {
         return null;
     }
@@ -909,6 +909,11 @@ public interface IMongoDBCollection {
 
     /** Size of this table, in bytes. */
     Long getSizeBytes();
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {

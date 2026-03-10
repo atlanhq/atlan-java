@@ -99,7 +99,7 @@ public class MicroStrategyFact extends Asset implements IMicroStrategyFact, IMic
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    Map<String, String> microStrategyLocation;
 
     /** Metrics that use this fact. */
     @Attribute

@@ -186,6 +186,10 @@ public class SnowflakeSemanticLogicalTable extends Asset implements ISnowflakeSe
     @Singular
     SortedSet<String> semanticLabels;
 
+    /** Semantic model in which this entity exists. */
+    @Attribute
+    ISemanticModel semanticModel;
+
     /** Sample values for the semantic field. */
     @Attribute
     @Singular
@@ -218,6 +222,11 @@ public class SnowflakeSemanticLogicalTable extends Asset implements ISnowflakeSe
     @Attribute
     @Singular
     SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTableJoins;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Metrics contained in the logical table. */
     @Attribute

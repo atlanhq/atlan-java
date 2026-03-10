@@ -54,7 +54,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String additionalEtlContext;
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -85,16 +85,16 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** TBC */
+    /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -103,7 +103,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -118,7 +118,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -131,7 +131,12 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String sql;
 
-    /** TBC */
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;

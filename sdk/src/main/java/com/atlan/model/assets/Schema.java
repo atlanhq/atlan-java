@@ -233,6 +233,16 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ISnowflakePipe> snowflakePipes;
 
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
+    /** Snowflake semantic views contained in the schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticView> snowflakeSemanticViews;
+
     /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
     @Attribute
     @Singular

@@ -88,7 +88,7 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
     /** List of objects of pipeline runs for a particular pipeline. */
     @Attribute
     @Singular
-    List<Map<String, String>> adfPipelineRuns;
+    Map<String, String> adfPipelineRuns;
 
     /** Tasks to which this asset provides input. */
     @Attribute

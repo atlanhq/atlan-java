@@ -673,7 +673,7 @@ public interface IQuickSightFolder {
     }
 
     /** Detailed path of this folder. */
-    List<Map<String, String>> getQuickSightFolderHierarchy();
+    Map<String, String> getQuickSightFolderHierarchy();
 
     /** Type of this folder, for example: SHARED. */
     QuickSightFolderType getQuickSightFolderType();

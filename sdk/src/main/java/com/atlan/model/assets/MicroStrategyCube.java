@@ -107,7 +107,7 @@ public class MicroStrategyCube extends Asset implements IMicroStrategyCube, IMic
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    Map<String, String> microStrategyLocation;
 
     /** Metrics that use this cube. */
     @Attribute

@@ -687,7 +687,7 @@ public interface ITableauWorksheet {
     SortedSet<String> getProductGUIDs();
 
     /** List of top-level projects with their nested child projects. */
-    List<Map<String, String>> getProjectHierarchy();
+    Map<String, String> getProjectHierarchy();
 
     /** Unique name of the project in which this worksheet exists. */
     String getProjectQualifiedName();

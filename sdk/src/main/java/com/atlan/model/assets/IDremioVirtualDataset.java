@@ -555,7 +555,7 @@ public interface IDremioVirtualDataset {
     }
 
     /** Ordered array of folder assets with qualified name and name representing the complete folder hierarchy path for this asset, from immediate parent to root folder. */
-    List<Map<String, String>> getDremioFolderHierarchy();
+    Map<String, String> getDremioFolderHierarchy();
 
     /** Source ID of this asset in Dremio. */
     String getDremioId();
@@ -786,6 +786,11 @@ public interface IDremioVirtualDataset {
 
     /** Size of this view, in bytes. */
     Long getSizeBytes();
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {

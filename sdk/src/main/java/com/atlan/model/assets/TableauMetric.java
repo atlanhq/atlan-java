@@ -105,7 +105,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
+    Map<String, String> projectHierarchy;
 
     /** Unique name of the project in which this metric exists. */
     @Attribute

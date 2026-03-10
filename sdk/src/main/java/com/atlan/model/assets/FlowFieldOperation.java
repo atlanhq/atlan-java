@@ -54,7 +54,7 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @Attribute
     String additionalEtlContext;
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -80,17 +80,17 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @Attribute
     String code;
 
-    /** Column-level processes that are part of this process. */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 
@@ -162,7 +162,7 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -177,11 +177,11 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Parent process for this column-level process. */
+    /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
 
@@ -194,7 +194,12 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     @Attribute
     String sql;
 
-    /** TBC */
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;

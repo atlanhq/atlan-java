@@ -179,6 +179,21 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Dimensions that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticDimension> semanticDimensions;
+
+    /** Entities that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticEntity> semanticEntities;
+
+    /** Measures that exist within this semantic model. */
+    @Attribute
+    @Singular
+    SortedSet<ISemanticMeasure> semanticMeasures;
+
     /**
      * Builds the minimal object necessary to create a relationship to a DbtSemanticModel, from a potentially
      * more-complete DbtSemanticModel object.

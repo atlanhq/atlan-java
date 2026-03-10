@@ -101,7 +101,7 @@ public class MicroStrategyVisualization extends Asset implements IMicroStrategyV
     /** Location of this asset in MicroStrategy. */
     @Attribute
     @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    Map<String, String> microStrategyLocation;
 
     /** Project in which this visualization exists. */
     @Attribute

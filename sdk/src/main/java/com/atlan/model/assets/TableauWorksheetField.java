@@ -117,7 +117,7 @@ public class TableauWorksheetField extends Asset implements ITableauWorksheetFie
     /** List of top-level projects and their nested child projects. */
     @Attribute
     @Singular("addTableauProjectHierarchy")
-    List<Map<String, String>> tableauProjectHierarchy;
+    Map<String, String> tableauProjectHierarchy;
 
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     @Attribute
@@ -171,17 +171,17 @@ public class TableauWorksheetField extends Asset implements ITableauWorksheetFie
     /** Columns upstream to this field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauWorksheetFieldUpstreamColumns;
+    Map<String, String> tableauWorksheetFieldUpstreamColumns;
 
     /** Fields upstream to this field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauWorksheetFieldUpstreamFields;
+    Map<String, String> tableauWorksheetFieldUpstreamFields;
 
     /** Tables upstream to this worksheet field. */
     @Attribute
     @Singular
-    List<Map<String, String>> tableauWorksheetFieldUpstreamTables;
+    Map<String, String> tableauWorksheetFieldUpstreamTables;
 
     /** Unique name of the datasource in which this worksheet field exists. */
     @Attribute

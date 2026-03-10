@@ -729,6 +729,11 @@ public interface IDbtEntity {
     /** Labels associated with the semantic field. */
     SortedSet<String> getSemanticLabels();
 
+    /** Semantic model in which this entity exists. */
+    default ISemanticModel getSemanticModel() {
+        return null;
+    }
+
     /** Sample values for the semantic field. */
     SortedSet<String> getSemanticSampleValues();
 

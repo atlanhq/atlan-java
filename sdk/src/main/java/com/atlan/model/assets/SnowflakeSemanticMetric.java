@@ -48,6 +48,11 @@ public class SnowflakeSemanticMetric extends Asset implements ISnowflakeSemantic
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> assets;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -112,6 +117,11 @@ public class SnowflakeSemanticMetric extends Asset implements ISnowflakeSemantic
     @Date
     Long lastProfiledAt;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> metricDimensionColumns;
+
     /** Filters to be applied to the metric query. */
     @Attribute
     String metricFilters;
@@ -124,6 +134,10 @@ public class SnowflakeSemanticMetric extends Asset implements ISnowflakeSemantic
     @Attribute
     @Singular
     SortedSet<String> metricTimeGrains;
+
+    /** TBC */
+    @Attribute
+    IColumn metricTimestampColumn;
 
     /** Type of the metric. */
     @Attribute
@@ -208,6 +222,11 @@ public class SnowflakeSemanticMetric extends Asset implements ISnowflakeSemantic
     /** Logical table containing the metric. */
     @Attribute
     ISnowflakeSemanticLogicalTable snowflakeSemanticLogicalTable;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Simple name of the logical table in which this metric exists. */
     @Attribute

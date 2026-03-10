@@ -456,7 +456,7 @@ public interface IBigqueryTag {
     }
 
     /** List of top-level upstream nested bigquery tags. */
-    List<Map<String, String>> getBigqueryTagHierarchy();
+    Map<String, String> getBigqueryTagHierarchy();
 
     /** Properties of the bigquery tag taxonomy attribute. */
     Map<String, String> getBigqueryTagTaxonomyProperties();
@@ -728,6 +728,11 @@ public interface IBigqueryTag {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

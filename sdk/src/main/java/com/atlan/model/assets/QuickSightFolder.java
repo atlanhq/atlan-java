@@ -117,7 +117,7 @@ public class QuickSightFolder extends Asset implements IQuickSightFolder, IQuick
     /** Detailed path of this folder. */
     @Attribute
     @Singular("addQuickSightFolderHierarchy")
-    List<Map<String, String>> quickSightFolderHierarchy;
+    Map<String, String> quickSightFolderHierarchy;
 
     /** Type of this folder, for example: SHARED. */
     @Attribute

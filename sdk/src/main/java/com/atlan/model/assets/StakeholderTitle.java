@@ -166,6 +166,11 @@ public class StakeholderTitle extends Asset implements IStakeholderTitle, IAcces
     @Singular
     SortedSet<String> personaUsers;
 
+    /** Access control entity to which this policy applies. */
+    @Attribute
+    @Singular
+    SortedSet<IAuthPolicy> policies;
+
     /** TBC */
     @Attribute
     String roleId;

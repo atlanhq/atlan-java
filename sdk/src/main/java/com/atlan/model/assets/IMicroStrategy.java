@@ -630,7 +630,7 @@ public interface IMicroStrategy {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    List<Map<String, String>> getMicroStrategyLocation();
+    Map<String, String> getMicroStrategyLocation();
 
     /** Simple name of the project in which this asset exists. */
     String getMicroStrategyProjectName();

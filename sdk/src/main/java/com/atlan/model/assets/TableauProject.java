@@ -124,7 +124,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
+    Map<String, String> projectHierarchy;
 
     /** Site in which this project exists. */
     @Attribute

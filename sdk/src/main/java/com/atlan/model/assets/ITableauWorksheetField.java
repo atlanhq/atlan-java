@@ -828,7 +828,7 @@ public interface ITableauWorksheetField {
     String getTableauFullyQualifiedName();
 
     /** List of top-level projects and their nested child projects. */
-    List<Map<String, String>> getTableauProjectHierarchy();
+    Map<String, String> getTableauProjectHierarchy();
 
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     SortedSet<String> getTableauProjectHierarchyQualifiedNames();
@@ -869,13 +869,13 @@ public interface ITableauWorksheetField {
     String getTableauWorksheetFieldType();
 
     /** Columns upstream to this field. */
-    List<Map<String, String>> getTableauWorksheetFieldUpstreamColumns();
+    Map<String, String> getTableauWorksheetFieldUpstreamColumns();
 
     /** Fields upstream to this field. */
-    List<Map<String, String>> getTableauWorksheetFieldUpstreamFields();
+    Map<String, String> getTableauWorksheetFieldUpstreamFields();
 
     /** Tables upstream to this worksheet field. */
-    List<Map<String, String>> getTableauWorksheetFieldUpstreamTables();
+    Map<String, String> getTableauWorksheetFieldUpstreamTables();
 
     /** Unique name of the datasource in which this worksheet field exists. */
     String getTableauWorksheetQualifiedName();

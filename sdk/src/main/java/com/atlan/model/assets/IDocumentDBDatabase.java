@@ -735,8 +735,13 @@ public interface IDocumentDBDatabase {
         return null;
     }
 
-    /** Schemas that exist within the database. */
+    /** Schemas that exist within this database. */
     default SortedSet<ISchema> getSchemas() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 

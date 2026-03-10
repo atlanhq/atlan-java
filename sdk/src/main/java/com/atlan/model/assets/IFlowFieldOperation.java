@@ -44,7 +44,7 @@ public interface IFlowFieldOperation {
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     default IAdfActivity getAdfActivity() {
         return null;
     }
@@ -61,7 +61,7 @@ public interface IFlowFieldOperation {
     /** Dataset type for AI Model - dataset process. */
     AIDatasetType getAiDatasetType();
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     default SortedSet<IAirflowTask> getAirflowTasks() {
         return null;
     }
@@ -484,7 +484,7 @@ public interface IFlowFieldOperation {
     /** Code that ran within the process. */
     String getCode();
 
-    /** Column-level processes that are part of this process. */
+    /** Processes that detail column-level lineage for this process. */
     default SortedSet<IColumnProcess> getColumnProcesses() {
         return null;
     }
@@ -530,7 +530,7 @@ public interface IFlowFieldOperation {
         return null;
     }
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     default SortedSet<IFabricActivity> getFabricActivities() {
         return null;
     }
@@ -540,7 +540,7 @@ public interface IFlowFieldOperation {
         return null;
     }
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     default IFivetranConnector getFivetranConnector() {
         return null;
     }
@@ -640,7 +640,7 @@ public interface IFlowFieldOperation {
         return null;
     }
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     default IMatillionComponent getMatillionComponent() {
         return null;
     }
@@ -691,12 +691,12 @@ public interface IFlowFieldOperation {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     default IPowerBIDataflow getPowerBIDataflow() {
         return null;
     }
 
-    /** Parent process for this column-level process. */
+    /** Parent process that contains this column-level process. */
     default ILineageProcess getProcess() {
         return null;
     }
@@ -799,7 +799,12 @@ public interface IFlowFieldOperation {
     /** SQL query that ran to produce the outputs. */
     String getSql();
 
-    /** TBC */
+    /** Functions used by this process. */
+    default SortedSet<IFunction> getSqlFunctions() {
+        return null;
+    }
+
+    /** Procedures used by this process. */
     default SortedSet<IProcedure> getSqlProcedures() {
         return null;
     }

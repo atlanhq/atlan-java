@@ -117,7 +117,7 @@ public class TableauCalculatedField extends Asset implements ITableauCalculatedF
     /** List of top-level projects and their nested projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
+    Map<String, String> projectHierarchy;
 
     /** Unique name of the project in which this calculated field exists. */
     @Attribute
@@ -151,7 +151,7 @@ public class TableauCalculatedField extends Asset implements ITableauCalculatedF
     /** List of fields that are upstream to this calculated field. */
     @Attribute
     @Singular
-    List<Map<String, String>> upstreamFields;
+    Map<String, String> upstreamFields;
 
     /** Unique name of the workbook in which this calculated field exists. */
     @Attribute

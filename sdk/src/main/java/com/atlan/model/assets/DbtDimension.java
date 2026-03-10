@@ -204,6 +204,10 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
     @Singular
     SortedSet<String> semanticLabels;
 
+    /** Semantic model in which this dimension exists. */
+    @Attribute
+    ISemanticModel semanticModel;
+
     /** Sample values for the semantic field. */
     @Attribute
     @Singular

@@ -718,6 +718,21 @@ public interface ISnowflakeSemanticView {
         return null;
     }
 
+    /** Dimensions that exist within this semantic model. */
+    default SortedSet<ISemanticDimension> getSemanticDimensions() {
+        return null;
+    }
+
+    /** Entities that exist within this semantic model. */
+    default SortedSet<ISemanticEntity> getSemanticEntities() {
+        return null;
+    }
+
+    /** Measures that exist within this semantic model. */
+    default SortedSet<ISemanticMeasure> getSemanticMeasures() {
+        return null;
+    }
+
     /** DDL definition of the semantic view (via GET_DDL). */
     String getSnowflakeDefinition();
 

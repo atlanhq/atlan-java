@@ -832,6 +832,16 @@ public interface ISchema {
         return null;
     }
 
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
+
+    /** Snowflake semantic views contained in the schema. */
+    default SortedSet<ISnowflakeSemanticView> getSnowflakeSemanticViews() {
+        return null;
+    }
+
     /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
     default SortedSet<ISnowflakeStage> getSnowflakeStages() {
         return null;

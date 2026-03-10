@@ -95,7 +95,7 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     /** List of objects of activity runs for a particular activity. */
     @Attribute
     @Singular
-    List<Map<String, String>> adfActivityRuns;
+    Map<String, String> adfActivityRuns;
 
     /** Defines the type of the sink of the ADF activtity. */
     @Attribute

@@ -538,7 +538,7 @@ public interface ITableauFlow {
     Boolean getHasLineage();
 
     /** List of fields that are inputs to this flow. */
-    List<Map<String, String>> getInputFields();
+    Map<String, String> getInputFields();
 
     /** Data products for which this asset is an input port. */
     default SortedSet<IDataProduct> getInputPortDataProducts() {
@@ -624,7 +624,7 @@ public interface ITableauFlow {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** List of fields that are outputs from this flow. */
-    List<Map<String, String>> getOutputFields();
+    Map<String, String> getOutputFields();
 
     /** Tasks from which this asset is output. */
     default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
@@ -650,7 +650,7 @@ public interface ITableauFlow {
     SortedSet<String> getOutputProductGUIDs();
 
     /** List of steps that are outputs from this flow. */
-    List<Map<String, String>> getOutputSteps();
+    Map<String, String> getOutputSteps();
 
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
@@ -680,7 +680,7 @@ public interface ITableauFlow {
     }
 
     /** List of top-level projects with their nested child projects. */
-    List<Map<String, String>> getProjectHierarchy();
+    Map<String, String> getProjectHierarchy();
 
     /** Unique name of the project in which this flow exists. */
     String getProjectQualifiedName();

@@ -186,6 +186,10 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
     @Singular
     SortedSet<String> semanticLabels;
 
+    /** Semantic model in which this dimension exists. */
+    @Attribute
+    ISemanticModel semanticModel;
+
     /** Sample values for the semantic field. */
     @Attribute
     @Singular
@@ -203,6 +207,11 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
     /** Logical table containing the dimension. */
     @Attribute
     ISnowflakeSemanticLogicalTable snowflakeSemanticLogicalTable;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Simple name of the logical table in which this dimension exists. */
     @Attribute

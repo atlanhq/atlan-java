@@ -622,7 +622,7 @@ public interface IMicroStrategyVisualization {
     Boolean getMicroStrategyIsCertified();
 
     /** Location of this asset in MicroStrategy. */
-    List<Map<String, String>> getMicroStrategyLocation();
+    Map<String, String> getMicroStrategyLocation();
 
     /** Project in which this visualization exists. */
     default IMicroStrategyProject getMicroStrategyProject() {

@@ -51,7 +51,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** List of fields that are inputs to this flow. */
     @Attribute
     @Singular
-    List<Map<String, String>> inputFields;
+    Map<String, String> inputFields;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -81,7 +81,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** List of fields that are outputs from this flow. */
     @Attribute
     @Singular
-    List<Map<String, String>> outputFields;
+    Map<String, String> outputFields;
 
     /** Tasks from which this asset is output. */
     @Attribute
@@ -101,7 +101,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** List of steps that are outputs from this flow. */
     @Attribute
     @Singular
-    List<Map<String, String>> outputSteps;
+    Map<String, String> outputSteps;
 
     /** Partial fields contained in the asset. */
     @Attribute
@@ -120,7 +120,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** List of top-level projects with their nested child projects. */
     @Attribute
     @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
+    Map<String, String> projectHierarchy;
 
     /** Unique name of the project in which this flow exists. */
     @Attribute

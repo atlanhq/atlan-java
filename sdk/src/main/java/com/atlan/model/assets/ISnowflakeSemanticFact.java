@@ -740,6 +740,11 @@ public interface ISnowflakeSemanticFact {
     /** Labels associated with the semantic field. */
     SortedSet<String> getSemanticLabels();
 
+    /** Semantic model in which this measure exists. */
+    default ISemanticModel getSemanticModel() {
+        return null;
+    }
+
     /** Sample values for the semantic field. */
     SortedSet<String> getSemanticSampleValues();
 
@@ -751,6 +756,11 @@ public interface ISnowflakeSemanticFact {
 
     /** Logical table containing the fact. */
     default ISnowflakeSemanticLogicalTable getSnowflakeSemanticLogicalTable() {
+        return null;
+    }
+
+    /** Semantic logical tables that reference this physical table or view. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
         return null;
     }
 
