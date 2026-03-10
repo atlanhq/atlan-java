@@ -366,8 +366,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSource does not exist or the provided GUID is not a DbtSource
      */
     @JsonIgnore
-    public static DbtSource get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DbtSource get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -479,8 +478,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return the updated DbtSource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSource removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtSource removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtSource) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -536,8 +534,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return the updated DbtSource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSource removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtSource removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtSource) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -555,8 +552,7 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
     public static DbtSource updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtSource)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtSource) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -583,8 +579,8 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
      * @return the DbtSource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtSource replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DbtSource replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DbtSource) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

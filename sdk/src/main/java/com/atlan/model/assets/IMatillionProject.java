@@ -54,8 +54,8 @@ public interface IMatillionProject {
             new KeywordTextField("matillionGroupName", "matillionGroupName.keyword", "matillionGroupName");
 
     /** Unique name of the Matillion group to which the project belongs. */
-    KeywordTextField MATILLION_GROUP_QUALIFIED_NAME = new KeywordTextField(
-            "matillionGroupQualifiedName", "matillionGroupQualifiedName", "matillionGroupQualifiedName.text");
+    KeywordTextField MATILLION_GROUP_QUALIFIED_NAME =
+            new KeywordTextField("matillionGroupQualifiedName", "matillionGroupQualifiedName", "matillionGroupQualifiedName.text");
 
     /** Jobs that exist within this project. */
     RelationField MATILLION_JOBS = new RelationField("matillionJobs");

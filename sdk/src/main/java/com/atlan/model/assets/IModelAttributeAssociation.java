@@ -45,8 +45,8 @@ public interface IModelAttributeAssociation {
     RelationField MODEL_ATTRIBUTE_ASSOCIATION_FROM = new RelationField("modelAttributeAssociationFrom");
 
     /** Unique name of the association from which this attribute is related. */
-    KeywordField MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME = new KeywordField(
-            "modelAttributeAssociationFromQualifiedName", "modelAttributeAssociationFromQualifiedName");
+    KeywordField MODEL_ATTRIBUTE_ASSOCIATION_FROM_QUALIFIED_NAME =
+            new KeywordField("modelAttributeAssociationFromQualifiedName", "modelAttributeAssociationFromQualifiedName");
 
     /** Attribute to which this association is related. */
     RelationField MODEL_ATTRIBUTE_ASSOCIATION_TO = new RelationField("modelAttributeAssociationTo");

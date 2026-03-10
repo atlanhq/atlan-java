@@ -429,29 +429,21 @@ public class SchemaTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -465,29 +457,21 @@ public class SchemaTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -529,29 +513,21 @@ public class SchemaTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -565,29 +541,21 @@ public class SchemaTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -661,10 +629,10 @@ public class SchemaTest {
                                     .assetGCPDataplexAspectFields(Map.of("String0", "String0"))
                                     .build()))
                     .build())
-            .assetGCPDataplexAspectList("String0")
-            .assetGCPDataplexAspectList("String1")
-            .assetGCPDataplexAspectFieldList("String0")
-            .assetGCPDataplexAspectFieldList("String1")
+            .addAssetGCPDataplexAspect("String0")
+            .addAssetGCPDataplexAspect("String1")
+            .addAssetGCPDataplexAspectField("String0")
+            .addAssetGCPDataplexAspectField("String1")
             .assetSmusMetadataFormName("String0")
             .assetSmusMetadataFormName("String1")
             .assetSmusMetadataFormKeyValueDetail("String0")
@@ -708,18 +676,15 @@ public class SchemaTest {
             .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedAttribute(
-                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedAttribute(ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .metric(Metric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .metric(Metric.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqBaseDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dqBaseDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqReferenceDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dqReferenceDatasetRule(
-                    DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dqReferenceDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .databricksAIModelContext(DatabricksAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .databricksAIModelContext(
-                    DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .databricksAIModelContext(DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .databricksVolume(DatabricksVolume.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .databricksVolume(DatabricksVolume.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -771,11 +736,9 @@ public class SchemaTest {
             .view(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .view(View.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .schemaRegistrySubject(
-                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .schemaRegistrySubject(SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeDynamicTable(
-                    SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakePipe(SnowflakePipe.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakePipe(SnowflakePipe.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeStage(SnowflakeStage.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -785,15 +748,11 @@ public class SchemaTest {
             .snowflakeTag(SnowflakeTag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeTag(SnowflakeTag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeAIModelContext(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeAIModelContext(
-                    SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeAIModelContext(SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeSemanticView(SnowflakeSemanticView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticView(
-                    SnowflakeSemanticView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeSemanticView(SnowflakeSemanticView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeSemanticLogicalTable(SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeSemanticLogicalTable(SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sodaCheck(SodaCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sodaCheck(SodaCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -813,7 +772,9 @@ public class SchemaTest {
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
-                full.toBuilder().build(), full, "Unable to converting Schema via builder back to its original state,");
+                full.toBuilder().build(),
+                full,
+                "Unable to converting Schema via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
         assertNotNull(serialized, "Unable to serialize sample instance of Schema,");

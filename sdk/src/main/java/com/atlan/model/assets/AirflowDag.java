@@ -315,8 +315,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AirflowDag does not exist or the provided GUID is not a AirflowDag
      */
     @JsonIgnore
-    public static AirflowDag get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static AirflowDag get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -386,7 +385,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create an AirflowDag.
      *
      * @param name of the AirflowDag
@@ -443,8 +442,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
      * @return the updated AirflowDag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AirflowDag removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AirflowDag removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AirflowDag) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -488,8 +486,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     public static AirflowDag updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AirflowDag)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AirflowDag) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -501,8 +498,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
      * @return the updated AirflowDag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AirflowDag removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AirflowDag removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AirflowDag) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -520,8 +516,7 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     public static AirflowDag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AirflowDag)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AirflowDag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -548,8 +543,8 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
      * @return the AirflowDag that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AirflowDag replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AirflowDag replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AirflowDag) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

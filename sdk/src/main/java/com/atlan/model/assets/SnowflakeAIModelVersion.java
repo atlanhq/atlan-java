@@ -45,8 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeAIModelVersion extends Asset
-        implements ISnowflakeAIModelVersion, IAIModelVersion, ISnowflake, IAI, ICatalog, IAsset, IReferenceable, ISQL {
+public class SnowflakeAIModelVersion extends Asset implements ISnowflakeAIModelVersion, IAIModelVersion, ISnowflake, IAI, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeAIModelVersion";
@@ -401,8 +400,7 @@ public class SnowflakeAIModelVersion extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeAIModelVersion does not exist or the provided GUID is not a SnowflakeAIModelVersion
      */
     @JsonIgnore
-    public static SnowflakeAIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakeAIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -434,8 +432,7 @@ public class SnowflakeAIModelVersion extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeAIModelVersion does not exist or the provided GUID is not a SnowflakeAIModelVersion
      */
     @JsonIgnore
-    public static SnowflakeAIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakeAIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -535,8 +532,7 @@ public class SnowflakeAIModelVersion extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SnowflakeAIModelVersionBuilder<
-                    C extends SnowflakeAIModelVersion, B extends SnowflakeAIModelVersionBuilder<C, B>>
+    public abstract static class SnowflakeAIModelVersionBuilder<C extends SnowflakeAIModelVersion, B extends SnowflakeAIModelVersionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -548,8 +544,7 @@ public class SnowflakeAIModelVersion extends Asset
      * @return the updated SnowflakeAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeAIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeAIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -576,8 +571,7 @@ public class SnowflakeAIModelVersion extends Asset
      * @return the updated SnowflakeAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeAIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeAIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -594,8 +588,7 @@ public class SnowflakeAIModelVersion extends Asset
     public static SnowflakeAIModelVersion updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeAIModelVersion)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeAIModelVersion) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -607,8 +600,7 @@ public class SnowflakeAIModelVersion extends Asset
      * @return the updated SnowflakeAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeAIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeAIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -626,8 +618,7 @@ public class SnowflakeAIModelVersion extends Asset
     public static SnowflakeAIModelVersion updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeAIModelVersion)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeAIModelVersion) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -654,8 +645,8 @@ public class SnowflakeAIModelVersion extends Asset
      * @return the SnowflakeAIModelVersion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeAIModelVersion replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeAIModelVersion replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -672,8 +663,8 @@ public class SnowflakeAIModelVersion extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeAIModelVersion appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeAIModelVersion appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -690,8 +681,8 @@ public class SnowflakeAIModelVersion extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeAIModelVersion removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeAIModelVersion removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -708,8 +699,8 @@ public class SnowflakeAIModelVersion extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SnowflakeAIModelVersion appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SnowflakeAIModelVersion appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SnowflakeAIModelVersion) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

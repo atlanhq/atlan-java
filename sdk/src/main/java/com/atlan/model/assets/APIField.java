@@ -427,8 +427,7 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
      * @return the updated APIField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static APIField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (APIField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -484,8 +483,7 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
      * @return the updated APIField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static APIField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (APIField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -530,8 +528,8 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
      * @return the APIField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APIField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static APIField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (APIField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

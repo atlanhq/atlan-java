@@ -25,8 +25,11 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.AtlanField;
 import com.atlan.model.lineage.FluentLineage;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.FluentSearch;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
@@ -35,6 +38,7 @@ import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -50,6 +54,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -473,12 +478,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** List of field key-values associated with all Aspects linked to this asset. */
     @Attribute
-    @Singular
+    @Singular("addAssetGCPDataplexAspectField")
     SortedSet<String> assetGCPDataplexAspectFieldList;
 
     /** List of names of all Aspects linked to this asset. */
     @Attribute
-    @Singular
+    @Singular("addAssetGCPDataplexAspect")
     SortedSet<String> assetGCPDataplexAspectList;
 
     /** Metrics captured by GCP Dataplex for objects associated with GCP services. */

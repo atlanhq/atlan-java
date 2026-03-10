@@ -307,8 +307,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikStream does not exist or the provided GUID is not a QlikStream
      */
     @JsonIgnore
-    public static QlikStream get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static QlikStream get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -420,8 +419,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
      * @return the updated QlikStream, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikStream removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikStream removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikStream) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -465,8 +463,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
     public static QlikStream updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikStream)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikStream) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -478,8 +475,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
      * @return the updated QlikStream, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikStream removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikStream removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikStream) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -497,8 +493,7 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
     public static QlikStream updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikStream)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikStream) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -525,8 +520,8 @@ public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace,
      * @return the QlikStream that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikStream replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static QlikStream replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QlikStream) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

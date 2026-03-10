@@ -100,6 +100,7 @@ public interface IModel {
     KeywordField MODEL_VERSION_QUALIFIED_NAME =
             new KeywordField("modelVersionQualifiedName", "modelVersionQualifiedName");
 
+
     /**
      * Generate a unique name that does not include any path delimiters.
      *

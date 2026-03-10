@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class MicroStrategyCube extends Asset
-        implements IMicroStrategyCube, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
+public class MicroStrategyCube extends Asset implements IMicroStrategyCube, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyCube";
@@ -303,8 +302,7 @@ public class MicroStrategyCube extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
      */
     @JsonIgnore
-    public static MicroStrategyCube get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static MicroStrategyCube get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -336,8 +334,7 @@ public class MicroStrategyCube extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyCube does not exist or the provided GUID is not a MicroStrategyCube
      */
     @JsonIgnore
-    public static MicroStrategyCube get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static MicroStrategyCube get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -437,8 +434,7 @@ public class MicroStrategyCube extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class MicroStrategyCubeBuilder<
-                    C extends MicroStrategyCube, B extends MicroStrategyCubeBuilder<C, B>>
+    public abstract static class MicroStrategyCubeBuilder<C extends MicroStrategyCube, B extends MicroStrategyCubeBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -450,8 +446,7 @@ public class MicroStrategyCube extends Asset
      * @return the updated MicroStrategyCube, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyCube removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyCube) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -478,8 +473,7 @@ public class MicroStrategyCube extends Asset
      * @return the updated MicroStrategyCube, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyCube removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyCube) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -496,8 +490,7 @@ public class MicroStrategyCube extends Asset
     public static MicroStrategyCube updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MicroStrategyCube)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MicroStrategyCube) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -509,8 +502,7 @@ public class MicroStrategyCube extends Asset
      * @return the updated MicroStrategyCube, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyCube removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyCube) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -528,8 +520,7 @@ public class MicroStrategyCube extends Asset
     public static MicroStrategyCube updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MicroStrategyCube)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MicroStrategyCube) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -556,8 +547,8 @@ public class MicroStrategyCube extends Asset
      * @return the MicroStrategyCube that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static MicroStrategyCube replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (MicroStrategyCube) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -610,8 +601,8 @@ public class MicroStrategyCube extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static MicroStrategyCube appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static MicroStrategyCube appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (MicroStrategyCube) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

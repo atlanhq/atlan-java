@@ -7,6 +7,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -17,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -252,8 +255,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
      */
     @JsonIgnore
-    public static ReadmeTemplate get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ReadmeTemplate get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -285,8 +287,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
      */
     @JsonIgnore
-    public static ReadmeTemplate get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ReadmeTemplate get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -398,8 +399,7 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
      * @return the updated ReadmeTemplate, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ReadmeTemplate removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ReadmeTemplate removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ReadmeTemplate) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 

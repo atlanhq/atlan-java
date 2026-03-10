@@ -61,8 +61,8 @@ public interface IPowerBI {
     BooleanField POWER_BI_IS_HIDDEN = new BooleanField("powerBIIsHidden", "powerBIIsHidden");
 
     /** Unique name of the Power BI table in which this asset exists. */
-    KeywordTextField POWER_BI_TABLE_QUALIFIED_NAME = new KeywordTextField(
-            "powerBITableQualifiedName", "powerBITableQualifiedName", "powerBITableQualifiedName.text");
+    KeywordTextField POWER_BI_TABLE_QUALIFIED_NAME =
+            new KeywordTextField("powerBITableQualifiedName", "powerBITableQualifiedName", "powerBITableQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

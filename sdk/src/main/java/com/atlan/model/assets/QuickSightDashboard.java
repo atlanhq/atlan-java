@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class QuickSightDashboard extends Asset
-        implements IQuickSightDashboard, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
+public class QuickSightDashboard extends Asset implements IQuickSightDashboard, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightDashboard";
@@ -261,8 +260,7 @@ public class QuickSightDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDashboard does not exist or the provided GUID is not a QuickSightDashboard
      */
     @JsonIgnore
-    public static QuickSightDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static QuickSightDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -294,8 +292,7 @@ public class QuickSightDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightDashboard does not exist or the provided GUID is not a QuickSightDashboard
      */
     @JsonIgnore
-    public static QuickSightDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static QuickSightDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -395,8 +392,7 @@ public class QuickSightDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class QuickSightDashboardBuilder<
-                    C extends QuickSightDashboard, B extends QuickSightDashboardBuilder<C, B>>
+    public abstract static class QuickSightDashboardBuilder<C extends QuickSightDashboard, B extends QuickSightDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -408,8 +404,7 @@ public class QuickSightDashboard extends Asset
      * @return the updated QuickSightDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -436,8 +431,7 @@ public class QuickSightDashboard extends Asset
      * @return the updated QuickSightDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -454,8 +448,7 @@ public class QuickSightDashboard extends Asset
     public static QuickSightDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QuickSightDashboard)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QuickSightDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -467,8 +460,7 @@ public class QuickSightDashboard extends Asset
      * @return the updated QuickSightDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -486,8 +478,7 @@ public class QuickSightDashboard extends Asset
     public static QuickSightDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QuickSightDashboard)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QuickSightDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -514,8 +505,8 @@ public class QuickSightDashboard extends Asset
      * @return the QuickSightDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static QuickSightDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QuickSightDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -568,8 +559,8 @@ public class QuickSightDashboard extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static QuickSightDashboard appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static QuickSightDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (QuickSightDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

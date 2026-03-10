@@ -274,8 +274,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpTable does not exist or the provided GUID is not a SapErpTable
      */
     @JsonIgnore
-    public static SapErpTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SapErpTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -307,8 +306,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpTable does not exist or the provided GUID is not a SapErpTable
      */
     @JsonIgnore
-    public static SapErpTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SapErpTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -420,8 +418,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @return the updated SapErpTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SapErpTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SapErpTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -448,8 +445,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @return the updated SapErpTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SapErpTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SapErpTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -466,8 +462,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     public static SapErpTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SapErpTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SapErpTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -479,8 +474,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @return the updated SapErpTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SapErpTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SapErpTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -498,8 +492,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     public static SapErpTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SapErpTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SapErpTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -526,8 +519,8 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
      * @return the SapErpTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SapErpTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SapErpTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SapErpTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -38,15 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeSemanticLogicalTable extends Asset
-        implements ISnowflakeSemanticLogicalTable,
-                ISemanticEntity,
-                ISnowflake,
-                ISemantic,
-                ICatalog,
-                IAsset,
-                IReferenceable,
-                ISQL {
+public class SnowflakeSemanticLogicalTable extends Asset implements ISnowflakeSemanticLogicalTable, ISemanticEntity, ISnowflake, ISemantic, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeSemanticLogicalTable";
@@ -370,10 +362,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return reference to a SnowflakeSemanticLogicalTable that can be used for defining a relationship to a SnowflakeSemanticLogicalTable
      */
     public static SnowflakeSemanticLogicalTable refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return SnowflakeSemanticLogicalTable._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return SnowflakeSemanticLogicalTable._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -396,8 +385,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
      * @return reference to a SnowflakeSemanticLogicalTable that can be used for defining a relationship to a SnowflakeSemanticLogicalTable
      */
-    public static SnowflakeSemanticLogicalTable refByQualifiedName(
-            String qualifiedName, Reference.SaveSemantic semantic) {
+    public static SnowflakeSemanticLogicalTable refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SnowflakeSemanticLogicalTable._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
@@ -428,8 +416,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticLogicalTable does not exist or the provided GUID is not a SnowflakeSemanticLogicalTable
      */
     @JsonIgnore
-    public static SnowflakeSemanticLogicalTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakeSemanticLogicalTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -461,8 +448,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticLogicalTable does not exist or the provided GUID is not a SnowflakeSemanticLogicalTable
      */
     @JsonIgnore
-    public static SnowflakeSemanticLogicalTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakeSemanticLogicalTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -562,8 +548,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SnowflakeSemanticLogicalTableBuilder<
-                    C extends SnowflakeSemanticLogicalTable, B extends SnowflakeSemanticLogicalTableBuilder<C, B>>
+    public abstract static class SnowflakeSemanticLogicalTableBuilder<C extends SnowflakeSemanticLogicalTable, B extends SnowflakeSemanticLogicalTableBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -575,8 +560,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the updated SnowflakeSemanticLogicalTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -589,8 +573,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the updated SnowflakeSemanticLogicalTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable removeUserDescription(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -603,8 +587,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the updated SnowflakeSemanticLogicalTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -621,8 +604,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
     public static SnowflakeSemanticLogicalTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeSemanticLogicalTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeSemanticLogicalTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -634,8 +616,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the updated SnowflakeSemanticLogicalTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -653,8 +634,7 @@ public class SnowflakeSemanticLogicalTable extends Asset
     public static SnowflakeSemanticLogicalTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeSemanticLogicalTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeSemanticLogicalTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -666,8 +646,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the updated SnowflakeSemanticLogicalTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable removeAnnouncement(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
@@ -681,8 +661,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @return the SnowflakeSemanticLogicalTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticLogicalTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -699,8 +679,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeSemanticLogicalTable appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -717,8 +697,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeSemanticLogicalTable removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -735,8 +715,8 @@ public class SnowflakeSemanticLogicalTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SnowflakeSemanticLogicalTable appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SnowflakeSemanticLogicalTable appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SnowflakeSemanticLogicalTable) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

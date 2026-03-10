@@ -243,8 +243,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Application does not exist or the provided GUID is not a Application
      */
     @JsonIgnore
-    public static Application get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static Application get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -276,8 +275,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Application does not exist or the provided GUID is not a Application
      */
     @JsonIgnore
-    public static Application get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static Application get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -346,7 +344,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create an Application asset.
      *
      * @param name of the application
@@ -361,7 +359,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-    /**
+/**
      * Generate a unique application name.
      *
      * @param name of the application
@@ -414,8 +412,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @return the updated Application, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Application removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Application removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Application) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -442,8 +439,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @return the updated Application, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Application removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Application removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Application) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -460,8 +456,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     public static Application updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Application)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Application) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -473,8 +468,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @return the updated Application, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Application removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Application removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Application) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,8 +486,7 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
     public static Application updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Application)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Application) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -520,8 +513,8 @@ public class Application extends Asset implements IApplication, IApp, ICatalog, 
      * @return the Application that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Application replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static Application replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (Application) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

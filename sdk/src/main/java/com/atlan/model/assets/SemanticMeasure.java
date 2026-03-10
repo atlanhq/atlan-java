@@ -264,8 +264,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticMeasure does not exist or the provided GUID is not a SemanticMeasure
      */
     @JsonIgnore
-    public static SemanticMeasure get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SemanticMeasure get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -297,8 +296,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticMeasure does not exist or the provided GUID is not a SemanticMeasure
      */
     @JsonIgnore
-    public static SemanticMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SemanticMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -398,8 +396,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SemanticMeasureBuilder<
-                    C extends SemanticMeasure, B extends SemanticMeasureBuilder<C, B>>
+    public abstract static class SemanticMeasureBuilder<C extends SemanticMeasure, B extends SemanticMeasureBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -411,8 +408,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @return the updated SemanticMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticMeasure removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticMeasure removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticMeasure) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -439,8 +435,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @return the updated SemanticMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticMeasure removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticMeasure removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticMeasure) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -457,8 +452,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
     public static SemanticMeasure updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SemanticMeasure)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SemanticMeasure) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -470,8 +464,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @return the updated SemanticMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticMeasure removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticMeasure removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticMeasure) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -489,8 +482,7 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
     public static SemanticMeasure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SemanticMeasure)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SemanticMeasure) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -517,8 +509,8 @@ public class SemanticMeasure extends Asset implements ISemanticMeasure, ISemanti
      * @return the SemanticMeasure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SemanticMeasure replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SemanticMeasure replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SemanticMeasure) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

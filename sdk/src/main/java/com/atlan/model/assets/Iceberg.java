@@ -86,7 +86,7 @@ public class Iceberg extends Asset implements IIceberg, ICatalog, IAsset, IRefer
 
     /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
     @Attribute
-    @Singular
+    @Singular("addIcebergNamespaceHierarchy")
     List<Map<String, String>> icebergNamespaceHierarchy;
 
     /** Unique name of the immediate parent namespace in which this asset exists. */
@@ -487,8 +487,7 @@ public class Iceberg extends Asset implements IIceberg, ICatalog, IAsset, IRefer
      * @return the updated Iceberg, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Iceberg removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Iceberg removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Iceberg) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -544,8 +543,7 @@ public class Iceberg extends Asset implements IIceberg, ICatalog, IAsset, IRefer
      * @return the updated Iceberg, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Iceberg removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Iceberg removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Iceberg) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

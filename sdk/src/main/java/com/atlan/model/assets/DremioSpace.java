@@ -378,8 +378,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioSpace does not exist or the provided GUID is not a DremioSpace
      */
     @JsonIgnore
-    public static DremioSpace get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DremioSpace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -411,8 +410,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioSpace does not exist or the provided GUID is not a DremioSpace
      */
     @JsonIgnore
-    public static DremioSpace get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DremioSpace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -524,8 +522,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @return the updated DremioSpace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioSpace removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioSpace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioSpace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -552,8 +549,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @return the updated DremioSpace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioSpace removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioSpace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioSpace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -570,8 +566,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
     public static DremioSpace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DremioSpace)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DremioSpace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -583,8 +578,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @return the updated DremioSpace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioSpace removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioSpace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioSpace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -602,8 +596,7 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
     public static DremioSpace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DremioSpace)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DremioSpace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -630,8 +623,8 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalo
      * @return the DremioSpace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DremioSpace replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DremioSpace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DremioSpace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -305,8 +305,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeChart does not exist or the provided GUID is not a ModeChart
      */
     @JsonIgnore
-    public static ModeChart get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ModeChart get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -418,8 +417,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return the updated ModeChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeChart removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModeChart removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModeChart) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -475,8 +473,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return the updated ModeChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeChart removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModeChart removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModeChart) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -494,8 +491,7 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     public static ModeChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeChart)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeChart) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -522,8 +518,8 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
      * @return the ModeChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeChart replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModeChart replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModeChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

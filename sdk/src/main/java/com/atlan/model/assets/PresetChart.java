@@ -258,8 +258,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist or the provided GUID is not a PresetChart
      */
     @JsonIgnore
-    public static PresetChart get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PresetChart get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -291,8 +290,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist or the provided GUID is not a PresetChart
      */
     @JsonIgnore
-    public static PresetChart get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PresetChart get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -361,7 +359,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a Preset chart.
      *
      * @param name of the chart
@@ -464,8 +462,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return the updated PresetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetChart removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetChart removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetChart) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -492,8 +489,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return the updated PresetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetChart removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetChart removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetChart) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -510,8 +506,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PresetChart)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PresetChart) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -523,8 +518,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return the updated PresetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetChart removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetChart removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetChart) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -542,8 +536,7 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     public static PresetChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PresetChart)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PresetChart) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -570,8 +563,8 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
      * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PresetChart replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PresetChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

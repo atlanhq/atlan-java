@@ -41,12 +41,12 @@ public interface IDataMesh {
     public static final String TYPE_NAME = "DataMesh";
 
     /** Unique name of the parent domain in which this asset exists. */
-    KeywordTextField PARENT_DOMAIN_QUALIFIED_NAME = new KeywordTextField(
-            "parentDomainQualifiedName", "parentDomainQualifiedName", "parentDomainQualifiedName.text");
+    KeywordTextField PARENT_DOMAIN_QUALIFIED_NAME =
+            new KeywordTextField("parentDomainQualifiedName", "parentDomainQualifiedName", "parentDomainQualifiedName.text");
 
     /** Unique name of the top-level domain in which this asset exists. */
-    KeywordTextField SUPER_DOMAIN_QUALIFIED_NAME = new KeywordTextField(
-            "superDomainQualifiedName", "superDomainQualifiedName", "superDomainQualifiedName.text");
+    KeywordTextField SUPER_DOMAIN_QUALIFIED_NAME =
+            new KeywordTextField("superDomainQualifiedName", "superDomainQualifiedName", "superDomainQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

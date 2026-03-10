@@ -267,8 +267,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIPage does not exist or the provided GUID is not a PowerBIPage
      */
     @JsonIgnore
-    public static PowerBIPage get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PowerBIPage get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -300,8 +299,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIPage does not exist or the provided GUID is not a PowerBIPage
      */
     @JsonIgnore
-    public static PowerBIPage get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PowerBIPage get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -413,8 +411,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return the updated PowerBIPage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIPage removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIPage) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -441,8 +438,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return the updated PowerBIPage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIPage removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIPage) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -459,8 +455,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     public static PowerBIPage updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIPage)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIPage) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,8 +467,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return the updated PowerBIPage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIPage removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIPage) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -491,8 +485,7 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
     public static PowerBIPage updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIPage)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIPage) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +512,8 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
      * @return the PowerBIPage that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PowerBIPage replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PowerBIPage) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

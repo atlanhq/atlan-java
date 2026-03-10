@@ -279,8 +279,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauProject does not exist or the provided GUID is not a TableauProject
      */
     @JsonIgnore
-    public static TableauProject get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TableauProject get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -312,8 +311,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauProject does not exist or the provided GUID is not a TableauProject
      */
     @JsonIgnore
-    public static TableauProject get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TableauProject get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -425,8 +423,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @return the updated TableauProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauProject removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauProject removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauProject) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -453,8 +450,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @return the updated TableauProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauProject removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauProject removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauProject) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -471,8 +467,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     public static TableauProject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauProject)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauProject) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -484,8 +479,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @return the updated TableauProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauProject removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauProject removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauProject) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -503,8 +497,7 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     public static TableauProject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauProject)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauProject) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -531,8 +524,8 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
      * @return the TableauProject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauProject replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TableauProject replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TableauProject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

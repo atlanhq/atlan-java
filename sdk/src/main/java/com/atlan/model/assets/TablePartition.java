@@ -413,8 +413,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
      */
     @JsonIgnore
-    public static TablePartition get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TablePartition get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -446,8 +445,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
      */
     @JsonIgnore
-    public static TablePartition get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TablePartition get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -516,7 +514,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a table partition.
      *
      * @param name of the table partition
@@ -644,8 +642,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the updated TablePartition, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TablePartition removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TablePartition removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TablePartition) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -672,8 +669,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the updated TablePartition, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TablePartition removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TablePartition removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TablePartition) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -690,8 +686,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     public static TablePartition updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TablePartition)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TablePartition) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -703,8 +698,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the updated TablePartition, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TablePartition removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TablePartition removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TablePartition) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -722,8 +716,7 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     public static TablePartition updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TablePartition)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TablePartition) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -750,8 +743,8 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
      * @return the TablePartition that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TablePartition replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TablePartition replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TablePartition) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

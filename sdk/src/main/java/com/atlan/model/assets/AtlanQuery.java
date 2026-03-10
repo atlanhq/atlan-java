@@ -433,8 +433,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanQuery does not exist or the provided GUID is not a AtlanQuery
      */
     @JsonIgnore
-    public static AtlanQuery get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static AtlanQuery get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -654,8 +653,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AtlanQuery removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AtlanQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -699,8 +697,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     public static AtlanQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AtlanQuery)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AtlanQuery) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -712,8 +709,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AtlanQuery removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AtlanQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -731,8 +727,7 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     public static AtlanQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AtlanQuery)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AtlanQuery) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -759,8 +754,8 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @return the AtlanQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AtlanQuery replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AtlanQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

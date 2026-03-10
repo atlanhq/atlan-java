@@ -324,8 +324,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CubeField does not exist or the provided GUID is not a CubeField
      */
     @JsonIgnore
-    public static CubeField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CubeField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -395,7 +394,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a top-level CubeField.
      *
      * @param name of the CubeField
@@ -545,7 +544,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-    /**
+/**
      * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.
      *
      * @param parentQualifiedName unique name of the hierarchy or parent field in which this CubeField exists
@@ -612,8 +611,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @return the updated CubeField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CubeField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CubeField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CubeField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -669,8 +667,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @return the updated CubeField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CubeField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CubeField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CubeField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -688,8 +685,7 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     public static CubeField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CubeField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CubeField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -716,8 +712,8 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
      * @return the CubeField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CubeField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CubeField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CubeField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

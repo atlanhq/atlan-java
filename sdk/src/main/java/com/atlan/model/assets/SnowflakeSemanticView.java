@@ -38,15 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeSemanticView extends Asset
-        implements ISnowflakeSemanticView,
-                ISemanticModel,
-                ISnowflake,
-                ISemantic,
-                ICatalog,
-                IAsset,
-                IReferenceable,
-                ISQL {
+public class SnowflakeSemanticView extends Asset implements ISnowflakeSemanticView, ISemanticModel, ISnowflake, ISemantic, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeSemanticView";
@@ -355,8 +347,7 @@ public class SnowflakeSemanticView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticView does not exist or the provided GUID is not a SnowflakeSemanticView
      */
     @JsonIgnore
-    public static SnowflakeSemanticView get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakeSemanticView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -388,8 +379,7 @@ public class SnowflakeSemanticView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticView does not exist or the provided GUID is not a SnowflakeSemanticView
      */
     @JsonIgnore
-    public static SnowflakeSemanticView get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakeSemanticView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -489,8 +479,7 @@ public class SnowflakeSemanticView extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SnowflakeSemanticViewBuilder<
-                    C extends SnowflakeSemanticView, B extends SnowflakeSemanticViewBuilder<C, B>>
+    public abstract static class SnowflakeSemanticViewBuilder<C extends SnowflakeSemanticView, B extends SnowflakeSemanticViewBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -502,8 +491,7 @@ public class SnowflakeSemanticView extends Asset
      * @return the updated SnowflakeSemanticView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticView removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -530,8 +518,7 @@ public class SnowflakeSemanticView extends Asset
      * @return the updated SnowflakeSemanticView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticView removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -548,8 +535,7 @@ public class SnowflakeSemanticView extends Asset
     public static SnowflakeSemanticView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeSemanticView)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeSemanticView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -561,8 +547,7 @@ public class SnowflakeSemanticView extends Asset
      * @return the updated SnowflakeSemanticView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticView removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -580,8 +565,7 @@ public class SnowflakeSemanticView extends Asset
     public static SnowflakeSemanticView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeSemanticView)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeSemanticView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -608,8 +592,8 @@ public class SnowflakeSemanticView extends Asset
      * @return the SnowflakeSemanticView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticView replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeSemanticView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeSemanticView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -662,8 +646,8 @@ public class SnowflakeSemanticView extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SnowflakeSemanticView appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SnowflakeSemanticView appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SnowflakeSemanticView) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

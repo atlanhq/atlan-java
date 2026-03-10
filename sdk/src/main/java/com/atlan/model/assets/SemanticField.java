@@ -260,8 +260,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticField does not exist or the provided GUID is not a SemanticField
      */
     @JsonIgnore
-    public static SemanticField get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SemanticField get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -293,8 +292,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticField does not exist or the provided GUID is not a SemanticField
      */
     @JsonIgnore
-    public static SemanticField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SemanticField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -406,8 +404,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @return the updated SemanticField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -434,8 +431,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @return the updated SemanticField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticField removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticField removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticField) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -452,8 +448,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
     public static SemanticField updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SemanticField)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SemanticField) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -465,8 +460,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @return the updated SemanticField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -484,8 +478,7 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
     public static SemanticField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SemanticField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SemanticField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -512,8 +505,8 @@ public class SemanticField extends Asset implements ISemanticField, ISemantic, I
      * @return the SemanticField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SemanticField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SemanticField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SemanticField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

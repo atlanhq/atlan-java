@@ -258,8 +258,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TagAttachment does not exist or the provided GUID is not a TagAttachment
      */
     @JsonIgnore
-    public static TagAttachment get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TagAttachment get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -291,8 +290,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TagAttachment does not exist or the provided GUID is not a TagAttachment
      */
     @JsonIgnore
-    public static TagAttachment get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TagAttachment get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -404,8 +402,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @return the updated TagAttachment, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TagAttachment removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TagAttachment removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TagAttachment) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -432,8 +429,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @return the updated TagAttachment, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TagAttachment removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TagAttachment removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TagAttachment) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -450,8 +446,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     public static TagAttachment updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TagAttachment)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TagAttachment) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -463,8 +458,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @return the updated TagAttachment, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TagAttachment removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TagAttachment removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TagAttachment) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -482,8 +476,7 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     public static TagAttachment updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TagAttachment)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TagAttachment) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -510,8 +503,8 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
      * @return the TagAttachment that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TagAttachment replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TagAttachment replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TagAttachment) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

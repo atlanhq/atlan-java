@@ -533,7 +533,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a schema.
      *
      * @param name of the schema
@@ -639,8 +639,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return the updated Schema, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Schema removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Schema removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Schema) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -696,8 +695,7 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
      * @return the updated Schema, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Schema removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Schema removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Schema) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

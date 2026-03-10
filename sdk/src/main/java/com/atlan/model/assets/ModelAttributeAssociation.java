@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ModelAttributeAssociation extends Asset
-        implements IModelAttributeAssociation, IModel, ICatalog, IAsset, IReferenceable {
+public class ModelAttributeAssociation extends Asset implements IModelAttributeAssociation, IModel, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModelAttributeAssociation";
@@ -256,10 +255,7 @@ public class ModelAttributeAssociation extends Asset
      * @return reference to a ModelAttributeAssociation that can be used for defining a relationship to a ModelAttributeAssociation
      */
     public static ModelAttributeAssociation refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return ModelAttributeAssociation._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return ModelAttributeAssociation._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -313,8 +309,7 @@ public class ModelAttributeAssociation extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelAttributeAssociation does not exist or the provided GUID is not a ModelAttributeAssociation
      */
     @JsonIgnore
-    public static ModelAttributeAssociation get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ModelAttributeAssociation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -346,8 +341,7 @@ public class ModelAttributeAssociation extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelAttributeAssociation does not exist or the provided GUID is not a ModelAttributeAssociation
      */
     @JsonIgnore
-    public static ModelAttributeAssociation get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ModelAttributeAssociation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -544,8 +538,7 @@ public class ModelAttributeAssociation extends Asset
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
-    public abstract static class ModelAttributeAssociationBuilder<
-                    C extends ModelAttributeAssociation, B extends ModelAttributeAssociationBuilder<C, B>>
+    public abstract static class ModelAttributeAssociationBuilder<C extends ModelAttributeAssociation, B extends ModelAttributeAssociationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -557,8 +550,7 @@ public class ModelAttributeAssociation extends Asset
      * @return the updated ModelAttributeAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttributeAssociation removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttributeAssociation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -585,8 +577,7 @@ public class ModelAttributeAssociation extends Asset
      * @return the updated ModelAttributeAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttributeAssociation removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttributeAssociation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -603,8 +594,7 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelAttributeAssociation)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelAttributeAssociation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -616,8 +606,7 @@ public class ModelAttributeAssociation extends Asset
      * @return the updated ModelAttributeAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttributeAssociation removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttributeAssociation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -635,8 +624,7 @@ public class ModelAttributeAssociation extends Asset
     public static ModelAttributeAssociation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelAttributeAssociation)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelAttributeAssociation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -663,8 +651,8 @@ public class ModelAttributeAssociation extends Asset
      * @return the ModelAttributeAssociation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelAttributeAssociation replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelAttributeAssociation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelAttributeAssociation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -681,8 +669,8 @@ public class ModelAttributeAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static ModelAttributeAssociation appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelAttributeAssociation appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelAttributeAssociation) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -699,8 +687,8 @@ public class ModelAttributeAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static ModelAttributeAssociation removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelAttributeAssociation removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelAttributeAssociation) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -717,8 +705,8 @@ public class ModelAttributeAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ModelAttributeAssociation appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static ModelAttributeAssociation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (ModelAttributeAssociation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

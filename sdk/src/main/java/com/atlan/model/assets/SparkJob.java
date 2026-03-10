@@ -423,8 +423,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
      * @return the updated SparkJob, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SparkJob removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SparkJob removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SparkJob) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -480,8 +479,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
      * @return the updated SparkJob, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SparkJob removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SparkJob removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SparkJob) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -526,8 +524,8 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
      * @return the SparkJob that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SparkJob replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SparkJob replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SparkJob) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

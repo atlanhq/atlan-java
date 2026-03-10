@@ -395,8 +395,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
      */
     @JsonIgnore
-    public static MaterializedView get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static MaterializedView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -428,8 +427,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
      */
     @JsonIgnore
-    public static MaterializedView get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static MaterializedView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -498,7 +496,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a materialized view.
      *
      * @param name of the materialized view
@@ -612,8 +610,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class MaterializedViewBuilder<
-                    C extends MaterializedView, B extends MaterializedViewBuilder<C, B>>
+    public abstract static class MaterializedViewBuilder<C extends MaterializedView, B extends MaterializedViewBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -625,8 +622,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the updated MaterializedView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MaterializedView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MaterializedView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -653,8 +649,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the updated MaterializedView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MaterializedView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MaterializedView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -671,8 +666,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     public static MaterializedView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MaterializedView)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MaterializedView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -684,8 +678,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the updated MaterializedView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MaterializedView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MaterializedView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -703,8 +696,7 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     public static MaterializedView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MaterializedView)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MaterializedView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -731,8 +723,8 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
      * @return the MaterializedView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static MaterializedView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (MaterializedView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

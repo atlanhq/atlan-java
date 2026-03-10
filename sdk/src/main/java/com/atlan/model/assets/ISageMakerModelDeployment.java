@@ -53,16 +53,16 @@ public interface ISageMakerModelDeployment {
     RelationField SAGE_MAKER_MODEL = new RelationField("sageMakerModel");
 
     /** Name of the endpoint configuration used by this deployment. */
-    KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_ENDPOINT_CONFIG_NAME = new KeywordField(
-            "sageMakerModelDeploymentEndpointConfigName", "sageMakerModelDeploymentEndpointConfigName");
+    KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_ENDPOINT_CONFIG_NAME =
+            new KeywordField("sageMakerModelDeploymentEndpointConfigName", "sageMakerModelDeploymentEndpointConfigName");
 
     /** Name of the parent Model. */
     KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_MODEL_NAME =
             new KeywordField("sageMakerModelDeploymentModelName", "sageMakerModelDeploymentModelName");
 
     /** Qualified name of the parent Model. */
-    KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_MODEL_QUALIFIED_NAME = new KeywordField(
-            "sageMakerModelDeploymentModelQualifiedName", "sageMakerModelDeploymentModelQualifiedName");
+    KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_MODEL_QUALIFIED_NAME =
+            new KeywordField("sageMakerModelDeploymentModelQualifiedName", "sageMakerModelDeploymentModelQualifiedName");
 
     /** Current status of the endpoint (e.g., InService, OutOfService, Creating, Failed). */
     KeywordField SAGE_MAKER_MODEL_DEPLOYMENT_STATUS =

@@ -332,8 +332,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerLook does not exist or the provided GUID is not a LookerLook
      */
     @JsonIgnore
-    public static LookerLook get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static LookerLook get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -445,8 +444,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      * @return the updated LookerLook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerLook removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static LookerLook removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (LookerLook) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -490,8 +488,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     public static LookerLook updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerLook)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerLook) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -503,8 +500,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      * @return the updated LookerLook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerLook removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static LookerLook removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (LookerLook) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -522,8 +518,7 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     public static LookerLook updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerLook)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerLook) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -550,8 +545,8 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
      * @return the LookerLook that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerLook replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static LookerLook replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (LookerLook) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

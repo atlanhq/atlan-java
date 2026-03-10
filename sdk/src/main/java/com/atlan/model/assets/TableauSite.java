@@ -239,8 +239,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauSite does not exist or the provided GUID is not a TableauSite
      */
     @JsonIgnore
-    public static TableauSite get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TableauSite get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -272,8 +271,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauSite does not exist or the provided GUID is not a TableauSite
      */
     @JsonIgnore
-    public static TableauSite get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TableauSite get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -385,8 +383,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return the updated TableauSite, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauSite removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauSite removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauSite) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -413,8 +410,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return the updated TableauSite, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauSite removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauSite removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauSite) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -431,8 +427,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     public static TableauSite updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauSite)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauSite) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -444,8 +439,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return the updated TableauSite, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauSite removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauSite removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauSite) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -463,8 +457,7 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
     public static TableauSite updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauSite)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauSite) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -491,8 +484,8 @@ public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, I
      * @return the TableauSite that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauSite replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TableauSite replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TableauSite) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

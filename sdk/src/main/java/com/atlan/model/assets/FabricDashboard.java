@@ -245,8 +245,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDashboard does not exist or the provided GUID is not a FabricDashboard
      */
     @JsonIgnore
-    public static FabricDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FabricDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -278,8 +277,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDashboard does not exist or the provided GUID is not a FabricDashboard
      */
     @JsonIgnore
-    public static FabricDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FabricDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -379,8 +377,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricDashboardBuilder<
-                    C extends FabricDashboard, B extends FabricDashboardBuilder<C, B>>
+    public abstract static class FabricDashboardBuilder<C extends FabricDashboard, B extends FabricDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -392,8 +389,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @return the updated FabricDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -420,8 +416,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @return the updated FabricDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -438,8 +433,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
     public static FabricDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricDashboard)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -451,8 +445,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @return the updated FabricDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -470,8 +463,7 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
     public static FabricDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricDashboard)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -498,8 +490,8 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
      * @return the FabricDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricDashboard replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

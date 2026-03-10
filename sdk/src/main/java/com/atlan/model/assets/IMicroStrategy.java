@@ -54,10 +54,8 @@ public interface IMicroStrategy {
             new KeywordTextField("microStrategyCubeNames", "microStrategyCubeNames.keyword", "microStrategyCubeNames");
 
     /** Unique names of the cubes related to this asset. */
-    KeywordTextField MICRO_STRATEGY_CUBE_QUALIFIED_NAMES = new KeywordTextField(
-            "microStrategyCubeQualifiedNames",
-            "microStrategyCubeQualifiedNames",
-            "microStrategyCubeQualifiedNames.text");
+    KeywordTextField MICRO_STRATEGY_CUBE_QUALIFIED_NAMES =
+            new KeywordTextField("microStrategyCubeQualifiedNames", "microStrategyCubeQualifiedNames", "microStrategyCubeQualifiedNames.text");
 
     /** Whether the asset is certified in MicroStrategy (true) or not (false). */
     BooleanField MICRO_STRATEGY_IS_CERTIFIED = new BooleanField("microStrategyIsCertified", "microStrategyIsCertified");
@@ -66,24 +64,20 @@ public interface IMicroStrategy {
     KeywordField MICRO_STRATEGY_LOCATION = new KeywordField("microStrategyLocation", "microStrategyLocation");
 
     /** Simple name of the project in which this asset exists. */
-    KeywordTextField MICRO_STRATEGY_PROJECT_NAME = new KeywordTextField(
-            "microStrategyProjectName", "microStrategyProjectName.keyword", "microStrategyProjectName");
+    KeywordTextField MICRO_STRATEGY_PROJECT_NAME =
+            new KeywordTextField("microStrategyProjectName", "microStrategyProjectName.keyword", "microStrategyProjectName");
 
     /** Unique name of the project in which this asset exists. */
-    KeywordTextField MICRO_STRATEGY_PROJECT_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyProjectQualifiedName",
-            "microStrategyProjectQualifiedName",
-            "microStrategyProjectQualifiedName.text");
+    KeywordTextField MICRO_STRATEGY_PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyProjectQualifiedName", "microStrategyProjectQualifiedName", "microStrategyProjectQualifiedName.text");
 
     /** Simple names of the reports related to this asset. */
-    KeywordTextField MICRO_STRATEGY_REPORT_NAMES = new KeywordTextField(
-            "microStrategyReportNames", "microStrategyReportNames.keyword", "microStrategyReportNames");
+    KeywordTextField MICRO_STRATEGY_REPORT_NAMES =
+            new KeywordTextField("microStrategyReportNames", "microStrategyReportNames.keyword", "microStrategyReportNames");
 
     /** Unique names of the reports related to this asset. */
-    KeywordTextField MICRO_STRATEGY_REPORT_QUALIFIED_NAMES = new KeywordTextField(
-            "microStrategyReportQualifiedNames",
-            "microStrategyReportQualifiedNames",
-            "microStrategyReportQualifiedNames.text");
+    KeywordTextField MICRO_STRATEGY_REPORT_QUALIFIED_NAMES =
+            new KeywordTextField("microStrategyReportQualifiedNames", "microStrategyReportQualifiedNames", "microStrategyReportQualifiedNames.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -24,8 +24,7 @@ import lombok.experimental.SuperBuilder;
 public class SnowflakeSemanticLogicalTableJoinsSnowflakeSemanticLogicalTableJoins extends RelationshipAttributes {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME =
-            "snowflake_semantic_logical_table_joins_snowflake_semantic_logical_table_joins";
+    public static final String TYPE_NAME = "snowflake_semantic_logical_table_joins_snowflake_semantic_logical_table_joins";
 
     /** Fixed typeName for SnowflakeSemanticLogicalTableJoinsSnowflakeSemanticLogicalTableJoinss. */
     @Getter(onMethod_ = {@Override})
@@ -88,8 +87,7 @@ public class SnowflakeSemanticLogicalTableJoinsSnowflakeSemanticLogicalTableJoin
          * @return a detailed Atlan relationship that conforms to the necessary interface for a related asset
          * @throws InvalidRequestException if the asset provided is without a GUID or qualifiedName
          */
-        public ISnowflakeSemanticLogicalTable snowflakeSemanticLogicalTableJoin(
-                ISnowflakeSemanticLogicalTable related, Reference.SaveSemantic semantic)
+        public ISnowflakeSemanticLogicalTable snowflakeSemanticLogicalTableJoin(ISnowflakeSemanticLogicalTable related, Reference.SaveSemantic semantic)
                 throws InvalidRequestException {
             SnowflakeSemanticLogicalTableJoinsSnowflakeSemanticLogicalTableJoins attributes = build();
             if (related.getGuid() != null && !related.getGuid().isBlank()) {

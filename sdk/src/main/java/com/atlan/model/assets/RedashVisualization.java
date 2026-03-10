@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class RedashVisualization extends Asset
-        implements IRedashVisualization, IRedash, IBI, ICatalog, IAsset, IReferenceable {
+public class RedashVisualization extends Asset implements IRedashVisualization, IRedash, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "RedashVisualization";
@@ -250,8 +249,7 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist or the provided GUID is not a RedashVisualization
      */
     @JsonIgnore
-    public static RedashVisualization get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static RedashVisualization get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -283,8 +281,7 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist or the provided GUID is not a RedashVisualization
      */
     @JsonIgnore
-    public static RedashVisualization get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static RedashVisualization get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -384,8 +381,7 @@ public class RedashVisualization extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class RedashVisualizationBuilder<
-                    C extends RedashVisualization, B extends RedashVisualizationBuilder<C, B>>
+    public abstract static class RedashVisualizationBuilder<C extends RedashVisualization, B extends RedashVisualizationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -397,8 +393,7 @@ public class RedashVisualization extends Asset
      * @return the updated RedashVisualization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashVisualization removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashVisualization) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -425,8 +420,7 @@ public class RedashVisualization extends Asset
      * @return the updated RedashVisualization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashVisualization removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashVisualization) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -443,8 +437,7 @@ public class RedashVisualization extends Asset
     public static RedashVisualization updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (RedashVisualization)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (RedashVisualization) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -456,8 +449,7 @@ public class RedashVisualization extends Asset
      * @return the updated RedashVisualization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashVisualization removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashVisualization) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -475,8 +467,7 @@ public class RedashVisualization extends Asset
     public static RedashVisualization updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (RedashVisualization)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (RedashVisualization) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -503,8 +494,8 @@ public class RedashVisualization extends Asset
      * @return the RedashVisualization that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static RedashVisualization replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (RedashVisualization) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -557,8 +548,8 @@ public class RedashVisualization extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static RedashVisualization appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static RedashVisualization appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (RedashVisualization) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

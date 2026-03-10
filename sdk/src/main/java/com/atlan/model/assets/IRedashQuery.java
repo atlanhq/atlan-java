@@ -62,8 +62,8 @@ public interface IRedashQuery {
     KeywordField REDASH_QUERY_SCHEDULE = new KeywordField("redashQuerySchedule", "redashQuerySchedule");
 
     /** Schdule for this query in readable text for overview tab and filtering. */
-    KeywordTextField REDASH_QUERY_SCHEDULE_HUMANIZED = new KeywordTextField(
-            "redashQueryScheduleHumanized", "redashQueryScheduleHumanized", "redashQueryScheduleHumanized.text");
+    KeywordTextField REDASH_QUERY_SCHEDULE_HUMANIZED =
+            new KeywordTextField("redashQueryScheduleHumanized", "redashQueryScheduleHumanized", "redashQueryScheduleHumanized.text");
 
     /** Visualizations that were created by this query. */
     RelationField REDASH_VISUALIZATIONS = new RelationField("redashVisualizations");

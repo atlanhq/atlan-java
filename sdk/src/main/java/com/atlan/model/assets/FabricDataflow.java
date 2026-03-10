@@ -250,8 +250,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataflow does not exist or the provided GUID is not a FabricDataflow
      */
     @JsonIgnore
-    public static FabricDataflow get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FabricDataflow get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -283,8 +282,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataflow does not exist or the provided GUID is not a FabricDataflow
      */
     @JsonIgnore
-    public static FabricDataflow get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FabricDataflow get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -396,8 +394,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @return the updated FabricDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflow removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflow removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflow) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -424,8 +421,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @return the updated FabricDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflow removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflow removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflow) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -442,8 +438,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
     public static FabricDataflow updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricDataflow)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricDataflow) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -455,8 +450,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @return the updated FabricDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflow removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflow removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflow) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -474,8 +468,7 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
     public static FabricDataflow updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricDataflow)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricDataflow) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -502,8 +495,8 @@ public class FabricDataflow extends Asset implements IFabricDataflow, IFabric, I
      * @return the FabricDataflow that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflow replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricDataflow replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricDataflow) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -42,8 +42,8 @@ public interface IAzureServiceBus {
     public static final String TYPE_NAME = "AzureServiceBus";
 
     /** Simple name of the AzureServiceBus Namespace in which this asset exists. */
-    KeywordTextField AZURE_SERVICE_BUS_NAMESPACE_NAME = new KeywordTextField(
-            "azureServiceBusNamespaceName", "azureServiceBusNamespaceName.keyword", "azureServiceBusNamespaceName");
+    KeywordTextField AZURE_SERVICE_BUS_NAMESPACE_NAME =
+            new KeywordTextField("azureServiceBusNamespaceName", "azureServiceBusNamespaceName.keyword", "azureServiceBusNamespaceName");
 
     /** Unique name of the AzureServiceBus Namespace in which this asset exists. */
     KeywordField AZURE_SERVICE_BUS_NAMESPACE_QUALIFIED_NAME =

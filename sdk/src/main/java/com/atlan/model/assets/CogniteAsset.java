@@ -254,8 +254,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteAsset does not exist or the provided GUID is not a CogniteAsset
      */
     @JsonIgnore
-    public static CogniteAsset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CogniteAsset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -287,8 +286,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteAsset does not exist or the provided GUID is not a CogniteAsset
      */
     @JsonIgnore
-    public static CogniteAsset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CogniteAsset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -400,8 +398,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @return the updated CogniteAsset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteAsset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteAsset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteAsset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -428,8 +425,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @return the updated CogniteAsset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteAsset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteAsset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteAsset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -446,8 +442,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CogniteAsset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CogniteAsset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -459,8 +454,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @return the updated CogniteAsset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteAsset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteAsset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteAsset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -478,8 +472,7 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     public static CogniteAsset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CogniteAsset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CogniteAsset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -506,8 +499,8 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
      * @return the CogniteAsset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CogniteAsset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CogniteAsset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CogniteAsset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

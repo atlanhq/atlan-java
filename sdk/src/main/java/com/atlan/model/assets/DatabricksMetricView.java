@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksMetricView extends Asset
-        implements IDatabricksMetricView, IView, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksMetricView extends Asset implements IDatabricksMetricView, IView, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksMetricView";
@@ -384,8 +383,7 @@ public class DatabricksMetricView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksMetricView does not exist or the provided GUID is not a DatabricksMetricView
      */
     @JsonIgnore
-    public static DatabricksMetricView get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DatabricksMetricView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -417,8 +415,7 @@ public class DatabricksMetricView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksMetricView does not exist or the provided GUID is not a DatabricksMetricView
      */
     @JsonIgnore
-    public static DatabricksMetricView get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DatabricksMetricView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -518,8 +515,7 @@ public class DatabricksMetricView extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksMetricViewBuilder<
-                    C extends DatabricksMetricView, B extends DatabricksMetricViewBuilder<C, B>>
+    public abstract static class DatabricksMetricViewBuilder<C extends DatabricksMetricView, B extends DatabricksMetricViewBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -531,8 +527,7 @@ public class DatabricksMetricView extends Asset
      * @return the updated DatabricksMetricView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksMetricView removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksMetricView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksMetricView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -559,8 +554,7 @@ public class DatabricksMetricView extends Asset
      * @return the updated DatabricksMetricView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksMetricView removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksMetricView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksMetricView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -577,8 +571,7 @@ public class DatabricksMetricView extends Asset
     public static DatabricksMetricView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksMetricView)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksMetricView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -590,8 +583,7 @@ public class DatabricksMetricView extends Asset
      * @return the updated DatabricksMetricView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksMetricView removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksMetricView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksMetricView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -609,8 +601,7 @@ public class DatabricksMetricView extends Asset
     public static DatabricksMetricView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksMetricView)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksMetricView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -637,8 +628,8 @@ public class DatabricksMetricView extends Asset
      * @return the DatabricksMetricView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksMetricView replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DatabricksMetricView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DatabricksMetricView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -691,8 +682,8 @@ public class DatabricksMetricView extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksMetricView appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static DatabricksMetricView appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (DatabricksMetricView) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

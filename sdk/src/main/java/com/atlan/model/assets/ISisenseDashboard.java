@@ -43,10 +43,8 @@ public interface ISisenseDashboard {
     public static final String TYPE_NAME = "SisenseDashboard";
 
     /** Unique name of the folder in which this dashboard exists. */
-    KeywordTextField SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME = new KeywordTextField(
-            "sisenseDashboardFolderQualifiedName",
-            "sisenseDashboardFolderQualifiedName",
-            "sisenseDashboardFolderQualifiedName.text");
+    KeywordTextField SISENSE_DASHBOARD_FOLDER_QUALIFIED_NAME =
+            new KeywordTextField("sisenseDashboardFolderQualifiedName", "sisenseDashboardFolderQualifiedName", "sisenseDashboardFolderQualifiedName.text");
 
     /** Number of widgets in this dashboard. */
     NumericField SISENSE_DASHBOARD_WIDGET_COUNT =

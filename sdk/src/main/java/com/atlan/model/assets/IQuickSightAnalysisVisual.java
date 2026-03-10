@@ -45,10 +45,8 @@ public interface IQuickSightAnalysisVisual {
     RelationField QUICK_SIGHT_ANALYSIS = new RelationField("quickSightAnalysis");
 
     /** Unique name of the QuickSight analysis in which this visual exists. */
-    KeywordTextField QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME = new KeywordTextField(
-            "quickSightAnalysisQualifiedName",
-            "quickSightAnalysisQualifiedName",
-            "quickSightAnalysisQualifiedName.text");
+    KeywordTextField QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME =
+            new KeywordTextField("quickSightAnalysisQualifiedName", "quickSightAnalysisQualifiedName", "quickSightAnalysisQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

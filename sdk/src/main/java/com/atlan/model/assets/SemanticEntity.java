@@ -264,8 +264,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticEntity does not exist or the provided GUID is not a SemanticEntity
      */
     @JsonIgnore
-    public static SemanticEntity get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SemanticEntity get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -297,8 +296,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SemanticEntity does not exist or the provided GUID is not a SemanticEntity
      */
     @JsonIgnore
-    public static SemanticEntity get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SemanticEntity get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -410,8 +408,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @return the updated SemanticEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticEntity removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticEntity removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticEntity) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -438,8 +435,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @return the updated SemanticEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticEntity removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticEntity removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticEntity) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -456,8 +452,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
     public static SemanticEntity updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SemanticEntity)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SemanticEntity) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -469,8 +464,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @return the updated SemanticEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SemanticEntity removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SemanticEntity removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SemanticEntity) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -488,8 +482,7 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
     public static SemanticEntity updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SemanticEntity)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SemanticEntity) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -516,8 +509,8 @@ public class SemanticEntity extends Asset implements ISemanticEntity, ISemantic,
      * @return the SemanticEntity that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SemanticEntity replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SemanticEntity replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SemanticEntity) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

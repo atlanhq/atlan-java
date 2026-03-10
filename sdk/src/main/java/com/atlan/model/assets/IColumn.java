@@ -289,8 +289,8 @@ public interface IColumn {
             new KeywordTextField("parentColumnName", "parentColumnName.keyword", "parentColumnName");
 
     /** Unique name of the column this column is nested within, for STRUCT and NESTED columns. */
-    KeywordTextField PARENT_COLUMN_QUALIFIED_NAME = new KeywordTextField(
-            "parentColumnQualifiedName", "parentColumnQualifiedName", "parentColumnQualifiedName.text");
+    KeywordTextField PARENT_COLUMN_QUALIFIED_NAME =
+            new KeywordTextField("parentColumnQualifiedName", "parentColumnQualifiedName", "parentColumnQualifiedName.text");
 
     /** Order (position) of this partition column in the table. */
     NumericField PARTITION_ORDER = new NumericField("partitionOrder", "partitionOrder");

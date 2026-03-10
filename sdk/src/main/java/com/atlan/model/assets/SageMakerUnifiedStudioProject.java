@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SageMakerUnifiedStudioProject extends Asset
-        implements ISageMakerUnifiedStudioProject, ISageMakerUnifiedStudio, ISaaS, ICatalog, IAsset, IReferenceable {
+public class SageMakerUnifiedStudioProject extends Asset implements ISageMakerUnifiedStudioProject, ISageMakerUnifiedStudio, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SageMakerUnifiedStudioProject";
@@ -227,10 +226,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return reference to a SageMakerUnifiedStudioProject that can be used for defining a relationship to a SageMakerUnifiedStudioProject
      */
     public static SageMakerUnifiedStudioProject refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return SageMakerUnifiedStudioProject._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return SageMakerUnifiedStudioProject._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -253,8 +249,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
      * @return reference to a SageMakerUnifiedStudioProject that can be used for defining a relationship to a SageMakerUnifiedStudioProject
      */
-    public static SageMakerUnifiedStudioProject refByQualifiedName(
-            String qualifiedName, Reference.SaveSemantic semantic) {
+    public static SageMakerUnifiedStudioProject refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return SageMakerUnifiedStudioProject._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
@@ -285,8 +280,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SageMakerUnifiedStudioProject does not exist or the provided GUID is not a SageMakerUnifiedStudioProject
      */
     @JsonIgnore
-    public static SageMakerUnifiedStudioProject get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SageMakerUnifiedStudioProject get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -318,8 +312,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SageMakerUnifiedStudioProject does not exist or the provided GUID is not a SageMakerUnifiedStudioProject
      */
     @JsonIgnore
-    public static SageMakerUnifiedStudioProject get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SageMakerUnifiedStudioProject get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -419,8 +412,7 @@ public class SageMakerUnifiedStudioProject extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SageMakerUnifiedStudioProjectBuilder<
-                    C extends SageMakerUnifiedStudioProject, B extends SageMakerUnifiedStudioProjectBuilder<C, B>>
+    public abstract static class SageMakerUnifiedStudioProjectBuilder<C extends SageMakerUnifiedStudioProject, B extends SageMakerUnifiedStudioProjectBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -432,8 +424,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the updated SageMakerUnifiedStudioProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -446,8 +437,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the updated SageMakerUnifiedStudioProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject removeUserDescription(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -460,8 +451,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the updated SageMakerUnifiedStudioProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -478,8 +468,7 @@ public class SageMakerUnifiedStudioProject extends Asset
     public static SageMakerUnifiedStudioProject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SageMakerUnifiedStudioProject)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SageMakerUnifiedStudioProject) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -491,8 +480,7 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the updated SageMakerUnifiedStudioProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -510,8 +498,7 @@ public class SageMakerUnifiedStudioProject extends Asset
     public static SageMakerUnifiedStudioProject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SageMakerUnifiedStudioProject)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SageMakerUnifiedStudioProject) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -523,8 +510,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the updated SageMakerUnifiedStudioProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject removeAnnouncement(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
@@ -538,8 +525,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @return the SageMakerUnifiedStudioProject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SageMakerUnifiedStudioProject replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SageMakerUnifiedStudioProject replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -556,8 +543,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SageMakerUnifiedStudioProject appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SageMakerUnifiedStudioProject appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -574,8 +561,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SageMakerUnifiedStudioProject removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SageMakerUnifiedStudioProject removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -592,8 +579,8 @@ public class SageMakerUnifiedStudioProject extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SageMakerUnifiedStudioProject appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SageMakerUnifiedStudioProject appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SageMakerUnifiedStudioProject) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

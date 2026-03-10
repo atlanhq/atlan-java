@@ -233,8 +233,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteFile does not exist or the provided GUID is not a CogniteFile
      */
     @JsonIgnore
-    public static CogniteFile get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CogniteFile get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -266,8 +265,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CogniteFile does not exist or the provided GUID is not a CogniteFile
      */
     @JsonIgnore
-    public static CogniteFile get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CogniteFile get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -379,8 +377,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @return the updated CogniteFile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteFile removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteFile removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteFile) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -407,8 +404,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @return the updated CogniteFile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteFile removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteFile removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteFile) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -425,8 +421,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
     public static CogniteFile updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CogniteFile)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CogniteFile) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -438,8 +433,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @return the updated CogniteFile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CogniteFile removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CogniteFile removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CogniteFile) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -457,8 +451,7 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
     public static CogniteFile updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CogniteFile)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CogniteFile) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -485,8 +478,8 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
      * @return the CogniteFile that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CogniteFile replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CogniteFile replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CogniteFile) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

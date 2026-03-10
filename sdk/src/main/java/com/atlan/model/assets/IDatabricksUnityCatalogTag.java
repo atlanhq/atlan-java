@@ -40,6 +40,7 @@ public interface IDatabricksUnityCatalogTag {
 
     public static final String TYPE_NAME = "DatabricksUnityCatalogTag";
 
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

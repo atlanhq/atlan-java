@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SupersetDashboard extends Asset
-        implements ISupersetDashboard, ISuperset, IBI, ICatalog, IAsset, IReferenceable {
+public class SupersetDashboard extends Asset implements ISupersetDashboard, ISuperset, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SupersetDashboard";
@@ -272,8 +271,7 @@ public class SupersetDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetDashboard does not exist or the provided GUID is not a SupersetDashboard
      */
     @JsonIgnore
-    public static SupersetDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SupersetDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -305,8 +303,7 @@ public class SupersetDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetDashboard does not exist or the provided GUID is not a SupersetDashboard
      */
     @JsonIgnore
-    public static SupersetDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SupersetDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -375,7 +372,7 @@ public class SupersetDashboard extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a Superset dashboard.
      *
      * @param name of the dashboard
@@ -420,8 +417,7 @@ public class SupersetDashboard extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SupersetDashboardBuilder<
-                    C extends SupersetDashboard, B extends SupersetDashboardBuilder<C, B>>
+    public abstract static class SupersetDashboardBuilder<C extends SupersetDashboard, B extends SupersetDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -433,8 +429,7 @@ public class SupersetDashboard extends Asset
      * @return the updated SupersetDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SupersetDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SupersetDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -461,8 +456,7 @@ public class SupersetDashboard extends Asset
      * @return the updated SupersetDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SupersetDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SupersetDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -479,8 +473,7 @@ public class SupersetDashboard extends Asset
     public static SupersetDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SupersetDashboard)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SupersetDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -492,8 +485,7 @@ public class SupersetDashboard extends Asset
      * @return the updated SupersetDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SupersetDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SupersetDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -511,8 +503,7 @@ public class SupersetDashboard extends Asset
     public static SupersetDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SupersetDashboard)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SupersetDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -539,8 +530,8 @@ public class SupersetDashboard extends Asset
      * @return the SupersetDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SupersetDashboard replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SupersetDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SupersetDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -593,8 +584,8 @@ public class SupersetDashboard extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SupersetDashboard appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SupersetDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SupersetDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

@@ -69,8 +69,8 @@ public interface IMatillionJob {
             new KeywordTextField("matillionProjectName", "matillionProjectName.keyword", "matillionProjectName");
 
     /** Unique name of the project to which the job belongs. */
-    KeywordTextField MATILLION_PROJECT_QUALIFIED_NAME = new KeywordTextField(
-            "matillionProjectQualifiedName", "matillionProjectQualifiedName", "matillionProjectQualifiedName.text");
+    KeywordTextField MATILLION_PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("matillionProjectQualifiedName", "matillionProjectQualifiedName", "matillionProjectQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

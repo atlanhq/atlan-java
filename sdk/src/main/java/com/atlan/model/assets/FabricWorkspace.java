@@ -271,8 +271,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricWorkspace does not exist or the provided GUID is not a FabricWorkspace
      */
     @JsonIgnore
-    public static FabricWorkspace get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FabricWorkspace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -304,8 +303,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricWorkspace does not exist or the provided GUID is not a FabricWorkspace
      */
     @JsonIgnore
-    public static FabricWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FabricWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -405,8 +403,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricWorkspaceBuilder<
-                    C extends FabricWorkspace, B extends FabricWorkspaceBuilder<C, B>>
+    public abstract static class FabricWorkspaceBuilder<C extends FabricWorkspace, B extends FabricWorkspaceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -418,8 +415,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @return the updated FabricWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricWorkspace removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricWorkspace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricWorkspace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -446,8 +442,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @return the updated FabricWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricWorkspace removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricWorkspace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricWorkspace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -464,8 +459,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
     public static FabricWorkspace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricWorkspace)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricWorkspace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -477,8 +471,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @return the updated FabricWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricWorkspace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -496,8 +489,7 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
     public static FabricWorkspace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricWorkspace)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricWorkspace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -524,8 +516,8 @@ public class FabricWorkspace extends Asset implements IFabricWorkspace, IFabric,
      * @return the FabricWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricWorkspace replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricWorkspace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricWorkspace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

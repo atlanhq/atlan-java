@@ -261,8 +261,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDataset does not exist or the provided GUID is not a PresetDataset
      */
     @JsonIgnore
-    public static PresetDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PresetDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -294,8 +293,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDataset does not exist or the provided GUID is not a PresetDataset
      */
     @JsonIgnore
-    public static PresetDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PresetDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -364,7 +362,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a Preset dataset.
      *
      * @param name of the dataset
@@ -467,8 +465,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the updated PresetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -495,8 +492,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the updated PresetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -513,8 +509,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     public static PresetDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PresetDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PresetDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -526,8 +521,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the updated PresetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PresetDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PresetDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -545,8 +539,7 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     public static PresetDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PresetDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PresetDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -573,8 +566,8 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
      * @return the PresetDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PresetDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PresetDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

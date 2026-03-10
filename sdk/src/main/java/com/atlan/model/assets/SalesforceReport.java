@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SalesforceReport extends Asset
-        implements ISalesforceReport, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
+public class SalesforceReport extends Asset implements ISalesforceReport, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceReport";
@@ -262,8 +261,7 @@ public class SalesforceReport extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
      */
     @JsonIgnore
-    public static SalesforceReport get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SalesforceReport get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -295,8 +293,7 @@ public class SalesforceReport extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceReport does not exist or the provided GUID is not a SalesforceReport
      */
     @JsonIgnore
-    public static SalesforceReport get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SalesforceReport get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -366,7 +363,7 @@ public class SalesforceReport extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a SalesforceReport asset.
      *
      * @param name of the report
@@ -486,8 +483,7 @@ public class SalesforceReport extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SalesforceReportBuilder<
-                    C extends SalesforceReport, B extends SalesforceReportBuilder<C, B>>
+    public abstract static class SalesforceReportBuilder<C extends SalesforceReport, B extends SalesforceReportBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -499,8 +495,7 @@ public class SalesforceReport extends Asset
      * @return the updated SalesforceReport, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SalesforceReport removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SalesforceReport) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -527,8 +522,7 @@ public class SalesforceReport extends Asset
      * @return the updated SalesforceReport, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SalesforceReport removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SalesforceReport) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -545,8 +539,7 @@ public class SalesforceReport extends Asset
     public static SalesforceReport updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SalesforceReport)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SalesforceReport) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -558,8 +551,7 @@ public class SalesforceReport extends Asset
      * @return the updated SalesforceReport, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SalesforceReport removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SalesforceReport) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -577,8 +569,7 @@ public class SalesforceReport extends Asset
     public static SalesforceReport updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SalesforceReport)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SalesforceReport) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -605,8 +596,8 @@ public class SalesforceReport extends Asset
      * @return the SalesforceReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SalesforceReport replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SalesforceReport) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

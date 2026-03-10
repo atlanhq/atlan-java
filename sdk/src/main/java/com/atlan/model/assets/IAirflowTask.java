@@ -56,15 +56,15 @@ public interface IAirflowTask {
     KeywordField AIRFLOW_DAG_QUALIFIED_NAME = new KeywordField("airflowDagQualifiedName", "airflowDagQualifiedName");
 
     /** Identifier for the connection this task accesses. */
-    KeywordTextField AIRFLOW_TASK_CONNECTION_ID = new KeywordTextField(
-            "airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
+    KeywordTextField AIRFLOW_TASK_CONNECTION_ID =
+            new KeywordTextField("airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
 
     /** Group name for the task. */
     KeywordField AIRFLOW_TASK_GROUP_NAME = new KeywordField("airflowTaskGroupName", "airflowTaskGroupName");
 
     /** Class name for the operator this task uses. */
-    KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS = new KeywordTextField(
-            "airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
+    KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS =
+            new KeywordTextField("airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
 
     /** Pool on which this run happened. */
     KeywordField AIRFLOW_TASK_POOL = new KeywordField("airflowTaskPool", "airflowTaskPool");

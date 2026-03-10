@@ -270,8 +270,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
      */
     @JsonIgnore
-    public static TableauFlow get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TableauFlow get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -303,8 +302,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauFlow does not exist or the provided GUID is not a TableauFlow
      */
     @JsonIgnore
-    public static TableauFlow get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TableauFlow get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -416,8 +414,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the updated TableauFlow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauFlow removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauFlow) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -444,8 +441,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the updated TableauFlow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauFlow removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauFlow) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -462,8 +458,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     public static TableauFlow updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauFlow)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauFlow) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -475,8 +470,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the updated TableauFlow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauFlow removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauFlow) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -494,8 +488,7 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     public static TableauFlow updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauFlow)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauFlow) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -522,8 +515,8 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
      * @return the TableauFlow that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TableauFlow replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TableauFlow) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

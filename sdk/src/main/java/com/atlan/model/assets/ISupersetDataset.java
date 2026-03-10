@@ -47,11 +47,8 @@ public interface ISupersetDataset {
     RelationField SUPERSET_DASHBOARD = new RelationField("supersetDashboard");
 
     /** Name of the datasource for the dataset. */
-    KeywordTextStemmedField SUPERSET_DATASET_DATASOURCE_NAME = new KeywordTextStemmedField(
-            "supersetDatasetDatasourceName",
-            "supersetDatasetDatasourceName.keyword",
-            "supersetDatasetDatasourceName",
-            "supersetDatasetDatasourceName.stemmed");
+    KeywordTextStemmedField SUPERSET_DATASET_DATASOURCE_NAME =
+            new KeywordTextStemmedField("supersetDatasetDatasourceName", "supersetDatasetDatasourceName.keyword", "supersetDatasetDatasourceName", "supersetDatasetDatasourceName.stemmed");
 
     /** Id of the dataset in superset. */
     NumericField SUPERSET_DATASET_ID = new NumericField("supersetDatasetId", "supersetDatasetId");

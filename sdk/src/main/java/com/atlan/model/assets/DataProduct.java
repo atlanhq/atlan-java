@@ -18,8 +18,11 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -329,8 +332,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataProduct does not exist or the provided GUID is not a DataProduct
      */
     @JsonIgnore
-    public static DataProduct get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DataProduct get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -362,8 +364,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataProduct does not exist or the provided GUID is not a DataProduct
      */
     @JsonIgnore
-    public static DataProduct get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DataProduct get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -641,8 +642,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the updated DataProduct, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataProduct removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DataProduct removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DataProduct) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -669,8 +669,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the updated DataProduct, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataProduct removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DataProduct removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DataProduct) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -687,8 +686,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     public static DataProduct updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DataProduct)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DataProduct) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -700,8 +698,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the updated DataProduct, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataProduct removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DataProduct removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DataProduct) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -719,8 +716,7 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     public static DataProduct updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DataProduct)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DataProduct) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -747,8 +743,8 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
      * @return the DataProduct that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataProduct replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DataProduct replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DataProduct) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
