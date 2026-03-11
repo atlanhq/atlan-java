@@ -1,5 +1,6 @@
 // IMPORT: import com.atlan.model.enums.BadgeComparisonOperator;
 // IMPORT: import com.atlan.model.enums.BadgeConditionColor;
+// TYPE_OVERRIDE: badgeConditionOperator=BadgeComparisonOperator
 
     /**
      * Build a new condition for a badge on a string-based custom metadata property (including options (enumerations)).
@@ -14,7 +15,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, String value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue("\"" + value + "\"")
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -33,7 +34,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, String value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue("\"" + value + "\"")
                 .badgeConditionColorhex(color)
                 .build();
@@ -49,7 +50,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, Number value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue(value.toString())
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -65,7 +66,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, Number value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue(value.toString())
                 .badgeConditionColorhex(color)
                 .build();
@@ -81,7 +82,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, boolean value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue(Boolean.toString(value))
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -97,7 +98,7 @@
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, boolean value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator.getValue())
+                .badgeConditionOperator(operator)
                 .badgeConditionValue(Boolean.toString(value))
                 .badgeConditionColorhex(color)
                 .build();
