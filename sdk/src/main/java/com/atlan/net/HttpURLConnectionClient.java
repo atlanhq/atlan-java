@@ -5,6 +5,7 @@ package com.atlan.net;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.ErrorCode;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -49,16 +50,20 @@ public class HttpURLConnectionClient extends HttpClient {
             if (responseStream != null) {
                 // Prefer the appropriate input stream, so long as it is non-null
                 return new AtlanResponseStream(responseCode, headers, responseStream);
-            } else if (conn.getInputStream() != null) {
-                // Try falling back to the non-error input stream, if it is non-null
-                return new AtlanResponseStream(responseCode, headers, conn.getInputStream());
-            } else if (conn.getErrorStream() != null) {
-                // Then try falling back to the error input stream, if that is non-null
-                return new AtlanResponseStream(responseCode, headers, conn.getErrorStream());
-            } else {
-                // Or if all else fails, treat it as a network problem so that we automatically retry
+            } else if (responseCode >= 200 && responseCode < 300) {
+                // For success codes, try the input stream as fallback
+                InputStream inputStream = conn.getInputStream();
+                if (inputStream != null) {
+                    return new AtlanResponseStream(responseCode, headers, inputStream);
+                }
                 throw new ConnectException(
                         "Received unexpected null response stream -- treating as an ephemeral network issue.");
+            } else {
+                // For error codes, return an empty stream to preserve the status code.
+                // (getInputStream() throws IOException for non-2xx, so we must not call it.)
+                // This ensures the HTTP status code (e.g. 401) is visible to the retry logic,
+                // allowing OAuth token refresh to be triggered when needed.
+                return new AtlanResponseStream(responseCode, headers, new ByteArrayInputStream(new byte[0]));
             }
 
         } catch (IOException | InterruptedException e) {
