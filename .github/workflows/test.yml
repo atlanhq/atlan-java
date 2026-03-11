@@ -52,6 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 8
       matrix:
         tests: ${{fromJson(needs.list-integration-tests.outputs.tests)}}
     concurrency:
@@ -118,9 +119,12 @@ jobs:
     needs:
       - build
       - list-packages
+      - integration-test
+    if: ${{ always() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 3
       matrix:
         include: ${{fromJson(needs.list-packages.outputs.asset-import-chunks)}}
     name: "asset-import: chunk ${{ matrix.chunk }}"
@@ -157,9 +161,12 @@ jobs:
     needs:
       - build
       - list-packages
+      - integration-test
+    if: ${{ always() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      max-parallel: 5
       matrix:
         tests: ${{fromJson(needs.list-packages.outputs.tests)}}
     concurrency:
