@@ -32,7 +32,7 @@ public class BadgeCondition extends AtlanStruct {
     String typeName = TYPE_NAME;
 
     /** Comparison operator to use when comparing a custom metadata attribute's value. */
-    BadgeComparisonOperator badgeConditionOperator;
+    String badgeConditionOperator;
 
     /** Value against which to compare the custom metadata attribute's content. */
     String badgeConditionValue;
@@ -53,7 +53,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, String value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue("\"" + value + "\"")
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -72,7 +72,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, String value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue("\"" + value + "\"")
                 .badgeConditionColorhex(color)
                 .build();
@@ -88,7 +88,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, Number value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue(value.toString())
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -104,7 +104,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, Number value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue(value.toString())
                 .badgeConditionColorhex(color)
                 .build();
@@ -120,7 +120,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, boolean value, BadgeConditionColor color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue(Boolean.toString(value))
                 .badgeConditionColorhex(color.getValue())
                 .build();
@@ -136,7 +136,7 @@ public class BadgeCondition extends AtlanStruct {
      */
     public static BadgeCondition of(BadgeComparisonOperator operator, boolean value, String color) {
         return BadgeCondition.builder()
-                .badgeConditionOperator(operator)
+                .badgeConditionOperator(operator.getValue())
                 .badgeConditionValue(Boolean.toString(value))
                 .badgeConditionColorhex(color)
                 .build();
