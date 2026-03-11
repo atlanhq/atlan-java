@@ -2,7 +2,6 @@
    Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.enums.BadgeComparisonOperator;
 import com.atlan.model.enums.BadgeConditionColor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.annotation.processing.Generated;
@@ -32,7 +31,7 @@ public class BadgeCondition extends AtlanStruct {
     String typeName = TYPE_NAME;
 
     /** Comparison operator to use when comparing a custom metadata attribute's value. */
-    BadgeComparisonOperator badgeConditionOperator;
+    String badgeConditionOperator;
 
     /** Value against which to compare the custom metadata attribute's content. */
     String badgeConditionValue;
