@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/api/meta/test/oauth-401-no-body"
+  },
+  "response": {
+    "status": 401
+  }
+}
