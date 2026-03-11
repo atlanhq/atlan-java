@@ -429,29 +429,21 @@ public class SnowflakeSemanticViewTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -465,29 +457,21 @@ public class SnowflakeSemanticViewTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -529,29 +513,21 @@ public class SnowflakeSemanticViewTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -565,29 +541,21 @@ public class SnowflakeSemanticViewTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -695,10 +663,8 @@ public class SnowflakeSemanticViewTest {
             .semanticEntity(SemanticEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .semanticEntity(SemanticEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeSemanticViewSchema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeSemanticLogicalTable(SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeSemanticLogicalTable(SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -710,8 +676,7 @@ public class SnowflakeSemanticViewTest {
             .dqBaseDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dqBaseDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqReferenceDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dqReferenceDatasetRule(
-                    DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dqReferenceDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputPortDataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -728,16 +693,13 @@ public class SnowflakeSemanticViewTest {
             .outputPortDataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .schemaRegistrySubject(
-                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .schemaRegistrySubject(SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sodaCheck(SodaCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sodaCheck(SodaCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipFrom(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipFrom(
-                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipFrom(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipTo(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipTo(
-                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipTo(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     @BeforeClass

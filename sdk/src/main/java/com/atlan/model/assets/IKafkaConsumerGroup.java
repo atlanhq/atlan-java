@@ -48,8 +48,8 @@ public interface IKafkaConsumerGroup {
             new NumericField("kafkaConsumerGroupMemberCount", "kafkaConsumerGroupMemberCount");
 
     /** List of consumption properties for Kafka topics, for this consumer group. */
-    KeywordField KAFKA_CONSUMER_GROUP_TOPIC_CONSUMPTION_PROPERTIES = new KeywordField(
-            "kafkaConsumerGroupTopicConsumptionProperties", "kafkaConsumerGroupTopicConsumptionProperties");
+    KeywordField KAFKA_CONSUMER_GROUP_TOPIC_CONSUMPTION_PROPERTIES =
+            new KeywordField("kafkaConsumerGroupTopicConsumptionProperties", "kafkaConsumerGroupTopicConsumptionProperties");
 
     /** Simple names of the topics consumed by this consumer group. */
     KeywordField KAFKA_TOPIC_NAMES = new KeywordField("kafkaTopicNames", "kafkaTopicNames");

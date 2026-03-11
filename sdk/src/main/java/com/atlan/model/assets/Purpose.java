@@ -9,9 +9,11 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AssetFilterGroup;
 import com.atlan.model.enums.AssetSidebarTab;
+import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.fields.AtlanField;
@@ -106,11 +108,6 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     Boolean isAccessControlEnabled;
-
-    /** Access control entity to which this policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
 
     /** TBC */
     @Attribute

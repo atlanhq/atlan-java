@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AzureServiceBusNamespace extends Asset
-        implements IAzureServiceBusNamespace, IAzureServiceBus, IEventStore, ICatalog, IAsset, IReferenceable {
+public class AzureServiceBusNamespace extends Asset implements IAzureServiceBusNamespace, IAzureServiceBus, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AzureServiceBusNamespace";
@@ -193,10 +192,7 @@ public class AzureServiceBusNamespace extends Asset
      * @return reference to a AzureServiceBusNamespace that can be used for defining a relationship to a AzureServiceBusNamespace
      */
     public static AzureServiceBusNamespace refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return AzureServiceBusNamespace._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return AzureServiceBusNamespace._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -250,8 +246,7 @@ public class AzureServiceBusNamespace extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AzureServiceBusNamespace does not exist or the provided GUID is not a AzureServiceBusNamespace
      */
     @JsonIgnore
-    public static AzureServiceBusNamespace get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static AzureServiceBusNamespace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -283,8 +278,7 @@ public class AzureServiceBusNamespace extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AzureServiceBusNamespace does not exist or the provided GUID is not a AzureServiceBusNamespace
      */
     @JsonIgnore
-    public static AzureServiceBusNamespace get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static AzureServiceBusNamespace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -384,8 +378,7 @@ public class AzureServiceBusNamespace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AzureServiceBusNamespaceBuilder<
-                    C extends AzureServiceBusNamespace, B extends AzureServiceBusNamespaceBuilder<C, B>>
+    public abstract static class AzureServiceBusNamespaceBuilder<C extends AzureServiceBusNamespace, B extends AzureServiceBusNamespaceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -397,8 +390,7 @@ public class AzureServiceBusNamespace extends Asset
      * @return the updated AzureServiceBusNamespace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusNamespace removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AzureServiceBusNamespace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AzureServiceBusNamespace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -425,8 +417,7 @@ public class AzureServiceBusNamespace extends Asset
      * @return the updated AzureServiceBusNamespace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusNamespace removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AzureServiceBusNamespace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AzureServiceBusNamespace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -443,8 +434,7 @@ public class AzureServiceBusNamespace extends Asset
     public static AzureServiceBusNamespace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AzureServiceBusNamespace)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AzureServiceBusNamespace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -456,8 +446,7 @@ public class AzureServiceBusNamespace extends Asset
      * @return the updated AzureServiceBusNamespace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusNamespace removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AzureServiceBusNamespace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AzureServiceBusNamespace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -475,8 +464,7 @@ public class AzureServiceBusNamespace extends Asset
     public static AzureServiceBusNamespace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AzureServiceBusNamespace)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AzureServiceBusNamespace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -503,8 +491,8 @@ public class AzureServiceBusNamespace extends Asset
      * @return the AzureServiceBusNamespace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusNamespace replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AzureServiceBusNamespace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AzureServiceBusNamespace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -521,8 +509,8 @@ public class AzureServiceBusNamespace extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AzureServiceBusNamespace appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AzureServiceBusNamespace appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AzureServiceBusNamespace) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -539,8 +527,8 @@ public class AzureServiceBusNamespace extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AzureServiceBusNamespace removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AzureServiceBusNamespace removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AzureServiceBusNamespace) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -557,8 +545,8 @@ public class AzureServiceBusNamespace extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static AzureServiceBusNamespace appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static AzureServiceBusNamespace appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (AzureServiceBusNamespace) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

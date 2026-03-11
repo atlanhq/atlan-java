@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class GCSBucket extends Asset
-        implements IGCSBucket, IGCS, IObjectStore, IGoogle, ICatalog, IAsset, IReferenceable, ICloud {
+public class GCSBucket extends Asset implements IGCSBucket, IGCS, IObjectStore, IGoogle, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCSBucket";
@@ -360,8 +359,7 @@ public class GCSBucket extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist or the provided GUID is not a GCSBucket
      */
     @JsonIgnore
-    public static GCSBucket get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static GCSBucket get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -431,7 +429,7 @@ public class GCSBucket extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a GCSBucket.
      *
      * @param name of the GCSBucket
@@ -499,8 +497,7 @@ public class GCSBucket extends Asset
      * @return the updated GCSBucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static GCSBucket removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (GCSBucket) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -556,8 +553,7 @@ public class GCSBucket extends Asset
      * @return the updated GCSBucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static GCSBucket removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (GCSBucket) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -575,8 +571,7 @@ public class GCSBucket extends Asset
     public static GCSBucket updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (GCSBucket)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (GCSBucket) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -603,8 +598,8 @@ public class GCSBucket extends Asset
      * @return the GCSBucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static GCSBucket replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (GCSBucket) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class StakeholderTitle extends Asset
-        implements IStakeholderTitle, IAccessControl, IDataMesh, ICatalog, IAsset, IReferenceable {
+public class StakeholderTitle extends Asset implements IStakeholderTitle, IAccessControl, IDataMesh, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "StakeholderTitle";
@@ -166,11 +165,6 @@ public class StakeholderTitle extends Asset
     @Attribute
     @Singular
     SortedSet<String> personaUsers;
-
-    /** Access control entity to which this policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
 
     /** TBC */
     @Attribute
@@ -316,8 +310,7 @@ public class StakeholderTitle extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the StakeholderTitle does not exist or the provided GUID is not a StakeholderTitle
      */
     @JsonIgnore
-    public static StakeholderTitle get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static StakeholderTitle get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -349,8 +342,7 @@ public class StakeholderTitle extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the StakeholderTitle does not exist or the provided GUID is not a StakeholderTitle
      */
     @JsonIgnore
-    public static StakeholderTitle get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static StakeholderTitle get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -450,8 +442,7 @@ public class StakeholderTitle extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class StakeholderTitleBuilder<
-                    C extends StakeholderTitle, B extends StakeholderTitleBuilder<C, B>>
+    public abstract static class StakeholderTitleBuilder<C extends StakeholderTitle, B extends StakeholderTitleBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -463,8 +454,7 @@ public class StakeholderTitle extends Asset
      * @return the updated StakeholderTitle, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StakeholderTitle removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StakeholderTitle removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StakeholderTitle) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -491,8 +481,7 @@ public class StakeholderTitle extends Asset
      * @return the updated StakeholderTitle, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StakeholderTitle removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StakeholderTitle removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StakeholderTitle) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -509,8 +498,7 @@ public class StakeholderTitle extends Asset
     public static StakeholderTitle updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (StakeholderTitle)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (StakeholderTitle) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -522,8 +510,7 @@ public class StakeholderTitle extends Asset
      * @return the updated StakeholderTitle, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StakeholderTitle removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StakeholderTitle removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StakeholderTitle) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -541,8 +528,7 @@ public class StakeholderTitle extends Asset
     public static StakeholderTitle updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (StakeholderTitle)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (StakeholderTitle) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -569,8 +555,8 @@ public class StakeholderTitle extends Asset
      * @return the StakeholderTitle that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static StakeholderTitle replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static StakeholderTitle replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (StakeholderTitle) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -344,8 +344,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
      */
     @JsonIgnore
-    public static DbtModelColumn get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DbtModelColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -377,8 +376,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtModelColumn does not exist or the provided GUID is not a DbtModelColumn
      */
     @JsonIgnore
-    public static DbtModelColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DbtModelColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -490,8 +488,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the updated DbtModelColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtModelColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtModelColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -518,8 +515,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the updated DbtModelColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtModelColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtModelColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -536,8 +532,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     public static DbtModelColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtModelColumn)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtModelColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -549,8 +544,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the updated DbtModelColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtModelColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtModelColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -568,8 +562,7 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     public static DbtModelColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtModelColumn)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtModelColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -596,8 +589,8 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
      * @return the DbtModelColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DbtModelColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DbtModelColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -48,11 +48,6 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Folders that exist within this namespace. */
-    @Attribute
-    @Singular
-    SortedSet<IFolder> childrenFolders;
-
     /** Queries that exist within this namespace. */
     @Attribute
     @Singular
@@ -302,7 +297,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a Folder.
      *
      * @param name of the Folder
@@ -414,8 +409,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @return the updated Folder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Folder removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Folder removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Folder) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -471,8 +465,7 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
      * @return the updated Folder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Folder removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Folder removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Folder) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

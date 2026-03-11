@@ -50,8 +50,8 @@ public interface IQlikDataset {
     KeywordField QLIK_DATASET_SUBTYPE = new KeywordField("qlikDatasetSubtype", "qlikDatasetSubtype");
 
     /** Technical name of this asset. */
-    KeywordTextField QLIK_DATASET_TECHNICAL_NAME = new KeywordTextField(
-            "qlikDatasetTechnicalName", "qlikDatasetTechnicalName.keyword", "qlikDatasetTechnicalName");
+    KeywordTextField QLIK_DATASET_TECHNICAL_NAME =
+            new KeywordTextField("qlikDatasetTechnicalName", "qlikDatasetTechnicalName.keyword", "qlikDatasetTechnicalName");
 
     /** Type of this data asset, for example: qix-df, snowflake, etc. */
     KeywordField QLIK_DATASET_TYPE = new KeywordField("qlikDatasetType", "qlikDatasetType");

@@ -39,6 +39,7 @@ public interface IFlowProject {
 
     public static final String TYPE_NAME = "FlowProject";
 
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

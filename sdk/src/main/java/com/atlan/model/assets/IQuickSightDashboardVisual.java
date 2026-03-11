@@ -45,10 +45,8 @@ public interface IQuickSightDashboardVisual {
     RelationField QUICK_SIGHT_DASHBOARD = new RelationField("quickSightDashboard");
 
     /** Unique name of the dashboard in which this visual exists. */
-    KeywordTextField QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
-            "quickSightDashboardQualifiedName",
-            "quickSightDashboardQualifiedName",
-            "quickSightDashboardQualifiedName.text");
+    KeywordTextField QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME =
+            new KeywordTextField("quickSightDashboardQualifiedName", "quickSightDashboardQualifiedName", "quickSightDashboardQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

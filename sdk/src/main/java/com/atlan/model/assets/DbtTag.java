@@ -435,7 +435,7 @@ public class DbtTag extends Asset implements IDbtTag, ITag, IDbt, ICatalog, IAss
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a DbtTag.
      *
      * @param name of the DbtTag
@@ -475,7 +475,7 @@ public class DbtTag extends Asset implements IDbtTag, ITag, IDbt, ICatalog, IAss
                 .tagAllowedValues(allowedValues);
     }
 
-    /**
+/**
      * Generate a unique DbtTag name.
      *
      * @param name of the DbtTag
@@ -531,8 +531,7 @@ public class DbtTag extends Asset implements IDbtTag, ITag, IDbt, ICatalog, IAss
      * @return the updated DbtTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtTag removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtTag removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtTag) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -588,8 +587,7 @@ public class DbtTag extends Asset implements IDbtTag, ITag, IDbt, ICatalog, IAss
      * @return the updated DbtTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtTag removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtTag removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtTag) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

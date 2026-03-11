@@ -40,6 +40,7 @@ public interface IFlowFieldOperation {
 
     public static final String TYPE_NAME = "FlowFieldOperation";
 
+
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
 

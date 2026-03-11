@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FabricDataflowEntityColumn extends Asset
-        implements IFabricDataflowEntityColumn, IFabric, IBI, ICatalog, IAsset, IReferenceable {
+public class FabricDataflowEntityColumn extends Asset implements IFabricDataflowEntityColumn, IFabric, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FabricDataflowEntityColumn";
@@ -200,10 +199,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @return reference to a FabricDataflowEntityColumn that can be used for defining a relationship to a FabricDataflowEntityColumn
      */
     public static FabricDataflowEntityColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FabricDataflowEntityColumn._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return FabricDataflowEntityColumn._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -257,8 +253,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataflowEntityColumn does not exist or the provided GUID is not a FabricDataflowEntityColumn
      */
     @JsonIgnore
-    public static FabricDataflowEntityColumn get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FabricDataflowEntityColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -290,8 +285,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataflowEntityColumn does not exist or the provided GUID is not a FabricDataflowEntityColumn
      */
     @JsonIgnore
-    public static FabricDataflowEntityColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FabricDataflowEntityColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -391,8 +385,7 @@ public class FabricDataflowEntityColumn extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricDataflowEntityColumnBuilder<
-                    C extends FabricDataflowEntityColumn, B extends FabricDataflowEntityColumnBuilder<C, B>>
+    public abstract static class FabricDataflowEntityColumnBuilder<C extends FabricDataflowEntityColumn, B extends FabricDataflowEntityColumnBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -404,8 +397,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @return the updated FabricDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflowEntityColumn removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflowEntityColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -418,8 +410,8 @@ public class FabricDataflowEntityColumn extends Asset
      * @return the updated FabricDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflowEntityColumn removeUserDescription(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricDataflowEntityColumn removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -432,8 +424,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @return the updated FabricDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflowEntityColumn removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflowEntityColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -450,8 +441,7 @@ public class FabricDataflowEntityColumn extends Asset
     public static FabricDataflowEntityColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricDataflowEntityColumn)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricDataflowEntityColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -463,8 +453,7 @@ public class FabricDataflowEntityColumn extends Asset
      * @return the updated FabricDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflowEntityColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricDataflowEntityColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -482,8 +471,7 @@ public class FabricDataflowEntityColumn extends Asset
     public static FabricDataflowEntityColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricDataflowEntityColumn)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricDataflowEntityColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -510,8 +498,8 @@ public class FabricDataflowEntityColumn extends Asset
      * @return the FabricDataflowEntityColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricDataflowEntityColumn replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricDataflowEntityColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -528,8 +516,8 @@ public class FabricDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricDataflowEntityColumn appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricDataflowEntityColumn appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -546,8 +534,8 @@ public class FabricDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricDataflowEntityColumn removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricDataflowEntityColumn removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -564,8 +552,8 @@ public class FabricDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FabricDataflowEntityColumn appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static FabricDataflowEntityColumn appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (FabricDataflowEntityColumn) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

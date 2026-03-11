@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class MetabaseCollection extends Asset
-        implements IMetabaseCollection, IMetabase, IBI, ICatalog, IAsset, IReferenceable {
+public class MetabaseCollection extends Asset implements IMetabaseCollection, IMetabase, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MetabaseCollection";
@@ -264,8 +263,7 @@ public class MetabaseCollection extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseCollection does not exist or the provided GUID is not a MetabaseCollection
      */
     @JsonIgnore
-    public static MetabaseCollection get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static MetabaseCollection get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -297,8 +295,7 @@ public class MetabaseCollection extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MetabaseCollection does not exist or the provided GUID is not a MetabaseCollection
      */
     @JsonIgnore
-    public static MetabaseCollection get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static MetabaseCollection get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -398,8 +395,7 @@ public class MetabaseCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class MetabaseCollectionBuilder<
-                    C extends MetabaseCollection, B extends MetabaseCollectionBuilder<C, B>>
+    public abstract static class MetabaseCollectionBuilder<C extends MetabaseCollection, B extends MetabaseCollectionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -411,8 +407,7 @@ public class MetabaseCollection extends Asset
      * @return the updated MetabaseCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MetabaseCollection removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MetabaseCollection removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MetabaseCollection) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -439,8 +434,7 @@ public class MetabaseCollection extends Asset
      * @return the updated MetabaseCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MetabaseCollection removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MetabaseCollection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MetabaseCollection) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -457,8 +451,7 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MetabaseCollection)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MetabaseCollection) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -470,8 +463,7 @@ public class MetabaseCollection extends Asset
      * @return the updated MetabaseCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MetabaseCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MetabaseCollection removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MetabaseCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -489,8 +481,7 @@ public class MetabaseCollection extends Asset
     public static MetabaseCollection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MetabaseCollection)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MetabaseCollection) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -517,8 +508,8 @@ public class MetabaseCollection extends Asset
      * @return the MetabaseCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseCollection replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static MetabaseCollection replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (MetabaseCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -571,8 +562,8 @@ public class MetabaseCollection extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static MetabaseCollection appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static MetabaseCollection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (MetabaseCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

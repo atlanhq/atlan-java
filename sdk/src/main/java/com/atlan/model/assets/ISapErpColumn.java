@@ -51,8 +51,8 @@ public interface ISapErpColumn {
             new KeywordTextField("sapErpCdsViewName", "sapErpCdsViewName.keyword", "sapErpCdsViewName");
 
     /** Unique name of the SAP ERP CDS view in which this column asset exists. */
-    KeywordTextField SAP_ERP_CDS_VIEW_QUALIFIED_NAME = new KeywordTextField(
-            "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName.text");
+    KeywordTextField SAP_ERP_CDS_VIEW_QUALIFIED_NAME =
+            new KeywordTextField("sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName", "sapErpCdsViewQualifiedName.text");
 
     /** Defines the SAP ERP table name used as a foreign key reference to validate permissible values for this column. */
     KeywordField SAP_ERP_COLUMN_CHECK_TABLE_NAME =
@@ -92,8 +92,8 @@ public interface ISapErpColumn {
             new KeywordTextField("sapErpTableName", "sapErpTableName.keyword", "sapErpTableName");
 
     /** Unique name of the SAP ERP table in which this SQL asset exists. */
-    KeywordTextField SAP_ERP_TABLE_QUALIFIED_NAME = new KeywordTextField(
-            "sapErpTableQualifiedName", "sapErpTableQualifiedName", "sapErpTableQualifiedName.text");
+    KeywordTextField SAP_ERP_TABLE_QUALIFIED_NAME =
+            new KeywordTextField("sapErpTableQualifiedName", "sapErpTableQualifiedName", "sapErpTableQualifiedName.text");
 
     /** SAP ERP View in which this column exists. */
     RelationField SAP_ERP_VIEW = new RelationField("sapErpView");

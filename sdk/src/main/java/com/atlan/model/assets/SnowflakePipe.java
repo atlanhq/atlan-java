@@ -187,11 +187,6 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
     @Attribute
     String snowflakePipeNotificationChannelName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -357,8 +352,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
      */
     @JsonIgnore
-    public static SnowflakePipe get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakePipe get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -390,8 +384,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakePipe does not exist or the provided GUID is not a SnowflakePipe
      */
     @JsonIgnore
-    public static SnowflakePipe get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakePipe get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -503,8 +496,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @return the updated SnowflakePipe, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakePipe removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakePipe) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -531,8 +523,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @return the updated SnowflakePipe, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakePipe removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakePipe) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -549,8 +540,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
     public static SnowflakePipe updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakePipe)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakePipe) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -562,8 +552,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @return the updated SnowflakePipe, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakePipe removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakePipe) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -581,8 +570,7 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
     public static SnowflakePipe updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakePipe)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakePipe) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -609,8 +597,8 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISnowflake, 
      * @return the SnowflakePipe that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakePipe replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakePipe) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

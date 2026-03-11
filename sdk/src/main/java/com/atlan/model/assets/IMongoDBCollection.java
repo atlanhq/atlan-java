@@ -79,8 +79,8 @@ public interface IMongoDBCollection {
             new TextField("mongoDBCollectionSchemaDefinition", "mongoDBCollectionSchemaDefinition");
 
     /** Subtype of a MongoDB collection, for example: Capped, Time Series, etc. */
-    KeywordTextField MONGO_DB_COLLECTION_SUBTYPE = new KeywordTextField(
-            "mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
+    KeywordTextField MONGO_DB_COLLECTION_SUBTYPE =
+            new KeywordTextField("mongoDBCollectionSubtype", "mongoDBCollectionSubtype", "mongoDBCollectionSubtype.text");
 
     /** Name of the field containing the date in each time series document. */
     TextField MONGO_DB_COLLECTION_TIME_FIELD =

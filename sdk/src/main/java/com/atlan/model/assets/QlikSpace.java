@@ -307,8 +307,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikSpace does not exist or the provided GUID is not a QlikSpace
      */
     @JsonIgnore
-    public static QlikSpace get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static QlikSpace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -420,8 +419,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return the updated QlikSpace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikSpace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikSpace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -477,8 +475,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return the updated QlikSpace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikSpace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikSpace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -496,8 +493,7 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     public static QlikSpace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikSpace)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikSpace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -524,8 +520,8 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
      * @return the QlikSpace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static QlikSpace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QlikSpace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

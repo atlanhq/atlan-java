@@ -237,8 +237,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
      */
     @JsonIgnore
-    public static RedashDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static RedashDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -270,8 +269,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashDashboard does not exist or the provided GUID is not a RedashDashboard
      */
     @JsonIgnore
-    public static RedashDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static RedashDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -371,8 +369,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class RedashDashboardBuilder<
-                    C extends RedashDashboard, B extends RedashDashboardBuilder<C, B>>
+    public abstract static class RedashDashboardBuilder<C extends RedashDashboard, B extends RedashDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -384,8 +381,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the updated RedashDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -412,8 +408,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the updated RedashDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -430,8 +425,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     public static RedashDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (RedashDashboard)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (RedashDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -443,8 +437,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the updated RedashDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static RedashDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (RedashDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -462,8 +455,7 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     public static RedashDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (RedashDashboard)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (RedashDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -490,8 +482,8 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
      * @return the RedashDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashDashboard replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static RedashDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (RedashDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -49,10 +49,8 @@ public interface ICosmosMongoDBCollection {
     RelationField COSMOS_MONGO_DB_DATABASE = new RelationField("cosmosMongoDBDatabase");
 
     /** Unique name of the database in which this collection exists. */
-    KeywordTextField COSMOS_MONGO_DB_DATABASE_QUALIFIED_NAME = new KeywordTextField(
-            "cosmosMongoDBDatabaseQualifiedName",
-            "cosmosMongoDBDatabaseQualifiedName",
-            "cosmosMongoDBDatabaseQualifiedName.text");
+    KeywordTextField COSMOS_MONGO_DB_DATABASE_QUALIFIED_NAME =
+            new KeywordTextField("cosmosMongoDBDatabaseQualifiedName", "cosmosMongoDBDatabaseQualifiedName", "cosmosMongoDBDatabaseQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

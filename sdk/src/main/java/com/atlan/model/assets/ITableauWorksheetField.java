@@ -59,8 +59,8 @@ public interface ITableauWorksheetField {
     KeywordField TABLEAU_PROJECT_HIERARCHY = new KeywordField("tableauProjectHierarchy", "tableauProjectHierarchy");
 
     /** Unique name of the project in which this worksheet field exists. */
-    KeywordTextField TABLEAU_PROJECT_QUALIFIED_NAME = new KeywordTextField(
-            "tableauProjectQualifiedName", "tableauProjectQualifiedName.keyword", "tableauProjectQualifiedName");
+    KeywordTextField TABLEAU_PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("tableauProjectQualifiedName", "tableauProjectQualifiedName.keyword", "tableauProjectQualifiedName");
 
     /** Unique name of the site in which this worksheet field exists. */
     TextField TABLEAU_SITE_QUALIFIED_NAME = new TextField("tableauSiteQualifiedName", "tableauSiteQualifiedName");
@@ -85,8 +85,8 @@ public interface ITableauWorksheetField {
             new TextField("tableauWorksheetFieldDataCategory", "tableauWorksheetFieldDataCategory");
 
     /** Data type of this field. */
-    KeywordTextField TABLEAU_WORKSHEET_FIELD_DATA_TYPE = new KeywordTextField(
-            "tableauWorksheetFieldDataType", "tableauWorksheetFieldDataType", "tableauWorksheetFieldDataType.text");
+    KeywordTextField TABLEAU_WORKSHEET_FIELD_DATA_TYPE =
+            new KeywordTextField("tableauWorksheetFieldDataType", "tableauWorksheetFieldDataType", "tableauWorksheetFieldDataType.text");
 
     /** Formula for this field. */
     TextField TABLEAU_WORKSHEET_FIELD_FORMULA =

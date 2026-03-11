@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class PowerBIDataflowEntityColumn extends Asset
-        implements IPowerBIDataflowEntityColumn, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
+public class PowerBIDataflowEntityColumn extends Asset implements IPowerBIDataflowEntityColumn, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDataflowEntityColumn";
@@ -222,10 +221,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return reference to a PowerBIDataflowEntityColumn that can be used for defining a relationship to a PowerBIDataflowEntityColumn
      */
     public static PowerBIDataflowEntityColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return PowerBIDataflowEntityColumn._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return PowerBIDataflowEntityColumn._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -248,8 +244,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
      * @return reference to a PowerBIDataflowEntityColumn that can be used for defining a relationship to a PowerBIDataflowEntityColumn
      */
-    public static PowerBIDataflowEntityColumn refByQualifiedName(
-            String qualifiedName, Reference.SaveSemantic semantic) {
+    public static PowerBIDataflowEntityColumn refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
         return PowerBIDataflowEntityColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
@@ -280,8 +275,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflowEntityColumn does not exist or the provided GUID is not a PowerBIDataflowEntityColumn
      */
     @JsonIgnore
-    public static PowerBIDataflowEntityColumn get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PowerBIDataflowEntityColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -313,8 +307,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflowEntityColumn does not exist or the provided GUID is not a PowerBIDataflowEntityColumn
      */
     @JsonIgnore
-    public static PowerBIDataflowEntityColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PowerBIDataflowEntityColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -414,8 +407,7 @@ public class PowerBIDataflowEntityColumn extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class PowerBIDataflowEntityColumnBuilder<
-                    C extends PowerBIDataflowEntityColumn, B extends PowerBIDataflowEntityColumnBuilder<C, B>>
+    public abstract static class PowerBIDataflowEntityColumnBuilder<C extends PowerBIDataflowEntityColumn, B extends PowerBIDataflowEntityColumnBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -427,8 +419,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return the updated PowerBIDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflowEntityColumn removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflowEntityColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -441,8 +432,8 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return the updated PowerBIDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflowEntityColumn removeUserDescription(
-            AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDataflowEntityColumn removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -455,8 +446,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return the updated PowerBIDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflowEntityColumn removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflowEntityColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -473,8 +463,7 @@ public class PowerBIDataflowEntityColumn extends Asset
     public static PowerBIDataflowEntityColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIDataflowEntityColumn)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIDataflowEntityColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -486,8 +475,7 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return the updated PowerBIDataflowEntityColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflowEntityColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflowEntityColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -505,8 +493,7 @@ public class PowerBIDataflowEntityColumn extends Asset
     public static PowerBIDataflowEntityColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIDataflowEntityColumn)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIDataflowEntityColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -533,8 +520,8 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @return the PowerBIDataflowEntityColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflowEntityColumn replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataflowEntityColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -551,8 +538,8 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static PowerBIDataflowEntityColumn appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataflowEntityColumn appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -569,8 +556,8 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static PowerBIDataflowEntityColumn removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataflowEntityColumn removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -587,8 +574,8 @@ public class PowerBIDataflowEntityColumn extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static PowerBIDataflowEntityColumn appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static PowerBIDataflowEntityColumn appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (PowerBIDataflowEntityColumn) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

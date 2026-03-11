@@ -48,10 +48,8 @@ public interface ISisenseFolder {
     RelationField SISENSE_DASHBOARDS = new RelationField("sisenseDashboards");
 
     /** Unique name of the parent folder in which this folder exists. */
-    KeywordTextField SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME = new KeywordTextField(
-            "sisenseFolderParentFolderQualifiedName",
-            "sisenseFolderParentFolderQualifiedName",
-            "sisenseFolderParentFolderQualifiedName.text");
+    KeywordTextField SISENSE_FOLDER_PARENT_FOLDER_QUALIFIED_NAME =
+            new KeywordTextField("sisenseFolderParentFolderQualifiedName", "sisenseFolderParentFolderQualifiedName", "sisenseFolderParentFolderQualifiedName.text");
 
     /** Folder in which this sub-folder exists. */
     RelationField SISENSE_PARENT_FOLDER = new RelationField("sisenseParentFolder");

@@ -340,8 +340,7 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowField does not exist or the provided GUID is not a FlowField
      */
     @JsonIgnore
-    public static FlowField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FlowField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -453,8 +452,7 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
      * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FlowField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FlowField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -510,8 +508,7 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
      * @return the updated FlowField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FlowField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FlowField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -529,8 +526,7 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
     public static FlowField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FlowField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -557,8 +553,8 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
      * @return the FlowField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FlowField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FlowField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

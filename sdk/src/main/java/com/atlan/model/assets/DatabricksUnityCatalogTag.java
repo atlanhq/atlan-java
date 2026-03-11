@@ -42,8 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksUnityCatalogTag extends Asset
-        implements IDatabricksUnityCatalogTag, ITag, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksUnityCatalogTag extends Asset implements IDatabricksUnityCatalogTag, ITag, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksUnityCatalogTag";
@@ -179,11 +178,6 @@ public class DatabricksUnityCatalogTag extends Asset
     @Attribute
     String schemaQualifiedName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -309,10 +303,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @return reference to a DatabricksUnityCatalogTag that can be used for defining a relationship to a DatabricksUnityCatalogTag
      */
     public static DatabricksUnityCatalogTag refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return DatabricksUnityCatalogTag._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return DatabricksUnityCatalogTag._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -366,8 +357,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksUnityCatalogTag does not exist or the provided GUID is not a DatabricksUnityCatalogTag
      */
     @JsonIgnore
-    public static DatabricksUnityCatalogTag get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DatabricksUnityCatalogTag get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -399,8 +389,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksUnityCatalogTag does not exist or the provided GUID is not a DatabricksUnityCatalogTag
      */
     @JsonIgnore
-    public static DatabricksUnityCatalogTag get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DatabricksUnityCatalogTag get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -470,7 +459,7 @@ public class DatabricksUnityCatalogTag extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a DatabricksUnityCatalogTag.
      *
      * @param name of the DatabricksUnityCatalogTag
@@ -506,7 +495,7 @@ public class DatabricksUnityCatalogTag extends Asset
                 .tagAllowedValues(allowedValues);
     }
 
-    /**
+/**
      * Generate a unique DatabricksUnityCatalogTag name.
      *
      * @param name of the DatabricksUnityCatalogTag
@@ -547,8 +536,7 @@ public class DatabricksUnityCatalogTag extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksUnityCatalogTagBuilder<
-                    C extends DatabricksUnityCatalogTag, B extends DatabricksUnityCatalogTagBuilder<C, B>>
+    public abstract static class DatabricksUnityCatalogTagBuilder<C extends DatabricksUnityCatalogTag, B extends DatabricksUnityCatalogTagBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -560,8 +548,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @return the updated DatabricksUnityCatalogTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksUnityCatalogTag removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksUnityCatalogTag removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -588,8 +575,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @return the updated DatabricksUnityCatalogTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksUnityCatalogTag removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksUnityCatalogTag removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -606,8 +592,7 @@ public class DatabricksUnityCatalogTag extends Asset
     public static DatabricksUnityCatalogTag updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksUnityCatalogTag)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksUnityCatalogTag) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -619,8 +604,7 @@ public class DatabricksUnityCatalogTag extends Asset
      * @return the updated DatabricksUnityCatalogTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksUnityCatalogTag removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksUnityCatalogTag removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -638,8 +622,7 @@ public class DatabricksUnityCatalogTag extends Asset
     public static DatabricksUnityCatalogTag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksUnityCatalogTag)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksUnityCatalogTag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -666,8 +649,8 @@ public class DatabricksUnityCatalogTag extends Asset
      * @return the DatabricksUnityCatalogTag that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksUnityCatalogTag replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DatabricksUnityCatalogTag replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -684,8 +667,8 @@ public class DatabricksUnityCatalogTag extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksUnityCatalogTag appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DatabricksUnityCatalogTag appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -702,8 +685,8 @@ public class DatabricksUnityCatalogTag extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksUnityCatalogTag removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DatabricksUnityCatalogTag removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -720,8 +703,8 @@ public class DatabricksUnityCatalogTag extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksUnityCatalogTag appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static DatabricksUnityCatalogTag appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (DatabricksUnityCatalogTag) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

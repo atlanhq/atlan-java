@@ -49,8 +49,8 @@ public interface ISisenseDatamodelTable {
     RelationField SISENSE_DATAMODEL = new RelationField("sisenseDatamodel");
 
     /** Unique name of the datamodel in which this datamodel table exists. */
-    KeywordTextField SISENSE_DATAMODEL_QUALIFIED_NAME = new KeywordTextField(
-            "sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName.text");
+    KeywordTextField SISENSE_DATAMODEL_QUALIFIED_NAME =
+            new KeywordTextField("sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName", "sisenseDatamodelQualifiedName.text");
 
     /** Number of columns present in this datamodel table. */
     NumericField SISENSE_DATAMODEL_TABLE_COLUMN_COUNT =

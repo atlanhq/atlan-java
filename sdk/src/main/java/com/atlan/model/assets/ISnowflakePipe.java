@@ -54,10 +54,8 @@ public interface ISnowflakePipe {
             new BooleanField("snowflakePipeIsAutoIngestEnabled", "snowflakePipeIsAutoIngestEnabled");
 
     /** Name of the notification channel for this pipe. */
-    KeywordTextField SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME = new KeywordTextField(
-            "snowflakePipeNotificationChannelName",
-            "snowflakePipeNotificationChannelName",
-            "snowflakePipeNotificationChannelName.text");
+    KeywordTextField SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME =
+            new KeywordTextField("snowflakePipeNotificationChannelName", "snowflakePipeNotificationChannelName", "snowflakePipeNotificationChannelName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

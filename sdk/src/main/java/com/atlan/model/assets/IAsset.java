@@ -47,6 +47,7 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAsset {
 
+
     /** Whether this asset has lineage (true) or not (false). */
     BooleanField HAS_LINEAGE = new BooleanField("__hasLineage", "__hasLineage");
 
@@ -234,8 +235,8 @@ public interface IAsset {
             new KeywordField("assetDbtEnvironmentDbtVersion", "assetDbtEnvironmentDbtVersion");
 
     /** Name of the environment in which this asset is materialized in dbt. */
-    KeywordTextField ASSET_DBT_ENVIRONMENT_NAME = new KeywordTextField(
-            "assetDbtEnvironmentName", "assetDbtEnvironmentName.keyword", "assetDbtEnvironmentName");
+    KeywordTextField ASSET_DBT_ENVIRONMENT_NAME =
+            new KeywordTextField("assetDbtEnvironmentName", "assetDbtEnvironmentName.keyword", "assetDbtEnvironmentName");
 
     /** Time (epoch) at which the job that materialized this asset in dbt last ran, in milliseconds. */
     NumericField ASSET_DBT_JOB_LAST_RUN = new NumericField("assetDbtJobLastRun", "assetDbtJobLastRun");
@@ -261,8 +262,8 @@ public interface IAsset {
             new KeywordField("assetDbtJobLastRunExecutedByThreadId", "assetDbtJobLastRunExecutedByThreadId");
 
     /** Branch in git from which the last run of the job that materialized this asset in dbt ran. */
-    KeywordTextField ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH = new KeywordTextField(
-            "assetDbtJobLastRunGitBranch", "assetDbtJobLastRunGitBranch", "assetDbtJobLastRunGitBranch.text");
+    KeywordTextField ASSET_DBT_JOB_LAST_RUN_GIT_BRANCH =
+            new KeywordTextField("assetDbtJobLastRunGitBranch", "assetDbtJobLastRunGitBranch", "assetDbtJobLastRunGitBranch.text");
 
     /** SHA hash in git for the last run of the job that materialized this asset in dbt. */
     KeywordField ASSET_DBT_JOB_LAST_RUN_GIT_SHA =
@@ -305,10 +306,8 @@ public interface IAsset {
             new NumericField("assetDbtJobLastRunStartedAt", "assetDbtJobLastRunStartedAt");
 
     /** Status message of the last run of the job that materialized this asset in dbt. */
-    KeywordTextField ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE = new KeywordTextField(
-            "assetDbtJobLastRunStatusMessage",
-            "assetDbtJobLastRunStatusMessage.keyword",
-            "assetDbtJobLastRunStatusMessage");
+    KeywordTextField ASSET_DBT_JOB_LAST_RUN_STATUS_MESSAGE =
+            new KeywordTextField("assetDbtJobLastRunStatusMessage", "assetDbtJobLastRunStatusMessage.keyword", "assetDbtJobLastRunStatusMessage");
 
     /** Total duration of the last run of the job that materialized this asset in dbt. */
     KeywordField ASSET_DBT_JOB_LAST_RUN_TOTAL_DURATION =
@@ -333,8 +332,8 @@ public interface IAsset {
     NumericField ASSET_DBT_JOB_NEXT_RUN = new NumericField("assetDbtJobNextRun", "assetDbtJobNextRun");
 
     /** Human-readable time when the next run of the job that materializes this asset in dbt is scheduled. */
-    KeywordTextField ASSET_DBT_JOB_NEXT_RUN_HUMANIZED = new KeywordTextField(
-            "assetDbtJobNextRunHumanized", "assetDbtJobNextRunHumanized.keyword", "assetDbtJobNextRunHumanized");
+    KeywordTextField ASSET_DBT_JOB_NEXT_RUN_HUMANIZED =
+            new KeywordTextField("assetDbtJobNextRunHumanized", "assetDbtJobNextRunHumanized.keyword", "assetDbtJobNextRunHumanized");
 
     /** Schedule of the job that materialized this asset in dbt. */
     KeywordField ASSET_DBT_JOB_SCHEDULE = new KeywordField("assetDbtJobSchedule", "assetDbtJobSchedule");
@@ -399,14 +398,12 @@ public interface IAsset {
     TextField ASSET_ICON = new TextField("assetIcon", "assetIcon");
 
     /** Internal Popularity score for this asset. */
-    NumericRankField ASSET_INTERNAL_POPULARITY_SCORE = new NumericRankField(
-            "assetInternalPopularityScore",
-            "assetInternalPopularityScore",
-            "assetInternalPopularityScore.rank_feature");
+    NumericRankField ASSET_INTERNAL_POPULARITY_SCORE =
+            new NumericRankField("assetInternalPopularityScore", "assetInternalPopularityScore", "assetInternalPopularityScore.rank_feature");
 
     /** List of unique Monte Carlo alert names attached to this asset. */
-    KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES = new KeywordTextField(
-            "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames.text");
+    KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES =
+            new KeywordTextField("assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames", "assetMcAlertQualifiedNames.text");
 
     /** List of Monte Carlo incident names attached to this asset. */
     KeywordTextField ASSET_MC_INCIDENT_NAMES =
@@ -417,8 +414,8 @@ public interface IAsset {
             new KeywordField("assetMcIncidentPriorities", "assetMcIncidentPriorities");
 
     /** List of unique Monte Carlo incident names attached to this asset. */
-    KeywordTextField ASSET_MC_INCIDENT_QUALIFIED_NAMES = new KeywordTextField(
-            "assetMcIncidentQualifiedNames", "assetMcIncidentQualifiedNames", "assetMcIncidentQualifiedNames.text");
+    KeywordTextField ASSET_MC_INCIDENT_QUALIFIED_NAMES =
+            new KeywordTextField("assetMcIncidentQualifiedNames", "assetMcIncidentQualifiedNames", "assetMcIncidentQualifiedNames.text");
 
     /** List of Monte Carlo incident severities associated with this asset. */
     KeywordField ASSET_MC_INCIDENT_SEVERITIES =
@@ -444,8 +441,8 @@ public interface IAsset {
             new KeywordTextField("assetMcMonitorNames", "assetMcMonitorNames.keyword", "assetMcMonitorNames");
 
     /** List of unique Monte Carlo monitor names attached to this asset. */
-    KeywordTextField ASSET_MC_MONITOR_QUALIFIED_NAMES = new KeywordTextField(
-            "assetMcMonitorQualifiedNames", "assetMcMonitorQualifiedNames", "assetMcMonitorQualifiedNames.text");
+    KeywordTextField ASSET_MC_MONITOR_QUALIFIED_NAMES =
+            new KeywordTextField("assetMcMonitorQualifiedNames", "assetMcMonitorQualifiedNames", "assetMcMonitorQualifiedNames.text");
 
     /** Schedules of all associated Monte Carlo monitors. */
     KeywordField ASSET_MC_MONITOR_SCHEDULE_TYPES =
@@ -471,14 +468,12 @@ public interface IAsset {
             new KeywordField("assetSmusMetadataFormDetails", "assetSmusMetadataFormDetails");
 
     /** List of AWS SMUS MetadataForm Key:Value Details. This is mainly used for filtering purpose. */
-    KeywordTextField ASSET_SMUS_METADATA_FORM_KEY_VALUE_DETAILS = new KeywordTextField(
-            "assetSmusMetadataFormKeyValueDetails",
-            "assetSmusMetadataFormKeyValueDetails.keyword",
-            "assetSmusMetadataFormKeyValueDetails");
+    KeywordTextField ASSET_SMUS_METADATA_FORM_KEY_VALUE_DETAILS =
+            new KeywordTextField("assetSmusMetadataFormKeyValueDetails", "assetSmusMetadataFormKeyValueDetails.keyword", "assetSmusMetadataFormKeyValueDetails");
 
     /** List of AWS SMUS MetadataForm Names. This is mainly used for filtering purpose. */
-    KeywordTextField ASSET_SMUS_METADATA_FORM_NAMES = new KeywordTextField(
-            "assetSmusMetadataFormNames", "assetSmusMetadataFormNames.keyword", "assetSmusMetadataFormNames");
+    KeywordTextField ASSET_SMUS_METADATA_FORM_NAMES =
+            new KeywordTextField("assetSmusMetadataFormNames", "assetSmusMetadataFormNames.keyword", "assetSmusMetadataFormNames");
 
     /** Number of checks done via Soda. */
     NumericField ASSET_SODA_CHECK_COUNT = new NumericField("assetSodaCheckCount", "assetSodaCheckCount");

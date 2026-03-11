@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DremioPhysicalDataset extends Asset
-        implements IDremioPhysicalDataset, ITable, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
+public class DremioPhysicalDataset extends Asset implements IDremioPhysicalDataset, ITable, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioPhysicalDataset";
@@ -329,11 +328,6 @@ public class DremioPhysicalDataset extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -524,8 +518,7 @@ public class DremioPhysicalDataset extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioPhysicalDataset does not exist or the provided GUID is not a DremioPhysicalDataset
      */
     @JsonIgnore
-    public static DremioPhysicalDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DremioPhysicalDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -557,8 +550,7 @@ public class DremioPhysicalDataset extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioPhysicalDataset does not exist or the provided GUID is not a DremioPhysicalDataset
      */
     @JsonIgnore
-    public static DremioPhysicalDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DremioPhysicalDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -658,8 +650,7 @@ public class DremioPhysicalDataset extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DremioPhysicalDatasetBuilder<
-                    C extends DremioPhysicalDataset, B extends DremioPhysicalDatasetBuilder<C, B>>
+    public abstract static class DremioPhysicalDatasetBuilder<C extends DremioPhysicalDataset, B extends DremioPhysicalDatasetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -671,8 +662,7 @@ public class DremioPhysicalDataset extends Asset
      * @return the updated DremioPhysicalDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioPhysicalDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioPhysicalDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioPhysicalDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -699,8 +689,7 @@ public class DremioPhysicalDataset extends Asset
      * @return the updated DremioPhysicalDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioPhysicalDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioPhysicalDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioPhysicalDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -717,8 +706,7 @@ public class DremioPhysicalDataset extends Asset
     public static DremioPhysicalDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DremioPhysicalDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DremioPhysicalDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -730,8 +718,7 @@ public class DremioPhysicalDataset extends Asset
      * @return the updated DremioPhysicalDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioPhysicalDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DremioPhysicalDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DremioPhysicalDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -749,8 +736,7 @@ public class DremioPhysicalDataset extends Asset
     public static DremioPhysicalDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DremioPhysicalDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DremioPhysicalDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -777,8 +763,8 @@ public class DremioPhysicalDataset extends Asset
      * @return the DremioPhysicalDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DremioPhysicalDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DremioPhysicalDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DremioPhysicalDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -831,8 +817,8 @@ public class DremioPhysicalDataset extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DremioPhysicalDataset appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static DremioPhysicalDataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (DremioPhysicalDataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

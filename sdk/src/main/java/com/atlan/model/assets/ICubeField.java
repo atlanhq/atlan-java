@@ -50,8 +50,8 @@ public interface ICubeField {
     NumericField CUBE_FIELD_LEVEL = new NumericField("cubeFieldLevel", "cubeFieldLevel");
 
     /** Expression used to calculate this measure. */
-    KeywordTextField CUBE_FIELD_MEASURE_EXPRESSION = new KeywordTextField(
-            "cubeFieldMeasureExpression", "cubeFieldMeasureExpression.keyword", "cubeFieldMeasureExpression");
+    KeywordTextField CUBE_FIELD_MEASURE_EXPRESSION =
+            new KeywordTextField("cubeFieldMeasureExpression", "cubeFieldMeasureExpression.keyword", "cubeFieldMeasureExpression");
 
     /** Hierarchy containing the field. */
     RelationField CUBE_HIERARCHY = new RelationField("cubeHierarchy");

@@ -351,8 +351,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelAttribute does not exist or the provided GUID is not a ModelAttribute
      */
     @JsonIgnore
-    public static ModelAttribute get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ModelAttribute get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -384,8 +383,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelAttribute does not exist or the provided GUID is not a ModelAttribute
      */
     @JsonIgnore
-    public static ModelAttribute get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ModelAttribute get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -595,8 +593,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @return the updated ModelAttribute, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttribute removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttribute removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttribute) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -623,8 +620,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @return the updated ModelAttribute, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttribute removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttribute removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttribute) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -641,8 +637,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
     public static ModelAttribute updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelAttribute)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelAttribute) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -654,8 +649,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @return the updated ModelAttribute, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelAttribute removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelAttribute removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelAttribute) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -673,8 +667,7 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
     public static ModelAttribute updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelAttribute)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelAttribute) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -701,8 +694,8 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
      * @return the ModelAttribute that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelAttribute replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelAttribute replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelAttribute) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class MicroStrategyDocument extends Asset
-        implements IMicroStrategyDocument, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
+public class MicroStrategyDocument extends Asset implements IMicroStrategyDocument, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyDocument";
@@ -285,8 +284,7 @@ public class MicroStrategyDocument extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyDocument does not exist or the provided GUID is not a MicroStrategyDocument
      */
     @JsonIgnore
-    public static MicroStrategyDocument get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static MicroStrategyDocument get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -318,8 +316,7 @@ public class MicroStrategyDocument extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MicroStrategyDocument does not exist or the provided GUID is not a MicroStrategyDocument
      */
     @JsonIgnore
-    public static MicroStrategyDocument get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static MicroStrategyDocument get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -419,8 +416,7 @@ public class MicroStrategyDocument extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class MicroStrategyDocumentBuilder<
-                    C extends MicroStrategyDocument, B extends MicroStrategyDocumentBuilder<C, B>>
+    public abstract static class MicroStrategyDocumentBuilder<C extends MicroStrategyDocument, B extends MicroStrategyDocumentBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -432,8 +428,7 @@ public class MicroStrategyDocument extends Asset
      * @return the updated MicroStrategyDocument, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyDocument removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyDocument) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -460,8 +455,7 @@ public class MicroStrategyDocument extends Asset
      * @return the updated MicroStrategyDocument, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyDocument removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyDocument) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -478,8 +472,7 @@ public class MicroStrategyDocument extends Asset
     public static MicroStrategyDocument updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MicroStrategyDocument)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MicroStrategyDocument) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -491,8 +484,7 @@ public class MicroStrategyDocument extends Asset
      * @return the updated MicroStrategyDocument, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MicroStrategyDocument removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MicroStrategyDocument) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -510,8 +502,7 @@ public class MicroStrategyDocument extends Asset
     public static MicroStrategyDocument updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MicroStrategyDocument)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MicroStrategyDocument) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -538,8 +529,8 @@ public class MicroStrategyDocument extends Asset
      * @return the MicroStrategyDocument that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static MicroStrategyDocument replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (MicroStrategyDocument) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -592,8 +583,8 @@ public class MicroStrategyDocument extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static MicroStrategyDocument appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static MicroStrategyDocument appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (MicroStrategyDocument) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

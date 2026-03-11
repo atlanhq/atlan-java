@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ModelEntityAssociation extends Asset
-        implements IModelEntityAssociation, IModel, ICatalog, IAsset, IReferenceable {
+public class ModelEntityAssociation extends Asset implements IModelEntityAssociation, IModel, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModelEntityAssociation";
@@ -339,8 +338,7 @@ public class ModelEntityAssociation extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelEntityAssociation does not exist or the provided GUID is not a ModelEntityAssociation
      */
     @JsonIgnore
-    public static ModelEntityAssociation get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ModelEntityAssociation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -372,8 +370,7 @@ public class ModelEntityAssociation extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelEntityAssociation does not exist or the provided GUID is not a ModelEntityAssociation
      */
     @JsonIgnore
-    public static ModelEntityAssociation get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ModelEntityAssociation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -567,8 +564,7 @@ public class ModelEntityAssociation extends Asset
         return updater(this.getModelVersionAgnosticQualifiedName(), this.getName());
     }
 
-    public abstract static class ModelEntityAssociationBuilder<
-                    C extends ModelEntityAssociation, B extends ModelEntityAssociationBuilder<C, B>>
+    public abstract static class ModelEntityAssociationBuilder<C extends ModelEntityAssociation, B extends ModelEntityAssociationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -580,8 +576,7 @@ public class ModelEntityAssociation extends Asset
      * @return the updated ModelEntityAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntityAssociation removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntityAssociation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntityAssociation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -608,8 +603,7 @@ public class ModelEntityAssociation extends Asset
      * @return the updated ModelEntityAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntityAssociation removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntityAssociation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntityAssociation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -626,8 +620,7 @@ public class ModelEntityAssociation extends Asset
     public static ModelEntityAssociation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelEntityAssociation)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelEntityAssociation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -639,8 +632,7 @@ public class ModelEntityAssociation extends Asset
      * @return the updated ModelEntityAssociation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntityAssociation removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntityAssociation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntityAssociation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -658,8 +650,7 @@ public class ModelEntityAssociation extends Asset
     public static ModelEntityAssociation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelEntityAssociation)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelEntityAssociation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -686,8 +677,8 @@ public class ModelEntityAssociation extends Asset
      * @return the ModelEntityAssociation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelEntityAssociation replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelEntityAssociation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelEntityAssociation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -704,8 +695,8 @@ public class ModelEntityAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static ModelEntityAssociation appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelEntityAssociation appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelEntityAssociation) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -722,8 +713,8 @@ public class ModelEntityAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static ModelEntityAssociation removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelEntityAssociation removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelEntityAssociation) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -740,8 +731,8 @@ public class ModelEntityAssociation extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ModelEntityAssociation appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static ModelEntityAssociation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (ModelEntityAssociation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

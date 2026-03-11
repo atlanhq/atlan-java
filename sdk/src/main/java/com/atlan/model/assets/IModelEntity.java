@@ -54,8 +54,8 @@ public interface IModelEntity {
     RelationField MODEL_ENTITY_GENERALIZATION_ENTITY = new RelationField("modelEntityGeneralizationEntity");
 
     /** Name of the general entity. */
-    KeywordTextField MODEL_ENTITY_GENERALIZATION_NAME = new KeywordTextField(
-            "modelEntityGeneralizationName", "modelEntityGeneralizationName.keyword", "modelEntityGeneralizationName");
+    KeywordTextField MODEL_ENTITY_GENERALIZATION_NAME =
+            new KeywordTextField("modelEntityGeneralizationName", "modelEntityGeneralizationName.keyword", "modelEntityGeneralizationName");
 
     /** Unique identifier for the general entity. */
     KeywordField MODEL_ENTITY_GENERALIZATION_QUALIFIED_NAME =

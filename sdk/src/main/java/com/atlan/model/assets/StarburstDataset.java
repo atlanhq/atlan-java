@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class StarburstDataset extends Asset
-        implements IStarburstDataset, ITable, IStarburst, ICatalog, IAsset, IReferenceable, ISQL {
+public class StarburstDataset extends Asset implements IStarburstDataset, ITable, IStarburst, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "StarburstDataset";
@@ -287,11 +286,6 @@ public class StarburstDataset extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -515,8 +509,7 @@ public class StarburstDataset extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the StarburstDataset does not exist or the provided GUID is not a StarburstDataset
      */
     @JsonIgnore
-    public static StarburstDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static StarburstDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -548,8 +541,7 @@ public class StarburstDataset extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the StarburstDataset does not exist or the provided GUID is not a StarburstDataset
      */
     @JsonIgnore
-    public static StarburstDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static StarburstDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -649,8 +641,7 @@ public class StarburstDataset extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class StarburstDatasetBuilder<
-                    C extends StarburstDataset, B extends StarburstDatasetBuilder<C, B>>
+    public abstract static class StarburstDatasetBuilder<C extends StarburstDataset, B extends StarburstDatasetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -662,8 +653,7 @@ public class StarburstDataset extends Asset
      * @return the updated StarburstDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StarburstDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StarburstDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StarburstDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -690,8 +680,7 @@ public class StarburstDataset extends Asset
      * @return the updated StarburstDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StarburstDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StarburstDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StarburstDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -708,8 +697,7 @@ public class StarburstDataset extends Asset
     public static StarburstDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (StarburstDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (StarburstDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -721,8 +709,7 @@ public class StarburstDataset extends Asset
      * @return the updated StarburstDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static StarburstDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static StarburstDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (StarburstDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -740,8 +727,7 @@ public class StarburstDataset extends Asset
     public static StarburstDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (StarburstDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (StarburstDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -768,8 +754,8 @@ public class StarburstDataset extends Asset
      * @return the StarburstDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static StarburstDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static StarburstDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (StarburstDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

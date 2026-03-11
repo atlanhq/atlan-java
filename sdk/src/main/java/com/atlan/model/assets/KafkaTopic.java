@@ -308,8 +308,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaTopic does not exist or the provided GUID is not a KafkaTopic
      */
     @JsonIgnore
-    public static KafkaTopic get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static KafkaTopic get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -379,7 +378,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a KafkaTopic.
      *
      * @param name of the KafkaTopic
@@ -447,8 +446,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return the updated KafkaTopic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static KafkaTopic removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (KafkaTopic) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -492,8 +490,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     public static KafkaTopic updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (KafkaTopic)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (KafkaTopic) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -505,8 +502,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return the updated KafkaTopic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static KafkaTopic removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (KafkaTopic) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -524,8 +520,7 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     public static KafkaTopic updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (KafkaTopic)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (KafkaTopic) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -552,8 +547,8 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
      * @return the KafkaTopic that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static KafkaTopic replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (KafkaTopic) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

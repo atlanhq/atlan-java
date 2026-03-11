@@ -39,6 +39,7 @@ public interface ICustom {
 
     public static final String TYPE_NAME = "Custom";
 
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

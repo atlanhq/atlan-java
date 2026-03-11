@@ -290,8 +290,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
      */
     @JsonIgnore
-    public static QlikDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static QlikDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -323,8 +322,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikDataset does not exist or the provided GUID is not a QlikDataset
      */
     @JsonIgnore
-    public static QlikDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static QlikDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -436,8 +434,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return the updated QlikDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -464,8 +461,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return the updated QlikDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -482,8 +478,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     public static QlikDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QlikDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -495,8 +490,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return the updated QlikDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QlikDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QlikDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -514,8 +508,7 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     public static QlikDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -542,8 +535,8 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
      * @return the QlikDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static QlikDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QlikDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -46,53 +46,39 @@ public interface IMicroStrategyColumn {
     RelationField MICRO_STRATEGY_ATTRIBUTE = new RelationField("microStrategyAttribute");
 
     /** Unique identifier of the Attribute in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_ATTRIBUTE_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnAttributeQualifiedName",
-            "microStrategyColumnAttributeQualifiedName.keyword",
-            "microStrategyColumnAttributeQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_ATTRIBUTE_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnAttributeQualifiedName", "microStrategyColumnAttributeQualifiedName.keyword", "microStrategyColumnAttributeQualifiedName");
 
     /** Unique identifier of the Cube in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_CUBE_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnCubeQualifiedName",
-            "microStrategyColumnCubeQualifiedName.keyword",
-            "microStrategyColumnCubeQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_CUBE_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnCubeQualifiedName", "microStrategyColumnCubeQualifiedName.keyword", "microStrategyColumnCubeQualifiedName");
 
     /** Unique identifier of the Document in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_DOCUMENT_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnDocumentQualifiedName",
-            "microStrategyColumnDocumentQualifiedName.keyword",
-            "microStrategyColumnDocumentQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_DOCUMENT_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnDocumentQualifiedName", "microStrategyColumnDocumentQualifiedName.keyword", "microStrategyColumnDocumentQualifiedName");
 
     /** Unique identifier of the Dossier in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_DOSSIER_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnDossierQualifiedName",
-            "microStrategyColumnDossierQualifiedName.keyword",
-            "microStrategyColumnDossierQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_DOSSIER_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnDossierQualifiedName", "microStrategyColumnDossierQualifiedName.keyword", "microStrategyColumnDossierQualifiedName");
 
     /** Expression or formula used to define this column. */
     KeywordField MICRO_STRATEGY_COLUMN_EXPRESSION =
             new KeywordField("microStrategyColumnExpression", "microStrategyColumnExpression");
 
     /** Unique identifier of the Fact in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_FACT_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnFactQualifiedName",
-            "microStrategyColumnFactQualifiedName.keyword",
-            "microStrategyColumnFactQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_FACT_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnFactQualifiedName", "microStrategyColumnFactQualifiedName.keyword", "microStrategyColumnFactQualifiedName");
 
     /** Unique identifier of the column in MicroStrategy. */
     KeywordField MICRO_STRATEGY_COLUMN_ID = new KeywordField("microStrategyColumnId", "microStrategyColumnId");
 
     /** Unique identifier of the Metric in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_METRIC_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnMetricQualifiedName",
-            "microStrategyColumnMetricQualifiedName.keyword",
-            "microStrategyColumnMetricQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_METRIC_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnMetricQualifiedName", "microStrategyColumnMetricQualifiedName.keyword", "microStrategyColumnMetricQualifiedName");
 
     /** Unique identifier of the Report in which this column exists. */
-    KeywordTextField MICRO_STRATEGY_COLUMN_REPORT_QUALIFIED_NAME = new KeywordTextField(
-            "microStrategyColumnReportQualifiedName",
-            "microStrategyColumnReportQualifiedName.keyword",
-            "microStrategyColumnReportQualifiedName");
+    KeywordTextField MICRO_STRATEGY_COLUMN_REPORT_QUALIFIED_NAME =
+            new KeywordTextField("microStrategyColumnReportQualifiedName", "microStrategyColumnReportQualifiedName.keyword", "microStrategyColumnReportQualifiedName");
 
     /** Type of the column (Eg attribute_column, fact_column, metric_column etc). */
     KeywordField MICRO_STRATEGY_COLUMN_TYPE = new KeywordField("microStrategyColumnType", "microStrategyColumnType");

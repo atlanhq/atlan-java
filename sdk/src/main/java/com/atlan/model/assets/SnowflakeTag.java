@@ -42,8 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeTag extends Asset
-        implements ISnowflakeTag, ITag, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
+public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeTag";
@@ -183,11 +182,6 @@ public class SnowflakeTag extends Asset
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
-
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -368,8 +362,7 @@ public class SnowflakeTag extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
      */
     @JsonIgnore
-    public static SnowflakeTag get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakeTag get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -401,8 +394,7 @@ public class SnowflakeTag extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeTag does not exist or the provided GUID is not a SnowflakeTag
      */
     @JsonIgnore
-    public static SnowflakeTag get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakeTag get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -472,7 +464,7 @@ public class SnowflakeTag extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a SnowflakeTag.
      *
      * @param name of the SnowflakeTag
@@ -588,7 +580,7 @@ public class SnowflakeTag extends Asset
                 .tagAllowedValues(allowedValues);
     }
 
-    /**
+/**
      * Generate a unique SnowflakeTag name.
      *
      * @param name of the SnowflakeTag
@@ -641,8 +633,7 @@ public class SnowflakeTag extends Asset
      * @return the updated SnowflakeTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeTag removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeTag) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -669,8 +660,7 @@ public class SnowflakeTag extends Asset
      * @return the updated SnowflakeTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeTag removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeTag) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -687,8 +677,7 @@ public class SnowflakeTag extends Asset
     public static SnowflakeTag updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeTag)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeTag) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -700,8 +689,7 @@ public class SnowflakeTag extends Asset
      * @return the updated SnowflakeTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeTag removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeTag) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -719,8 +707,7 @@ public class SnowflakeTag extends Asset
     public static SnowflakeTag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeTag)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeTag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -747,8 +734,8 @@ public class SnowflakeTag extends Asset
      * @return the SnowflakeTag that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeTag replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeTag) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

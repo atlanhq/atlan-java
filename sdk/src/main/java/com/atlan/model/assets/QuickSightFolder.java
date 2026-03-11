@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class QuickSightFolder extends Asset
-        implements IQuickSightFolder, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
+public class QuickSightFolder extends Asset implements IQuickSightFolder, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightFolder";
@@ -267,8 +266,7 @@ public class QuickSightFolder extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
      */
     @JsonIgnore
-    public static QuickSightFolder get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static QuickSightFolder get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -300,8 +298,7 @@ public class QuickSightFolder extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightFolder does not exist or the provided GUID is not a QuickSightFolder
      */
     @JsonIgnore
-    public static QuickSightFolder get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static QuickSightFolder get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -401,8 +398,7 @@ public class QuickSightFolder extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class QuickSightFolderBuilder<
-                    C extends QuickSightFolder, B extends QuickSightFolderBuilder<C, B>>
+    public abstract static class QuickSightFolderBuilder<C extends QuickSightFolder, B extends QuickSightFolderBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -414,8 +410,7 @@ public class QuickSightFolder extends Asset
      * @return the updated QuickSightFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightFolder removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightFolder) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -442,8 +437,7 @@ public class QuickSightFolder extends Asset
      * @return the updated QuickSightFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightFolder removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightFolder) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -460,8 +454,7 @@ public class QuickSightFolder extends Asset
     public static QuickSightFolder updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QuickSightFolder)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QuickSightFolder) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -473,8 +466,7 @@ public class QuickSightFolder extends Asset
      * @return the updated QuickSightFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static QuickSightFolder removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (QuickSightFolder) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,8 +484,7 @@ public class QuickSightFolder extends Asset
     public static QuickSightFolder updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QuickSightFolder)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QuickSightFolder) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -520,8 +511,8 @@ public class QuickSightFolder extends Asset
      * @return the QuickSightFolder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static QuickSightFolder replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QuickSightFolder) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -255,8 +255,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauMetric does not exist or the provided GUID is not a TableauMetric
      */
     @JsonIgnore
-    public static TableauMetric get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static TableauMetric get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -288,8 +287,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauMetric does not exist or the provided GUID is not a TableauMetric
      */
     @JsonIgnore
-    public static TableauMetric get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static TableauMetric get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -401,8 +399,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return the updated TableauMetric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauMetric removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauMetric) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -429,8 +426,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return the updated TableauMetric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauMetric removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauMetric) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -447,8 +443,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     public static TableauMetric updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauMetric)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauMetric) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -460,8 +455,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return the updated TableauMetric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static TableauMetric removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (TableauMetric) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -479,8 +473,7 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     public static TableauMetric updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauMetric)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauMetric) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -507,8 +500,8 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
      * @return the TableauMetric that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static TableauMetric replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (TableauMetric) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

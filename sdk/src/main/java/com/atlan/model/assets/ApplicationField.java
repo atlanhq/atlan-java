@@ -246,8 +246,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ApplicationField does not exist or the provided GUID is not a ApplicationField
      */
     @JsonIgnore
-    public static ApplicationField get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ApplicationField get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -279,8 +278,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ApplicationField does not exist or the provided GUID is not a ApplicationField
      */
     @JsonIgnore
-    public static ApplicationField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ApplicationField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -349,7 +347,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-    /**
+/**
      * Builds the minimal object necessary to create a ApplicationField.
      *
      * @param name of the field
@@ -440,8 +438,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ApplicationFieldBuilder<
-                    C extends ApplicationField, B extends ApplicationFieldBuilder<C, B>>
+    public abstract static class ApplicationFieldBuilder<C extends ApplicationField, B extends ApplicationFieldBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -453,8 +450,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @return the updated ApplicationField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ApplicationField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ApplicationField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ApplicationField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -481,8 +477,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @return the updated ApplicationField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ApplicationField removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ApplicationField removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ApplicationField) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -499,8 +494,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     public static ApplicationField updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ApplicationField)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ApplicationField) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -512,8 +506,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @return the updated ApplicationField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ApplicationField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ApplicationField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ApplicationField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -531,8 +524,7 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
     public static ApplicationField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ApplicationField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ApplicationField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -559,8 +551,8 @@ public class ApplicationField extends Asset implements IApplicationField, IApp, 
      * @return the ApplicationField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ApplicationField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ApplicationField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ApplicationField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

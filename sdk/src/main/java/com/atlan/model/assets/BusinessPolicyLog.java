@@ -104,11 +104,6 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     @Attribute
     Long compliantAssetsCount;
 
-    /** Exception assigned to business polices */
-    @Attribute
-    @Singular("exceptionForBusinessPolicy")
-    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
-
     /** number of governed assets in the policy */
     @Attribute
     Long governedAssetsCount;
@@ -120,11 +115,6 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     /** number of non governed assets in the policy */
     @Attribute
     Long nonGovernedAssetsCount;
-
-    /** BusinessPolicy that have the same (or relatable) compliance */
-    @Attribute
-    @Singular
-    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicyLog, from a potentially
@@ -257,8 +247,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicyLog does not exist or the provided GUID is not a BusinessPolicyLog
      */
     @JsonIgnore
-    public static BusinessPolicyLog get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static BusinessPolicyLog get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -290,8 +279,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicyLog does not exist or the provided GUID is not a BusinessPolicyLog
      */
     @JsonIgnore
-    public static BusinessPolicyLog get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static BusinessPolicyLog get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -391,8 +379,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class BusinessPolicyLogBuilder<
-                    C extends BusinessPolicyLog, B extends BusinessPolicyLogBuilder<C, B>>
+    public abstract static class BusinessPolicyLogBuilder<C extends BusinessPolicyLog, B extends BusinessPolicyLogBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -404,8 +391,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @return the updated BusinessPolicyLog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyLog removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicyLog removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicyLog) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -432,8 +418,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @return the updated BusinessPolicyLog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyLog removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicyLog removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicyLog) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -450,8 +435,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     public static BusinessPolicyLog updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (BusinessPolicyLog)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (BusinessPolicyLog) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -463,8 +447,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @return the updated BusinessPolicyLog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyLog removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicyLog removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicyLog) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -482,8 +465,7 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     public static BusinessPolicyLog updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (BusinessPolicyLog)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (BusinessPolicyLog) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -510,8 +492,8 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @return the BusinessPolicyLog that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyLog replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static BusinessPolicyLog replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (BusinessPolicyLog) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -564,8 +546,8 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static BusinessPolicyLog appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static BusinessPolicyLog appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (BusinessPolicyLog) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

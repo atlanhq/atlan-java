@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FabricSemanticModelTable extends Asset
-        implements IFabricSemanticModelTable, IFabric, IBI, ICatalog, IAsset, IReferenceable {
+public class FabricSemanticModelTable extends Asset implements IFabricSemanticModelTable, IFabric, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FabricSemanticModelTable";
@@ -201,10 +200,7 @@ public class FabricSemanticModelTable extends Asset
      * @return reference to a FabricSemanticModelTable that can be used for defining a relationship to a FabricSemanticModelTable
      */
     public static FabricSemanticModelTable refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FabricSemanticModelTable._internal()
-                .guid(guid)
-                .semantic(semantic)
-                .build();
+        return FabricSemanticModelTable._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
@@ -258,8 +254,7 @@ public class FabricSemanticModelTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricSemanticModelTable does not exist or the provided GUID is not a FabricSemanticModelTable
      */
     @JsonIgnore
-    public static FabricSemanticModelTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static FabricSemanticModelTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -291,8 +286,7 @@ public class FabricSemanticModelTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricSemanticModelTable does not exist or the provided GUID is not a FabricSemanticModelTable
      */
     @JsonIgnore
-    public static FabricSemanticModelTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static FabricSemanticModelTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -392,8 +386,7 @@ public class FabricSemanticModelTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricSemanticModelTableBuilder<
-                    C extends FabricSemanticModelTable, B extends FabricSemanticModelTableBuilder<C, B>>
+    public abstract static class FabricSemanticModelTableBuilder<C extends FabricSemanticModelTable, B extends FabricSemanticModelTableBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -405,8 +398,7 @@ public class FabricSemanticModelTable extends Asset
      * @return the updated FabricSemanticModelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricSemanticModelTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -433,8 +425,7 @@ public class FabricSemanticModelTable extends Asset
      * @return the updated FabricSemanticModelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricSemanticModelTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -451,8 +442,7 @@ public class FabricSemanticModelTable extends Asset
     public static FabricSemanticModelTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricSemanticModelTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricSemanticModelTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -464,8 +454,7 @@ public class FabricSemanticModelTable extends Asset
      * @return the updated FabricSemanticModelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricSemanticModelTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -483,8 +472,7 @@ public class FabricSemanticModelTable extends Asset
     public static FabricSemanticModelTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricSemanticModelTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricSemanticModelTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -511,8 +499,8 @@ public class FabricSemanticModelTable extends Asset
      * @return the FabricSemanticModelTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricSemanticModelTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricSemanticModelTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -529,8 +517,8 @@ public class FabricSemanticModelTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricSemanticModelTable appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricSemanticModelTable appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricSemanticModelTable) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -547,8 +535,8 @@ public class FabricSemanticModelTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricSemanticModelTable removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static FabricSemanticModelTable removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (FabricSemanticModelTable) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -565,8 +553,8 @@ public class FabricSemanticModelTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FabricSemanticModelTable appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static FabricSemanticModelTable appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (FabricSemanticModelTable) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

@@ -403,8 +403,7 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @return the updated DomoCard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DomoCard removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DomoCard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DomoCard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -460,8 +459,7 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @return the updated DomoCard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DomoCard removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DomoCard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DomoCard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -506,8 +504,8 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
      * @return the DomoCard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DomoCard replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DomoCard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DomoCard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

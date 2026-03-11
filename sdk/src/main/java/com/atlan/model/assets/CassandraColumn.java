@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CassandraColumn extends Asset
-        implements ICassandraColumn, ICassandra, INoSQL, ICatalog, IAsset, IReferenceable {
+public class CassandraColumn extends Asset implements ICassandraColumn, ICassandra, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CassandraColumn";
@@ -290,8 +289,7 @@ public class CassandraColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CassandraColumn does not exist or the provided GUID is not a CassandraColumn
      */
     @JsonIgnore
-    public static CassandraColumn get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CassandraColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -323,8 +321,7 @@ public class CassandraColumn extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CassandraColumn does not exist or the provided GUID is not a CassandraColumn
      */
     @JsonIgnore
-    public static CassandraColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CassandraColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -424,8 +421,7 @@ public class CassandraColumn extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CassandraColumnBuilder<
-                    C extends CassandraColumn, B extends CassandraColumnBuilder<C, B>>
+    public abstract static class CassandraColumnBuilder<C extends CassandraColumn, B extends CassandraColumnBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -437,8 +433,7 @@ public class CassandraColumn extends Asset
      * @return the updated CassandraColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraColumn removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -465,8 +460,7 @@ public class CassandraColumn extends Asset
      * @return the updated CassandraColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraColumn removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -483,8 +477,7 @@ public class CassandraColumn extends Asset
     public static CassandraColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CassandraColumn)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CassandraColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -496,8 +489,7 @@ public class CassandraColumn extends Asset
      * @return the updated CassandraColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -515,8 +507,7 @@ public class CassandraColumn extends Asset
     public static CassandraColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CassandraColumn)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CassandraColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -543,8 +534,8 @@ public class CassandraColumn extends Asset
      * @return the CassandraColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CassandraColumn replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CassandraColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CassandraColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

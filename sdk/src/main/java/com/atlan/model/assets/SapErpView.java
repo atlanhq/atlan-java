@@ -306,8 +306,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpView does not exist or the provided GUID is not a SapErpView
      */
     @JsonIgnore
-    public static SapErpView get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SapErpView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -419,8 +418,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
      * @return the updated SapErpView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpView removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SapErpView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SapErpView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -464,8 +462,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
     public static SapErpView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SapErpView)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SapErpView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -477,8 +474,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
      * @return the updated SapErpView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpView removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SapErpView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SapErpView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -496,8 +492,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
     public static SapErpView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SapErpView)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SapErpView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -524,8 +519,8 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
      * @return the SapErpView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SapErpView replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SapErpView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SapErpView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -41,8 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ADLSContainer extends Asset
-        implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+public class ADLSContainer extends Asset implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSContainer";
@@ -295,8 +294,7 @@ public class ADLSContainer extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSContainer does not exist or the provided GUID is not a ADLSContainer
      */
     @JsonIgnore
-    public static ADLSContainer get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ADLSContainer get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -328,8 +326,7 @@ public class ADLSContainer extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSContainer does not exist or the provided GUID is not a ADLSContainer
      */
     @JsonIgnore
-    public static ADLSContainer get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ADLSContainer get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -399,7 +396,7 @@ public class ADLSContainer extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a ADLSContainer.
      *
      * @param name of the ADLSContainer
@@ -501,8 +498,7 @@ public class ADLSContainer extends Asset
      * @return the updated ADLSContainer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ADLSContainer removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ADLSContainer) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -529,8 +525,7 @@ public class ADLSContainer extends Asset
      * @return the updated ADLSContainer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ADLSContainer removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ADLSContainer) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -547,8 +542,7 @@ public class ADLSContainer extends Asset
     public static ADLSContainer updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ADLSContainer)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ADLSContainer) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -560,8 +554,7 @@ public class ADLSContainer extends Asset
      * @return the updated ADLSContainer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ADLSContainer removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ADLSContainer) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -579,8 +572,7 @@ public class ADLSContainer extends Asset
     public static ADLSContainer updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ADLSContainer)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ADLSContainer) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -607,8 +599,8 @@ public class ADLSContainer extends Asset
      * @return the ADLSContainer that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ADLSContainer replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ADLSContainer) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

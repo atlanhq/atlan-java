@@ -274,8 +274,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosDataset does not exist or the provided GUID is not a CognosDataset
      */
     @JsonIgnore
-    public static CognosDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CognosDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -307,8 +306,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosDataset does not exist or the provided GUID is not a CognosDataset
      */
     @JsonIgnore
-    public static CognosDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CognosDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -420,8 +418,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @return the updated CognosDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -448,8 +445,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @return the updated CognosDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -466,8 +462,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
     public static CognosDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -479,8 +474,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @return the updated CognosDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -498,8 +492,7 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
     public static CognosDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -526,8 +519,8 @@ public class CognosDataset extends Asset implements ICognosDataset, ICognos, IBI
      * @return the CognosDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CognosDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CognosDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

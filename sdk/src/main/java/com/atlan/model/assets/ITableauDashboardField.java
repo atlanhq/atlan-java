@@ -55,8 +55,8 @@ public interface ITableauDashboardField {
             new TextField("tableauDashboardFieldDataCategory", "tableauDashboardFieldDataCategory");
 
     /** Data type of this field. */
-    KeywordTextField TABLEAU_DASHBOARD_FIELD_DATA_TYPE = new KeywordTextField(
-            "tableauDashboardFieldDataType", "tableauDashboardFieldDataType", "tableauDashboardFieldDataType.text");
+    KeywordTextField TABLEAU_DASHBOARD_FIELD_DATA_TYPE =
+            new KeywordTextField("tableauDashboardFieldDataType", "tableauDashboardFieldDataType", "tableauDashboardFieldDataType.text");
 
     /** Formula for this field. */
     TextField TABLEAU_DASHBOARD_FIELD_FORMULA =
@@ -87,8 +87,8 @@ public interface ITableauDashboardField {
     KeywordField TABLEAU_PROJECT_HIERARCHY = new KeywordField("tableauProjectHierarchy", "tableauProjectHierarchy");
 
     /** Unique name of the project in which this dashboard field exists. */
-    KeywordTextField TABLEAU_PROJECT_QUALIFIED_NAME = new KeywordTextField(
-            "tableauProjectQualifiedName", "tableauProjectQualifiedName.keyword", "tableauProjectQualifiedName");
+    KeywordTextField TABLEAU_PROJECT_QUALIFIED_NAME =
+            new KeywordTextField("tableauProjectQualifiedName", "tableauProjectQualifiedName.keyword", "tableauProjectQualifiedName");
 
     /** Unique name of the site in which this dashboard field exists. */
     TextField TABLEAU_SITE_QUALIFIED_NAME = new TextField("tableauSiteQualifiedName", "tableauSiteQualifiedName");

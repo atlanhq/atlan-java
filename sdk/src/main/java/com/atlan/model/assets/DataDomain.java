@@ -289,8 +289,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataDomain does not exist or the provided GUID is not a DataDomain
      */
     @JsonIgnore
-    public static DataDomain get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DataDomain get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -360,7 +359,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary for creating a DataDomain.
      *
      * @param name of the DataDomain
@@ -497,8 +496,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @return the updated DataDomain, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataDomain removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DataDomain removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DataDomain) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -542,8 +540,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     public static DataDomain updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DataDomain)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DataDomain) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -555,8 +552,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @return the updated DataDomain, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataDomain removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DataDomain removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DataDomain) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -574,8 +570,7 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     public static DataDomain updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DataDomain)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DataDomain) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -602,8 +597,8 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
      * @return the DataDomain that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataDomain replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DataDomain replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DataDomain) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -41,8 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DynamoDBTable extends Asset
-        implements IDynamoDBTable, ITable, IDynamoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
+public class DynamoDBTable extends Asset implements IDynamoDBTable, ITable, IDynamoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DynamoDBTable";
@@ -335,11 +334,6 @@ public class DynamoDBTable extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -530,8 +524,7 @@ public class DynamoDBTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      */
     @JsonIgnore
-    public static DynamoDBTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DynamoDBTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -563,8 +556,7 @@ public class DynamoDBTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBTable does not exist or the provided GUID is not a DynamoDBTable
      */
     @JsonIgnore
-    public static DynamoDBTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DynamoDBTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -676,8 +668,7 @@ public class DynamoDBTable extends Asset
      * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DynamoDBTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DynamoDBTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -704,8 +695,7 @@ public class DynamoDBTable extends Asset
      * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DynamoDBTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DynamoDBTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -722,8 +712,7 @@ public class DynamoDBTable extends Asset
     public static DynamoDBTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DynamoDBTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DynamoDBTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -735,8 +724,7 @@ public class DynamoDBTable extends Asset
      * @return the updated DynamoDBTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DynamoDBTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DynamoDBTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -754,8 +742,7 @@ public class DynamoDBTable extends Asset
     public static DynamoDBTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DynamoDBTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DynamoDBTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -782,8 +769,8 @@ public class DynamoDBTable extends Asset
      * @return the DynamoDBTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DynamoDBTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DynamoDBTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

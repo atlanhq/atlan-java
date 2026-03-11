@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class S3Object extends Asset
-        implements IS3Object, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
+public class S3Object extends Asset implements IS3Object, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "S3Object";
@@ -450,7 +449,7 @@ public class S3Object extends Asset
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create an S3 object.
      * Note: this will use the provided prefix and name of the object to construct the qualifiedName for the object.
      *
@@ -583,8 +582,7 @@ public class S3Object extends Asset
      * @return the updated S3Object, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static S3Object removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static S3Object removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (S3Object) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -640,8 +638,7 @@ public class S3Object extends Asset
      * @return the updated S3Object, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static S3Object removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static S3Object removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (S3Object) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -686,8 +683,8 @@ public class S3Object extends Asset
      * @return the S3Object that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static S3Object replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (S3Object) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -40,8 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeDynamicTable extends Asset
-        implements ISnowflakeDynamicTable, ITable, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
+public class SnowflakeDynamicTable extends Asset implements ISnowflakeDynamicTable, ITable, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeDynamicTable";
@@ -291,11 +290,6 @@ public class SnowflakeDynamicTable extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -486,8 +480,7 @@ public class SnowflakeDynamicTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeDynamicTable does not exist or the provided GUID is not a SnowflakeDynamicTable
      */
     @JsonIgnore
-    public static SnowflakeDynamicTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SnowflakeDynamicTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -519,8 +512,7 @@ public class SnowflakeDynamicTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeDynamicTable does not exist or the provided GUID is not a SnowflakeDynamicTable
      */
     @JsonIgnore
-    public static SnowflakeDynamicTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SnowflakeDynamicTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -620,8 +612,7 @@ public class SnowflakeDynamicTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SnowflakeDynamicTableBuilder<
-                    C extends SnowflakeDynamicTable, B extends SnowflakeDynamicTableBuilder<C, B>>
+    public abstract static class SnowflakeDynamicTableBuilder<C extends SnowflakeDynamicTable, B extends SnowflakeDynamicTableBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -633,8 +624,7 @@ public class SnowflakeDynamicTable extends Asset
      * @return the updated SnowflakeDynamicTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeDynamicTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeDynamicTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeDynamicTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -661,8 +651,7 @@ public class SnowflakeDynamicTable extends Asset
      * @return the updated SnowflakeDynamicTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeDynamicTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeDynamicTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeDynamicTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -679,8 +668,7 @@ public class SnowflakeDynamicTable extends Asset
     public static SnowflakeDynamicTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeDynamicTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeDynamicTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -692,8 +680,7 @@ public class SnowflakeDynamicTable extends Asset
      * @return the updated SnowflakeDynamicTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeDynamicTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeDynamicTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeDynamicTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -711,8 +698,7 @@ public class SnowflakeDynamicTable extends Asset
     public static SnowflakeDynamicTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeDynamicTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeDynamicTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -739,8 +725,8 @@ public class SnowflakeDynamicTable extends Asset
      * @return the SnowflakeDynamicTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeDynamicTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeDynamicTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SnowflakeDynamicTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -793,8 +779,8 @@ public class SnowflakeDynamicTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SnowflakeDynamicTable appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SnowflakeDynamicTable appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SnowflakeDynamicTable) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

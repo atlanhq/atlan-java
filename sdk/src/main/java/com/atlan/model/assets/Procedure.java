@@ -181,11 +181,6 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     String schemaQualifiedName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -433,8 +428,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Procedure does not exist or the provided GUID is not a Procedure
      */
     @JsonIgnore
-    public static Procedure get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static Procedure get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -504,7 +498,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a procedure.
      *
      * @param name of the procedure
@@ -590,7 +584,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-    /**
+/**
      * Generate a unique table name.
      *
      * @param name of the table
@@ -643,8 +637,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return the updated Procedure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Procedure removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Procedure removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Procedure) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -700,8 +693,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return the updated Procedure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Procedure removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Procedure removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Procedure) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -719,8 +711,7 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     public static Procedure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Procedure)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Procedure) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -747,8 +738,8 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
      * @return the Procedure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Procedure replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static Procedure replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (Procedure) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

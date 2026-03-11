@@ -252,8 +252,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseFolder does not exist or the provided GUID is not a SisenseFolder
      */
     @JsonIgnore
-    public static SisenseFolder get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SisenseFolder get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -285,8 +284,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseFolder does not exist or the provided GUID is not a SisenseFolder
      */
     @JsonIgnore
-    public static SisenseFolder get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SisenseFolder get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -398,8 +396,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @return the updated SisenseFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseFolder removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseFolder removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseFolder) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -426,8 +423,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @return the updated SisenseFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseFolder removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseFolder removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseFolder) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -444,8 +440,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     public static SisenseFolder updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SisenseFolder)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SisenseFolder) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -457,8 +452,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @return the updated SisenseFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseFolder removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseFolder removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseFolder) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -476,8 +470,7 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
     public static SisenseFolder updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SisenseFolder)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SisenseFolder) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -504,8 +497,8 @@ public class SisenseFolder extends Asset implements ISisenseFolder, ISisense, IB
      * @return the SisenseFolder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SisenseFolder replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SisenseFolder replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SisenseFolder) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

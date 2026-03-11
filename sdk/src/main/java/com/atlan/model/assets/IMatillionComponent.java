@@ -73,8 +73,8 @@ public interface IMatillionComponent {
             new KeywordTextField("matillionJobName", "matillionJobName.keyword", "matillionJobName");
 
     /** Unique name of the job to which the component belongs. */
-    KeywordTextField MATILLION_JOB_QUALIFIED_NAME = new KeywordTextField(
-            "matillionJobQualifiedName", "matillionJobQualifiedName", "matillionJobQualifiedName.text");
+    KeywordTextField MATILLION_JOB_QUALIFIED_NAME =
+            new KeywordTextField("matillionJobQualifiedName", "matillionJobQualifiedName", "matillionJobQualifiedName.text");
 
     /** Lineage process that represents this Matillion component. */
     RelationField MATILLION_PROCESS = new RelationField("matillionProcess");

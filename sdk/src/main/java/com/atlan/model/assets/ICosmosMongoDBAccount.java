@@ -53,24 +53,24 @@ public interface ICosmosMongoDBAccount {
             new TextField("cosmosMongoDBAccountDocumentEndpoint", "cosmosMongoDBAccountDocumentEndpoint");
 
     /** Indicates whether automatic failover is enabled for the Cosmos MongoDB account. */
-    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_AUTOMATIC_FAILOVER = new BooleanField(
-            "cosmosMongoDBAccountEnableAutomaticFailover", "cosmosMongoDBAccountEnableAutomaticFailover");
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_AUTOMATIC_FAILOVER =
+            new BooleanField("cosmosMongoDBAccountEnableAutomaticFailover", "cosmosMongoDBAccountEnableAutomaticFailover");
 
     /** Indicates whether multiple write locations are enabled for the Cosmos MongoDB account. */
-    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_MULTIPLE_WRITE_LOCATIONS = new BooleanField(
-            "cosmosMongoDBAccountEnableMultipleWriteLocations", "cosmosMongoDBAccountEnableMultipleWriteLocations");
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_MULTIPLE_WRITE_LOCATIONS =
+            new BooleanField("cosmosMongoDBAccountEnableMultipleWriteLocations", "cosmosMongoDBAccountEnableMultipleWriteLocations");
 
     /** Indicates whether partition key monitoring is enabled for the Cosmos MongoDB account. */
-    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_PARTITION_KEY_MONITOR = new BooleanField(
-            "cosmosMongoDBAccountEnablePartitionKeyMonitor", "cosmosMongoDBAccountEnablePartitionKeyMonitor");
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_ENABLE_PARTITION_KEY_MONITOR =
+            new BooleanField("cosmosMongoDBAccountEnablePartitionKeyMonitor", "cosmosMongoDBAccountEnablePartitionKeyMonitor");
 
     /** The unique identifier for the Cosmos MongoDB account. */
     KeywordField COSMOS_MONGO_DB_ACCOUNT_INSTANCE_ID =
             new KeywordField("cosmosMongoDBAccountInstanceId", "cosmosMongoDBAccountInstanceId");
 
     /** Indicates whether the virtual network filter is enabled for the Cosmos MongoDB account. */
-    BooleanField COSMOS_MONGO_DB_ACCOUNT_IS_VIRTUAL_NETWORK_FILTER_ENABLED = new BooleanField(
-            "cosmosMongoDBAccountIsVirtualNetworkFilterEnabled", "cosmosMongoDBAccountIsVirtualNetworkFilterEnabled");
+    BooleanField COSMOS_MONGO_DB_ACCOUNT_IS_VIRTUAL_NETWORK_FILTER_ENABLED =
+            new BooleanField("cosmosMongoDBAccountIsVirtualNetworkFilterEnabled", "cosmosMongoDBAccountIsVirtualNetworkFilterEnabled");
 
     /** The locations where the Cosmos MongoDB account is available. */
     TextField COSMOS_MONGO_DB_ACCOUNT_LOCATIONS =

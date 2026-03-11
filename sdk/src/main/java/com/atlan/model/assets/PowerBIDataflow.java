@@ -39,8 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class PowerBIDataflow extends Asset
-        implements IPowerBIDataflow, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
+public class PowerBIDataflow extends Asset implements IPowerBIDataflow, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDataflow";
@@ -316,8 +315,7 @@ public class PowerBIDataflow extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
      */
     @JsonIgnore
-    public static PowerBIDataflow get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PowerBIDataflow get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -349,8 +347,7 @@ public class PowerBIDataflow extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataflow does not exist or the provided GUID is not a PowerBIDataflow
      */
     @JsonIgnore
-    public static PowerBIDataflow get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PowerBIDataflow get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -450,8 +447,7 @@ public class PowerBIDataflow extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class PowerBIDataflowBuilder<
-                    C extends PowerBIDataflow, B extends PowerBIDataflowBuilder<C, B>>
+    public abstract static class PowerBIDataflowBuilder<C extends PowerBIDataflow, B extends PowerBIDataflowBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -463,8 +459,7 @@ public class PowerBIDataflow extends Asset
      * @return the updated PowerBIDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflow removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflow) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -491,8 +486,7 @@ public class PowerBIDataflow extends Asset
      * @return the updated PowerBIDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflow removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflow) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -509,8 +503,7 @@ public class PowerBIDataflow extends Asset
     public static PowerBIDataflow updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIDataflow) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -522,8 +515,7 @@ public class PowerBIDataflow extends Asset
      * @return the updated PowerBIDataflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PowerBIDataflow removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PowerBIDataflow) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -541,8 +533,7 @@ public class PowerBIDataflow extends Asset
     public static PowerBIDataflow updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIDataflow) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -569,8 +560,8 @@ public class PowerBIDataflow extends Asset
      * @return the PowerBIDataflow that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataflow replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PowerBIDataflow) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

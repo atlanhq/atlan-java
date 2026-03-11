@@ -267,8 +267,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DomoDataset does not exist or the provided GUID is not a DomoDataset
      */
     @JsonIgnore
-    public static DomoDataset get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DomoDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -300,8 +299,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DomoDataset does not exist or the provided GUID is not a DomoDataset
      */
     @JsonIgnore
-    public static DomoDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DomoDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -413,8 +411,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @return the updated DomoDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DomoDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DomoDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DomoDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -441,8 +438,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @return the updated DomoDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DomoDataset removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DomoDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DomoDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -459,8 +455,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DomoDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DomoDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,8 +467,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @return the updated DomoDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DomoDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DomoDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DomoDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -491,8 +485,7 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     public static DomoDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DomoDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DomoDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +512,8 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
      * @return the DomoDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DomoDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DomoDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DomoDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

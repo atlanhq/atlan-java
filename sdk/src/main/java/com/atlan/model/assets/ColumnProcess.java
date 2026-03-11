@@ -54,7 +54,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -80,37 +80,22 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
-    @Attribute
-    @Singular
-    SortedSet<IColumnProcess> columnProcesses;
-
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
-    /** Assets that are inputs to this process. */
-    @Attribute
-    @Singular
-    SortedSet<ICatalog> inputs;
-
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
-
-    /** Assets that are outputs from this process. */
-    @Attribute
-    @Singular
-    SortedSet<ICatalog> outputs;
 
     /** TBC */
     @Attribute
@@ -118,7 +103,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -135,12 +120,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String sql;
 
-    /** Functions used by this process. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> sqlFunctions;
-
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -276,8 +256,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist or the provided GUID is not a ColumnProcess
      */
     @JsonIgnore
-    public static ColumnProcess get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ColumnProcess get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -309,8 +288,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist or the provided GUID is not a ColumnProcess
      */
     @JsonIgnore
-    public static ColumnProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ColumnProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -380,7 +358,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-    /**
+/**
      * Builds the minimal object necessary to create a column-level process.
      *
      * @param name of the column-level process
@@ -456,8 +434,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the updated ColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ColumnProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ColumnProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -484,8 +461,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the updated ColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ColumnProcess removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ColumnProcess) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -502,8 +478,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     public static ColumnProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ColumnProcess)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ColumnProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -515,8 +490,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the updated ColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ColumnProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ColumnProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -534,8 +508,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     public static ColumnProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ColumnProcess)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ColumnProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -562,8 +535,8 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
      * @return the ColumnProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ColumnProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ColumnProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -333,8 +333,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfDataset does not exist or the provided GUID is not a AdfDataset
      */
     @JsonIgnore
-    public static AdfDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static AdfDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -446,8 +445,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
      * @return the updated AdfDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfDataset removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AdfDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AdfDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -491,8 +489,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
     public static AdfDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AdfDataset)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AdfDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -504,8 +501,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
      * @return the updated AdfDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AdfDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AdfDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -523,8 +519,7 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
     public static AdfDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AdfDataset)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AdfDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -551,8 +546,8 @@ public class AdfDataset extends Asset implements IAdfDataset, IADF, ICatalog, IA
      * @return the AdfDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AdfDataset replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AdfDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AdfDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

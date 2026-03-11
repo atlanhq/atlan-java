@@ -52,12 +52,12 @@ public interface IAssetGroupingStrategy {
             new KeywordField("assetGroupingStrategyConfig", "assetGroupingStrategyConfig");
 
     /** Number of assets matching this strategy at last evaluation. */
-    NumericField ASSET_GROUPING_STRATEGY_LAST_EVALUATED_ASSET_COUNT = new NumericField(
-            "assetGroupingStrategyLastEvaluatedAssetCount", "assetGroupingStrategyLastEvaluatedAssetCount");
+    NumericField ASSET_GROUPING_STRATEGY_LAST_EVALUATED_ASSET_COUNT =
+            new NumericField("assetGroupingStrategyLastEvaluatedAssetCount", "assetGroupingStrategyLastEvaluatedAssetCount");
 
     /** Time (epoch) at which this strategy was last evaluated. */
-    NumericField ASSET_GROUPING_STRATEGY_LAST_EVALUATED_TIMESTAMP = new NumericField(
-            "assetGroupingStrategyLastEvaluatedTimestamp", "assetGroupingStrategyLastEvaluatedTimestamp");
+    NumericField ASSET_GROUPING_STRATEGY_LAST_EVALUATED_TIMESTAMP =
+            new NumericField("assetGroupingStrategyLastEvaluatedTimestamp", "assetGroupingStrategyLastEvaluatedTimestamp");
 
     /** Source of this grouping strategy. */
     KeywordField ASSET_GROUPING_STRATEGY_SOURCE =

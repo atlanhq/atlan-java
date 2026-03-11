@@ -432,29 +432,21 @@ public class IcebergNamespaceTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -468,29 +460,21 @@ public class IcebergNamespaceTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -532,29 +516,21 @@ public class IcebergNamespaceTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -568,29 +544,21 @@ public class IcebergNamespaceTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String0")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String0")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String0")
+                                                                    .assetExternalDQTestMetricUpperBound("String0")
+                                                                    .assetExternalDQTestMetricLowerBound("String0")
+                                                                    .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(
-                                                                    AssetExternalDQTestMetric.builder()
-                                                                            .assetExternalDQTestMetricObservedValue(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricUpperBound(
-                                                                                    "String1")
-                                                                            .assetExternalDQTestMetricLowerBound(
-                                                                                    "String1")
-                                                                            .build())
+                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
+                                                                    .assetExternalDQTestMetricObservedValue("String1")
+                                                                    .assetExternalDQTestMetricUpperBound("String1")
+                                                                    .assetExternalDQTestMetricLowerBound("String1")
+                                                                    .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -695,22 +663,9 @@ public class IcebergNamespaceTest {
             .viewCount(123)
             .linkedSchemaQualifiedName("String0")
             .databricksAIModelContext(DatabricksAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .databricksAIModelContext(
-                    DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .databricksAIModelContext(DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .databricksVolume(DatabricksVolume.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .databricksVolume(DatabricksVolume.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .icebergSubNamespace(IcebergNamespace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .icebergSubNamespace(IcebergNamespace.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .icebergParentNamespace(IcebergNamespace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -728,8 +683,7 @@ public class IcebergNamespaceTest {
             .view(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .view(View.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeDynamicTable(
-                    SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeDynamicTable(SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakePipe(SnowflakePipe.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakePipe(SnowflakePipe.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeStage(SnowflakeStage.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -739,15 +693,9 @@ public class IcebergNamespaceTest {
             .snowflakeTag(SnowflakeTag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeTag(SnowflakeTag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeAIModelContext(SnowflakeAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeAIModelContext(
-                    SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeAIModelContext(SnowflakeAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeSemanticView(SnowflakeSemanticView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticView(
-                    SnowflakeSemanticView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeSemanticView(SnowflakeSemanticView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -759,8 +707,7 @@ public class IcebergNamespaceTest {
             .dqBaseDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dqBaseDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqReferenceDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dqReferenceDatasetRule(
-                    DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dqReferenceDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputPortDataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -777,16 +724,13 @@ public class IcebergNamespaceTest {
             .outputPortDataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .schemaRegistrySubject(
-                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .schemaRegistrySubject(SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sodaCheck(SodaCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sodaCheck(SodaCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipFrom(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipFrom(
-                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipFrom(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipTo(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipTo(
-                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipTo(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     @BeforeClass

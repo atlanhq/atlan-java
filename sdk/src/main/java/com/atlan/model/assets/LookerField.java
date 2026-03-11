@@ -313,8 +313,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerField does not exist or the provided GUID is not a LookerField
      */
     @JsonIgnore
-    public static LookerField get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static LookerField get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -346,8 +345,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerField does not exist or the provided GUID is not a LookerField
      */
     @JsonIgnore
-    public static LookerField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static LookerField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -459,8 +457,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @return the updated LookerField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static LookerField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (LookerField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -487,8 +484,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @return the updated LookerField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerField removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static LookerField removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (LookerField) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -505,8 +501,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerField)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerField) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -518,8 +513,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @return the updated LookerField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static LookerField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (LookerField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -537,8 +531,7 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     public static LookerField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -565,8 +558,8 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
      * @return the LookerField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static LookerField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (LookerField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

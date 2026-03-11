@@ -49,11 +49,8 @@ public interface IDataStudioAsset {
     KeywordField DATA_STUDIO_ASSET_OWNER = new KeywordField("dataStudioAssetOwner", "dataStudioAssetOwner");
 
     /** Title of the Google Data Studio asset. */
-    KeywordTextStemmedField DATA_STUDIO_ASSET_TITLE = new KeywordTextStemmedField(
-            "dataStudioAssetTitle",
-            "dataStudioAssetTitle.keyword",
-            "dataStudioAssetTitle",
-            "dataStudioAssetTitle.stemmed");
+    KeywordTextStemmedField DATA_STUDIO_ASSET_TITLE =
+            new KeywordTextStemmedField("dataStudioAssetTitle", "dataStudioAssetTitle.keyword", "dataStudioAssetTitle", "dataStudioAssetTitle.stemmed");
 
     /** Type of the Google Data Studio asset, for example: REPORT or DATA_SOURCE. */
     KeywordField DATA_STUDIO_ASSET_TYPE = new KeywordField("dataStudioAssetType", "dataStudioAssetType");

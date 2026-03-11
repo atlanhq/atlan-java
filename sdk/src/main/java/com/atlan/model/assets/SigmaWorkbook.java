@@ -262,8 +262,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
      */
     @JsonIgnore
-    public static SigmaWorkbook get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SigmaWorkbook get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -295,8 +294,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaWorkbook does not exist or the provided GUID is not a SigmaWorkbook
      */
     @JsonIgnore
-    public static SigmaWorkbook get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SigmaWorkbook get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -408,8 +406,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the updated SigmaWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SigmaWorkbook removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SigmaWorkbook) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -436,8 +433,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the updated SigmaWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SigmaWorkbook removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SigmaWorkbook) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -454,8 +450,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     public static SigmaWorkbook updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SigmaWorkbook)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SigmaWorkbook) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -467,8 +462,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the updated SigmaWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SigmaWorkbook removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SigmaWorkbook) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -486,8 +480,7 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     public static SigmaWorkbook updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SigmaWorkbook)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SigmaWorkbook) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -514,8 +507,8 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
      * @return the SigmaWorkbook that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SigmaWorkbook replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SigmaWorkbook) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

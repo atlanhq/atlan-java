@@ -257,8 +257,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PartialField does not exist or the provided GUID is not a PartialField
      */
     @JsonIgnore
-    public static PartialField get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static PartialField get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -290,8 +289,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PartialField does not exist or the provided GUID is not a PartialField
      */
     @JsonIgnore
-    public static PartialField get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static PartialField get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -403,8 +401,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @return the updated PartialField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PartialField removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PartialField removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PartialField) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -431,8 +428,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @return the updated PartialField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PartialField removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PartialField removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PartialField) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -449,8 +445,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
     public static PartialField updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PartialField)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PartialField) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -462,8 +457,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @return the updated PartialField, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PartialField removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static PartialField removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (PartialField) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -481,8 +475,7 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
     public static PartialField updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PartialField)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PartialField) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -509,8 +502,8 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
      * @return the PartialField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PartialField replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static PartialField replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (PartialField) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

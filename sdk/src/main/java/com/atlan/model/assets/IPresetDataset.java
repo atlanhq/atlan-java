@@ -47,11 +47,8 @@ public interface IPresetDataset {
     RelationField PRESET_DASHBOARD = new RelationField("presetDashboard");
 
     /** TBC */
-    KeywordTextStemmedField PRESET_DATASET_DATASOURCE_NAME = new KeywordTextStemmedField(
-            "presetDatasetDatasourceName",
-            "presetDatasetDatasourceName.keyword",
-            "presetDatasetDatasourceName",
-            "presetDatasetDatasourceName.stemmed");
+    KeywordTextStemmedField PRESET_DATASET_DATASOURCE_NAME =
+            new KeywordTextStemmedField("presetDatasetDatasourceName", "presetDatasetDatasourceName.keyword", "presetDatasetDatasourceName", "presetDatasetDatasourceName.stemmed");
 
     /** TBC */
     NumericField PRESET_DATASET_ID = new NumericField("presetDatasetId", "presetDatasetId");

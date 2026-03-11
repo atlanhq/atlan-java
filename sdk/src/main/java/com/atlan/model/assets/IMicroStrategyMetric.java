@@ -43,14 +43,12 @@ public interface IMicroStrategyMetric {
     public static final String TYPE_NAME = "MicroStrategyMetric";
 
     /** List of simple names of attributes related to this metric. */
-    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_NAMES = new KeywordTextField(
-            "microStrategyAttributeNames", "microStrategyAttributeNames.keyword", "microStrategyAttributeNames");
+    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_NAMES =
+            new KeywordTextField("microStrategyAttributeNames", "microStrategyAttributeNames.keyword", "microStrategyAttributeNames");
 
     /** List of unique names of attributes related to this metric. */
-    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES = new KeywordTextField(
-            "microStrategyAttributeQualifiedNames",
-            "microStrategyAttributeQualifiedNames",
-            "microStrategyAttributeQualifiedNames.text");
+    KeywordTextField MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES =
+            new KeywordTextField("microStrategyAttributeQualifiedNames", "microStrategyAttributeQualifiedNames", "microStrategyAttributeQualifiedNames.text");
 
     /** Attributes this metric uses. */
     RelationField MICRO_STRATEGY_ATTRIBUTES = new RelationField("microStrategyAttributes");
@@ -66,10 +64,8 @@ public interface IMicroStrategyMetric {
             new KeywordTextField("microStrategyFactNames", "microStrategyFactNames.keyword", "microStrategyFactNames");
 
     /** List of unique names of facts related to this metric. */
-    KeywordTextField MICRO_STRATEGY_FACT_QUALIFIED_NAMES = new KeywordTextField(
-            "microStrategyFactQualifiedNames",
-            "microStrategyFactQualifiedNames",
-            "microStrategyFactQualifiedNames.text");
+    KeywordTextField MICRO_STRATEGY_FACT_QUALIFIED_NAMES =
+            new KeywordTextField("microStrategyFactQualifiedNames", "microStrategyFactQualifiedNames", "microStrategyFactQualifiedNames.text");
 
     /** Facts this metric uses. */
     RelationField MICRO_STRATEGY_FACTS = new RelationField("microStrategyFacts");
@@ -82,16 +78,12 @@ public interface IMicroStrategyMetric {
             new TextField("microStrategyMetricExpression", "microStrategyMetricExpression");
 
     /** List of simple names of parent metrics of this metric. */
-    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_NAMES = new KeywordTextField(
-            "microStrategyMetricParentNames",
-            "microStrategyMetricParentNames.keyword",
-            "microStrategyMetricParentNames");
+    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_NAMES =
+            new KeywordTextField("microStrategyMetricParentNames", "microStrategyMetricParentNames.keyword", "microStrategyMetricParentNames");
 
     /** List of unique names of parent metrics of this metric. */
-    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES = new KeywordTextField(
-            "microStrategyMetricParentQualifiedNames",
-            "microStrategyMetricParentQualifiedNames",
-            "microStrategyMetricParentQualifiedNames.text");
+    KeywordTextField MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES =
+            new KeywordTextField("microStrategyMetricParentQualifiedNames", "microStrategyMetricParentQualifiedNames", "microStrategyMetricParentQualifiedNames.text");
 
     /** Parent metrics to this metric. */
     RelationField MICRO_STRATEGY_METRIC_PARENTS = new RelationField("microStrategyMetricParents");

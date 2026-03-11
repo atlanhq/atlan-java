@@ -41,8 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtColumnProcess extends Asset
-        implements IDbtColumnProcess, IColumnProcess, IDbt, ILineageProcess, ICatalog, IAsset, IReferenceable {
+public class DbtColumnProcess extends Asset implements IDbtColumnProcess, IColumnProcess, IDbt, ILineageProcess, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtColumnProcess";
@@ -56,7 +55,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -64,7 +63,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -82,7 +81,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
+    /** Column-level processes that are part of this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -171,16 +170,16 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String dbtUniqueId;
 
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -204,7 +203,7 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -254,7 +253,7 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -271,12 +270,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String sql;
 
-    /** Functions used by this process. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> sqlFunctions;
-
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -412,8 +406,7 @@ public class DbtColumnProcess extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtColumnProcess does not exist or the provided GUID is not a DbtColumnProcess
      */
     @JsonIgnore
-    public static DbtColumnProcess get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static DbtColumnProcess get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -445,8 +438,7 @@ public class DbtColumnProcess extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtColumnProcess does not exist or the provided GUID is not a DbtColumnProcess
      */
     @JsonIgnore
-    public static DbtColumnProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DbtColumnProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -546,8 +538,7 @@ public class DbtColumnProcess extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DbtColumnProcessBuilder<
-                    C extends DbtColumnProcess, B extends DbtColumnProcessBuilder<C, B>>
+    public abstract static class DbtColumnProcessBuilder<C extends DbtColumnProcess, B extends DbtColumnProcessBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -559,8 +550,7 @@ public class DbtColumnProcess extends Asset
      * @return the updated DbtColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtColumnProcess removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtColumnProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtColumnProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -587,8 +577,7 @@ public class DbtColumnProcess extends Asset
      * @return the updated DbtColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtColumnProcess removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtColumnProcess removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtColumnProcess) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -605,8 +594,7 @@ public class DbtColumnProcess extends Asset
     public static DbtColumnProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtColumnProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -618,8 +606,7 @@ public class DbtColumnProcess extends Asset
      * @return the updated DbtColumnProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtColumnProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtColumnProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtColumnProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -637,8 +624,7 @@ public class DbtColumnProcess extends Asset
     public static DbtColumnProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtColumnProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -665,8 +651,8 @@ public class DbtColumnProcess extends Asset
      * @return the DbtColumnProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtColumnProcess replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DbtColumnProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DbtColumnProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

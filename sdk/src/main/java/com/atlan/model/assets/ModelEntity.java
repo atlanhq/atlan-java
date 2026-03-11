@@ -349,8 +349,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelEntity does not exist or the provided GUID is not a ModelEntity
      */
     @JsonIgnore
-    public static ModelEntity get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ModelEntity get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -382,8 +381,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelEntity does not exist or the provided GUID is not a ModelEntity
      */
     @JsonIgnore
-    public static ModelEntity get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ModelEntity get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -639,8 +637,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @return the updated ModelEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntity removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntity removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntity) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -667,8 +664,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @return the updated ModelEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntity removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntity removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntity) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -685,8 +681,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     public static ModelEntity updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelEntity)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelEntity) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -698,8 +693,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @return the updated ModelEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelEntity removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ModelEntity removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ModelEntity) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -717,8 +711,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
     public static ModelEntity updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelEntity)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelEntity) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -745,8 +738,8 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
      * @return the ModelEntity that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelEntity replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ModelEntity replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ModelEntity) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

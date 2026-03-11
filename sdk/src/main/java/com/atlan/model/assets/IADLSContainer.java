@@ -65,8 +65,8 @@ public interface IADLSContainer {
             new KeywordTextField("adlsContainerUrl", "adlsContainerUrl.keyword", "adlsContainerUrl");
 
     /** Whether this container supports version-level immutability (true) or not (false). */
-    BooleanField ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT = new BooleanField(
-            "adlsContainerVersionLevelImmutabilitySupport", "adlsContainerVersionLevelImmutabilitySupport");
+    BooleanField ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT =
+            new BooleanField("adlsContainerVersionLevelImmutabilitySupport", "adlsContainerVersionLevelImmutabilitySupport");
 
     /** Number of objects that exist within this container. */
     NumericField ADLS_OBJECT_COUNT = new NumericField("adlsObjectCount", "adlsObjectCount");

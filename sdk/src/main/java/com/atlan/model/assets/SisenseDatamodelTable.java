@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SisenseDatamodelTable extends Asset
-        implements ISisenseDatamodelTable, ISisense, IBI, ICatalog, IAsset, IReferenceable {
+public class SisenseDatamodelTable extends Asset implements ISisenseDatamodelTable, ISisense, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SisenseDatamodelTable";
@@ -271,8 +270,7 @@ public class SisenseDatamodelTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseDatamodelTable does not exist or the provided GUID is not a SisenseDatamodelTable
      */
     @JsonIgnore
-    public static SisenseDatamodelTable get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SisenseDatamodelTable get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -304,8 +302,7 @@ public class SisenseDatamodelTable extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseDatamodelTable does not exist or the provided GUID is not a SisenseDatamodelTable
      */
     @JsonIgnore
-    public static SisenseDatamodelTable get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SisenseDatamodelTable get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -405,8 +402,7 @@ public class SisenseDatamodelTable extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SisenseDatamodelTableBuilder<
-                    C extends SisenseDatamodelTable, B extends SisenseDatamodelTableBuilder<C, B>>
+    public abstract static class SisenseDatamodelTableBuilder<C extends SisenseDatamodelTable, B extends SisenseDatamodelTableBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -418,8 +414,7 @@ public class SisenseDatamodelTable extends Asset
      * @return the updated SisenseDatamodelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodelTable removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseDatamodelTable removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseDatamodelTable) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -446,8 +441,7 @@ public class SisenseDatamodelTable extends Asset
      * @return the updated SisenseDatamodelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodelTable removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseDatamodelTable removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseDatamodelTable) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -464,8 +458,7 @@ public class SisenseDatamodelTable extends Asset
     public static SisenseDatamodelTable updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SisenseDatamodelTable)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SisenseDatamodelTable) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -477,8 +470,7 @@ public class SisenseDatamodelTable extends Asset
      * @return the updated SisenseDatamodelTable, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodelTable removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseDatamodelTable removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseDatamodelTable) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -496,8 +488,7 @@ public class SisenseDatamodelTable extends Asset
     public static SisenseDatamodelTable updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SisenseDatamodelTable)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SisenseDatamodelTable) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -524,8 +515,8 @@ public class SisenseDatamodelTable extends Asset
      * @return the SisenseDatamodelTable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodelTable replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SisenseDatamodelTable replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SisenseDatamodelTable) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -578,8 +569,8 @@ public class SisenseDatamodelTable extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SisenseDatamodelTable appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static SisenseDatamodelTable appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (SisenseDatamodelTable) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

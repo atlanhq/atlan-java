@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ThoughtspotWorksheet extends Asset
-        implements IThoughtspotWorksheet, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
+public class ThoughtspotWorksheet extends Asset implements IThoughtspotWorksheet, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ThoughtspotWorksheet";
@@ -251,8 +250,7 @@ public class ThoughtspotWorksheet extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotWorksheet does not exist or the provided GUID is not a ThoughtspotWorksheet
      */
     @JsonIgnore
-    public static ThoughtspotWorksheet get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ThoughtspotWorksheet get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -284,8 +282,7 @@ public class ThoughtspotWorksheet extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotWorksheet does not exist or the provided GUID is not a ThoughtspotWorksheet
      */
     @JsonIgnore
-    public static ThoughtspotWorksheet get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ThoughtspotWorksheet get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -385,8 +382,7 @@ public class ThoughtspotWorksheet extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ThoughtspotWorksheetBuilder<
-                    C extends ThoughtspotWorksheet, B extends ThoughtspotWorksheetBuilder<C, B>>
+    public abstract static class ThoughtspotWorksheetBuilder<C extends ThoughtspotWorksheet, B extends ThoughtspotWorksheetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -398,8 +394,7 @@ public class ThoughtspotWorksheet extends Asset
      * @return the updated ThoughtspotWorksheet, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotWorksheet removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotWorksheet removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotWorksheet) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -426,8 +421,7 @@ public class ThoughtspotWorksheet extends Asset
      * @return the updated ThoughtspotWorksheet, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotWorksheet removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotWorksheet removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotWorksheet) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -444,8 +438,7 @@ public class ThoughtspotWorksheet extends Asset
     public static ThoughtspotWorksheet updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ThoughtspotWorksheet)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ThoughtspotWorksheet) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -457,8 +450,7 @@ public class ThoughtspotWorksheet extends Asset
      * @return the updated ThoughtspotWorksheet, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotWorksheet removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotWorksheet removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotWorksheet) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -476,8 +468,7 @@ public class ThoughtspotWorksheet extends Asset
     public static ThoughtspotWorksheet updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ThoughtspotWorksheet)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ThoughtspotWorksheet) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -504,8 +495,8 @@ public class ThoughtspotWorksheet extends Asset
      * @return the ThoughtspotWorksheet that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotWorksheet replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ThoughtspotWorksheet replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ThoughtspotWorksheet) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -558,8 +549,8 @@ public class ThoughtspotWorksheet extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ThoughtspotWorksheet appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static ThoughtspotWorksheet appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (ThoughtspotWorksheet) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

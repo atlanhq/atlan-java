@@ -54,7 +54,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -62,7 +62,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -80,37 +80,32 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
-    @Attribute
-    @Singular
-    SortedSet<IColumnProcess> columnProcesses;
-
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
-    /** Assets that are inputs to this process. */
+    /** Connection assets that are inputs to this connection process. */
     @Attribute
     @Singular
-    SortedSet<ICatalog> inputs;
+    SortedSet<IConnection> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
-    /** Assets that are outputs from this process. */
+    /** Connection assets that are outputs from this connection process. */
     @Attribute
     @Singular
-    SortedSet<ICatalog> outputs;
+    SortedSet<IConnection> outputs;
 
     /** TBC */
     @Attribute
@@ -118,7 +113,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -131,12 +126,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String sql;
 
-    /** Functions used by this process. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> sqlFunctions;
-
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -272,8 +262,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ConnectionProcess does not exist or the provided GUID is not a ConnectionProcess
      */
     @JsonIgnore
-    public static ConnectionProcess get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ConnectionProcess get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -305,8 +294,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ConnectionProcess does not exist or the provided GUID is not a ConnectionProcess
      */
     @JsonIgnore
-    public static ConnectionProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ConnectionProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -406,8 +394,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ConnectionProcessBuilder<
-                    C extends ConnectionProcess, B extends ConnectionProcessBuilder<C, B>>
+    public abstract static class ConnectionProcessBuilder<C extends ConnectionProcess, B extends ConnectionProcessBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -419,8 +406,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ConnectionProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ConnectionProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -447,8 +433,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ConnectionProcess removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ConnectionProcess) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -465,8 +450,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     public static ConnectionProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ConnectionProcess)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ConnectionProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -478,8 +462,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ConnectionProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ConnectionProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -497,8 +480,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     public static ConnectionProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ConnectionProcess)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ConnectionProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -525,8 +507,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the ConnectionProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ConnectionProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ConnectionProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -579,8 +561,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ConnectionProcess appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static ConnectionProcess appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (ConnectionProcess) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

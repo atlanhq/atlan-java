@@ -262,8 +262,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseWidget does not exist or the provided GUID is not a SisenseWidget
      */
     @JsonIgnore
-    public static SisenseWidget get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static SisenseWidget get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -295,8 +294,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseWidget does not exist or the provided GUID is not a SisenseWidget
      */
     @JsonIgnore
-    public static SisenseWidget get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static SisenseWidget get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -408,8 +406,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @return the updated SisenseWidget, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseWidget removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseWidget removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseWidget) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -436,8 +433,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @return the updated SisenseWidget, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseWidget removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseWidget removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseWidget) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -454,8 +450,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     public static SisenseWidget updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SisenseWidget)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SisenseWidget) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -467,8 +462,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @return the updated SisenseWidget, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseWidget removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SisenseWidget removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SisenseWidget) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -486,8 +480,7 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
     public static SisenseWidget updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SisenseWidget)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SisenseWidget) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -514,8 +507,8 @@ public class SisenseWidget extends Asset implements ISisenseWidget, ISisense, IB
      * @return the SisenseWidget that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SisenseWidget replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static SisenseWidget replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SisenseWidget) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -52,11 +52,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Folders that exist within this namespace. */
-    @Attribute
-    @Singular
-    SortedSet<IFolder> childrenFolders;
-
     /** Queries that exist within this namespace. */
     @Attribute
     @Singular
@@ -201,8 +196,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanCollection does not exist or the provided GUID is not a AtlanCollection
      */
     @JsonIgnore
-    public static AtlanCollection get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static AtlanCollection get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -234,8 +228,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanCollection does not exist or the provided GUID is not a AtlanCollection
      */
     @JsonIgnore
-    public static AtlanCollection get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static AtlanCollection get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -460,8 +453,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AtlanCollectionBuilder<
-                    C extends AtlanCollection, B extends AtlanCollectionBuilder<C, B>>
+    public abstract static class AtlanCollectionBuilder<C extends AtlanCollection, B extends AtlanCollectionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -473,8 +465,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @return the updated AtlanCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AtlanCollection removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AtlanCollection) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -501,8 +492,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @return the updated AtlanCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AtlanCollection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AtlanCollection) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -519,8 +509,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AtlanCollection)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AtlanCollection) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -532,8 +521,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @return the updated AtlanCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AtlanCollection removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AtlanCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -551,8 +539,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     public static AtlanCollection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AtlanCollection)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AtlanCollection) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -579,8 +566,8 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
      * @return the AtlanCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static AtlanCollection replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (AtlanCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

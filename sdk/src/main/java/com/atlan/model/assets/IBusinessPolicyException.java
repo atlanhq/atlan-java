@@ -60,8 +60,8 @@ public interface IBusinessPolicyException {
     RelationField BUSINESS_POLICY_FOR_EXCEPTION = new RelationField("businessPolicyForException");
 
     /** Unique name of the business policy through which this asset is accessible. */
-    KeywordTextField BUSINESS_POLICY_QUALIFIED_NAME = new KeywordTextField(
-            "businessPolicyQualifiedName", "businessPolicyQualifiedName", "businessPolicyQualifiedName.text");
+    KeywordTextField BUSINESS_POLICY_QUALIFIED_NAME =
+            new KeywordTextField("businessPolicyQualifiedName", "businessPolicyQualifiedName", "businessPolicyQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -53,24 +53,22 @@ public interface IThoughtspotColumn {
     RelationField THOUGHTSPOT_TABLE = new RelationField("thoughtspotTable");
 
     /** Unique name of the table in which this column exists. */
-    KeywordTextField THOUGHTSPOT_TABLE_QUALIFIED_NAME = new KeywordTextField(
-            "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName.text");
+    KeywordTextField THOUGHTSPOT_TABLE_QUALIFIED_NAME =
+            new KeywordTextField("thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName", "thoughtspotTableQualifiedName.text");
 
     /** View in which this column exists. */
     RelationField THOUGHTSPOT_VIEW = new RelationField("thoughtspotView");
 
     /** Unique name of the view in which this column exists. */
-    KeywordTextField THOUGHTSPOT_VIEW_QUALIFIED_NAME = new KeywordTextField(
-            "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName.text");
+    KeywordTextField THOUGHTSPOT_VIEW_QUALIFIED_NAME =
+            new KeywordTextField("thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName", "thoughtspotViewQualifiedName.text");
 
     /** Worksheet in which this column exists. */
     RelationField THOUGHTSPOT_WORKSHEET = new RelationField("thoughtspotWorksheet");
 
     /** Unique name of the worksheet in which this column exists. */
-    KeywordTextField THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME = new KeywordTextField(
-            "thoughtspotWorksheetQualifiedName",
-            "thoughtspotWorksheetQualifiedName",
-            "thoughtspotWorksheetQualifiedName.text");
+    KeywordTextField THOUGHTSPOT_WORKSHEET_QUALIFIED_NAME =
+            new KeywordTextField("thoughtspotWorksheetQualifiedName", "thoughtspotWorksheetQualifiedName", "thoughtspotWorksheetQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

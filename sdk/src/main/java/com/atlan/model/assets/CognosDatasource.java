@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CognosDatasource extends Asset
-        implements ICognosDatasource, ICognos, IBI, ICatalog, IAsset, IReferenceable {
+public class CognosDatasource extends Asset implements ICognosDatasource, ICognos, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CognosDatasource";
@@ -270,8 +269,7 @@ public class CognosDatasource extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosDatasource does not exist or the provided GUID is not a CognosDatasource
      */
     @JsonIgnore
-    public static CognosDatasource get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CognosDatasource get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -303,8 +301,7 @@ public class CognosDatasource extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosDatasource does not exist or the provided GUID is not a CognosDatasource
      */
     @JsonIgnore
-    public static CognosDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CognosDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -404,8 +401,7 @@ public class CognosDatasource extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CognosDatasourceBuilder<
-                    C extends CognosDatasource, B extends CognosDatasourceBuilder<C, B>>
+    public abstract static class CognosDatasourceBuilder<C extends CognosDatasource, B extends CognosDatasourceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -417,8 +413,7 @@ public class CognosDatasource extends Asset
      * @return the updated CognosDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDatasource removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDatasource removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDatasource) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -445,8 +440,7 @@ public class CognosDatasource extends Asset
      * @return the updated CognosDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDatasource removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDatasource removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDatasource) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -463,8 +457,7 @@ public class CognosDatasource extends Asset
     public static CognosDatasource updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosDatasource)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosDatasource) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -476,8 +469,7 @@ public class CognosDatasource extends Asset
      * @return the updated CognosDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosDatasource removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosDatasource removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosDatasource) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -495,8 +487,7 @@ public class CognosDatasource extends Asset
     public static CognosDatasource updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosDatasource)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosDatasource) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -523,8 +514,8 @@ public class CognosDatasource extends Asset
      * @return the CognosDatasource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosDatasource replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CognosDatasource replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CognosDatasource) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

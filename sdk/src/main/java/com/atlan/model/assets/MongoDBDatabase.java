@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class MongoDBDatabase extends Asset
-        implements IMongoDBDatabase, IDatabase, IMongoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
+public class MongoDBDatabase extends Asset implements IMongoDBDatabase, IDatabase, IMongoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MongoDBDatabase";
@@ -195,11 +194,6 @@ public class MongoDBDatabase extends Asset
     @Attribute
     @Singular
     SortedSet<ISchema> schemas;
-
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -366,8 +360,7 @@ public class MongoDBDatabase extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBDatabase does not exist or the provided GUID is not a MongoDBDatabase
      */
     @JsonIgnore
-    public static MongoDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static MongoDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -399,8 +392,7 @@ public class MongoDBDatabase extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MongoDBDatabase does not exist or the provided GUID is not a MongoDBDatabase
      */
     @JsonIgnore
-    public static MongoDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static MongoDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -500,8 +492,7 @@ public class MongoDBDatabase extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class MongoDBDatabaseBuilder<
-                    C extends MongoDBDatabase, B extends MongoDBDatabaseBuilder<C, B>>
+    public abstract static class MongoDBDatabaseBuilder<C extends MongoDBDatabase, B extends MongoDBDatabaseBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -513,8 +504,7 @@ public class MongoDBDatabase extends Asset
      * @return the updated MongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MongoDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MongoDBDatabase) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -541,8 +531,7 @@ public class MongoDBDatabase extends Asset
      * @return the updated MongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MongoDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MongoDBDatabase) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -559,8 +548,7 @@ public class MongoDBDatabase extends Asset
     public static MongoDBDatabase updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MongoDBDatabase)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MongoDBDatabase) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -572,8 +560,7 @@ public class MongoDBDatabase extends Asset
      * @return the updated MongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MongoDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static MongoDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (MongoDBDatabase) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -591,8 +578,7 @@ public class MongoDBDatabase extends Asset
     public static MongoDBDatabase updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MongoDBDatabase)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MongoDBDatabase) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -619,8 +605,8 @@ public class MongoDBDatabase extends Asset
      * @return the MongoDBDatabase that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MongoDBDatabase replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static MongoDBDatabase replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (MongoDBDatabase) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

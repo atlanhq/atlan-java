@@ -56,7 +56,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -64,7 +64,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -82,7 +82,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
+    /** Column-level processes that are part of this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
@@ -176,16 +176,16 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Singular
     List<DbtInputContext> dbtUpstreamContexts;
 
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
@@ -209,7 +209,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
 
@@ -259,7 +259,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -272,12 +272,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Attribute
     String sql;
 
-    /** Functions used by this process. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> sqlFunctions;
-
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -445,8 +440,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtProcess does not exist or the provided GUID is not a DbtProcess
      */
     @JsonIgnore
-    public static DbtProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static DbtProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -558,8 +552,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
      * @return the updated DbtProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -603,8 +596,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     public static DbtProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtProcess)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -616,8 +608,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
      * @return the updated DbtProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DbtProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DbtProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -635,8 +626,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     public static DbtProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtProcess)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -663,8 +653,8 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
      * @return the DbtProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static DbtProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (DbtProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

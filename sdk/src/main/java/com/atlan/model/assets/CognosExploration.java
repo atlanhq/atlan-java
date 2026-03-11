@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CognosExploration extends Asset
-        implements ICognosExploration, ICognos, IBI, ICatalog, IAsset, IReferenceable {
+public class CognosExploration extends Asset implements ICognosExploration, ICognos, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CognosExploration";
@@ -275,8 +274,7 @@ public class CognosExploration extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosExploration does not exist or the provided GUID is not a CognosExploration
      */
     @JsonIgnore
-    public static CognosExploration get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CognosExploration get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -308,8 +306,7 @@ public class CognosExploration extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosExploration does not exist or the provided GUID is not a CognosExploration
      */
     @JsonIgnore
-    public static CognosExploration get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CognosExploration get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -409,8 +406,7 @@ public class CognosExploration extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CognosExplorationBuilder<
-                    C extends CognosExploration, B extends CognosExplorationBuilder<C, B>>
+    public abstract static class CognosExplorationBuilder<C extends CognosExploration, B extends CognosExplorationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -422,8 +418,7 @@ public class CognosExploration extends Asset
      * @return the updated CognosExploration, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosExploration removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosExploration removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosExploration) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -450,8 +445,7 @@ public class CognosExploration extends Asset
      * @return the updated CognosExploration, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosExploration removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosExploration removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosExploration) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -468,8 +462,7 @@ public class CognosExploration extends Asset
     public static CognosExploration updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosExploration)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosExploration) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -481,8 +474,7 @@ public class CognosExploration extends Asset
      * @return the updated CognosExploration, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosExploration removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CognosExploration removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CognosExploration) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,8 +492,7 @@ public class CognosExploration extends Asset
     public static CognosExploration updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosExploration)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosExploration) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -528,8 +519,8 @@ public class CognosExploration extends Asset
      * @return the CognosExploration that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosExploration replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CognosExploration replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CognosExploration) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -582,8 +573,8 @@ public class CognosExploration extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static CognosExploration appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static CognosExploration appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (CognosExploration) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

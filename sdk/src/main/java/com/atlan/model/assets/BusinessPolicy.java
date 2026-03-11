@@ -92,16 +92,6 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     @Attribute
     Integer businessPolicyVersion;
 
-    /** Exception assigned to business polices */
-    @Attribute
-    @Singular("exceptionForBusinessPolicy")
-    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
-
-    /** BusinessPolicy that have the same (or relatable) compliance */
-    @Attribute
-    @Singular
-    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
-
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicy, from a potentially
      * more-complete BusinessPolicy object.
@@ -233,8 +223,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicy does not exist or the provided GUID is not a BusinessPolicy
      */
     @JsonIgnore
-    public static BusinessPolicy get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static BusinessPolicy get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -266,8 +255,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicy does not exist or the provided GUID is not a BusinessPolicy
      */
     @JsonIgnore
-    public static BusinessPolicy get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static BusinessPolicy get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -379,8 +367,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @return the updated BusinessPolicy, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicy removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicy removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicy) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -407,8 +394,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @return the updated BusinessPolicy, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicy removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicy removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicy) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -425,8 +411,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     public static BusinessPolicy updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (BusinessPolicy)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (BusinessPolicy) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -438,8 +423,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @return the updated BusinessPolicy, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicy removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BusinessPolicy removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BusinessPolicy) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -457,8 +441,7 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     public static BusinessPolicy updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (BusinessPolicy)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (BusinessPolicy) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -485,8 +468,8 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
      * @return the BusinessPolicy that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicy replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static BusinessPolicy replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (BusinessPolicy) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

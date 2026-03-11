@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ThoughtspotView extends Asset
-        implements IThoughtspotView, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
+public class ThoughtspotView extends Asset implements IThoughtspotView, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ThoughtspotView";
@@ -251,8 +250,7 @@ public class ThoughtspotView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotView does not exist or the provided GUID is not a ThoughtspotView
      */
     @JsonIgnore
-    public static ThoughtspotView get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static ThoughtspotView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -284,8 +282,7 @@ public class ThoughtspotView extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotView does not exist or the provided GUID is not a ThoughtspotView
      */
     @JsonIgnore
-    public static ThoughtspotView get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static ThoughtspotView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -385,8 +382,7 @@ public class ThoughtspotView extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ThoughtspotViewBuilder<
-                    C extends ThoughtspotView, B extends ThoughtspotViewBuilder<C, B>>
+    public abstract static class ThoughtspotViewBuilder<C extends ThoughtspotView, B extends ThoughtspotViewBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -398,8 +394,7 @@ public class ThoughtspotView extends Asset
      * @return the updated ThoughtspotView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotView removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -426,8 +421,7 @@ public class ThoughtspotView extends Asset
      * @return the updated ThoughtspotView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotView removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -444,8 +438,7 @@ public class ThoughtspotView extends Asset
     public static ThoughtspotView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ThoughtspotView)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ThoughtspotView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -457,8 +450,7 @@ public class ThoughtspotView extends Asset
      * @return the updated ThoughtspotView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotView removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static ThoughtspotView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (ThoughtspotView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -476,8 +468,7 @@ public class ThoughtspotView extends Asset
     public static ThoughtspotView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ThoughtspotView)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ThoughtspotView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -504,8 +495,8 @@ public class ThoughtspotView extends Asset
      * @return the ThoughtspotView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotView replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static ThoughtspotView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (ThoughtspotView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

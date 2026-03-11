@@ -9,9 +9,11 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AssetFilterGroup;
 import com.atlan.model.enums.AssetSidebarTab;
+import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.PersonaAIAction;
 import com.atlan.model.enums.PersonaDomainAction;
@@ -118,11 +120,6 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     @Attribute
     @Singular
     SortedSet<String> personaUsers;
-
-    /** Access control entity to which this policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
 
     /** TBC */
     @Attribute

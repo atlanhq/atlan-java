@@ -40,17 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CosmosMongoDBCollection extends Asset
-        implements ICosmosMongoDBCollection,
-                IMongoDBCollection,
-                ICosmosMongoDB,
-                IMongoDB,
-                ITable,
-                INoSQL,
-                ISQL,
-                ICatalog,
-                IAsset,
-                IReferenceable {
+public class CosmosMongoDBCollection extends Asset implements ICosmosMongoDBCollection, IMongoDBCollection, ICosmosMongoDB, IMongoDB, ITable, INoSQL, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CosmosMongoDBCollection";
@@ -365,11 +355,6 @@ public class CosmosMongoDBCollection extends Asset
     @Attribute
     Long sizeBytes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -560,8 +545,7 @@ public class CosmosMongoDBCollection extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CosmosMongoDBCollection does not exist or the provided GUID is not a CosmosMongoDBCollection
      */
     @JsonIgnore
-    public static CosmosMongoDBCollection get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CosmosMongoDBCollection get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -593,8 +577,7 @@ public class CosmosMongoDBCollection extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CosmosMongoDBCollection does not exist or the provided GUID is not a CosmosMongoDBCollection
      */
     @JsonIgnore
-    public static CosmosMongoDBCollection get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CosmosMongoDBCollection get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -694,8 +677,7 @@ public class CosmosMongoDBCollection extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CosmosMongoDBCollectionBuilder<
-                    C extends CosmosMongoDBCollection, B extends CosmosMongoDBCollectionBuilder<C, B>>
+    public abstract static class CosmosMongoDBCollectionBuilder<C extends CosmosMongoDBCollection, B extends CosmosMongoDBCollectionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -707,8 +689,7 @@ public class CosmosMongoDBCollection extends Asset
      * @return the updated CosmosMongoDBCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBCollection removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CosmosMongoDBCollection removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -735,8 +716,7 @@ public class CosmosMongoDBCollection extends Asset
      * @return the updated CosmosMongoDBCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBCollection removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CosmosMongoDBCollection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -753,8 +733,7 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CosmosMongoDBCollection)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CosmosMongoDBCollection) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -766,8 +745,7 @@ public class CosmosMongoDBCollection extends Asset
      * @return the updated CosmosMongoDBCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CosmosMongoDBCollection removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -785,8 +763,7 @@ public class CosmosMongoDBCollection extends Asset
     public static CosmosMongoDBCollection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CosmosMongoDBCollection)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CosmosMongoDBCollection) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -813,8 +790,8 @@ public class CosmosMongoDBCollection extends Asset
      * @return the CosmosMongoDBCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBCollection replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CosmosMongoDBCollection replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CosmosMongoDBCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -831,8 +808,8 @@ public class CosmosMongoDBCollection extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static CosmosMongoDBCollection appendTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CosmosMongoDBCollection appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CosmosMongoDBCollection) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -849,8 +826,8 @@ public class CosmosMongoDBCollection extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static CosmosMongoDBCollection removeTerms(
-            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CosmosMongoDBCollection removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CosmosMongoDBCollection) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -867,8 +844,8 @@ public class CosmosMongoDBCollection extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static CosmosMongoDBCollection appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static CosmosMongoDBCollection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (CosmosMongoDBCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

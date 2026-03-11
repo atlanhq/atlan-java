@@ -38,8 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CassandraKeyspace extends Asset
-        implements ICassandraKeyspace, ICassandra, INoSQL, ICatalog, IAsset, IReferenceable {
+public class CassandraKeyspace extends Asset implements ICassandraKeyspace, ICassandra, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CassandraKeyspace";
@@ -281,8 +280,7 @@ public class CassandraKeyspace extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CassandraKeyspace does not exist or the provided GUID is not a CassandraKeyspace
      */
     @JsonIgnore
-    public static CassandraKeyspace get(AtlanClient client, String id, boolean includeAllRelationships)
-            throws AtlanException {
+    public static CassandraKeyspace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -314,8 +312,7 @@ public class CassandraKeyspace extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CassandraKeyspace does not exist or the provided GUID is not a CassandraKeyspace
      */
     @JsonIgnore
-    public static CassandraKeyspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
-            throws AtlanException {
+    public static CassandraKeyspace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -415,8 +412,7 @@ public class CassandraKeyspace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CassandraKeyspaceBuilder<
-                    C extends CassandraKeyspace, B extends CassandraKeyspaceBuilder<C, B>>
+    public abstract static class CassandraKeyspaceBuilder<C extends CassandraKeyspace, B extends CassandraKeyspaceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -428,8 +424,7 @@ public class CassandraKeyspace extends Asset
      * @return the updated CassandraKeyspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraKeyspace removeDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraKeyspace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraKeyspace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -456,8 +451,7 @@ public class CassandraKeyspace extends Asset
      * @return the updated CassandraKeyspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraKeyspace removeOwners(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraKeyspace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraKeyspace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -474,8 +468,7 @@ public class CassandraKeyspace extends Asset
     public static CassandraKeyspace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CassandraKeyspace)
-                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CassandraKeyspace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -487,8 +480,7 @@ public class CassandraKeyspace extends Asset
      * @return the updated CassandraKeyspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CassandraKeyspace removeCertificate(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static CassandraKeyspace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (CassandraKeyspace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -506,8 +498,7 @@ public class CassandraKeyspace extends Asset
     public static CassandraKeyspace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CassandraKeyspace)
-                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CassandraKeyspace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -534,8 +525,8 @@ public class CassandraKeyspace extends Asset
      * @return the CassandraKeyspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CassandraKeyspace replaceTerms(
-            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+    public static CassandraKeyspace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (CassandraKeyspace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -588,8 +579,8 @@ public class CassandraKeyspace extends Asset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static CassandraKeyspace appendAtlanTags(
-            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+    public static CassandraKeyspace appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
         return (CassandraKeyspace) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
