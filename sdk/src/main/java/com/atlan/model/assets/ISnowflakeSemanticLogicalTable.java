@@ -50,9 +50,6 @@ public interface ISnowflakeSemanticLogicalTable {
     /** Facts contained in the logical table. */
     RelationField SNOWFLAKE_SEMANTIC_FACTS = new RelationField("snowflakeSemanticFacts");
 
-    /** Logical tables that join to this logical table. */
-    RelationField SNOWFLAKE_SEMANTIC_LOGICAL_TABLE_JOINS = new RelationField("snowflakeSemanticLogicalTableJoins");
-
     /** Metrics contained in the logical table. */
     RelationField SNOWFLAKE_SEMANTIC_METRICS = new RelationField("snowflakeSemanticMetrics");
 
@@ -780,11 +777,6 @@ public interface ISnowflakeSemanticLogicalTable {
 
     /** Facts contained in the logical table. */
     default SortedSet<ISnowflakeSemanticFact> getSnowflakeSemanticFacts() {
-        return null;
-    }
-
-    /** Logical tables that join to this logical table. */
-    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTableJoins() {
         return null;
     }
 

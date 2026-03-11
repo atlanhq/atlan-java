@@ -226,11 +226,6 @@ public class SnowflakeSemanticLogicalTable extends Asset
     @Singular
     SortedSet<ISnowflakeSemanticFact> snowflakeSemanticFacts;
 
-    /** Logical tables that join to this logical table. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTableJoins;
-
     /** Metrics contained in the logical table. */
     @Attribute
     @Singular
