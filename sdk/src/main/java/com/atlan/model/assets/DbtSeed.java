@@ -472,7 +472,8 @@ public class DbtSeed extends Asset implements IDbtSeed, IDbt, ICatalog, IAsset, 
      * @return the updated DbtSeed, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSeed removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtSeed removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtSeed) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -528,7 +529,8 @@ public class DbtSeed extends Asset implements IDbtSeed, IDbt, ICatalog, IAsset, 
      * @return the updated DbtSeed, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSeed removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtSeed removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtSeed) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

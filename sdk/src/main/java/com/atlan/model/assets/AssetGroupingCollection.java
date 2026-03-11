@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AssetGroupingCollection extends Asset implements IAssetGroupingCollection, IAssetGrouping, ICatalog, IAsset, IReferenceable {
+public class AssetGroupingCollection extends Asset
+        implements IAssetGroupingCollection, IAssetGrouping, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AssetGroupingCollection";
@@ -243,7 +244,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AssetGroupingCollection does not exist or the provided GUID is not a AssetGroupingCollection
      */
     @JsonIgnore
-    public static AssetGroupingCollection get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AssetGroupingCollection get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -275,7 +277,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AssetGroupingCollection does not exist or the provided GUID is not a AssetGroupingCollection
      */
     @JsonIgnore
-    public static AssetGroupingCollection get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AssetGroupingCollection get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -375,7 +378,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AssetGroupingCollectionBuilder<C extends AssetGroupingCollection, B extends AssetGroupingCollectionBuilder<C, B>>
+    public abstract static class AssetGroupingCollectionBuilder<
+                    C extends AssetGroupingCollection, B extends AssetGroupingCollectionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -387,7 +391,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @return the updated AssetGroupingCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGroupingCollection removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGroupingCollection removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGroupingCollection) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -414,7 +419,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @return the updated AssetGroupingCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGroupingCollection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGroupingCollection removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGroupingCollection) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -431,7 +437,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
     public static AssetGroupingCollection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AssetGroupingCollection) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AssetGroupingCollection)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -443,7 +450,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @return the updated AssetGroupingCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGroupingCollection removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGroupingCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGroupingCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -461,7 +469,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
     public static AssetGroupingCollection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AssetGroupingCollection) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AssetGroupingCollection)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -488,8 +497,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @return the AssetGroupingCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AssetGroupingCollection replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AssetGroupingCollection replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AssetGroupingCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -506,8 +515,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AssetGroupingCollection appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AssetGroupingCollection appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AssetGroupingCollection) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -524,8 +533,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AssetGroupingCollection removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AssetGroupingCollection removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AssetGroupingCollection) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -542,8 +551,8 @@ public class AssetGroupingCollection extends Asset implements IAssetGroupingColl
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static AssetGroupingCollection appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static AssetGroupingCollection appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (AssetGroupingCollection) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

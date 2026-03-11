@@ -46,7 +46,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksAIModelContext extends Asset implements IDatabricksAIModelContext, IAIModel, IDatabricks, IAI, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksAIModelContext extends Asset
+        implements IDatabricksAIModelContext, IAIModel, IDatabricks, IAI, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksAIModelContext";
@@ -351,7 +352,10 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @return reference to a DatabricksAIModelContext that can be used for defining a relationship to a DatabricksAIModelContext
      */
     public static DatabricksAIModelContext refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return DatabricksAIModelContext._internal().guid(guid).semantic(semantic).build();
+        return DatabricksAIModelContext._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -405,7 +409,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksAIModelContext does not exist or the provided GUID is not a DatabricksAIModelContext
      */
     @JsonIgnore
-    public static DatabricksAIModelContext get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DatabricksAIModelContext get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -437,7 +442,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksAIModelContext does not exist or the provided GUID is not a DatabricksAIModelContext
      */
     @JsonIgnore
-    public static DatabricksAIModelContext get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DatabricksAIModelContext get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -537,7 +543,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksAIModelContextBuilder<C extends DatabricksAIModelContext, B extends DatabricksAIModelContextBuilder<C, B>>
+    public abstract static class DatabricksAIModelContextBuilder<
+                    C extends DatabricksAIModelContext, B extends DatabricksAIModelContextBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -549,7 +556,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelContext, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelContext removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelContext removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelContext) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -576,7 +584,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelContext, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelContext removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelContext removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelContext) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -593,7 +602,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
     public static DatabricksAIModelContext updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksAIModelContext) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksAIModelContext)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -605,7 +615,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelContext, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelContext removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelContext removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelContext) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -623,7 +634,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
     public static DatabricksAIModelContext updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksAIModelContext) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksAIModelContext)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -650,8 +662,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @return the DatabricksAIModelContext that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelContext replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelContext replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelContext) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -668,8 +680,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksAIModelContext appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelContext appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelContext) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -686,8 +698,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksAIModelContext removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelContext removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelContext) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -704,8 +716,8 @@ public class DatabricksAIModelContext extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksAIModelContext appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DatabricksAIModelContext appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DatabricksAIModelContext) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

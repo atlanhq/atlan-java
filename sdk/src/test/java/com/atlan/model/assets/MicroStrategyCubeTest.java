@@ -425,21 +425,29 @@ public class MicroStrategyCubeTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String0")
-                                                                    .assetExternalDQTestMetricUpperBound("String0")
-                                                                    .assetExternalDQTestMetricLowerBound("String0")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String1")
-                                                                    .assetExternalDQTestMetricUpperBound("String1")
-                                                                    .assetExternalDQTestMetricLowerBound("String1")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -453,21 +461,29 @@ public class MicroStrategyCubeTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String0")
-                                                                    .assetExternalDQTestMetricUpperBound("String0")
-                                                                    .assetExternalDQTestMetricLowerBound("String0")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String1")
-                                                                    .assetExternalDQTestMetricUpperBound("String1")
-                                                                    .assetExternalDQTestMetricLowerBound("String1")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -509,21 +525,29 @@ public class MicroStrategyCubeTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String0")
-                                                                    .assetExternalDQTestMetricUpperBound("String0")
-                                                                    .assetExternalDQTestMetricLowerBound("String0")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String1")
-                                                                    .assetExternalDQTestMetricUpperBound("String1")
-                                                                    .assetExternalDQTestMetricLowerBound("String1")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -537,21 +561,29 @@ public class MicroStrategyCubeTest {
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String0")
-                                                                    .assetExternalDQTestMetricUpperBound("String0")
-                                                                    .assetExternalDQTestMetricLowerBound("String0")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String0")
+                                                                            .build())
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
-                                                            .assetExternalDQTestMetricInfo(AssetExternalDQTestMetric.builder()
-                                                                    .assetExternalDQTestMetricObservedValue("String1")
-                                                                    .assetExternalDQTestMetricUpperBound("String1")
-                                                                    .assetExternalDQTestMetricLowerBound("String1")
-                                                                    .build())
+                                                            .assetExternalDQTestMetricInfo(
+                                                                    AssetExternalDQTestMetric.builder()
+                                                                            .assetExternalDQTestMetricObservedValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricUpperBound(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestMetricLowerBound(
+                                                                                    "String1")
+                                                                            .build())
                                                             .build()))
                                             .build()))
                             .build())
@@ -655,11 +687,14 @@ public class MicroStrategyCubeTest {
             .microStrategyCubeQuery("String0")
             .microStrategyProject(MicroStrategyProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .microStrategyMetric(MicroStrategyMetric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .microStrategyMetric(MicroStrategyMetric.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .microStrategyMetric(
+                    MicroStrategyMetric.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .microStrategyAttribute(MicroStrategyAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .microStrategyAttribute(MicroStrategyAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .microStrategyAttribute(
+                    MicroStrategyAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .microStrategyColumn(MicroStrategyColumn.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .microStrategyColumn(MicroStrategyColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .microStrategyColumn(
+                    MicroStrategyColumn.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -671,7 +706,8 @@ public class MicroStrategyCubeTest {
             .dqBaseDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dqBaseDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dqReferenceDatasetRule(DataQualityRule.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dqReferenceDatasetRule(DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .dqReferenceDatasetRule(
+                    DataQualityRule.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .inputPortDataProduct(DataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -688,13 +724,16 @@ public class MicroStrategyCubeTest {
             .outputPortDataProduct(DataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .schemaRegistrySubject(SchemaRegistrySubject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .schemaRegistrySubject(SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .schemaRegistrySubject(
+                    SchemaRegistrySubject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sodaCheck(SodaCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sodaCheck(SodaCheck.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipFrom(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipFrom(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipFrom(
+                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .userDefRelationshipTo(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .userDefRelationshipTo(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .userDefRelationshipTo(
+                    IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     @BeforeClass

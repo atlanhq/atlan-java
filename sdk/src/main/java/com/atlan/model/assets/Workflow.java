@@ -363,7 +363,8 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @return the updated Workflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Workflow removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Workflow removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Workflow) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -419,7 +420,8 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @return the updated Workflow, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Workflow removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Workflow removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Workflow) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -464,8 +466,8 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
      * @return the Workflow that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Workflow replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Workflow replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Workflow) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

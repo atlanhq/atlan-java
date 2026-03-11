@@ -306,7 +306,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosFile does not exist or the provided GUID is not a CognosFile
      */
     @JsonIgnore
-    public static CognosFile get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CognosFile get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -418,7 +419,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
      * @return the updated CognosFile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosFile removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosFile removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosFile) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -462,7 +464,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
     public static CognosFile updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosFile) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosFile)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -474,7 +477,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
      * @return the updated CognosFile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosFile removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosFile removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosFile) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,7 +496,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
     public static CognosFile updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosFile) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosFile)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +524,8 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
      * @return the CognosFile that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosFile replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CognosFile replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CognosFile) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

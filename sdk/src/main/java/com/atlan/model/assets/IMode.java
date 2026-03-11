@@ -67,8 +67,8 @@ public interface IMode {
             new KeywordTextField("modeWorkspaceName", "modeWorkspaceName.keyword", "modeWorkspaceName");
 
     /** Unique name of the workspace for the Mode asset. */
-    KeywordTextField MODE_WORKSPACE_QUALIFIED_NAME =
-            new KeywordTextField("modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName.text");
+    KeywordTextField MODE_WORKSPACE_QUALIFIED_NAME = new KeywordTextField(
+            "modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName", "modeWorkspaceQualifiedName.text");
 
     /** Username of the workspace for the Mode asset. */
     KeywordTextField MODE_WORKSPACE_USERNAME =

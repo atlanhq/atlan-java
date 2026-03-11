@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
+public class SnowflakeStage extends Asset
+        implements ISnowflakeStage, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeStage";
@@ -359,7 +360,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeStage does not exist or the provided GUID is not a SnowflakeStage
      */
     @JsonIgnore
-    public static SnowflakeStage get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SnowflakeStage get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -391,7 +393,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeStage does not exist or the provided GUID is not a SnowflakeStage
      */
     @JsonIgnore
-    public static SnowflakeStage get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SnowflakeStage get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -503,7 +506,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @return the updated SnowflakeStage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStage removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeStage removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeStage) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -530,7 +534,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @return the updated SnowflakeStage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStage removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeStage removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeStage) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -547,7 +552,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
     public static SnowflakeStage updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeStage) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeStage)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -559,7 +565,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @return the updated SnowflakeStage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStage removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeStage removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeStage) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -577,7 +584,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
     public static SnowflakeStage updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeStage) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeStage)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -604,8 +612,8 @@ public class SnowflakeStage extends Asset implements ISnowflakeStage, ISnowflake
      * @return the SnowflakeStage that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStage replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SnowflakeStage replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeStage) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

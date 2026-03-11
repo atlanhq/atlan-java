@@ -38,7 +38,17 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDatabase, IMongoDBDatabase, ICosmosMongoDB, IMongoDB, IDatabase, INoSQL, ISQL, ICatalog, IAsset, IReferenceable {
+public class CosmosMongoDBDatabase extends Asset
+        implements ICosmosMongoDBDatabase,
+                IMongoDBDatabase,
+                ICosmosMongoDB,
+                IMongoDB,
+                IDatabase,
+                INoSQL,
+                ISQL,
+                ICatalog,
+                IAsset,
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CosmosMongoDBDatabase";
@@ -378,7 +388,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CosmosMongoDBDatabase does not exist or the provided GUID is not a CosmosMongoDBDatabase
      */
     @JsonIgnore
-    public static CosmosMongoDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static CosmosMongoDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -410,7 +421,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CosmosMongoDBDatabase does not exist or the provided GUID is not a CosmosMongoDBDatabase
      */
     @JsonIgnore
-    public static CosmosMongoDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CosmosMongoDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -510,7 +522,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CosmosMongoDBDatabaseBuilder<C extends CosmosMongoDBDatabase, B extends CosmosMongoDBDatabaseBuilder<C, B>>
+    public abstract static class CosmosMongoDBDatabaseBuilder<
+                    C extends CosmosMongoDBDatabase, B extends CosmosMongoDBDatabaseBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -522,7 +535,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @return the updated CosmosMongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CosmosMongoDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CosmosMongoDBDatabase) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -549,7 +563,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @return the updated CosmosMongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CosmosMongoDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CosmosMongoDBDatabase) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -566,7 +581,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
     public static CosmosMongoDBDatabase updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CosmosMongoDBDatabase) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CosmosMongoDBDatabase)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -578,7 +594,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @return the updated CosmosMongoDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CosmosMongoDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CosmosMongoDBDatabase) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -596,7 +613,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
     public static CosmosMongoDBDatabase updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CosmosMongoDBDatabase) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CosmosMongoDBDatabase)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -623,8 +641,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @return the CosmosMongoDBDatabase that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CosmosMongoDBDatabase replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CosmosMongoDBDatabase replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CosmosMongoDBDatabase) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -677,8 +695,8 @@ public class CosmosMongoDBDatabase extends Asset implements ICosmosMongoDBDataba
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static CosmosMongoDBDatabase appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static CosmosMongoDBDatabase appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (CosmosMongoDBDatabase) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

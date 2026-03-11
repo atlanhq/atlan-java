@@ -400,7 +400,7 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create an API spec.
      *
      * @param name of the API spec
@@ -457,7 +457,8 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return the updated APISpec, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APISpec removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APISpec removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APISpec) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -513,7 +514,8 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
      * @return the updated APISpec, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APISpec removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APISpec removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APISpec) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

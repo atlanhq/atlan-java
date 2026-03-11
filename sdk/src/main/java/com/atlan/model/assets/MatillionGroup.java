@@ -242,7 +242,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MatillionGroup does not exist or the provided GUID is not a MatillionGroup
      */
     @JsonIgnore
-    public static MatillionGroup get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static MatillionGroup get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -274,7 +275,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MatillionGroup does not exist or the provided GUID is not a MatillionGroup
      */
     @JsonIgnore
-    public static MatillionGroup get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static MatillionGroup get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -386,7 +388,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @return the updated MatillionGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MatillionGroup removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static MatillionGroup removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (MatillionGroup) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -413,7 +416,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @return the updated MatillionGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MatillionGroup removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static MatillionGroup removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (MatillionGroup) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -430,7 +434,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     public static MatillionGroup updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MatillionGroup) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MatillionGroup)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -442,7 +447,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @return the updated MatillionGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MatillionGroup removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static MatillionGroup removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (MatillionGroup) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -460,7 +466,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
     public static MatillionGroup updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MatillionGroup) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MatillionGroup)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -487,8 +494,8 @@ public class MatillionGroup extends Asset implements IMatillionGroup, IMatillion
      * @return the MatillionGroup that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MatillionGroup replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static MatillionGroup replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (MatillionGroup) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -506,7 +506,8 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
      * @return the updated DbtTest, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtTest removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtTest removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtTest) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -562,7 +563,8 @@ public class DbtTest extends Asset implements IDbtTest, IDbt, ICatalog, IAsset, 
      * @return the updated DbtTest, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtTest removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtTest removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtTest) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

@@ -45,8 +45,10 @@ public interface ICosmosMongoDBDatabase {
     RelationField COSMOS_MONGO_DB_ACCOUNT = new RelationField("cosmosMongoDBAccount");
 
     /** Unique name of the account in which this database exists. */
-    KeywordTextField COSMOS_MONGO_DB_ACCOUNT_QUALIFIED_NAME =
-            new KeywordTextField("cosmosMongoDBAccountQualifiedName", "cosmosMongoDBAccountQualifiedName", "cosmosMongoDBAccountQualifiedName.text");
+    KeywordTextField COSMOS_MONGO_DB_ACCOUNT_QUALIFIED_NAME = new KeywordTextField(
+            "cosmosMongoDBAccountQualifiedName",
+            "cosmosMongoDBAccountQualifiedName",
+            "cosmosMongoDBAccountQualifiedName.text");
 
     /** Collections that exist within this database. */
     RelationField COSMOS_MONGO_DB_COLLECTIONS = new RelationField("cosmosMongoDBCollections");

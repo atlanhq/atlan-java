@@ -45,8 +45,10 @@ public interface IMetabase {
             new KeywordTextField("metabaseCollectionName", "metabaseCollectionName.keyword", "metabaseCollectionName");
 
     /** Unique name of the Metabase collection in which this asset exists. */
-    KeywordTextField METABASE_COLLECTION_QUALIFIED_NAME =
-            new KeywordTextField("metabaseCollectionQualifiedName", "metabaseCollectionQualifiedName", "metabaseCollectionQualifiedName.text");
+    KeywordTextField METABASE_COLLECTION_QUALIFIED_NAME = new KeywordTextField(
+            "metabaseCollectionQualifiedName",
+            "metabaseCollectionQualifiedName",
+            "metabaseCollectionQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -276,7 +276,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanView does not exist or the provided GUID is not a AnaplanView
      */
     @JsonIgnore
-    public static AnaplanView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AnaplanView get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -308,7 +309,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanView does not exist or the provided GUID is not a AnaplanView
      */
     @JsonIgnore
-    public static AnaplanView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnaplanView get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -377,7 +379,7 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Anaplan view.
      *
      * @param name of the view
@@ -523,7 +525,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @return the updated AnaplanView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanView removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -550,7 +553,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @return the updated AnaplanView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanView removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -567,7 +571,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
     public static AnaplanView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnaplanView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnaplanView)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -579,7 +584,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @return the updated AnaplanView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanView removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -597,7 +603,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
     public static AnaplanView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnaplanView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnaplanView)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -624,8 +631,8 @@ public class AnaplanView extends Asset implements IAnaplanView, IAnaplan, IBI, I
      * @return the AnaplanView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnaplanView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanView replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

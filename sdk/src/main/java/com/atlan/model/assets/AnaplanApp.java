@@ -294,7 +294,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanApp does not exist or the provided GUID is not a AnaplanApp
      */
     @JsonIgnore
-    public static AnaplanApp get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnaplanApp get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -363,7 +364,7 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create an Anaplan app.
      *
      * @param name of the Anaplan app
@@ -420,7 +421,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
      * @return the updated AnaplanApp, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanApp removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanApp removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanApp) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -464,7 +466,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
     public static AnaplanApp updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnaplanApp) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnaplanApp)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -476,7 +479,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
      * @return the updated AnaplanApp, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanApp removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanApp removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanApp) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -494,7 +498,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
     public static AnaplanApp updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnaplanApp) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnaplanApp)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -521,8 +526,8 @@ public class AnaplanApp extends Asset implements IAnaplanApp, IAnaplan, IBI, ICa
      * @return the AnaplanApp that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnaplanApp replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanApp replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanApp) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

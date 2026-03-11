@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic, IAzureServiceBus, IEventStore, ICatalog, IAsset, IReferenceable {
+public class AzureServiceBusTopic extends Asset
+        implements IAzureServiceBusTopic, IAzureServiceBus, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AzureServiceBusTopic";
@@ -250,7 +251,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AzureServiceBusTopic does not exist or the provided GUID is not a AzureServiceBusTopic
      */
     @JsonIgnore
-    public static AzureServiceBusTopic get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AzureServiceBusTopic get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -282,7 +284,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AzureServiceBusTopic does not exist or the provided GUID is not a AzureServiceBusTopic
      */
     @JsonIgnore
-    public static AzureServiceBusTopic get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AzureServiceBusTopic get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -382,7 +385,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AzureServiceBusTopicBuilder<C extends AzureServiceBusTopic, B extends AzureServiceBusTopicBuilder<C, B>>
+    public abstract static class AzureServiceBusTopicBuilder<
+                    C extends AzureServiceBusTopic, B extends AzureServiceBusTopicBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -394,7 +398,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @return the updated AzureServiceBusTopic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusTopic removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AzureServiceBusTopic removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AzureServiceBusTopic) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -421,7 +426,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @return the updated AzureServiceBusTopic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusTopic removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AzureServiceBusTopic removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AzureServiceBusTopic) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -438,7 +444,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
     public static AzureServiceBusTopic updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AzureServiceBusTopic) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AzureServiceBusTopic)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -450,7 +457,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @return the updated AzureServiceBusTopic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusTopic removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AzureServiceBusTopic removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AzureServiceBusTopic) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -468,7 +476,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
     public static AzureServiceBusTopic updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AzureServiceBusTopic) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AzureServiceBusTopic)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -495,8 +504,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @return the AzureServiceBusTopic that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AzureServiceBusTopic replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AzureServiceBusTopic replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AzureServiceBusTopic) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -549,8 +558,8 @@ public class AzureServiceBusTopic extends Asset implements IAzureServiceBusTopic
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static AzureServiceBusTopic appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static AzureServiceBusTopic appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (AzureServiceBusTopic) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

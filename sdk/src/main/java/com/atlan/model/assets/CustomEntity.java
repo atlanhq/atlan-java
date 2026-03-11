@@ -252,7 +252,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CustomEntity does not exist or the provided GUID is not a CustomEntity
      */
     @JsonIgnore
-    public static CustomEntity get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static CustomEntity get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -284,7 +285,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CustomEntity does not exist or the provided GUID is not a CustomEntity
      */
     @JsonIgnore
-    public static CustomEntity get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CustomEntity get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -353,7 +355,7 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a CustomEntity.
      *
      * @param name of the CustomEntity
@@ -410,7 +412,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @return the updated CustomEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CustomEntity removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CustomEntity removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CustomEntity) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -437,7 +440,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @return the updated CustomEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CustomEntity removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CustomEntity removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CustomEntity) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -454,7 +458,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     public static CustomEntity updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CustomEntity) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CustomEntity)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -466,7 +471,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @return the updated CustomEntity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CustomEntity removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CustomEntity removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CustomEntity) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -484,7 +490,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     public static CustomEntity updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CustomEntity) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CustomEntity)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -511,8 +518,8 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
      * @return the CustomEntity that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CustomEntity replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CustomEntity replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CustomEntity) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -261,7 +261,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the EventStore does not exist or the provided GUID is not a EventStore
      */
     @JsonIgnore
-    public static EventStore get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static EventStore get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -373,7 +374,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
      * @return the updated EventStore, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static EventStore removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static EventStore removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (EventStore) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -417,7 +419,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
     public static EventStore updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (EventStore) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (EventStore)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -429,7 +432,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
      * @return the updated EventStore, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static EventStore removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static EventStore removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (EventStore) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -447,7 +451,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
     public static EventStore updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (EventStore) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (EventStore)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -474,8 +479,8 @@ public class EventStore extends Asset implements IEventStore, ICatalog, IAsset, 
      * @return the EventStore that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static EventStore replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static EventStore replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (EventStore) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -328,7 +327,8 @@ public class Incident extends Asset implements IIncident, IAsset, IReferenceable
      * @return the updated Incident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Incident removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Incident removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Incident) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -384,7 +384,8 @@ public class Incident extends Asset implements IIncident, IAsset, IReferenceable
      * @return the updated Incident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Incident removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Incident removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Incident) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -429,8 +430,8 @@ public class Incident extends Asset implements IIncident, IAsset, IReferenceable
      * @return the Incident that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Incident replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Incident replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Incident) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

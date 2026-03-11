@@ -290,7 +290,8 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
      */
     @JsonIgnore
-    public static GlossaryTerm get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static GlossaryTerm get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -322,7 +323,8 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
      */
     @JsonIgnore
-    public static GlossaryTerm get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static GlossaryTerm get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 

@@ -48,8 +48,11 @@ public interface IPresetDashboard {
     RelationField PRESET_CHARTS = new RelationField("presetCharts");
 
     /** TBC */
-    KeywordTextStemmedField PRESET_DASHBOARD_CHANGED_BY_NAME =
-            new KeywordTextStemmedField("presetDashboardChangedByName", "presetDashboardChangedByName.keyword", "presetDashboardChangedByName", "presetDashboardChangedByName.stemmed");
+    KeywordTextStemmedField PRESET_DASHBOARD_CHANGED_BY_NAME = new KeywordTextStemmedField(
+            "presetDashboardChangedByName",
+            "presetDashboardChangedByName.keyword",
+            "presetDashboardChangedByName",
+            "presetDashboardChangedByName.stemmed");
 
     /** TBC */
     KeywordField PRESET_DASHBOARD_CHANGED_BY_URL =

@@ -56,12 +56,16 @@ public interface ISisenseWidget {
     NumericField SISENSE_WIDGET_COLUMN_COUNT = new NumericField("sisenseWidgetColumnCount", "sisenseWidgetColumnCount");
 
     /** Unique name of the dashboard in which this widget exists. */
-    KeywordTextField SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME =
-            new KeywordTextField("sisenseWidgetDashboardQualifiedName", "sisenseWidgetDashboardQualifiedName", "sisenseWidgetDashboardQualifiedName.text");
+    KeywordTextField SISENSE_WIDGET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "sisenseWidgetDashboardQualifiedName",
+            "sisenseWidgetDashboardQualifiedName",
+            "sisenseWidgetDashboardQualifiedName.text");
 
     /** Unique name of the folder in which this widget exists. */
-    KeywordTextField SISENSE_WIDGET_FOLDER_QUALIFIED_NAME =
-            new KeywordTextField("sisenseWidgetFolderQualifiedName", "sisenseWidgetFolderQualifiedName", "sisenseWidgetFolderQualifiedName.text");
+    KeywordTextField SISENSE_WIDGET_FOLDER_QUALIFIED_NAME = new KeywordTextField(
+            "sisenseWidgetFolderQualifiedName",
+            "sisenseWidgetFolderQualifiedName",
+            "sisenseWidgetFolderQualifiedName.text");
 
     /** Size of this widget. */
     KeywordField SISENSE_WIDGET_SIZE = new KeywordField("sisenseWidgetSize", "sisenseWidgetSize");

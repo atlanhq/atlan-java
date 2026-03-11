@@ -39,7 +39,6 @@ public interface INotebook {
 
     public static final String TYPE_NAME = "Notebook";
 
-
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

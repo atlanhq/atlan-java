@@ -48,8 +48,11 @@ public interface ISupersetDashboard {
     RelationField SUPERSET_CHARTS = new RelationField("supersetCharts");
 
     /** Name of the user who changed the dashboard. */
-    KeywordTextStemmedField SUPERSET_DASHBOARD_CHANGED_BY_NAME =
-            new KeywordTextStemmedField("supersetDashboardChangedByName", "supersetDashboardChangedByName.keyword", "supersetDashboardChangedByName", "supersetDashboardChangedByName.stemmed");
+    KeywordTextStemmedField SUPERSET_DASHBOARD_CHANGED_BY_NAME = new KeywordTextStemmedField(
+            "supersetDashboardChangedByName",
+            "supersetDashboardChangedByName.keyword",
+            "supersetDashboardChangedByName",
+            "supersetDashboardChangedByName.stemmed");
 
     /** URL of the user profile that changed the dashboard */
     TextField SUPERSET_DASHBOARD_CHANGED_BY_URL =

@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SalesforceOrganization extends Asset implements ISalesforceOrganization, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
+public class SalesforceOrganization extends Asset
+        implements ISalesforceOrganization, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceOrganization";
@@ -257,7 +258,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceOrganization does not exist or the provided GUID is not a SalesforceOrganization
      */
     @JsonIgnore
-    public static SalesforceOrganization get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SalesforceOrganization get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -289,7 +291,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SalesforceOrganization does not exist or the provided GUID is not a SalesforceOrganization
      */
     @JsonIgnore
-    public static SalesforceOrganization get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SalesforceOrganization get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -359,7 +362,7 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a SalesforceOrganization asset.
      *
      * @param name of the organization
@@ -430,7 +433,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SalesforceOrganizationBuilder<C extends SalesforceOrganization, B extends SalesforceOrganizationBuilder<C, B>>
+    public abstract static class SalesforceOrganizationBuilder<
+                    C extends SalesforceOrganization, B extends SalesforceOrganizationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -442,7 +446,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @return the updated SalesforceOrganization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SalesforceOrganization removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SalesforceOrganization) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -469,7 +474,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @return the updated SalesforceOrganization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SalesforceOrganization removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SalesforceOrganization) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -486,7 +492,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
     public static SalesforceOrganization updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SalesforceOrganization) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SalesforceOrganization)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -498,7 +505,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @return the updated SalesforceOrganization, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SalesforceOrganization removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SalesforceOrganization) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -516,7 +524,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
     public static SalesforceOrganization updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SalesforceOrganization) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SalesforceOrganization)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -543,8 +552,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @return the SalesforceOrganization that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SalesforceOrganization replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceOrganization) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -561,8 +570,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SalesforceOrganization appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SalesforceOrganization appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceOrganization) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -579,8 +588,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SalesforceOrganization removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SalesforceOrganization removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceOrganization) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -597,8 +606,8 @@ public class SalesforceOrganization extends Asset implements ISalesforceOrganiza
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SalesforceOrganization appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static SalesforceOrganization appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (SalesforceOrganization) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

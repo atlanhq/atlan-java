@@ -549,7 +549,8 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
      * @return the updated Function, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Function removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Function removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Function) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -605,7 +606,8 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
      * @return the updated Function, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Function removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Function removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Function) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -650,8 +652,8 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
      * @return the Function that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Function replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Function replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Function) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

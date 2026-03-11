@@ -257,7 +257,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricActivity does not exist or the provided GUID is not a FabricActivity
      */
     @JsonIgnore
-    public static FabricActivity get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FabricActivity get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -289,7 +290,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricActivity does not exist or the provided GUID is not a FabricActivity
      */
     @JsonIgnore
-    public static FabricActivity get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FabricActivity get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -401,7 +403,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @return the updated FabricActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricActivity removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricActivity removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricActivity) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -428,7 +431,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @return the updated FabricActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricActivity removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricActivity removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricActivity) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -445,7 +449,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
     public static FabricActivity updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricActivity) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricActivity)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -457,7 +462,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @return the updated FabricActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricActivity removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricActivity removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricActivity) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -475,7 +481,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
     public static FabricActivity updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricActivity) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricActivity)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -502,8 +509,8 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
      * @return the FabricActivity that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricActivity replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FabricActivity replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FabricActivity) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

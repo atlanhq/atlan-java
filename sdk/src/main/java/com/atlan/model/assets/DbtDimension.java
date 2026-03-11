@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimension, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
+public class DbtDimension extends Asset
+        implements IDbtDimension, ISemanticDimension, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtDimension";
@@ -353,7 +354,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtDimension does not exist or the provided GUID is not a DbtDimension
      */
     @JsonIgnore
-    public static DbtDimension get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DbtDimension get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -385,7 +387,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtDimension does not exist or the provided GUID is not a DbtDimension
      */
     @JsonIgnore
-    public static DbtDimension get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DbtDimension get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -497,7 +500,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @return the updated DbtDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtDimension removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtDimension removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtDimension) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -524,7 +528,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @return the updated DbtDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtDimension removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtDimension removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtDimension) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -541,7 +546,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
     public static DbtDimension updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtDimension) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtDimension)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -553,7 +559,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @return the updated DbtDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtDimension removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtDimension removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtDimension) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -571,7 +578,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
     public static DbtDimension updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtDimension) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtDimension)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -598,8 +606,8 @@ public class DbtDimension extends Asset implements IDbtDimension, ISemanticDimen
      * @return the DbtDimension that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtDimension replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DbtDimension replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtDimension) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -45,8 +45,8 @@ public interface ISuperset {
     NumericField SUPERSET_DASHBOARD_ID = new NumericField("supersetDashboardId", "supersetDashboardId");
 
     /** Unique name of the dashboard in which this asset exists. */
-    KeywordTextField SUPERSET_DASHBOARD_QUALIFIED_NAME =
-            new KeywordTextField("supersetDashboardQualifiedName", "supersetDashboardQualifiedName", "supersetDashboardQualifiedName.text");
+    KeywordTextField SUPERSET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "supersetDashboardQualifiedName", "supersetDashboardQualifiedName", "supersetDashboardQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -42,7 +42,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedure, IBigquery, ICatalog, IAsset, IReferenceable, ISQL {
+public class BigqueryRoutine extends Asset
+        implements IBigqueryRoutine, IProcedure, IBigquery, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BigqueryRoutine";
@@ -432,7 +433,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BigqueryRoutine does not exist or the provided GUID is not a BigqueryRoutine
      */
     @JsonIgnore
-    public static BigqueryRoutine get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static BigqueryRoutine get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -464,7 +466,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BigqueryRoutine does not exist or the provided GUID is not a BigqueryRoutine
      */
     @JsonIgnore
-    public static BigqueryRoutine get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static BigqueryRoutine get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -564,7 +567,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class BigqueryRoutineBuilder<C extends BigqueryRoutine, B extends BigqueryRoutineBuilder<C, B>>
+    public abstract static class BigqueryRoutineBuilder<
+                    C extends BigqueryRoutine, B extends BigqueryRoutineBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -576,7 +580,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @return the updated BigqueryRoutine, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BigqueryRoutine removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BigqueryRoutine removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BigqueryRoutine) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -603,7 +608,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @return the updated BigqueryRoutine, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BigqueryRoutine removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BigqueryRoutine removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BigqueryRoutine) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -620,7 +626,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
     public static BigqueryRoutine updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (BigqueryRoutine) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (BigqueryRoutine)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -632,7 +639,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @return the updated BigqueryRoutine, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BigqueryRoutine removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BigqueryRoutine removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BigqueryRoutine) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -650,7 +658,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
     public static BigqueryRoutine updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (BigqueryRoutine) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (BigqueryRoutine)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -677,8 +686,8 @@ public class BigqueryRoutine extends Asset implements IBigqueryRoutine, IProcedu
      * @return the BigqueryRoutine that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BigqueryRoutine replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static BigqueryRoutine replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (BigqueryRoutine) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

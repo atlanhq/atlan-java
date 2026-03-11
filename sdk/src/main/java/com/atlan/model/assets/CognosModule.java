@@ -274,7 +274,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosModule does not exist or the provided GUID is not a CognosModule
      */
     @JsonIgnore
-    public static CognosModule get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static CognosModule get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -306,7 +307,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosModule does not exist or the provided GUID is not a CognosModule
      */
     @JsonIgnore
-    public static CognosModule get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CognosModule get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -418,7 +420,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @return the updated CognosModule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosModule removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosModule removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosModule) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -445,7 +448,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @return the updated CognosModule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosModule removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosModule removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosModule) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -462,7 +466,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     public static CognosModule updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosModule) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosModule)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -474,7 +479,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @return the updated CognosModule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosModule removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosModule removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosModule) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,7 +498,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     public static CognosModule updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosModule) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosModule)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +526,8 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
      * @return the CognosModule that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosModule replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CognosModule replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CognosModule) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -434,7 +434,8 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
      * @return the updated QlikApp, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikApp removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QlikApp removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QlikApp) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -490,7 +491,8 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
      * @return the updated QlikApp, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikApp removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QlikApp removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QlikApp) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

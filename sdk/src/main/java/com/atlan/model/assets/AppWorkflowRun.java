@@ -308,7 +308,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AppWorkflowRun does not exist or the provided GUID is not a AppWorkflowRun
      */
     @JsonIgnore
-    public static AppWorkflowRun get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AppWorkflowRun get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -340,7 +341,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AppWorkflowRun does not exist or the provided GUID is not a AppWorkflowRun
      */
     @JsonIgnore
-    public static AppWorkflowRun get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AppWorkflowRun get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -452,7 +454,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @return the updated AppWorkflowRun, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AppWorkflowRun removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AppWorkflowRun removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AppWorkflowRun) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -479,7 +482,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @return the updated AppWorkflowRun, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AppWorkflowRun removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AppWorkflowRun removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AppWorkflowRun) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -496,7 +500,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     public static AppWorkflowRun updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AppWorkflowRun) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AppWorkflowRun)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -508,7 +513,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @return the updated AppWorkflowRun, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AppWorkflowRun removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AppWorkflowRun removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AppWorkflowRun) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -526,7 +532,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     public static AppWorkflowRun updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AppWorkflowRun) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AppWorkflowRun)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -553,8 +560,8 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
      * @return the AppWorkflowRun that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AppWorkflowRun replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AppWorkflowRun replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AppWorkflowRun) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

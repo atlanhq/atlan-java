@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset, IView, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
+public class DremioVirtualDataset extends Asset
+        implements IDremioVirtualDataset, IView, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioVirtualDataset";
@@ -430,7 +431,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioVirtualDataset does not exist or the provided GUID is not a DremioVirtualDataset
      */
     @JsonIgnore
-    public static DremioVirtualDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DremioVirtualDataset get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -462,7 +464,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioVirtualDataset does not exist or the provided GUID is not a DremioVirtualDataset
      */
     @JsonIgnore
-    public static DremioVirtualDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DremioVirtualDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -562,7 +565,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DremioVirtualDatasetBuilder<C extends DremioVirtualDataset, B extends DremioVirtualDatasetBuilder<C, B>>
+    public abstract static class DremioVirtualDatasetBuilder<
+                    C extends DremioVirtualDataset, B extends DremioVirtualDatasetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -574,7 +578,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @return the updated DremioVirtualDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioVirtualDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioVirtualDataset removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioVirtualDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -601,7 +606,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @return the updated DremioVirtualDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioVirtualDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioVirtualDataset removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioVirtualDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -618,7 +624,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
     public static DremioVirtualDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DremioVirtualDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DremioVirtualDataset)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -630,7 +637,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @return the updated DremioVirtualDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioVirtualDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioVirtualDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioVirtualDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -648,7 +656,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
     public static DremioVirtualDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DremioVirtualDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DremioVirtualDataset)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -675,8 +684,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @return the DremioVirtualDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DremioVirtualDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DremioVirtualDataset replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DremioVirtualDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -729,8 +738,8 @@ public class DremioVirtualDataset extends Asset implements IDremioVirtualDataset
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DremioVirtualDataset appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DremioVirtualDataset appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DremioVirtualDataset) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

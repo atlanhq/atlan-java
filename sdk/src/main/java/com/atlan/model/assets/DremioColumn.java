@@ -42,7 +42,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
+public class DremioColumn extends Asset
+        implements IDremioColumn, IColumn, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioColumn";
@@ -746,7 +747,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioColumn does not exist or the provided GUID is not a DremioColumn
      */
     @JsonIgnore
-    public static DremioColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DremioColumn get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -778,7 +780,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DremioColumn does not exist or the provided GUID is not a DremioColumn
      */
     @JsonIgnore
-    public static DremioColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DremioColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -890,7 +893,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @return the updated DremioColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioColumn removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -917,7 +921,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @return the updated DremioColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioColumn removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -934,7 +939,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
     public static DremioColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DremioColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DremioColumn)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -946,7 +952,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @return the updated DremioColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DremioColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DremioColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DremioColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -964,7 +971,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
     public static DremioColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DremioColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DremioColumn)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -991,8 +999,8 @@ public class DremioColumn extends Asset implements IDremioColumn, IColumn, IDrem
      * @return the DremioColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DremioColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DremioColumn replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DremioColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

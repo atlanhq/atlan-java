@@ -288,7 +288,8 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SourceTag does not exist or the provided GUID is not a SourceTag
      */
     @JsonIgnore
-    public static SourceTag get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SourceTag get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -358,7 +359,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a SourceTag.
      *
      * @param name of the SourceTag
@@ -394,7 +395,7 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
                 .tagAllowedValues(allowedValues);
     }
 
-/**
+    /**
      * Generate a unique SourceTag name.
      *
      * @param name of the SourceTag
@@ -447,7 +448,8 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * @return the updated SourceTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SourceTag removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SourceTag removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SourceTag) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -503,7 +505,8 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * @return the updated SourceTag, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SourceTag removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SourceTag removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SourceTag) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -521,7 +524,8 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
     public static SourceTag updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SourceTag) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SourceTag)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -548,8 +552,8 @@ public class SourceTag extends Asset implements ISourceTag, ITag, ICatalog, IAss
      * @return the SourceTag that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SourceTag replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SourceTag replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SourceTag) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

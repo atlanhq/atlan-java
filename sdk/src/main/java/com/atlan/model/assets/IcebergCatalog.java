@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase, IIceberg, ICatalog, IAsset, IReferenceable, ISQL {
+public class IcebergCatalog extends Asset
+        implements IIcebergCatalog, IDatabase, IIceberg, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "IcebergCatalog";
@@ -382,7 +383,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergCatalog does not exist or the provided GUID is not a IcebergCatalog
      */
     @JsonIgnore
-    public static IcebergCatalog get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static IcebergCatalog get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -414,7 +416,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergCatalog does not exist or the provided GUID is not a IcebergCatalog
      */
     @JsonIgnore
-    public static IcebergCatalog get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static IcebergCatalog get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -526,7 +529,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @return the updated IcebergCatalog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergCatalog removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static IcebergCatalog removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (IcebergCatalog) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -553,7 +557,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @return the updated IcebergCatalog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergCatalog removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static IcebergCatalog removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (IcebergCatalog) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -570,7 +575,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
     public static IcebergCatalog updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (IcebergCatalog) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (IcebergCatalog)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -582,7 +588,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @return the updated IcebergCatalog, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergCatalog removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static IcebergCatalog removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (IcebergCatalog) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -600,7 +607,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
     public static IcebergCatalog updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (IcebergCatalog) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (IcebergCatalog)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -627,8 +635,8 @@ public class IcebergCatalog extends Asset implements IIcebergCatalog, IDatabase,
      * @return the IcebergCatalog that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static IcebergCatalog replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static IcebergCatalog replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (IcebergCatalog) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

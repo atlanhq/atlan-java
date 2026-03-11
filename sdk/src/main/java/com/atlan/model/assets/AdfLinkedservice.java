@@ -318,7 +318,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfLinkedservice does not exist or the provided GUID is not a AdfLinkedservice
      */
     @JsonIgnore
-    public static AdfLinkedservice get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AdfLinkedservice get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -350,7 +351,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfLinkedservice does not exist or the provided GUID is not a AdfLinkedservice
      */
     @JsonIgnore
-    public static AdfLinkedservice get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AdfLinkedservice get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -450,7 +452,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AdfLinkedserviceBuilder<C extends AdfLinkedservice, B extends AdfLinkedserviceBuilder<C, B>>
+    public abstract static class AdfLinkedserviceBuilder<
+                    C extends AdfLinkedservice, B extends AdfLinkedserviceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -462,7 +465,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @return the updated AdfLinkedservice, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfLinkedservice removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfLinkedservice removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfLinkedservice) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -489,7 +493,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @return the updated AdfLinkedservice, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfLinkedservice removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfLinkedservice removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfLinkedservice) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -506,7 +511,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
     public static AdfLinkedservice updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AdfLinkedservice) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AdfLinkedservice)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -518,7 +524,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @return the updated AdfLinkedservice, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfLinkedservice removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfLinkedservice removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfLinkedservice) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -536,7 +543,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
     public static AdfLinkedservice updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AdfLinkedservice) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AdfLinkedservice)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -563,8 +571,8 @@ public class AdfLinkedservice extends Asset implements IAdfLinkedservice, IADF, 
      * @return the AdfLinkedservice that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AdfLinkedservice replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AdfLinkedservice replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AdfLinkedservice) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -40,7 +40,6 @@ public interface IBIProcess {
 
     public static final String TYPE_NAME = "BIProcess";
 
-
     /** Additional Context of the ETL pipeline/notebook which creates the process. */
     String getAdditionalEtlContext();
 

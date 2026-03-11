@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksVolumePath extends Asset
+        implements IDatabricksVolumePath, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksVolumePath";
@@ -350,7 +351,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksVolumePath does not exist or the provided GUID is not a DatabricksVolumePath
      */
     @JsonIgnore
-    public static DatabricksVolumePath get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DatabricksVolumePath get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -382,7 +384,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksVolumePath does not exist or the provided GUID is not a DatabricksVolumePath
      */
     @JsonIgnore
-    public static DatabricksVolumePath get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DatabricksVolumePath get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -482,7 +485,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksVolumePathBuilder<C extends DatabricksVolumePath, B extends DatabricksVolumePathBuilder<C, B>>
+    public abstract static class DatabricksVolumePathBuilder<
+                    C extends DatabricksVolumePath, B extends DatabricksVolumePathBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -494,7 +498,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @return the updated DatabricksVolumePath, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksVolumePath removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksVolumePath removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksVolumePath) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -521,7 +526,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @return the updated DatabricksVolumePath, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksVolumePath removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksVolumePath removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksVolumePath) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -538,7 +544,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
     public static DatabricksVolumePath updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksVolumePath) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksVolumePath)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -550,7 +557,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @return the updated DatabricksVolumePath, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksVolumePath removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksVolumePath removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksVolumePath) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -568,7 +576,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
     public static DatabricksVolumePath updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksVolumePath) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksVolumePath)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -595,8 +604,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @return the DatabricksVolumePath that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksVolumePath replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksVolumePath replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksVolumePath) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -649,8 +658,8 @@ public class DatabricksVolumePath extends Asset implements IDatabricksVolumePath
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksVolumePath appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DatabricksVolumePath appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DatabricksVolumePath) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

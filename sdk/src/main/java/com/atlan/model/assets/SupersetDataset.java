@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SupersetDataset extends Asset implements ISupersetDataset, ISuperset, IBI, ICatalog, IAsset, IReferenceable {
+public class SupersetDataset extends Asset
+        implements ISupersetDataset, ISuperset, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SupersetDataset";
@@ -253,7 +254,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetDataset does not exist or the provided GUID is not a SupersetDataset
      */
     @JsonIgnore
-    public static SupersetDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SupersetDataset get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -285,7 +287,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetDataset does not exist or the provided GUID is not a SupersetDataset
      */
     @JsonIgnore
-    public static SupersetDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SupersetDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -354,7 +357,7 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Superset dataset.
      *
      * @param name of the dataset
@@ -434,7 +437,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SupersetDatasetBuilder<C extends SupersetDataset, B extends SupersetDatasetBuilder<C, B>>
+    public abstract static class SupersetDatasetBuilder<
+                    C extends SupersetDataset, B extends SupersetDatasetBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -446,7 +450,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @return the updated SupersetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetDataset removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -473,7 +478,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @return the updated SupersetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetDataset removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -490,7 +496,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
     public static SupersetDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SupersetDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SupersetDataset)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -502,7 +509,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @return the updated SupersetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -520,7 +528,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
     public static SupersetDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SupersetDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SupersetDataset)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -547,8 +556,8 @@ public class SupersetDataset extends Asset implements ISupersetDataset, ISuperse
      * @return the SupersetDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SupersetDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SupersetDataset replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SupersetDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -69,8 +69,8 @@ public interface IConnection {
             new KeywordField("connectionDQEnvironmentSetupStatus", "connectionDQEnvironmentSetupStatus");
 
     /** Timestamp when the data quality environment setup status was last updated. */
-    NumericField CONNECTION_DQ_ENVIRONMENT_SETUP_STATUS_UPDATED_AT =
-            new NumericField("connectionDQEnvironmentSetupStatusUpdatedAt", "connectionDQEnvironmentSetupStatusUpdatedAt");
+    NumericField CONNECTION_DQ_ENVIRONMENT_SETUP_STATUS_UPDATED_AT = new NumericField(
+            "connectionDQEnvironmentSetupStatusUpdatedAt", "connectionDQEnvironmentSetupStatusUpdatedAt");
 
     /** Name of the database in the source environment for data quality. */
     KeywordField CONNECTION_DQ_ENVIRONMENT_SOURCE_DATABASE_NAME =

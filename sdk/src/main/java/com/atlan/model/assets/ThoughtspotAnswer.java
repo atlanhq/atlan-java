@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
+public class ThoughtspotAnswer extends Asset
+        implements IThoughtspotAnswer, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ThoughtspotAnswer";
@@ -245,7 +246,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
      */
     @JsonIgnore
-    public static ThoughtspotAnswer get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ThoughtspotAnswer get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -277,7 +279,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotAnswer does not exist or the provided GUID is not a ThoughtspotAnswer
      */
     @JsonIgnore
-    public static ThoughtspotAnswer get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ThoughtspotAnswer get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -377,7 +380,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ThoughtspotAnswerBuilder<C extends ThoughtspotAnswer, B extends ThoughtspotAnswerBuilder<C, B>>
+    public abstract static class ThoughtspotAnswerBuilder<
+                    C extends ThoughtspotAnswer, B extends ThoughtspotAnswerBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -389,7 +393,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @return the updated ThoughtspotAnswer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotAnswer removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ThoughtspotAnswer removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ThoughtspotAnswer) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -416,7 +421,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @return the updated ThoughtspotAnswer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotAnswer removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ThoughtspotAnswer removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ThoughtspotAnswer) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -433,7 +439,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
     public static ThoughtspotAnswer updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ThoughtspotAnswer) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ThoughtspotAnswer)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -445,7 +452,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @return the updated ThoughtspotAnswer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotAnswer removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ThoughtspotAnswer removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ThoughtspotAnswer) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -463,7 +471,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
     public static ThoughtspotAnswer updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ThoughtspotAnswer) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ThoughtspotAnswer)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -490,8 +499,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @return the ThoughtspotAnswer that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotAnswer replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ThoughtspotAnswer replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ThoughtspotAnswer) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -544,8 +553,8 @@ public class ThoughtspotAnswer extends Asset implements IThoughtspotAnswer, ITho
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ThoughtspotAnswer appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static ThoughtspotAnswer appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (ThoughtspotAnswer) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

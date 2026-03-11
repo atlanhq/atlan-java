@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimension, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
+public class AnaplanSystemDimension extends Asset
+        implements IAnaplanSystemDimension, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AnaplanSystemDimension";
@@ -257,7 +258,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanSystemDimension does not exist or the provided GUID is not a AnaplanSystemDimension
      */
     @JsonIgnore
-    public static AnaplanSystemDimension get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AnaplanSystemDimension get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -289,7 +291,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanSystemDimension does not exist or the provided GUID is not a AnaplanSystemDimension
      */
     @JsonIgnore
-    public static AnaplanSystemDimension get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnaplanSystemDimension get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -358,7 +361,7 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create an Anaplan System Dimension.
      *
      * @param name of the Anaplan System Dimension
@@ -404,7 +407,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AnaplanSystemDimensionBuilder<C extends AnaplanSystemDimension, B extends AnaplanSystemDimensionBuilder<C, B>>
+    public abstract static class AnaplanSystemDimensionBuilder<
+                    C extends AnaplanSystemDimension, B extends AnaplanSystemDimensionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -416,7 +420,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @return the updated AnaplanSystemDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanSystemDimension removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanSystemDimension removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanSystemDimension) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -443,7 +448,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @return the updated AnaplanSystemDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanSystemDimension removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanSystemDimension removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanSystemDimension) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -460,7 +466,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
     public static AnaplanSystemDimension updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnaplanSystemDimension) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnaplanSystemDimension)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,7 +479,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @return the updated AnaplanSystemDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanSystemDimension removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanSystemDimension removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanSystemDimension) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -490,7 +498,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
     public static AnaplanSystemDimension updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnaplanSystemDimension) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnaplanSystemDimension)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -517,8 +526,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @return the AnaplanSystemDimension that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnaplanSystemDimension replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanSystemDimension replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanSystemDimension) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -535,8 +544,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AnaplanSystemDimension appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanSystemDimension appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanSystemDimension) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -553,8 +562,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static AnaplanSystemDimension removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanSystemDimension removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanSystemDimension) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -571,8 +580,8 @@ public class AnaplanSystemDimension extends Asset implements IAnaplanSystemDimen
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static AnaplanSystemDimension appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static AnaplanSystemDimension appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (AnaplanSystemDimension) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

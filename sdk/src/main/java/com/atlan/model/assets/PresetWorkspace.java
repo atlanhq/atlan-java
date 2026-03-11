@@ -286,7 +286,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
      */
     @JsonIgnore
-    public static PresetWorkspace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PresetWorkspace get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -318,7 +319,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
      */
     @JsonIgnore
-    public static PresetWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PresetWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -387,7 +389,7 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Preset workspace.
      *
      * @param name of the workspace
@@ -443,7 +445,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class PresetWorkspaceBuilder<C extends PresetWorkspace, B extends PresetWorkspaceBuilder<C, B>>
+    public abstract static class PresetWorkspaceBuilder<
+                    C extends PresetWorkspace, B extends PresetWorkspaceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -455,7 +458,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the updated PresetWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PresetWorkspace removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PresetWorkspace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -482,7 +486,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the updated PresetWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PresetWorkspace removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PresetWorkspace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -499,7 +504,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     public static PresetWorkspace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PresetWorkspace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PresetWorkspace)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -511,7 +517,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the updated PresetWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PresetWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PresetWorkspace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -529,7 +536,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     public static PresetWorkspace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PresetWorkspace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PresetWorkspace)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -556,8 +564,8 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
      * @return the PresetWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PresetWorkspace replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetWorkspace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

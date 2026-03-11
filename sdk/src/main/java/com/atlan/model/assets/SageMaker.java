@@ -342,7 +342,8 @@ public class SageMaker extends Asset implements ISageMaker, IAI, IAWS, ICatalog,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SageMaker does not exist or the provided GUID is not a SageMaker
      */
     @JsonIgnore
-    public static SageMaker get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SageMaker get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -454,7 +455,8 @@ public class SageMaker extends Asset implements ISageMaker, IAI, IAWS, ICatalog,
      * @return the updated SageMaker, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMaker removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SageMaker removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SageMaker) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -510,7 +512,8 @@ public class SageMaker extends Asset implements ISageMaker, IAI, IAWS, ICatalog,
      * @return the updated SageMaker, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SageMaker removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SageMaker removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SageMaker) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -528,7 +531,8 @@ public class SageMaker extends Asset implements ISageMaker, IAI, IAWS, ICatalog,
     public static SageMaker updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SageMaker) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SageMaker)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -555,8 +559,8 @@ public class SageMaker extends Asset implements ISageMaker, IAI, IAWS, ICatalog,
      * @return the SageMaker that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SageMaker replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SageMaker replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SageMaker) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

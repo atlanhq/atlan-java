@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISemanticModel, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
+public class DbtSemanticModel extends Asset
+        implements IDbtSemanticModel, ISemanticModel, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtSemanticModel";
@@ -325,7 +326,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSemanticModel does not exist or the provided GUID is not a DbtSemanticModel
      */
     @JsonIgnore
-    public static DbtSemanticModel get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DbtSemanticModel get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -357,7 +359,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtSemanticModel does not exist or the provided GUID is not a DbtSemanticModel
      */
     @JsonIgnore
-    public static DbtSemanticModel get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DbtSemanticModel get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -457,7 +460,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DbtSemanticModelBuilder<C extends DbtSemanticModel, B extends DbtSemanticModelBuilder<C, B>>
+    public abstract static class DbtSemanticModelBuilder<
+                    C extends DbtSemanticModel, B extends DbtSemanticModelBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -469,7 +473,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @return the updated DbtSemanticModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSemanticModel removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtSemanticModel removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtSemanticModel) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -496,7 +501,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @return the updated DbtSemanticModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSemanticModel removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtSemanticModel removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtSemanticModel) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -513,7 +519,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
     public static DbtSemanticModel updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtSemanticModel) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtSemanticModel)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -525,7 +532,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @return the updated DbtSemanticModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSemanticModel removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtSemanticModel removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtSemanticModel) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -543,7 +551,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
     public static DbtSemanticModel updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtSemanticModel) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtSemanticModel)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -570,8 +579,8 @@ public class DbtSemanticModel extends Asset implements IDbtSemanticModel, ISeman
      * @return the DbtSemanticModel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtSemanticModel replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DbtSemanticModel replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtSemanticModel) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

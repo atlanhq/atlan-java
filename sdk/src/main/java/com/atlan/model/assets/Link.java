@@ -7,8 +7,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.IconType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -19,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -362,7 +359,7 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to update a Link.
      *
      * @param reference a reference to the asset to which the Link should be attached

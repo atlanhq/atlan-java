@@ -42,7 +42,16 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlobalSecondaryIndex, IDynamoDB, IDynamoDBSecondaryIndex, INoSQL, ITable, ICatalog, ISQL, IAsset, IReferenceable {
+public class DynamoDBGlobalSecondaryIndex extends Asset
+        implements IDynamoDBGlobalSecondaryIndex,
+                IDynamoDB,
+                IDynamoDBSecondaryIndex,
+                INoSQL,
+                ITable,
+                ICatalog,
+                ISQL,
+                IAsset,
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DynamoDBGlobalSecondaryIndex";
@@ -461,7 +470,10 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return reference to a DynamoDBGlobalSecondaryIndex that can be used for defining a relationship to a DynamoDBGlobalSecondaryIndex
      */
     public static DynamoDBGlobalSecondaryIndex refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return DynamoDBGlobalSecondaryIndex._internal().guid(guid).semantic(semantic).build();
+        return DynamoDBGlobalSecondaryIndex._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -484,7 +496,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
      * @return reference to a DynamoDBGlobalSecondaryIndex that can be used for defining a relationship to a DynamoDBGlobalSecondaryIndex
      */
-    public static DynamoDBGlobalSecondaryIndex refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+    public static DynamoDBGlobalSecondaryIndex refByQualifiedName(
+            String qualifiedName, Reference.SaveSemantic semantic) {
         return DynamoDBGlobalSecondaryIndex._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
@@ -515,7 +528,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBGlobalSecondaryIndex does not exist or the provided GUID is not a DynamoDBGlobalSecondaryIndex
      */
     @JsonIgnore
-    public static DynamoDBGlobalSecondaryIndex get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -547,7 +561,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DynamoDBGlobalSecondaryIndex does not exist or the provided GUID is not a DynamoDBGlobalSecondaryIndex
      */
     @JsonIgnore
-    public static DynamoDBGlobalSecondaryIndex get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -647,7 +662,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DynamoDBGlobalSecondaryIndexBuilder<C extends DynamoDBGlobalSecondaryIndex, B extends DynamoDBGlobalSecondaryIndexBuilder<C, B>>
+    public abstract static class DynamoDBGlobalSecondaryIndexBuilder<
+                    C extends DynamoDBGlobalSecondaryIndex, B extends DynamoDBGlobalSecondaryIndexBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -659,7 +675,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBGlobalSecondaryIndex removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -672,8 +689,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBGlobalSecondaryIndex removeUserDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex removeUserDescription(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -686,7 +703,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBGlobalSecondaryIndex removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -703,7 +721,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
     public static DynamoDBGlobalSecondaryIndex updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DynamoDBGlobalSecondaryIndex) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DynamoDBGlobalSecondaryIndex)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -715,7 +734,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return the updated DynamoDBGlobalSecondaryIndex, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBGlobalSecondaryIndex removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -733,7 +753,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
     public static DynamoDBGlobalSecondaryIndex updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DynamoDBGlobalSecondaryIndex) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DynamoDBGlobalSecondaryIndex)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -760,8 +781,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @return the DynamoDBGlobalSecondaryIndex that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DynamoDBGlobalSecondaryIndex replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -778,8 +799,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DynamoDBGlobalSecondaryIndex appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -796,8 +817,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DynamoDBGlobalSecondaryIndex removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -814,8 +835,8 @@ public class DynamoDBGlobalSecondaryIndex extends Asset implements IDynamoDBGlob
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DynamoDBGlobalSecondaryIndex appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DynamoDBGlobalSecondaryIndex appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DynamoDBGlobalSecondaryIndex) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

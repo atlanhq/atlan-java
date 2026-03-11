@@ -304,7 +304,8 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BIProcess does not exist or the provided GUID is not a BIProcess
      */
     @JsonIgnore
-    public static BIProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static BIProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -416,7 +417,8 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
      * @return the updated BIProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BIProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BIProcess removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BIProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -472,7 +474,8 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
      * @return the updated BIProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BIProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BIProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BIProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -490,7 +493,8 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     public static BIProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (BIProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (BIProcess)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -517,8 +521,8 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
      * @return the BIProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BIProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static BIProcess replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (BIProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

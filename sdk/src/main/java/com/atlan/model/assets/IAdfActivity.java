@@ -116,8 +116,8 @@ public interface IAdfActivity {
     RelationField ADF_PIPELINE = new RelationField("adfPipeline");
 
     /** Unique name of the pipeline in which this activity exists. */
-    KeywordTextField ADF_PIPELINE_QUALIFIED_NAME =
-            new KeywordTextField("adfPipelineQualifiedName", "adfPipelineQualifiedName", "adfPipelineQualifiedName.text");
+    KeywordTextField ADF_PIPELINE_QUALIFIED_NAME = new KeywordTextField(
+            "adfPipelineQualifiedName", "adfPipelineQualifiedName", "adfPipelineQualifiedName.text");
 
     /** Lineage process that associates this ADF Activity. */
     RelationField PROCESSES = new RelationField("processes");

@@ -314,7 +314,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerTile does not exist or the provided GUID is not a LookerTile
      */
     @JsonIgnore
-    public static LookerTile get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static LookerTile get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -426,7 +427,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
      * @return the updated LookerTile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerTile removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerTile removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerTile) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -470,7 +472,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     public static LookerTile updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerTile) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerTile)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -482,7 +485,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
      * @return the updated LookerTile, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerTile removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerTile removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerTile) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,7 +504,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     public static LookerTile updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerTile) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerTile)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -527,8 +532,8 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
      * @return the LookerTile that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerTile replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static LookerTile replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerTile) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

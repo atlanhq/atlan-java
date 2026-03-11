@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksExternalLocation extends Asset implements IDatabricksExternalLocation, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksExternalLocation extends Asset
+        implements IDatabricksExternalLocation, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksExternalLocation";
@@ -293,7 +294,10 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return reference to a DatabricksExternalLocation that can be used for defining a relationship to a DatabricksExternalLocation
      */
     public static DatabricksExternalLocation refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return DatabricksExternalLocation._internal().guid(guid).semantic(semantic).build();
+        return DatabricksExternalLocation._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -347,7 +351,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksExternalLocation does not exist or the provided GUID is not a DatabricksExternalLocation
      */
     @JsonIgnore
-    public static DatabricksExternalLocation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DatabricksExternalLocation get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -379,7 +384,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksExternalLocation does not exist or the provided GUID is not a DatabricksExternalLocation
      */
     @JsonIgnore
-    public static DatabricksExternalLocation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DatabricksExternalLocation get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -479,7 +485,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksExternalLocationBuilder<C extends DatabricksExternalLocation, B extends DatabricksExternalLocationBuilder<C, B>>
+    public abstract static class DatabricksExternalLocationBuilder<
+                    C extends DatabricksExternalLocation, B extends DatabricksExternalLocationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -491,7 +498,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return the updated DatabricksExternalLocation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksExternalLocation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksExternalLocation removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksExternalLocation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -504,8 +512,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return the updated DatabricksExternalLocation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksExternalLocation removeUserDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static DatabricksExternalLocation removeUserDescription(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (DatabricksExternalLocation) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -518,7 +526,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return the updated DatabricksExternalLocation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksExternalLocation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksExternalLocation removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksExternalLocation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -535,7 +544,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
     public static DatabricksExternalLocation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksExternalLocation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksExternalLocation)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -547,7 +557,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return the updated DatabricksExternalLocation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksExternalLocation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksExternalLocation removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksExternalLocation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -565,7 +576,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
     public static DatabricksExternalLocation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksExternalLocation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksExternalLocation)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -592,8 +604,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @return the DatabricksExternalLocation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksExternalLocation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksExternalLocation replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksExternalLocation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -610,8 +622,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksExternalLocation appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksExternalLocation appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksExternalLocation) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -628,8 +640,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksExternalLocation removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksExternalLocation removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksExternalLocation) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -646,8 +658,8 @@ public class DatabricksExternalLocation extends Asset implements IDatabricksExte
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksExternalLocation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DatabricksExternalLocation appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DatabricksExternalLocation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

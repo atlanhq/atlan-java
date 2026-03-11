@@ -340,7 +340,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeReport does not exist or the provided GUID is not a ModeReport
      */
     @JsonIgnore
-    public static ModeReport get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModeReport get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -452,7 +453,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @return the updated ModeReport, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeReport removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeReport removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeReport) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -496,7 +498,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     public static ModeReport updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModeReport) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModeReport)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -508,7 +511,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @return the updated ModeReport, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeReport removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeReport removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeReport) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -526,7 +530,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     public static ModeReport updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeReport) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeReport)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -553,8 +558,8 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
      * @return the ModeReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeReport replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModeReport replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeReport) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

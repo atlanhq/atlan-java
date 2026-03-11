@@ -46,12 +46,14 @@ public interface IMicroStrategyVisualization {
     RelationField MICRO_STRATEGY_DOSSIER = new RelationField("microStrategyDossier");
 
     /** Simple name of the dossier in which this visualization exists. */
-    KeywordTextField MICRO_STRATEGY_DOSSIER_NAME =
-            new KeywordTextField("microStrategyDossierName", "microStrategyDossierName.keyword", "microStrategyDossierName");
+    KeywordTextField MICRO_STRATEGY_DOSSIER_NAME = new KeywordTextField(
+            "microStrategyDossierName", "microStrategyDossierName.keyword", "microStrategyDossierName");
 
     /** Unique name of the dossier in which this visualization exists. */
-    KeywordTextField MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME =
-            new KeywordTextField("microStrategyDossierQualifiedName", "microStrategyDossierQualifiedName", "microStrategyDossierQualifiedName.text");
+    KeywordTextField MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME = new KeywordTextField(
+            "microStrategyDossierQualifiedName",
+            "microStrategyDossierQualifiedName",
+            "microStrategyDossierQualifiedName.text");
 
     /** Project in which this visualization exists. */
     RelationField MICRO_STRATEGY_PROJECT = new RelationField("microStrategyProject");

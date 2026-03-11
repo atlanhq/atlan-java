@@ -439,7 +439,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpColumn does not exist or the provided GUID is not a SapErpColumn
      */
     @JsonIgnore
-    public static SapErpColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SapErpColumn get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -471,7 +472,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpColumn does not exist or the provided GUID is not a SapErpColumn
      */
     @JsonIgnore
-    public static SapErpColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SapErpColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -583,7 +585,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @return the updated SapErpColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpColumn removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -610,7 +613,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @return the updated SapErpColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpColumn removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -627,7 +631,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
     public static SapErpColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SapErpColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SapErpColumn)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -639,7 +644,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @return the updated SapErpColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -657,7 +663,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
     public static SapErpColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SapErpColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SapErpColumn)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -684,8 +691,8 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
      * @return the SapErpColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SapErpColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SapErpColumn replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SapErpColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

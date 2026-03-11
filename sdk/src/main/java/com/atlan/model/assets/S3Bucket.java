@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class S3Bucket extends Asset implements IS3Bucket, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
+public class S3Bucket extends Asset
+        implements IS3Bucket, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "S3Bucket";
@@ -408,7 +409,7 @@ public class S3Bucket extends Asset implements IS3Bucket, IS3, IObjectStore, IAW
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create an S3 bucket.
      * Note: this will use the name of the bucket to construct the qualifiedName for the bucket.
      *
@@ -484,7 +485,8 @@ public class S3Bucket extends Asset implements IS3Bucket, IS3, IObjectStore, IAW
      * @return the updated S3Bucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static S3Bucket removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (S3Bucket) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -540,7 +542,8 @@ public class S3Bucket extends Asset implements IS3Bucket, IS3, IObjectStore, IAW
      * @return the updated S3Bucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static S3Bucket removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (S3Bucket) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -585,8 +588,8 @@ public class S3Bucket extends Asset implements IS3Bucket, IS3, IObjectStore, IAW
      * @return the S3Bucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static S3Bucket replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (S3Bucket) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

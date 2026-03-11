@@ -361,7 +361,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a File.
      *
      * @param name of the File (if multiple files with the same name exist in the connection, also include the path that makes this file unique)
@@ -517,8 +517,7 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      * @return the updated File, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static File removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static File removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (File) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

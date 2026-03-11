@@ -43,8 +43,8 @@ public interface IAssetGroupingCollection {
     public static final String TYPE_NAME = "AssetGroupingCollection";
 
     /** Qualified name of the grouping strategy from which this collection was created. */
-    KeywordField ASSET_GROUPING_COLLECTION_STRATEGY_QUALIFIED_NAME =
-            new KeywordField("assetGroupingCollectionStrategyQualifiedName", "assetGroupingCollectionStrategyQualifiedName");
+    KeywordField ASSET_GROUPING_COLLECTION_STRATEGY_QUALIFIED_NAME = new KeywordField(
+            "assetGroupingCollectionStrategyQualifiedName", "assetGroupingCollectionStrategyQualifiedName");
 
     /** Metadata categories the user explicitly selected for tracking. */
     KeywordField ASSET_GROUPING_COLLECTION_TRACKED_CATEGORIES =

@@ -39,7 +39,6 @@ public interface IAnaplanSystemDimension {
 
     public static final String TYPE_NAME = "AnaplanSystemDimension";
 
-
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 

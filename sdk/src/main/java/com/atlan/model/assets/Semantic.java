@@ -373,7 +373,8 @@ public class Semantic extends Asset implements ISemantic, ICatalog, IAsset, IRef
      * @return the updated Semantic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Semantic removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Semantic removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Semantic) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -429,7 +430,8 @@ public class Semantic extends Asset implements ISemantic, ICatalog, IAsset, IRef
      * @return the updated Semantic, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Semantic removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Semantic removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Semantic) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -474,8 +476,8 @@ public class Semantic extends Asset implements ISemantic, ICatalog, IAsset, IRef
      * @return the Semantic that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Semantic replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Semantic replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Semantic) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

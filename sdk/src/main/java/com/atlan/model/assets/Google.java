@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -363,7 +362,8 @@ public class Google extends Asset implements IGoogle, IAsset, IReferenceable, IC
      * @return the updated Google, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Google removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Google removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Google) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -419,7 +419,8 @@ public class Google extends Asset implements IGoogle, IAsset, IReferenceable, IC
      * @return the updated Google, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Google removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Google removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Google) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

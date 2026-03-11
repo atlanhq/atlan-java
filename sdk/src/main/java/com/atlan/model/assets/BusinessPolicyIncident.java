@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class BusinessPolicyIncident extends Asset implements IBusinessPolicyIncident, IIncident, IBusinessPolicy, IAsset, IReferenceable {
+public class BusinessPolicyIncident extends Asset
+        implements IBusinessPolicyIncident, IIncident, IBusinessPolicy, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BusinessPolicyIncident";
@@ -251,7 +252,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicyIncident does not exist or the provided GUID is not a BusinessPolicyIncident
      */
     @JsonIgnore
-    public static BusinessPolicyIncident get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static BusinessPolicyIncident get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -283,7 +285,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the BusinessPolicyIncident does not exist or the provided GUID is not a BusinessPolicyIncident
      */
     @JsonIgnore
-    public static BusinessPolicyIncident get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static BusinessPolicyIncident get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -383,7 +386,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class BusinessPolicyIncidentBuilder<C extends BusinessPolicyIncident, B extends BusinessPolicyIncidentBuilder<C, B>>
+    public abstract static class BusinessPolicyIncidentBuilder<
+                    C extends BusinessPolicyIncident, B extends BusinessPolicyIncidentBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -395,7 +399,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @return the updated BusinessPolicyIncident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyIncident removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BusinessPolicyIncident removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BusinessPolicyIncident) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -422,7 +427,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @return the updated BusinessPolicyIncident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyIncident removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BusinessPolicyIncident removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BusinessPolicyIncident) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -439,7 +445,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
     public static BusinessPolicyIncident updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (BusinessPolicyIncident) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (BusinessPolicyIncident)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -451,7 +458,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @return the updated BusinessPolicyIncident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyIncident removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static BusinessPolicyIncident removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (BusinessPolicyIncident) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -469,7 +477,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
     public static BusinessPolicyIncident updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (BusinessPolicyIncident) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (BusinessPolicyIncident)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -496,8 +505,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @return the BusinessPolicyIncident that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BusinessPolicyIncident replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static BusinessPolicyIncident replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (BusinessPolicyIncident) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -514,8 +523,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static BusinessPolicyIncident appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static BusinessPolicyIncident appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (BusinessPolicyIncident) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -532,8 +541,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static BusinessPolicyIncident removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static BusinessPolicyIncident removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (BusinessPolicyIncident) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -550,8 +559,8 @@ public class BusinessPolicyIncident extends Asset implements IBusinessPolicyInci
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static BusinessPolicyIncident appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static BusinessPolicyIncident appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (BusinessPolicyIncident) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

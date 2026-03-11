@@ -302,7 +302,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelVersion does not exist or the provided GUID is not a ModelVersion
      */
     @JsonIgnore
-    public static ModelVersion get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ModelVersion get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -334,7 +335,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelVersion does not exist or the provided GUID is not a ModelVersion
      */
     @JsonIgnore
-    public static ModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -403,7 +405,7 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a ModelVersion.
      *
      * @param name of the ModelVersion
@@ -456,7 +458,7 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-/**
+    /**
      * Generate a unique ModelVersion name.
      *
      * @param name of the ModelVersion
@@ -509,7 +511,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @return the updated ModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelVersion removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelVersion removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelVersion) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -536,7 +539,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @return the updated ModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelVersion removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelVersion removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelVersion) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -553,7 +557,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     public static ModelVersion updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelVersion) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelVersion)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -565,7 +570,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @return the updated ModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelVersion) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -583,7 +589,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
     public static ModelVersion updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelVersion) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelVersion)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -610,8 +617,8 @@ public class ModelVersion extends Asset implements IModelVersion, IModel, ICatal
      * @return the ModelVersion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelVersion replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModelVersion replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModelVersion) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

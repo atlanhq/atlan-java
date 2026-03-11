@@ -74,8 +74,8 @@ public interface ITableauDatasourceField {
             new TextField("tableauDatasourceFieldDataCategory", "tableauDatasourceFieldDataCategory");
 
     /** Data type of this field. */
-    KeywordTextField TABLEAU_DATASOURCE_FIELD_DATA_TYPE =
-            new KeywordTextField("tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType.text");
+    KeywordTextField TABLEAU_DATASOURCE_FIELD_DATA_TYPE = new KeywordTextField(
+            "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType", "tableauDatasourceFieldDataType.text");
 
     /** Formula for this field. */
     TextField TABLEAU_DATASOURCE_FIELD_FORMULA =

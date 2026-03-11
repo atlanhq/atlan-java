@@ -423,7 +423,8 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
      * @return the updated APIQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIQuery removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIQuery removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -479,7 +480,8 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
      * @return the updated APIQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIQuery removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -524,8 +526,8 @@ public class APIQuery extends Asset implements IAPIQuery, IAPI, ICatalog, IAsset
      * @return the APIQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APIQuery replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static APIQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (APIQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

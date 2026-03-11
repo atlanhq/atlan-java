@@ -272,7 +272,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ConnectionProcess does not exist or the provided GUID is not a ConnectionProcess
      */
     @JsonIgnore
-    public static ConnectionProcess get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ConnectionProcess get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -304,7 +305,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ConnectionProcess does not exist or the provided GUID is not a ConnectionProcess
      */
     @JsonIgnore
-    public static ConnectionProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ConnectionProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -404,7 +406,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class ConnectionProcessBuilder<C extends ConnectionProcess, B extends ConnectionProcessBuilder<C, B>>
+    public abstract static class ConnectionProcessBuilder<
+                    C extends ConnectionProcess, B extends ConnectionProcessBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -416,7 +419,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ConnectionProcess removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ConnectionProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -443,7 +447,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ConnectionProcess removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ConnectionProcess) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -460,7 +465,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     public static ConnectionProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ConnectionProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ConnectionProcess)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -472,7 +478,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the updated ConnectionProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ConnectionProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ConnectionProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -490,7 +497,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     public static ConnectionProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ConnectionProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ConnectionProcess)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -517,8 +525,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @return the ConnectionProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ConnectionProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ConnectionProcess replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ConnectionProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -571,8 +579,8 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static ConnectionProcess appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static ConnectionProcess appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (ConnectionProcess) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

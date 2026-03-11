@@ -378,7 +378,8 @@ public class Starburst extends Asset implements IStarburst, ICatalog, IAsset, IR
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Starburst does not exist or the provided GUID is not a Starburst
      */
     @JsonIgnore
-    public static Starburst get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static Starburst get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -490,7 +491,8 @@ public class Starburst extends Asset implements IStarburst, ICatalog, IAsset, IR
      * @return the updated Starburst, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Starburst removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Starburst removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Starburst) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -546,7 +548,8 @@ public class Starburst extends Asset implements IStarburst, ICatalog, IAsset, IR
      * @return the updated Starburst, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Starburst removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Starburst removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Starburst) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -564,7 +567,8 @@ public class Starburst extends Asset implements IStarburst, ICatalog, IAsset, IR
     public static Starburst updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (Starburst) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (Starburst)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -591,8 +595,8 @@ public class Starburst extends Asset implements IStarburst, ICatalog, IAsset, IR
      * @return the Starburst that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Starburst replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Starburst replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Starburst) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -49,8 +49,8 @@ public interface ISigmaDatasetColumn {
             new KeywordTextField("sigmaDatasetName", "sigmaDatasetName.keyword", "sigmaDatasetName");
 
     /** Unique name of the dataset in which this column exists. */
-    KeywordTextField SIGMA_DATASET_QUALIFIED_NAME =
-            new KeywordTextField("sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName.text");
+    KeywordTextField SIGMA_DATASET_QUALIFIED_NAME = new KeywordTextField(
+            "sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName", "sigmaDatasetQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -204,7 +203,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AuthService does not exist or the provided GUID is not a AuthService
      */
     @JsonIgnore
-    public static AuthService get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AuthService get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -236,7 +236,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AuthService does not exist or the provided GUID is not a AuthService
      */
     @JsonIgnore
-    public static AuthService get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AuthService get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -348,7 +349,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return the updated AuthService, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AuthService removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AuthService removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AuthService) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -375,7 +377,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return the updated AuthService, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AuthService removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AuthService removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AuthService) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -392,7 +395,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     public static AuthService updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AuthService) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AuthService)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -404,7 +408,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return the updated AuthService, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AuthService removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AuthService removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AuthService) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -422,7 +427,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     public static AuthService updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AuthService) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AuthService)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -449,8 +455,8 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
      * @return the AuthService that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthService replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AuthService replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AuthService) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

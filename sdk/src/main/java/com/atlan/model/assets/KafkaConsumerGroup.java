@@ -41,7 +41,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IKafka, IEventStore, ICatalog, IAsset, IReferenceable {
+public class KafkaConsumerGroup extends Asset
+        implements IKafkaConsumerGroup, IKafka, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "KafkaConsumerGroup";
@@ -256,7 +257,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaConsumerGroup does not exist or the provided GUID is not a KafkaConsumerGroup
      */
     @JsonIgnore
-    public static KafkaConsumerGroup get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static KafkaConsumerGroup get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -288,7 +290,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the KafkaConsumerGroup does not exist or the provided GUID is not a KafkaConsumerGroup
      */
     @JsonIgnore
-    public static KafkaConsumerGroup get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static KafkaConsumerGroup get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -358,7 +361,7 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a KafkaConsumerGroup.
      *
      * @param name of the KafkaConsumerGroup
@@ -475,7 +478,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class KafkaConsumerGroupBuilder<C extends KafkaConsumerGroup, B extends KafkaConsumerGroupBuilder<C, B>>
+    public abstract static class KafkaConsumerGroupBuilder<
+                    C extends KafkaConsumerGroup, B extends KafkaConsumerGroupBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -487,7 +491,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @return the updated KafkaConsumerGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static KafkaConsumerGroup removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (KafkaConsumerGroup) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -514,7 +519,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @return the updated KafkaConsumerGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static KafkaConsumerGroup removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (KafkaConsumerGroup) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -531,7 +537,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
     public static KafkaConsumerGroup updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (KafkaConsumerGroup) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (KafkaConsumerGroup)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -543,7 +550,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @return the updated KafkaConsumerGroup, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static KafkaConsumerGroup removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (KafkaConsumerGroup) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -561,7 +569,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
     public static KafkaConsumerGroup updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (KafkaConsumerGroup) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (KafkaConsumerGroup)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -588,8 +597,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static KafkaConsumerGroup replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (KafkaConsumerGroup) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -642,8 +651,8 @@ public class KafkaConsumerGroup extends Asset implements IKafkaConsumerGroup, IK
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static KafkaConsumerGroup appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static KafkaConsumerGroup appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (KafkaConsumerGroup) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

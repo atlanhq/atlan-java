@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -349,7 +348,8 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
      * @return the updated Response, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Response removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Response removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Response) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -405,7 +405,8 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
      * @return the updated Response, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Response removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Response removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Response) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -450,8 +451,8 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
      * @return the Response that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Response replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Response replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Response) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

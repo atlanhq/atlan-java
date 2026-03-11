@@ -373,7 +373,8 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return the updated Insight, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Insight removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Insight removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Insight) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -429,7 +430,8 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return the updated Insight, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Insight removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Insight removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Insight) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

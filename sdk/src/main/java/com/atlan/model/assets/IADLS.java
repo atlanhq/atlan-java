@@ -46,8 +46,8 @@ public interface IADLS {
             new KeywordTextField("adlsAccountName", "adlsAccountName.keyword", "adlsAccountName");
 
     /** Unique name of the account for this ADLS asset. */
-    KeywordTextField ADLS_ACCOUNT_QUALIFIED_NAME =
-            new KeywordTextField("adlsAccountQualifiedName", "adlsAccountQualifiedName", "adlsAccountQualifiedName.text");
+    KeywordTextField ADLS_ACCOUNT_QUALIFIED_NAME = new KeywordTextField(
+            "adlsAccountQualifiedName", "adlsAccountQualifiedName", "adlsAccountQualifiedName.text");
 
     /** Name of the account for this ADLS asset. */
     String getAdlsAccountName();

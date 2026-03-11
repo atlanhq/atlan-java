@@ -336,7 +336,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AirflowTask does not exist or the provided GUID is not a AirflowTask
      */
     @JsonIgnore
-    public static AirflowTask get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AirflowTask get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -368,7 +369,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AirflowTask does not exist or the provided GUID is not a AirflowTask
      */
     @JsonIgnore
-    public static AirflowTask get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AirflowTask get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -438,7 +440,7 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create an AirflowTask.
      *
      * @param name of the AirflowTask
@@ -517,7 +519,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @return the updated AirflowTask, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AirflowTask removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AirflowTask removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AirflowTask) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -544,7 +547,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @return the updated AirflowTask, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AirflowTask removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AirflowTask removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AirflowTask) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -561,7 +565,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     public static AirflowTask updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AirflowTask) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AirflowTask)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -573,7 +578,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @return the updated AirflowTask, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AirflowTask removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AirflowTask removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AirflowTask) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -591,7 +597,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
     public static AirflowTask updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AirflowTask) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AirflowTask)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -618,8 +625,8 @@ public class AirflowTask extends Asset implements IAirflowTask, IAirflow, ICatal
      * @return the AirflowTask that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AirflowTask replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AirflowTask replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AirflowTask) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

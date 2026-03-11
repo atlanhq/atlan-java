@@ -282,7 +282,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist or the provided GUID is not a LookerDashboard
      */
     @JsonIgnore
-    public static LookerDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static LookerDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -314,7 +315,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist or the provided GUID is not a LookerDashboard
      */
     @JsonIgnore
-    public static LookerDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static LookerDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -414,7 +416,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class LookerDashboardBuilder<C extends LookerDashboard, B extends LookerDashboardBuilder<C, B>>
+    public abstract static class LookerDashboardBuilder<
+                    C extends LookerDashboard, B extends LookerDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -426,7 +429,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return the updated LookerDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -453,7 +457,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return the updated LookerDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -470,7 +475,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     public static LookerDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerDashboard)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -482,7 +488,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return the updated LookerDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,7 +507,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     public static LookerDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerDashboard)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -527,8 +535,8 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @return the LookerDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static LookerDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

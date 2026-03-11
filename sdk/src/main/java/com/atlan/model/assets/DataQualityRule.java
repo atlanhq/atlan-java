@@ -360,7 +360,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataQualityRule does not exist or the provided GUID is not a DataQualityRule
      */
     @JsonIgnore
-    public static DataQualityRule get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DataQualityRule get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -392,7 +393,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DataQualityRule does not exist or the provided GUID is not a DataQualityRule
      */
     @JsonIgnore
-    public static DataQualityRule get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DataQualityRule get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -492,7 +494,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DataQualityRuleBuilder<C extends DataQualityRule, B extends DataQualityRuleBuilder<C, B>>
+    public abstract static class DataQualityRuleBuilder<
+                    C extends DataQualityRule, B extends DataQualityRuleBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -504,7 +507,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @return the updated DataQualityRule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataQualityRule removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataQualityRule removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataQualityRule) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -531,7 +535,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @return the updated DataQualityRule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataQualityRule removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataQualityRule removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataQualityRule) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -548,7 +553,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     public static DataQualityRule updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DataQualityRule) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DataQualityRule)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -560,7 +566,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @return the updated DataQualityRule, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DataQualityRule removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DataQualityRule removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DataQualityRule) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -578,7 +585,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     public static DataQualityRule updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DataQualityRule) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DataQualityRule)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -605,8 +613,8 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
      * @return the DataQualityRule that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataQualityRule replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DataQualityRule replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DataQualityRule) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -393,7 +393,7 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create an API path.
      *
      * @param name of the API path
@@ -470,7 +470,8 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return the updated APIPath, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIPath removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIPath removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIPath) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -526,7 +527,8 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return the updated APIPath, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIPath removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIPath removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIPath) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

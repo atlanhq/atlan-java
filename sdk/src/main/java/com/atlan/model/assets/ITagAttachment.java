@@ -42,8 +42,8 @@ public interface ITagAttachment {
     public static final String TYPE_NAME = "TagAttachment";
 
     /** Represents associated tag value. */
-    KeywordTextField TAG_ATTACHMENT_STRING_VALUE =
-            new KeywordTextField("tagAttachmentStringValue", "tagAttachmentStringValue", "tagAttachmentStringValue.text");
+    KeywordTextField TAG_ATTACHMENT_STRING_VALUE = new KeywordTextField(
+            "tagAttachmentStringValue", "tagAttachmentStringValue", "tagAttachmentStringValue.text");
 
     /** Represents associated source tag's qualified name. */
     KeywordTextField TAG_QUALIFIED_NAME =

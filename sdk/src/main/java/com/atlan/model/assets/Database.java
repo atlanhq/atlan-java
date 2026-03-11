@@ -453,7 +453,7 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a database.
      *
      * @param name of the database
@@ -521,7 +521,8 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return the updated Database, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Database removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Database removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Database) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -577,7 +578,8 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return the updated Database, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Database removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Database removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Database) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -622,8 +624,8 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
      * @return the Database that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Database replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static Database replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (Database) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

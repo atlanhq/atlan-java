@@ -278,7 +278,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpCdsView does not exist or the provided GUID is not a SapErpCdsView
      */
     @JsonIgnore
-    public static SapErpCdsView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SapErpCdsView get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -310,7 +311,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SapErpCdsView does not exist or the provided GUID is not a SapErpCdsView
      */
     @JsonIgnore
-    public static SapErpCdsView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SapErpCdsView get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -422,7 +424,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @return the updated SapErpCdsView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpCdsView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpCdsView removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpCdsView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -449,7 +452,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @return the updated SapErpCdsView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpCdsView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpCdsView removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpCdsView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -466,7 +470,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
     public static SapErpCdsView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SapErpCdsView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SapErpCdsView)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -478,7 +483,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @return the updated SapErpCdsView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SapErpCdsView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SapErpCdsView removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SapErpCdsView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -496,7 +502,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
     public static SapErpCdsView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SapErpCdsView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SapErpCdsView)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -523,8 +530,8 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
      * @return the SapErpCdsView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SapErpCdsView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SapErpCdsView replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SapErpCdsView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

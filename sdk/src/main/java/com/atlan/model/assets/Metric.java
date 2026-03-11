@@ -408,7 +408,8 @@ public class Metric extends Asset implements IMetric, IDataQuality, ICatalog, IA
      * @return the updated Metric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Metric removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Metric removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Metric) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -464,7 +465,8 @@ public class Metric extends Asset implements IMetric, IDataQuality, ICatalog, IA
      * @return the updated Metric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Metric removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Metric removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Metric) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

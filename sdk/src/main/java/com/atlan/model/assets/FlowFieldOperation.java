@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IColumnProcess, IFlow, ILineageProcess, IAsset, IReferenceable {
+public class FlowFieldOperation extends Asset
+        implements IFlowFieldOperation, IColumnProcess, IFlow, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FlowFieldOperation";
@@ -335,7 +336,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowFieldOperation does not exist or the provided GUID is not a FlowFieldOperation
      */
     @JsonIgnore
-    public static FlowFieldOperation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FlowFieldOperation get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -367,7 +369,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowFieldOperation does not exist or the provided GUID is not a FlowFieldOperation
      */
     @JsonIgnore
-    public static FlowFieldOperation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FlowFieldOperation get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -467,7 +470,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowFieldOperationBuilder<C extends FlowFieldOperation, B extends FlowFieldOperationBuilder<C, B>>
+    public abstract static class FlowFieldOperationBuilder<
+                    C extends FlowFieldOperation, B extends FlowFieldOperationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -479,7 +483,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @return the updated FlowFieldOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowFieldOperation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowFieldOperation removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowFieldOperation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -506,7 +511,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @return the updated FlowFieldOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowFieldOperation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowFieldOperation removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowFieldOperation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -523,7 +529,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     public static FlowFieldOperation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowFieldOperation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FlowFieldOperation)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -535,7 +542,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @return the updated FlowFieldOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowFieldOperation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowFieldOperation removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowFieldOperation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -553,7 +561,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
     public static FlowFieldOperation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowFieldOperation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FlowFieldOperation)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -580,8 +589,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @return the FlowFieldOperation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowFieldOperation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FlowFieldOperation replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FlowFieldOperation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -634,8 +643,8 @@ public class FlowFieldOperation extends Asset implements IFlowFieldOperation, IC
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowFieldOperation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static FlowFieldOperation appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (FlowFieldOperation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

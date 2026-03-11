@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
+public class AnaplanLineItem extends Asset
+        implements IAnaplanLineItem, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AnaplanLineItem";
@@ -275,7 +276,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanLineItem does not exist or the provided GUID is not a AnaplanLineItem
      */
     @JsonIgnore
-    public static AnaplanLineItem get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AnaplanLineItem get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -307,7 +309,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanLineItem does not exist or the provided GUID is not a AnaplanLineItem
      */
     @JsonIgnore
-    public static AnaplanLineItem get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnaplanLineItem get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -376,7 +379,7 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Anaplan lineitem.
      *
      * @param name of the lineitem
@@ -510,7 +513,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AnaplanLineItemBuilder<C extends AnaplanLineItem, B extends AnaplanLineItemBuilder<C, B>>
+    public abstract static class AnaplanLineItemBuilder<
+                    C extends AnaplanLineItem, B extends AnaplanLineItemBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -522,7 +526,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @return the updated AnaplanLineItem, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanLineItem removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanLineItem removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanLineItem) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -549,7 +554,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @return the updated AnaplanLineItem, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanLineItem removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanLineItem removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanLineItem) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -566,7 +572,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
     public static AnaplanLineItem updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnaplanLineItem) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnaplanLineItem)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -578,7 +585,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @return the updated AnaplanLineItem, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanLineItem removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanLineItem removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanLineItem) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -596,7 +604,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
     public static AnaplanLineItem updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnaplanLineItem) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnaplanLineItem)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -623,8 +632,8 @@ public class AnaplanLineItem extends Asset implements IAnaplanLineItem, IAnaplan
      * @return the AnaplanLineItem that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnaplanLineItem replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanLineItem replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanLineItem) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

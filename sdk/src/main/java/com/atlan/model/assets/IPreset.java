@@ -45,15 +45,15 @@ public interface IPreset {
     NumericField PRESET_DASHBOARD_ID = new NumericField("presetDashboardId", "presetDashboardId");
 
     /** Unique name of the dashboard in which this asset exists. */
-    KeywordTextField PRESET_DASHBOARD_QUALIFIED_NAME =
-            new KeywordTextField("presetDashboardQualifiedName", "presetDashboardQualifiedName", "presetDashboardQualifiedName.text");
+    KeywordTextField PRESET_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "presetDashboardQualifiedName", "presetDashboardQualifiedName", "presetDashboardQualifiedName.text");
 
     /** Identifier of the workspace in which this asset exists, in Preset. */
     NumericField PRESET_WORKSPACE_ID = new NumericField("presetWorkspaceId", "presetWorkspaceId");
 
     /** Unique name of the workspace in which this asset exists. */
-    KeywordTextField PRESET_WORKSPACE_QUALIFIED_NAME =
-            new KeywordTextField("presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName.text");
+    KeywordTextField PRESET_WORKSPACE_QUALIFIED_NAME = new KeywordTextField(
+            "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName", "presetWorkspaceQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

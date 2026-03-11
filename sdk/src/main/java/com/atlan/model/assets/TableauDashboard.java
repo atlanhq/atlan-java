@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class TableauDashboard extends Asset implements ITableauDashboard, ITableau, IBI, ICatalog, IAsset, IReferenceable {
+public class TableauDashboard extends Asset
+        implements ITableauDashboard, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDashboard";
@@ -279,7 +280,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist or the provided GUID is not a TableauDashboard
      */
     @JsonIgnore
-    public static TableauDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static TableauDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -311,7 +313,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist or the provided GUID is not a TableauDashboard
      */
     @JsonIgnore
-    public static TableauDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static TableauDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -411,7 +414,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class TableauDashboardBuilder<C extends TableauDashboard, B extends TableauDashboardBuilder<C, B>>
+    public abstract static class TableauDashboardBuilder<
+                    C extends TableauDashboard, B extends TableauDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -423,7 +427,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @return the updated TableauDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -450,7 +455,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @return the updated TableauDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -467,7 +473,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
     public static TableauDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauDashboard)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -479,7 +486,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @return the updated TableauDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -497,7 +505,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
     public static TableauDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauDashboard)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -524,8 +533,8 @@ public class TableauDashboard extends Asset implements ITableauDashboard, ITable
      * @return the TableauDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static TableauDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

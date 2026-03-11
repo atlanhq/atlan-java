@@ -217,7 +217,8 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
      */
     @JsonIgnore
-    public static GlossaryCategory get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static GlossaryCategory get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -249,7 +250,8 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
      */
     @JsonIgnore
-    public static GlossaryCategory get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static GlossaryCategory get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -306,8 +308,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
             }
         }
     }
-
-
 
     /**
      * Builds the minimal object necessary for creating a category.
@@ -630,7 +630,8 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
         return (GlossaryCategory) Asset.removeAnnouncement(client, updater(qualifiedName, name, glossaryGuid));
     }
 
-    public abstract static class GlossaryCategoryBuilder<C extends GlossaryCategory, B extends GlossaryCategoryBuilder<C, B>>
+    public abstract static class GlossaryCategoryBuilder<
+                    C extends GlossaryCategory, B extends GlossaryCategoryBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**

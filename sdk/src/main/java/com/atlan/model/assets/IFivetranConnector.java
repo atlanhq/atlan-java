@@ -63,12 +63,12 @@ public interface IFivetranConnector {
             new KeywordField("fivetranConnectorDestinationURL", "fivetranConnectorDestinationURL");
 
     /** Extract time in seconds in the latest sync on fivetran */
-    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_TIME_SECONDS =
-            new NumericField("fivetranConnectorLastSyncExtractTimeSeconds", "fivetranConnectorLastSyncExtractTimeSeconds");
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_TIME_SECONDS = new NumericField(
+            "fivetranConnectorLastSyncExtractTimeSeconds", "fivetranConnectorLastSyncExtractTimeSeconds");
 
     /** Extracted data volume in metabytes in the latest sync on Fivetran */
-    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_VOLUME_MEGABYTES =
-            new NumericField("fivetranConnectorLastSyncExtractVolumeMegabytes", "fivetranConnectorLastSyncExtractVolumeMegabytes");
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_EXTRACT_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncExtractVolumeMegabytes", "fivetranConnectorLastSyncExtractVolumeMegabytes");
 
     /** Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds */
     NumericField FIVETRAN_CONNECTOR_LAST_SYNC_FINISHED_AT =
@@ -83,20 +83,22 @@ public interface IFivetranConnector {
             new NumericField("fivetranConnectorLastSyncLoadTimeSeconds", "fivetranConnectorLastSyncLoadTimeSeconds");
 
     /** Loaded data volume in metabytes in the latest sync on Fivetran */
-    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_LOAD_VOLUME_MEGABYTES =
-            new NumericField("fivetranConnectorLastSyncLoadVolumeMegabytes", "fivetranConnectorLastSyncLoadVolumeMegabytes");
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_LOAD_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncLoadVolumeMegabytes", "fivetranConnectorLastSyncLoadVolumeMegabytes");
 
     /** Process time in seconds in the latest sync on Fivetran */
-    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_TIME_SECONDS =
-            new NumericField("fivetranConnectorLastSyncProcessTimeSeconds", "fivetranConnectorLastSyncProcessTimeSeconds");
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_TIME_SECONDS = new NumericField(
+            "fivetranConnectorLastSyncProcessTimeSeconds", "fivetranConnectorLastSyncProcessTimeSeconds");
 
     /** Process volume in metabytes in the latest sync on Fivetran */
-    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_VOLUME_MEGABYTES =
-            new NumericField("fivetranConnectorLastSyncProcessVolumeMegabytes", "fivetranConnectorLastSyncProcessVolumeMegabytes");
+    NumericField FIVETRAN_CONNECTOR_LAST_SYNC_PROCESS_VOLUME_MEGABYTES = new NumericField(
+            "fivetranConnectorLastSyncProcessVolumeMegabytes", "fivetranConnectorLastSyncProcessVolumeMegabytes");
 
     /** Failure reason for the latest sync on Fivetran. If status is FAILURE, this is the description of the reason why the sync failed. If status is FAILURE_WITH_TASK, this is the description of the Error. If status is RESCHEDULED, this is the description of the reason why the sync is rescheduled. */
-    KeywordTextField FIVETRAN_CONNECTOR_LAST_SYNC_REASON =
-            new KeywordTextField("fivetranConnectorLastSyncReason", "fivetranConnectorLastSyncReason.keyword", "fivetranConnectorLastSyncReason");
+    KeywordTextField FIVETRAN_CONNECTOR_LAST_SYNC_REASON = new KeywordTextField(
+            "fivetranConnectorLastSyncReason",
+            "fivetranConnectorLastSyncReason.keyword",
+            "fivetranConnectorLastSyncReason");
 
     /** Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran */
     NumericField FIVETRAN_CONNECTOR_LAST_SYNC_RESCHEDULED_AT =
@@ -119,40 +121,46 @@ public interface IFivetranConnector {
             new NumericField("fivetranConnectorLastSyncTotalTimeSeconds", "fivetranConnectorLastSyncTotalTimeSeconds");
 
     /** Increase in the percentage of free MAR compared to the previous month */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_FREE =
-            new NumericField("fivetranConnectorMonthlyActiveRowsChangePercentageFree", "fivetranConnectorMonthlyActiveRowsChangePercentageFree");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_FREE = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentageFree",
+            "fivetranConnectorMonthlyActiveRowsChangePercentageFree");
 
     /** Increase in the percentage of paid MAR compared to the previous month */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_PAID =
-            new NumericField("fivetranConnectorMonthlyActiveRowsChangePercentagePaid", "fivetranConnectorMonthlyActiveRowsChangePercentagePaid");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_PAID = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentagePaid",
+            "fivetranConnectorMonthlyActiveRowsChangePercentagePaid");
 
     /** Increase in the percentage of total MAR compared to the previous month */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_TOTAL =
-            new NumericField("fivetranConnectorMonthlyActiveRowsChangePercentageTotal", "fivetranConnectorMonthlyActiveRowsChangePercentageTotal");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_CHANGE_PERCENTAGE_TOTAL = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsChangePercentageTotal",
+            "fivetranConnectorMonthlyActiveRowsChangePercentageTotal");
 
     /** Free Monthly Active Rows used by the connector in the past month */
     NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_FREE =
             new NumericField("fivetranConnectorMonthlyActiveRowsFree", "fivetranConnectorMonthlyActiveRowsFree");
 
     /** Percentage of the account's total free MAR used by this connector */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_FREE_PERCENTAGE_OF_ACCOUNT =
-            new NumericField("fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount", "fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_FREE_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount");
 
     /** Paid Monthly Active Rows used by the connector in the past month */
     NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_PAID =
             new NumericField("fivetranConnectorMonthlyActiveRowsPaid", "fivetranConnectorMonthlyActiveRowsPaid");
 
     /** Percentage of the account's total paid MAR used by this connector */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_PAID_PERCENTAGE_OF_ACCOUNT =
-            new NumericField("fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount", "fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_PAID_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount");
 
     /** Total Monthly Active Rows used by the connector in the past month */
     NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_TOTAL =
             new NumericField("fivetranConnectorMonthlyActiveRowsTotal", "fivetranConnectorMonthlyActiveRowsTotal");
 
     /** Percentage of the account's total MAR used by this connector */
-    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_TOTAL_PERCENTAGE_OF_ACCOUNT =
-            new NumericField("fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount", "fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount");
+    NumericField FIVETRAN_CONNECTOR_MONTHLY_ACTIVE_ROWS_TOTAL_PERCENTAGE_OF_ACCOUNT = new NumericField(
+            "fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount",
+            "fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount");
 
     /** Connector name added by the user on Fivetran */
     KeywordField FIVETRAN_CONNECTOR_NAME = new KeywordField("fivetranConnectorName", "fivetranConnectorName");

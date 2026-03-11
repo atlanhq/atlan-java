@@ -38,7 +38,15 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSemanticDimension, ISemanticDimension, ISnowflake, ISemantic, ICatalog, IAsset, IReferenceable, ISQL {
+public class SnowflakeSemanticDimension extends Asset
+        implements ISnowflakeSemanticDimension,
+                ISemanticDimension,
+                ISnowflake,
+                ISemantic,
+                ICatalog,
+                IAsset,
+                IReferenceable,
+                ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeSemanticDimension";
@@ -335,7 +343,10 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return reference to a SnowflakeSemanticDimension that can be used for defining a relationship to a SnowflakeSemanticDimension
      */
     public static SnowflakeSemanticDimension refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return SnowflakeSemanticDimension._internal().guid(guid).semantic(semantic).build();
+        return SnowflakeSemanticDimension._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -389,7 +400,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticDimension does not exist or the provided GUID is not a SnowflakeSemanticDimension
      */
     @JsonIgnore
-    public static SnowflakeSemanticDimension get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SnowflakeSemanticDimension get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -421,7 +433,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SnowflakeSemanticDimension does not exist or the provided GUID is not a SnowflakeSemanticDimension
      */
     @JsonIgnore
-    public static SnowflakeSemanticDimension get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SnowflakeSemanticDimension get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -521,7 +534,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SnowflakeSemanticDimensionBuilder<C extends SnowflakeSemanticDimension, B extends SnowflakeSemanticDimensionBuilder<C, B>>
+    public abstract static class SnowflakeSemanticDimensionBuilder<
+                    C extends SnowflakeSemanticDimension, B extends SnowflakeSemanticDimensionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -533,7 +547,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return the updated SnowflakeSemanticDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticDimension removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeSemanticDimension removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -546,8 +561,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return the updated SnowflakeSemanticDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticDimension removeUserDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SnowflakeSemanticDimension removeUserDescription(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -560,7 +575,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return the updated SnowflakeSemanticDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticDimension removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeSemanticDimension removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -577,7 +593,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
     public static SnowflakeSemanticDimension updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SnowflakeSemanticDimension) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SnowflakeSemanticDimension)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -589,7 +606,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return the updated SnowflakeSemanticDimension, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticDimension removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SnowflakeSemanticDimension removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -607,7 +625,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
     public static SnowflakeSemanticDimension updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SnowflakeSemanticDimension) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SnowflakeSemanticDimension)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -634,8 +653,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @return the SnowflakeSemanticDimension that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeSemanticDimension replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SnowflakeSemanticDimension replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -652,8 +671,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeSemanticDimension appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SnowflakeSemanticDimension appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -670,8 +689,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static SnowflakeSemanticDimension removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SnowflakeSemanticDimension removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -688,8 +707,8 @@ public class SnowflakeSemanticDimension extends Asset implements ISnowflakeSeman
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static SnowflakeSemanticDimension appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static SnowflakeSemanticDimension appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (SnowflakeSemanticDimension) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

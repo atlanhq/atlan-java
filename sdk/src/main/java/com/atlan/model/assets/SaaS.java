@@ -459,8 +459,7 @@ public class SaaS extends Asset implements ISaaS, ICatalog, IAsset, IReferenceab
      * @return the updated SaaS, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SaaS removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static SaaS removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (SaaS) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

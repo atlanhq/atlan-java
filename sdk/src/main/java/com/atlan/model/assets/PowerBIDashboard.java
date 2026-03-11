@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
+public class PowerBIDashboard extends Asset
+        implements IPowerBIDashboard, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDashboard";
@@ -281,7 +282,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist or the provided GUID is not a PowerBIDashboard
      */
     @JsonIgnore
-    public static PowerBIDashboard get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PowerBIDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -313,7 +315,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist or the provided GUID is not a PowerBIDashboard
      */
     @JsonIgnore
-    public static PowerBIDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PowerBIDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -413,7 +416,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class PowerBIDashboardBuilder<C extends PowerBIDashboard, B extends PowerBIDashboardBuilder<C, B>>
+    public abstract static class PowerBIDashboardBuilder<
+                    C extends PowerBIDashboard, B extends PowerBIDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -425,7 +429,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @return the updated PowerBIDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDashboard removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -452,7 +457,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @return the updated PowerBIDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDashboard removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -469,7 +475,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
     public static PowerBIDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIDashboard) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIDashboard)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -481,7 +488,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @return the updated PowerBIDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDashboard removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -499,7 +507,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
     public static PowerBIDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIDashboard) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIDashboard)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -526,8 +535,8 @@ public class PowerBIDashboard extends Asset implements IPowerBIDashboard, IPower
      * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDashboard replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PowerBIDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

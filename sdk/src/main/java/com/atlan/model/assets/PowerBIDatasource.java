@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
+public class PowerBIDatasource extends Asset
+        implements IPowerBIDatasource, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDatasource";
@@ -270,7 +271,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
      */
     @JsonIgnore
-    public static PowerBIDatasource get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PowerBIDatasource get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -302,7 +304,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDatasource does not exist or the provided GUID is not a PowerBIDatasource
      */
     @JsonIgnore
-    public static PowerBIDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PowerBIDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -402,7 +405,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class PowerBIDatasourceBuilder<C extends PowerBIDatasource, B extends PowerBIDatasourceBuilder<C, B>>
+    public abstract static class PowerBIDatasourceBuilder<
+                    C extends PowerBIDatasource, B extends PowerBIDatasourceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -414,7 +418,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @return the updated PowerBIDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDatasource removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDatasource) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -441,7 +446,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @return the updated PowerBIDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDatasource removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDatasource) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -458,7 +464,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
     public static PowerBIDatasource updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIDatasource) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIDatasource)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -470,7 +477,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @return the updated PowerBIDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDatasource removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDatasource) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -488,7 +496,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
     public static PowerBIDatasource updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIDatasource) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIDatasource)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -515,8 +524,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @return the PowerBIDatasource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PowerBIDatasource replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDatasource) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -569,8 +578,8 @@ public class PowerBIDatasource extends Asset implements IPowerBIDatasource, IPow
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static PowerBIDatasource appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static PowerBIDatasource appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (PowerBIDatasource) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

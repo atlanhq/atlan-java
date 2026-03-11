@@ -55,12 +55,12 @@ public interface ILookerField {
     RelationField LOOK = new RelationField("look");
 
     /** Unique name of the dashboard in which this field is used. */
-    KeywordTextField LOOKER_DASHBOARD_QUALIFIED_NAME =
-            new KeywordTextField("lookerDashboardQualifiedName", "lookerDashboardQualifiedName", "lookerDashboardQualifiedName.text");
+    KeywordTextField LOOKER_DASHBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "lookerDashboardQualifiedName", "lookerDashboardQualifiedName", "lookerDashboardQualifiedName.text");
 
     /** Unique name of the Explore in which this field exists. */
-    KeywordTextField LOOKER_EXPLORE_QUALIFIED_NAME =
-            new KeywordTextField("lookerExploreQualifiedName", "lookerExploreQualifiedName", "lookerExploreQualifiedName.text");
+    KeywordTextField LOOKER_EXPLORE_QUALIFIED_NAME = new KeywordTextField(
+            "lookerExploreQualifiedName", "lookerExploreQualifiedName", "lookerExploreQualifiedName.text");
 
     /** Deprecated. */
     KeywordField LOOKER_FIELD_DATA_TYPE = new KeywordField("lookerFieldDataType", "lookerFieldDataType");

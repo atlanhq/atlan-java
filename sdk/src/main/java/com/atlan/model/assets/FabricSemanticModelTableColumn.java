@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FabricSemanticModelTableColumn extends Asset implements IFabricSemanticModelTableColumn, IFabric, IBI, ICatalog, IAsset, IReferenceable {
+public class FabricSemanticModelTableColumn extends Asset
+        implements IFabricSemanticModelTableColumn, IFabric, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FabricSemanticModelTableColumn";
@@ -199,7 +200,10 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return reference to a FabricSemanticModelTableColumn that can be used for defining a relationship to a FabricSemanticModelTableColumn
      */
     public static FabricSemanticModelTableColumn refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return FabricSemanticModelTableColumn._internal().guid(guid).semantic(semantic).build();
+        return FabricSemanticModelTableColumn._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -222,7 +226,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
      * @return reference to a FabricSemanticModelTableColumn that can be used for defining a relationship to a FabricSemanticModelTableColumn
      */
-    public static FabricSemanticModelTableColumn refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+    public static FabricSemanticModelTableColumn refByQualifiedName(
+            String qualifiedName, Reference.SaveSemantic semantic) {
         return FabricSemanticModelTableColumn._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
@@ -253,7 +258,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricSemanticModelTableColumn does not exist or the provided GUID is not a FabricSemanticModelTableColumn
      */
     @JsonIgnore
-    public static FabricSemanticModelTableColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FabricSemanticModelTableColumn get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -285,7 +291,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricSemanticModelTableColumn does not exist or the provided GUID is not a FabricSemanticModelTableColumn
      */
     @JsonIgnore
-    public static FabricSemanticModelTableColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FabricSemanticModelTableColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -385,7 +392,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricSemanticModelTableColumnBuilder<C extends FabricSemanticModelTableColumn, B extends FabricSemanticModelTableColumnBuilder<C, B>>
+    public abstract static class FabricSemanticModelTableColumnBuilder<
+                    C extends FabricSemanticModelTableColumn, B extends FabricSemanticModelTableColumnBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -397,7 +405,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the updated FabricSemanticModelTableColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricSemanticModelTableColumn removeDescription(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -410,8 +419,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the updated FabricSemanticModelTableColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn removeUserDescription(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn removeUserDescription(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
@@ -424,7 +433,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the updated FabricSemanticModelTableColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricSemanticModelTableColumn removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -441,7 +451,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
     public static FabricSemanticModelTableColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricSemanticModelTableColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricSemanticModelTableColumn)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -453,7 +464,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the updated FabricSemanticModelTableColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricSemanticModelTableColumn removeCertificate(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -471,7 +483,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
     public static FabricSemanticModelTableColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricSemanticModelTableColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricSemanticModelTableColumn)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -483,8 +496,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the updated FabricSemanticModelTableColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn removeAnnouncement(
+            AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
@@ -498,8 +511,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @return the FabricSemanticModelTableColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricSemanticModelTableColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -516,8 +529,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricSemanticModelTableColumn appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -534,8 +547,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static FabricSemanticModelTableColumn removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -552,8 +565,8 @@ public class FabricSemanticModelTableColumn extends Asset implements IFabricSema
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FabricSemanticModelTableColumn appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static FabricSemanticModelTableColumn appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (FabricSemanticModelTableColumn) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

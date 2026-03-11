@@ -250,7 +250,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetChart does not exist or the provided GUID is not a SupersetChart
      */
     @JsonIgnore
-    public static SupersetChart get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SupersetChart get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -282,7 +283,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SupersetChart does not exist or the provided GUID is not a SupersetChart
      */
     @JsonIgnore
-    public static SupersetChart get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SupersetChart get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -351,7 +353,7 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Superset chart.
      *
      * @param name of the chart
@@ -443,7 +445,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @return the updated SupersetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetChart removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetChart removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetChart) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -470,7 +473,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @return the updated SupersetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetChart removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetChart removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetChart) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -487,7 +491,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     public static SupersetChart updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SupersetChart) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SupersetChart)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -499,7 +504,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @return the updated SupersetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SupersetChart removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SupersetChart removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SupersetChart) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -517,7 +523,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     public static SupersetChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SupersetChart) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SupersetChart)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -544,8 +551,8 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
      * @return the SupersetChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SupersetChart replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SupersetChart replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SupersetChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -303,7 +303,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelDataModel does not exist or the provided GUID is not a ModelDataModel
      */
     @JsonIgnore
-    public static ModelDataModel get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ModelDataModel get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -335,7 +336,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModelDataModel does not exist or the provided GUID is not a ModelDataModel
      */
     @JsonIgnore
-    public static ModelDataModel get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModelDataModel get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -405,7 +407,7 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a ModelDataModel.
      *
      * @param name of the ModelDataModel
@@ -423,7 +425,7 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-/**
+    /**
      * Generate a unique ModelDataModel name.
      *
      * @param name of the ModelDataModel
@@ -476,7 +478,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @return the updated ModelDataModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelDataModel removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelDataModel removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelDataModel) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -503,7 +506,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @return the updated ModelDataModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelDataModel removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelDataModel removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelDataModel) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -520,7 +524,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     public static ModelDataModel updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModelDataModel) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModelDataModel)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -532,7 +537,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @return the updated ModelDataModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModelDataModel removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModelDataModel removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModelDataModel) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -550,7 +556,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     public static ModelDataModel updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModelDataModel) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModelDataModel)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -577,8 +584,8 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
      * @return the ModelDataModel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModelDataModel replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModelDataModel replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModelDataModel) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

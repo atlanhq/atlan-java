@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
+public class MCIncident extends Asset
+        implements IMCIncident, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MCIncident";
@@ -313,7 +314,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MCIncident does not exist or the provided GUID is not a MCIncident
      */
     @JsonIgnore
-    public static MCIncident get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static MCIncident get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -425,7 +427,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
      * @return the updated MCIncident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MCIncident removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static MCIncident removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (MCIncident) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -469,7 +472,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
     public static MCIncident updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (MCIncident)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -481,7 +485,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
      * @return the updated MCIncident, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static MCIncident removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static MCIncident removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (MCIncident) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -499,7 +504,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
     public static MCIncident updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (MCIncident) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (MCIncident)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -526,8 +532,8 @@ public class MCIncident extends Asset implements IMCIncident, IMonteCarlo, IData
      * @return the MCIncident that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MCIncident replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static MCIncident replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (MCIncident) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

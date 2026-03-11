@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -277,7 +276,8 @@ public class AWS extends Asset implements IAWS, IAsset, IReferenceable, ICloud {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = AWS.select(client)
+            Optional<Asset> asset = AWS
+                    .select(client)
                     .where(AWS.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
@@ -293,7 +293,8 @@ public class AWS extends Asset implements IAWS, IAsset, IReferenceable, ICloud {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = AWS.select(client)
+            Optional<Asset> asset = AWS
+                    .select(client)
                     .where(AWS.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
@@ -451,8 +452,7 @@ public class AWS extends Asset implements IAWS, IAsset, IReferenceable, ICloud {
      * @return the updated AWS, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AWS removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static AWS removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (AWS) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

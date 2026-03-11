@@ -64,7 +64,6 @@ public interface IMultiDimensionalDataset {
     /** Unique name of the cube in which this asset exists, or empty if it is itself a cube. */
     KeywordField CUBE_QUALIFIED_NAME = new KeywordField("cubeQualifiedName", "cubeQualifiedName");
 
-
     /**
      * Generate a unique name that does not include any path delimiters.
      *

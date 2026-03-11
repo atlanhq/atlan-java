@@ -59,8 +59,8 @@ public interface IADLSObject {
             new KeywordTextField("adlsContainerName", "adlsContainerName.keyword", "adlsContainerName");
 
     /** Unique name of the container this object exists within. */
-    KeywordTextField ADLS_CONTAINER_QUALIFIED_NAME =
-            new KeywordTextField("adlsContainerQualifiedName", "adlsContainerQualifiedName", "adlsContainerQualifiedName.text");
+    KeywordTextField ADLS_CONTAINER_QUALIFIED_NAME = new KeywordTextField(
+            "adlsContainerQualifiedName", "adlsContainerQualifiedName", "adlsContainerQualifiedName.text");
 
     /** Access tier of this object. */
     KeywordField ADLS_OBJECT_ACCESS_TIER = new KeywordField("adlsObjectAccessTier", "adlsObjectAccessTier");
@@ -76,8 +76,8 @@ public interface IADLSObject {
     TextField ADLS_OBJECT_CACHE_CONTROL = new TextField("adlsObjectCacheControl", "adlsObjectCacheControl");
 
     /** Language of this object's contents. */
-    KeywordTextField ADLS_OBJECT_CONTENT_LANGUAGE =
-            new KeywordTextField("adlsObjectContentLanguage", "adlsObjectContentLanguage.keyword", "adlsObjectContentLanguage");
+    KeywordTextField ADLS_OBJECT_CONTENT_LANGUAGE = new KeywordTextField(
+            "adlsObjectContentLanguage", "adlsObjectContentLanguage.keyword", "adlsObjectContentLanguage");
 
     /** MD5 hash of this object's contents. */
     KeywordField ADLS_OBJECT_CONTENT_MD5HASH = new KeywordField("adlsObjectContentMD5Hash", "adlsObjectContentMD5Hash");

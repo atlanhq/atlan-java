@@ -288,7 +288,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
      */
     @JsonIgnore
-    public static PowerBIColumn get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PowerBIColumn get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -320,7 +321,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
      */
     @JsonIgnore
-    public static PowerBIColumn get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PowerBIColumn get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -432,7 +434,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @return the updated PowerBIColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIColumn removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIColumn) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -459,7 +462,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @return the updated PowerBIColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIColumn removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIColumn) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -476,7 +480,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     public static PowerBIColumn updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIColumn) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIColumn)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -488,7 +493,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @return the updated PowerBIColumn, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIColumn removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIColumn) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -506,7 +512,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     public static PowerBIColumn updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIColumn) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIColumn)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -533,8 +540,8 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
      * @return the PowerBIColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PowerBIColumn replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIColumn) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

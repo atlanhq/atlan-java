@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class TableauDatasource extends Asset implements ITableauDatasource, ITableau, IBI, ICatalog, IAsset, IReferenceable {
+public class TableauDatasource extends Asset
+        implements ITableauDatasource, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDatasource";
@@ -303,7 +304,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
      */
     @JsonIgnore
-    public static TableauDatasource get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static TableauDatasource get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -335,7 +337,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDatasource does not exist or the provided GUID is not a TableauDatasource
      */
     @JsonIgnore
-    public static TableauDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static TableauDatasource get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -435,7 +438,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class TableauDatasourceBuilder<C extends TableauDatasource, B extends TableauDatasourceBuilder<C, B>>
+    public abstract static class TableauDatasourceBuilder<
+                    C extends TableauDatasource, B extends TableauDatasourceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -447,7 +451,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @return the updated TableauDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDatasource removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDatasource) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -474,7 +479,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @return the updated TableauDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDatasource removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDatasource) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -491,7 +497,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
     public static TableauDatasource updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauDatasource) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauDatasource)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -503,7 +510,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @return the updated TableauDatasource, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauDatasource removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauDatasource) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -521,7 +529,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
     public static TableauDatasource updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauDatasource) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauDatasource)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -548,8 +557,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @return the TableauDatasource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static TableauDatasource replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDatasource) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -602,8 +611,8 @@ public class TableauDatasource extends Asset implements ITableauDatasource, ITab
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static TableauDatasource appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static TableauDatasource appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (TableauDatasource) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

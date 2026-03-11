@@ -440,7 +440,8 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanQuery does not exist or the provided GUID is not a AtlanQuery
      */
     @JsonIgnore
-    public static AtlanQuery get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AtlanQuery get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 

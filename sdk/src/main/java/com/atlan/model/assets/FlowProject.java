@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -238,7 +237,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowProject does not exist or the provided GUID is not a FlowProject
      */
     @JsonIgnore
-    public static FlowProject get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FlowProject get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -270,7 +270,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowProject does not exist or the provided GUID is not a FlowProject
      */
     @JsonIgnore
-    public static FlowProject get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FlowProject get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -382,7 +383,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @return the updated FlowProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowProject removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowProject removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowProject) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -409,7 +411,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @return the updated FlowProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowProject removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowProject removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowProject) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -426,7 +429,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     public static FlowProject updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowProject) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FlowProject)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -438,7 +442,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @return the updated FlowProject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowProject removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowProject removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowProject) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -456,7 +461,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
     public static FlowProject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowProject) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FlowProject)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -483,8 +489,8 @@ public class FlowProject extends Asset implements IFlowProject, IFlow, IAsset, I
      * @return the FlowProject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowProject replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FlowProject replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FlowProject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

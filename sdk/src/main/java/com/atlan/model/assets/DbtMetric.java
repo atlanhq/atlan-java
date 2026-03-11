@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IDataQuality, ICatalog, IAsset, IReferenceable {
+public class DbtMetric extends Asset
+        implements IDbtMetric, IMetric, IDbt, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtMetric";
@@ -133,7 +134,7 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
 
     /** Filters applied to the dbt metric. */
     @Attribute
-    @Singular
+    @Singular("dbtMetricFilterEntry")
     List<DbtMetricFilter> dbtMetricFilters;
 
     /** Time window for cumulative/conversion metrics. */
@@ -408,7 +409,8 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtMetric does not exist or the provided GUID is not a DbtMetric
      */
     @JsonIgnore
-    public static DbtMetric get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DbtMetric get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -520,7 +522,8 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
      * @return the updated DbtMetric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtMetric removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtMetric) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -576,7 +579,8 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
      * @return the updated DbtMetric, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtMetric removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtMetric) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -594,7 +598,8 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
     public static DbtMetric updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtMetric) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtMetric)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -621,8 +626,8 @@ public class DbtMetric extends Asset implements IDbtMetric, IMetric, IDbt, IData
      * @return the DbtMetric that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DbtMetric replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtMetric) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

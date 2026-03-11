@@ -292,7 +292,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataset does not exist or the provided GUID is not a PowerBIDataset
      */
     @JsonIgnore
-    public static PowerBIDataset get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PowerBIDataset get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -324,7 +325,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDataset does not exist or the provided GUID is not a PowerBIDataset
      */
     @JsonIgnore
-    public static PowerBIDataset get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PowerBIDataset get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -436,7 +438,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return the updated PowerBIDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDataset removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDataset) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -463,7 +466,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return the updated PowerBIDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDataset removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDataset) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -480,7 +484,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     public static PowerBIDataset updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIDataset) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIDataset)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -492,7 +497,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return the updated PowerBIDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIDataset removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIDataset) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -510,7 +516,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
     public static PowerBIDataset updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIDataset) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIDataset)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -537,8 +544,8 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
      * @return the PowerBIDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PowerBIDataset replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDataset) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

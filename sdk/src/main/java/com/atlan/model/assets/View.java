@@ -489,7 +489,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a view.
      *
      * @param name of the view
@@ -701,8 +701,7 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the updated View, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static View removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static View removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (View) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

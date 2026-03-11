@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisense, IBI, ICatalog, IAsset, IReferenceable {
+public class SisenseDatamodel extends Asset
+        implements ISisenseDatamodel, ISisense, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SisenseDatamodel";
@@ -274,7 +275,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseDatamodel does not exist or the provided GUID is not a SisenseDatamodel
      */
     @JsonIgnore
-    public static SisenseDatamodel get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static SisenseDatamodel get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -306,7 +308,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SisenseDatamodel does not exist or the provided GUID is not a SisenseDatamodel
      */
     @JsonIgnore
-    public static SisenseDatamodel get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SisenseDatamodel get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -406,7 +409,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class SisenseDatamodelBuilder<C extends SisenseDatamodel, B extends SisenseDatamodelBuilder<C, B>>
+    public abstract static class SisenseDatamodelBuilder<
+                    C extends SisenseDatamodel, B extends SisenseDatamodelBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -418,7 +422,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @return the updated SisenseDatamodel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodel removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SisenseDatamodel removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SisenseDatamodel) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -445,7 +450,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @return the updated SisenseDatamodel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodel removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SisenseDatamodel removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SisenseDatamodel) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -462,7 +468,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
     public static SisenseDatamodel updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (SisenseDatamodel) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (SisenseDatamodel)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -474,7 +481,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @return the updated SisenseDatamodel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodel removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SisenseDatamodel removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SisenseDatamodel) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,7 +500,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
     public static SisenseDatamodel updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SisenseDatamodel) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SisenseDatamodel)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +528,8 @@ public class SisenseDatamodel extends Asset implements ISisenseDatamodel, ISisen
      * @return the SisenseDatamodel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SisenseDatamodel replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SisenseDatamodel replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SisenseDatamodel) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -46,7 +46,15 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DatabricksAIModelVersion extends Asset implements IDatabricksAIModelVersion, IAIModelVersion, IDatabricks, IAI, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksAIModelVersion extends Asset
+        implements IDatabricksAIModelVersion,
+                IAIModelVersion,
+                IDatabricks,
+                IAI,
+                ICatalog,
+                IAsset,
+                IReferenceable,
+                ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksAIModelVersion";
@@ -377,7 +385,10 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @return reference to a DatabricksAIModelVersion that can be used for defining a relationship to a DatabricksAIModelVersion
      */
     public static DatabricksAIModelVersion refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return DatabricksAIModelVersion._internal().guid(guid).semantic(semantic).build();
+        return DatabricksAIModelVersion._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -431,7 +442,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksAIModelVersion does not exist or the provided GUID is not a DatabricksAIModelVersion
      */
     @JsonIgnore
-    public static DatabricksAIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DatabricksAIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -463,7 +475,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksAIModelVersion does not exist or the provided GUID is not a DatabricksAIModelVersion
      */
     @JsonIgnore
-    public static DatabricksAIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DatabricksAIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -563,7 +576,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DatabricksAIModelVersionBuilder<C extends DatabricksAIModelVersion, B extends DatabricksAIModelVersionBuilder<C, B>>
+    public abstract static class DatabricksAIModelVersionBuilder<
+                    C extends DatabricksAIModelVersion, B extends DatabricksAIModelVersionBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -575,7 +589,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelVersion) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -602,7 +617,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelVersion) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -619,7 +635,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
     public static DatabricksAIModelVersion updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DatabricksAIModelVersion) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DatabricksAIModelVersion)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -631,7 +648,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @return the updated DatabricksAIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DatabricksAIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DatabricksAIModelVersion) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -649,7 +667,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
     public static DatabricksAIModelVersion updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DatabricksAIModelVersion) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DatabricksAIModelVersion)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -676,8 +695,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @return the DatabricksAIModelVersion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DatabricksAIModelVersion replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelVersion replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelVersion) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -694,8 +713,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksAIModelVersion appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelVersion appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelVersion) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -712,8 +731,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static DatabricksAIModelVersion removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DatabricksAIModelVersion removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DatabricksAIModelVersion) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -730,8 +749,8 @@ public class DatabricksAIModelVersion extends Asset implements IDatabricksAIMode
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DatabricksAIModelVersion appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DatabricksAIModelVersion appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DatabricksAIModelVersion) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

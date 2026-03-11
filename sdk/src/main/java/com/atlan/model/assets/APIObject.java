@@ -303,7 +303,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
      */
     @JsonIgnore
-    public static APIObject get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static APIObject get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -415,7 +416,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * @return the updated APIObject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIObject removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIObject) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -471,7 +473,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * @return the updated APIObject, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static APIObject removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (APIObject) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -489,7 +492,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     public static APIObject updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (APIObject) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (APIObject)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -516,8 +520,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
      * @return the APIObject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APIObject replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static APIObject replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (APIObject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

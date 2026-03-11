@@ -264,7 +264,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist or the provided GUID is not a RedashQuery
      */
     @JsonIgnore
-    public static RedashQuery get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static RedashQuery get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -296,7 +297,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist or the provided GUID is not a RedashQuery
      */
     @JsonIgnore
-    public static RedashQuery get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static RedashQuery get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -408,7 +410,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the updated RedashQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static RedashQuery removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (RedashQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -435,7 +438,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the updated RedashQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static RedashQuery removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (RedashQuery) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -452,7 +456,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     public static RedashQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (RedashQuery) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (RedashQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -464,7 +469,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the updated RedashQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static RedashQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (RedashQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -482,7 +488,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     public static RedashQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (RedashQuery) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (RedashQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -509,8 +516,8 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the RedashQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static RedashQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (RedashQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

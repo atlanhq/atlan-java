@@ -431,7 +431,8 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
      * @return the updated AIModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AIModel removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AIModel removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AIModel) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -487,7 +488,8 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
      * @return the updated AIModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AIModel removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AIModel removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AIModel) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

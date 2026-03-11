@@ -314,7 +314,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeQuery does not exist or the provided GUID is not a ModeQuery
      */
     @JsonIgnore
-    public static ModeQuery get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModeQuery get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -426,7 +427,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return the updated ModeQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeQuery removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -482,7 +484,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return the updated ModeQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,7 +503,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     public static ModeQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeQuery) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -527,8 +531,8 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
      * @return the ModeQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModeQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

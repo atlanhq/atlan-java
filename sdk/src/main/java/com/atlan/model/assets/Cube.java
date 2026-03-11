@@ -363,7 +363,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a Cube.
      *
      * @param name of the Cube
@@ -378,7 +378,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
-/**
+    /**
      * Generate a unique Cube name.
      *
      * @param name of the Cube
@@ -517,8 +517,7 @@ public class Cube extends Asset implements ICube, IMultiDimensionalDataset, ICat
      * @return the updated Cube, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Cube removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Cube removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Cube) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

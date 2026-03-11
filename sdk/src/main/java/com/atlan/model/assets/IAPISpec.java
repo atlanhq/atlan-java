@@ -73,8 +73,8 @@ public interface IAPISpec {
             new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
 
     /** URL to the terms of service for the API specification. */
-    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL =
-            new KeywordTextField("apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
+    KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
+            "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

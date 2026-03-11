@@ -274,7 +274,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
      */
     @JsonIgnore
-    public static ModeWorkspace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ModeWorkspace get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -306,7 +307,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeWorkspace does not exist or the provided GUID is not a ModeWorkspace
      */
     @JsonIgnore
-    public static ModeWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModeWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -418,7 +420,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the updated ModeWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeWorkspace removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeWorkspace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -445,7 +448,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the updated ModeWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeWorkspace removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeWorkspace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -462,7 +466,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     public static ModeWorkspace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModeWorkspace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModeWorkspace)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -474,7 +479,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the updated ModeWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeWorkspace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,7 +498,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     public static ModeWorkspace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeWorkspace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeWorkspace)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +526,8 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
      * @return the ModeWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModeWorkspace replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeWorkspace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

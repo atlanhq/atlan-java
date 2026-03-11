@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDataQuality, ICatalog, IAsset, IReferenceable {
+public class AnomaloCheck extends Asset
+        implements IAnomaloCheck, IAnomalo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AnomaloCheck";
@@ -282,7 +283,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnomaloCheck does not exist or the provided GUID is not a AnomaloCheck
      */
     @JsonIgnore
-    public static AnomaloCheck get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AnomaloCheck get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -314,7 +316,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnomaloCheck does not exist or the provided GUID is not a AnomaloCheck
      */
     @JsonIgnore
-    public static AnomaloCheck get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnomaloCheck get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -426,7 +429,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @return the updated AnomaloCheck, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnomaloCheck removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnomaloCheck removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnomaloCheck) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -453,7 +457,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @return the updated AnomaloCheck, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnomaloCheck removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnomaloCheck removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnomaloCheck) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -470,7 +475,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
     public static AnomaloCheck updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnomaloCheck) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnomaloCheck)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -482,7 +488,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @return the updated AnomaloCheck, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnomaloCheck removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnomaloCheck removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnomaloCheck) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,7 +507,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
     public static AnomaloCheck updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnomaloCheck) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnomaloCheck)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -527,8 +535,8 @@ public class AnomaloCheck extends Asset implements IAnomaloCheck, IAnomalo, IDat
      * @return the AnomaloCheck that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnomaloCheck replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnomaloCheck replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnomaloCheck) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

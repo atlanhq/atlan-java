@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau, IBI, ICatalog, IAsset, IReferenceable {
+public class TableauWorkbook extends Asset
+        implements ITableauWorkbook, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauWorkbook";
@@ -274,7 +275,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorkbook does not exist or the provided GUID is not a TableauWorkbook
      */
     @JsonIgnore
-    public static TableauWorkbook get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static TableauWorkbook get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -306,7 +308,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorkbook does not exist or the provided GUID is not a TableauWorkbook
      */
     @JsonIgnore
-    public static TableauWorkbook get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static TableauWorkbook get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -406,7 +409,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class TableauWorkbookBuilder<C extends TableauWorkbook, B extends TableauWorkbookBuilder<C, B>>
+    public abstract static class TableauWorkbookBuilder<
+                    C extends TableauWorkbook, B extends TableauWorkbookBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -418,7 +422,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @return the updated TableauWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauWorkbook removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauWorkbook removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauWorkbook) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -445,7 +450,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @return the updated TableauWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauWorkbook removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauWorkbook removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauWorkbook) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -462,7 +468,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
     public static TableauWorkbook updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (TableauWorkbook) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (TableauWorkbook)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -474,7 +481,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @return the updated TableauWorkbook, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static TableauWorkbook removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static TableauWorkbook removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (TableauWorkbook) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -492,7 +500,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
     public static TableauWorkbook updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (TableauWorkbook) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (TableauWorkbook)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -519,8 +528,8 @@ public class TableauWorkbook extends Asset implements ITableauWorkbook, ITableau
      * @return the TableauWorkbook that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauWorkbook replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static TableauWorkbook replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauWorkbook) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

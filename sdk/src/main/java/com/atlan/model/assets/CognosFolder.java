@@ -317,7 +317,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosFolder does not exist or the provided GUID is not a CognosFolder
      */
     @JsonIgnore
-    public static CognosFolder get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static CognosFolder get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -349,7 +350,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CognosFolder does not exist or the provided GUID is not a CognosFolder
      */
     @JsonIgnore
-    public static CognosFolder get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CognosFolder get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -461,7 +463,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @return the updated CognosFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosFolder removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosFolder removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosFolder) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -488,7 +491,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @return the updated CognosFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosFolder removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosFolder removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosFolder) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -505,7 +509,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     public static CognosFolder updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CognosFolder) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CognosFolder)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -517,7 +522,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @return the updated CognosFolder, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CognosFolder removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CognosFolder removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CognosFolder) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -535,7 +541,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     public static CognosFolder updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CognosFolder) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CognosFolder)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -562,8 +569,8 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
      * @return the CognosFolder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CognosFolder replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CognosFolder replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CognosFolder) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

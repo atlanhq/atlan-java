@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IFabric, IBI, ICatalog, IAsset, IReferenceable {
+public class FabricDataPipeline extends Asset
+        implements IFabricDataPipeline, IFabric, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FabricDataPipeline";
@@ -250,7 +251,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataPipeline does not exist or the provided GUID is not a FabricDataPipeline
      */
     @JsonIgnore
-    public static FabricDataPipeline get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FabricDataPipeline get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -282,7 +284,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FabricDataPipeline does not exist or the provided GUID is not a FabricDataPipeline
      */
     @JsonIgnore
-    public static FabricDataPipeline get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FabricDataPipeline get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -382,7 +385,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FabricDataPipelineBuilder<C extends FabricDataPipeline, B extends FabricDataPipelineBuilder<C, B>>
+    public abstract static class FabricDataPipelineBuilder<
+                    C extends FabricDataPipeline, B extends FabricDataPipelineBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -394,7 +398,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @return the updated FabricDataPipeline, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataPipeline removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricDataPipeline removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricDataPipeline) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -421,7 +426,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @return the updated FabricDataPipeline, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataPipeline removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricDataPipeline removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricDataPipeline) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -438,7 +444,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
     public static FabricDataPipeline updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FabricDataPipeline) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FabricDataPipeline)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -450,7 +457,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @return the updated FabricDataPipeline, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FabricDataPipeline removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FabricDataPipeline removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FabricDataPipeline) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -468,7 +476,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
     public static FabricDataPipeline updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FabricDataPipeline) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FabricDataPipeline)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -495,8 +504,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @return the FabricDataPipeline that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FabricDataPipeline replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FabricDataPipeline replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FabricDataPipeline) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -549,8 +558,8 @@ public class FabricDataPipeline extends Asset implements IFabricDataPipeline, IF
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FabricDataPipeline appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static FabricDataPipeline appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (FabricDataPipeline) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

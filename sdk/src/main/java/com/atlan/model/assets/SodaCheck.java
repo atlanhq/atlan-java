@@ -300,7 +300,8 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SodaCheck does not exist or the provided GUID is not a SodaCheck
      */
     @JsonIgnore
-    public static SodaCheck get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SodaCheck get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -412,7 +413,8 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
      * @return the updated SodaCheck, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SodaCheck removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SodaCheck removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SodaCheck) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -468,7 +470,8 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
      * @return the updated SodaCheck, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SodaCheck removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SodaCheck removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SodaCheck) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -486,7 +489,8 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
     public static SodaCheck updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SodaCheck) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SodaCheck)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -513,8 +517,8 @@ public class SodaCheck extends Asset implements ISodaCheck, ISoda, IDataQuality,
      * @return the SodaCheck that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SodaCheck replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SodaCheck replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SodaCheck) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

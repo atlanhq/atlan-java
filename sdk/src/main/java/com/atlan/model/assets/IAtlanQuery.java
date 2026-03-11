@@ -51,12 +51,12 @@ public interface IAtlanQuery {
     RelationField COLUMNS = new RelationField("columns");
 
     /** Unique name of the default database to use for this query. */
-    KeywordTextField DEFAULT_DATABASE_QUALIFIED_NAME =
-            new KeywordTextField("defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName.text");
+    KeywordTextField DEFAULT_DATABASE_QUALIFIED_NAME = new KeywordTextField(
+            "defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName", "defaultDatabaseQualifiedName.text");
 
     /** Unique name of the default schema to use for this query. */
-    KeywordTextField DEFAULT_SCHEMA_QUALIFIED_NAME =
-            new KeywordTextField("defaultSchemaQualifiedName", "defaultSchemaQualifiedName", "defaultSchemaQualifiedName.text");
+    KeywordTextField DEFAULT_SCHEMA_QUALIFIED_NAME = new KeywordTextField(
+            "defaultSchemaQualifiedName", "defaultSchemaQualifiedName", "defaultSchemaQualifiedName.text");
 
     /** Whether this query is private (true) or shared (false). */
     BooleanField IS_PRIVATE = new BooleanField("isPrivate", "isPrivate");

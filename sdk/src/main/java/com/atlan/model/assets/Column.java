@@ -814,7 +814,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Retrieve the parent of this Column, irrespective of its type.
      * @return the reference to this Column's parent
      */
@@ -1130,7 +1130,8 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return the updated Column, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Column removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Column removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Column) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -1186,7 +1187,8 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
      * @return the updated Column, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Column removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static Column removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Column) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 

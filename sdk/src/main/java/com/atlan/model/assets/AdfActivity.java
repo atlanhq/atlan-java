@@ -344,7 +344,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfActivity does not exist or the provided GUID is not a AdfActivity
      */
     @JsonIgnore
-    public static AdfActivity get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AdfActivity get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -376,7 +377,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AdfActivity does not exist or the provided GUID is not a AdfActivity
      */
     @JsonIgnore
-    public static AdfActivity get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AdfActivity get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -488,7 +490,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @return the updated AdfActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfActivity removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfActivity removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfActivity) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -515,7 +518,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @return the updated AdfActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfActivity removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfActivity removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfActivity) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -532,7 +536,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     public static AdfActivity updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AdfActivity) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AdfActivity)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -544,7 +549,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @return the updated AdfActivity, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AdfActivity removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AdfActivity removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AdfActivity) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -562,7 +568,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
     public static AdfActivity updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AdfActivity) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AdfActivity)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -589,8 +596,8 @@ public class AdfActivity extends Asset implements IAdfActivity, IADF, ICatalog, 
      * @return the AdfActivity that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AdfActivity replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AdfActivity replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AdfActivity) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

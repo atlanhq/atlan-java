@@ -67,12 +67,12 @@ public interface IADLSAccount {
     KeywordField ADLS_ACCOUNT_REPLICATION = new KeywordField("adlsAccountReplication", "adlsAccountReplication");
 
     /** Resource group for this account. */
-    KeywordTextField ADLS_ACCOUNT_RESOURCE_GROUP =
-            new KeywordTextField("adlsAccountResourceGroup", "adlsAccountResourceGroup.keyword", "adlsAccountResourceGroup");
+    KeywordTextField ADLS_ACCOUNT_RESOURCE_GROUP = new KeywordTextField(
+            "adlsAccountResourceGroup", "adlsAccountResourceGroup.keyword", "adlsAccountResourceGroup");
 
     /** Subscription for this account. */
-    KeywordTextField ADLS_ACCOUNT_SUBSCRIPTION =
-            new KeywordTextField("adlsAccountSubscription", "adlsAccountSubscription.keyword", "adlsAccountSubscription");
+    KeywordTextField ADLS_ACCOUNT_SUBSCRIPTION = new KeywordTextField(
+            "adlsAccountSubscription", "adlsAccountSubscription.keyword", "adlsAccountSubscription");
 
     /** Containers that exist within this account. */
     RelationField ADLS_CONTAINERS = new RelationField("adlsContainers");

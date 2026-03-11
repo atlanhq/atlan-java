@@ -276,7 +276,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
      */
     @JsonIgnore
-    public static LineageProcess get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static LineageProcess get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -308,7 +309,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
      */
     @JsonIgnore
-    public static LineageProcess get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static LineageProcess get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -378,7 +380,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
-/**
+    /**
      * Builds the minimal object necessary to create a process.
      *
      * @param name of the process to use for display purposes
@@ -502,7 +504,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the updated LineageProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LineageProcess removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LineageProcess) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -529,7 +532,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the updated LineageProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LineageProcess removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LineageProcess) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -546,7 +550,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     public static LineageProcess updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LineageProcess) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LineageProcess)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -558,7 +563,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the updated LineageProcess, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LineageProcess removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LineageProcess) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -576,7 +582,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     public static LineageProcess updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LineageProcess) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LineageProcess)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -603,8 +610,8 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
      * @return the LineageProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static LineageProcess replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (LineageProcess) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

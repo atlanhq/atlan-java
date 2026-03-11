@@ -371,7 +371,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CalculationView does not exist or the provided GUID is not a CalculationView
      */
     @JsonIgnore
-    public static CalculationView get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static CalculationView get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -403,7 +404,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the CalculationView does not exist or the provided GUID is not a CalculationView
      */
     @JsonIgnore
-    public static CalculationView get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static CalculationView get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -503,7 +505,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class CalculationViewBuilder<C extends CalculationView, B extends CalculationViewBuilder<C, B>>
+    public abstract static class CalculationViewBuilder<
+                    C extends CalculationView, B extends CalculationViewBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -515,7 +518,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @return the updated CalculationView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CalculationView removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CalculationView removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CalculationView) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -542,7 +546,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @return the updated CalculationView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CalculationView removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CalculationView removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CalculationView) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -559,7 +564,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     public static CalculationView updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (CalculationView) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (CalculationView)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -571,7 +577,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @return the updated CalculationView, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static CalculationView removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static CalculationView removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (CalculationView) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -589,7 +596,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     public static CalculationView updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (CalculationView) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (CalculationView)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -616,8 +624,8 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
      * @return the CalculationView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static CalculationView replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static CalculationView replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (CalculationView) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

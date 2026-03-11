@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation, ILineageProcess, IFlow, IAsset, IReferenceable {
+public class FlowDatasetOperation extends Asset
+        implements IFlowDatasetOperation, ILineageProcess, IFlow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "FlowDatasetOperation";
@@ -335,7 +336,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowDatasetOperation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FlowDatasetOperation get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -367,7 +369,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowDatasetOperation does not exist or the provided GUID is not a FlowDatasetOperation
      */
     @JsonIgnore
-    public static FlowDatasetOperation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FlowDatasetOperation get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -467,7 +470,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowDatasetOperationBuilder<C extends FlowDatasetOperation, B extends FlowDatasetOperationBuilder<C, B>>
+    public abstract static class FlowDatasetOperationBuilder<
+                    C extends FlowDatasetOperation, B extends FlowDatasetOperationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -479,7 +483,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowDatasetOperation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowDatasetOperation removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowDatasetOperation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -506,7 +511,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowDatasetOperation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowDatasetOperation removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowDatasetOperation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -523,7 +529,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     public static FlowDatasetOperation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowDatasetOperation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FlowDatasetOperation)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -535,7 +542,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @return the updated FlowDatasetOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowDatasetOperation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowDatasetOperation removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowDatasetOperation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -553,7 +561,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
     public static FlowDatasetOperation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowDatasetOperation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FlowDatasetOperation)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -580,8 +589,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @return the FlowDatasetOperation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowDatasetOperation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FlowDatasetOperation replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FlowDatasetOperation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -634,8 +643,8 @@ public class FlowDatasetOperation extends Asset implements IFlowDatasetOperation
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowDatasetOperation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static FlowDatasetOperation appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (FlowDatasetOperation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

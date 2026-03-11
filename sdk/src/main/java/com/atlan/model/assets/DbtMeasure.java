@@ -39,7 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
+public class DbtMeasure extends Asset
+        implements IDbtMeasure, ISemanticMeasure, IDbt, ISemantic, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtMeasure";
@@ -381,7 +382,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DbtMeasure does not exist or the provided GUID is not a DbtMeasure
      */
     @JsonIgnore
-    public static DbtMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DbtMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -493,7 +495,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
      * @return the updated DbtMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtMeasure removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtMeasure removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtMeasure) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -537,7 +540,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
     public static DbtMeasure updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DbtMeasure) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DbtMeasure)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -549,7 +553,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
      * @return the updated DbtMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtMeasure removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtMeasure removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtMeasure) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -567,7 +572,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
     public static DbtMeasure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DbtMeasure) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DbtMeasure)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -594,8 +600,8 @@ public class DbtMeasure extends Asset implements IDbtMeasure, ISemanticMeasure, 
      * @return the DbtMeasure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtMeasure replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DbtMeasure replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtMeasure) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

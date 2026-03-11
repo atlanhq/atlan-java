@@ -7,12 +7,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanPolicyAction;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
-import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataMaskingType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -24,9 +22,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
@@ -301,7 +297,8 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AuthPolicy does not exist or the provided GUID is not a AuthPolicy
      */
     @JsonIgnore
-    public static AuthPolicy get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AuthPolicy get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 

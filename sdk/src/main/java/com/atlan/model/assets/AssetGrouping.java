@@ -229,7 +229,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AssetGrouping does not exist or the provided GUID is not a AssetGrouping
      */
     @JsonIgnore
-    public static AssetGrouping get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AssetGrouping get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -261,7 +262,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AssetGrouping does not exist or the provided GUID is not a AssetGrouping
      */
     @JsonIgnore
-    public static AssetGrouping get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AssetGrouping get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -373,7 +375,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @return the updated AssetGrouping, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGrouping removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGrouping removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGrouping) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -400,7 +403,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @return the updated AssetGrouping, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGrouping removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGrouping removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGrouping) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -417,7 +421,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
     public static AssetGrouping updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AssetGrouping) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AssetGrouping)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -429,7 +434,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @return the updated AssetGrouping, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AssetGrouping removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AssetGrouping removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AssetGrouping) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -447,7 +453,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
     public static AssetGrouping updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AssetGrouping) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AssetGrouping)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -474,8 +481,8 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
      * @return the AssetGrouping that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AssetGrouping replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AssetGrouping replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AssetGrouping) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

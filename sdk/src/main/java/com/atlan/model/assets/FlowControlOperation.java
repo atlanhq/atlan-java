@@ -262,7 +262,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowControlOperation does not exist or the provided GUID is not a FlowControlOperation
      */
     @JsonIgnore
-    public static FlowControlOperation get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static FlowControlOperation get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -294,7 +295,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the FlowControlOperation does not exist or the provided GUID is not a FlowControlOperation
      */
     @JsonIgnore
-    public static FlowControlOperation get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static FlowControlOperation get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -394,7 +396,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class FlowControlOperationBuilder<C extends FlowControlOperation, B extends FlowControlOperationBuilder<C, B>>
+    public abstract static class FlowControlOperationBuilder<
+                    C extends FlowControlOperation, B extends FlowControlOperationBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -406,7 +409,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @return the updated FlowControlOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowControlOperation removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowControlOperation removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowControlOperation) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -433,7 +437,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @return the updated FlowControlOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowControlOperation removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowControlOperation removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowControlOperation) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -450,7 +455,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     public static FlowControlOperation updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (FlowControlOperation) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (FlowControlOperation)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -462,7 +468,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @return the updated FlowControlOperation, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static FlowControlOperation removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static FlowControlOperation removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (FlowControlOperation) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -480,7 +487,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     public static FlowControlOperation updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (FlowControlOperation) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (FlowControlOperation)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -507,8 +515,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @return the FlowControlOperation that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static FlowControlOperation replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static FlowControlOperation replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (FlowControlOperation) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -561,8 +569,8 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static FlowControlOperation appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static FlowControlOperation appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (FlowControlOperation) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -468,8 +467,7 @@ public class Task extends Asset implements ITask, IAsset, IReferenceable {
      * @return the updated Task, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Task removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static Task removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (Task) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

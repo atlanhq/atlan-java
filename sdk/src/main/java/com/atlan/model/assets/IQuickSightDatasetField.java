@@ -51,8 +51,8 @@ public interface IQuickSightDatasetField {
             new KeywordField("quickSightDatasetFieldType", "quickSightDatasetFieldType");
 
     /** Unique name of the dataset in which this field exists. */
-    KeywordTextField QUICK_SIGHT_DATASET_QUALIFIED_NAME =
-            new KeywordTextField("quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName.text");
+    KeywordTextField QUICK_SIGHT_DATASET_QUALIFIED_NAME = new KeywordTextField(
+            "quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName", "quickSightDatasetQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

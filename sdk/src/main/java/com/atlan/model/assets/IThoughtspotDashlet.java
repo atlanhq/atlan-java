@@ -45,12 +45,14 @@ public interface IThoughtspotDashlet {
     RelationField THOUGHTSPOT_LIVEBOARD = new RelationField("thoughtspotLiveboard");
 
     /** Simple name of the liveboard in which this dashlet exists. */
-    KeywordTextField THOUGHTSPOT_LIVEBOARD_NAME =
-            new KeywordTextField("thoughtspotLiveboardName", "thoughtspotLiveboardName.keyword", "thoughtspotLiveboardName");
+    KeywordTextField THOUGHTSPOT_LIVEBOARD_NAME = new KeywordTextField(
+            "thoughtspotLiveboardName", "thoughtspotLiveboardName.keyword", "thoughtspotLiveboardName");
 
     /** Unique name of the liveboard in which this dashlet exists. */
-    KeywordTextField THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME =
-            new KeywordTextField("thoughtspotLiveboardQualifiedName", "thoughtspotLiveboardQualifiedName", "thoughtspotLiveboardQualifiedName.text");
+    KeywordTextField THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME = new KeywordTextField(
+            "thoughtspotLiveboardQualifiedName",
+            "thoughtspotLiveboardQualifiedName",
+            "thoughtspotLiveboardQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

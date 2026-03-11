@@ -268,7 +268,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AIModelVersion does not exist or the provided GUID is not a AIModelVersion
      */
     @JsonIgnore
-    public static AIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AIModelVersion get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -300,7 +301,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AIModelVersion does not exist or the provided GUID is not a AIModelVersion
      */
     @JsonIgnore
-    public static AIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AIModelVersion get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -412,7 +414,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @return the updated AIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AIModelVersion removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AIModelVersion) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -439,7 +442,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @return the updated AIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AIModelVersion removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AIModelVersion) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -456,7 +460,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
     public static AIModelVersion updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AIModelVersion) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AIModelVersion)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -468,7 +473,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @return the updated AIModelVersion, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AIModelVersion removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AIModelVersion) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -486,7 +492,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
     public static AIModelVersion updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AIModelVersion) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AIModelVersion)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -513,8 +520,8 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
      * @return the AIModelVersion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AIModelVersion replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AIModelVersion replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AIModelVersion) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

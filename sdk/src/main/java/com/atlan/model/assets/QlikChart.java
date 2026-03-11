@@ -318,7 +318,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikChart does not exist or the provided GUID is not a QlikChart
      */
     @JsonIgnore
-    public static QlikChart get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static QlikChart get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -430,7 +431,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return the updated QlikChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikChart removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QlikChart removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QlikChart) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -486,7 +488,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return the updated QlikChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QlikChart removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QlikChart removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QlikChart) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -504,7 +507,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     public static QlikChart updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QlikChart) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QlikChart)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -531,8 +535,8 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return the QlikChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikChart replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static QlikChart replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

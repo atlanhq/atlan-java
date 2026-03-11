@@ -55,8 +55,8 @@ public interface IDbt {
     TextField DBT_CONNECTION_CONTEXT = new TextField("dbtConnectionContext", "dbtConnectionContext");
 
     /** Version of dbt used in the environment. */
-    KeywordTextField DBT_ENVIRONMENT_DBT_VERSION =
-            new KeywordTextField("dbtEnvironmentDbtVersion", "dbtEnvironmentDbtVersion.keyword", "dbtEnvironmentDbtVersion");
+    KeywordTextField DBT_ENVIRONMENT_DBT_VERSION = new KeywordTextField(
+            "dbtEnvironmentDbtVersion", "dbtEnvironmentDbtVersion.keyword", "dbtEnvironmentDbtVersion");
 
     /** Name of the environment in which this asset exists in dbt. */
     KeywordTextField DBT_ENVIRONMENT_NAME =
@@ -82,8 +82,8 @@ public interface IDbt {
     TextField DBT_JOB_SCHEDULE = new TextField("dbtJobSchedule", "dbtJobSchedule");
 
     /** Human-readable cron schedule of the job that materialized this asset in dbt. */
-    KeywordTextField DBT_JOB_SCHEDULE_CRON_HUMANIZED =
-            new KeywordTextField("dbtJobScheduleCronHumanized", "dbtJobScheduleCronHumanized.keyword", "dbtJobScheduleCronHumanized");
+    KeywordTextField DBT_JOB_SCHEDULE_CRON_HUMANIZED = new KeywordTextField(
+            "dbtJobScheduleCronHumanized", "dbtJobScheduleCronHumanized.keyword", "dbtJobScheduleCronHumanized");
 
     /** Status of the job that materialized this asset in dbt. */
     KeywordField DBT_JOB_STATUS = new KeywordField("dbtJobStatus", "dbtJobStatus");

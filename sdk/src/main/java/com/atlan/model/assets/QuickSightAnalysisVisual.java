@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalysisVisual, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
+public class QuickSightAnalysisVisual extends Asset
+        implements IQuickSightAnalysisVisual, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightAnalysisVisual";
@@ -195,7 +196,10 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @return reference to a QuickSightAnalysisVisual that can be used for defining a relationship to a QuickSightAnalysisVisual
      */
     public static QuickSightAnalysisVisual refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return QuickSightAnalysisVisual._internal().guid(guid).semantic(semantic).build();
+        return QuickSightAnalysisVisual._internal()
+                .guid(guid)
+                .semantic(semantic)
+                .build();
     }
 
     /**
@@ -249,7 +253,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
      */
     @JsonIgnore
-    public static QuickSightAnalysisVisual get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static QuickSightAnalysisVisual get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -281,7 +286,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QuickSightAnalysisVisual does not exist or the provided GUID is not a QuickSightAnalysisVisual
      */
     @JsonIgnore
-    public static QuickSightAnalysisVisual get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static QuickSightAnalysisVisual get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -381,7 +387,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class QuickSightAnalysisVisualBuilder<C extends QuickSightAnalysisVisual, B extends QuickSightAnalysisVisualBuilder<C, B>>
+    public abstract static class QuickSightAnalysisVisualBuilder<
+                    C extends QuickSightAnalysisVisual, B extends QuickSightAnalysisVisualBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -393,7 +400,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @return the updated QuickSightAnalysisVisual, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QuickSightAnalysisVisual removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -420,7 +428,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @return the updated QuickSightAnalysisVisual, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QuickSightAnalysisVisual removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -437,7 +446,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
     public static QuickSightAnalysisVisual updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QuickSightAnalysisVisual) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (QuickSightAnalysisVisual)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -449,7 +459,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @return the updated QuickSightAnalysisVisual, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static QuickSightAnalysisVisual removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -467,7 +478,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
     public static QuickSightAnalysisVisual updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (QuickSightAnalysisVisual) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (QuickSightAnalysisVisual)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -494,8 +506,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @return the QuickSightAnalysisVisual that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static QuickSightAnalysisVisual replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -512,8 +524,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static QuickSightAnalysisVisual appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static QuickSightAnalysisVisual appendTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -530,8 +542,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static QuickSightAnalysisVisual removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static QuickSightAnalysisVisual removeTerms(
+            AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
@@ -548,8 +560,8 @@ public class QuickSightAnalysisVisual extends Asset implements IQuickSightAnalys
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static QuickSightAnalysisVisual appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static QuickSightAnalysisVisual appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

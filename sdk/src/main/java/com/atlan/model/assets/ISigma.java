@@ -45,8 +45,8 @@ public interface ISigma {
             new KeywordTextField("sigmaDataElementName", "sigmaDataElementName.keyword", "sigmaDataElementName");
 
     /** Unique name of the data element in which this asset exists. */
-    KeywordTextField SIGMA_DATA_ELEMENT_QUALIFIED_NAME =
-            new KeywordTextField("sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName.text");
+    KeywordTextField SIGMA_DATA_ELEMENT_QUALIFIED_NAME = new KeywordTextField(
+            "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName", "sigmaDataElementQualifiedName.text");
 
     /** Simple name of the page on which this asset exists. */
     KeywordTextField SIGMA_PAGE_NAME = new KeywordTextField("sigmaPageName", "sigmaPageName.keyword", "sigmaPageName");
@@ -60,8 +60,8 @@ public interface ISigma {
             new KeywordTextField("sigmaWorkbookName", "sigmaWorkbookName.keyword", "sigmaWorkbookName");
 
     /** Unique name of the workbook in which this asset exists. */
-    KeywordTextField SIGMA_WORKBOOK_QUALIFIED_NAME =
-            new KeywordTextField("sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName.text");
+    KeywordTextField SIGMA_WORKBOOK_QUALIFIED_NAME = new KeywordTextField(
+            "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName", "sigmaWorkbookQualifiedName.text");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();

@@ -285,7 +285,8 @@ public class BI extends Asset implements IBI, ICatalog, IAsset, IReferenceable {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = BI.select(client)
+            Optional<Asset> asset = BI
+                    .select(client)
                     .where(BI.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
@@ -301,7 +302,8 @@ public class BI extends Asset implements IBI, ICatalog, IAsset, IReferenceable {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = BI.select(client)
+            Optional<Asset> asset = BI
+                    .select(client)
                     .where(BI.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
@@ -361,8 +363,7 @@ public class BI extends Asset implements IBI, ICatalog, IAsset, IReferenceable {
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class BIBuilder<C extends BI, B extends BIBuilder<C, B>>
-            extends Asset.AssetBuilder<C, B> {}
+    public abstract static class BIBuilder<C extends BI, B extends BIBuilder<C, B>> extends Asset.AssetBuilder<C, B> {}
 
     /**
      * Remove the system description from a BI.
@@ -459,8 +460,7 @@ public class BI extends Asset implements IBI, ICatalog, IAsset, IReferenceable {
      * @return the updated BI, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static BI removeAnnouncement(AtlanClient client, String qualifiedName, String name)
-            throws AtlanException {
+    public static BI removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
         return (BI) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 

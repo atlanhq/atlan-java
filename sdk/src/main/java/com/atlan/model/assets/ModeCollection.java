@@ -282,7 +282,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeCollection does not exist or the provided GUID is not a ModeCollection
      */
     @JsonIgnore
-    public static ModeCollection get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static ModeCollection get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -314,7 +315,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeCollection does not exist or the provided GUID is not a ModeCollection
      */
     @JsonIgnore
-    public static ModeCollection get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static ModeCollection get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -426,7 +428,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return the updated ModeCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeCollection removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeCollection) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -453,7 +456,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return the updated ModeCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeCollection removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeCollection) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -470,7 +474,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     public static ModeCollection updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ModeCollection) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (ModeCollection)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -482,7 +487,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return the updated ModeCollection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static ModeCollection removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (ModeCollection) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -500,7 +506,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     public static ModeCollection updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (ModeCollection) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (ModeCollection)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -527,8 +534,8 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
      * @return the ModeCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static ModeCollection replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeCollection) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

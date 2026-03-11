@@ -280,7 +280,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
      */
     @JsonIgnore
-    public static PowerBIMeasure get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static PowerBIMeasure get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -312,7 +313,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIMeasure does not exist or the provided GUID is not a PowerBIMeasure
      */
     @JsonIgnore
-    public static PowerBIMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static PowerBIMeasure get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -424,7 +426,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the updated PowerBIMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIMeasure removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIMeasure) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -451,7 +454,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the updated PowerBIMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIMeasure removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIMeasure) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -468,7 +472,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     public static PowerBIMeasure updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (PowerBIMeasure) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (PowerBIMeasure)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -480,7 +485,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the updated PowerBIMeasure, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static PowerBIMeasure removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (PowerBIMeasure) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -498,7 +504,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
     public static PowerBIMeasure updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (PowerBIMeasure) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (PowerBIMeasure)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -525,8 +532,8 @@ public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, 
      * @return the PowerBIMeasure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static PowerBIMeasure replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIMeasure) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

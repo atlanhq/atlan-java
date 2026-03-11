@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
+public class AnaplanWorkspace extends Asset
+        implements IAnaplanWorkspace, IAnaplan, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AnaplanWorkspace";
@@ -270,7 +271,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanWorkspace does not exist or the provided GUID is not a AnaplanWorkspace
      */
     @JsonIgnore
-    public static AnaplanWorkspace get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static AnaplanWorkspace get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -302,7 +304,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AnaplanWorkspace does not exist or the provided GUID is not a AnaplanWorkspace
      */
     @JsonIgnore
-    public static AnaplanWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static AnaplanWorkspace get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -371,7 +374,7 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create an Anaplan workspace.
      *
      * @param name of the Anaplan workspace
@@ -416,7 +419,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class AnaplanWorkspaceBuilder<C extends AnaplanWorkspace, B extends AnaplanWorkspaceBuilder<C, B>>
+    public abstract static class AnaplanWorkspaceBuilder<
+                    C extends AnaplanWorkspace, B extends AnaplanWorkspaceBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -428,7 +432,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @return the updated AnaplanWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanWorkspace removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanWorkspace removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanWorkspace) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -455,7 +460,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @return the updated AnaplanWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanWorkspace removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanWorkspace removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanWorkspace) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -472,7 +478,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
     public static AnaplanWorkspace updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (AnaplanWorkspace) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (AnaplanWorkspace)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -484,7 +491,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @return the updated AnaplanWorkspace, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static AnaplanWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static AnaplanWorkspace removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (AnaplanWorkspace) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -502,7 +510,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
     public static AnaplanWorkspace updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (AnaplanWorkspace) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (AnaplanWorkspace)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -529,8 +538,8 @@ public class AnaplanWorkspace extends Asset implements IAnaplanWorkspace, IAnapl
      * @return the AnaplanWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AnaplanWorkspace replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static AnaplanWorkspace replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (AnaplanWorkspace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

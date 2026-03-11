@@ -537,7 +537,8 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return the updated DbtModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModel removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtModel removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtModel) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -593,7 +594,8 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return the updated DbtModel, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModel removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DbtModel removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DbtModel) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -638,8 +640,8 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
      * @return the DbtModel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModel replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DbtModel replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtModel) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

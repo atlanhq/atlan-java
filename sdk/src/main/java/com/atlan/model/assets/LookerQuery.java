@@ -264,7 +264,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
      */
     @JsonIgnore
-    public static LookerQuery get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static LookerQuery get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -296,7 +297,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerQuery does not exist or the provided GUID is not a LookerQuery
      */
     @JsonIgnore
-    public static LookerQuery get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static LookerQuery get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -408,7 +410,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return the updated LookerQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerQuery removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerQuery removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -435,7 +438,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return the updated LookerQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerQuery removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerQuery removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerQuery) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -452,7 +456,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     public static LookerQuery updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerQuery) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (LookerQuery)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -464,7 +469,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return the updated LookerQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static LookerQuery removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static LookerQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (LookerQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -482,7 +488,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     public static LookerQuery updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (LookerQuery) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (LookerQuery)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -509,8 +516,8 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
      * @return the LookerQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerQuery replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static LookerQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 

@@ -50,8 +50,8 @@ public interface IRedashVisualization {
             new KeywordTextField("redashQueryName", "redashQueryName.keyword", "redashQueryName");
 
     /** Unique name of the query from which this visualization is created. */
-    KeywordTextField REDASH_QUERY_QUALIFIED_NAME =
-            new KeywordTextField("redashQueryQualifiedName", "redashQueryQualifiedName", "redashQueryQualifiedName.text");
+    KeywordTextField REDASH_QUERY_QUALIFIED_NAME = new KeywordTextField(
+            "redashQueryQualifiedName", "redashQueryQualifiedName", "redashQueryQualifiedName.text");
 
     /** Type of this visualization. */
     KeywordField REDASH_VISUALIZATION_TYPE = new KeywordField("redashVisualizationType", "redashVisualizationType");

@@ -53,8 +53,8 @@ public interface ISchemaRegistrySubject {
             new KeywordField("schemaRegistrySubjectBaseName", "schemaRegistrySubjectBaseName");
 
     /** List of asset qualified names that this subject is governing/validating. */
-    KeywordField SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES =
-            new KeywordField("schemaRegistrySubjectGoverningAssetQualifiedNames", "schemaRegistrySubjectGoverningAssetQualifiedNames");
+    KeywordField SCHEMA_REGISTRY_SUBJECT_GOVERNING_ASSET_QUALIFIED_NAMES = new KeywordField(
+            "schemaRegistrySubjectGoverningAssetQualifiedNames", "schemaRegistrySubjectGoverningAssetQualifiedNames");
 
     /** Whether the subject is a schema for the keys of the messages (true) or not (false). */
     BooleanField SCHEMA_REGISTRY_SUBJECT_IS_KEY_SCHEMA =

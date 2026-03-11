@@ -38,7 +38,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, IDatabase, IDocumentDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
+public class DocumentDBDatabase extends Asset
+        implements IDocumentDBDatabase, IDatabase, IDocumentDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DocumentDBDatabase";
@@ -365,7 +366,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DocumentDBDatabase does not exist or the provided GUID is not a DocumentDBDatabase
      */
     @JsonIgnore
-    public static DocumentDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static DocumentDBDatabase get(AtlanClient client, String id, boolean includeAllRelationships)
+            throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
@@ -397,7 +399,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DocumentDBDatabase does not exist or the provided GUID is not a DocumentDBDatabase
      */
     @JsonIgnore
-    public static DocumentDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static DocumentDBDatabase get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -466,7 +469,7 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-/**
+    /**
      * Builds the minimal object necessary to create a DocumentDBDatabase.
      *
      * @param name of the DocumentDBDatabase
@@ -511,7 +514,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class DocumentDBDatabaseBuilder<C extends DocumentDBDatabase, B extends DocumentDBDatabaseBuilder<C, B>>
+    public abstract static class DocumentDBDatabaseBuilder<
+                    C extends DocumentDBDatabase, B extends DocumentDBDatabaseBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
@@ -523,7 +527,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @return the updated DocumentDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DocumentDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DocumentDBDatabase removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DocumentDBDatabase) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -550,7 +555,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @return the updated DocumentDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DocumentDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DocumentDBDatabase removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DocumentDBDatabase) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
@@ -567,7 +573,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
     public static DocumentDBDatabase updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (DocumentDBDatabase) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (DocumentDBDatabase)
+                Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -579,7 +586,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @return the updated DocumentDBDatabase, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static DocumentDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static DocumentDBDatabase removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (DocumentDBDatabase) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -597,7 +605,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
     public static DocumentDBDatabase updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (DocumentDBDatabase) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (DocumentDBDatabase)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -624,8 +633,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @return the DocumentDBDatabase that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DocumentDBDatabase replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static DocumentDBDatabase replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (DocumentDBDatabase) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
@@ -678,8 +687,8 @@ public class DocumentDBDatabase extends Asset implements IDocumentDBDatabase, ID
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static DocumentDBDatabase appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
+    public static DocumentDBDatabase appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
         return (DocumentDBDatabase) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 

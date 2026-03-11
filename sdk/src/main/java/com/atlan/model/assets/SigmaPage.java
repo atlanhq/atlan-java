@@ -298,7 +298,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the SigmaPage does not exist or the provided GUID is not a SigmaPage
      */
     @JsonIgnore
-    public static SigmaPage get(AtlanClient client, String id, Collection<AtlanField> attributes) throws AtlanException {
+    public static SigmaPage get(AtlanClient client, String id, Collection<AtlanField> attributes)
+            throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
@@ -410,7 +411,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return the updated SigmaPage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SigmaPage removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SigmaPage) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
@@ -466,7 +468,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return the updated SigmaPage, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+    public static SigmaPage removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (SigmaPage) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
@@ -484,7 +487,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     public static SigmaPage updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (SigmaPage) Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
+        return (SigmaPage)
+                Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -511,8 +515,8 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
      * @return the SigmaPage that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
-            throws AtlanException {
+    public static SigmaPage replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaPage) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
