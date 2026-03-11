@@ -58,7 +58,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     String additionalEtlContext;
 
-    /** ADF Activity that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IAdfActivity adfActivity;
 
@@ -66,7 +66,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** Tasks that exist within this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
@@ -84,37 +84,22 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     String code;
 
-    /** Processes that detail column-level lineage for this process. */
-    @Attribute
-    @Singular
-    SortedSet<IColumnProcess> columnProcesses;
-
-    /** Individual Fabric activities contained in the process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** TBC */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** Orchestrated control operation that ran these data flows (process). */
+    /** TBC */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
-    /** Assets that are inputs to this process. */
-    @Attribute
-    @Singular
-    SortedSet<ICatalog> inputs;
-
-    /** Matillion component that contains the logic for this lineage process. */
+    /** TBC */
     @Attribute
     IMatillionComponent matillionComponent;
-
-    /** Assets that are outputs from this process. */
-    @Attribute
-    @Singular
-    SortedSet<ICatalog> outputs;
 
     /** TBC */
     @Attribute
@@ -122,7 +107,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** PowerBI Dataflow that is associated with this lineage process. */
+    /** TBC */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -135,12 +120,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     String sql;
 
-    /** Functions used by this process. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> sqlFunctions;
-
-    /** Procedures used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;

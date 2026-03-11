@@ -115,16 +115,6 @@ public class BusinessPolicyException extends Asset
     @Attribute
     Integer businessPolicyVersion;
 
-    /** Exception assigned to business polices */
-    @Attribute
-    @Singular("exceptionForBusinessPolicy")
-    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
-
-    /** BusinessPolicy that have the same (or relatable) compliance */
-    @Attribute
-    @Singular
-    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
-
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicyException, from a potentially
      * more-complete BusinessPolicyException object.

@@ -83,11 +83,6 @@ public class AtlanAppDeployment extends Asset
     @Attribute
     AtlanAppDeploymentStatus atlanAppStatus;
 
-    /** Tools that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppTool> atlanAppTools;
-
     /** Version identifier for deployment. */
     @Attribute
     Integer atlanAppVersionId;
@@ -95,11 +90,6 @@ public class AtlanAppDeployment extends Asset
     /** Version uuid for deployment. This is externally exposed information. */
     @Attribute
     String atlanAppVersionUUID;
-
-    /** Workflows that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
 
     /** Tasks to which this asset provides input. */
     @Attribute

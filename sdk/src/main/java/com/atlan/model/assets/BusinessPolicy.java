@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -91,16 +90,6 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     /** Version of the policy */
     @Attribute
     Integer businessPolicyVersion;
-
-    /** Exception assigned to business polices */
-    @Attribute
-    @Singular("exceptionForBusinessPolicy")
-    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
-
-    /** BusinessPolicy that have the same (or relatable) compliance */
-    @Attribute
-    @Singular
-    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicy, from a potentially

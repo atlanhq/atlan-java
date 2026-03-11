@@ -123,10 +123,6 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Attribute
     String appWorkflowRunTemporalRunId;
 
-    /** The workflow that contains the workflow run. */
-    @Attribute
-    IAtlanAppWorkflow atlanAppWorkflow;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

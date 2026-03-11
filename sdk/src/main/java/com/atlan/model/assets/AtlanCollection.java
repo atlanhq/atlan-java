@@ -52,11 +52,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Folders that exist within this namespace. */
-    @Attribute
-    @Singular
-    SortedSet<IFolder> childrenFolders;
-
     /** Queries that exist within this namespace. */
     @Attribute
     @Singular

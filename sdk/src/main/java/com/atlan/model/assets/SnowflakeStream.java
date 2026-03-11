@@ -176,11 +176,6 @@ public class SnowflakeStream extends Asset
     @Attribute
     String schemaQualifiedName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Whether this stream is stale (true) or not (false). */
     @Attribute
     Boolean snowflakeStreamIsStale;

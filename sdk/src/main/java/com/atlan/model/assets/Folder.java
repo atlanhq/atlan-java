@@ -48,11 +48,6 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Folders that exist within this namespace. */
-    @Attribute
-    @Singular
-    SortedSet<IFolder> childrenFolders;
-
     /** Queries that exist within this namespace. */
     @Attribute
     @Singular

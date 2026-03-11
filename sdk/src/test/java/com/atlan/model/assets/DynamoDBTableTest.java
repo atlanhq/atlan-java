@@ -724,18 +724,6 @@ public class DynamoDBTableTest {
             .sqlIsSecure(true)
             .dynamoDBTableGSICount(123)
             .dynamoDBTableLSICount(123)
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dynamoDBGlobalSecondaryIndex(
                     DynamoDBGlobalSecondaryIndex.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dynamoDBGlobalSecondaryIndex(
@@ -756,10 +744,6 @@ public class DynamoDBTableTest {
             .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .snowflakeSemanticLogicalTable(
-                    SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

@@ -48,29 +48,13 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Asset this contract controls. */
-    @Attribute
-    IAsset dataContractAssetCertified;
-
     /** Unique identifier of the asset associated with this data contract. */
     @Attribute
     String dataContractAssetGuid;
 
-    /** Asset this contract controls or will control. */
-    @Attribute
-    IAsset dataContractAssetLatest;
-
     /** (Deprecated) Replaced by dataContractSpec attribute. */
     @Attribute
     String dataContractJson;
-
-    /** Data contract instance that holds the next version of this contract. */
-    @Attribute
-    IDataContract dataContractNextVersion;
-
-    /** Data contract instance that holds the previous version of this contract. */
-    @Attribute
-    IDataContract dataContractPreviousVersion;
 
     /** Actual content of the contract in YAML string format. Any changes to this string should create a new instance (with new sequential version number). */
     @Attribute

@@ -72,11 +72,6 @@ public class AtlanAppWorkflow extends Asset
     @Attribute
     String atlanAppQualifiedName;
 
-    /** Tools that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppTool> atlanAppTools;
-
     /** Map of all activity steps for the workflow (escaped JSON string). */
     @Attribute
     String atlanAppWorkflowDag;
@@ -109,11 +104,6 @@ public class AtlanAppWorkflow extends Asset
     /** Version of the workflow. */
     @Attribute
     String atlanAppWorkflowVersion;
-
-    /** Workflows that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
 
     /** Tasks to which this asset provides input. */
     @Attribute

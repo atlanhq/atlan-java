@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -104,11 +103,6 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     @Attribute
     Long compliantAssetsCount;
 
-    /** Exception assigned to business polices */
-    @Attribute
-    @Singular("exceptionForBusinessPolicy")
-    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
-
     /** number of governed assets in the policy */
     @Attribute
     Long governedAssetsCount;
@@ -120,11 +114,6 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     /** number of non governed assets in the policy */
     @Attribute
     Long nonGovernedAssetsCount;
-
-    /** BusinessPolicy that have the same (or relatable) compliance */
-    @Attribute
-    @Singular
-    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicyLog, from a potentially

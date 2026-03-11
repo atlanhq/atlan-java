@@ -84,16 +84,6 @@ public class AtlanAppTool extends Asset implements IAtlanAppTool, IAtlanApp, IAp
     @Attribute
     String atlanAppToolTaskQueue;
 
-    /** Tools that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppTool> atlanAppTools;
-
-    /** Workflows that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

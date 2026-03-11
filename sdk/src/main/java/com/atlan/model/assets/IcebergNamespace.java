@@ -247,11 +247,6 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<ISnowflakePipe> snowflakePipes;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Snowflake semantic views contained in the schema. */
     @Attribute
     @Singular

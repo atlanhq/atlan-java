@@ -167,11 +167,6 @@ public class Stakeholder extends Asset
     @Singular
     SortedSet<String> personaUsers;
 
-    /** Access control entity to which this policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
-
     /** TBC */
     @Attribute
     String roleId;

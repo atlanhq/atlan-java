@@ -170,11 +170,6 @@ public class SnowflakeStage extends Asset
     @Attribute
     String schemaQualifiedName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** The URL or cloud storage path specifying the external location where the stage data files are stored. This is NULL for internal stages. */
     @Attribute
     String snowflakeStageExternalLocation;

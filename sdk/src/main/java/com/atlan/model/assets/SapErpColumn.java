@@ -269,11 +269,6 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
     @Attribute
     String schemaQualifiedName;
 
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;

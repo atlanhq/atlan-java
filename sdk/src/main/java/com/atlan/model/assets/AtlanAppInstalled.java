@@ -81,16 +81,6 @@ public class AtlanAppInstalled extends Asset
     @Attribute
     String atlanAppQualifiedName;
 
-    /** Tools that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppTool> atlanAppTools;
-
-    /** Workflows that exist within this Atlan application. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
-
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

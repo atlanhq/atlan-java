@@ -692,8 +692,6 @@ public class PersonaTest {
             .personaUser("String0")
             .personaUser("String1")
             .roleId("String0")
-            .policy(AuthPolicy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .policy(AuthPolicy.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
