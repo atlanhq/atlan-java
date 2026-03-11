@@ -1,4 +1,6 @@
+// IMPORT: import com.atlan.model.enums.BadgeComparisonOperator;
 // IMPORT: import com.atlan.model.enums.BadgeConditionColor;
+// TYPE_OVERRIDE: badgeConditionOperator=BadgeComparisonOperator
 
     /**
      * Build a new condition for a badge on a string-based custom metadata property (including options (enumerations)).
