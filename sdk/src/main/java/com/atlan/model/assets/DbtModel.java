@@ -510,11 +510,11 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtModel, from a potentially
-     * more-complete DbtModel object.
+     * Builds the minimal object necessary to apply an update to a DbtModel,
+     * from a potentially more-complete DbtModel object.
      *
      * @return the minimal object necessary to update the DbtModel, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtModel are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtModel are not present in the initial object
      */
     @Override
     public DbtModelBuilder<?, ?> trimToRequired() throws InvalidRequestException {

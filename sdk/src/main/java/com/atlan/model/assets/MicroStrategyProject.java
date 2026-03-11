@@ -435,11 +435,11 @@ public class MicroStrategyProject extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyProject, from a potentially
-     * more-complete MicroStrategyProject object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyProject,
+     * from a potentially more-complete MicroStrategyProject object.
      *
      * @return the minimal object necessary to update the MicroStrategyProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyProject are not present in the initial object
      */
     @Override
     public MicroStrategyProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

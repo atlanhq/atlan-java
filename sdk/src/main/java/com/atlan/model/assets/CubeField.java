@@ -546,20 +546,6 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     }
 
     /**
-     * Builds the minimal object necessary to update a CubeField.
-     *
-     * @param qualifiedName of the CubeField
-     * @param name of the CubeField
-     * @return the minimal request necessary to update the CubeField, as a builder
-     */
-    public static CubeFieldBuilder<?, ?> updater(String qualifiedName, String name) {
-        return CubeField._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
      * Extracts the unique name of the hierarchy from the qualified name of the CubeField's parent.
      *
      * @param parentQualifiedName unique name of the hierarchy or parent field in which this CubeField exists
@@ -585,11 +571,25 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CubeField, from a potentially
-     * more-complete CubeField object.
+     * Builds the minimal object necessary to update a CubeField.
+     *
+     * @param qualifiedName of the CubeField
+     * @param name of the CubeField
+     * @return the minimal request necessary to update the CubeField, as a builder
+     */
+    public static CubeFieldBuilder<?, ?> updater(String qualifiedName, String name) {
+        return CubeField._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a CubeField,
+     * from a potentially more-complete CubeField object.
      *
      * @return the minimal object necessary to update the CubeField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CubeField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CubeField are not present in the initial object
      */
     @Override
     public CubeFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

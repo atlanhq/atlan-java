@@ -346,11 +346,11 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Insight, from a potentially
-     * more-complete Insight object.
+     * Builds the minimal object necessary to apply an update to a Insight,
+     * from a potentially more-complete Insight object.
      *
      * @return the minimal object necessary to update the Insight, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Insight are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Insight are not present in the initial object
      */
     @Override
     public InsightBuilder<?, ?> trimToRequired() throws InvalidRequestException {

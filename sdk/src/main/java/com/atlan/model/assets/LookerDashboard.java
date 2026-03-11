@@ -401,11 +401,11 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerDashboard, from a potentially
-     * more-complete LookerDashboard object.
+     * Builds the minimal object necessary to apply an update to a LookerDashboard,
+     * from a potentially more-complete LookerDashboard object.
      *
      * @return the minimal object necessary to update the LookerDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerDashboard are not present in the initial object
      */
     @Override
     public LookerDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

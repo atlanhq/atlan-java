@@ -390,11 +390,11 @@ public class CassandraIndex extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CassandraIndex, from a potentially
-     * more-complete CassandraIndex object.
+     * Builds the minimal object necessary to apply an update to a CassandraIndex,
+     * from a potentially more-complete CassandraIndex object.
      *
      * @return the minimal object necessary to update the CassandraIndex, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CassandraIndex are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CassandraIndex are not present in the initial object
      */
     @Override
     public CassandraIndexBuilder<?, ?> trimToRequired() throws InvalidRequestException {

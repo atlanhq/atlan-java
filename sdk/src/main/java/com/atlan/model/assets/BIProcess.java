@@ -71,7 +71,7 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -130,6 +130,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
+
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
 
     /** Procedures used by this process. */
     @Attribute
@@ -385,11 +390,11 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BIProcess, from a potentially
-     * more-complete BIProcess object.
+     * Builds the minimal object necessary to apply an update to a BIProcess,
+     * from a potentially more-complete BIProcess object.
      *
      * @return the minimal object necessary to update the BIProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BIProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BIProcess are not present in the initial object
      */
     @Override
     public BIProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

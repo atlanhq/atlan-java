@@ -7,7 +7,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
@@ -25,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -54,21 +52,21 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Folders that exist within this namespace. */
     @Attribute
     @Singular
     SortedSet<IFolder> childrenFolders;
 
-    /** TBC */
+    /** Queries that exist within this namespace. */
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> childrenQueries;
 
-    /** TBC */
+    /** Image used to represent this collection. */
     @Attribute
     String icon;
 
-    /** TBC */
+    /** Type of image used to represent the collection (for example, an emoji). */
     @Attribute
     IconType iconType;
 
@@ -308,57 +306,7 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     }
 
     /**
-     * Add the API token configured for the default client as an admin for this AtlanCollection.
-     * This is necessary to allow the API token to manage the collection itself or any queries within it.
-     *
-     * @param client connectivity to the Atlan tenant
-     * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
-     * @throws AtlanException on any error during API invocation
-     */
-    public AssetMutationResponse addApiTokenAsAdmin(AtlanClient client, final String impersonationToken)
-            throws AtlanException {
-        return Asset.addApiTokenAsAdmin(client, getGuid(), impersonationToken);
-    }
-
-    /**
-     * Add the API token configured for the default client as a viewer for this AtlanCollection.
-     * This is necessary to allow the API token to view or run queries within the collection, but not make any
-     * changes to them.
-     *
-     * @param client connectivity to Atlan tenant
-     * @param impersonationToken a bearer token for an actual user who is already an admin for the AtlanCollection, NOT an API token
-     * @throws AtlanException on any error during API invocation
-     */
-    public AssetMutationResponse addApiTokenAsViewer(AtlanClient client, final String impersonationToken)
-            throws AtlanException {
-        String username = client.users.getCurrentUser().getUsername();
-        AssetMutationResponse response = null;
-        try (AtlanClient tmp = new AtlanClient(client.getBaseUrl(), impersonationToken)) {
-            // Look for the asset as the impersonated user, ensuring we include the viewer users
-            // in the results (so we avoid clobbering any existing viewer users)
-            Optional<Asset> found =
-                    tmp.assets.select().where(GUID.eq(getGuid())).includeOnResults(VIEWER_USERS).stream()
-                            .findFirst();
-            response = null;
-            if (found.isPresent()) {
-                Asset asset = found.get();
-                Set<String> existingViewers = asset.getViewerUsers();
-                response = asset.trimToRequired()
-                        .viewerUsers(existingViewers)
-                        .viewerUser(username)
-                        .build()
-                        .save(tmp);
-            } else {
-                throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, getGuid());
-            }
-        } catch (Exception e) {
-            log.warn("Unable to remove temporary client using impersonationToken.", e);
-        }
-        return response;
-    }
-
-    /**
-     * Builds the minimal object necessary to create an AltanCollection.
+     * Builds the minimal object necessary to create an AtlanCollection.
      *
      * @param client connectivity to the Atlan tenant
      * @param name of the AtlanCollection as the user who will own the AtlanCollection
@@ -372,10 +320,10 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     }
 
     /**
-     * Generate a unique AltanCollection name.
+     * Generate a unique AtlanCollection name.
      *
      * @param client connectivity to the Atlan tenant as the user who will own the AtlanCollection
-     * @return a unique name for the AltanCollection
+     * @return a unique name for the AtlanCollection
      */
     public static String generateQualifiedName(AtlanClient client) {
         try {
@@ -416,36 +364,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Override
     public AsyncCreationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
         return client.assets.save(this, replaceAtlanTags);
-    }
-
-    /**
-     * Builds the minimal object necessary to update a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the minimal request necessary to update the AtlanCollection, as a builder
-     */
-    public static AtlanCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AtlanCollection._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a AtlanCollection, from a potentially
-     * more-complete AtlanCollection object.
-     *
-     * @return the minimal object necessary to update the AtlanCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AtlanCollection are not found in the initial object
-     */
-    @Override
-    public AtlanCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -510,6 +428,36 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
             throw new NotFoundException(ErrorCode.COLLECTION_NOT_FOUND_BY_NAME, name);
         }
         return results;
+    }
+
+    /**
+     * Builds the minimal object necessary to update a AtlanCollection.
+     *
+     * @param qualifiedName of the AtlanCollection
+     * @param name of the AtlanCollection
+     * @return the minimal request necessary to update the AtlanCollection, as a builder
+     */
+    public static AtlanCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return AtlanCollection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a AtlanCollection,
+     * from a potentially more-complete AtlanCollection object.
+     *
+     * @return the minimal object necessary to update the AtlanCollection, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AtlanCollection are not present in the initial object
+     */
+    @Override
+    public AtlanCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     public abstract static class AtlanCollectionBuilder<

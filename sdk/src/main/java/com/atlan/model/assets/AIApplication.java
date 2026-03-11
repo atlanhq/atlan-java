@@ -397,11 +397,11 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AIApplication, from a potentially
-     * more-complete AIApplication object.
+     * Builds the minimal object necessary to apply an update to a AIApplication,
+     * from a potentially more-complete AIApplication object.
      *
      * @return the minimal object necessary to update the AIApplication, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AIApplication are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AIApplication are not present in the initial object
      */
     @Override
     public AIApplicationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

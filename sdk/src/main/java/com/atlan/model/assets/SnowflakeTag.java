@@ -42,7 +42,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, ICatalog, IAsset, IReferenceable {
+public class SnowflakeTag extends Asset
+        implements ISnowflakeTag, ITag, ISnowflake, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeTag";
@@ -182,6 +183,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -583,6 +589,17 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     }
 
     /**
+     * Generate a unique SnowflakeTag name.
+     *
+     * @param name of the SnowflakeTag
+     * @param schemaQualifiedName unique name of the schema in which this SnowflakeTag exists
+     * @return a unique name for the SnowflakeTag
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a SnowflakeTag.
      *
      * @param qualifiedName of the SnowflakeTag
@@ -597,22 +614,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     }
 
     /**
-     * Generate a unique SnowflakeTag name.
-     *
-     * @param name of the SnowflakeTag
-     * @param schemaQualifiedName unique name of the schema in which this SnowflakeTag exists
-     * @return a unique name for the SnowflakeTag
-     */
-    public static String generateQualifiedName(String name, String schemaQualifiedName) {
-        return schemaQualifiedName + "/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a SnowflakeTag, from a potentially
-     * more-complete SnowflakeTag object.
+     * Builds the minimal object necessary to apply an update to a SnowflakeTag,
+     * from a potentially more-complete SnowflakeTag object.
      *
      * @return the minimal object necessary to update the SnowflakeTag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SnowflakeTag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SnowflakeTag are not present in the initial object
      */
     @Override
     public SnowflakeTagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

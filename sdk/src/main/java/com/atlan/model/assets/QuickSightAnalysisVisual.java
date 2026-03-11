@@ -372,11 +372,11 @@ public class QuickSightAnalysisVisual extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QuickSightAnalysisVisual, from a potentially
-     * more-complete QuickSightAnalysisVisual object.
+     * Builds the minimal object necessary to apply an update to a QuickSightAnalysisVisual,
+     * from a potentially more-complete QuickSightAnalysisVisual object.
      *
      * @return the minimal object necessary to update the QuickSightAnalysisVisual, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QuickSightAnalysisVisual are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QuickSightAnalysisVisual are not present in the initial object
      */
     @Override
     public QuickSightAnalysisVisualBuilder<?, ?> trimToRequired() throws InvalidRequestException {

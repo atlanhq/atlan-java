@@ -72,7 +72,7 @@ public class FlowDatasetOperation extends Asset
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -194,6 +194,11 @@ public class FlowDatasetOperation extends Asset
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
+
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
 
     /** Procedures used by this process. */
     @Attribute
@@ -450,11 +455,11 @@ public class FlowDatasetOperation extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowDatasetOperation, from a potentially
-     * more-complete FlowDatasetOperation object.
+     * Builds the minimal object necessary to apply an update to a FlowDatasetOperation,
+     * from a potentially more-complete FlowDatasetOperation object.
      *
      * @return the minimal object necessary to update the FlowDatasetOperation, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowDatasetOperation are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FlowDatasetOperation are not present in the initial object
      */
     @Override
     public FlowDatasetOperationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

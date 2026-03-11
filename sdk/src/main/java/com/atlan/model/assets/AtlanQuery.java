@@ -16,7 +16,6 @@ import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,65 +50,65 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
 
-    /** TBC */
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewQualifiedName;
 
-    /** TBC */
+    /** Unique name of the collection in which this query exists. */
     @Attribute
     String collectionQualifiedName;
 
-    /** TBC */
+    /** Columns this query accesses. */
     @Attribute
     @Singular
     SortedSet<IColumn> columns;
 
-    /** TBC */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /** TBC */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** (Deprecated) Model containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** DBT seeds that materialize the SQL asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSeed> dbtSeedAssets;
 
-    /** TBC */
+    /** Source containing the assets. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
-    /** TBC */
+    /** Tests related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
 
-    /** TBC */
+    /** Unique name of the default database to use for this query. */
     @Attribute
     String defaultDatabaseQualifiedName;
 
-    /** TBC */
+    /** Unique name of the default schema to use for this query. */
     @Attribute
     String defaultSchemaQualifiedName;
 
-    /** TBC */
+    /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> inputToAirflowTasks;
 
-    /** TBC */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
@@ -119,47 +118,47 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** TBC */
+    /** Whether this query is private (true) or shared (false). */
     @Attribute
     Boolean isPrivate;
 
-    /** TBC */
+    /** Whether this asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
 
-    /** TBC */
+    /** Whether this query is a SQL snippet (true) or not (false). */
     @Attribute
     Boolean isSqlSnippet;
 
-    /** TBC */
+    /** Whether this query is a visual query (true) or not (false). */
     @Attribute
     Boolean isVisualQuery;
 
-    /** TBC */
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
     @Attribute
     @Date
     Long lastProfiledAt;
 
-    /** TBC */
+    /** Raw SQL query string. */
     @Attribute
     String longRawQuery;
 
-    /** TBC */
+    /** Attributes implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelAttribute> modelImplementedAttributes;
 
-    /** TBC */
+    /** Entities implemented by this asset. */
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
 
-    /** TBC */
+    /** Tasks from which this asset is output. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> outputFromAirflowTasks;
 
-    /** TBC */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
@@ -169,43 +168,43 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** TBC */
+    /** Namespace in which this query exists. */
     @Attribute
     INamespace parent;
 
-    /** TBC */
+    /** Unique name of the parent collection or folder in which this query exists. */
     @Attribute
     String parentQualifiedName;
 
-    /** TBC */
+    /** Partial fields contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialField> partialChildFields;
 
-    /** TBC */
+    /** Partial objects contained in the asset. */
     @Attribute
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
 
-    /** TBC */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     @Date
     Long queryCountUpdatedAt;
 
-    /** TBC */
+    /** Number of unique users who have queried this asset. */
     @Attribute
     Long queryUserCount;
 
-    /** TBC */
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** TBC */
+    /** Deprecated. See 'longRawQuery' instead. */
     @Attribute
     String rawQuery;
 
@@ -213,63 +212,68 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Attribute
     String rawQueryText;
 
-    /** TBC */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /** TBC */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
-    /** TBC */
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
 
-    /** TBC */
+    /** Sources related to this asset. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** TBC */
+    /** Assets related to the model. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
-    /** TBC */
+    /** Whether this asset is secure (true) or not (false). */
     @Attribute
     Boolean sqlIsSecure;
 
-    /** TBC */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /** TBC */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /** TBC */
+    /** Tables this query accesses. */
     @Attribute
     @Singular
     SortedSet<ITable> tables;
 
-    /** TBC */
+    /** Base64-encoded string of the variables to use in this query. */
     @Attribute
     String variablesSchemaBase64;
 
-    /** TBC */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /** TBC */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 
-    /** TBC */
+    /** Views this query accesses. */
     @Attribute
     @Singular
     SortedSet<IView> views;
 
-    /** TBC */
+    /** Base64-encoded string for the visual query builder. */
     @Attribute
     String visualBuilderSchemaBase64;
 
@@ -628,156 +632,6 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
                 this.getParentQualifiedName());
     }
 
-    public abstract static class AtlanQueryBuilder<C extends AtlanQuery, B extends AtlanQueryBuilder<C, B>>
-            extends Asset.AssetBuilder<C, B> {
-
-        private static final String DEFAULT_VARIABLE_SCHEMA =
-                "{\"customvariablesDateTimeFormat\":{\"defaultDateFormat\":\"YYYY-MM-DD\",\"defaultTimeFormat\":\"HH:mm\"},\"customVariables\":[]}";
-
-        public B withRawQuery(String schemaQualifiedName, String query) {
-            String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
-            String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
-            return connectionName(Connection.getConnectorFromQualifiedName(connectionQualifiedName))
-                    .connectionQualifiedName(connectionQualifiedName)
-                    .defaultDatabaseQualifiedName(databaseQualifiedName)
-                    .defaultSchemaQualifiedName(schemaQualifiedName)
-                    .isVisualQuery(false)
-                    .rawQueryText(query)
-                    .variablesSchemaBase64(Base64.getEncoder()
-                            .encodeToString(DEFAULT_VARIABLE_SCHEMA.getBytes(StandardCharsets.UTF_8)));
-        }
-    }
-
-    /**
-     * Find a query by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the query, if found.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name) throws AtlanException {
-        return findByName(client, name, (List<AtlanField>) null);
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @param attributes an optional collection of attributes to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name, Collection<String> attributes)
-            throws AtlanException {
-        List<AtlanQuery> results = new ArrayList<>();
-        AtlanQuery.select(client)
-                .where(NAME.eq(name))
-                ._includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof AtlanQuery)
-                .forEach(q -> results.add((AtlanQuery) q));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.QUERY_NOT_FOUND_BY_NAME, name);
-        }
-        return results;
-    }
-
-    /**
-     * Find a query by its human-readable name.
-     *
-     * @param client connectivity to the Atlan tenant in which to search for the query
-     * @param name of the query
-     * @param attributes an optional collection of attributes (checked) to retrieve for the query
-     * @return all queries with that name, if found
-     * @throws AtlanException on any API problems
-     * @throws NotFoundException if the query does not exist
-     */
-    public static List<AtlanQuery> findByName(AtlanClient client, String name, List<AtlanField> attributes)
-            throws AtlanException {
-        List<AtlanQuery> results = new ArrayList<>();
-        AtlanQuery.select(client)
-                .where(NAME.eq(name))
-                .includesOnResults(attributes == null ? Collections.emptyList() : attributes)
-                .stream()
-                .filter(a -> a instanceof AtlanQuery)
-                .forEach(q -> results.add((AtlanQuery) q));
-        if (results.isEmpty()) {
-            throw new NotFoundException(ErrorCode.QUERY_NOT_FOUND_BY_NAME, name);
-        }
-        return results;
-    }
-
-    /**
-     * Remove the system description from a AtlanQuery.
-     *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's description
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeDescription(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
-            throws AtlanException {
-        return (AtlanQuery) Asset.removeDescription(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
-    /**
-     * Remove the user's description from a AtlanQuery.
-     *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's description
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeUserDescription(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
-            throws AtlanException {
-        return (AtlanQuery) Asset.removeUserDescription(
-                client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
-    /**
-     * Remove the owners from a AtlanQuery.
-     *
-     * @param client connectivity to the Atlan tenant from which to remove the AtlanQuery's owners
-     * @param qualifiedName of the AtlanQuery
-     * @param name of the AtlanQuery
-     * @param collectionQualifiedName qualifiedName of the AtlanQuery's collection
-     * @param parentQualifiedName qualifiedName of the AtlanQuery's parent namespace
-     * @return the updated AtlanQuery, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanQuery removeOwners(
-            AtlanClient client,
-            String qualifiedName,
-            String name,
-            String collectionQualifiedName,
-            String parentQualifiedName)
-            throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeOwners(client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
-    }
-
     /**
      * Update the certificate on a AtlanQuery.
      *
@@ -881,6 +735,26 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
             throws AtlanException {
         return (AtlanQuery) Asset.removeAnnouncement(
                 client, updater(qualifiedName, name, collectionQualifiedName, parentQualifiedName));
+    }
+
+    public abstract static class AtlanQueryBuilder<C extends AtlanQuery, B extends AtlanQueryBuilder<C, B>>
+            extends Asset.AssetBuilder<C, B> {
+
+        private static final String DEFAULT_VARIABLE_SCHEMA =
+                "{\"customvariablesDateTimeFormat\":{\"defaultDateFormat\":\"YYYY-MM-DD\",\"defaultTimeFormat\":\"HH:mm\"},\"customVariables\":[]}";
+
+        public B withRawQuery(String schemaQualifiedName, String query) {
+            String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+            String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+            return connectionName(Connection.getConnectorFromQualifiedName(connectionQualifiedName))
+                    .connectionQualifiedName(connectionQualifiedName)
+                    .defaultDatabaseQualifiedName(databaseQualifiedName)
+                    .defaultSchemaQualifiedName(schemaQualifiedName)
+                    .isVisualQuery(false)
+                    .rawQueryText(query)
+                    .variablesSchemaBase64(Base64.getEncoder()
+                            .encodeToString(DEFAULT_VARIABLE_SCHEMA.getBytes(StandardCharsets.UTF_8)));
+        }
     }
 
     /**

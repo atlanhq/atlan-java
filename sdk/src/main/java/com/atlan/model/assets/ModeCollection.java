@@ -401,11 +401,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ModeCollection, from a potentially
-     * more-complete ModeCollection object.
+     * Builds the minimal object necessary to apply an update to a ModeCollection,
+     * from a potentially more-complete ModeCollection object.
      *
      * @return the minimal object necessary to update the ModeCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModeCollection are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModeCollection are not present in the initial object
      */
     @Override
     public ModeCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

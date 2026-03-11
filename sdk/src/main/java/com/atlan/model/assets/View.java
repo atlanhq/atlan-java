@@ -218,6 +218,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     Long sizeBytes;
 
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -484,7 +489,6 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a view.
      *
@@ -584,11 +588,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a View, from a potentially
-     * more-complete View object.
+     * Builds the minimal object necessary to apply an update to a View,
+     * from a potentially more-complete View object.
      *
      * @return the minimal object necessary to update the View, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for View are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a View are not present in the initial object
      */
     @Override
     public ViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -33,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Atlan DynamoDB Global Secondary Index
+ * Represents a DynamoDB global secondary index (GSI) asset in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -44,14 +44,14 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings({"cast", "serial"})
 public class DynamoDBGlobalSecondaryIndex extends Asset
         implements IDynamoDBGlobalSecondaryIndex,
-                IDynamoDBSecondaryIndex,
-                ITable,
                 IDynamoDB,
-                ISQL,
+                IDynamoDBSecondaryIndex,
+                INoSQL,
+                ITable,
                 ICatalog,
+                ISQL,
                 IAsset,
-                IReferenceable,
-                INoSQL {
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DynamoDBGlobalSecondaryIndex";
@@ -115,31 +115,31 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     @Singular
     SortedSet<ITable> dimensions;
 
-    /** Specifies the partition key of the DynamoDB Table/Index */
+    /** Specifies the partition key of the DynamoDB table or index. */
     @Attribute
     String dynamoDBPartitionKey;
 
-    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException */
+    /** The maximum number of strongly consistent reads consumed per second before DynamoDB returns a ThrottlingException. */
     @Attribute
     Long dynamoDBReadCapacityUnits;
 
-    /** Specifies attributes that are projected from the DynamoDB table into the index */
+    /** Specifies attributes that are projected from the DynamoDB table into the index. */
     @Attribute
     DynamoDBSecondaryIndexProjectionType dynamoDBSecondaryIndexProjectionType;
 
-    /** Specifies the sort key of the DynamoDB Table/Index */
+    /** Specifies the sort key of the DynamoDB table or index. */
     @Attribute
     String dynamoDBSortKey;
 
-    /** Status of the DynamoDB Asset */
+    /** Status of the DynamoDB asset. */
     @Attribute
     DynamoDBStatus dynamoDBStatus;
 
-    /** DynamoDB global secondary index */
+    /** DynamoDB global secondary index. */
     @Attribute
     IDynamoDBTable dynamoDBTable;
 
-    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException */
+    /** The maximum number of writes consumed per second before DynamoDB returns a ThrottlingException. */
     @Attribute
     Long dynamoDBWriteCapacityUnits;
 
@@ -328,6 +328,11 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     /** Size of this table, in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -642,11 +647,11 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DynamoDBGlobalSecondaryIndex, from a potentially
-     * more-complete DynamoDBGlobalSecondaryIndex object.
+     * Builds the minimal object necessary to apply an update to a DynamoDBGlobalSecondaryIndex,
+     * from a potentially more-complete DynamoDBGlobalSecondaryIndex object.
      *
      * @return the minimal object necessary to update the DynamoDBGlobalSecondaryIndex, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DynamoDBGlobalSecondaryIndex are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DynamoDBGlobalSecondaryIndex are not present in the initial object
      */
     @Override
     public DynamoDBGlobalSecondaryIndexBuilder<?, ?> trimToRequired() throws InvalidRequestException {

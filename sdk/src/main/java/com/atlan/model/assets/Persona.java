@@ -119,7 +119,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     @Singular
     SortedSet<String> personaUsers;
 
-    /** TBC */
+    /** Access control entity to which this policy applies. */
     @Attribute
     @Singular
     SortedSet<IAuthPolicy> policies;

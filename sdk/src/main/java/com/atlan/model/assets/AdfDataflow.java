@@ -390,11 +390,11 @@ public class AdfDataflow extends Asset implements IAdfDataflow, IADF, ICatalog, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AdfDataflow, from a potentially
-     * more-complete AdfDataflow object.
+     * Builds the minimal object necessary to apply an update to a AdfDataflow,
+     * from a potentially more-complete AdfDataflow object.
      *
      * @return the minimal object necessary to update the AdfDataflow, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AdfDataflow are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AdfDataflow are not present in the initial object
      */
     @Override
     public AdfDataflowBuilder<?, ?> trimToRequired() throws InvalidRequestException {

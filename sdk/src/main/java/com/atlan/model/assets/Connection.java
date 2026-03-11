@@ -94,6 +94,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Singular
     SortedSet<String> connectionDbtEnvironments;
 
+    /** Whether cookie based OAuth is enabled in Insights for this connection (true) or not (false). */
+    @Attribute
+    Boolean connectionInsightsViaOAuthCookie;
+
     /** Whether data quality is enabled for this connection (true) or not (false). */
     @Attribute
     Boolean connectionIsDQEnabled;
@@ -777,37 +781,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     }
 
     /**
-     * Builds the minimal object necessary to update a Connection.
-     *
-     * @param qualifiedName of the Connection
-     * @param name of the Connection
-     * @return the minimal request necessary to update the Connection, as a builder
-     */
-    public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Connection, from a potentially
-     * more-complete Connection object.
-     *
-     * @return the minimal object necessary to update the Connection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Connection are not found in the initial object
-     */
-    @Override
-    public ConnectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieve the epoch component of the connection name from its qualifiedName.
+     * Extract the epoch component from a connection's qualifiedName.
      *
      * @param qualifiedName of the connection
      * @return the epoch component of the qualifiedName
@@ -947,6 +921,36 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         return Connection.select(client).includeOnResults(Connection.QUALIFIED_NAME).pageSize(50).stream()
                 .map(Asset::getQualifiedName)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Builds the minimal object necessary to update a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the minimal request necessary to update the Connection, as a builder
+     */
+    public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Connection._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Connection,
+     * from a potentially more-complete Connection object.
+     *
+     * @return the minimal object necessary to update the Connection, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Connection are not present in the initial object
+     */
+    @Override
+    public ConnectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     public abstract static class ConnectionBuilder<C extends Connection, B extends ConnectionBuilder<C, B>>

@@ -336,11 +336,11 @@ public class Workflow extends Asset implements IWorkflow, IAsset, IReferenceable
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Workflow, from a potentially
-     * more-complete Workflow object.
+     * Builds the minimal object necessary to apply an update to a Workflow,
+     * from a potentially more-complete Workflow object.
      *
      * @return the minimal object necessary to update the Workflow, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Workflow are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Workflow are not present in the initial object
      */
     @Override
     public WorkflowBuilder<?, ?> trimToRequired() throws InvalidRequestException {

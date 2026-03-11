@@ -528,11 +528,11 @@ public class DatabricksAIModelContext extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksAIModelContext, from a potentially
-     * more-complete DatabricksAIModelContext object.
+     * Builds the minimal object necessary to apply an update to a DatabricksAIModelContext,
+     * from a potentially more-complete DatabricksAIModelContext object.
      *
      * @return the minimal object necessary to update the DatabricksAIModelContext, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksAIModelContext are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksAIModelContext are not present in the initial object
      */
     @Override
     public DatabricksAIModelContextBuilder<?, ?> trimToRequired() throws InvalidRequestException {

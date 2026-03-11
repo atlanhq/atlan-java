@@ -54,24 +54,24 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
     @Attribute
     String additionalEtlContext;
 
-    /** TBC */
+    /** ADF Activity that is associated with this lineage process. */
     @Attribute
     IAdfActivity adfActivity;
 
-    /** TBC */
+    /** Dataset type for AI Model - dataset process. */
     @Attribute
     AIDatasetType aiDatasetType;
 
-    /** TBC */
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
-    /** TBC */
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
     @Attribute
     String ast;
 
@@ -80,38 +80,38 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
 
-    /** TBC */
+    /** Code that ran within the process. */
     @Attribute
     String code;
 
-    /** TBC */
+    /** Processes that detail column-level lineage for this process. */
     @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
-    /** TBC */
+    /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** TBC */
+    /** fivetranConnector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 
-    /** TBC */
+    /** Orchestrated control operation that ran these data flows (process). */
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
-    /** TBC */
+    /** Assets that are inputs to this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
 
-    /** TBC */
+    /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
 
-    /** TBC */
+    /** Assets that are outputs from this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
@@ -122,7 +122,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @JsonProperty("parentConnectionProcessQualifiedName")
     SortedSet<String> parentConnectionProcessQualifiedNames;
 
-    /** TBC */
+    /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
@@ -131,11 +131,16 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<ISparkJob> sparkJobs;
 
-    /** TBC */
+    /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
 
-    /** TBC */
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
     @Attribute
     @Singular
     SortedSet<IProcedure> sqlProcedures;
@@ -403,45 +408,15 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to update a LineageProcess.
+     * Generate a unique qualifiedName for a LineageProcess.
      *
-     * @param qualifiedName of the LineageProcess
-     * @param name of the LineageProcess
-     * @return the minimal request necessary to update the LineageProcess, as a builder
-     */
-    public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LineageProcess._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a LineageProcess, from a potentially
-     * more-complete LineageProcess object.
-     *
-     * @return the minimal object necessary to update the LineageProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LineageProcess are not found in the initial object
-     */
-    @Override
-    public LineageProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique qualifiedName for a process.
-     *
-     * @param name of the process
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that ran the process
+     * @param name of the process to use for display purposes
+     * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
      * @param inputs sources of data the process reads from
      * @param outputs targets of data the process writes to
      * @param parent (optional) parent process in which this sub-process ran
-     * @return unique name for the process
+     * @return unique qualifiedName for the LineageProcess
      */
     public static String generateQualifiedName(
             String name,
@@ -450,12 +425,9 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
             List<ICatalog> inputs,
             List<ICatalog> outputs,
             LineageProcess parent) {
-        // If an ID was provided, use that as the unique name for the process
         if (id != null && id.length() > 0) {
             return connectionQualifiedName + "/" + id;
         } else {
-            // Otherwise, hash all the relationships to arrive at a consistent
-            // generated qualifiedName
             StringBuilder sb = new StringBuilder();
             sb.append(name).append(connectionQualifiedName);
             if (parent != null) {
@@ -475,32 +447,49 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
         }
     }
 
-    /**
-     * Append all the relationships into the provided string builder.
-     * @param sb into which to append
-     * @param relationships to append
-     */
     private static void appendRelationships(StringBuilder sb, List<ICatalog> relationships) {
         for (ICatalog relationship : relationships) {
             appendRelationship(sb, (IAsset) relationship);
         }
     }
 
-    /**
-     * Append a single relationship into the provided string builder.
-     * @param sb into which to append
-     * @param relationship to append
-     */
     private static void appendRelationship(StringBuilder sb, IAsset relationship) {
-        // TODO: if two calls are made for the same process, but one uses GUIDs for
-        //  its references and the other uses qualifiedName, we'll end up with different
-        //  hashes (duplicate processes)
         if (relationship.getGuid() != null) {
             sb.append(relationship.getGuid());
         } else if (relationship.getUniqueAttributes() != null
                 && relationship.getUniqueAttributes().getQualifiedName() != null) {
             sb.append(relationship.getUniqueAttributes().getQualifiedName());
         }
+    }
+
+    /**
+     * Builds the minimal object necessary to update a LineageProcess.
+     *
+     * @param qualifiedName of the LineageProcess
+     * @param name of the LineageProcess
+     * @return the minimal request necessary to update the LineageProcess, as a builder
+     */
+    public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LineageProcess._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a LineageProcess,
+     * from a potentially more-complete LineageProcess object.
+     *
+     * @return the minimal object necessary to update the LineageProcess, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LineageProcess are not present in the initial object
+     */
+    @Override
+    public LineageProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     public abstract static class LineageProcessBuilder<C extends LineageProcess, B extends LineageProcessBuilder<C, B>>

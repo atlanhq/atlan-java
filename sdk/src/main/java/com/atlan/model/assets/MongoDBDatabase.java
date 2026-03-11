@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class MongoDBDatabase extends Asset
-        implements IMongoDBDatabase, IDatabase, IMongoDB, ISQL, ICatalog, IAsset, IReferenceable, INoSQL {
+        implements IMongoDBDatabase, IDatabase, IMongoDB, ISQL, INoSQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MongoDBDatabase";
@@ -195,6 +195,11 @@ public class MongoDBDatabase extends Asset
     @Attribute
     @Singular
     SortedSet<ISchema> schemas;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -480,11 +485,11 @@ public class MongoDBDatabase extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MongoDBDatabase, from a potentially
-     * more-complete MongoDBDatabase object.
+     * Builds the minimal object necessary to apply an update to a MongoDBDatabase,
+     * from a potentially more-complete MongoDBDatabase object.
      *
      * @return the minimal object necessary to update the MongoDBDatabase, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MongoDBDatabase are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MongoDBDatabase are not present in the initial object
      */
     @Override
     public MongoDBDatabaseBuilder<?, ?> trimToRequired() throws InvalidRequestException {

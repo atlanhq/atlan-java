@@ -50,83 +50,83 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Abbreviation of the term. */
     @Attribute
     String abbreviation;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes for the terrm. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Glossary in which this term is contained. */
     @Attribute
     IGlossary anchor;
 
-    /** TBC */
+    /** Terms that have the opposite (or near opposite) meaning, in the same language. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> antonyms;
 
-    /** TBC */
+    /** Assets assigned this term. */
     @Attribute
     @Singular
     SortedSet<IAsset> assignedEntities;
 
-    /** TBC */
+    /** Categories within which this term is organized. */
     @Attribute
     @Singular
     SortedSet<IGlossaryCategory> categories;
 
-    /** TBC */
+    /** More general term that defines a group of terms, for example: 'animal'. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> classifies;
 
-    /** TBC */
+    /** Unused. Exmaples of the term. */
     @Attribute
     @Singular
     SortedSet<String> examples;
 
-    /** TBC */
+    /** More specific term that is a sub-class of another term, for example: 'cat'. */
     @Attribute
     @Singular("isATerm")
     SortedSet<IGlossaryTerm> isA;
 
-    /** TBC */
+    /** Unused. Detailed definition of the term. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Preferred term(s) to use instead of this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> preferredTerms;
 
-    /** TBC */
+    /** Other term(s) that are less common or less preferred than this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> preferredToTerms;
 
-    /** TBC */
+    /** Term(s) that must no longer be used. */
     @Attribute
     @Singular("replacedByTerm")
     SortedSet<IGlossaryTerm> replacedBy;
 
-    /** TBC */
+    /** Term(s) that must be used instead. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> replacementTerms;
 
-    /** TBC */
+    /** Linked terms that may also be of interest. */
     @Attribute
     @Singular("seeAlsoOne")
     SortedSet<IGlossaryTerm> seeAlso;
 
-    /** TBC */
+    /** Unused. Brief summary of the term. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms that have the same (or a very similar) meaning, in the same language. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> synonyms;
@@ -135,26 +135,26 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Attribute
     AtlasGlossaryTermType termType;
 
-    /** TBC */
+    /** Term(s) that are a translation of this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> translatedTerms;
 
-    /** TBC */
+    /** Term(s) for which this term is a translation. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> translationTerms;
 
-    /** TBC */
+    /** Unused. Intended usage for the term. */
     @Attribute
     String usage;
 
-    /** TBC */
+    /** Valid values for this term. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> validValues;
 
-    /** TBC */
+    /** Term for which this is a valid value. */
     @Attribute
     @Singular("validValueFor")
     SortedSet<IGlossaryTerm> validValuesFor;

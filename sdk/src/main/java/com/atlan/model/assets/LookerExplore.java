@@ -385,11 +385,11 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerExplore, from a potentially
-     * more-complete LookerExplore object.
+     * Builds the minimal object necessary to apply an update to a LookerExplore,
+     * from a potentially more-complete LookerExplore object.
      *
      * @return the minimal object necessary to update the LookerExplore, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerExplore are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerExplore are not present in the initial object
      */
     @Override
     public LookerExploreBuilder<?, ?> trimToRequired() throws InvalidRequestException {

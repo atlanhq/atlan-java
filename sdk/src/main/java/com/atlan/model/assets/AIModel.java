@@ -404,11 +404,11 @@ public class AIModel extends Asset implements IAIModel, IAI, ICatalog, IAsset, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AIModel, from a potentially
-     * more-complete AIModel object.
+     * Builds the minimal object necessary to apply an update to a AIModel,
+     * from a potentially more-complete AIModel object.
      *
      * @return the minimal object necessary to update the AIModel, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AIModel are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AIModel are not present in the initial object
      */
     @Override
     public AIModelBuilder<?, ?> trimToRequired() throws InvalidRequestException {

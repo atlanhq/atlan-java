@@ -426,11 +426,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ModeReport, from a potentially
-     * more-complete ModeReport object.
+     * Builds the minimal object necessary to apply an update to a ModeReport,
+     * from a potentially more-complete ModeReport object.
      *
      * @return the minimal object necessary to update the ModeReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModeReport are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModeReport are not present in the initial object
      */
     @Override
     public ModeReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {

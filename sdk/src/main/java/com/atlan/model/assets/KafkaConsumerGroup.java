@@ -449,7 +449,7 @@ public class KafkaConsumerGroup extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to update an KafkaConsumerGroup.
+     * Builds the minimal object necessary to update a KafkaConsumerGroup.
      *
      * @param qualifiedName of the KafkaConsumerGroup
      * @param name of the KafkaConsumerGroup
@@ -463,11 +463,11 @@ public class KafkaConsumerGroup extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to an KafkaConsumerGroup, from a potentially
-     * more-complete KafkaConsumerGroup object.
+     * Builds the minimal object necessary to apply an update to a KafkaConsumerGroup,
+     * from a potentially more-complete KafkaConsumerGroup object.
      *
      * @return the minimal object necessary to update the KafkaConsumerGroup, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for KafkaConsumerGroup are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a KafkaConsumerGroup are not present in the initial object
      */
     @Override
     public KafkaConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {

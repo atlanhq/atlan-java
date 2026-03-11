@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.FormField;
 import com.atlan.model.structs.ResponseValue;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class Response extends Asset implements IResponse, IAsset, IReferenceable {
+public class Response extends Asset implements IResponse, IForm, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Response";
@@ -48,9 +49,19 @@ public class Response extends Asset implements IResponse, IAsset, IReferenceable
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Fields in a form. */
+    @Attribute
+    @Singular
+    List<FormField> formFields;
+
     /** Unique identifier of the form. */
     @Attribute
     String formGuid;
+
+    /** Options of the form. */
+    @Attribute
+    @Singular
+    Map<String, String> formOptions;
 
     /** Options of the response to a form. */
     @Attribute
@@ -310,11 +321,11 @@ public class Response extends Asset implements IResponse, IAsset, IReferenceable
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Response, from a potentially
-     * more-complete Response object.
+     * Builds the minimal object necessary to apply an update to a Response,
+     * from a potentially more-complete Response object.
      *
      * @return the minimal object necessary to update the Response, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Response are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Response are not present in the initial object
      */
     @Override
     public ResponseBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -426,6 +426,17 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     }
 
     /**
+     * Generate a unique ModelDataModel name.
+     *
+     * @param name of the ModelDataModel
+     * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
+     * @return a unique name for the ModelDataModel
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
+    }
+
+    /**
      * Builds the minimal object necessary to update a ModelDataModel.
      *
      * @param qualifiedName of the ModelDataModel
@@ -440,22 +451,11 @@ public class ModelDataModel extends Asset implements IModelDataModel, IModel, IC
     }
 
     /**
-     * Generate a unique ModelDataModel name.
-     *
-     * @param name of the ModelDataModel
-     * @param connectionQualifiedName unique name of the connection in which this ModelDataModel exists
-     * @return a unique name for the ModelDataModel
-     */
-    public static String generateQualifiedName(String name, String connectionQualifiedName) {
-        return connectionQualifiedName + "/" + name;
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a ModelDataModel, from a potentially
-     * more-complete ModelDataModel object.
+     * Builds the minimal object necessary to apply an update to a ModelDataModel,
+     * from a potentially more-complete ModelDataModel object.
      *
      * @return the minimal object necessary to update the ModelDataModel, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ModelDataModel are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ModelDataModel are not present in the initial object
      */
     @Override
     public ModelDataModelBuilder<?, ?> trimToRequired() throws InvalidRequestException {

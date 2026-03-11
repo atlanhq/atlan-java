@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.enums.AppWorkflowRunStatus;
+import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -13,13 +14,17 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AppWorkflowRunStep;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -41,9 +46,42 @@ public interface IAppWorkflowRun {
 
     public static final String TYPE_NAME = "AppWorkflowRun";
 
+    /** Name of the application this workflow run belongs to. */
+    KeywordField APP_WORKFLOW_RUN_APP_NAME = new KeywordField("appWorkflowRunAppName", "appWorkflowRunAppName");
+
+    /** Qualified name of the application this workflow run belongs to. */
+    KeywordField APP_WORKFLOW_RUN_APP_QUALIFIED_NAME =
+            new KeywordField("appWorkflowRunAppQualifiedName", "appWorkflowRunAppQualifiedName");
+
+    /** Name of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_NAME =
+            new KeywordField("appWorkflowRunAppWorkflowName", "appWorkflowRunAppWorkflowName");
+
+    /** Qualified name of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_QUALIFIED_NAME =
+            new KeywordField("appWorkflowRunAppWorkflowQualifiedName", "appWorkflowRunAppWorkflowQualifiedName");
+
+    /** Slug of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_SLUG =
+            new KeywordField("appWorkflowRunAppWorkflowSlug", "appWorkflowRunAppWorkflowSlug");
+
+    /** Version of the parent workflow. */
+    KeywordField APP_WORKFLOW_RUN_APP_WORKFLOW_VERSION =
+            new KeywordField("appWorkflowRunAppWorkflowVersion", "appWorkflowRunAppWorkflowVersion");
+
     /** Timestamp when the workflow run finished execution. */
     NumericField APP_WORKFLOW_RUN_COMPLETED_AT =
             new NumericField("appWorkflowRunCompletedAt", "appWorkflowRunCompletedAt");
+
+    /** Map of all activity steps for the workflow run (escaped JSON string). */
+    TextField APP_WORKFLOW_RUN_DAG = new TextField("appWorkflowRunDag", "appWorkflowRunDag");
+
+    /** Error handling strategy for the workflow run. */
+    KeywordField APP_WORKFLOW_RUN_ERROR_HANDLING =
+            new KeywordField("appWorkflowRunErrorHandling", "appWorkflowRunErrorHandling");
+
+    /** Whether the workflow run is a test run. */
+    BooleanField APP_WORKFLOW_RUN_IS_TEST_RUN = new BooleanField("appWorkflowRunIsTestRun", "appWorkflowRunIsTestRun");
 
     /** Root name for the workflow run. */
     KeywordField APP_WORKFLOW_RUN_LABEL = new KeywordField("appWorkflowRunLabel", "appWorkflowRunLabel");
@@ -54,11 +92,18 @@ public interface IAppWorkflowRun {
     /** Timestamp when the workflow run began execution. */
     NumericField APP_WORKFLOW_RUN_STARTED_AT = new NumericField("appWorkflowRunStartedAt", "appWorkflowRunStartedAt");
 
+    /** Username of the user who started the workflow run. */
+    KeywordField APP_WORKFLOW_RUN_STARTED_BY = new KeywordField("appWorkflowRunStartedBy", "appWorkflowRunStartedBy");
+
     /** Overall execution status of the entire workflow run. */
     KeywordField APP_WORKFLOW_RUN_STATUS = new KeywordField("appWorkflowRunStatus", "appWorkflowRunStatus");
 
     /** Collection of individual workflow steps in this run. */
     KeywordField APP_WORKFLOW_RUN_STEPS = new KeywordField("appWorkflowRunSteps", "appWorkflowRunSteps");
+
+    /** Unique identifier for the temporal run associated with this workflow execution. */
+    KeywordField APP_WORKFLOW_RUN_TEMPORAL_RUN_ID =
+            new KeywordField("appWorkflowRunTemporalRunId", "appWorkflowRunTemporalRunId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -85,10 +130,39 @@ public interface IAppWorkflowRun {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
+
+    /** Name of the application this workflow run belongs to. */
+    String getAppWorkflowRunAppName();
+
+    /** Qualified name of the application this workflow run belongs to. */
+    String getAppWorkflowRunAppQualifiedName();
+
+    /** Name of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowName();
+
+    /** Qualified name of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowQualifiedName();
+
+    /** Slug of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowSlug();
+
+    /** Version of the parent workflow. */
+    String getAppWorkflowRunAppWorkflowVersion();
 
     /** Timestamp when the workflow run finished execution. */
     Long getAppWorkflowRunCompletedAt();
+
+    /** Map of all activity steps for the workflow run (escaped JSON string). */
+    String getAppWorkflowRunDag();
+
+    /** Error handling strategy for the workflow run. */
+    AtlanAppErrorHandling getAppWorkflowRunErrorHandling();
+
+    /** Whether the workflow run is a test run. */
+    Boolean getAppWorkflowRunIsTestRun();
 
     /** Root name for the workflow run. */
     String getAppWorkflowRunLabel();
@@ -99,23 +173,45 @@ public interface IAppWorkflowRun {
     /** Timestamp when the workflow run began execution. */
     Long getAppWorkflowRunStartedAt();
 
+    /** Username of the user who started the workflow run. */
+    String getAppWorkflowRunStartedBy();
+
     /** Overall execution status of the entire workflow run. */
     AppWorkflowRunStatus getAppWorkflowRunStatus();
 
     /** Collection of individual workflow steps in this run. */
     List<AppWorkflowRunStep> getAppWorkflowRunSteps();
 
+    /** Unique identifier for the temporal run associated with this workflow execution. */
+    String getAppWorkflowRunTemporalRunId();
+
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
+
+    /** Description of this asset, generated by AI based on the asset's context. Displayed separately in the UI and can be used to overwrite existing descriptions. */
+    String getAssetAiGeneratedDescription();
+
+    /** Confidence score of the AI-generated description, ranging from 0.0 to 1.0. */
+    Double getAssetAiGeneratedDescriptionConfidence();
+
+    /** Reasoning behind the AI-generated description, explaining how the description was derived from the asset's context. */
+    String getAssetAiGeneratedDescriptionReasoning();
+
+    /** Time (epoch) at which the announcement expires, in milliseconds. When set, the announcement will no longer be displayed after this time. */
+    Long getAssetAnnouncementExpiredAt();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -149,6 +245,9 @@ public interface IAppWorkflowRun {
 
     /** Value of data freshness from Source. */
     Long getAssetDQFreshnessValue();
+
+    /** Status of the latest manual DQ run triggered for this asset. */
+    AssetDQRunStatus getAssetDQManualRunStatus();
 
     /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
     DataQualityResult getAssetDQResult();
@@ -339,6 +438,15 @@ public interface IAppWorkflowRun {
     /** DQ metadata captured for asset from external DQ tool(s). */
     Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
+    /** List of field key-values associated with all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectFieldList();
+
+    /** List of names of all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectList();
+
+    /** Metrics captured by GCP Dataplex for objects associated with GCP services. */
+    AssetGCPDataplexMetadata getAssetGCPDataplexMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -426,6 +534,9 @@ public interface IAppWorkflowRun {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Unique identifier for this asset in the system from which it was sourced. */
+    String getAssetSourceId();
+
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
 
@@ -445,7 +556,9 @@ public interface IAppWorkflowRun {
     String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -469,10 +582,14 @@ public interface IAppWorkflowRun {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -487,13 +604,19 @@ public interface IAppWorkflowRun {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -502,16 +625,24 @@ public interface IAppWorkflowRun {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
+    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
+        return null;
+    }
 
     /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
+    default SortedSet<ILineageProcess> getInputToProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
+    default SortedSet<ISparkJob> getInputToSparkJobs() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -541,22 +672,34 @@ public interface IAppWorkflowRun {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
+    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
+        return null;
+    }
 
     /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
+    default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -565,16 +708,24 @@ public interface IAppWorkflowRun {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
+        return null;
+    }
 
     /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
+    default SortedSet<ILineageProcess> getOutputFromProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
+    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
+        return null;
+    }
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -586,10 +737,14 @@ public interface IAppWorkflowRun {
     SortedSet<String> getOwnerUsers();
 
     /** Partial fields contained in the asset. */
-    SortedSet<IPartialField> getPartialChildFields();
+    default SortedSet<IPartialField> getPartialChildFields() {
+        return null;
+    }
 
     /** Partial objects contained in the asset. */
-    SortedSet<IPartialObject> getPartialChildObjects();
+    default SortedSet<IPartialObject> getPartialChildObjects() {
+        return null;
+    }
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
@@ -601,16 +756,22 @@ public interface IAppWorkflowRun {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -694,10 +855,14 @@ public interface IAppWorkflowRun {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

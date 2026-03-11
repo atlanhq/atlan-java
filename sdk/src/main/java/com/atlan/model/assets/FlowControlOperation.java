@@ -48,6 +48,15 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Control operation that controls the execution of this control operation. */
+    @Attribute
+    IFlowControlOperation flowControlledBy;
+
+    /** Control operations whose execution is controlled by this control operation. */
+    @Attribute
+    @Singular
+    SortedSet<IFlowControlOperation> flowControlledOperations;
+
     /** Individual data flows (processes) orchestrated by this control operation. */
     @Attribute
     @Singular
@@ -372,11 +381,11 @@ public class FlowControlOperation extends Asset implements IFlowControlOperation
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FlowControlOperation, from a potentially
-     * more-complete FlowControlOperation object.
+     * Builds the minimal object necessary to apply an update to a FlowControlOperation,
+     * from a potentially more-complete FlowControlOperation object.
      *
      * @return the minimal object necessary to update the FlowControlOperation, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FlowControlOperation are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FlowControlOperation are not present in the initial object
      */
     @Override
     public FlowControlOperationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

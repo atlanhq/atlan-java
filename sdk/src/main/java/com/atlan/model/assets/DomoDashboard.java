@@ -374,11 +374,11 @@ public class DomoDashboard extends Asset implements IDomoDashboard, IDomo, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DomoDashboard, from a potentially
-     * more-complete DomoDashboard object.
+     * Builds the minimal object necessary to apply an update to a DomoDashboard,
+     * from a potentially more-complete DomoDashboard object.
      *
      * @return the minimal object necessary to update the DomoDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DomoDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DomoDashboard are not present in the initial object
      */
     @Override
     public DomoDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

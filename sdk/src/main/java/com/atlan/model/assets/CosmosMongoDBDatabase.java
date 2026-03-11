@@ -40,15 +40,15 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings({"cast", "serial"})
 public class CosmosMongoDBDatabase extends Asset
         implements ICosmosMongoDBDatabase,
-                ICosmosMongoDB,
                 IMongoDBDatabase,
+                ICosmosMongoDB,
+                IMongoDB,
+                IDatabase,
                 INoSQL,
+                ISQL,
                 ICatalog,
                 IAsset,
-                IReferenceable,
-                IDatabase,
-                IMongoDB,
-                ISQL {
+                IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CosmosMongoDBDatabase";
@@ -217,6 +217,11 @@ public class CosmosMongoDBDatabase extends Asset
     @Attribute
     @Singular
     SortedSet<ISchema> schemas;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -502,11 +507,11 @@ public class CosmosMongoDBDatabase extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CosmosMongoDBDatabase, from a potentially
-     * more-complete CosmosMongoDBDatabase object.
+     * Builds the minimal object necessary to apply an update to a CosmosMongoDBDatabase,
+     * from a potentially more-complete CosmosMongoDBDatabase object.
      *
      * @return the minimal object necessary to update the CosmosMongoDBDatabase, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CosmosMongoDBDatabase are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CosmosMongoDBDatabase are not present in the initial object
      */
     @Override
     public CosmosMongoDBDatabaseBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -90,7 +90,7 @@ public class DatabricksAIModelVersion extends Asset
 
     /** The aliases of the model. */
     @Attribute
-    @Singular
+    @Singular("databricksAIModelVersionAlias")
     SortedSet<String> databricksAIModelVersionAliases;
 
     /** Artifact uri for the model. */
@@ -561,11 +561,11 @@ public class DatabricksAIModelVersion extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksAIModelVersion, from a potentially
-     * more-complete DatabricksAIModelVersion object.
+     * Builds the minimal object necessary to apply an update to a DatabricksAIModelVersion,
+     * from a potentially more-complete DatabricksAIModelVersion object.
      *
      * @return the minimal object necessary to update the DatabricksAIModelVersion, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksAIModelVersion are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksAIModelVersion are not present in the initial object
      */
     @Override
     public DatabricksAIModelVersionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

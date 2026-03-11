@@ -127,6 +127,15 @@ public class PowerBIWorkspace extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Time at which this asset was endorsed in Power BI. */
+    @Attribute
+    @Date
+    Long powerBIEndorsedAt;
+
+    /** User who endorsed this asset in Power BI. */
+    @Attribute
+    String powerBIEndorsedBy;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -406,11 +415,11 @@ public class PowerBIWorkspace extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PowerBIWorkspace, from a potentially
-     * more-complete PowerBIWorkspace object.
+     * Builds the minimal object necessary to apply an update to a PowerBIWorkspace,
+     * from a potentially more-complete PowerBIWorkspace object.
      *
      * @return the minimal object necessary to update the PowerBIWorkspace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIWorkspace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PowerBIWorkspace are not present in the initial object
      */
     @Override
     public PowerBIWorkspaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

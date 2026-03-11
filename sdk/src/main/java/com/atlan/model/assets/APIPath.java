@@ -393,7 +393,6 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create an API path.
      *
@@ -444,11 +443,11 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APIPath, from a potentially
-     * more-complete APIPath object.
+     * Builds the minimal object necessary to apply an update to a APIPath,
+     * from a potentially more-complete APIPath object.
      *
      * @return the minimal object necessary to update the APIPath, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for APIPath are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APIPath are not present in the initial object
      */
     @Override
     public APIPathBuilder<?, ?> trimToRequired() throws InvalidRequestException {

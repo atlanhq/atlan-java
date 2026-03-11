@@ -376,11 +376,11 @@ public class PartialField extends Asset implements IPartialField, IPartial, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PartialField, from a potentially
-     * more-complete PartialField object.
+     * Builds the minimal object necessary to apply an update to a PartialField,
+     * from a potentially more-complete PartialField object.
      *
      * @return the minimal object necessary to update the PartialField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PartialField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PartialField are not present in the initial object
      */
     @Override
     public PartialFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

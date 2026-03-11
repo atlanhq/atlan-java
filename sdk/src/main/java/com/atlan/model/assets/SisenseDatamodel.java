@@ -394,11 +394,11 @@ public class SisenseDatamodel extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SisenseDatamodel, from a potentially
-     * more-complete SisenseDatamodel object.
+     * Builds the minimal object necessary to apply an update to a SisenseDatamodel,
+     * from a potentially more-complete SisenseDatamodel object.
      *
      * @return the minimal object necessary to update the SisenseDatamodel, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SisenseDatamodel are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SisenseDatamodel are not present in the initial object
      */
     @Override
     public SisenseDatamodelBuilder<?, ?> trimToRequired() throws InvalidRequestException {

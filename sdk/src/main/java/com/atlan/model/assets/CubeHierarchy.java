@@ -370,7 +370,6 @@ public class CubeHierarchy extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a CubeHierarchy.
      *
@@ -447,6 +446,17 @@ public class CubeHierarchy extends Asset
     }
 
     /**
+     * Generate a unique CubeHierarchy name.
+     *
+     * @param name of the CubeHierarchy
+     * @param dimensionQualifiedName unique name of the cube dimension in which this CubeHierarchy exists
+     * @return a unique name for the CubeHierarchy
+     */
+    public static String generateQualifiedName(String name, String dimensionQualifiedName) {
+        return dimensionQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
+    }
+
+    /**
      * Builds the minimal object necessary to update a CubeHierarchy.
      *
      * @param qualifiedName of the CubeHierarchy
@@ -461,22 +471,11 @@ public class CubeHierarchy extends Asset
     }
 
     /**
-     * Generate a unique CubeHierarchy name.
-     *
-     * @param name of the CubeHierarchy
-     * @param dimensionQualifiedName unique name of the cube dimension in which this CubeHierarchy exists
-     * @return a unique name for the CubeHierarchy
-     */
-    public static String generateQualifiedName(String name, String dimensionQualifiedName) {
-        return dimensionQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a CubeHierarchy, from a potentially
-     * more-complete CubeHierarchy object.
+     * Builds the minimal object necessary to apply an update to a CubeHierarchy,
+     * from a potentially more-complete CubeHierarchy object.
      *
      * @return the minimal object necessary to update the CubeHierarchy, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CubeHierarchy are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CubeHierarchy are not present in the initial object
      */
     @Override
     public CubeHierarchyBuilder<?, ?> trimToRequired() throws InvalidRequestException {

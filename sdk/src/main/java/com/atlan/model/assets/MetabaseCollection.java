@@ -383,11 +383,11 @@ public class MetabaseCollection extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MetabaseCollection, from a potentially
-     * more-complete MetabaseCollection object.
+     * Builds the minimal object necessary to apply an update to a MetabaseCollection,
+     * from a potentially more-complete MetabaseCollection object.
      *
      * @return the minimal object necessary to update the MetabaseCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseCollection are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MetabaseCollection are not present in the initial object
      */
     @Override
     public MetabaseCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

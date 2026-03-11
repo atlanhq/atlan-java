@@ -11,6 +11,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.WorkflowRunStatus;
 import com.atlan.model.enums.WorkflowRunType;
+import com.atlan.model.enums.WorkflowStatus;
+import com.atlan.model.enums.WorkflowType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -40,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferenceable {
+public class WorkflowRun extends Asset implements IWorkflowRun, IWorkflow, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "WorkflowRun";
@@ -49,6 +51,24 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** List of workflow action choices. */
+    @Attribute
+    @Singular
+    SortedSet<String> workflowActionChoices;
+
+    /** Details of the workflow. */
+    @Attribute
+    String workflowConfig;
+
+    /** Username of the user who created this workflow. */
+    @Attribute
+    String workflowCreatedBy;
+
+    /** Deletion time of this workflow. */
+    @Attribute
+    @Date
+    Long workflowDeletedAt;
 
     /** List of workflow run action choices. */
     @Attribute
@@ -77,6 +97,10 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
     @Date
     Long workflowRunExpiresAt;
 
+    /** Time duration after which a run of this workflow will expire. */
+    @Attribute
+    String workflowRunExpiresIn;
+
     /** The asset for which this run was created. */
     @Attribute
     String workflowRunOnAssetGuid;
@@ -96,6 +120,22 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
     /** GUID of the workflow from which this run was created. */
     @Attribute
     String workflowRunWorkflowGuid;
+
+    /** Status of the workflow. */
+    @Attribute
+    WorkflowStatus workflowStatus;
+
+    /** GUID of the workflow template from which this workflow was created. */
+    @Attribute
+    String workflowTemplateGuid;
+
+    /** Type of the workflow. */
+    @Attribute
+    WorkflowType workflowType;
+
+    /** Username of the user who updated this workflow. */
+    @Attribute
+    String workflowUpdatedBy;
 
     /**
      * Builds the minimal object necessary to create a relationship to a WorkflowRun, from a potentially
@@ -347,11 +387,11 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IAsset, IReferen
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a WorkflowRun, from a potentially
-     * more-complete WorkflowRun object.
+     * Builds the minimal object necessary to apply an update to a WorkflowRun,
+     * from a potentially more-complete WorkflowRun object.
      *
      * @return the minimal object necessary to update the WorkflowRun, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for WorkflowRun are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a WorkflowRun are not present in the initial object
      */
     @Override
     public WorkflowRunBuilder<?, ?> trimToRequired() throws InvalidRequestException {

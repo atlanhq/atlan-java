@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DatabricksVolumePath extends Asset
-        implements IDatabricksVolumePath, IDatabricks, ISQL, ICatalog, IAsset, IReferenceable {
+        implements IDatabricksVolumePath, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DatabricksVolumePath";
@@ -470,11 +470,11 @@ public class DatabricksVolumePath extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DatabricksVolumePath, from a potentially
-     * more-complete DatabricksVolumePath object.
+     * Builds the minimal object necessary to apply an update to a DatabricksVolumePath,
+     * from a potentially more-complete DatabricksVolumePath object.
      *
      * @return the minimal object necessary to update the DatabricksVolumePath, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DatabricksVolumePath are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksVolumePath are not present in the initial object
      */
     @Override
     public DatabricksVolumePathBuilder<?, ?> trimToRequired() throws InvalidRequestException {

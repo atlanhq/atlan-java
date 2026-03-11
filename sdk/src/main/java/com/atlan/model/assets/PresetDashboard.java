@@ -386,7 +386,6 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Preset collection.
      *
@@ -452,11 +451,11 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PresetDashboard, from a potentially
-     * more-complete PresetDashboard object.
+     * Builds the minimal object necessary to apply an update to a PresetDashboard,
+     * from a potentially more-complete PresetDashboard object.
      *
      * @return the minimal object necessary to update the PresetDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PresetDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PresetDashboard are not present in the initial object
      */
     @Override
     public PresetDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

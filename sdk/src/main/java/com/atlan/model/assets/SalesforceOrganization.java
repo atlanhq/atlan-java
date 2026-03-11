@@ -418,11 +418,11 @@ public class SalesforceOrganization extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SalesforceOrganization, from a potentially
-     * more-complete SalesforceOrganization object.
+     * Builds the minimal object necessary to apply an update to a SalesforceOrganization,
+     * from a potentially more-complete SalesforceOrganization object.
      *
      * @return the minimal object necessary to update the SalesforceOrganization, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceOrganization are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SalesforceOrganization are not present in the initial object
      */
     @Override
     public SalesforceOrganizationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

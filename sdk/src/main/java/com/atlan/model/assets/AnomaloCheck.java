@@ -402,11 +402,11 @@ public class AnomaloCheck extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AnomaloCheck, from a potentially
-     * more-complete AnomaloCheck object.
+     * Builds the minimal object necessary to apply an update to a AnomaloCheck,
+     * from a potentially more-complete AnomaloCheck object.
      *
      * @return the minimal object necessary to update the AnomaloCheck, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AnomaloCheck are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AnomaloCheck are not present in the initial object
      */
     @Override
     public AnomaloCheckBuilder<?, ?> trimToRequired() throws InvalidRequestException {

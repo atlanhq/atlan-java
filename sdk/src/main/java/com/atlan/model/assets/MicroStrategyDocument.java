@@ -404,11 +404,11 @@ public class MicroStrategyDocument extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyDocument, from a potentially
-     * more-complete MicroStrategyDocument object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyDocument,
+     * from a potentially more-complete MicroStrategyDocument object.
      *
      * @return the minimal object necessary to update the MicroStrategyDocument, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyDocument are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyDocument are not present in the initial object
      */
     @Override
     public MicroStrategyDocumentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

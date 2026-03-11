@@ -32,19 +32,19 @@ public class GlossarySynonym extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Details about the relationship. */
     String description;
 
-    /** TBC */
+    /** Expression used to set the relationship. */
     String expression;
 
-    /** TBC */
+    /** Source of the relationship. */
     String source;
 
-    /** TBC */
+    /** Status of the synonym assignment, typically used by discovery engines. */
     AtlasGlossaryTermRelationshipStatus status;
 
-    /** TBC */
+    /** User responsible for assessing the relationship and deciding if it should be approved or not. */
     String steward;
 
     /** {@inheritDoc} */

@@ -479,11 +479,11 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DataQualityRule, from a potentially
-     * more-complete DataQualityRule object.
+     * Builds the minimal object necessary to apply an update to a DataQualityRule,
+     * from a potentially more-complete DataQualityRule object.
      *
      * @return the minimal object necessary to update the DataQualityRule, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataQualityRule are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataQualityRule are not present in the initial object
      */
     @Override
     public DataQualityRuleBuilder<?, ?> trimToRequired() throws InvalidRequestException {

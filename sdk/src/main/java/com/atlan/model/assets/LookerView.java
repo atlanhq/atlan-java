@@ -372,11 +372,11 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerView, from a potentially
-     * more-complete LookerView object.
+     * Builds the minimal object necessary to apply an update to a LookerView,
+     * from a potentially more-complete LookerView object.
      *
      * @return the minimal object necessary to update the LookerView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerView are not present in the initial object
      */
     @Override
     public LookerViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

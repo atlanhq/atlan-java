@@ -370,7 +370,6 @@ public class CubeDimension extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a CubeDimension.
      *
@@ -425,6 +424,17 @@ public class CubeDimension extends Asset
     }
 
     /**
+     * Generate a unique CubeDimension name.
+     *
+     * @param name of the CubeDimension
+     * @param cubeQualifiedName unique name of the cube in which this CubeDimension exists
+     * @return a unique name for the CubeDimension
+     */
+    public static String generateQualifiedName(String name, String cubeQualifiedName) {
+        return cubeQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
+    }
+
+    /**
      * Builds the minimal object necessary to update a CubeDimension.
      *
      * @param qualifiedName of the CubeDimension
@@ -439,22 +449,11 @@ public class CubeDimension extends Asset
     }
 
     /**
-     * Generate a unique CubeDimension name.
-     *
-     * @param name of the CubeDimension
-     * @param cubeQualifiedName unique name of the cube in which this CubeDimension exists
-     * @return a unique name for the CubeDimension
-     */
-    public static String generateQualifiedName(String name, String cubeQualifiedName) {
-        return cubeQualifiedName + "/" + IMultiDimensionalDataset.getSlugForName(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a CubeDimension, from a potentially
-     * more-complete CubeDimension object.
+     * Builds the minimal object necessary to apply an update to a CubeDimension,
+     * from a potentially more-complete CubeDimension object.
      *
      * @return the minimal object necessary to update the CubeDimension, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CubeDimension are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CubeDimension are not present in the initial object
      */
     @Override
     public CubeDimensionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

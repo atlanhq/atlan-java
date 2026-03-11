@@ -374,7 +374,6 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Anaplan module.
      *
@@ -475,11 +474,11 @@ public class AnaplanModule extends Asset implements IAnaplanModule, IAnaplan, IB
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AnaplanModule, from a potentially
-     * more-complete AnaplanModule object.
+     * Builds the minimal object necessary to apply an update to a AnaplanModule,
+     * from a potentially more-complete AnaplanModule object.
      *
      * @return the minimal object necessary to update the AnaplanModule, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AnaplanModule are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AnaplanModule are not present in the initial object
      */
     @Override
     public AnaplanModuleBuilder<?, ?> trimToRequired() throws InvalidRequestException {

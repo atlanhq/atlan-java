@@ -32,25 +32,25 @@ public class GlossarySemanticAssignment extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Level of confidence (0-100%) in the correctness of the semantic assignment, typically used by discovery engines. */
     Integer confidence;
 
-    /** TBC */
+    /** Username of the user who created the semantic assignment. */
     String createdBy;
 
-    /** TBC */
+    /** Details about the semantic assignment. */
     String description;
 
-    /** TBC */
+    /** Expression that was used to create the semantic assignment. */
     String expression;
 
-    /** TBC */
+    /** Source of the semantic assignment. */
     String source;
 
-    /** TBC */
+    /** Status of the semantic assignment, typically used by discovery engines. */
     AtlasGlossaryTermRelationshipStatus status;
 
-    /** TBC */
+    /** User responsible for assessing the semantic assignment and deciding if it should be approved or not. */
     String steward;
 
     /** {@inheritDoc} */

@@ -393,38 +393,8 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     }
 
     /**
-     * Builds the minimal object necessary to update a DataDomain.
-     *
-     * @param qualifiedName of the DataDomain
-     * @param name of the DataDomain
-     * @return the minimal request necessary to update the DataDomain, as a builder
-     */
-    public static DataDomainBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DataDomain._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a DataDomain, from a potentially
-     * more-complete DataDomain object.
-     *
-     * @return the minimal object necessary to update the DataDomain, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DataDomain are not found in the initial object
-     */
-    @Override
-    public DataDomainBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Find a DataDomain by its human-readable name. Only the bare minimum set of attributes and no
-     * relationships will be retrieved for the domain, if found.
+     * Find a DataDomain by its human-readable name.
+     * Note that domains are not unique by name, so there may be multiple results.
      *
      * @param client connectivity to the Atlan tenant on which to search for the DataDomain
      * @param name of the DataDomain
@@ -483,6 +453,36 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
         }
         return results;
+    }
+
+    /**
+     * Builds the minimal object necessary to update a DataDomain.
+     *
+     * @param qualifiedName of the DataDomain
+     * @param name of the DataDomain
+     * @return the minimal request necessary to update the DataDomain, as a builder
+     */
+    public static DataDomainBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DataDomain._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a DataDomain,
+     * from a potentially more-complete DataDomain object.
+     *
+     * @return the minimal object necessary to update the DataDomain, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DataDomain are not present in the initial object
+     */
+    @Override
+    public DataDomainBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     public abstract static class DataDomainBuilder<C extends DataDomain, B extends DataDomainBuilder<C, B>>

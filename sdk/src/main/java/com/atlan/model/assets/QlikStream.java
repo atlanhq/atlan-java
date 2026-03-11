@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik, IBI, ICatalog, IAsset, IReferenceable {
+public class QlikStream extends Asset implements IQlikStream, IQlik, IQlikSpace, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikStream";
@@ -393,11 +393,11 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikStream, from a potentially
-     * more-complete QlikStream object.
+     * Builds the minimal object necessary to apply an update to a QlikStream,
+     * from a potentially more-complete QlikStream object.
      *
      * @return the minimal object necessary to update the QlikStream, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikStream are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikStream are not present in the initial object
      */
     @Override
     public QlikStreamBuilder<?, ?> trimToRequired() throws InvalidRequestException {

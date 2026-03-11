@@ -393,11 +393,11 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikSpace, from a potentially
-     * more-complete QlikSpace object.
+     * Builds the minimal object necessary to apply an update to a QlikSpace,
+     * from a potentially more-complete QlikSpace object.
      *
      * @return the minimal object necessary to update the QlikSpace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikSpace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikSpace are not present in the initial object
      */
     @Override
     public QlikSpaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

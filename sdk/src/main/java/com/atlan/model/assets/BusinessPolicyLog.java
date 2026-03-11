@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.BusinessPolicyRule;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -37,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAsset, IReferenceable {
+public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBusinessPolicy, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BusinessPolicyLog";
@@ -47,6 +49,14 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Base parent Guid for policy used in version */
+    @Attribute
+    String businessPolicyBaseParentGuid;
+
+    /** Business Policy Filter ES DSL to denote the associate asset/s involved. */
+    @Attribute
+    String businessPolicyFilterDSL;
+
     /** business policy guid for which log are created */
     @Attribute
     String businessPolicyId;
@@ -55,9 +65,49 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
     @Attribute
     String businessPolicyLogPolicyType;
 
+    /** Body of the business policy, a long readme like document */
+    @Attribute
+    String businessPolicyLongDescription;
+
+    /** Duration for the business policy to complete review. */
+    @Attribute
+    String businessPolicyReviewPeriod;
+
+    /** List of rules applied to this business policy. */
+    @Attribute
+    @Singular
+    List<BusinessPolicyRule> businessPolicyRules;
+
+    /** Selected approval workflow id for business policy */
+    @Attribute
+    String businessPolicySelectedApprovalWF;
+
+    /** Type of business policy */
+    @Attribute
+    String businessPolicyType;
+
+    /** Validity start date of the policy */
+    @Attribute
+    @Date
+    Long businessPolicyValidFrom;
+
+    /** Validity end date of the policy */
+    @Attribute
+    @Date
+    Long businessPolicyValidTill;
+
+    /** Version of the policy */
+    @Attribute
+    Integer businessPolicyVersion;
+
     /** number of compliant assets in the policy */
     @Attribute
     Long compliantAssetsCount;
+
+    /** Exception assigned to business polices */
+    @Attribute
+    @Singular("exceptionForBusinessPolicy")
+    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
 
     /** number of governed assets in the policy */
     @Attribute
@@ -70,6 +120,11 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
     /** number of non governed assets in the policy */
     @Attribute
     Long nonGovernedAssetsCount;
+
+    /** BusinessPolicy that have the same (or relatable) compliance */
+    @Attribute
+    @Singular
+    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicyLog, from a potentially
@@ -321,11 +376,11 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BusinessPolicyLog, from a potentially
-     * more-complete BusinessPolicyLog object.
+     * Builds the minimal object necessary to apply an update to a BusinessPolicyLog,
+     * from a potentially more-complete BusinessPolicyLog object.
      *
      * @return the minimal object necessary to update the BusinessPolicyLog, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BusinessPolicyLog are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BusinessPolicyLog are not present in the initial object
      */
     @Override
     public BusinessPolicyLogBuilder<?, ?> trimToRequired() throws InvalidRequestException {

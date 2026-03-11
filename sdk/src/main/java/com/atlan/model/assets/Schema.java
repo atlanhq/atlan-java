@@ -233,6 +233,16 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ISnowflakePipe> snowflakePipes;
 
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
+    /** Snowflake semantic views contained in the schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticView> snowflakeSemanticViews;
+
     /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
     @Attribute
     @Singular
@@ -533,7 +543,6 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a schema.
      *
@@ -613,11 +622,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Schema, from a potentially
-     * more-complete Schema object.
+     * Builds the minimal object necessary to apply an update to a Schema,
+     * from a potentially more-complete Schema object.
      *
      * @return the minimal object necessary to update the Schema, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Schema are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Schema are not present in the initial object
      */
     @Override
     public SchemaBuilder<?, ?> trimToRequired() throws InvalidRequestException {

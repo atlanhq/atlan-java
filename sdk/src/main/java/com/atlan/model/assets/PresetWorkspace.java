@@ -389,7 +389,6 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Preset workspace.
      *
@@ -403,6 +402,17 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique Preset workspace name.
+     *
+     * @param connectionQualifiedName unique name of the connection
+     * @param name for the workspace
+     * @return a unique name for the workspace
+     */
+    private static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**
@@ -420,11 +430,11 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PresetWorkspace, from a potentially
-     * more-complete PresetWorkspace object.
+     * Builds the minimal object necessary to apply an update to a PresetWorkspace,
+     * from a potentially more-complete PresetWorkspace object.
      *
      * @return the minimal object necessary to update the PresetWorkspace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PresetWorkspace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PresetWorkspace are not present in the initial object
      */
     @Override
     public PresetWorkspaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -433,17 +443,6 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
         map.put("name", this.getName());
         validateRequired(TYPE_NAME, map);
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique Preset workspace name.
-     *
-     * @param connectionQualifiedName unique name of the connection
-     * @param name for the workspace
-     * @return a unique name for the workspace
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String name) {
-        return connectionQualifiedName + "/" + name;
     }
 
     public abstract static class PresetWorkspaceBuilder<

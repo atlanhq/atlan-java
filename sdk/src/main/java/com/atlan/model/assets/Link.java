@@ -395,36 +395,6 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     }
 
     /**
-     * Builds the minimal object necessary to update a Link.
-     *
-     * @param qualifiedName of the Link
-     * @param name of the Link
-     * @return the minimal request necessary to update the Link, as a builder
-     */
-    public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Link._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Link, from a potentially
-     * more-complete Link object.
-     *
-     * @return the minimal object necessary to update the Link, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Link are not found in the initial object
-     */
-    @Override
-    public LinkBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        Map<String, String> map = new HashMap<>();
-        map.put("qualifiedName", this.getQualifiedName());
-        map.put("name", this.getName());
-        validateRequired(TYPE_NAME, map);
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Generate a unique link name.
      * Note: while the UI allows you to create any number of links with the same title on
      * a single asset, using this will ensure there is only a single link with a given title
@@ -447,6 +417,36 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
      */
     private static String generateQualifiedName() {
         return UUID.randomUUID().toString();
+    }
+
+    /**
+     * Builds the minimal object necessary to update a Link.
+     *
+     * @param qualifiedName of the Link
+     * @param name of the Link
+     * @return the minimal request necessary to update the Link, as a builder
+     */
+    public static LinkBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Link._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Link,
+     * from a potentially more-complete Link object.
+     *
+     * @return the minimal object necessary to update the Link, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Link are not present in the initial object
+     */
+    @Override
+    public LinkBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        Map<String, String> map = new HashMap<>();
+        map.put("qualifiedName", this.getQualifiedName());
+        map.put("name", this.getName());
+        validateRequired(TYPE_NAME, map);
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     public abstract static class LinkBuilder<C extends Link, B extends LinkBuilder<C, B>>

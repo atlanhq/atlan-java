@@ -370,11 +370,11 @@ public class ThoughtspotView extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ThoughtspotView, from a potentially
-     * more-complete ThoughtspotView object.
+     * Builds the minimal object necessary to apply an update to a ThoughtspotView,
+     * from a potentially more-complete ThoughtspotView object.
      *
      * @return the minimal object necessary to update the ThoughtspotView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ThoughtspotView are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ThoughtspotView are not present in the initial object
      */
     @Override
     public ThoughtspotViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {

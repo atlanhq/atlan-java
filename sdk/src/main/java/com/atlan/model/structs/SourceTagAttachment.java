@@ -109,20 +109,6 @@ public class SourceTagAttachment extends AtlanStruct {
         return byName(client, name, sourceTagValues, false, null, null);
     }
 
-    /**
-     * Create a source-synced tag attachment with a particular value, when the attachment is
-     * synced to the source.
-     *
-     * @param client connectivity to an Atlan tenant
-     * @param name Unique name of the source tag, in Atlan.
-     * @param sourceTagValues Value of the tag attachment, from the source.
-     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
-     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
-     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
-     * @return a SourceTagAttachment with the provided information
-     * @throws AtlanException on any error communicating via the underlying APIs
-     * @throws NotFoundException if the source-synced tag cannot be resolved
-     */
     private static SourceTagAttachment byName(
             AtlanClient client,
             SourceTagCache.SourceTagName name,
@@ -141,7 +127,8 @@ public class SourceTagAttachment extends AtlanStruct {
                 sourceTagValues,
                 isSourceTagSynced,
                 sourceTagSyncTimestamp,
-                sourceTagSyncError);
+                sourceTagSyncError,
+                null);
     }
 
     /**
@@ -185,20 +172,6 @@ public class SourceTagAttachment extends AtlanStruct {
         return byQualifiedName(client, sourceTagQualifiedName, sourceTagValues, false, null, null);
     }
 
-    /**
-     * Create a source-synced tag attachment with a particular value, when the attachment is
-     * synced to the source.
-     *
-     * @param client connectivity to an Atlan tenant
-     * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
-     * @param sourceTagValues Value of the tag attachment, from the source.
-     * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
-     * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
-     * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
-     * @return a SourceTagAttachment with the provided information
-     * @throws AtlanException on any error communicating via the underlying APIs
-     * @throws NotFoundException if the source-synced tag cannot be resolved
-     */
     private static SourceTagAttachment byQualifiedName(
             AtlanClient client,
             String sourceTagQualifiedName,
@@ -217,12 +190,12 @@ public class SourceTagAttachment extends AtlanStruct {
                 sourceTagValues,
                 isSourceTagSynced,
                 sourceTagSyncTimestamp,
-                sourceTagSyncError);
+                sourceTagSyncError,
+                null);
     }
 
     /**
      * Quickly create a new SourceTagAttachment.
-     *
      * @param sourceTagName Simple name of the source tag.
      * @param sourceTagQualifiedName Unique name of the source tag, in Atlan.
      * @param sourceTagGuid Unique identifier (GUID) of the source tag, in Atlan.
@@ -231,6 +204,7 @@ public class SourceTagAttachment extends AtlanStruct {
      * @param isSourceTagSynced Whether the tag attachment has been synced at the source (true) or not (false).
      * @param sourceTagSyncTimestamp Time (epoch) when the tag attachment was synced at the source, in milliseconds.
      * @param sourceTagSyncError Error message if the tag attachment sync at the source failed.
+     * @param sourceTagType Specifies the source tag type.
      * @return a SourceTagAttachment with the provided information
      */
     public static SourceTagAttachment of(
@@ -241,7 +215,8 @@ public class SourceTagAttachment extends AtlanStruct {
             List<SourceTagAttachmentValue> sourceTagValues,
             Boolean isSourceTagSynced,
             Long sourceTagSyncTimestamp,
-            String sourceTagSyncError) {
+            String sourceTagSyncError,
+            String sourceTagType) {
         return SourceTagAttachment.builder()
                 .sourceTagName(sourceTagName)
                 .sourceTagQualifiedName(sourceTagQualifiedName)
@@ -251,6 +226,7 @@ public class SourceTagAttachment extends AtlanStruct {
                 .isSourceTagSynced(isSourceTagSynced)
                 .sourceTagSyncTimestamp(sourceTagSyncTimestamp)
                 .sourceTagSyncError(sourceTagSyncError)
+                .sourceTagType(sourceTagType)
                 .build();
     }
 

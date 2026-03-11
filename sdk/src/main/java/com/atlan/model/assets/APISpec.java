@@ -400,7 +400,6 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create an API spec.
      *
@@ -431,11 +430,11 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APISpec, from a potentially
-     * more-complete APISpec object.
+     * Builds the minimal object necessary to apply an update to a APISpec,
+     * from a potentially more-complete APISpec object.
      *
      * @return the minimal object necessary to update the APISpec, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for APISpec are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APISpec are not present in the initial object
      */
     @Override
     public APISpecBuilder<?, ?> trimToRequired() throws InvalidRequestException {

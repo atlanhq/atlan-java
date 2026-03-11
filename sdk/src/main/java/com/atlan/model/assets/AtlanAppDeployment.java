@@ -55,17 +55,51 @@ public class AtlanAppDeployment extends Asset
     @Attribute
     String appId;
 
+    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    @Attribute
+    String atlanAppDeploymentName;
+
+    /** Detailed error message explaining why the deployment failed. Should only be populated when status = FAILED. */
+    @Attribute
+    String atlanAppErrorDetails;
+
+    /** Metadata for the Atlan application (escaped JSON string). */
+    @Attribute
+    String atlanAppMetadata;
+
+    /** Name of the Atlan application this asset belongs to. */
+    @Attribute
+    String atlanAppName;
+
     /** Type of operation requested. */
     @Attribute
     AtlanAppDeploymentOperation atlanAppOperation;
+
+    /** Qualified name of the Atlan application this asset belongs to. */
+    @Attribute
+    String atlanAppQualifiedName;
 
     /** Status of deployment. */
     @Attribute
     AtlanAppDeploymentStatus atlanAppStatus;
 
+    /** Tools that exist within this Atlan application. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanAppTool> atlanAppTools;
+
     /** Version identifier for deployment. */
     @Attribute
     Integer atlanAppVersionId;
+
+    /** Version uuid for deployment. This is externally exposed information. */
+    @Attribute
+    String atlanAppVersionUUID;
+
+    /** Workflows that exist within this Atlan application. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -367,11 +401,11 @@ public class AtlanAppDeployment extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AtlanAppDeployment, from a potentially
-     * more-complete AtlanAppDeployment object.
+     * Builds the minimal object necessary to apply an update to a AtlanAppDeployment,
+     * from a potentially more-complete AtlanAppDeployment object.
      *
      * @return the minimal object necessary to update the AtlanAppDeployment, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AtlanAppDeployment are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AtlanAppDeployment are not present in the initial object
      */
     @Override
     public AtlanAppDeploymentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

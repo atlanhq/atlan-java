@@ -40,8 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings({"cast", "serial"})
 public class SageMakerUnifiedStudioPublishedAsset extends Asset
         implements ISageMakerUnifiedStudioPublishedAsset,
-                ISageMakerUnifiedStudioAsset,
                 ISageMakerUnifiedStudio,
+                ISageMakerUnifiedStudioAsset,
                 ISaaS,
                 ICatalog,
                 IAsset,
@@ -421,11 +421,11 @@ public class SageMakerUnifiedStudioPublishedAsset extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SageMakerUnifiedStudioPublishedAsset, from a potentially
-     * more-complete SageMakerUnifiedStudioPublishedAsset object.
+     * Builds the minimal object necessary to apply an update to a SageMakerUnifiedStudioPublishedAsset,
+     * from a potentially more-complete SageMakerUnifiedStudioPublishedAsset object.
      *
      * @return the minimal object necessary to update the SageMakerUnifiedStudioPublishedAsset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SageMakerUnifiedStudioPublishedAsset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SageMakerUnifiedStudioPublishedAsset are not present in the initial object
      */
     @Override
     public SageMakerUnifiedStudioPublishedAssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

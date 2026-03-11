@@ -16,6 +16,7 @@ public enum DataQualityRuleThresholdUnit implements AtlanEnum {
     WEEKS("WEEKS"),
     MONTHS("MONTHS"),
     YEARS("YEARS"),
+    ABSOLUTE("ABSOLUTE"),
     ;
 
     @JsonValue

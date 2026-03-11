@@ -438,11 +438,11 @@ public class TableauWorksheetField extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauWorksheetField, from a potentially
-     * more-complete TableauWorksheetField object.
+     * Builds the minimal object necessary to apply an update to a TableauWorksheetField,
+     * from a potentially more-complete TableauWorksheetField object.
      *
      * @return the minimal object necessary to update the TableauWorksheetField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauWorksheetField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauWorksheetField are not present in the initial object
      */
     @Override
     public TableauWorksheetFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

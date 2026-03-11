@@ -371,11 +371,11 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ReadmeTemplate, from a potentially
-     * more-complete ReadmeTemplate object.
+     * Builds the minimal object necessary to apply an update to a ReadmeTemplate,
+     * from a potentially more-complete ReadmeTemplate object.
      *
      * @return the minimal object necessary to update the ReadmeTemplate, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ReadmeTemplate are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ReadmeTemplate are not present in the initial object
      */
     @Override
     public ReadmeTemplateBuilder<?, ?> trimToRequired() throws InvalidRequestException {

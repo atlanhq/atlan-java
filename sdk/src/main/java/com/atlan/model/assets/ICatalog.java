@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -16,6 +17,7 @@ import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
+import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -93,6 +95,9 @@ public interface ICatalog {
             case AIModel.TYPE_NAME:
                 ref = AIModel.refByQualifiedName(qualifiedName);
                 break;
+            case AIModelVersion.TYPE_NAME:
+                ref = AIModelVersion.refByQualifiedName(qualifiedName);
+                break;
             case APIField.TYPE_NAME:
                 ref = APIField.refByQualifiedName(qualifiedName);
                 break;
@@ -162,14 +167,17 @@ public interface ICatalog {
             case AnomaloCheck.TYPE_NAME:
                 ref = AnomaloCheck.refByQualifiedName(qualifiedName);
                 break;
-            case AppWorkflowRun.TYPE_NAME:
-                ref = AppWorkflowRun.refByQualifiedName(qualifiedName);
-                break;
             case Application.TYPE_NAME:
                 ref = Application.refByQualifiedName(qualifiedName);
                 break;
             case ApplicationField.TYPE_NAME:
                 ref = ApplicationField.refByQualifiedName(qualifiedName);
+                break;
+            case AssetGroupingCollection.TYPE_NAME:
+                ref = AssetGroupingCollection.refByQualifiedName(qualifiedName);
+                break;
+            case AssetGroupingStrategy.TYPE_NAME:
+                ref = AssetGroupingStrategy.refByQualifiedName(qualifiedName);
                 break;
             case AtlanAppDeployment.TYPE_NAME:
                 ref = AtlanAppDeployment.refByQualifiedName(qualifiedName);
@@ -177,14 +185,14 @@ public interface ICatalog {
             case AtlanAppInstalled.TYPE_NAME:
                 ref = AtlanAppInstalled.refByQualifiedName(qualifiedName);
                 break;
+            case AtlanAppTool.TYPE_NAME:
+                ref = AtlanAppTool.refByQualifiedName(qualifiedName);
+                break;
+            case AtlanAppWorkflow.TYPE_NAME:
+                ref = AtlanAppWorkflow.refByQualifiedName(qualifiedName);
+                break;
             case AtlanQuery.TYPE_NAME:
                 ref = AtlanQuery.refByQualifiedName(qualifiedName);
-                break;
-            case AzureEventHub.TYPE_NAME:
-                ref = AzureEventHub.refByQualifiedName(qualifiedName);
-                break;
-            case AzureEventHubConsumerGroup.TYPE_NAME:
-                ref = AzureEventHubConsumerGroup.refByQualifiedName(qualifiedName);
                 break;
             case AzureServiceBusNamespace.TYPE_NAME:
                 ref = AzureServiceBusNamespace.refByQualifiedName(qualifiedName);
@@ -197,9 +205,6 @@ public interface ICatalog {
                 break;
             case BigqueryRoutine.TYPE_NAME:
                 ref = BigqueryRoutine.refByQualifiedName(qualifiedName);
-                break;
-            case BigqueryTag.TYPE_NAME:
-                ref = BigqueryTag.refByQualifiedName(qualifiedName);
                 break;
             case CalculationView.TYPE_NAME:
                 ref = CalculationView.refByQualifiedName(qualifiedName);
@@ -294,9 +299,6 @@ public interface ICatalog {
             case CustomEntity.TYPE_NAME:
                 ref = CustomEntity.refByQualifiedName(qualifiedName);
                 break;
-            case DataContract.TYPE_NAME:
-                ref = DataContract.refByQualifiedName(qualifiedName);
-                break;
             case DataDomain.TYPE_NAME:
                 ref = DataDomain.refByQualifiedName(qualifiedName);
                 break;
@@ -333,9 +335,6 @@ public interface ICatalog {
             case DatabricksNotebook.TYPE_NAME:
                 ref = DatabricksNotebook.refByQualifiedName(qualifiedName);
                 break;
-            case DatabricksUnityCatalogTag.TYPE_NAME:
-                ref = DatabricksUnityCatalogTag.refByQualifiedName(qualifiedName);
-                break;
             case DatabricksVolume.TYPE_NAME:
                 ref = DatabricksVolume.refByQualifiedName(qualifiedName);
                 break;
@@ -351,6 +350,15 @@ public interface ICatalog {
             case DbtColumnProcess.TYPE_NAME:
                 ref = DbtColumnProcess.refByQualifiedName(qualifiedName);
                 break;
+            case DbtDimension.TYPE_NAME:
+                ref = DbtDimension.refByQualifiedName(qualifiedName);
+                break;
+            case DbtEntity.TYPE_NAME:
+                ref = DbtEntity.refByQualifiedName(qualifiedName);
+                break;
+            case DbtMeasure.TYPE_NAME:
+                ref = DbtMeasure.refByQualifiedName(qualifiedName);
+                break;
             case DbtMetric.TYPE_NAME:
                 ref = DbtMetric.refByQualifiedName(qualifiedName);
                 break;
@@ -365,6 +373,9 @@ public interface ICatalog {
                 break;
             case DbtSeed.TYPE_NAME:
                 ref = DbtSeed.refByQualifiedName(qualifiedName);
+                break;
+            case DbtSemanticModel.TYPE_NAME:
+                ref = DbtSemanticModel.refByQualifiedName(qualifiedName);
                 break;
             case DbtSource.TYPE_NAME:
                 ref = DbtSource.refByQualifiedName(qualifiedName);
@@ -411,11 +422,8 @@ public interface ICatalog {
             case DremioVirtualDataset.TYPE_NAME:
                 ref = DremioVirtualDataset.refByQualifiedName(qualifiedName);
                 break;
-            case DynamoDBGlobalSecondaryIndex.TYPE_NAME:
-                ref = DynamoDBGlobalSecondaryIndex.refByQualifiedName(qualifiedName);
-                break;
-            case DynamoDBLocalSecondaryIndex.TYPE_NAME:
-                ref = DynamoDBLocalSecondaryIndex.refByQualifiedName(qualifiedName);
+            case DynamoDBAttribute.TYPE_NAME:
+                ref = DynamoDBAttribute.refByQualifiedName(qualifiedName);
                 break;
             case DynamoDBTable.TYPE_NAME:
                 ref = DynamoDBTable.refByQualifiedName(qualifiedName);
@@ -462,12 +470,6 @@ public interface ICatalog {
             case FivetranConnector.TYPE_NAME:
                 ref = FivetranConnector.refByQualifiedName(qualifiedName);
                 break;
-            case FlowDataset.TYPE_NAME:
-                ref = FlowDataset.refByQualifiedName(qualifiedName);
-                break;
-            case FlowField.TYPE_NAME:
-                ref = FlowField.refByQualifiedName(qualifiedName);
-                break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
                 break;
@@ -477,8 +479,17 @@ public interface ICatalog {
             case GCSObject.TYPE_NAME:
                 ref = GCSObject.refByQualifiedName(qualifiedName);
                 break;
-            case Insight.TYPE_NAME:
-                ref = Insight.refByQualifiedName(qualifiedName);
+            case IcebergCatalog.TYPE_NAME:
+                ref = IcebergCatalog.refByQualifiedName(qualifiedName);
+                break;
+            case IcebergColumn.TYPE_NAME:
+                ref = IcebergColumn.refByQualifiedName(qualifiedName);
+                break;
+            case IcebergNamespace.TYPE_NAME:
+                ref = IcebergNamespace.refByQualifiedName(qualifiedName);
+                break;
+            case IcebergTable.TYPE_NAME:
+                ref = IcebergTable.refByQualifiedName(qualifiedName);
                 break;
             case KafkaConsumerGroup.TYPE_NAME:
                 ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
@@ -548,6 +559,9 @@ public interface ICatalog {
                 break;
             case MetabaseQuestion.TYPE_NAME:
                 ref = MetabaseQuestion.refByQualifiedName(qualifiedName);
+                break;
+            case Metric.TYPE_NAME:
+                ref = Metric.refByQualifiedName(qualifiedName);
                 break;
             case MicroStrategyAttribute.TYPE_NAME:
                 ref = MicroStrategyAttribute.refByQualifiedName(qualifiedName);
@@ -696,9 +710,6 @@ public interface ICatalog {
             case QlikSpace.TYPE_NAME:
                 ref = QlikSpace.refByQualifiedName(qualifiedName);
                 break;
-            case QlikStream.TYPE_NAME:
-                ref = QlikStream.refByQualifiedName(qualifiedName);
-                break;
             case QuickSightAnalysis.TYPE_NAME:
                 ref = QuickSightAnalysis.refByQualifiedName(qualifiedName);
                 break;
@@ -743,6 +754,24 @@ public interface ICatalog {
                 break;
             case S3Prefix.TYPE_NAME:
                 ref = S3Prefix.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerFeature.TYPE_NAME:
+                ref = SageMakerFeature.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerFeatureGroup.TYPE_NAME:
+                ref = SageMakerFeatureGroup.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerModel.TYPE_NAME:
+                ref = SageMakerModel.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerModelDeployment.TYPE_NAME:
+                ref = SageMakerModelDeployment.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerModelGroup.TYPE_NAME:
+                ref = SageMakerModelGroup.refByQualifiedName(qualifiedName);
+                break;
+            case SageMakerUnifiedStudioAsset.TYPE_NAME:
+                ref = SageMakerUnifiedStudioAsset.refByQualifiedName(qualifiedName);
                 break;
             case SageMakerUnifiedStudioAssetSchema.TYPE_NAME:
                 ref = SageMakerUnifiedStudioAssetSchema.refByQualifiedName(qualifiedName);
@@ -801,6 +830,21 @@ public interface ICatalog {
             case SchemaRegistrySubject.TYPE_NAME:
                 ref = SchemaRegistrySubject.refByQualifiedName(qualifiedName);
                 break;
+            case SemanticDimension.TYPE_NAME:
+                ref = SemanticDimension.refByQualifiedName(qualifiedName);
+                break;
+            case SemanticEntity.TYPE_NAME:
+                ref = SemanticEntity.refByQualifiedName(qualifiedName);
+                break;
+            case SemanticField.TYPE_NAME:
+                ref = SemanticField.refByQualifiedName(qualifiedName);
+                break;
+            case SemanticMeasure.TYPE_NAME:
+                ref = SemanticMeasure.refByQualifiedName(qualifiedName);
+                break;
+            case SemanticModel.TYPE_NAME:
+                ref = SemanticModel.refByQualifiedName(qualifiedName);
+                break;
             case SigmaDataElement.TYPE_NAME:
                 ref = SigmaDataElement.refByQualifiedName(qualifiedName);
                 break;
@@ -840,20 +884,20 @@ public interface ICatalog {
             case SnowflakeAIModelVersion.TYPE_NAME:
                 ref = SnowflakeAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
-            case SnowflakeDynamicTable.TYPE_NAME:
-                ref = SnowflakeDynamicTable.refByQualifiedName(qualifiedName);
+            case SnowflakeSemanticDimension.TYPE_NAME:
+                ref = SnowflakeSemanticDimension.refByQualifiedName(qualifiedName);
                 break;
-            case SnowflakePipe.TYPE_NAME:
-                ref = SnowflakePipe.refByQualifiedName(qualifiedName);
+            case SnowflakeSemanticFact.TYPE_NAME:
+                ref = SnowflakeSemanticFact.refByQualifiedName(qualifiedName);
                 break;
-            case SnowflakeStage.TYPE_NAME:
-                ref = SnowflakeStage.refByQualifiedName(qualifiedName);
+            case SnowflakeSemanticLogicalTable.TYPE_NAME:
+                ref = SnowflakeSemanticLogicalTable.refByQualifiedName(qualifiedName);
                 break;
-            case SnowflakeStream.TYPE_NAME:
-                ref = SnowflakeStream.refByQualifiedName(qualifiedName);
+            case SnowflakeSemanticMetric.TYPE_NAME:
+                ref = SnowflakeSemanticMetric.refByQualifiedName(qualifiedName);
                 break;
-            case SnowflakeTag.TYPE_NAME:
-                ref = SnowflakeTag.refByQualifiedName(qualifiedName);
+            case SnowflakeSemanticView.TYPE_NAME:
+                ref = SnowflakeSemanticView.refByQualifiedName(qualifiedName);
                 break;
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);
@@ -863,6 +907,12 @@ public interface ICatalog {
                 break;
             case SparkJob.TYPE_NAME:
                 ref = SparkJob.refByQualifiedName(qualifiedName);
+                break;
+            case StarburstDataset.TYPE_NAME:
+                ref = StarburstDataset.refByQualifiedName(qualifiedName);
+                break;
+            case StarburstDatasetColumn.TYPE_NAME:
+                ref = StarburstDatasetColumn.refByQualifiedName(qualifiedName);
                 break;
             case SupersetChart.TYPE_NAME:
                 ref = SupersetChart.refByQualifiedName(qualifiedName);
@@ -971,19 +1021,37 @@ public interface ICatalog {
     String getAnnouncementUpdatedBy();
 
     /** Checks that run on this asset. */
-    SortedSet<IAnomaloCheck> getAnomaloChecks();
+    default SortedSet<IAnomaloCheck> getAnomaloChecks() {
+        return null;
+    }
 
     /** Application owning the Asset. */
-    IApplication getApplication();
+    default IApplication getApplication() {
+        return null;
+    }
 
     /** ApplicationField owning the Asset. */
-    IApplicationField getApplicationField();
+    default IApplicationField getApplicationField() {
+        return null;
+    }
 
     /** Qualified name of the ApplicationField that contains this asset. */
     String getApplicationFieldQualifiedName();
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
+
+    /** Description of this asset, generated by AI based on the asset's context. Displayed separately in the UI and can be used to overwrite existing descriptions. */
+    String getAssetAiGeneratedDescription();
+
+    /** Confidence score of the AI-generated description, ranging from 0.0 to 1.0. */
+    Double getAssetAiGeneratedDescriptionConfidence();
+
+    /** Reasoning behind the AI-generated description, explaining how the description was derived from the asset's context. */
+    String getAssetAiGeneratedDescriptionReasoning();
+
+    /** Time (epoch) at which the announcement expires, in milliseconds. When set, the announcement will no longer be displayed after this time. */
+    Long getAssetAnnouncementExpiredAt();
 
     /** All associated Anomalo check types. */
     SortedSet<String> getAssetAnomaloAppliedCheckTypes();
@@ -1017,6 +1085,9 @@ public interface ICatalog {
 
     /** Value of data freshness from Source. */
     Long getAssetDQFreshnessValue();
+
+    /** Status of the latest manual DQ run triggered for this asset. */
+    AssetDQRunStatus getAssetDQManualRunStatus();
 
     /** Overall result of all the dq rules. If any one rule failed, then fail else pass. */
     DataQualityResult getAssetDQResult();
@@ -1207,6 +1278,15 @@ public interface ICatalog {
     /** DQ metadata captured for asset from external DQ tool(s). */
     Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
+    /** List of field key-values associated with all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectFieldList();
+
+    /** List of names of all Aspects linked to this asset. */
+    SortedSet<String> getAssetGCPDataplexAspectList();
+
+    /** Metrics captured by GCP Dataplex for objects associated with GCP services. */
+    AssetGCPDataplexMetadata getAssetGCPDataplexMetadataDetails();
+
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
@@ -1294,6 +1374,9 @@ public interface ICatalog {
     /** TBC */
     String getAssetSodaSourceURL();
 
+    /** Unique identifier for this asset in the system from which it was sourced. */
+    String getAssetSourceId();
+
     /** Readme of this asset, as extracted from source. If present, this will be used for the readme in user interface. */
     String getAssetSourceReadme();
 
@@ -1313,7 +1396,9 @@ public interface ICatalog {
     String getAssetUserDefinedType();
 
     /** Glossary terms that are linked to this asset. */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
+    default SortedSet<IGlossaryTerm> getAssignedTerms() {
+        return null;
+    }
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
@@ -1337,10 +1422,14 @@ public interface ICatalog {
     String getConnectorName();
 
     /** Latest version of the data contract (in any status) for this asset. */
-    IDataContract getDataContractLatest();
+    default IDataContract getDataContractLatest() {
+        return null;
+    }
 
     /** Latest certified version of the data contract for this asset. */
-    IDataContract getDataContractLatestCertified();
+    default IDataContract getDataContractLatestCertified() {
+        return null;
+    }
 
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
@@ -1355,13 +1444,19 @@ public interface ICatalog {
     SortedSet<String> getDomainGUIDs();
 
     /** Rules that are applied on this dataset. */
-    SortedSet<IDataQualityRule> getDqBaseDatasetRules();
+    default SortedSet<IDataQualityRule> getDqBaseDatasetRules() {
+        return null;
+    }
 
     /** Rules where this dataset is referenced. */
-    SortedSet<IDataQualityRule> getDqReferenceDatasetRules();
+    default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IFile> getFiles();
+    default SortedSet<IFile> getFiles() {
+        return null;
+    }
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -1370,16 +1465,24 @@ public interface ICatalog {
     Boolean getHasLineage();
 
     /** Data products for which this asset is an input port. */
-    SortedSet<IDataProduct> getInputPortDataProducts();
+    default SortedSet<IDataProduct> getInputPortDataProducts() {
+        return null;
+    }
 
     /** Tasks to which this asset provides input. */
-    SortedSet<IAirflowTask> getInputToAirflowTasks();
+    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
+        return null;
+    }
 
     /** Processes to which this asset provides input. */
-    SortedSet<ILineageProcess> getInputToProcesses();
+    default SortedSet<ILineageProcess> getInputToProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getInputToSparkJobs();
+    default SortedSet<ISparkJob> getInputToSparkJobs() {
+        return null;
+    }
 
     /** TBC */
     Boolean getIsAIGenerated();
@@ -1409,22 +1512,34 @@ public interface ICatalog {
     String getLexicographicalSortOrder();
 
     /** Links that are attached to this asset. */
-    SortedSet<ILink> getLinks();
+    default SortedSet<ILink> getLinks() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
+    default SortedSet<IMCIncident> getMcIncidents() {
+        return null;
+    }
 
     /** Monitors that observe this asset. */
-    SortedSet<IMCMonitor> getMcMonitors();
+    default SortedSet<IMCMonitor> getMcMonitors() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IMetric> getMetrics();
+    default SortedSet<IMetric> getMetrics() {
+        return null;
+    }
 
     /** Attributes implemented by this asset. */
-    SortedSet<IModelAttribute> getModelImplementedAttributes();
+    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
+        return null;
+    }
 
     /** Entities implemented by this asset. */
-    SortedSet<IModelEntity> getModelImplementedEntities();
+    default SortedSet<IModelEntity> getModelImplementedEntities() {
+        return null;
+    }
 
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
@@ -1433,16 +1548,24 @@ public interface ICatalog {
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
     /** Tasks from which this asset is output. */
-    SortedSet<IAirflowTask> getOutputFromAirflowTasks();
+    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
+        return null;
+    }
 
     /** Processes from which this asset is produced as output. */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
+    default SortedSet<ILineageProcess> getOutputFromProcesses() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISparkJob> getOutputFromSparkJobs();
+    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
+        return null;
+    }
 
     /** Data products for which this asset is an output port. */
-    SortedSet<IDataProduct> getOutputPortDataProducts();
+    default SortedSet<IDataProduct> getOutputPortDataProducts() {
+        return null;
+    }
 
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
@@ -1454,10 +1577,14 @@ public interface ICatalog {
     SortedSet<String> getOwnerUsers();
 
     /** Partial fields contained in the asset. */
-    SortedSet<IPartialField> getPartialChildFields();
+    default SortedSet<IPartialField> getPartialChildFields() {
+        return null;
+    }
 
     /** Partial objects contained in the asset. */
-    SortedSet<IPartialObject> getPartialChildObjects();
+    default SortedSet<IPartialObject> getPartialChildObjects() {
+        return null;
+    }
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
@@ -1469,16 +1596,22 @@ public interface ICatalog {
     String getQualifiedName();
 
     /** README that is linked to this asset. */
-    IReadme getReadme();
+    default IReadme getReadme() {
+        return null;
+    }
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
 
     /** TBC */
-    SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects();
+    default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<ISodaCheck> getSodaChecks();
+    default SortedSet<ISodaCheck> getSodaChecks() {
+        return null;
+    }
 
     /** The unit of measure for sourceTotalCost. */
     SourceCostUnitType getSourceCostUnit();
@@ -1562,10 +1695,14 @@ public interface ICatalog {
     String getTenantId();
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipFroms();
+    default SortedSet<IAsset> getUserDefRelationshipFroms() {
+        return null;
+    }
 
     /** TBC */
-    SortedSet<IAsset> getUserDefRelationshipTos();
+    default SortedSet<IAsset> getUserDefRelationshipTos() {
+        return null;
+    }
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();

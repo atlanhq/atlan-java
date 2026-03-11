@@ -381,11 +381,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SigmaWorkbook, from a potentially
-     * more-complete SigmaWorkbook object.
+     * Builds the minimal object necessary to apply an update to a SigmaWorkbook,
+     * from a potentially more-complete SigmaWorkbook object.
      *
      * @return the minimal object necessary to update the SigmaWorkbook, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaWorkbook are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SigmaWorkbook are not present in the initial object
      */
     @Override
     public SigmaWorkbookBuilder<?, ?> trimToRequired() throws InvalidRequestException {

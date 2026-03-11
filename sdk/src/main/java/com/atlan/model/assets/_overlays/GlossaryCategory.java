@@ -1,3 +1,4 @@
+// IMPORT: import java.util.ArrayList;
 // IMPORT: import com.atlan.model.enums.AtlanAnnouncementType;
 // IMPORT: import com.atlan.model.enums.AtlasGlossaryCategoryType;
 // IMPORT: import com.atlan.model.enums.CertificateStatus;

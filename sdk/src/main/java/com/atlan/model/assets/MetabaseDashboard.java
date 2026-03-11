@@ -370,11 +370,11 @@ public class MetabaseDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MetabaseDashboard, from a potentially
-     * more-complete MetabaseDashboard object.
+     * Builds the minimal object necessary to apply an update to a MetabaseDashboard,
+     * from a potentially more-complete MetabaseDashboard object.
      *
      * @return the minimal object necessary to update the MetabaseDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MetabaseDashboard are not present in the initial object
      */
     @Override
     public MetabaseDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

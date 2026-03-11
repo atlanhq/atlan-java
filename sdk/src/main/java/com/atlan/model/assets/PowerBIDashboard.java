@@ -105,6 +105,15 @@ public class PowerBIDashboard extends Asset
     @Singular
     SortedSet<IPowerBIApp> powerBIApps;
 
+    /** Time at which this asset was endorsed in Power BI. */
+    @Attribute
+    @Date
+    Long powerBIEndorsedAt;
+
+    /** User who endorsed this asset in Power BI. */
+    @Attribute
+    String powerBIEndorsedBy;
+
     /** Endorsement status of this asset, in Power BI. */
     @Attribute
     PowerBIEndorsementType powerBIEndorsement;
@@ -392,11 +401,11 @@ public class PowerBIDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a PowerBIDashboard, from a potentially
-     * more-complete PowerBIDashboard object.
+     * Builds the minimal object necessary to apply an update to a PowerBIDashboard,
+     * from a potentially more-complete PowerBIDashboard object.
      *
      * @return the minimal object necessary to update the PowerBIDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a PowerBIDashboard are not present in the initial object
      */
     @Override
     public PowerBIDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

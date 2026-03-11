@@ -398,11 +398,11 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauProject, from a potentially
-     * more-complete TableauProject object.
+     * Builds the minimal object necessary to apply an update to a TableauProject,
+     * from a potentially more-complete TableauProject object.
      *
      * @return the minimal object necessary to update the TableauProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauProject are not present in the initial object
      */
     @Override
     public TableauProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

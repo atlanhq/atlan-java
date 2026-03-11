@@ -383,11 +383,11 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a LookerQuery, from a potentially
-     * more-complete LookerQuery object.
+     * Builds the minimal object necessary to apply an update to a LookerQuery,
+     * from a potentially more-complete LookerQuery object.
      *
      * @return the minimal object necessary to update the LookerQuery, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerQuery are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a LookerQuery are not present in the initial object
      */
     @Override
     public LookerQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {

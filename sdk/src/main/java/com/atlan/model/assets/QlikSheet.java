@@ -397,11 +397,11 @@ public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikSheet, from a potentially
-     * more-complete QlikSheet object.
+     * Builds the minimal object necessary to apply an update to a QlikSheet,
+     * from a potentially more-complete QlikSheet object.
      *
      * @return the minimal object necessary to update the QlikSheet, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikSheet are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikSheet are not present in the initial object
      */
     @Override
     public QlikSheetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

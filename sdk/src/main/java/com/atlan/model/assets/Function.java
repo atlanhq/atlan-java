@@ -93,6 +93,14 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionDefinition;
 
+    /** Names of external access integrations used by the function. */
+    @Attribute
+    String functionExternalAccessIntegrations;
+
+    /** Packages actually installed for the function. */
+    @Attribute
+    String functionInstalledPackages;
+
     /** Whether the function is a data metric function. */
     @Attribute
     Boolean functionIsDMF;
@@ -113,13 +121,25 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String functionLanguage;
 
+    /** Packages requested by the function. */
+    @Attribute
+    String functionPackages;
+
     /** Data type of the value returned by the function. */
     @Attribute
     String functionReturnType;
 
+    /** Version of the language runtime used by the function. */
+    @Attribute
+    String functionRuntimeVersion;
+
     /** Schema in which this function exists. */
     @Attribute
     ISchema functionSchema;
+
+    /** Secret variables used by the function. */
+    @Attribute
+    String functionSecrets;
 
     /** Type of function. */
     @Attribute
@@ -210,6 +230,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     @Attribute
     String schemaQualifiedName;
 
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -227,6 +252,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     /** Whether this asset is secure (true) or not (false). */
     @Attribute
     Boolean sqlIsSecure;
+
+    /** Processes that utilize this function. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> sqlProcesses;
 
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
@@ -492,11 +522,11 @@ public class Function extends Asset implements IFunction, ISQL, ICatalog, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Function, from a potentially
-     * more-complete Function object.
+     * Builds the minimal object necessary to apply an update to a Function,
+     * from a potentially more-complete Function object.
      *
      * @return the minimal object necessary to update the Function, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Function are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Function are not present in the initial object
      */
     @Override
     public FunctionBuilder<?, ?> trimToRequired() throws InvalidRequestException {

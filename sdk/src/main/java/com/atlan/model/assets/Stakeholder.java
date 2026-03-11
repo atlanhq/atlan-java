@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class Stakeholder extends Asset implements IStakeholder, IPersona, IAccessControl, IAsset, IReferenceable {
+public class Stakeholder extends Asset
+        implements IStakeholder, IAccessControl, IDataMesh, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Stakeholder";
@@ -98,9 +99,63 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     @Singular
     SortedSet<String> displayPreferences;
 
+    /** Tasks to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** Processes to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
     /** TBC */
     @Attribute
     Boolean isAccessControlEnabled;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Tasks from which this asset is output. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
+
+    /** Processes from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Unique name of the parent domain in which this asset exists. */
+    @Attribute
+    String parentDomainQualifiedName;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
 
     /** TBC */
     @Attribute
@@ -112,7 +167,7 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     @Singular
     SortedSet<String> personaUsers;
 
-    /** TBC */
+    /** Access control entity to which this policy applies. */
     @Attribute
     @Singular
     SortedSet<IAuthPolicy> policies;
@@ -136,6 +191,10 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     /** TBC */
     @Attribute
     String stakeholderTitleGuid;
+
+    /** Unique name of the top-level domain in which this asset exists. */
+    @Attribute
+    String superDomainQualifiedName;
 
     /**
      * Builds the minimal object necessary to create a relationship to a Stakeholder, from a potentially
@@ -387,11 +446,11 @@ public class Stakeholder extends Asset implements IStakeholder, IPersona, IAcces
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Stakeholder, from a potentially
-     * more-complete Stakeholder object.
+     * Builds the minimal object necessary to apply an update to a Stakeholder,
+     * from a potentially more-complete Stakeholder object.
      *
      * @return the minimal object necessary to update the Stakeholder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Stakeholder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Stakeholder are not present in the initial object
      */
     @Override
     public StakeholderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

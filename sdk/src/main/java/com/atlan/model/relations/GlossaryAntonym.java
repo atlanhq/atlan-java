@@ -32,19 +32,19 @@ public class GlossaryAntonym extends RelationshipAttributes {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Details about the relationship. */
     String description;
 
-    /** TBC */
+    /** Expression that was used to set the relationship. */
     String expression;
 
-    /** TBC */
+    /** Source of the relationship. */
     String source;
 
-    /** TBC */
+    /** Status of the relationship, typically used by discovery engines. */
     AtlasGlossaryTermRelationshipStatus status;
 
-    /** TBC */
+    /** User responsible for assessing the relationship and deciding if it should be approved or not. */
     String steward;
 
     /** {@inheritDoc} */

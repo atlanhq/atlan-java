@@ -352,11 +352,11 @@ public class BusinessPolicy extends Asset implements IBusinessPolicy, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BusinessPolicy, from a potentially
-     * more-complete BusinessPolicy object.
+     * Builds the minimal object necessary to apply an update to a BusinessPolicy,
+     * from a potentially more-complete BusinessPolicy object.
      *
      * @return the minimal object necessary to update the BusinessPolicy, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BusinessPolicy are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BusinessPolicy are not present in the initial object
      */
     @Override
     public BusinessPolicyBuilder<?, ?> trimToRequired() throws InvalidRequestException {

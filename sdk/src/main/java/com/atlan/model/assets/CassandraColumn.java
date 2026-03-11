@@ -409,11 +409,11 @@ public class CassandraColumn extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CassandraColumn, from a potentially
-     * more-complete CassandraColumn object.
+     * Builds the minimal object necessary to apply an update to a CassandraColumn,
+     * from a potentially more-complete CassandraColumn object.
      *
      * @return the minimal object necessary to update the CassandraColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CassandraColumn are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CassandraColumn are not present in the initial object
      */
     @Override
     public CassandraColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

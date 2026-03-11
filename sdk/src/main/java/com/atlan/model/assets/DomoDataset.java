@@ -386,11 +386,11 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DomoDataset, from a potentially
-     * more-complete DomoDataset object.
+     * Builds the minimal object necessary to apply an update to a DomoDataset,
+     * from a potentially more-complete DomoDataset object.
      *
      * @return the minimal object necessary to update the DomoDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DomoDataset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DomoDataset are not present in the initial object
      */
     @Override
     public DomoDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

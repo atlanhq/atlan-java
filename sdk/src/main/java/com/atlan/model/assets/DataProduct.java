@@ -200,6 +200,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Starburst datasets published by this data product. */
+    @Attribute
+    @Singular
+    SortedSet<IStarburstDataset> starburstDatasets;
+
     /** Unique name of the top-level domain in which this asset exists. */
     @Attribute
     String superDomainQualifiedName;

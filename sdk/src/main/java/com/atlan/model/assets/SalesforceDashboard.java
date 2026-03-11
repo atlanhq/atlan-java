@@ -469,11 +469,11 @@ public class SalesforceDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SalesforceDashboard, from a potentially
-     * more-complete SalesforceDashboard object.
+     * Builds the minimal object necessary to apply an update to a SalesforceDashboard,
+     * from a potentially more-complete SalesforceDashboard object.
      *
      * @return the minimal object necessary to update the SalesforceDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SalesforceDashboard are not present in the initial object
      */
     @Override
     public SalesforceDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

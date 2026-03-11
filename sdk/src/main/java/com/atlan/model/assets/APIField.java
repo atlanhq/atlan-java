@@ -400,11 +400,11 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APIField, from a potentially
-     * more-complete APIField object.
+     * Builds the minimal object necessary to apply an update to a APIField,
+     * from a potentially more-complete APIField object.
      *
      * @return the minimal object necessary to update the APIField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for APIField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APIField are not present in the initial object
      */
     @Override
     public APIFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

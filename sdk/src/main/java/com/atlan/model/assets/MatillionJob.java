@@ -386,11 +386,11 @@ public class MatillionJob extends Asset implements IMatillionJob, IMatillion, IC
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MatillionJob, from a potentially
-     * more-complete MatillionJob object.
+     * Builds the minimal object necessary to apply an update to a MatillionJob,
+     * from a potentially more-complete MatillionJob object.
      *
      * @return the minimal object necessary to update the MatillionJob, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MatillionJob are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MatillionJob are not present in the initial object
      */
     @Override
     public MatillionJobBuilder<?, ?> trimToRequired() throws InvalidRequestException {

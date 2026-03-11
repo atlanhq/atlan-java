@@ -71,7 +71,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -122,7 +122,7 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Process in which this task exists. */
+    /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
 
@@ -134,6 +134,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
+
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
 
     /** Procedures used by this process. */
     @Attribute
@@ -424,11 +429,11 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ColumnProcess, from a potentially
-     * more-complete ColumnProcess object.
+     * Builds the minimal object necessary to apply an update to a ColumnProcess,
+     * from a potentially more-complete ColumnProcess object.
      *
      * @return the minimal object necessary to update the ColumnProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ColumnProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ColumnProcess are not present in the initial object
      */
     @Override
     public ColumnProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

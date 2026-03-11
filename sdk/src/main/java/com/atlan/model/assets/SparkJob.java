@@ -64,7 +64,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** Assets that are inputs to this task. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
@@ -94,7 +94,7 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** Assets that are outputs from this task. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
@@ -396,11 +396,11 @@ public class SparkJob extends Asset implements ISparkJob, ISpark, ICatalog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SparkJob, from a potentially
-     * more-complete SparkJob object.
+     * Builds the minimal object necessary to apply an update to a SparkJob,
+     * from a potentially more-complete SparkJob object.
      *
      * @return the minimal object necessary to update the SparkJob, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SparkJob are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SparkJob are not present in the initial object
      */
     @Override
     public SparkJobBuilder<?, ?> trimToRequired() throws InvalidRequestException {

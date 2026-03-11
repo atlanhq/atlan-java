@@ -369,11 +369,11 @@ public class FabricReport extends Asset implements IFabricReport, IFabric, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a FabricReport, from a potentially
-     * more-complete FabricReport object.
+     * Builds the minimal object necessary to apply an update to a FabricReport,
+     * from a potentially more-complete FabricReport object.
      *
      * @return the minimal object necessary to update the FabricReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for FabricReport are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a FabricReport are not present in the initial object
      */
     @Override
     public FabricReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {

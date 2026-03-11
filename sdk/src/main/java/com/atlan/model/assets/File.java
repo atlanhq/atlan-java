@@ -404,11 +404,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a File, from a potentially
-     * more-complete File object.
+     * Builds the minimal object necessary to apply an update to a File,
+     * from a potentially more-complete File object.
      *
      * @return the minimal object necessary to update the File, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for File are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a File are not present in the initial object
      */
     @Override
     public FileBuilder<?, ?> trimToRequired() throws InvalidRequestException {

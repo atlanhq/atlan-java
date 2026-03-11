@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -36,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
+public class Badge extends Asset implements IBadge, IResource, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Badge";
@@ -54,6 +55,73 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     /** Custom metadata attribute for which to show the badge. */
     @Attribute
     String badgeMetadataAttribute;
+
+    /** Tasks to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> inputToAirflowTasks;
+
+    /** Processes to which this asset provides input. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> inputToSparkJobs;
+
+    /** Whether the resource is global (true) or not (false). */
+    @Attribute
+    Boolean isGlobal;
+
+    /** URL to the resource. */
+    @Attribute
+    String link;
+
+    /** Attributes implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelAttribute> modelImplementedAttributes;
+
+    /** Entities implemented by this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Tasks from which this asset is output. */
+    @Attribute
+    @Singular
+    SortedSet<IAirflowTask> outputFromAirflowTasks;
+
+    /** Processes from which this asset is produced as output. */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> outputFromSparkJobs;
+
+    /** Partial fields contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialField> partialChildFields;
+
+    /** Partial objects contained in the asset. */
+    @Attribute
+    @Singular
+    SortedSet<IPartialObject> partialChildObjects;
+
+    /** Reference to the resource. */
+    @Attribute
+    String reference;
+
+    /** Metadata of the resource. */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 
     /**
      * Builds the minimal object necessary to create a relationship to a Badge, from a potentially
@@ -340,11 +408,11 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Badge, from a potentially
-     * more-complete Badge object.
+     * Builds the minimal object necessary to apply an update to a Badge,
+     * from a potentially more-complete Badge object.
      *
      * @return the minimal object necessary to update the Badge, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Badge are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Badge are not present in the initial object
      */
     @Override
     public BadgeBuilder<?, ?> trimToRequired() throws InvalidRequestException {

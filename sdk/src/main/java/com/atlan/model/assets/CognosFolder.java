@@ -72,7 +72,7 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     @Singular
     SortedSet<ICognosFile> cognosFiles;
 
-    /** Folder containing the dashboard. */
+    /** Parent folder containing this folder. */
     @Attribute
     ICognosFolder cognosFolder;
 
@@ -436,11 +436,11 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosFolder, from a potentially
-     * more-complete CognosFolder object.
+     * Builds the minimal object necessary to apply an update to a CognosFolder,
+     * from a potentially more-complete CognosFolder object.
      *
      * @return the minimal object necessary to update the CognosFolder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosFolder are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosFolder are not present in the initial object
      */
     @Override
     public CognosFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {

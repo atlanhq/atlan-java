@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAsset, IReferenceable {
+public class DbtTag extends Asset implements IDbtTag, ITag, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtTag";
@@ -476,20 +476,6 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to update a DbtTag.
-     *
-     * @param qualifiedName of the DbtTag
-     * @param name of the DbtTag
-     * @return the minimal request necessary to update the DbtTag, as a builder
-     */
-    public static DbtTagBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtTag._internal()
-                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                .qualifiedName(qualifiedName)
-                .name(name);
-    }
-
-    /**
      * Generate a unique DbtTag name.
      *
      * @param name of the DbtTag
@@ -504,11 +490,25 @@ public class DbtTag extends Asset implements IDbtTag, IDbt, ITag, ICatalog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtTag, from a potentially
-     * more-complete DbtTag object.
+     * Builds the minimal object necessary to update a DbtTag.
+     *
+     * @param qualifiedName of the DbtTag
+     * @param name of the DbtTag
+     * @return the minimal request necessary to update the DbtTag, as a builder
+     */
+    public static DbtTagBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DbtTag._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(qualifiedName)
+                .name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a DbtTag,
+     * from a potentially more-complete DbtTag object.
      *
      * @return the minimal object necessary to update the DbtTag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtTag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtTag are not present in the initial object
      */
     @Override
     public DbtTagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -369,11 +369,11 @@ public class AzureServiceBusNamespace extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AzureServiceBusNamespace, from a potentially
-     * more-complete AzureServiceBusNamespace object.
+     * Builds the minimal object necessary to apply an update to a AzureServiceBusNamespace,
+     * from a potentially more-complete AzureServiceBusNamespace object.
      *
      * @return the minimal object necessary to update the AzureServiceBusNamespace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AzureServiceBusNamespace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AzureServiceBusNamespace are not present in the initial object
      */
     @Override
     public AzureServiceBusNamespaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {

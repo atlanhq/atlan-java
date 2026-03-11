@@ -353,7 +353,6 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Superset chart.
      *
@@ -419,11 +418,11 @@ public class SupersetChart extends Asset implements ISupersetChart, ISuperset, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SupersetChart, from a potentially
-     * more-complete SupersetChart object.
+     * Builds the minimal object necessary to apply an update to a SupersetChart,
+     * from a potentially more-complete SupersetChart object.
      *
      * @return the minimal object necessary to update the SupersetChart, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SupersetChart are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SupersetChart are not present in the initial object
      */
     @Override
     public SupersetChartBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -352,11 +352,11 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CogniteEvent, from a potentially
-     * more-complete CogniteEvent object.
+     * Builds the minimal object necessary to apply an update to a CogniteEvent,
+     * from a potentially more-complete CogniteEvent object.
      *
      * @return the minimal object necessary to update the CogniteEvent, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CogniteEvent are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CogniteEvent are not present in the initial object
      */
     @Override
     public CogniteEventBuilder<?, ?> trimToRequired() throws InvalidRequestException {

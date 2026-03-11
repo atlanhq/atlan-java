@@ -400,11 +400,11 @@ public class MCIncident extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MCIncident, from a potentially
-     * more-complete MCIncident object.
+     * Builds the minimal object necessary to apply an update to a MCIncident,
+     * from a potentially more-complete MCIncident object.
      *
      * @return the minimal object necessary to update the MCIncident, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MCIncident are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MCIncident are not present in the initial object
      */
     @Override
     public MCIncidentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -393,11 +393,11 @@ public class CognosModule extends Asset implements ICognosModule, ICognos, IBI, 
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CognosModule, from a potentially
-     * more-complete CognosModule object.
+     * Builds the minimal object necessary to apply an update to a CognosModule,
+     * from a potentially more-complete CognosModule object.
      *
      * @return the minimal object necessary to update the CognosModule, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CognosModule are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CognosModule are not present in the initial object
      */
     @Override
     public CognosModuleBuilder<?, ?> trimToRequired() throws InvalidRequestException {

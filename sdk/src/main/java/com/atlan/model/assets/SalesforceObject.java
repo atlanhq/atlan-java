@@ -371,7 +371,6 @@ public class SalesforceObject extends Asset
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a SalesforceObject asset.
      *
@@ -447,11 +446,11 @@ public class SalesforceObject extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SalesforceObject, from a potentially
-     * more-complete SalesforceObject object.
+     * Builds the minimal object necessary to apply an update to a SalesforceObject,
+     * from a potentially more-complete SalesforceObject object.
      *
      * @return the minimal object necessary to update the SalesforceObject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceObject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SalesforceObject are not present in the initial object
      */
     @Override
     public SalesforceObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

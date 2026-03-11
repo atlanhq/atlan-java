@@ -369,11 +369,11 @@ public class RedashVisualization extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a RedashVisualization, from a potentially
-     * more-complete RedashVisualization object.
+     * Builds the minimal object necessary to apply an update to a RedashVisualization,
+     * from a potentially more-complete RedashVisualization object.
      *
      * @return the minimal object necessary to update the RedashVisualization, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for RedashVisualization are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a RedashVisualization are not present in the initial object
      */
     @Override
     public RedashVisualizationBuilder<?, ?> trimToRequired() throws InvalidRequestException {

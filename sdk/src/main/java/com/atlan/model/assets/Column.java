@@ -521,6 +521,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     ISnowflakeDynamicTable snowflakeDynamicTable;
 
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
     String sqlAIModelContextQualifiedName;
@@ -1098,11 +1103,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Column, from a potentially
-     * more-complete Column object.
+     * Builds the minimal object necessary to apply an update to a Column,
+     * from a potentially more-complete Column object.
      *
      * @return the minimal object necessary to update the Column, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Column are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a Column are not present in the initial object
      */
     @Override
     public ColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {

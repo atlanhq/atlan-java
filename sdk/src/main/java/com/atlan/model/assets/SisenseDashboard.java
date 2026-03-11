@@ -371,11 +371,11 @@ public class SisenseDashboard extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SisenseDashboard, from a potentially
-     * more-complete SisenseDashboard object.
+     * Builds the minimal object necessary to apply an update to a SisenseDashboard,
+     * from a potentially more-complete SisenseDashboard object.
      *
      * @return the minimal object necessary to update the SisenseDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SisenseDashboard are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SisenseDashboard are not present in the initial object
      */
     @Override
     public SisenseDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {

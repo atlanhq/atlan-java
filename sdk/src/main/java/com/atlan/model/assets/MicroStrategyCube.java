@@ -422,11 +422,11 @@ public class MicroStrategyCube extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a MicroStrategyCube, from a potentially
-     * more-complete MicroStrategyCube object.
+     * Builds the minimal object necessary to apply an update to a MicroStrategyCube,
+     * from a potentially more-complete MicroStrategyCube object.
      *
      * @return the minimal object necessary to update the MicroStrategyCube, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MicroStrategyCube are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a MicroStrategyCube are not present in the initial object
      */
     @Override
     public MicroStrategyCubeBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class DbtColumnProcess extends Asset
-        implements IDbtColumnProcess, IDbt, IColumnProcess, ICatalog, IAsset, IReferenceable, ILineageProcess {
+        implements IDbtColumnProcess, IColumnProcess, IDbt, ILineageProcess, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtColumnProcess";
@@ -73,7 +73,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String ast;
 
-    /** Routines used by this process. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -199,7 +199,7 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
-    /** Assets that are inputs to this task. */
+    /** Assets that are inputs to this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
@@ -233,7 +233,7 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** Assets that are outputs from this task. */
+    /** Assets that are outputs from this process. */
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
@@ -258,7 +258,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     IPowerBIDataflow powerBIDataflow;
 
-    /** Process in which this task exists. */
+    /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
 
@@ -270,6 +270,11 @@ public class DbtColumnProcess extends Asset
     /** SQL query that ran to produce the outputs. */
     @Attribute
     String sql;
+
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
 
     /** Procedures used by this process. */
     @Attribute
@@ -526,11 +531,11 @@ public class DbtColumnProcess extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DbtColumnProcess, from a potentially
-     * more-complete DbtColumnProcess object.
+     * Builds the minimal object necessary to apply an update to a DbtColumnProcess,
+     * from a potentially more-complete DbtColumnProcess object.
      *
      * @return the minimal object necessary to update the DbtColumnProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtColumnProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DbtColumnProcess are not present in the initial object
      */
     @Override
     public DbtColumnProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

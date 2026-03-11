@@ -521,11 +521,11 @@ public class SnowflakeAIModelContext extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SnowflakeAIModelContext, from a potentially
-     * more-complete SnowflakeAIModelContext object.
+     * Builds the minimal object necessary to apply an update to a SnowflakeAIModelContext,
+     * from a potentially more-complete SnowflakeAIModelContext object.
      *
      * @return the minimal object necessary to update the SnowflakeAIModelContext, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SnowflakeAIModelContext are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SnowflakeAIModelContext are not present in the initial object
      */
     @Override
     public SnowflakeAIModelContextBuilder<?, ?> trimToRequired() throws InvalidRequestException {

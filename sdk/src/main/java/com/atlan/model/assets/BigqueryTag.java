@@ -40,7 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICatalog, IAsset, IReferenceable {
+public class BigqueryTag extends Asset
+        implements IBigqueryTag, ITag, IBigquery, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BigqueryTag";
@@ -189,6 +190,11 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICat
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
+
+    /** Semantic logical tables that reference this physical table or view. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -488,11 +494,11 @@ public class BigqueryTag extends Asset implements IBigqueryTag, ITag, ISQL, ICat
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BigqueryTag, from a potentially
-     * more-complete BigqueryTag object.
+     * Builds the minimal object necessary to apply an update to a BigqueryTag,
+     * from a potentially more-complete BigqueryTag object.
      *
      * @return the minimal object necessary to update the BigqueryTag, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BigqueryTag are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BigqueryTag are not present in the initial object
      */
     @Override
     public BigqueryTagBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -420,11 +420,11 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a KafkaTopic, from a potentially
-     * more-complete KafkaTopic object.
+     * Builds the minimal object necessary to apply an update to a KafkaTopic,
+     * from a potentially more-complete KafkaTopic object.
      *
      * @return the minimal object necessary to update the KafkaTopic, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for KafkaTopic are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a KafkaTopic are not present in the initial object
      */
     @Override
     public KafkaTopicBuilder<?, ?> trimToRequired() throws InvalidRequestException {

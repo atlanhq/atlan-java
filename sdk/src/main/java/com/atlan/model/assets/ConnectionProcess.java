@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
@@ -15,6 +16,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class ConnectionProcess extends Asset implements IConnectionProcess, IAsset, IReferenceable {
+public class ConnectionProcess extends Asset implements IConnectionProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ConnectionProcess";
@@ -48,15 +50,96 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Connection assets that are inputs to this connection process. */
+    /** Additional Context of the ETL pipeline/notebook which creates the process. */
     @Attribute
-    @Singular
-    SortedSet<IConnection> inputs;
+    String additionalEtlContext;
 
-    /** Connection assets that are outputs from this connection process. */
+    /** ADF Activity that is associated with this lineage process. */
+    @Attribute
+    IAdfActivity adfActivity;
+
+    /** Dataset type for AI Model - dataset process. */
+    @Attribute
+    AIDatasetType aiDatasetType;
+
+    /** Tasks that exist within this process. */
     @Attribute
     @Singular
-    SortedSet<IConnection> outputs;
+    SortedSet<IAirflowTask> airflowTasks;
+
+    /** Parsed AST of the code or SQL statements that describe the logic of this process. */
+    @Attribute
+    String ast;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
+    /** Code that ran within the process. */
+    @Attribute
+    String code;
+
+    /** Processes that detail column-level lineage for this process. */
+    @Attribute
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
+
+    /** Individual Fabric activities contained in the process. */
+    @Attribute
+    @Singular
+    SortedSet<IFabricActivity> fabricActivities;
+
+    /** fivetranConnector in which this process exists. */
+    @Attribute
+    IFivetranConnector fivetranConnector;
+
+    /** Orchestrated control operation that ran these data flows (process). */
+    @Attribute
+    IFlowControlOperation flowOrchestratedBy;
+
+    /** Assets that are inputs to this process. */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> inputs;
+
+    /** Matillion component that contains the logic for this lineage process. */
+    @Attribute
+    IMatillionComponent matillionComponent;
+
+    /** Assets that are outputs from this process. */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    @JsonProperty("parentConnectionProcessQualifiedName")
+    SortedSet<String> parentConnectionProcessQualifiedNames;
+
+    /** PowerBI Dataflow that is associated with this lineage process. */
+    @Attribute
+    IPowerBIDataflow powerBIDataflow;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISparkJob> sparkJobs;
+
+    /** SQL query that ran to produce the outputs. */
+    @Attribute
+    String sql;
+
+    /** Functions used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> sqlFunctions;
+
+    /** Procedures used by this process. */
+    @Attribute
+    @Singular
+    SortedSet<IProcedure> sqlProcedures;
 
     /**
      * Builds the minimal object necessary to create a relationship to a ConnectionProcess, from a potentially
@@ -308,11 +391,11 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, IAss
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a ConnectionProcess, from a potentially
-     * more-complete ConnectionProcess object.
+     * Builds the minimal object necessary to apply an update to a ConnectionProcess,
+     * from a potentially more-complete ConnectionProcess object.
      *
      * @return the minimal object necessary to update the ConnectionProcess, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ConnectionProcess are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a ConnectionProcess are not present in the initial object
      */
     @Override
     public ConnectionProcessBuilder<?, ?> trimToRequired() throws InvalidRequestException {

@@ -373,11 +373,11 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CogniteAsset, from a potentially
-     * more-complete CogniteAsset object.
+     * Builds the minimal object necessary to apply an update to a CogniteAsset,
+     * from a potentially more-complete CogniteAsset object.
      *
      * @return the minimal object necessary to update the CogniteAsset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CogniteAsset are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CogniteAsset are not present in the initial object
      */
     @Override
     public CogniteAssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {

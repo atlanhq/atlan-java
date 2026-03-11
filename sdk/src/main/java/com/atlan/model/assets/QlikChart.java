@@ -404,11 +404,11 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a QlikChart, from a potentially
-     * more-complete QlikChart object.
+     * Builds the minimal object necessary to apply an update to a QlikChart,
+     * from a potentially more-complete QlikChart object.
      *
      * @return the minimal object necessary to update the QlikChart, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikChart are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a QlikChart are not present in the initial object
      */
     @Override
     public QlikChartBuilder<?, ?> trimToRequired() throws InvalidRequestException {

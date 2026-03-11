@@ -43,8 +43,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuppressWarnings({"cast", "serial"})
 public class AzureEventHubConsumerGroup extends Asset
         implements IAzureEventHubConsumerGroup,
-                IKafkaConsumerGroup,
                 IKafka,
+                IKafkaConsumerGroup,
                 IEventStore,
                 ICatalog,
                 IAsset,
@@ -458,7 +458,7 @@ public class AzureEventHubConsumerGroup extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to update an AzureEventHubConsumerGroup.
+     * Builds the minimal object necessary to update a AzureEventHubConsumerGroup.
      *
      * @param qualifiedName of the AzureEventHubConsumerGroup
      * @param name of the AzureEventHubConsumerGroup
@@ -472,11 +472,11 @@ public class AzureEventHubConsumerGroup extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to an AzureEventHubConsumerGroup, from a potentially
-     * more-complete AzureEventHubConsumerGroup object.
+     * Builds the minimal object necessary to apply an update to a AzureEventHubConsumerGroup,
+     * from a potentially more-complete AzureEventHubConsumerGroup object.
      *
      * @return the minimal object necessary to update the AzureEventHubConsumerGroup, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AzureEventHubConsumerGroup are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AzureEventHubConsumerGroup are not present in the initial object
      */
     @Override
     public AzureEventHubConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {

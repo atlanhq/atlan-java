@@ -14,6 +14,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.BusinessPolicyRule;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -40,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class BusinessPolicyIncident extends Asset
-        implements IBusinessPolicyIncident, IIncident, IAsset, IReferenceable {
+        implements IBusinessPolicyIncident, IIncident, IBusinessPolicy, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BusinessPolicyIncident";
@@ -49,6 +50,14 @@ public class BusinessPolicyIncident extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Base parent Guid for policy used in version */
+    @Attribute
+    String businessPolicyBaseParentGuid;
+
+    /** Business Policy Filter ES DSL to denote the associate asset/s involved. */
+    @Attribute
+    String businessPolicyFilterDSL;
 
     /** Filter ES DSL to denote the associate asset/s involved. */
     @Attribute
@@ -63,9 +72,54 @@ public class BusinessPolicyIncident extends Asset
     @Singular
     SortedSet<String> businessPolicyIncidentRelatedPolicyGUIDs;
 
+    /** Body of the business policy, a long readme like document */
+    @Attribute
+    String businessPolicyLongDescription;
+
+    /** Duration for the business policy to complete review. */
+    @Attribute
+    String businessPolicyReviewPeriod;
+
+    /** List of rules applied to this business policy. */
+    @Attribute
+    @Singular
+    List<BusinessPolicyRule> businessPolicyRules;
+
+    /** Selected approval workflow id for business policy */
+    @Attribute
+    String businessPolicySelectedApprovalWF;
+
+    /** Type of business policy */
+    @Attribute
+    String businessPolicyType;
+
+    /** Validity start date of the policy */
+    @Attribute
+    @Date
+    Long businessPolicyValidFrom;
+
+    /** Validity end date of the policy */
+    @Attribute
+    @Date
+    Long businessPolicyValidTill;
+
+    /** Version of the policy */
+    @Attribute
+    Integer businessPolicyVersion;
+
+    /** Exception assigned to business polices */
+    @Attribute
+    @Singular("exceptionForBusinessPolicy")
+    SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
+
     /** Status of this asset's severity. */
     @Attribute
     IncidentSeverity incidentSeverity;
+
+    /** BusinessPolicy that have the same (or relatable) compliance */
+    @Attribute
+    @Singular
+    SortedSet<IBusinessPolicy> relatedBusinessPolicies;
 
     /**
      * Builds the minimal object necessary to create a relationship to a BusinessPolicyIncident, from a potentially
@@ -317,11 +371,11 @@ public class BusinessPolicyIncident extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a BusinessPolicyIncident, from a potentially
-     * more-complete BusinessPolicyIncident object.
+     * Builds the minimal object necessary to apply an update to a BusinessPolicyIncident,
+     * from a potentially more-complete BusinessPolicyIncident object.
      *
      * @return the minimal object necessary to update the BusinessPolicyIncident, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for BusinessPolicyIncident are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a BusinessPolicyIncident are not present in the initial object
      */
     @Override
     public BusinessPolicyIncidentBuilder<?, ?> trimToRequired() throws InvalidRequestException {

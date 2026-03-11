@@ -381,7 +381,6 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a Anaplan page.
      *
@@ -460,11 +459,11 @@ public class AnaplanPage extends Asset implements IAnaplanPage, IAnaplan, IBI, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AnaplanPage, from a potentially
-     * more-complete AnaplanPage object.
+     * Builds the minimal object necessary to apply an update to a AnaplanPage,
+     * from a potentially more-complete AnaplanPage object.
      *
      * @return the minimal object necessary to update the AnaplanPage, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AnaplanPage are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a AnaplanPage are not present in the initial object
      */
     @Override
     public AnaplanPageBuilder<?, ?> trimToRequired() throws InvalidRequestException {

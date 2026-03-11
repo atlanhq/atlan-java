@@ -404,11 +404,11 @@ public class SageMakerUnifiedStudioProject extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SageMakerUnifiedStudioProject, from a potentially
-     * more-complete SageMakerUnifiedStudioProject object.
+     * Builds the minimal object necessary to apply an update to a SageMakerUnifiedStudioProject,
+     * from a potentially more-complete SageMakerUnifiedStudioProject object.
      *
      * @return the minimal object necessary to update the SageMakerUnifiedStudioProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SageMakerUnifiedStudioProject are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SageMakerUnifiedStudioProject are not present in the initial object
      */
     @Override
     public SageMakerUnifiedStudioProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {

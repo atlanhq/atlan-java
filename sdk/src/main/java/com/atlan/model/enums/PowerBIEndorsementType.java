@@ -10,6 +10,7 @@ import lombok.Getter;
 public enum PowerBIEndorsementType implements AtlanEnum {
     PROMOTED("Promoted"),
     CERTIFIED("Certified"),
+    MASTER_DATA("Master Data"),
     ;
 
     @JsonValue

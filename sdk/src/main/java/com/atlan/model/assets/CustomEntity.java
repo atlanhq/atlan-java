@@ -355,7 +355,6 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
         return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
-
     /**
      * Builds the minimal object necessary to create a CustomEntity.
      *
@@ -386,11 +385,11 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a CustomEntity, from a potentially
-     * more-complete CustomEntity object.
+     * Builds the minimal object necessary to apply an update to a CustomEntity,
+     * from a potentially more-complete CustomEntity object.
      *
      * @return the minimal object necessary to update the CustomEntity, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for CustomEntity are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a CustomEntity are not present in the initial object
      */
     @Override
     public CustomEntityBuilder<?, ?> trimToRequired() throws InvalidRequestException {

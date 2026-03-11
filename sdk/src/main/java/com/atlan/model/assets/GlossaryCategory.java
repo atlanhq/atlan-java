@@ -50,12 +50,12 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes associated with the category. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Glossary in which this category is contained. */
     @Attribute
     IGlossary anchor;
 
@@ -63,25 +63,25 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Attribute
     AtlasGlossaryCategoryType categoryType;
 
-    /** TBC */
+    /** Child categories organized within this category. */
     @Attribute
     @Singular("childCategory")
     @Setter(AccessLevel.PACKAGE)
     SortedSet<IGlossaryCategory> childrenCategories;
 
-    /** TBC */
+    /** Unused. Detailed description of the category. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Parent category in which this category is located (or empty if this is a root-level category). */
     @Attribute
     IGlossaryCategory parentCategory;
 
-    /** TBC */
+    /** Unused. Brief summary of the category. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms organized within this category. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;

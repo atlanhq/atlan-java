@@ -426,11 +426,11 @@ public class TableauDashboardField extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a TableauDashboardField, from a potentially
-     * more-complete TableauDashboardField object.
+     * Builds the minimal object necessary to apply an update to a TableauDashboardField,
+     * from a potentially more-complete TableauDashboardField object.
      *
      * @return the minimal object necessary to update the TableauDashboardField, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDashboardField are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a TableauDashboardField are not present in the initial object
      */
     @Override
     public TableauDashboardFieldBuilder<?, ?> trimToRequired() throws InvalidRequestException {

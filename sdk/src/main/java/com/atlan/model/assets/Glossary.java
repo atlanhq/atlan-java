@@ -56,12 +56,12 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unused. Arbitrary set of additional attributes associated with this glossary. */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** TBC */
+    /** Categories contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<IGlossaryCategory> categories;
@@ -70,24 +70,24 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Attribute
     AtlasGlossaryType glossaryType;
 
-    /** TBC */
+    /** Unused. Language of the glossary's contents. */
     @Attribute
     String language;
 
-    /** TBC */
+    /** Unused. A longer description of the glossary. See 'readme' instead. */
     @Attribute
     String longDescription;
 
-    /** TBC */
+    /** Unused. A short definition of the glossary. See 'description' and 'userDescription' instead. */
     @Attribute
     String shortDescription;
 
-    /** TBC */
+    /** Terms contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;
 
-    /** TBC */
+    /** Unused. Inteded usage for the glossary. */
     @Attribute
     String usage;
 

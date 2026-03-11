@@ -471,11 +471,11 @@ public class SalesforceReport extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a SalesforceReport, from a potentially
-     * more-complete SalesforceReport object.
+     * Builds the minimal object necessary to apply an update to a SalesforceReport,
+     * from a potentially more-complete SalesforceReport object.
      *
      * @return the minimal object necessary to update the SalesforceReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceReport are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a SalesforceReport are not present in the initial object
      */
     @Override
     public SalesforceReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {

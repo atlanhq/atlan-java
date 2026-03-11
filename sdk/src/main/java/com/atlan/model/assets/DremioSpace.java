@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class DremioSpace extends Asset implements IDremioSpace, IDremio, ISQL, ICatalog, IAsset, IReferenceable {
+public class DremioSpace extends Asset implements IDremioSpace, IDremio, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DremioSpace";
@@ -497,11 +497,11 @@ public class DremioSpace extends Asset implements IDremioSpace, IDremio, ISQL, I
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a DremioSpace, from a potentially
-     * more-complete DremioSpace object.
+     * Builds the minimal object necessary to apply an update to a DremioSpace,
+     * from a potentially more-complete DremioSpace object.
      *
      * @return the minimal object necessary to update the DremioSpace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DremioSpace are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DremioSpace are not present in the initial object
      */
     @Override
     public DremioSpaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
