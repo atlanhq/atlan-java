@@ -87,9 +87,11 @@ tasks.register<Copy>("generateJava") {
     finalizedBy("generateEffectiveLombokConfig")
 }
 
+// Exclude overlay files (bare method fragments, not valid standalone Java) from all tasks
+sourceSets["main"].java.exclude("com/atlan/model/assets/_overlays/**")
+
 tasks.compileJava {
     sourceSets["main"].java.srcDir("${layout.buildDirectory.get()}/generated/java")
-    sourceSets["main"].java.exclude("com/atlan/model/assets/_overlays/**")
     dependsOn(tasks.getByName("generateJava"))
 }
 
