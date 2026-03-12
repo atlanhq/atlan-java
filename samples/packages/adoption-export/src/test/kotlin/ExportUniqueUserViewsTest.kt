@@ -8,7 +8,6 @@ import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
 import java.io.File
-import java.math.BigDecimal
 
 /**
  * Test export of asset views adoption information, sorted by number of unique users.
