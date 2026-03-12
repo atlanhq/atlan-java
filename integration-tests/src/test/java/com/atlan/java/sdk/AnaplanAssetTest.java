@@ -358,15 +358,15 @@ public class AnaplanAssetTest extends AtlanLiveTest {
             groups = {"anaplan.update.view.again"},
             dependsOnGroups = {"anaplan.read.view"})
     void updateViewAgain() throws AtlanException {
-        AnaplanView updated = AnaplanView.removeCertificate(client, view.getQualifiedName(), VIEW_NAME);
-        assertNotNull(updated);
+        AnaplanView.removeCertificate(client, view.getQualifiedName(), VIEW_NAME);
+        AnaplanView updated = AnaplanView.get(client, view.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AnaplanView.removeAnnouncement(client, view.getQualifiedName(), VIEW_NAME);
-        assertNotNull(updated);
+        AnaplanView.removeAnnouncement(client, view.getQualifiedName(), VIEW_NAME);
+        updated = AnaplanView.get(client, view.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

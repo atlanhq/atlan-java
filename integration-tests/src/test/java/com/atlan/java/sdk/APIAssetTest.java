@@ -116,15 +116,15 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.update.spec.again"},
             dependsOnGroups = {"api.read.spec"})
     void updateSpecAgain() throws AtlanException {
-        APISpec updated = APISpec.removeCertificate(client, spec.getQualifiedName(), SPEC_NAME);
-        assertNotNull(updated);
+        APISpec.removeCertificate(client, spec.getQualifiedName(), SPEC_NAME);
+        APISpec updated = APISpec.get(client, spec.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = APISpec.removeAnnouncement(client, spec.getQualifiedName(), SPEC_NAME);
-        assertNotNull(updated);
+        APISpec.removeAnnouncement(client, spec.getQualifiedName(), SPEC_NAME);
+        updated = APISpec.get(client, spec.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

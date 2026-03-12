@@ -150,16 +150,15 @@ public class KafkaTest extends AtlanLiveTest {
             groups = {"kafka.update.consumergroup.again"},
             dependsOnGroups = {"kafka.read.consumergroup"})
     void updateGroupAgain() throws AtlanException {
-        KafkaConsumerGroup updated =
-                KafkaConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
-        assertNotNull(updated);
+        KafkaConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
+        KafkaConsumerGroup updated = KafkaConsumerGroup.get(client, consumerGroup.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = KafkaConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
-        assertNotNull(updated);
+        KafkaConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
+        updated = KafkaConsumerGroup.get(client, consumerGroup.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

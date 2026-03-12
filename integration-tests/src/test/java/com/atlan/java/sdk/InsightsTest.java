@@ -225,25 +225,25 @@ public class InsightsTest extends AtlanLiveTest {
             groups = {"insights.update.query.again"},
             dependsOnGroups = {"insights.read.query", "insights.read.folder"})
     void updateQueryAgain() throws AtlanException {
-        AtlanQuery updated = AtlanQuery.removeCertificate(
+        AtlanQuery.removeCertificate(
                 client,
                 query.getQualifiedName(),
                 query.getName(),
                 query.getCollectionQualifiedName(),
                 query.getParentQualifiedName());
-        assertNotNull(updated);
+        AtlanQuery updated = AtlanQuery.get(client, query.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AtlanQuery.removeAnnouncement(
+        AtlanQuery.removeAnnouncement(
                 client,
                 query.getQualifiedName(),
                 QUERY_NAME,
                 query.getCollectionQualifiedName(),
                 query.getParentQualifiedName());
-        assertNotNull(updated);
+        updated = AtlanQuery.get(client, query.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

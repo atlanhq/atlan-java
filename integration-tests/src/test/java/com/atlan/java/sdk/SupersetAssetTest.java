@@ -166,16 +166,15 @@ public class SupersetAssetTest extends AtlanLiveTest {
             groups = {"superset.update.dashboard.again"},
             dependsOnGroups = {"superset.read.dashboard"})
     void updateDashboardAgain() throws AtlanException {
-        SupersetDashboard updated =
-                SupersetDashboard.removeCertificate(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
-        assertNotNull(updated);
+        SupersetDashboard.removeCertificate(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
+        SupersetDashboard updated = SupersetDashboard.get(client, dashboard.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = SupersetDashboard.removeAnnouncement(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
-        assertNotNull(updated);
+        SupersetDashboard.removeAnnouncement(client, dashboard.getQualifiedName(), DASHBOARD_NAME);
+        updated = SupersetDashboard.get(client, dashboard.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

@@ -92,15 +92,15 @@ public class FileTest extends AtlanLiveTest {
             groups = {"file.update.file.again"},
             dependsOnGroups = {"file.read.file"})
     void updateFileAgain() throws AtlanException {
-        File updated = File.removeCertificate(client, file.getQualifiedName(), FILE_NAME);
-        assertNotNull(updated);
+        File.removeCertificate(client, file.getQualifiedName(), FILE_NAME);
+        File updated = File.get(client, file.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = File.removeAnnouncement(client, file.getQualifiedName(), FILE_NAME);
-        assertNotNull(updated);
+        File.removeAnnouncement(client, file.getQualifiedName(), FILE_NAME);
+        updated = File.get(client, file.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

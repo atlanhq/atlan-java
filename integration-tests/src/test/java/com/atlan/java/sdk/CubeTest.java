@@ -340,15 +340,15 @@ public class CubeTest extends AtlanLiveTest {
             groups = {"mdd.update.cube.again"},
             dependsOnGroups = {"mdd.read.cube"})
     void updateCubeAgain() throws AtlanException {
-        Cube updated = Cube.removeCertificate(client, cube.getQualifiedName(), CUBE_NAME);
-        assertNotNull(updated);
+        Cube.removeCertificate(client, cube.getQualifiedName(), CUBE_NAME);
+        Cube updated = Cube.get(client, cube.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = Cube.removeAnnouncement(client, cube.getQualifiedName(), CUBE_NAME);
-        assertNotNull(updated);
+        Cube.removeAnnouncement(client, cube.getQualifiedName(), CUBE_NAME);
+        updated = Cube.get(client, cube.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

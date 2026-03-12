@@ -520,10 +520,8 @@ public class GlossaryTest extends AtlanLiveTest {
                         category.getAnchor().getGuid())
                 .removeAnnouncement()
                 .build();
-        AssetMutationResponse response = toUpdate.save(client);
-        Asset one = validateSingleUpdate(response);
-        assertTrue(one instanceof GlossaryCategory);
-        GlossaryCategory c = (GlossaryCategory) one;
+        toUpdate.save(client);
+        GlossaryCategory c = GlossaryCategory.get(client, category.getGuid(), false);
         assertEquals(c.getGuid(), category.getGuid());
         assertEquals(c.getQualifiedName(), category.getQualifiedName());
         assertEquals(c.getName(), category.getName());

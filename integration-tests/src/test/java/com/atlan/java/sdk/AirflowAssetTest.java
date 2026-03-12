@@ -126,15 +126,15 @@ public class AirflowAssetTest extends AtlanLiveTest {
             groups = {"airflow.update.dag.again"},
             dependsOnGroups = {"airflow.read.dag"})
     void updateDAGAgain() throws AtlanException {
-        AirflowDag updated = AirflowDag.removeCertificate(client, dag.getQualifiedName(), DAG_NAME);
-        assertNotNull(updated);
+        AirflowDag.removeCertificate(client, dag.getQualifiedName(), DAG_NAME);
+        AirflowDag updated = AirflowDag.get(client, dag.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AirflowDag.removeAnnouncement(client, dag.getQualifiedName(), DAG_NAME);
-        assertNotNull(updated);
+        AirflowDag.removeAnnouncement(client, dag.getQualifiedName(), DAG_NAME);
+        updated = AirflowDag.get(client, dag.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());
