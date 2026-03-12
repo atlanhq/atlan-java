@@ -119,8 +119,6 @@ jobs:
     needs:
       - build
       - list-packages
-      - integration-test
-    if: ${{ always() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -161,8 +159,6 @@ jobs:
     needs:
       - build
       - list-packages
-      - integration-test
-    if: ${{ always() && needs.build.result == 'success' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
