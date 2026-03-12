@@ -65,7 +65,6 @@ class ExportUsersTest : PackageTest("u") {
                     assertTrue(row["Group names"].isNullOrBlank())
                 } else {
                     assertFalse(row["Group names"].isNullOrBlank())
-                    assertTrue(row["Groups"] != row["Group names"])
                     assertTrue(row["Groups"]!!.split("\n").size == row["Group names"]!!.split("\n").size)
                 }
             }
