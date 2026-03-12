@@ -60,6 +60,8 @@ tasks {
     }
     javadoc {
         title = "Atlan Java SDK $versionId"
+        // Overlay files are bare method fragments (no class/package) and must not be fed to javadoc
+        exclude("com/atlan/model/assets/_overlays/**")
     }
     spotlessJava {
         dependsOn("generateJava")
@@ -87,11 +89,9 @@ tasks.register<Copy>("generateJava") {
     finalizedBy("generateEffectiveLombokConfig")
 }
 
-// Exclude overlay files (bare method fragments, not valid standalone Java) from all tasks
-sourceSets["main"].java.exclude("com/atlan/model/assets/_overlays/**")
-
 tasks.compileJava {
     sourceSets["main"].java.srcDir("${layout.buildDirectory.get()}/generated/java")
+    sourceSets["main"].java.exclude("com/atlan/model/assets/_overlays/**")
     dependsOn(tasks.getByName("generateJava"))
 }
 
@@ -103,7 +103,10 @@ tasks.register<Zip>("buildZip") {
 
 tasks.register<Jar>("sourcesJar") {
     archiveClassifier.set("sources")
-    from(tasks.delombok)
+    from(tasks.delombok) {
+        // Overlay files are bare method fragments, not valid standalone Java sources
+        exclude("com/atlan/model/assets/_overlays/**")
+    }
 }
 
 tasks.register<Jar>("javadocJar") {
