@@ -122,17 +122,15 @@ public class AppAssetTest extends AtlanLiveTest {
             groups = {"app.update.applicationField.again"},
             dependsOnGroups = {"app.read.applicationField"})
     void updateApplicationFieldAgain() throws AtlanException {
-        ApplicationField updated =
-                ApplicationField.removeCertificate(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
-        assertNotNull(updated);
+        ApplicationField.removeCertificate(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
+        ApplicationField updated = ApplicationField.get(client, applicationField.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = ApplicationField.removeAnnouncement(
-                client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
-        assertNotNull(updated);
+        ApplicationField.removeAnnouncement(client, applicationField.getQualifiedName(), APPLICATION_FIELD_NAME);
+        updated = ApplicationField.get(client, applicationField.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

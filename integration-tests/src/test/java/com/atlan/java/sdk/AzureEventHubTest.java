@@ -149,16 +149,15 @@ public class AzureEventHubTest extends AtlanLiveTest {
             groups = {"aeh.update.consumergroup.again"},
             dependsOnGroups = {"aeh.read.consumergroup"})
     void updateGroupAgain() throws AtlanException {
-        AzureEventHubConsumerGroup updated =
-                AzureEventHubConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
-        assertNotNull(updated);
+        AzureEventHubConsumerGroup.removeCertificate(client, consumerGroup.getQualifiedName(), CG_NAME);
+        AzureEventHubConsumerGroup updated = AzureEventHubConsumerGroup.get(client, consumerGroup.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = AzureEventHubConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
-        assertNotNull(updated);
+        AzureEventHubConsumerGroup.removeAnnouncement(client, consumerGroup.getQualifiedName(), CG_NAME);
+        updated = AzureEventHubConsumerGroup.get(client, consumerGroup.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

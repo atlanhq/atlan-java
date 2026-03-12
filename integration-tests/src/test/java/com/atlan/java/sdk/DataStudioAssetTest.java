@@ -114,15 +114,15 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.update.report.again"},
             dependsOnGroups = {"gds.read.report"})
     void updateReportAgain() throws AtlanException {
-        DataStudioAsset updated = DataStudioAsset.removeCertificate(client, report.getQualifiedName(), REPORT_NAME);
-        assertNotNull(updated);
+        DataStudioAsset.removeCertificate(client, report.getQualifiedName(), REPORT_NAME);
+        DataStudioAsset updated = DataStudioAsset.get(client, report.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = DataStudioAsset.removeAnnouncement(client, report.getQualifiedName(), REPORT_NAME);
-        assertNotNull(updated);
+        DataStudioAsset.removeAnnouncement(client, report.getQualifiedName(), REPORT_NAME);
+        updated = DataStudioAsset.get(client, report.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

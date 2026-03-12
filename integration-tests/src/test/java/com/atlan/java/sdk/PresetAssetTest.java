@@ -193,16 +193,15 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.update.collection.again"},
             dependsOnGroups = {"preset.read.collection"})
     void updateCollectionAgain() throws AtlanException {
-        PresetDashboard updated =
-                PresetDashboard.removeCertificate(client, collection.getQualifiedName(), COLLECTION_NAME);
-        assertNotNull(updated);
+        PresetDashboard.removeCertificate(client, collection.getQualifiedName(), COLLECTION_NAME);
+        PresetDashboard updated = PresetDashboard.get(client, collection.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = PresetDashboard.removeAnnouncement(client, collection.getQualifiedName(), COLLECTION_NAME);
-        assertNotNull(updated);
+        PresetDashboard.removeAnnouncement(client, collection.getQualifiedName(), COLLECTION_NAME);
+        updated = PresetDashboard.get(client, collection.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

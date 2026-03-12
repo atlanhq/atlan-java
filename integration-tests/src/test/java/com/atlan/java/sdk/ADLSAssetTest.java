@@ -150,15 +150,15 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.update.container.again"},
             dependsOnGroups = {"adls.read.container"})
     void updateContainerAgain() throws AtlanException {
-        ADLSContainer updated = ADLSContainer.removeCertificate(client, container.getQualifiedName(), CONTAINER_NAME);
-        assertNotNull(updated);
+        ADLSContainer.removeCertificate(client, container.getQualifiedName(), CONTAINER_NAME);
+        ADLSContainer updated = ADLSContainer.get(client, container.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = ADLSContainer.removeAnnouncement(client, container.getQualifiedName(), CONTAINER_NAME);
-        assertNotNull(updated);
+        ADLSContainer.removeAnnouncement(client, container.getQualifiedName(), CONTAINER_NAME);
+        updated = ADLSContainer.get(client, container.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

@@ -123,15 +123,15 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.update.bucket.again"},
             dependsOnGroups = {"gcs.read.bucket"})
     void updateBucketAgain() throws AtlanException {
-        GCSBucket updated = GCSBucket.removeCertificate(client, bucket.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        GCSBucket.removeCertificate(client, bucket.getQualifiedName(), BUCKET_NAME);
+        GCSBucket updated = GCSBucket.get(client, bucket.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = GCSBucket.removeAnnouncement(client, bucket.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        GCSBucket.removeAnnouncement(client, bucket.getQualifiedName(), BUCKET_NAME);
+        updated = GCSBucket.get(client, bucket.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());

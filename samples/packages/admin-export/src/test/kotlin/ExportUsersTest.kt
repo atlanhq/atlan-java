@@ -61,9 +61,13 @@ class ExportUsersTest : PackageTest("u") {
                 // assertFalse(row["Last name"].isNullOrBlank())
                 assertFalse(row["Email address"].isNullOrBlank())
                 assertTrue(row["Email address"]!!.contains('@'))
-                assertTrue((row["Groups"].isNullOrBlank() && row["Group names"].isNullOrBlank()) || (row["Groups"]!!.isNotBlank() && row["Group names"]!!.isNotBlank()))
-                assertTrue(row["Groups"] != row["Group names"])
-                assertTrue(row["Groups"]!!.split("\n").size == row["Group names"]!!.split("\n").size)
+                if (row["Groups"].isNullOrBlank()) {
+                    assertTrue(row["Group names"].isNullOrBlank())
+                } else {
+                    assertFalse(row["Group names"].isNullOrBlank())
+                    assertTrue(row["Groups"] != row["Group names"])
+                    assertTrue(row["Groups"]!!.split("\n").size == row["Group names"]!!.split("\n").size)
+                }
             }
         }
     }

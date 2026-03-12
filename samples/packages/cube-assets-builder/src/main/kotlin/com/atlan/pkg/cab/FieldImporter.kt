@@ -174,7 +174,7 @@ class FieldImporter(
             .creator(name, parentQN)
             .cubeFieldLevel(level)
             .cubeFieldGeneration(generationToProcess)
-            .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong())
+            .cubeSubFieldCount(preprocessed.qualifiedNameToChildCount[qnDetails.uniqueQN]?.toLong() ?: 0L)
     }
 
     /**

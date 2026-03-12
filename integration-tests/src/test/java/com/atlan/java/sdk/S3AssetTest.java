@@ -216,15 +216,15 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.update.bucket.again"},
             dependsOnGroups = {"s3.read.bucket"})
     void updateS3BucketAgainARN() throws AtlanException {
-        S3Bucket updated = S3Bucket.removeCertificate(client, bucketARN.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        S3Bucket.removeCertificate(client, bucketARN.getQualifiedName(), BUCKET_NAME);
+        S3Bucket updated = S3Bucket.get(client, bucketARN.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = S3Bucket.removeAnnouncement(client, bucketARN.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        S3Bucket.removeAnnouncement(client, bucketARN.getQualifiedName(), BUCKET_NAME);
+        updated = S3Bucket.get(client, bucketARN.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());
@@ -234,15 +234,15 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.update.bucket.again"},
             dependsOnGroups = {"s3.read.bucket"})
     void updateS3BucketAgainByName() throws AtlanException {
-        S3Bucket updated = S3Bucket.removeCertificate(client, bucketByName.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        S3Bucket.removeCertificate(client, bucketByName.getQualifiedName(), BUCKET_NAME);
+        S3Bucket updated = S3Bucket.get(client, bucketByName.getGuid(), false);
         assertNull(updated.getCertificateStatus());
         assertNull(updated.getCertificateStatusMessage());
         assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        updated = S3Bucket.removeAnnouncement(client, bucketByName.getQualifiedName(), BUCKET_NAME);
-        assertNotNull(updated);
+        S3Bucket.removeAnnouncement(client, bucketByName.getQualifiedName(), BUCKET_NAME);
+        updated = S3Bucket.get(client, bucketByName.getGuid(), false);
         assertNull(updated.getAnnouncementType());
         assertNull(updated.getAnnouncementTitle());
         assertNull(updated.getAnnouncementMessage());
