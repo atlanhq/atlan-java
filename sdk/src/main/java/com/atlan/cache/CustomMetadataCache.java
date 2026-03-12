@@ -32,6 +32,7 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
     private volatile Map<String, Map<String, String>> mapAttrSidToName = new ConcurrentHashMap<>();
     private volatile Map<String, Map<String, String>> mapAttrNameToSid = new ConcurrentHashMap<>();
     private volatile Set<String> archivedAttrSids = ConcurrentHashMap.newKeySet();
+    private volatile Set<String> deletedAttrIds = ConcurrentHashMap.newKeySet();
 
     private final TypeDefsEndpoint typeDefsEndpoint;
 
@@ -69,6 +70,7 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
         mapAttrSidToName.clear();
         mapAttrNameToSid.clear();
         archivedAttrSids.clear();
+        deletedAttrIds.clear();
         super.refreshCache();
         for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
@@ -529,6 +531,10 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
         if (setId == null || setId.isEmpty()) throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
         if (attributeId == null || attributeId.isEmpty())
             throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
+        String compositeKey = setId + "." + attributeId;
+        if (deletedAttrIds.contains(compositeKey)) {
+            throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_ID, attributeId, setId);
+        }
         Map<String, String> subMap = getAttrNameFromId(setId);
         String attrName = null;
         if (subMap != null) {
@@ -539,6 +545,7 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
             refresh(minimumTime);
             subMap = getAttrNameFromId(setId);
             if (subMap == null) {
+                deletedAttrIds.add(compositeKey);
                 throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
             }
         } else {
@@ -546,6 +553,7 @@ public class CustomMetadataCache extends AbstractMassTrackingCache<CustomMetadat
         }
         attrName = subMap.get(attributeId);
         if (attrName == null) {
+            deletedAttrIds.add(compositeKey);
             throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_ID, attributeId, setId);
         }
         return attrName;
