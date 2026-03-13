@@ -81,3 +81,32 @@ cp .env.example .env
 # Edit .env with your ATLAN_BASE_URL and ATLAN_API_KEY
 export $(cat .env | xargs)
 ```
+
+## Security
+
+> Follow these security guidelines for every change to the Atlan Java SDK.
+
+### Contact
+
+- **Security Team:** #bu-security-and-it on Slack
+
+### Quickstart for Agents
+
+This multi-module Gradle project provides the Atlan Java SDK (`sdk/`) and package-toolkit (`package-toolkit/`). The SDK uses `HttpURLConnection`-based HTTP client with API key auth. The package-toolkit supports S3, GCS, and ADLS object storage connectors. Review every change for:
+
+- **API key logging** — the `apiKey` / `token` used for Atlan API auth must never appear in log output or error messages; log only the base URL and HTTP status codes.
+- **TLS verification** — HTTP connections to the Atlan API must use TLS with certificate verification; `trustAllCerts` or disabling hostname verification is not permitted.
+- **Package-toolkit credential handling** — S3/GCS/ADLS credentials used in package-toolkit runtime must not be logged; use credential-aware `toString()` that excludes secret fields.
+
+### Security Invariants
+
+- **[MUST]** `apiKey` / `token` must never appear in log output or error messages.
+- **[MUST]** TLS certificate verification must not be disabled.
+- **[MUST]** Cloud storage credentials (S3 secret key, GCS service account, ADLS client secret) must not be logged.
+
+### Review Checklist
+
+- [ ] `apiKey` / `token` absent from all log output and exceptions
+- [ ] No `trustAllCerts` or hostname verification bypass
+- [ ] S3/GCS/ADLS credential values absent from all log output
+- [ ] All dependencies in `build.gradle.kts` use explicit version pins
