@@ -44,6 +44,12 @@ public interface IAPIObject {
     /** Count of the APIField of this object. */
     NumericField API_FIELD_COUNT = new NumericField("apiFieldCount", "apiFieldCount");
 
+    /** API methods that use this object as their request schema. */
+    RelationField API_METHODS_REQUESTING_THIS = new RelationField("apiMethodsRequestingThis");
+
+    /** API methods that use this object as one of their response schemas. */
+    RelationField API_METHODS_RESPONDING_WITH_THIS = new RelationField("apiMethodsRespondingWithThis");
+
     /** APIField assets contained within this APIObject. */
     RelationField API_FIELDS = new RelationField("apiFields");
 
@@ -89,6 +95,16 @@ public interface IAPIObject {
 
     /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
+
+    /** API methods that use this object as their request schema. */
+    default SortedSet<IAPIMethod> getApiMethodsRequestingThis() {
+        return null;
+    }
+
+    /** API methods that use this object as one of their response schemas. */
+    default SortedSet<IAPIMethod> getApiMethodsRespondingWithThis() {
+        return null;
+    }
 
     /** If this asset refers to an APIObject */
     Boolean getApiIsObjectReference();

@@ -29,7 +29,8 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instances of APIObject in Atlan.
+ * Instance of an API method (operation) on a path in Atlan.
+ * Represents a single HTTP method such as GET, POST, PUT, DELETE on an APIPath.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -38,12 +39,12 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAsset, IReferenceable {
+public class APIMethod extends Asset implements IAPIMethod, IAPI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "APIObject";
+    public static final String TYPE_NAME = "APIMethod";
 
-    /** Fixed typeName for APIObjects. */
+    /** Fixed typeName for APIMethods. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -53,36 +54,43 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     @Singular
     Map<String, String> apiExternalDocs;
 
-    /** Count of the APIField of this object. */
-    @Attribute
-    Long apiFieldCount;
-
-    /** APIField assets contained within this APIObject. */
-    @Attribute
-    @Singular
-    SortedSet<IAPIField> apiFields;
-
     /** Whether authentication is optional (true) or required (false). */
     @Attribute
     Boolean apiIsAuthOptional;
-
-    /** API methods that use this object as their request schema. */
-    @Attribute
-    @Singular
-    SortedSet<IAPIMethod> apiMethodsRequestingThis;
-
-    /** API methods that use this object as one of their response schemas. */
-    @Attribute
-    @Singular
-    SortedSet<IAPIMethod> apiMethodsRespondingWithThis;
 
     /** If this asset refers to an APIObject */
     @Attribute
     Boolean apiIsObjectReference;
 
+    /** Request body or schema information for this API method. */
+    @Attribute
+    String apiMethodRequest;
+
+    /** APIObject schema describing this method's request body. */
+    @Attribute
+    IAPIObject apiMethodRequestSchema;
+
+    /** Response body or schema information for this API method. */
+    @Attribute
+    String apiMethodResponse;
+
+    /** Map of HTTP response status codes to the qualified names of the APIObject schemas that describe each response. */
+    @Attribute
+    @Singular
+    Map<String, String> apiMethodResponseCodes;
+
+    /** APIObject schemas describing this method's response bodies. */
+    @Attribute
+    @Singular("apiMethodResponseSchema")
+    SortedSet<IAPIObject> apiMethodResponseSchemas;
+
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     @Attribute
     String apiObjectQualifiedName;
+
+    /** API path on which this method operates. */
+    @Attribute
+    IAPIPath apiPath;
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     @Attribute
@@ -140,25 +148,15 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     @Singular
     SortedSet<ISparkJob> outputFromSparkJobs;
 
-    /** Partial fields contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialField> partialChildFields;
-
-    /** Partial objects contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialObject> partialChildObjects;
-
     /**
-     * Builds the minimal object necessary to create a relationship to a APIObject, from a potentially
-     * more-complete APIObject object.
+     * Builds the minimal object necessary to create a relationship to a APIMethod, from a potentially
+     * more-complete APIMethod object.
      *
-     * @return the minimal object necessary to relate to the APIObject
-     * @throws InvalidRequestException if any of the minimal set of required properties for a APIObject relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the APIMethod
+     * @throws InvalidRequestException if any of the minimal set of required properties for a APIMethod relationship are not found in the initial object
      */
     @Override
-    public APIObject trimToReference() throws InvalidRequestException {
+    public APIMethod trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -175,27 +173,27 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Start a fluent search that will return all APIObject assets.
+     * Start a fluent search that will return all APIMethod assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) APIObject assets will be included.
+     * optimal retrieval. Only active (non-archived) APIMethod assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all APIObject assets
+     * @return a fluent search that includes all APIMethod assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all APIObject assets.
+     * Start a fluent search that will return all APIMethod assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) APIObjects will be included
-     * @return a fluent search that includes all APIObject assets
+     * @param includeArchived when true, archived (soft-deleted) APIMethods will be included
+     * @return a fluent search that includes all APIMethod assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -207,51 +205,51 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Reference to a APIObject by GUID. Use this to create a relationship to this APIObject,
+     * Reference to a APIMethod by GUID. Use this to create a relationship to this APIMethod,
      * where the relationship should be replaced.
      *
-     * @param guid the GUID of the APIObject to reference
-     * @return reference to a APIObject that can be used for defining a relationship to a APIObject
+     * @param guid the GUID of the APIMethod to reference
+     * @return reference to a APIMethod that can be used for defining a relationship to a APIMethod
      */
-    public static APIObject refByGuid(String guid) {
+    public static APIMethod refByGuid(String guid) {
         return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a APIObject by GUID. Use this to create a relationship to this APIObject,
+     * Reference to a APIMethod by GUID. Use this to create a relationship to this APIMethod,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param guid the GUID of the APIObject to reference
+     * @param guid the GUID of the APIMethod to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a APIObject that can be used for defining a relationship to a APIObject
+     * @return reference to a APIMethod that can be used for defining a relationship to a APIMethod
      */
-    public static APIObject refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return APIObject._internal().guid(guid).semantic(semantic).build();
+    public static APIMethod refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return APIMethod._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
-     * Reference to a APIObject by qualifiedName. Use this to create a relationship to this APIObject,
+     * Reference to a APIMethod by qualifiedName. Use this to create a relationship to this APIMethod,
      * where the relationship should be replaced.
      *
-     * @param qualifiedName the qualifiedName of the APIObject to reference
-     * @return reference to a APIObject that can be used for defining a relationship to a APIObject
+     * @param qualifiedName the qualifiedName of the APIMethod to reference
+     * @return reference to a APIMethod that can be used for defining a relationship to a APIMethod
      */
-    public static APIObject refByQualifiedName(String qualifiedName) {
+    public static APIMethod refByQualifiedName(String qualifiedName) {
         return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a APIObject by qualifiedName. Use this to create a relationship to this APIObject,
+     * Reference to a APIMethod by qualifiedName. Use this to create a relationship to this APIMethod,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param qualifiedName the qualifiedName of the APIObject to reference
+     * @param qualifiedName the qualifiedName of the APIMethod to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a APIObject that can be used for defining a relationship to a APIObject
+     * @return reference to a APIMethod that can be used for defining a relationship to a APIMethod
      */
-    public static APIObject refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
-        return APIObject._internal()
+    public static APIMethod refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+        return APIMethod._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .semantic(semantic)
@@ -259,44 +257,44 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Retrieves a APIObject by one of its identifiers, complete with all of its relationships.
+     * Retrieves a APIMethod by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full APIObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
+     * @param id of the APIMethod to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full APIMethod, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIMethod does not exist or the provided GUID is not a APIMethod
      */
     @JsonIgnore
-    public static APIObject get(AtlanClient client, String id) throws AtlanException {
+    public static APIMethod get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, false);
     }
 
     /**
-     * Retrieves a APIObject by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a APIMethod by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
+     * @param id of the APIMethod to retrieve, either its GUID or its full qualifiedName
      * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full APIObject, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
+     * @return the requested full APIMethod, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIMethod does not exist or the provided GUID is not a APIMethod
      */
     @JsonIgnore
-    public static APIObject get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
+    public static APIMethod get(AtlanClient client, String id, boolean includeAllRelationships) throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
             Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof APIObject) {
-                return (APIObject) asset;
+            } else if (asset instanceof APIMethod) {
+                return (APIMethod) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
-            if (asset instanceof APIObject) {
-                return (APIObject) asset;
+            if (asset instanceof APIMethod) {
+                return (APIMethod) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -304,32 +302,32 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Retrieves a APIObject by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a APIMethod by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the APIObject, including any relationships
-     * @return the requested APIObject, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
+     * @param id of the APIMethod to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the APIMethod, including any relationships
+     * @return the requested APIMethod, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIMethod does not exist or the provided GUID is not a APIMethod
      */
     @JsonIgnore
-    public static APIObject get(AtlanClient client, String id, Collection<AtlanField> attributes)
+    public static APIMethod get(AtlanClient client, String id, Collection<AtlanField> attributes)
             throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
     /**
-     * Retrieves a APIObject by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a APIMethod by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the APIObject to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the APIObject, including any relationships
-     * @param attributesOnRelated to retrieve on each relationship retrieved for the APIObject
-     * @return the requested APIObject, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIObject does not exist or the provided GUID is not a APIObject
+     * @param id of the APIMethod to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the APIMethod, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the APIMethod
+     * @return the requested APIMethod, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIMethod does not exist or the provided GUID is not a APIMethod
      */
     @JsonIgnore
-    public static APIObject get(
+    public static APIMethod get(
             AtlanClient client,
             String id,
             Collection<AtlanField> attributes,
@@ -338,8 +336,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = APIObject.select(client)
-                    .where(APIObject.GUID.eq(id))
+            Optional<Asset> asset = APIMethod.select(client)
+                    .where(APIMethod.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -348,14 +346,14 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset.get() instanceof APIObject) {
-                return (APIObject) asset.get();
+            } else if (asset.get() instanceof APIMethod) {
+                return (APIMethod) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = APIObject.select(client)
-                    .where(APIObject.QUALIFIED_NAME.eq(id))
+            Optional<Asset> asset = APIMethod.select(client)
+                    .where(APIMethod.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -364,8 +362,8 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
-            } else if (asset.get() instanceof APIObject) {
-                return (APIObject) asset.get();
+            } else if (asset.get() instanceof APIMethod) {
+                return (APIMethod) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
@@ -373,11 +371,11 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Restore the archived (soft-deleted) APIObject to active.
+     * Restore the archived (soft-deleted) APIMethod to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the APIObject
-     * @return true if the APIObject is now active, and false otherwise
+     * @param qualifiedName for the APIMethod
+     * @return true if the APIMethod is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -385,28 +383,28 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Builds the minimal object necessary to update a APIObject.
+     * Builds the minimal object necessary to update a APIMethod.
      *
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the minimal request necessary to update the APIObject, as a builder
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the minimal request necessary to update the APIMethod, as a builder
      */
-    public static APIObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return APIObject._internal()
+    public static APIMethodBuilder<?, ?> updater(String qualifiedName, String name) {
+        return APIMethod._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a APIObject,
-     * from a potentially more-complete APIObject object.
+     * Builds the minimal object necessary to apply an update to a APIMethod,
+     * from a potentially more-complete APIMethod object.
      *
-     * @return the minimal object necessary to update the APIObject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required fields for a APIObject are not present in the initial object
+     * @return the minimal object necessary to update the APIMethod, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a APIMethod are not present in the initial object
      */
     @Override
-    public APIObjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public APIMethodBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
@@ -414,198 +412,198 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class APIObjectBuilder<C extends APIObject, B extends APIObjectBuilder<C, B>>
+    public abstract static class APIMethodBuilder<C extends APIMethod, B extends APIMethodBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
-     * Remove the system description from a APIObject.
+     * Remove the system description from a APIMethod.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the updated APIMethod, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static APIMethod removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (APIObject) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (APIMethod) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a APIObject.
+     * Remove the user's description from a APIMethod.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the updated APIMethod, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static APIMethod removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (APIObject) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (APIMethod) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a APIObject.
+     * Remove the owners from a APIMethod.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the APIObject's owners
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the APIMethod's owners
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the updated APIMethod, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
-        return (APIObject) Asset.removeOwners(client, updater(qualifiedName, name));
+    public static APIMethod removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (APIMethod) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a APIObject.
+     * Update the certificate on a APIMethod.
      *
-     * @param client connectivity to the Atlan tenant on which to update the APIObject's certificate
-     * @param qualifiedName of the APIObject
+     * @param client connectivity to the Atlan tenant on which to update the APIMethod's certificate
+     * @param qualifiedName of the APIMethod
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated APIObject, or null if the update failed
+     * @return the updated APIMethod, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject updateCertificate(
+    public static APIMethod updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (APIObject) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
+        return (APIMethod) Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a APIObject.
+     * Remove the certificate from a APIMethod.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the APIObject's certificate
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the APIMethod's certificate
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the updated APIMethod, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static APIMethod removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (APIObject) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (APIMethod) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a APIObject.
+     * Update the announcement on a APIMethod.
      *
-     * @param client connectivity to the Atlan tenant on which to update the APIObject's announcement
-     * @param qualifiedName of the APIObject
+     * @param client connectivity to the Atlan tenant on which to update the APIMethod's announcement
+     * @param qualifiedName of the APIMethod
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject updateAnnouncement(
+    public static APIMethod updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (APIObject)
+        return (APIMethod)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a APIObject.
+     * Remove the announcement from a APIMethod.
      *
-     * @param client connectivity to the Atlan client from which to remove the APIObject's announcement
-     * @param qualifiedName of the APIObject
-     * @param name of the APIObject
-     * @return the updated APIObject, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the APIMethod's announcement
+     * @param qualifiedName of the APIMethod
+     * @param name of the APIMethod
+     * @return the updated APIMethod, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static APIObject removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static APIMethod removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (APIObject) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (APIMethod) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the APIObject.
+     * Replace the terms linked to the APIMethod.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the APIObject's assigned terms
-     * @param qualifiedName for the APIObject
-     * @param name human-readable name of the APIObject
-     * @param terms the list of terms to replace on the APIObject, or null to remove all terms from the APIObject
-     * @return the APIObject that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the APIMethod's assigned terms
+     * @param qualifiedName for the APIMethod
+     * @param name human-readable name of the APIMethod
+     * @param terms the list of terms to replace on the APIMethod, or null to remove all terms from the APIMethod
+     * @return the APIMethod that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APIObject replaceTerms(
+    public static APIMethod replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (APIObject) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (APIMethod) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the APIObject, without replacing existing terms linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing terms,
+     * Link additional terms to the APIMethod, without replacing existing terms linked to the APIMethod.
+     * Note: this operation must make two API calls — one to retrieve the APIMethod's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the APIObject
-     * @param qualifiedName for the APIObject
-     * @param terms the list of terms to append to the APIObject
-     * @return the APIObject that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the APIMethod
+     * @param qualifiedName for the APIMethod
+     * @param terms the list of terms to append to the APIMethod
+     * @return the APIMethod that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static APIObject appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static APIMethod appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (APIObject) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (APIMethod) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a APIObject, without replacing all existing terms linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing terms,
+     * Remove terms from a APIMethod, without replacing all existing terms linked to the APIMethod.
+     * Note: this operation must make two API calls — one to retrieve the APIMethod's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the APIObject
-     * @param qualifiedName for the APIObject
-     * @param terms the list of terms to remove from the APIObject, which must be referenced by GUID
-     * @return the APIObject that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the APIMethod
+     * @param qualifiedName for the APIMethod
+     * @param terms the list of terms to remove from the APIMethod, which must be referenced by GUID
+     * @return the APIMethod that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static APIObject removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static APIMethod removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (APIObject) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (APIMethod) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a APIObject, without replacing existing Atlan tags linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing Atlan tags,
+     * Add Atlan tags to a APIMethod, without replacing existing Atlan tags linked to the APIMethod.
+     * Note: this operation must make two API calls — one to retrieve the APIMethod's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIObject
-     * @param qualifiedName of the APIObject
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIMethod
+     * @param qualifiedName of the APIMethod
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated APIObject
+     * @return the updated APIMethod
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static APIObject appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+    public static APIMethod appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (APIObject) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+        return (APIMethod) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a APIObject, without replacing existing Atlan tags linked to the APIObject.
-     * Note: this operation must make two API calls — one to retrieve the APIObject's existing Atlan tags,
+     * Add Atlan tags to a APIMethod, without replacing existing Atlan tags linked to the APIMethod.
+     * Note: this operation must make two API calls — one to retrieve the APIMethod's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIObject
-     * @param qualifiedName of the APIObject
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIMethod
+     * @param qualifiedName of the APIMethod
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated APIObject
+     * @return the updated APIMethod
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
     @Deprecated
-    public static APIObject appendAtlanTags(
+    public static APIMethod appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -613,7 +611,7 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (APIObject) Asset.appendAtlanTags(
+        return (APIMethod) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -624,12 +622,12 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     }
 
     /**
-     * Remove an Atlan tag from a APIObject.
+     * Remove an Atlan tag from a APIMethod.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a APIObject
-     * @param qualifiedName of the APIObject
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a APIMethod
+     * @param qualifiedName of the APIMethod
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the APIObject
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the APIMethod
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
     @Deprecated
