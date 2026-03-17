@@ -64,6 +64,9 @@ public interface IAPIPath {
     /** Descriptive summary intended to apply to all operations in this path. */
     TextField API_PATH_SUMMARY = new TextField("apiPathSummary", "apiPathSummary");
 
+    /** API methods (operations) available on this path. */
+    RelationField API_METHODS = new RelationField("apiMethods");
+
     /** API specification in which this path exists. */
     RelationField API_SPEC = new RelationField("apiSpec");
 
@@ -107,6 +110,11 @@ public interface IAPIPath {
 
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     String getApiObjectQualifiedName();
+
+    /** API methods (operations) available on this path. */
+    default SortedSet<IAPIMethod> getApiMethods() {
+        return null;
+    }
 
     /** List of the operations available on the endpoint. */
     SortedSet<String> getApiPathAvailableOperations();
