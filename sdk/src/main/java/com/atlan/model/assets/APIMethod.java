@@ -44,6 +44,38 @@ public class APIMethod extends Asset implements IAPIMethod, IAPI, ICatalog, IAss
 
     public static final String TYPE_NAME = "APIMethod";
 
+    // Override all default methods that conflict between IAPI and ICatalog interfaces.
+    @Override public IApplication getApplication() { return null; }
+    @Override public IApplicationField getApplicationField() { return null; }
+    @Override public IDataContract getDataContractLatest() { return null; }
+    @Override public IDataContract getDataContractLatestCertified() { return null; }
+    @Override public IReadme getReadme() { return null; }
+    @Override public SortedSet<IAirflowTask> getInputToAirflowTasks() { return null; }
+    @Override public SortedSet<IAirflowTask> getOutputFromAirflowTasks() { return null; }
+    @Override public SortedSet<IAnomaloCheck> getAnomaloChecks() { return null; }
+    @Override public SortedSet<IAsset> getUserDefRelationshipFroms() { return null; }
+    @Override public SortedSet<IAsset> getUserDefRelationshipTos() { return null; }
+    @Override public SortedSet<IDataProduct> getInputPortDataProducts() { return null; }
+    @Override public SortedSet<IDataProduct> getOutputPortDataProducts() { return null; }
+    @Override public SortedSet<IDataQualityRule> getDqBaseDatasetRules() { return null; }
+    @Override public SortedSet<IDataQualityRule> getDqReferenceDatasetRules() { return null; }
+    @Override public SortedSet<IFile> getFiles() { return null; }
+    @Override public SortedSet<IGlossaryTerm> getAssignedTerms() { return null; }
+    @Override public SortedSet<ILineageProcess> getInputToProcesses() { return null; }
+    @Override public SortedSet<ILineageProcess> getOutputFromProcesses() { return null; }
+    @Override public SortedSet<ILink> getLinks() { return null; }
+    @Override public SortedSet<IMCIncident> getMcIncidents() { return null; }
+    @Override public SortedSet<IMCMonitor> getMcMonitors() { return null; }
+    @Override public SortedSet<IMetric> getMetrics() { return null; }
+    @Override public SortedSet<IModelAttribute> getModelImplementedAttributes() { return null; }
+    @Override public SortedSet<IModelEntity> getModelImplementedEntities() { return null; }
+    @Override public SortedSet<IPartialField> getPartialChildFields() { return null; }
+    @Override public SortedSet<IPartialObject> getPartialChildObjects() { return null; }
+    @Override public SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() { return null; }
+    @Override public SortedSet<ISodaCheck> getSodaChecks() { return null; }
+    @Override public SortedSet<ISparkJob> getInputToSparkJobs() { return null; }
+    @Override public SortedSet<ISparkJob> getOutputFromSparkJobs() { return null; }
+
     /** Fixed typeName for APIMethods. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
