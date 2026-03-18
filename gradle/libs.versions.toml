@@ -1,7 +1,7 @@
 [versions]
 jackson = "2.21.1"
 slf4j = "2.0.17"
-elasticsearch = "9.3.2"
+elasticsearch = "9.3.3"
 classgraph = "4.8.184"
 testng = "7.12.0"
 log4j = "2.25.3"
