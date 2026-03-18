@@ -237,6 +237,62 @@ class ImportJsonTest : PackageTest("j") {
     }
 
     @Test
+    fun methodResponseSchemaLinked() {
+        // Verify that methods with $ref response schemas are linked to APIObjects
+        val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
+        val request =
+            APIMethod
+                .select(client)
+                .where(APIMethod.QUALIFIED_NAME.startsWith(connectionQN))
+                .includeOnResults(APIMethod.NAME)
+                .includeOnResults(APIMethod.API_METHOD_RESPONSE_SCHEMAS)
+                .includeOnResults(APIMethod.API_METHOD_RESPONSE_CODES)
+                .includeOnRelations(APIObject.QUALIFIED_NAME)
+                .toRequest()
+        val response = retrySearchUntil(request, 20)
+        val results = response.stream().toList()
+        // GET /pet/{petId} should have a response schema linked to the Pet APIObject
+        val getPetById = results.first { (it as APIMethod).name == "GET /pet/{petId}" } as APIMethod
+        assertNotNull(getPetById.apiMethodResponseSchemas, "GET /pet/{petId} should have response schemas")
+        assertFalse(getPetById.apiMethodResponseSchemas.isEmpty(), "GET /pet/{petId} should have at least one response schema")
+        assertTrue(
+            getPetById.apiMethodResponseSchemas.any {
+                (it as APIObject).uniqueAttributes.qualifiedName.contains("Pet")
+            },
+            "GET /pet/{petId} response should reference the Pet object",
+        )
+        // Verify response codes map is populated
+        assertNotNull(getPetById.apiMethodResponseCodes, "GET /pet/{petId} should have response codes")
+        assertTrue(getPetById.apiMethodResponseCodes.containsKey("200"), "GET /pet/{petId} should have a 200 response code")
+    }
+
+    @Test
+    fun objectRefFieldsLinked() {
+        // Verify that APIField objects referencing other schemas have apiIsObjectReference and apiObjectQualifiedName set
+        val connectionQN = Connection.findByName(client, testId, connectorType)?.get(0)?.qualifiedName!!
+        val request =
+            APIField
+                .select(client)
+                .where(APIField.QUALIFIED_NAME.startsWith(connectionQN))
+                .where(APIField.API_IS_OBJECT_REFERENCE.eq(true))
+                .includeOnResults(APIField.NAME)
+                .includeOnResults(APIField.API_IS_OBJECT_REFERENCE)
+                .includeOnResults(APIField.API_OBJECT_QUALIFIED_NAME)
+                .toRequest()
+        val response = retrySearchUntil(request, 1)
+        val results = response.stream().toList()
+        assertTrue(results.isNotEmpty(), "Should have fields with object references")
+        // Pet.category should reference the Category schema
+        val categoryField = results.firstOrNull { (it as APIField).name == "category" }
+        if (categoryField != null) {
+            val field = categoryField as APIField
+            assertEquals(true, field.apiIsObjectReference)
+            assertNotNull(field.apiObjectQualifiedName, "category field should have apiObjectQualifiedName")
+            assertTrue(field.apiObjectQualifiedName.contains("Category"), "category field should reference the Category schema")
+        }
+    }
+
+    @Test
     fun filesCreated() {
         validateFilesExist(files)
     }

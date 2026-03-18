@@ -273,47 +273,52 @@ object OpenAPISpecLoader {
             logger.info { "Creating an APIPath for each path defined within the spec (total: $totalCount)" }
             AssetBatch(client, batchSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE, true).use { pathBatch ->
                 AssetBatch(client, batchSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE, true).use { methodBatch ->
-                    try {
-                        val assetCount = AtomicLong(0)
-                        for (apiPath in spec.paths.entries) {
-                            val pathUrl = apiPath.key
-                            val pathDetails = apiPath.value
+                    AssetBatch(client, batchSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE, true).use { inlineObjectBatch ->
+                        AssetBatch(client, batchSize, AtlanTagHandling.IGNORE, CustomMetadataHandling.MERGE, true).use { inlineFieldBatch ->
+                            try {
+                                val assetCount = AtomicLong(0)
+                                for (apiPath in spec.paths.entries) {
+                                    val pathUrl = apiPath.key
+                                    val pathDetails = apiPath.value
 
-                            // --- APIPath creation (unchanged from original) ---
-                            val operations = mutableListOf<String>()
-                            val desc = StringBuilder()
-                            desc.append("| Method | Summary|\n|---|---|\n")
-                            addOperationDetails(pathDetails.get, "GET", operations, desc)
-                            addOperationDetails(pathDetails.post, "POST", operations, desc)
-                            addOperationDetails(pathDetails.put, "PUT", operations, desc)
-                            addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
-                            addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
-                            val path =
-                                APIPath
-                                    .creator(pathUrl, specQN)
-                                    .description(desc.toString())
-                                    .apiPathRawURI(pathUrl)
-                                    .apiPathSummary(pathDetails.summary)
-                                    .apiPathAvailableOperations(operations)
-                                    .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
-                                    .build()
-                            pathBatch.add(path)
-                            val pathQN = path.qualifiedName
+                                    // --- APIPath creation (unchanged from original) ---
+                                    val operations = mutableListOf<String>()
+                                    val desc = StringBuilder()
+                                    desc.append("| Method | Summary|\n|---|---|\n")
+                                    addOperationDetails(pathDetails.get, "GET", operations, desc)
+                                    addOperationDetails(pathDetails.post, "POST", operations, desc)
+                                    addOperationDetails(pathDetails.put, "PUT", operations, desc)
+                                    addOperationDetails(pathDetails.patch, "PATCH", operations, desc)
+                                    addOperationDetails(pathDetails.delete, "DELETE", operations, desc)
+                                    val path =
+                                        APIPath
+                                            .creator(pathUrl, specQN)
+                                            .description(desc.toString())
+                                            .apiPathRawURI(pathUrl)
+                                            .apiPathSummary(pathDetails.summary)
+                                            .apiPathAvailableOperations(operations)
+                                            .apiPathIsTemplated(pathUrl.contains("{") && pathUrl.contains("}"))
+                                            .build()
+                                    pathBatch.add(path)
+                                    val pathQN = path.qualifiedName
 
-                            // --- APIMethod creation per operation ---
-                            createMethodIfPresent(pathDetails.get, "GET", pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch)
-                            createMethodIfPresent(pathDetails.post, "POST", pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch)
-                            createMethodIfPresent(pathDetails.put, "PUT", pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch)
-                            createMethodIfPresent(pathDetails.patch, "PATCH", pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch)
-                            createMethodIfPresent(pathDetails.delete, "DELETE", pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch)
+                                    // --- APIMethod creation per operation (with inline schema support) ---
+                                    val methods = listOf("GET" to pathDetails.get, "POST" to pathDetails.post, "PUT" to pathDetails.put, "PATCH" to pathDetails.patch, "DELETE" to pathDetails.delete)
+                                    for ((httpMethod, op) in methods) {
+                                        createMethodIfPresent(op, httpMethod, pathQN, pathUrl, specQN, connectionQN, spec, objectQNs, methodBatch, inlineObjectBatch, inlineFieldBatch)
+                                    }
 
-                            Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                                    Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                                }
+                                pathBatch.flush()
+                                inlineObjectBatch.flush()
+                                inlineFieldBatch.flush()
+                                methodBatch.flush()
+                                Utils.logProgress(assetCount, totalCount, logger, batchSize)
+                            } catch (e: AtlanException) {
+                                logger.error("Unable to bulk-save API paths/methods.", e)
+                            }
                         }
-                        pathBatch.flush()
-                        methodBatch.flush()
-                        Utils.logProgress(assetCount, totalCount, logger, batchSize)
-                    } catch (e: AtlanException) {
-                        logger.error("Unable to bulk-save API paths/methods.", e)
                     }
                 }
             }
@@ -341,8 +346,10 @@ object OpenAPISpecLoader {
         specQN: String,
         connectionQN: String,
         spec: OpenAPISpecReader,
-        objectQNs: Map<String, String>,
-        batch: AssetBatch,
+        objectQNs: MutableMap<String, String>,
+        methodBatch: AssetBatch,
+        objectBatch: AssetBatch,
+        fieldBatch: AssetBatch,
     ) {
         if (operation == null) return
 
@@ -372,6 +379,21 @@ object OpenAPISpecLoader {
                 if (requestObjectQN != null) {
                     methodBuilder.apiMethodRequestSchema(APIObject.refByQualifiedName(requestObjectQN))
                 }
+            } else if (requestSchema.properties != null && requestSchema.properties.isNotEmpty()) {
+                // Inline request schema with properties — create synthetic APIObject + APIFields
+                val syntheticName = "${httpMethod}_${sanitizePath(pathUrl)}_Request"
+                val syntheticQN =
+                    createInlineSchemaObject(
+                        syntheticName,
+                        requestSchema,
+                        specQN,
+                        connectionQN,
+                        spec,
+                        objectQNs,
+                        objectBatch,
+                        fieldBatch,
+                    )
+                methodBuilder.apiMethodRequestSchema(APIObject.refByQualifiedName(syntheticQN))
             }
         }
 
@@ -394,9 +416,25 @@ object OpenAPISpecLoader {
                             responseCodes[statusCode] = responseObjectQN
                             responseSchemas.add(responseObjectQN)
                         }
+                    } else if (responseSchema.properties != null && responseSchema.properties.isNotEmpty()) {
+                        // Inline response schema with properties — create synthetic APIObject + APIFields
+                        val syntheticName = "${httpMethod}_${sanitizePath(pathUrl)}_${statusCode}_Response"
+                        val syntheticQN =
+                            createInlineSchemaObject(
+                                syntheticName,
+                                responseSchema,
+                                specQN,
+                                connectionQN,
+                                spec,
+                                objectQNs,
+                                objectBatch,
+                                fieldBatch,
+                            )
+                        responseCodes[statusCode] = syntheticQN
+                        responseSchemas.add(syntheticQN)
                     } else {
-                        // Inline schema: create a synthetic APIObject name for the response codes map
-                        val inlineName = "${httpMethod}_${pathUrl.replace("/", "_").replace("{", "").replace("}", "")}_$statusCode"
+                        // Inline primitive/array schema — record in response codes map only
+                        val inlineName = "${httpMethod}_${sanitizePath(pathUrl)}_$statusCode"
                         responseCodes[statusCode] = inlineName
                     }
                 }
@@ -412,8 +450,81 @@ object OpenAPISpecLoader {
             methodBuilder.apiMethodResponseSchema(APIObject.refByQualifiedName(responseQN))
         }
 
-        batch.add(methodBuilder.build())
+        methodBatch.add(methodBuilder.build())
     }
+
+    /**
+     * Create a synthetic APIObject (and its APIFields) for an inline schema that has properties.
+     * Returns the qualified name of the created APIObject.
+     */
+    private fun createInlineSchemaObject(
+        syntheticName: String,
+        schema: Schema<*>,
+        specQN: String,
+        connectionQN: String,
+        spec: OpenAPISpecReader,
+        objectQNs: MutableMap<String, String>,
+        objectBatch: AssetBatch,
+        fieldBatch: AssetBatch,
+    ): String {
+        val objectQN = "$specQN/schemas/$syntheticName"
+        objectQNs[syntheticName] = objectQN
+        val properties = schema.properties ?: emptyMap()
+        val apiObject =
+            APIObject
+                ._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(objectQN)
+                .name(syntheticName)
+                .connectionQualifiedName(connectionQN)
+                .apiSpecQualifiedName(specQN)
+                .apiSpecName(spec.title)
+                .apiSpecType(spec.openAPIVersion)
+                .apiFieldCount(properties.size.toLong())
+                .build()
+        objectBatch.add(apiObject)
+        for ((fieldName, fieldSchema) in properties) {
+            val fieldQN = "$objectQN/$fieldName"
+            val refSchemaName = extractRefSchemaName(fieldSchema)
+            val isObjectRef = refSchemaName != null
+            val fieldType = resolveFieldType(fieldSchema)
+            val fieldTypeSecondary = resolveFieldTypeSecondary(fieldSchema)
+            val fieldBuilder =
+                APIField
+                    ._internal()
+                    .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                    .qualifiedName(fieldQN)
+                    .name(fieldName)
+                    .connectionQualifiedName(connectionQN)
+                    .apiSpecQualifiedName(specQN)
+                    .apiSpecName(spec.title)
+                    .apiSpecType(spec.openAPIVersion)
+                    .apiFieldType(fieldType)
+                    .apiObject(APIObject.refByQualifiedName(objectQN))
+            if (fieldTypeSecondary != null) {
+                fieldBuilder.apiFieldTypeSecondary(fieldTypeSecondary)
+            }
+            if (isObjectRef) {
+                fieldBuilder.apiIsObjectReference(true)
+                val refQN = objectQNs[refSchemaName]
+                if (refQN != null) {
+                    fieldBuilder.apiObjectQualifiedName(refQN)
+                }
+            }
+            fieldBatch.add(fieldBuilder.build())
+        }
+        return objectQN
+    }
+
+    /**
+     * Sanitize a path URL for use in synthetic schema names.
+     */
+    private fun sanitizePath(pathUrl: String): String =
+        pathUrl
+            .replace("/", "_")
+            .replace("{", "")
+            .replace("}", "")
+            .trimStart('_')
 
     /**
      * Extract the request body schema from an operation, preferring application/json.
