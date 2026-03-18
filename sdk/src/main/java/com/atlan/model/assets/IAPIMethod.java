@@ -31,8 +31,7 @@ public interface IAPIMethod {
     TextField API_METHOD_RESPONSE = new TextField("apiMethodResponse", "apiMethodResponse");
 
     /** Map of HTTP response status codes to the qualified names of the APIObject schemas that describe each response. */
-    KeywordField API_METHOD_RESPONSE_CODES =
-            new KeywordField("apiMethodResponseCodes", "apiMethodResponseCodes");
+    KeywordField API_METHOD_RESPONSE_CODES = new KeywordField("apiMethodResponseCodes", "apiMethodResponseCodes");
 
     /** APIObject schema describing this method's request body. */
     RelationField API_METHOD_REQUEST_SCHEMA = new RelationField("apiMethodRequestSchema");
