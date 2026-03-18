@@ -45,18 +45,35 @@ public interface IKafkaTopic {
 
     public static final String TYPE_NAME = "KafkaTopic";
 
+    /** Kafka cluster containing this topic. */
+    RelationField KAFKA_CLUSTER = new RelationField("kafkaCluster");
+
     /** Consumer groups subscribed to this topic. */
     RelationField KAFKA_CONSUMER_GROUPS = new RelationField("kafkaConsumerGroups");
 
+    /** Schema fields defined within this Kafka topic. */
+    RelationField KAFKA_FIELDS = new RelationField("kafkaFields");
+
     /** Cleanup policy for this topic. */
     KeywordField KAFKA_TOPIC_CLEANUP_POLICY = new KeywordField("kafkaTopicCleanupPolicy", "kafkaTopicCleanupPolicy");
+
+    /** Unique name of the Kafka cluster in which this topic exists. */
+    KeywordField KAFKA_TOPIC_CLUSTER_QUALIFIED_NAME =
+            new KeywordField("kafkaTopicClusterQualifiedName", "kafkaTopicClusterQualifiedName");
 
     /** Type of compression used for this topic. */
     KeywordField KAFKA_TOPIC_COMPRESSION_TYPE =
             new KeywordField("kafkaTopicCompressionType", "kafkaTopicCompressionType");
 
+    /** Number of consumer groups consuming this topic. */
+    NumericField KAFKA_TOPIC_CONSUMER_COUNT = new NumericField("kafkaTopicConsumerCount", "kafkaTopicConsumerCount");
+
     /** Whether this topic is an internal topic (true) or not (false). */
     BooleanField KAFKA_TOPIC_IS_INTERNAL = new BooleanField("kafkaTopicIsInternal", "kafkaTopicIsInternal");
+
+    /** Whether this topic is fully managed by a schema registry (true) or not (false). */
+    BooleanField KAFKA_TOPIC_IS_SCHEMA_MANAGED =
+            new BooleanField("kafkaTopicIsSchemaManaged", "kafkaTopicIsSchemaManaged");
 
     /** Comma seperated Cleanup policy for this topic. */
     KeywordField KAFKA_TOPIC_LOG_CLEANUP_POLICY =
@@ -73,9 +90,16 @@ public interface IKafkaTopic {
     NumericField KAFKA_TOPIC_REPLICATION_FACTOR =
             new NumericField("kafkaTopicReplicationFactor", "kafkaTopicReplicationFactor");
 
+    /** Maximum size in bytes that a topic can grow to before discarding old messages; -1 means unlimited. */
+    NumericField KAFKA_TOPIC_RETENTION_BYTES = new NumericField("kafkaTopicRetentionBytes", "kafkaTopicRetentionBytes");
+
     /** Amount of time messages will be retained in this topic, in milliseconds. */
     NumericField KAFKA_TOPIC_RETENTION_TIME_IN_MS =
             new NumericField("kafkaTopicRetentionTimeInMs", "kafkaTopicRetentionTimeInMs");
+
+    /** Name of the schema registry subject governing this topic, if any. */
+    KeywordField KAFKA_TOPIC_SCHEMA_REGISTRY_SUBJECT_NAME =
+            new KeywordField("kafkaTopicSchemaRegistrySubjectName", "kafkaTopicSchemaRegistrySubjectName");
 
     /** Segment size for this topic. */
     NumericField KAFKA_TOPIC_SEGMENT_BYTES = new NumericField("kafkaTopicSegmentBytes", "kafkaTopicSegmentBytes");
@@ -377,6 +401,12 @@ public interface IKafkaTopic {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
+
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
@@ -583,19 +613,38 @@ public interface IKafkaTopic {
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
+    /** Kafka cluster containing this topic. */
+    default IKafkaCluster getKafkaCluster() {
+        return null;
+    }
+
     /** Consumer groups subscribed to this topic. */
     default SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups() {
+        return null;
+    }
+
+    /** Schema fields defined within this Kafka topic. */
+    default SortedSet<IKafkaField> getKafkaFields() {
         return null;
     }
 
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 
+    /** Unique name of the Kafka cluster in which this topic exists. */
+    String getKafkaTopicClusterQualifiedName();
+
     /** Type of compression used for this topic. */
     KafkaTopicCompressionType getKafkaTopicCompressionType();
 
+    /** Number of consumer groups consuming this topic. */
+    Long getKafkaTopicConsumerCount();
+
     /** Whether this topic is an internal topic (true) or not (false). */
     Boolean getKafkaTopicIsInternal();
+
+    /** Whether this topic is fully managed by a schema registry (true) or not (false). */
+    Boolean getKafkaTopicIsSchemaManaged();
 
     /** Comma seperated Cleanup policy for this topic. */
     String getKafkaTopicLogCleanupPolicy();
@@ -609,8 +658,14 @@ public interface IKafkaTopic {
     /** Replication factor for this topic. */
     Long getKafkaTopicReplicationFactor();
 
+    /** Maximum size in bytes that a topic can grow to before discarding old messages; -1 means unlimited. */
+    Long getKafkaTopicRetentionBytes();
+
     /** Amount of time messages will be retained in this topic, in milliseconds. */
     Long getKafkaTopicRetentionTimeInMs();
+
+    /** Name of the schema registry subject governing this topic, if any. */
+    String getKafkaTopicSchemaRegistrySubjectName();
 
     /** Segment size for this topic. */
     Long getKafkaTopicSegmentBytes();

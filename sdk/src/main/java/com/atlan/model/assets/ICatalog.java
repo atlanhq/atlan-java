@@ -491,8 +491,14 @@ public interface ICatalog {
             case IcebergTable.TYPE_NAME:
                 ref = IcebergTable.refByQualifiedName(qualifiedName);
                 break;
+            case KafkaCluster.TYPE_NAME:
+                ref = KafkaCluster.refByQualifiedName(qualifiedName);
+                break;
             case KafkaConsumerGroup.TYPE_NAME:
                 ref = KafkaConsumerGroup.refByQualifiedName(qualifiedName);
+                break;
+            case KafkaField.TYPE_NAME:
+                ref = KafkaField.refByQualifiedName(qualifiedName);
                 break;
             case KafkaTopic.TYPE_NAME:
                 ref = KafkaTopic.refByQualifiedName(qualifiedName);
@@ -829,6 +835,9 @@ public interface ICatalog {
                 break;
             case SchemaRegistrySubject.TYPE_NAME:
                 ref = SchemaRegistrySubject.refByQualifiedName(qualifiedName);
+                break;
+            case SchemaRegistryVersion.TYPE_NAME:
+                ref = SchemaRegistryVersion.refByQualifiedName(qualifiedName);
                 break;
             case SemanticDimension.TYPE_NAME:
                 ref = SemanticDimension.refByQualifiedName(qualifiedName);
@@ -1289,6 +1298,12 @@ public interface ICatalog {
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
+
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();

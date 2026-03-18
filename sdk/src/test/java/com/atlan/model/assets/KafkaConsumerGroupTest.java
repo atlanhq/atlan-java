@@ -628,6 +628,8 @@ public class KafkaConsumerGroupTest {
             .assetDQRowScopeFilterColumnQualifiedName("String0")
             .assetSpaceQualifiedName("String0")
             .assetSpaceName("String0")
+            .assetImmutaRequestUrl("String0")
+            .assetImmutaRequestType("String0")
             .assetGCPDataplexMetadataDetails(AssetGCPDataplexMetadata.builder()
                     .assetGCPDataplexLastSyncRunAt(123456789L)
                     .assetGCPDataplexAspectDetails(Map.of(
@@ -685,6 +687,9 @@ public class KafkaConsumerGroupTest {
             .kafkaTopicName("String1")
             .kafkaTopicQualifiedName("String0")
             .kafkaTopicQualifiedName("String1")
+            .kafkaConsumerGroupState(KafkaConsumerGroupState.STABLE)
+            .kafkaConsumerGroupAssignedPartition("String0")
+            .kafkaConsumerGroupAssignedPartition("String1")
             .kafkaTopic(KafkaTopic.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .kafkaTopic(KafkaTopic.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
