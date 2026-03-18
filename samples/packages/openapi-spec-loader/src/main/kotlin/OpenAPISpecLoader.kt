@@ -207,16 +207,18 @@ object OpenAPISpecLoader {
                             val objectQN = "$specQN/schemas/$schemaName"
                             objectQNs[schemaName] = objectQN
                             val properties = schema.properties ?: emptyMap()
-                            val apiObject = APIObject._internal()
-                                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                                .qualifiedName(objectQN)
-                                .name(schemaName)
-                                .connectionQualifiedName(connectionQN)
-                                .apiSpecQualifiedName(specQN)
-                                .apiSpecName(spec.title)
-                                .apiSpecType(spec.openAPIVersion)
-                                .apiFieldCount(properties.size.toLong())
-                                .build()
+                            val apiObject =
+                                APIObject
+                                    ._internal()
+                                    .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                                    .qualifiedName(objectQN)
+                                    .name(schemaName)
+                                    .connectionQualifiedName(connectionQN)
+                                    .apiSpecQualifiedName(specQN)
+                                    .apiSpecName(spec.title)
+                                    .apiSpecType(spec.openAPIVersion)
+                                    .apiFieldCount(properties.size.toLong())
+                                    .build()
                             objectBatch.add(apiObject)
                         }
                         objectBatch.flush()
@@ -231,16 +233,18 @@ object OpenAPISpecLoader {
                                 val isObjectRef = refSchemaName != null
                                 val fieldType = resolveFieldType(fieldSchema)
                                 val fieldTypeSecondary = resolveFieldTypeSecondary(fieldSchema)
-                                val fieldBuilder = APIField._internal()
-                                    .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-                                    .qualifiedName(fieldQN)
-                                    .name(fieldName)
-                                    .connectionQualifiedName(connectionQN)
-                                    .apiSpecQualifiedName(specQN)
-                                    .apiSpecName(spec.title)
-                                    .apiSpecType(spec.openAPIVersion)
-                                    .apiFieldType(fieldType)
-                                    .apiObject(APIObject.refByQualifiedName(objectQN))
+                                val fieldBuilder =
+                                    APIField
+                                        ._internal()
+                                        .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                                        .qualifiedName(fieldQN)
+                                        .name(fieldName)
+                                        .connectionQualifiedName(connectionQN)
+                                        .apiSpecQualifiedName(specQN)
+                                        .apiSpecName(spec.title)
+                                        .apiSpecType(spec.openAPIVersion)
+                                        .apiFieldType(fieldType)
+                                        .apiObject(APIObject.refByQualifiedName(objectQN))
                                 if (fieldTypeSecondary != null) {
                                     fieldBuilder.apiFieldTypeSecondary(fieldTypeSecondary)
                                 }
@@ -345,16 +349,18 @@ object OpenAPISpecLoader {
         val methodName = "$httpMethod $pathUrl"
         val methodQN = "$pathQN/$httpMethod"
 
-        val methodBuilder = APIMethod._internal()
-            .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
-            .qualifiedName(methodQN)
-            .name(methodName)
-            .connectionQualifiedName(connectionQN)
-            .apiSpecQualifiedName(specQN)
-            .apiSpecName(spec.title)
-            .apiSpecType(spec.openAPIVersion)
-            .description(operation.summary ?: operation.description ?: "")
-            .apiPath(APIPath.refByQualifiedName(pathQN))
+        val methodBuilder =
+            APIMethod
+                ._internal()
+                .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
+                .qualifiedName(methodQN)
+                .name(methodName)
+                .connectionQualifiedName(connectionQN)
+                .apiSpecQualifiedName(specQN)
+                .apiSpecName(spec.title)
+                .apiSpecType(spec.openAPIVersion)
+                .description(operation.summary ?: operation.description ?: "")
+                .apiPath(APIPath.refByQualifiedName(pathQN))
 
         // Request body blob + schema relationship
         val requestSchema = extractRequestSchema(operation)
@@ -390,7 +396,7 @@ object OpenAPISpecLoader {
                         }
                     } else {
                         // Inline schema: create a synthetic APIObject name for the response codes map
-                        val inlineName = "${httpMethod}_${pathUrl.replace("/", "_").replace("{", "").replace("}", "")}_${statusCode}"
+                        val inlineName = "${httpMethod}_${pathUrl.replace("/", "_").replace("{", "").replace("}", "")}_$statusCode"
                         responseCodes[statusCode] = inlineName
                     }
                 }
@@ -473,13 +479,12 @@ object OpenAPISpecLoader {
     /**
      * Serialize a schema to a JSON string for the blob attributes.
      */
-    private fun serializeSchema(schema: Schema<*>): String {
-        return try {
+    private fun serializeSchema(schema: Schema<*>): String =
+        try {
             jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(schema)
         } catch (e: Exception) {
             schema.toString()
         }
-    }
 
     /**
      * Add the details of the provided operation to the details captured for the APIPath.

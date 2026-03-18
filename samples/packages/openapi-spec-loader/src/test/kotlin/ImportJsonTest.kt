@@ -230,7 +230,8 @@ class ImportJsonTest : PackageTest("j") {
         val postPet = results.first { (it as APIMethod).name == "POST /pet" } as APIMethod
         assertNotNull(postPet.apiMethodRequestSchema, "POST /pet should be linked to a request schema APIObject")
         assertTrue(
-            postPet.apiMethodRequestSchema.uniqueAttributes.qualifiedName.contains("Pet"),
+            postPet.apiMethodRequestSchema.uniqueAttributes.qualifiedName
+                .contains("Pet"),
             "POST /pet request schema should reference the Pet object",
         )
     }
