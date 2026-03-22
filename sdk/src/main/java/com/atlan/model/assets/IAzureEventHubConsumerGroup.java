@@ -12,6 +12,7 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.KafkaConsumerGroupState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -334,6 +335,12 @@ public interface IAzureEventHubConsumerGroup {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
+
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
@@ -540,8 +547,14 @@ public interface IAzureEventHubConsumerGroup {
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
+    /** List of topic-partition pairs assigned to this consumer group. */
+    SortedSet<String> getKafkaConsumerGroupAssignedPartitions();
+
     /** Number of members in this consumer group. */
     Long getKafkaConsumerGroupMemberCount();
+
+    /** State of this consumer group. */
+    KafkaConsumerGroupState getKafkaConsumerGroupState();
 
     /** List of consumption properties for Kafka topics, for this consumer group. */
     List<KafkaTopicConsumption> getKafkaConsumerGroupTopicConsumptionProperties();

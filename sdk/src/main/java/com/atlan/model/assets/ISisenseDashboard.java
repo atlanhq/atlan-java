@@ -355,6 +355,12 @@ public interface ISisenseDashboard {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
+
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
