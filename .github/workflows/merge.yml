@@ -150,16 +150,14 @@ jobs:
           distribution: temurin
       - name: Publish Javadoc
         run: |
+          git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
           ./gradlew gitPublishPush --stacktrace --info -Dorg.gradle.jvmargs="-Xms512m -Xmx2g -XX:MaxMetaspaceSize=512m"
         env:
           GIT_AUTHOR_NAME: "GitHub Actions Bot"
           GIT_AUTHOR_EMAIL: "github-actions[bot]@users.noreply.github.com"
           GIT_COMMITTER_NAME: "GitHub Actions Bot"
           GIT_COMMITTER_EMAIL: "github-actions[bot]@users.noreply.github.com"
-          GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GRGIT_USER: ${{ github.actor }}
-          GRGIT_PASS: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
   publish-snapshot:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
