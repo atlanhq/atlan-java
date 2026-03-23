@@ -3490,9 +3490,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Kafka assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IKafkaConsumerGroup.html" title="interface in com.atlan.model.assets">IKafkaConsumerGroup</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IKafkaCluster.html" title="interface in com.atlan.model.assets">IKafkaCluster</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Instance of a Kafka cluster in Atlan.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IKafkaConsumerGroup.html" title="interface in com.atlan.model.assets">IKafkaConsumerGroup</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Kafka ConsumerGroup in Atlan.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IKafkaField.html" title="interface in com.atlan.model.assets">IKafkaField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Instance of a field within a Kafka topic schema in Atlan, enabling field-level lineage.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IKafkaTopic.html" title="interface in com.atlan.model.assets">IKafkaTopic</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
@@ -4158,329 +4166,347 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a schema registry subject in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemantic.html" title="interface in com.atlan.model.assets">ISemantic</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISchemaRegistryVersion.html" title="interface in com.atlan.model.assets">ISchemaRegistryVersion</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Instance of a specific version of a schema registry subject in Atlan.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/ISearchable.html" title="interface in com.atlan.model.fields">ISearchable</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemantic.html" title="interface in com.atlan.model.assets">ISemantic</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic layer assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticDimension.html" title="interface in com.atlan.model.assets">ISemanticDimension</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticDimension.html" title="interface in com.atlan.model.assets">ISemanticDimension</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic dimensions across different sources.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticEntity.html" title="interface in com.atlan.model.assets">ISemanticEntity</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticEntity.html" title="interface in com.atlan.model.assets">ISemanticEntity</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic entities/logical tables across different sources.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticField.html" title="interface in com.atlan.model.assets">ISemanticField</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticField.html" title="interface in com.atlan.model.assets">ISemanticField</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic fields (measures, dimensions, entities) across different sources.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticMeasure.html" title="interface in com.atlan.model.assets">ISemanticMeasure</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticMeasure.html" title="interface in com.atlan.model.assets">ISemanticMeasure</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic measures across different sources.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticModel.html" title="interface in com.atlan.model.assets">ISemanticModel</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISemanticModel.html" title="interface in com.atlan.model.assets">ISemanticModel</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for semantic models across different sources.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigma.html" title="interface in com.atlan.model.assets">ISigma</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigma.html" title="interface in com.atlan.model.assets">ISigma</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Sigma assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataElement.html" title="interface in com.atlan.model.assets">ISigmaDataElement</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataElement.html" title="interface in com.atlan.model.assets">ISigmaDataElement</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma data element in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataElementField.html" title="interface in com.atlan.model.assets">ISigmaDataElementField</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataElementField.html" title="interface in com.atlan.model.assets">ISigmaDataElementField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma data element field in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDataset.html" title="interface in com.atlan.model.assets">ISigmaDataset</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma dataset in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaDatasetColumn.html" title="interface in com.atlan.model.assets">ISigmaDatasetColumn</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma dataset column in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaPage.html" title="interface in com.atlan.model.assets">ISigmaPage</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaPage.html" title="interface in com.atlan.model.assets">ISigmaPage</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma page in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaWorkbook.html" title="interface in com.atlan.model.assets">ISigmaWorkbook</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISigmaWorkbook.html" title="interface in com.atlan.model.assets">ISigmaWorkbook</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sigma workbook in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisense.html" title="interface in com.atlan.model.assets">ISisense</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisense.html" title="interface in com.atlan.model.assets">ISisense</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Sisense assets.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDashboard.html" title="interface in com.atlan.model.assets">ISisenseDashboard</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sisense dashboard in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDatamodel.html" title="interface in com.atlan.model.assets">ISisenseDatamodel</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDatamodel.html" title="interface in com.atlan.model.assets">ISisenseDatamodel</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sisense datamodel in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDatamodelTable.html" title="interface in com.atlan.model.assets">ISisenseDatamodelTable</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseDatamodelTable.html" title="interface in com.atlan.model.assets">ISisenseDatamodelTable</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sisense datamodel table in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseFolder.html" title="interface in com.atlan.model.assets">ISisenseFolder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sisense folder in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseWidget.html" title="interface in com.atlan.model.assets">ISisenseWidget</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISisenseWidget.html" title="interface in com.atlan.model.assets">ISisenseWidget</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Sisense widget in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflake.html" title="interface in com.atlan.model.assets">ISnowflake</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflake.html" title="interface in com.atlan.model.assets">ISnowflake</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Snowflake-specific assets.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeAIModelContext.html" title="interface in com.atlan.model.assets">ISnowflakeAIModelContext</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeAIModelContext.html" title="interface in com.atlan.model.assets">ISnowflakeAIModelContext</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of an ai model in snowflake.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeAIModelVersion.html" title="interface in com.atlan.model.assets">ISnowflakeAIModelVersion</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeAIModelVersion.html" title="interface in com.atlan.model.assets">ISnowflakeAIModelVersion</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of an ai model version in snowflake.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeDynamicTable.html" title="interface in com.atlan.model.assets">ISnowflakeDynamicTable</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake dynamic table in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakePipe.html" title="interface in com.atlan.model.assets">ISnowflakePipe</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake pipe in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticDimension.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticDimension</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticDimension.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticDimension</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake semantic dimension in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticFact.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticFact</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticFact.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticFact</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake semantic fact in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticLogicalTable.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticLogicalTable</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticLogicalTable.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticLogicalTable</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake semantic logical table in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticMetric.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticMetric</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticMetric.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticMetric</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake semantic metric in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticView.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticView</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeSemanticView.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticView</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake semantic view in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeStage.html" title="interface in com.atlan.model.assets">ISnowflakeStage</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeStage.html" title="interface in com.atlan.model.assets">ISnowflakeStage</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Represents a Snowflake stage, an object for storing data files used in loading and unloading operations.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeStream.html" title="interface in com.atlan.model.assets">ISnowflakeStream</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake stream in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeTag.html" title="interface in com.atlan.model.assets">ISnowflakeTag</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISnowflakeTag.html" title="interface in com.atlan.model.assets">ISnowflakeTag</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Snowflake tag in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISoda.html" title="interface in com.atlan.model.assets">ISoda</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISoda.html" title="interface in com.atlan.model.assets">ISoda</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Soda assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISodaCheck.html" title="interface in com.atlan.model.assets">ISodaCheck</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISodaCheck.html" title="interface in com.atlan.model.assets">ISodaCheck</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Soda check in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISourceTag.html" title="interface in com.atlan.model.assets">ISourceTag</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISourceTag.html" title="interface in com.atlan.model.assets">ISourceTag</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a source system-imported tag in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISpark.html" title="interface in com.atlan.model.assets">ISpark</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISpark.html" title="interface in com.atlan.model.assets">ISpark</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Spark assets</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISparkJob.html" title="interface in com.atlan.model.assets">ISparkJob</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Spark Job run in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISQL.html" title="interface in com.atlan.model.assets">ISQL</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for SQL assets.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStakeholder.html" title="interface in com.atlan.model.assets">IStakeholder</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStakeholder.html" title="interface in com.atlan.model.assets">IStakeholder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Atlan Type representing Stakeholders</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStakeholderTitle.html" title="interface in com.atlan.model.assets">IStakeholderTitle</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStakeholderTitle.html" title="interface in com.atlan.model.assets">IStakeholderTitle</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Atlan Type representing Stakeholder Titles.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburst.html" title="interface in com.atlan.model.assets">IStarburst</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburst.html" title="interface in com.atlan.model.assets">IStarburst</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Starburst assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburstDataset.html" title="interface in com.atlan.model.assets">IStarburstDataset</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburstDataset.html" title="interface in com.atlan.model.assets">IStarburstDataset</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Starburst dataset in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburstDatasetColumn.html" title="interface in com.atlan.model.assets">IStarburstDatasetColumn</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IStarburstDatasetColumn.html" title="interface in com.atlan.model.assets">IStarburstDatasetColumn</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a column within a Starburst dataset in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/IStemmedSearchable.html" title="interface in com.atlan.model.fields">IStemmedSearchable</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISuperset.html" title="interface in com.atlan.model.assets">ISuperset</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/IStemmedSearchable.html" title="interface in com.atlan.model.fields">IStemmedSearchable</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISuperset.html" title="interface in com.atlan.model.assets">ISuperset</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for all Superset types.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetChart.html" title="interface in com.atlan.model.assets">ISupersetChart</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetChart.html" title="interface in com.atlan.model.assets">ISupersetChart</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instances of Superset Chart in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetDashboard.html" title="interface in com.atlan.model.assets">ISupersetDashboard</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetDashboard.html" title="interface in com.atlan.model.assets">ISupersetDashboard</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instances of SupersetDashboard in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetDataset.html" title="interface in com.atlan.model.assets">ISupersetDataset</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ISupersetDataset.html" title="interface in com.atlan.model.assets">ISupersetDataset</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instances of SupersetDataset in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITable.html" title="interface in com.atlan.model.assets">ITable</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITable.html" title="interface in com.atlan.model.assets">ITable</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a database table in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableau.html" title="interface in com.atlan.model.assets">ITableau</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableau.html" title="interface in com.atlan.model.assets">ITableau</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Tableau assets.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauCalculatedField.html" title="interface in com.atlan.model.assets">ITableauCalculatedField</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauCalculatedField.html" title="interface in com.atlan.model.assets">ITableauCalculatedField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau calculated field in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDashboard.html" title="interface in com.atlan.model.assets">ITableauDashboard</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau dashboard in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDashboardField.html" title="interface in com.atlan.model.assets">ITableauDashboardField</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDashboardField.html" title="interface in com.atlan.model.assets">ITableauDashboardField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau dashboard field in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDatasource.html" title="interface in com.atlan.model.assets">ITableauDatasource</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDatasource.html" title="interface in com.atlan.model.assets">ITableauDatasource</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau datasource in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDatasourceField.html" title="interface in com.atlan.model.assets">ITableauDatasourceField</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauDatasourceField.html" title="interface in com.atlan.model.assets">ITableauDatasourceField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau datasource field in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauField.html" title="interface in com.atlan.model.assets">ITableauField</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauField.html" title="interface in com.atlan.model.assets">ITableauField</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau calculated or datasource field in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauFlow.html" title="interface in com.atlan.model.assets">ITableauFlow</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauFlow.html" title="interface in com.atlan.model.assets">ITableauFlow</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau flow in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauMetric.html" title="interface in com.atlan.model.assets">ITableauMetric</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauMetric.html" title="interface in com.atlan.model.assets">ITableauMetric</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau metric in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauProject.html" title="interface in com.atlan.model.assets">ITableauProject</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauProject.html" title="interface in com.atlan.model.assets">ITableauProject</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau project in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauSite.html" title="interface in com.atlan.model.assets">ITableauSite</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauSite.html" title="interface in com.atlan.model.assets">ITableauSite</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau site in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorkbook.html" title="interface in com.atlan.model.assets">ITableauWorkbook</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau workbook in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorksheet.html" title="interface in com.atlan.model.assets">ITableauWorksheet</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorksheet.html" title="interface in com.atlan.model.assets">ITableauWorksheet</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau worksheet in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorksheetField.html" title="interface in com.atlan.model.assets">ITableauWorksheetField</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITableauWorksheetField.html" title="interface in com.atlan.model.assets">ITableauWorksheetField</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Tableau worksheet field in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITablePartition.html" title="interface in com.atlan.model.assets">ITablePartition</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a database table partition in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITag.html" title="interface in com.atlan.model.assets">ITag</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITag.html" title="interface in com.atlan.model.assets">ITag</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for all (source-specific) tag assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITagAttachment.html" title="interface in com.atlan.model.assets">ITagAttachment</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITagAttachment.html" title="interface in com.atlan.model.assets">ITagAttachment</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Represents Source tag association asset.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITask.html" title="interface in com.atlan.model.assets">ITask</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/ITask.html" title="interface in com.atlan.model.assets">ITask</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Task for user in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/ITextSearchable.html" title="interface in com.atlan.model.fields">ITextSearchable</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspot.html" title="interface in com.atlan.model.assets">IThoughtspot</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/fields/ITextSearchable.html" title="interface in com.atlan.model.fields">ITextSearchable</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspot.html" title="interface in com.atlan.model.assets">IThoughtspot</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Base class for Thoughtspot assets.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotAnswer.html" title="interface in com.atlan.model.assets">IThoughtspotAnswer</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotAnswer.html" title="interface in com.atlan.model.assets">IThoughtspotAnswer</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot answer in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotColumn.html" title="interface in com.atlan.model.assets">IThoughtspotColumn</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotColumn.html" title="interface in com.atlan.model.assets">IThoughtspotColumn</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot column in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotDashlet.html" title="interface in com.atlan.model.assets">IThoughtspotDashlet</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotDashlet.html" title="interface in com.atlan.model.assets">IThoughtspotDashlet</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot dashlet in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotLiveboard.html" title="interface in com.atlan.model.assets">IThoughtspotLiveboard</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotLiveboard.html" title="interface in com.atlan.model.assets">IThoughtspotLiveboard</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot liveboard in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotTable.html" title="interface in com.atlan.model.assets">IThoughtspotTable</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotTable.html" title="interface in com.atlan.model.assets">IThoughtspotTable</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot table in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotView.html" title="interface in com.atlan.model.assets">IThoughtspotView</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotView.html" title="interface in com.atlan.model.assets">IThoughtspotView</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot view in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotWorksheet.html" title="interface in com.atlan.model.assets">IThoughtspotWorksheet</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IThoughtspotWorksheet.html" title="interface in com.atlan.model.assets">IThoughtspotWorksheet</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a Thoughtspot worksheet in Atlan.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IView.html" title="interface in com.atlan.model.assets">IView</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IView.html" title="interface in com.atlan.model.assets">IView</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a database view in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IWorkflow.html" title="interface in com.atlan.model.assets">IWorkflow</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IWorkflow.html" title="interface in com.atlan.model.assets">IWorkflow</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of a governance workflow.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IWorkflowRun.html" title="interface in com.atlan.model.assets">IWorkflowRun</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="com/atlan/model/assets/IWorkflowRun.html" title="interface in com.atlan.model.assets">IWorkflowRun</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Instance of an workflow run.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/util/JacksonUtils.html" title="class in com.atlan.util">JacksonUtils</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/util/JacksonUtils.html" title="class in com.atlan.util">JacksonUtils</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Utilities for interacting with Jackson for serialization and deserialization.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaConsumerGroup.html" title="class in com.atlan.model.assets">KafkaConsumerGroup</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaCluster.html" title="class in com.atlan.model.assets">KafkaCluster</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Instance of a Kafka cluster in Atlan.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaCluster.KafkaClusterBuilder.html" title="class in com.atlan.model.assets">KafkaCluster.KafkaClusterBuilder&lt;C,<wbr>B&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaConsumerGroup.html" title="class in com.atlan.model.assets">KafkaConsumerGroup</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Instance of a Kafka ConsumerGroup in Atlan.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaConsumerGroup.KafkaConsumerGroupBuilder.html" title="class in com.atlan.model.assets">KafkaConsumerGroup.KafkaConsumerGroupBuilder&lt;C,<wbr>B&gt;</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaConsumerGroup.KafkaConsumerGroupBuilder.html" title="class in com.atlan.model.assets">KafkaConsumerGroup.KafkaConsumerGroupBuilder&lt;C,<wbr>B&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="com/atlan/model/enums/KafkaConsumerGroupState.html" title="enum class in com.atlan.model.enums">KafkaConsumerGroupState</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaField.html" title="class in com.atlan.model.assets">KafkaField</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Instance of a field within a Kafka topic schema in Atlan, enabling field-level lineage.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaField.KafkaFieldBuilder.html" title="class in com.atlan.model.assets">KafkaField.KafkaFieldBuilder&lt;C,<wbr>B&gt;</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/KafkaTopic.html" title="class in com.atlan.model.assets">KafkaTopic</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
@@ -5794,6 +5820,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Instance of a schema registry subject in Atlan.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/SchemaRegistrySubject.SchemaRegistrySubjectBuilder.html" title="class in com.atlan.model.assets">SchemaRegistrySubject.SchemaRegistrySubjectBuilder&lt;C,<wbr>B&gt;</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/SchemaRegistryVersion.html" title="class in com.atlan.model.assets">SchemaRegistryVersion</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Instance of a specific version of a schema registry subject in Atlan.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/assets/SchemaRegistryVersion.SchemaRegistryVersionBuilder.html" title="class in com.atlan.model.assets">SchemaRegistryVersion.SchemaRegistryVersionBuilder&lt;C,<wbr>B&gt;</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/atlan/model/fields/SearchableField.html" title="class in com.atlan.model.fields">SearchableField</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
