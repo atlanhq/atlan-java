@@ -42,7 +42,7 @@ public interface IAzureEventHub {
 
     public static final String TYPE_NAME = "AzureEventHub";
 
-    /** TBC */
+    /** Operational status of the Azure Event Hub at the source. */
     KeywordField AZURE_EVENT_HUB_STATUS = new KeywordField("azureEventHubStatus", "azureEventHubStatus");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -339,6 +339,12 @@ public interface IAzureEventHub {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
+
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
@@ -449,7 +455,7 @@ public interface IAzureEventHub {
         return null;
     }
 
-    /** TBC */
+    /** Operational status of the Azure Event Hub at the source. */
     String getAzureEventHubStatus();
 
     /** Status of this asset's certification. */
@@ -548,19 +554,38 @@ public interface IAzureEventHub {
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
+    /** Kafka cluster containing this topic. */
+    default IKafkaCluster getKafkaCluster() {
+        return null;
+    }
+
     /** Consumer groups subscribed to this topic. */
     default SortedSet<IKafkaConsumerGroup> getKafkaConsumerGroups() {
+        return null;
+    }
+
+    /** Schema fields defined within this Kafka topic. */
+    default SortedSet<IKafkaField> getKafkaFields() {
         return null;
     }
 
     /** Cleanup policy for this topic. */
     KafkaTopicCleanupPolicy getKafkaTopicCleanupPolicy();
 
+    /** Unique name of the Kafka cluster in which this topic exists. */
+    String getKafkaTopicClusterQualifiedName();
+
     /** Type of compression used for this topic. */
     KafkaTopicCompressionType getKafkaTopicCompressionType();
 
+    /** Number of consumer groups consuming this topic. */
+    Long getKafkaTopicConsumerCount();
+
     /** Whether this topic is an internal topic (true) or not (false). */
     Boolean getKafkaTopicIsInternal();
+
+    /** Whether this topic is fully managed by a schema registry (true) or not (false). */
+    Boolean getKafkaTopicIsSchemaManaged();
 
     /** Comma seperated Cleanup policy for this topic. */
     String getKafkaTopicLogCleanupPolicy();
@@ -574,8 +599,14 @@ public interface IAzureEventHub {
     /** Replication factor for this topic. */
     Long getKafkaTopicReplicationFactor();
 
+    /** Maximum size in bytes that a topic can grow to before discarding old messages; -1 means unlimited. */
+    Long getKafkaTopicRetentionBytes();
+
     /** Amount of time messages will be retained in this topic, in milliseconds. */
     Long getKafkaTopicRetentionTimeInMs();
+
+    /** Name of the schema registry subject governing this topic, if any. */
+    String getKafkaTopicSchemaRegistrySubjectName();
 
     /** Segment size for this topic. */
     Long getKafkaTopicSegmentBytes();

@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AIModelVersionStage;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.EthicalAIAccountabilityConfig;
@@ -59,6 +60,19 @@ public class SnowflakeAIModelVersion extends Asset
     /** Model containing the versions. */
     @Attribute
     IAIModel aiModel;
+
+    /** Unique name of the AI model to which this version belongs, used to navigate from a version back to its parent model. */
+    @Attribute
+    String aiModelQualifiedName;
+
+    /** Evaluation and performance metrics recorded for this AI model version, stored as key-value pairs (e.g. accuracy, F1 score, precision, recall). */
+    @Attribute
+    @Singular
+    Map<String, String> aiModelVersionMetrics;
+
+    /** Lifecycle deployment stage of this AI model version, indicating its readiness for production use. */
+    @Attribute
+    AIModelVersionStage aiModelVersionStage;
 
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute

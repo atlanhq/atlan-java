@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIModelVersionStage;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -84,6 +85,15 @@ public interface ISnowflakeAIModelVersion {
     default IAIModel getAiModel() {
         return null;
     }
+
+    /** Unique name of the AI model to which this version belongs, used to navigate from a version back to its parent model. */
+    String getAiModelQualifiedName();
+
+    /** Evaluation and performance metrics recorded for this AI model version, stored as key-value pairs (e.g. accuracy, F1 score, precision, recall). */
+    Map<String, String> getAiModelVersionMetrics();
+
+    /** Lifecycle deployment stage of this AI model version, indicating its readiness for production use. */
+    AIModelVersionStage getAiModelVersionStage();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -369,6 +379,12 @@ public interface ISnowflakeAIModelVersion {
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
+
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();

@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AIModelVersionStage;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -20,6 +21,7 @@ import com.atlan.model.enums.EthicalAIPrivacyConfig;
 import com.atlan.model.enums.EthicalAIReliabilityAndSafetyConfig;
 import com.atlan.model.enums.EthicalAITransparencyConfig;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -50,6 +52,15 @@ public interface IAIModelVersion {
     /** Model containing the versions. */
     RelationField AI_MODEL = new RelationField("aiModel");
 
+    /** Unique name of the AI model to which this version belongs, used to navigate from a version back to its parent model. */
+    KeywordField AI_MODEL_QUALIFIED_NAME = new KeywordField("aiModelQualifiedName", "aiModelQualifiedName");
+
+    /** Evaluation and performance metrics recorded for this AI model version, stored as key-value pairs (e.g. accuracy, F1 score, precision, recall). */
+    KeywordField AI_MODEL_VERSION_METRICS = new KeywordField("aiModelVersionMetrics", "aiModelVersionMetrics");
+
+    /** Lifecycle deployment stage of this AI model version, indicating its readiness for production use. */
+    KeywordField AI_MODEL_VERSION_STAGE = new KeywordField("aiModelVersionStage", "aiModelVersionStage");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -63,6 +74,15 @@ public interface IAIModelVersion {
     default IAIModel getAiModel() {
         return null;
     }
+
+    /** Unique name of the AI model to which this version belongs, used to navigate from a version back to its parent model. */
+    String getAiModelQualifiedName();
+
+    /** Evaluation and performance metrics recorded for this AI model version, stored as key-value pairs (e.g. accuracy, F1 score, precision, recall). */
+    Map<String, String> getAiModelVersionMetrics();
+
+    /** Lifecycle deployment stage of this AI model version, indicating its readiness for production use. */
+    AIModelVersionStage getAiModelVersionStage();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -348,6 +368,12 @@ public interface IAIModelVersion {
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
+
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();

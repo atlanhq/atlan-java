@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.KafkaConsumerGroupState;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -73,9 +74,18 @@ public class AzureEventHubConsumerGroup extends Asset
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** List of topic-partition pairs assigned to this consumer group. */
+    @Attribute
+    @Singular
+    SortedSet<String> kafkaConsumerGroupAssignedPartitions;
+
     /** Number of members in this consumer group. */
     @Attribute
     Long kafkaConsumerGroupMemberCount;
+
+    /** State of this consumer group. */
+    @Attribute
+    KafkaConsumerGroupState kafkaConsumerGroupState;
 
     /** List of consumption properties for Kafka topics, for this consumer group. */
     @Attribute

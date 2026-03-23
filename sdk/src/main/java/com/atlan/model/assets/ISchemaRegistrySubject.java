@@ -45,7 +45,7 @@ public interface ISchemaRegistrySubject {
 
     public static final String TYPE_NAME = "SchemaRegistrySubject";
 
-    /** TBC */
+    /** Assets governed by this schema registry subject. */
     RelationField ASSETS = new RelationField("assets");
 
     /** Base name of the subject, without -key, -value prefixes. */
@@ -71,6 +71,9 @@ public interface ISchemaRegistrySubject {
     /** Compatibility of the schema across versions. */
     KeywordField SCHEMA_REGISTRY_SUBJECT_SCHEMA_COMPATIBILITY =
             new KeywordField("schemaRegistrySubjectSchemaCompatibility", "schemaRegistrySubjectSchemaCompatibility");
+
+    /** Individual schema versions within this subject. */
+    RelationField SCHEMA_REGISTRY_VERSIONS = new RelationField("schemaRegistryVersions");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -366,6 +369,12 @@ public interface ISchemaRegistrySubject {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
 
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
+
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
@@ -471,7 +480,7 @@ public interface ISchemaRegistrySubject {
     /** Name to use for this type of asset, as a subtype of the actual typeName. */
     String getAssetUserDefinedType();
 
-    /** TBC */
+    /** Assets governed by this schema registry subject. */
     default SortedSet<IAsset> getAssets() {
         return null;
     }
@@ -710,6 +719,11 @@ public interface ISchemaRegistrySubject {
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
+        return null;
+    }
+
+    /** Individual schema versions within this subject. */
+    default SortedSet<ISchemaRegistryVersion> getSchemaRegistryVersions() {
         return null;
     }
 

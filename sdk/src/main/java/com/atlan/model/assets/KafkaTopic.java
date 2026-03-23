@@ -65,22 +65,43 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** Kafka cluster containing this topic. */
+    @Attribute
+    IKafkaCluster kafkaCluster;
+
     /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
     SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
+    /** Schema fields defined within this Kafka topic. */
+    @Attribute
+    @Singular
+    SortedSet<IKafkaField> kafkaFields;
+
     /** Cleanup policy for this topic. */
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
+
+    /** Unique name of the Kafka cluster in which this topic exists. */
+    @Attribute
+    String kafkaTopicClusterQualifiedName;
 
     /** Type of compression used for this topic. */
     @Attribute
     KafkaTopicCompressionType kafkaTopicCompressionType;
 
+    /** Number of consumer groups consuming this topic. */
+    @Attribute
+    Long kafkaTopicConsumerCount;
+
     /** Whether this topic is an internal topic (true) or not (false). */
     @Attribute
     Boolean kafkaTopicIsInternal;
+
+    /** Whether this topic is fully managed by a schema registry (true) or not (false). */
+    @Attribute
+    Boolean kafkaTopicIsSchemaManaged;
 
     /** Comma seperated Cleanup policy for this topic. */
     @Attribute
@@ -98,9 +119,17 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Attribute
     Long kafkaTopicReplicationFactor;
 
+    /** Maximum size in bytes that a topic can grow to before discarding old messages; -1 means unlimited. */
+    @Attribute
+    Long kafkaTopicRetentionBytes;
+
     /** Amount of time messages will be retained in this topic, in milliseconds. */
     @Attribute
     Long kafkaTopicRetentionTimeInMs;
+
+    /** Name of the schema registry subject governing this topic, if any. */
+    @Attribute
+    String kafkaTopicSchemaRegistrySubjectName;
 
     /** Segment size for this topic. */
     @Attribute

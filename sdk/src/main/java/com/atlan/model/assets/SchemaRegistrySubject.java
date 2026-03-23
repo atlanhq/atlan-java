@@ -51,7 +51,7 @@ public class SchemaRegistrySubject extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Assets governed by this schema registry subject. */
     @Attribute
     @Singular
     SortedSet<IAsset> assets;
@@ -138,6 +138,11 @@ public class SchemaRegistrySubject extends Asset
     /** Compatibility of the schema across versions. */
     @Attribute
     SchemaRegistrySchemaCompatibility schemaRegistrySubjectSchemaCompatibility;
+
+    /** Individual schema versions within this subject. */
+    @Attribute
+    @Singular
+    SortedSet<ISchemaRegistryVersion> schemaRegistryVersions;
 
     /**
      * Builds the minimal object necessary to create a relationship to a SchemaRegistrySubject, from a potentially

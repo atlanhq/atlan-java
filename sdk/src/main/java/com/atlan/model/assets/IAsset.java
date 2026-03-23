@@ -398,6 +398,12 @@ public interface IAsset {
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     TextField ASSET_ICON = new TextField("assetIcon", "assetIcon");
 
+    /** The type of request form on Immuta applicable for the asset. */
+    KeywordField ASSET_IMMUTA_REQUEST_TYPE = new KeywordField("assetImmutaRequestType", "assetImmutaRequestType");
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    KeywordField ASSET_IMMUTA_REQUEST_URL = new KeywordField("assetImmutaRequestUrl", "assetImmutaRequestUrl");
+
     /** Internal Popularity score for this asset. */
     NumericRankField ASSET_INTERNAL_POPULARITY_SCORE = new NumericRankField(
             "assetInternalPopularityScore",
@@ -1064,6 +1070,12 @@ public interface IAsset {
 
     /** Name of the icon to use for this asset. (Only applies to glossaries, currently.) */
     AtlanIcon getAssetIcon();
+
+    /** The type of request form on Immuta applicable for the asset. */
+    String getAssetImmutaRequestType();
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    String getAssetImmutaRequestUrl();
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();

@@ -489,6 +489,14 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     AtlanIcon assetIcon;
 
+    /** The type of request form on Immuta applicable for the asset. */
+    @Attribute
+    String assetImmutaRequestType;
+
+    /** URL of the request form on Immuta relevant to the asset. */
+    @Attribute
+    String assetImmutaRequestUrl;
+
     /** Internal Popularity score for this asset. */
     @Attribute
     Double assetInternalPopularityScore;
