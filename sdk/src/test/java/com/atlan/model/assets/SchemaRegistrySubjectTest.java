@@ -630,6 +630,8 @@ public class SchemaRegistrySubjectTest {
             .assetDQRowScopeFilterColumnQualifiedName("String0")
             .assetSpaceQualifiedName("String0")
             .assetSpaceName("String0")
+            .assetImmutaRequestUrl("String0")
+            .assetImmutaRequestType("String0")
             .assetGCPDataplexMetadataDetails(AssetGCPDataplexMetadata.builder()
                     .assetGCPDataplexLastSyncRunAt(123456789L)
                     .assetGCPDataplexAspectDetails(Map.of(
@@ -679,6 +681,9 @@ public class SchemaRegistrySubjectTest {
             .schemaRegistrySubjectGoverningAssetQualifiedName("String1")
             .asset(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .asset(IndistinctAsset.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .schemaRegistryVersion(SchemaRegistryVersion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .schemaRegistryVersion(
+                    SchemaRegistryVersion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

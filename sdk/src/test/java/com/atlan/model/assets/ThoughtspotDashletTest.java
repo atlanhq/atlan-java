@@ -632,6 +632,8 @@ public class ThoughtspotDashletTest {
             .assetDQRowScopeFilterColumnQualifiedName("String0")
             .assetSpaceQualifiedName("String0")
             .assetSpaceName("String0")
+            .assetImmutaRequestUrl("String0")
+            .assetImmutaRequestType("String0")
             .assetGCPDataplexMetadataDetails(AssetGCPDataplexMetadata.builder()
                     .assetGCPDataplexLastSyncRunAt(123456789L)
                     .assetGCPDataplexAspectDetails(Map.of(
