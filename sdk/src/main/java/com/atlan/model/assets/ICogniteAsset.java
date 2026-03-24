@@ -465,6 +465,9 @@ public interface ICogniteAsset {
         return null;
     }
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

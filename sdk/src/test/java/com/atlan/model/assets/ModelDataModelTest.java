@@ -74,6 +74,7 @@ public class ModelDataModelTest {
             .modelBusinessDate(123456789L)
             .modelExpiredAtSystemDate(123456789L)
             .modelExpiredAtBusinessDate(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

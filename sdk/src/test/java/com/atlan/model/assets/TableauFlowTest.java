@@ -62,6 +62,7 @@ public class TableauFlowTest {
                             .build())
             .tableauProjectHierarchyQualifiedName("String0")
             .tableauProjectHierarchyQualifiedName("String1")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

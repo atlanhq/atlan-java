@@ -79,6 +79,7 @@ public class FunctionTest {
             .isProfiled(true)
             .lastProfiledAt(123456789L)
             .sqlAIModelContextQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

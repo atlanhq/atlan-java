@@ -62,6 +62,7 @@ public class SupersetDashboardTest {
                             .build())
             .supersetDashboardId(123456789L)
             .supersetDashboardQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

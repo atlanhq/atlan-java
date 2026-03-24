@@ -67,6 +67,7 @@ public class AnaplanPageTest {
             .anaplanModuleQualifiedName("String0")
             .anaplanModuleName("String0")
             .anaplanSourceId("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

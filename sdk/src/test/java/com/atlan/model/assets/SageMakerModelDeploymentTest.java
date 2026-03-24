@@ -68,6 +68,7 @@ public class SageMakerModelDeploymentTest {
             .ethicalAITransparencyConfig(EthicalAITransparencyConfig.LIMITED_DISCLOSURE)
             .ethicalAIAccountabilityConfig(EthicalAIAccountabilityConfig.HAS_OWNER)
             .ethicalAIEnvironmentalConsciousnessConfig(EthicalAIEnvironmentalConsciousnessConfig.LOW_RISK)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

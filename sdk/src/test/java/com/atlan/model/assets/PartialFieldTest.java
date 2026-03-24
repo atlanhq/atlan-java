@@ -65,6 +65,7 @@ public class PartialFieldTest {
             .partialUnknownAttributesHashId("String0")
             .partialParentType("String0")
             .partialParentQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

@@ -75,6 +75,7 @@ public class MicroStrategyCubeTest {
             .microStrategyCertifiedAt(123456789L)
             .putMicroStrategyLocation(Map.of("key1", "value1"))
             .putMicroStrategyLocation(Map.of("key2", "value2"))
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

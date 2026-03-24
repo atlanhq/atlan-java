@@ -69,6 +69,7 @@ public class ModeCollectionTest {
             .modeReportQualifiedName("String0")
             .modeQueryName("String0")
             .modeQueryQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

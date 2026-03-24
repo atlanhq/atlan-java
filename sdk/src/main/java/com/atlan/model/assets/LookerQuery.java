@@ -48,6 +48,10 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Deprecated. */
     @Attribute
     @Singular

@@ -61,6 +61,7 @@ public class ApplicationFieldTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .appId("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

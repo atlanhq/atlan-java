@@ -63,6 +63,7 @@ public class DataverseEntityTest {
             .dataverseIsCustom(true)
             .dataverseIsCustomizable(true)
             .dataverseIsAuditEnabled(true)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

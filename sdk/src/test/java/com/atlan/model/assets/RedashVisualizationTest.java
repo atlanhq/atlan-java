@@ -61,6 +61,7 @@ public class RedashVisualizationTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .redashIsPublished(true)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

@@ -62,6 +62,7 @@ public class SalesforceDashboardTest {
                             .build())
             .organizationQualifiedName("String0")
             .apiName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

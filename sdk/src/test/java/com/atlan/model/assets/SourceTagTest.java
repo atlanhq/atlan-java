@@ -74,6 +74,7 @@ public class SourceTagTest {
             .tagAllowedValue("String0")
             .tagAllowedValue("String1")
             .mappedAtlanTagName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

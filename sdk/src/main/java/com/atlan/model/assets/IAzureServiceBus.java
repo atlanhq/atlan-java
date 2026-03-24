@@ -472,6 +472,9 @@ public interface IAzureServiceBus {
     /** Unique name of the AzureServiceBus Schema in which this asset exists. */
     String getAzureServiceBusSchemaQualifiedName();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

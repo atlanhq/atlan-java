@@ -685,6 +685,7 @@ public class FlowDatasetTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .catalogDatasetGuid("String0")
             .flowFieldCount(123456789L)
             .flowType("String0")
             .flowExpression("String0")

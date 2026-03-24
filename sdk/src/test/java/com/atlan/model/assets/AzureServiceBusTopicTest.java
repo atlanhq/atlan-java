@@ -63,6 +63,7 @@ public class AzureServiceBusTopicTest {
             .azureServiceBusNamespaceQualifiedName("String0")
             .azureServiceBusNamespaceName("String0")
             .azureServiceBusSchemaQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

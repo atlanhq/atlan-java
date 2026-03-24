@@ -89,6 +89,7 @@ public class DremioVirtualDatasetTest {
             .lastProfiledAt(123456789L)
             .sqlAIModelContextQualifiedName("String0")
             .sqlIsSecure(true)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

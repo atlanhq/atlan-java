@@ -65,6 +65,7 @@ public class ReadmeTemplateTest {
             .reference("String0")
             .putResourceMetadata("String0", "String0")
             .putResourceMetadata("String1", "String1")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

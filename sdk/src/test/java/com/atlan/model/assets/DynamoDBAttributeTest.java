@@ -66,6 +66,7 @@ public class DynamoDBAttributeTest {
             .dynamoDBReadCapacityUnits(123456789L)
             .dynamoDBWriteCapacityUnits(123456789L)
             .noSQLSchemaDefinition("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

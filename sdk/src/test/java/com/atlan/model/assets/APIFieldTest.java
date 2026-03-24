@@ -69,6 +69,7 @@ public class APIFieldTest {
             .apiIsAuthOptional(true)
             .apiIsObjectReference(true)
             .apiObjectQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

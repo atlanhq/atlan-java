@@ -458,6 +458,9 @@ public interface IAzureEventHub {
     /** Operational status of the Azure Event Hub at the source. */
     String getAzureEventHubStatus();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
