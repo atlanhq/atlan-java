@@ -65,6 +65,7 @@ public class S3ObjectTest {
             .s3ParentPrefixQualifiedName("String0")
             .putS3PrefixHierarchy(Map.of("key1", "value1"))
             .putS3PrefixHierarchy(Map.of("key2", "value2"))
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

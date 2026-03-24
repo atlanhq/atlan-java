@@ -610,6 +610,9 @@ public interface ICassandraTable {
     /** Unique name of view for Cassandra asset */
     String getCassandraViewQualifiedName();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

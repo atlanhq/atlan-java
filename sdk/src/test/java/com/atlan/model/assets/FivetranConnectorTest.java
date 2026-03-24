@@ -63,6 +63,7 @@ public class FivetranConnectorTest {
             .fivetranWorkflowName("String0")
             .fivetranLastSyncStatus(FivetranConnectorStatus.SUCCESSFUL)
             .fivetranLastSyncRecordsUpdated(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

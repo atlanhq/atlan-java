@@ -513,6 +513,9 @@ public interface ISageMakerModelGroup {
     /** List of tags that have been applied to the asset in AWS. */
     List<AwsTag> getAwsTags();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

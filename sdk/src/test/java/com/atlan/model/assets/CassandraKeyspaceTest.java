@@ -66,6 +66,7 @@ public class CassandraKeyspaceTest {
             .cassandraTableQualifiedName("String0")
             .cassandraViewQualifiedName("String0")
             .noSQLSchemaDefinition("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

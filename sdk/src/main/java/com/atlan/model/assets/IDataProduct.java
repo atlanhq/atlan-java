@@ -78,6 +78,9 @@ public interface IDataProduct {
     /** Data domain in which this data product exists. */
     RelationField DATA_DOMAIN = new RelationField("dataDomain");
 
+    /** Datasets associated with this data product. */
+    RelationField DATA_MESH_DATASETS = new RelationField("dataMeshDatasets");
+
     /** Search DSL used to define which assets are part of this data product. */
     TextField DATA_PRODUCT_ASSETS_DSL = new TextField("dataProductAssetsDSL", "dataProductAssetsDSL");
 
@@ -520,6 +523,9 @@ public interface IDataProduct {
         return null;
     }
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -580,6 +586,11 @@ public interface IDataProduct {
 
     /** Data domain in which this data product exists. */
     default IDataDomain getDataDomain() {
+        return null;
+    }
+
+    /** Datasets associated with this data product. */
+    default SortedSet<IDataMeshDataset> getDataMeshDatasets() {
         return null;
     }
 

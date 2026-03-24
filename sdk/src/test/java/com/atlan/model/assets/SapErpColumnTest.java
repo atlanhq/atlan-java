@@ -67,6 +67,7 @@ public class SapErpColumnTest {
             .sapDataType("String0")
             .sapFieldCount(123456789L)
             .sapFieldOrder(123)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

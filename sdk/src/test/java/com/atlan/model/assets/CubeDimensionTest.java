@@ -66,6 +66,7 @@ public class CubeDimensionTest {
             .cubeDimensionQualifiedName("String0")
             .cubeHierarchyName("String0")
             .cubeHierarchyQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

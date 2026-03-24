@@ -48,6 +48,10 @@ public class FlowField extends Asset implements IFlowField, ICatalog, IFlow, IAs
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Type of the data captured in this field. */
     @Attribute
     String flowDataType;

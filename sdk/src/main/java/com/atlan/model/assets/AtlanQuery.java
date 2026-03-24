@@ -58,6 +58,10 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Unique name of the collection in which this query exists. */
     @Attribute
     String collectionQualifiedName;

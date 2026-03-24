@@ -62,6 +62,7 @@ public class DataDomainTest {
                             .build())
             .parentDomainQualifiedName("String0")
             .superDomainQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

@@ -61,6 +61,7 @@ public class MatillionJobTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .matillionVersion("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

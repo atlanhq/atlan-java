@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -39,6 +40,9 @@ import javax.annotation.processing.Generated;
 public interface ICatalog {
 
     public static final String TYPE_NAME = "Catalog";
+
+    /** Unique identifier of the dataset this asset belongs to. */
+    KeywordField CATALOG_DATASET_GUID = new KeywordField("catalogDatasetGuid", "catalogDatasetGuid");
 
     /** Tasks to which this asset provides input. */
     RelationField INPUT_TO_AIRFLOW_TASKS = new RelationField("inputToAirflowTasks");
@@ -301,6 +305,9 @@ public interface ICatalog {
                 break;
             case DataDomain.TYPE_NAME:
                 ref = DataDomain.refByQualifiedName(qualifiedName);
+                break;
+            case DataMeshDataset.TYPE_NAME:
+                ref = DataMeshDataset.refByQualifiedName(qualifiedName);
                 break;
             case DataProduct.TYPE_NAME:
                 ref = DataProduct.refByQualifiedName(qualifiedName);
@@ -1414,6 +1421,9 @@ public interface ICatalog {
     default SortedSet<IGlossaryTerm> getAssignedTerms() {
         return null;
     }
+
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
 
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();

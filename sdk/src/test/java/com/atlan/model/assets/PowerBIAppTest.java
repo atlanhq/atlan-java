@@ -66,6 +66,7 @@ public class PowerBIAppTest {
             .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
             .powerBIEndorsedBy("String0")
             .powerBIEndorsedAt(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

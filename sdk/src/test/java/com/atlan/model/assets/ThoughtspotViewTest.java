@@ -64,6 +64,7 @@ public class ThoughtspotViewTest {
             .thoughtspotQuestionText("String0")
             .thoughtspotJoinCount(123456789L)
             .thoughtspotColumnCount(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

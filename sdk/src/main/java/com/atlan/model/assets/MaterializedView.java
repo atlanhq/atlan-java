@@ -61,6 +61,10 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of columns in this materialized view. */
     @Attribute
     Long columnCount;

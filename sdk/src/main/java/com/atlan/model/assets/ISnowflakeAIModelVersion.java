@@ -502,6 +502,9 @@ public interface ISnowflakeAIModelVersion {
     /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     String getCalculationViewQualifiedName();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

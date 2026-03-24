@@ -66,6 +66,7 @@ public class GCSBucketTest {
             .gcsRequesterPays(true)
             .gcsAccessControl("String0")
             .gcsMetaGenerationId(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

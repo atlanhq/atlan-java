@@ -69,6 +69,7 @@ public class AirflowTaskTest {
             .airflowRunStartTime(123456789L)
             .airflowRunEndTime(123456789L)
             .airflowRunOpenLineageState(OpenLineageRunState.START)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

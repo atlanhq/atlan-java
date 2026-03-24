@@ -105,6 +105,7 @@ public class DbtColumnProcessTest {
                     .dbtCompiledSQL("String1")
                     .dbtCompiledCode("String1")
                     .build())
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

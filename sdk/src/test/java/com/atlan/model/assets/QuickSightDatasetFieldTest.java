@@ -63,6 +63,7 @@ public class QuickSightDatasetFieldTest {
             .quickSightId("String0")
             .quickSightSheetId("String0")
             .quickSightSheetName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

@@ -64,6 +64,7 @@ public class PresetChartTest {
             .presetWorkspaceQualifiedName("String0")
             .presetDashboardId(123456789L)
             .presetDashboardQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

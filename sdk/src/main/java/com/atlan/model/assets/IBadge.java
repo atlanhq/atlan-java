@@ -463,6 +463,9 @@ public interface IBadge {
     /** Custom metadata attribute for which to show the badge. */
     String getBadgeMetadataAttribute();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

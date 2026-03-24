@@ -62,6 +62,7 @@ public class ADLSContainerTest {
                             .build())
             .adlsAccountQualifiedName("String0")
             .adlsAccountName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

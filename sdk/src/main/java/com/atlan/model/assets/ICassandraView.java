@@ -596,6 +596,9 @@ public interface ICassandraView {
     /** Where clause used for the CassandraView query. */
     String getCassandraViewWhereClause();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

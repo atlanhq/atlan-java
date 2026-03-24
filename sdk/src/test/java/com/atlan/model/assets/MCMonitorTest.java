@@ -65,6 +65,7 @@ public class MCMonitorTest {
             .mcAssetQualifiedName("String0")
             .mcAssetQualifiedName("String1")
             .dqIsPartOfContract(true)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

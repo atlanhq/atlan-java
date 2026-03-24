@@ -63,6 +63,10 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<ICalculationView> calculationViews;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Database in which this schema exists. */
     @Attribute
     IDatabase database;

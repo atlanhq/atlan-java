@@ -63,6 +63,7 @@ public class FabricReportTest {
             .fabricColumnCount(123)
             .fabricDataType("String0")
             .fabricOrdinal(123)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

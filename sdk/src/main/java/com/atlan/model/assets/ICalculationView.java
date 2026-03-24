@@ -493,6 +493,9 @@ public interface ICalculationView {
     /** The version ID of this calculation view. */
     Long getCalculationViewVersionId();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

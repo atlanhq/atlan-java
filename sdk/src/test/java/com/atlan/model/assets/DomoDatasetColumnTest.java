@@ -62,6 +62,7 @@ public class DomoDatasetColumnTest {
                             .build())
             .domoId("String0")
             .domoOwnerId("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

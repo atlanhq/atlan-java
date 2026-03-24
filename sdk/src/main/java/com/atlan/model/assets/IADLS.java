@@ -477,6 +477,9 @@ public interface IADLS {
     /** Tags that have been applied to this asset in Azure. */
     List<AzureTag> getAzureTags();
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    String getCatalogDatasetGuid();
+
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 

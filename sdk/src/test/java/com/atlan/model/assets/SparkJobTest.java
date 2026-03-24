@@ -65,6 +65,7 @@ public class SparkJobTest {
             .sparkRunStartTime(123456789L)
             .sparkRunEndTime(123456789L)
             .sparkRunOpenLineageState(OpenLineageRunState.START)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

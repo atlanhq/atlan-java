@@ -66,6 +66,7 @@ public class SigmaPageTest {
             .sigmaPageName("String0")
             .sigmaDataElementQualifiedName("String0")
             .sigmaDataElementName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

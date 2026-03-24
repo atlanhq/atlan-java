@@ -61,6 +61,7 @@ public class MongoDBDatabaseTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .noSQLSchemaDefinition("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")

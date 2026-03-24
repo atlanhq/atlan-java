@@ -68,6 +68,7 @@ public class QlikSheetTest {
             .qlikAppQualifiedName("String0")
             .qlikOwnerId("String0")
             .qlikIsPublished(true)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
