@@ -64,6 +64,7 @@ public class ThoughtspotLiveboardTest {
             .thoughtspotQuestionText("String0")
             .thoughtspotJoinCount(123456789L)
             .thoughtspotColumnCount(123456789L)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -674,6 +675,8 @@ public class ThoughtspotLiveboardTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .thoughtspotDashlet(ThoughtspotDashlet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .thoughtspotDashlet(
                     ThoughtspotDashlet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

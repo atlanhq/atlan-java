@@ -48,6 +48,10 @@ public class FabricDashboard extends Asset implements IFabricDashboard, IFabric,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of columns in this asset. */
     @Attribute
     Integer fabricColumnCount;

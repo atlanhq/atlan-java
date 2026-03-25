@@ -97,6 +97,10 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Singular
     SortedSet<IAirflowTask> airflowTasks;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

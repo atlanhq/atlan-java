@@ -53,6 +53,10 @@ public class Metric extends Asset implements IMetric, IDataQuality, ICatalog, IA
     @Singular
     SortedSet<IAsset> assets;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Whether this data quality is part of contract (true) or not (false). */
     @Attribute
     Boolean dqIsPartOfContract;

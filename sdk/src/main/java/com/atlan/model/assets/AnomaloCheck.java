@@ -98,6 +98,10 @@ public class AnomaloCheck extends Asset
     @Attribute
     String anomaloCheckType;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Whether this data quality is part of contract (true) or not (false). */
     @Attribute
     Boolean dqIsPartOfContract;

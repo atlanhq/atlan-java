@@ -670,6 +670,8 @@ public class AtlanCollectionTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .icon("String0")
             .iconType(IconType.IMAGE)
             .childrenFolder(Folder.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

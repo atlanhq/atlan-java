@@ -72,6 +72,10 @@ public class CosmosMongoDBCollection extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of columns in this table. */
     @Attribute
     Long columnCount;

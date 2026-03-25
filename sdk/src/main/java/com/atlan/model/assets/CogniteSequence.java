@@ -49,6 +49,10 @@ public class CogniteSequence extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Asset in which this sequence exists. */
     @Attribute
     ICogniteAsset cogniteAsset;

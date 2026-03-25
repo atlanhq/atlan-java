@@ -48,6 +48,10 @@ public class CogniteFile extends Asset implements ICogniteFile, ICognite, ISaaS,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Asset in which this file exists. */
     @Attribute
     ICogniteAsset cogniteAsset;
