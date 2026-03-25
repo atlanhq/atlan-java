@@ -50,6 +50,10 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
