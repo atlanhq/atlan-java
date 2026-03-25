@@ -74,6 +74,10 @@ public class CalculationView extends Asset implements ICalculationView, ISQL, IC
     @Attribute
     Long calculationViewVersionId;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of columns in this calculation view. */
     @Attribute
     Long columnCount;

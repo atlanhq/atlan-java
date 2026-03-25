@@ -11,6 +11,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
+import com.atlan.model.enums.DataQualityRuleADStatus;
 import com.atlan.model.enums.DataQualityRuleAlertPriority;
 import com.atlan.model.enums.DataQualityRuleCustomSQLReturnType;
 import com.atlan.model.enums.DataQualityRuleStatus;
@@ -55,9 +56,17 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Whether this data quality is part of contract (true) or not (false). */
     @Attribute
     Boolean dqIsPartOfContract;
+
+    /** Anomaly detection lifecycle status for this rule. */
+    @Attribute
+    DataQualityRuleADStatus dqRuleADStatus;
 
     /** Default priority level for alerts involving this rule. */
     @Attribute
@@ -116,6 +125,10 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     @Attribute
     @Date
     Long dqRuleLatestResultComputedAt;
+
+    /** JSON string with anomaly detection result details (forecast, upper_bound, lower_bound, is_anomaly) from Snowflake AD. */
+    @Attribute
+    String dqRuleLatestResultDetails;
 
     /** Time (epoch) at which the latest rule result was fetched. */
     @Attribute

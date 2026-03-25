@@ -78,6 +78,10 @@ public class DbtColumnProcess extends Asset
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Code that ran within the process. */
     @Attribute
     String code;
