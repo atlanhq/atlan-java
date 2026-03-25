@@ -54,6 +54,10 @@ public class SalesforceOrganization extends Asset
     @Attribute
     String apiName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboards that exist within this organization. */
     @Attribute
     @Singular

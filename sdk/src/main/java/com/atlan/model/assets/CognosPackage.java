@@ -48,6 +48,10 @@ public class CognosPackage extends Asset implements ICognosPackage, ICognos, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Columns contained in the package. */
     @Attribute
     @Singular
