@@ -685,6 +685,8 @@ public class FlowDatasetOperationTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .code("String0")
             .sql("String0")
             .parentConnectionProcessQualifiedName("String0")

@@ -62,6 +62,10 @@ public class DatabricksMetricView extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of columns in this view. */
     @Attribute
     Long columnCount;

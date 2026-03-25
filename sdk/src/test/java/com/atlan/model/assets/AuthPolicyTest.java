@@ -670,6 +670,8 @@ public class AuthPolicyTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .isPolicyEnabled(true)
             .policyAction(PersonaMetadataAction.CREATE)
             .policyAction(PersonaMetadataAction.READ)

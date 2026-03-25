@@ -61,6 +61,7 @@ public class ApplicationFieldTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .appId("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -671,6 +672,8 @@ public class ApplicationFieldTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .applicationParentQualifiedName("String0")
             .applicationFieldOwnedAsset(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .applicationFieldOwnedAsset(

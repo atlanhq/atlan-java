@@ -66,6 +66,10 @@ public class CosmosMongoDBDatabase extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Account in which the database exists. */
     @Attribute
     ICosmosMongoDBAccount cosmosMongoDBAccount;

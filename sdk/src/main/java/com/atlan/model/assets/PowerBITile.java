@@ -49,6 +49,10 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboard in which this tile exists. */
     @Attribute
     IPowerBIDashboard dashboard;

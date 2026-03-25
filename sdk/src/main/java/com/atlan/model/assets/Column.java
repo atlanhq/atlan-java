@@ -64,6 +64,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Average value in this column. */
     @Attribute
     Double columnAverage;
