@@ -67,6 +67,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<ICalculationView> calculationViews;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Database in which this schema exists. */
     @Attribute
     IDatabase database;

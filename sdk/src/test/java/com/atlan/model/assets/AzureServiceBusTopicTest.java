@@ -63,6 +63,7 @@ public class AzureServiceBusTopicTest {
             .azureServiceBusNamespaceQualifiedName("String0")
             .azureServiceBusNamespaceName("String0")
             .azureServiceBusSchemaQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -673,6 +674,8 @@ public class AzureServiceBusTopicTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
             .azureServiceBusSchema(AzureServiceBusSchema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .azureServiceBusSchema(
                     AzureServiceBusSchema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
