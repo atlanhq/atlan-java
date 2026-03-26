@@ -65,6 +65,30 @@ public class DremioColumn extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
+    /** Type of dimension as classified by AI analysis, for example: time, categorical, geographic. */
+    @Attribute
+    String columnAiInsightsDimensionType;
+
+    /** Qualified name of the column in another table that this column likely references as a foreign key, inferred by AI analysis of query patterns. */
+    @Attribute
+    String columnAiInsightsForeignKeyColumnQualifiedName;
+
+    /** When true, this column is identified as a dimension by AI analysis of query patterns. */
+    @Attribute
+    Boolean columnAiInsightsIsDimension;
+
+    /** When true, this column is identified as a measure/calculated column by AI analysis of query patterns. */
+    @Attribute
+    Boolean columnAiInsightsIsMeasure;
+
+    /** Type of measure/calculated column as classified by AI analysis, for example: base, calculated, derived. */
+    @Attribute
+    String columnAiInsightsMeasureType;
+
     /** Average value in this column. */
     @Attribute
     Double columnAverage;
@@ -565,6 +589,23 @@ public class DremioColumn extends Asset
     @Attribute
     String sqlAIModelContextQualifiedName;
 
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    @Attribute
+    @Date
+    Long sqlAiInsightsLastAnalyzedAt;
+
+    /** Number of popular business questions associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularBusinessQuestionCount;
+
+    /** Number of popular filter patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularFilterCount;
+
+    /** Number of popular join patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularJoinCount;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular
@@ -574,6 +615,30 @@ public class DremioColumn extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset has any AI insights data available. */
+    @Attribute
+    Boolean sqlHasAiInsights;
+
+    /** Business question insights for this SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightBusinessQuestion> sqlInsightBusinessQuestions;
+
+    /** Filter insights for this column. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightFilter> sqlInsightFilters;
+
+    /** Join insights where this asset is the joined dataset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightJoin> sqlInsightIncomingJoins;
+
+    /** Join insights where this asset is the source dataset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightJoin> sqlInsightOutgoingJoins;
 
     /** Whether this asset is secure (true) or not (false). */
     @Attribute

@@ -90,6 +90,10 @@ public class AdfPipeline extends Asset implements IAdfPipeline, IADF, ICatalog, 
     @Singular
     List<Map<String, String>> adfPipelineRuns;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

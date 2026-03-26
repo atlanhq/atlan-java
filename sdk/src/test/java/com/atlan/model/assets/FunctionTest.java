@@ -79,6 +79,12 @@ public class FunctionTest {
             .isProfiled(true)
             .lastProfiledAt(123456789L)
             .sqlAIModelContextQualifiedName("String0")
+            .sqlHasAiInsights(true)
+            .sqlAiInsightsLastAnalyzedAt(123456789L)
+            .sqlAiInsightsPopularBusinessQuestionCount(123)
+            .sqlAiInsightsPopularJoinCount(123)
+            .sqlAiInsightsPopularFilterCount(123)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -490,6 +496,18 @@ public class FunctionTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -590,6 +608,18 @@ public class FunctionTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -689,6 +719,9 @@ public class FunctionTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
+            .assetHasAiReadme(true)
             .functionDefinition("String0")
             .functionReturnType("String0")
             .functionArgument("String0")
@@ -723,6 +756,15 @@ public class FunctionTest {
                     SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeSemanticLogicalTable(
                     SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightOutgoingJoin(SqlInsightJoin.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightOutgoingJoin(
+                    SqlInsightJoin.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightIncomingJoin(SqlInsightJoin.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightIncomingJoin(
+                    SqlInsightJoin.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightBusinessQuestion(SqlInsightBusinessQuestion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightBusinessQuestion(
+                    SqlInsightBusinessQuestion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

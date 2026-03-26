@@ -63,6 +63,10 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<ICalculationView> calculationViews;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Database in which this schema exists. */
     @Attribute
     IDatabase database;
@@ -276,6 +280,23 @@ public class IcebergNamespace extends Asset
     @Attribute
     String sqlAIModelContextQualifiedName;
 
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    @Attribute
+    @Date
+    Long sqlAiInsightsLastAnalyzedAt;
+
+    /** Number of popular business questions associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularBusinessQuestionCount;
+
+    /** Number of popular filter patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularFilterCount;
+
+    /** Number of popular join patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularJoinCount;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular
@@ -285,6 +306,25 @@ public class IcebergNamespace extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset has any AI insights data available. */
+    @Attribute
+    Boolean sqlHasAiInsights;
+
+    /** Business question insights for this SQL asset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightBusinessQuestion> sqlInsightBusinessQuestions;
+
+    /** Join insights where this asset is the joined dataset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightJoin> sqlInsightIncomingJoins;
+
+    /** Join insights where this asset is the source dataset. */
+    @Attribute
+    @Singular
+    SortedSet<ISqlInsightJoin> sqlInsightOutgoingJoins;
 
     /** Whether this asset is secure (true) or not (false). */
     @Attribute
