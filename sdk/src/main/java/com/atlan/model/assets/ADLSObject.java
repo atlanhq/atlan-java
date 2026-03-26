@@ -162,6 +162,10 @@ public class ADLSObject extends Asset
     @Singular
     List<AzureTag> azureTags;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
     @Attribute
     String cloudUniformResourceName;

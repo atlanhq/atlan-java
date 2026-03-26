@@ -49,6 +49,10 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Attribute
     IAsset asset;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
