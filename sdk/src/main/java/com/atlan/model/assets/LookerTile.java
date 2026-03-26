@@ -48,6 +48,10 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboard in which this tile exists. */
     @Attribute
     ILookerDashboard dashboard;

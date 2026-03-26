@@ -57,6 +57,10 @@ public class MongoDBDatabase extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;

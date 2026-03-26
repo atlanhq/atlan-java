@@ -49,6 +49,10 @@ public class TableauDatasourceField extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Datasource in which this field exists. */
     @Attribute
     ITableauDatasource datasource;

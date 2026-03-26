@@ -60,6 +60,10 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Partitions that exist within this partition. */
     @Attribute
     @Singular

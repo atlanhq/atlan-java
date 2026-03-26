@@ -48,6 +48,10 @@ public class ModelAttribute extends Asset implements IModelAttribute, IModel, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

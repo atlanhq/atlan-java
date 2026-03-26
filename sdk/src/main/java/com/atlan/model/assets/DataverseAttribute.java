@@ -49,6 +49,10 @@ public class DataverseAttribute extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Indicator if DataverseAttribute is the primary key. */
     @Attribute
     Boolean dataverseAttributeIsPrimaryId;

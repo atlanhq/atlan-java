@@ -49,6 +49,10 @@ public class DataDomain extends Asset implements IDataDomain, IDataMesh, ICatalo
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Data products that exist within this data domain. */
     @Attribute
     @Singular
