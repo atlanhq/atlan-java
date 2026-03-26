@@ -49,6 +49,10 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dataset from which this report was built. */
     @Attribute
     IPowerBIDataset dataset;

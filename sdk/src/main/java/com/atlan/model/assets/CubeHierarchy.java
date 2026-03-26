@@ -49,6 +49,10 @@ public class CubeHierarchy extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dimension containing the hierarchy. */
     @Attribute
     ICubeDimension cubeDimension;

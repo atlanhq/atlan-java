@@ -486,6 +486,18 @@ public class FlowProjectTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -586,6 +598,18 @@ public class FlowProjectTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -685,6 +709,9 @@ public class FlowProjectTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
+            .assetHasAiReadme(true)
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

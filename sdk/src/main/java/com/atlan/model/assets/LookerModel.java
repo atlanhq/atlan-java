@@ -48,6 +48,10 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Explores that exist within this model. */
     @Attribute
     @Singular
