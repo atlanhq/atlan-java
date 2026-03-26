@@ -51,6 +51,10 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Attribute
     IAsset asset;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Icon for the link. */
     @Attribute
     String icon;

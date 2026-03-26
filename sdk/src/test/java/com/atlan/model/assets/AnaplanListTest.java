@@ -67,6 +67,7 @@ public class AnaplanListTest {
             .anaplanModuleQualifiedName("String0")
             .anaplanModuleName("String0")
             .anaplanSourceId("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -478,6 +479,18 @@ public class AnaplanListTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -578,6 +591,18 @@ public class AnaplanListTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -677,6 +702,9 @@ public class AnaplanListTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
+            .assetHasAiReadme(true)
             .anaplanListItemCount(123456789L)
             .anaplanModel(AnaplanModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .anaplanLineItem(AnaplanLineItem.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

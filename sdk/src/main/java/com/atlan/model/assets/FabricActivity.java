@@ -48,6 +48,10 @@ public class FabricActivity extends Asset implements IFabricActivity, IFabric, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Type of activity. */
     @Attribute
     String fabricActivityType;
