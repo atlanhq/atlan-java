@@ -54,6 +54,10 @@ public class SalesforceReport extends Asset
     @Attribute
     String apiName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** TBC */
     @Attribute
     @Singular
