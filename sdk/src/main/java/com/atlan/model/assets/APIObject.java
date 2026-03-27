@@ -66,6 +66,16 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     @Attribute
     Boolean apiIsAuthOptional;
 
+    /** API methods that use this object as their request schema. */
+    @Attribute
+    @Singular("apiMethodRequestingThis")
+    SortedSet<IAPIMethod> apiMethodsRequestingThis;
+
+    /** API methods that use this object as one of their response schemas. */
+    @Attribute
+    @Singular("apiMethodRespondingWithThis")
+    SortedSet<IAPIMethod> apiMethodsRespondingWithThis;
+
     /** If this asset refers to an APIObject */
     @Attribute
     Boolean apiIsObjectReference;
