@@ -15,6 +15,7 @@ public enum AssetGroupingTrackedCategories implements AtlanEnum {
     OWNERS("owners"),
     CERTIFICATION("certification"),
     DATA_QUALITY_RULES("data-quality-rules"),
+    SQL_INSIGHTS("sql-insights"),
     ;
 
     @JsonValue

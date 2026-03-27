@@ -48,6 +48,10 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboard in which this field is used. */
     @Attribute
     ILookerDashboard dashboard;
