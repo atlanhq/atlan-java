@@ -54,6 +54,10 @@ public class TableauWorksheet extends Asset
     @Singular
     SortedSet<ITableauCalculatedField> calculatedFields;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboards that use this worksheet. */
     @Attribute
     @Singular

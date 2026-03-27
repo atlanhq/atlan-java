@@ -53,6 +53,10 @@ public class SalesforceObject extends Asset
     @Attribute
     String apiName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of fields in this object. */
     @Attribute
     Long fieldCount;

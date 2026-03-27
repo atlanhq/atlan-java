@@ -48,6 +48,10 @@ public class LookerProject extends Asset implements ILookerProject, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Explores that exist within this project. */
     @Attribute
     @Singular

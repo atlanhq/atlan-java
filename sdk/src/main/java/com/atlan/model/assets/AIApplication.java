@@ -64,6 +64,10 @@ public class AIApplication extends Asset implements IAIApplication, IAI, ICatalo
     @Attribute
     String aiApplicationVersion;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Accountability configuration for ensuring the ethical use of an AI asset */
     @Attribute
     EthicalAIAccountabilityConfig ethicalAIAccountabilityConfig;

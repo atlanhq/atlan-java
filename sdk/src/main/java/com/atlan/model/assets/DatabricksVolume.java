@@ -58,6 +58,10 @@ public class DatabricksVolume extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
@@ -196,6 +200,27 @@ public class DatabricksVolume extends Asset
     @Attribute
     String sqlAIModelContextQualifiedName;
 
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    @Attribute
+    @Date
+    Long sqlAiInsightsLastAnalyzedAt;
+
+    /** Number of popular business questions associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularBusinessQuestionCount;
+
+    /** Number of popular filter patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularFilterCount;
+
+    /** Number of popular join patterns associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsPopularJoinCount;
+
+    /** Number of relationship insights associated with this asset. */
+    @Attribute
+    Integer sqlAiInsightsRelationshipCount;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular
@@ -205,6 +230,10 @@ public class DatabricksVolume extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether this asset has any AI insights data available. */
+    @Attribute
+    Boolean sqlHasAiInsights;
 
     /** Whether this asset is secure (true) or not (false). */
     @Attribute

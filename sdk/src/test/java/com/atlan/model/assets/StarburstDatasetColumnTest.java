@@ -82,6 +82,13 @@ public class StarburstDatasetColumnTest {
             .lastProfiledAt(123456789L)
             .sqlAIModelContextQualifiedName("String0")
             .sqlIsSecure(true)
+            .sqlHasAiInsights(true)
+            .sqlAiInsightsLastAnalyzedAt(123456789L)
+            .sqlAiInsightsPopularBusinessQuestionCount(123)
+            .sqlAiInsightsPopularJoinCount(123)
+            .sqlAiInsightsPopularFilterCount(123)
+            .sqlAiInsightsRelationshipCount(123)
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -493,6 +500,18 @@ public class StarburstDatasetColumnTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -593,6 +612,18 @@ public class StarburstDatasetColumnTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -692,6 +723,9 @@ public class StarburstDatasetColumnTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .assetAiAlia("String0")
+            .assetAiAlia("String1")
+            .assetHasAiReadme(true)
             .dataType("String0")
             .subDataType("String0")
             .columnCompression("String0")
@@ -777,6 +811,11 @@ public class StarburstDatasetColumnTest {
             .nosqlCollectionQualifiedName("String0")
             .columnIsMeasure(true)
             .columnMeasureType("String0")
+            .columnAiInsightsIsMeasure(true)
+            .columnAiInsightsMeasureType("String0")
+            .columnAiInsightsIsDimension(true)
+            .columnAiInsightsDimensionType("String0")
+            .columnAiInsightsForeignKeyColumnQualifiedName("String0")
             .starburstSqlColumnQualifiedName("String0")
             .cosmosMongoDBCollection(CosmosMongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .metricTimestamp(Metric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -825,6 +864,17 @@ public class StarburstDatasetColumnTest {
                     SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeSemanticLogicalTable(
                     SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightOutgoingJoin(SqlInsightJoin.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightOutgoingJoin(
+                    SqlInsightJoin.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightIncomingJoin(SqlInsightJoin.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightIncomingJoin(
+                    SqlInsightJoin.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightFilter(SqlInsightFilter.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightFilter(SqlInsightFilter.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlInsightBusinessQuestion(SqlInsightBusinessQuestion.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlInsightBusinessQuestion(
+                    SqlInsightBusinessQuestion.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .starburstDataset(StarburstDataset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
