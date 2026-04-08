@@ -49,7 +49,7 @@ jobs:
         id: tags
         run: |
           if [ -n "${{ inputs.branch }}" ]; then
-            # For manual runs with branch specified, use version and branch name (sanitized)
+            # For non-main branches, use version and branch name (sanitized)
             BRANCH_NAME=$(echo "${{ inputs.branch }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
             echo "tags=ghcr.io/atlanhq/csa-${{inputs.package_name}}:${{inputs.version}}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
             echo "build_version=${{inputs.version}}-${BRANCH_NAME}" >> $GITHUB_OUTPUT
