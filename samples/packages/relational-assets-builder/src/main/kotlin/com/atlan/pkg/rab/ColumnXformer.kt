@@ -36,6 +36,12 @@ class ColumnXformer(
     companion object {
         const val COLUMN_PARENT_QN = "columnParentQualifiedName"
         const val COLUMN_NAME = "columnName"
+        val PARENT_COLUMN_QN_HEADER = RowSerde.getHeaderForField(Column.PARENT_COLUMN_QUALIFIED_NAME, Column::class.java)
+        val PARENT_COLUMN_HEADER = RowSerde.getHeaderForField(Column.PARENT_COLUMN, Column::class.java)
+        val PARENT_COLUMN_NAME_HEADER = RowSerde.getHeaderForField(Column.PARENT_COLUMN_NAME, Column::class.java)
+        val NESTED_COLUMN_ORDER_HEADER = RowSerde.getHeaderForField(Column.NESTED_COLUMN_ORDER, Column::class.java)
+        val COLUMN_DEPTH_LEVEL_HEADER = RowSerde.getHeaderForField(Column.COLUMN_DEPTH_LEVEL, Column::class.java)
+        val COLUMN_HIERARCHY_HEADER = RowSerde.getHeaderForField(Column.COLUMN_HIERARCHY, Column::class.java)
         val REQUIRED_HEADERS =
             mapOf<String, Set<String>>(
                 Asset.TYPE_NAME.atlanFieldName to setOf(),
@@ -66,6 +72,7 @@ class ColumnXformer(
         val assetQN = "$connectionQN/${details.partialQN}"
         val parentQN = "$connectionQN/${details.parentPartialQN}"
         val rawDataType = trimWhitespace(inputRow.getOrElse(Column.DATA_TYPE.atlanFieldName) { "" })
+        val displayDataType = baseTypeName(rawDataType)
         var precision: Int? = null
         var scale: Double? = null
         var maxLength: Long? = null
@@ -95,6 +102,7 @@ class ColumnXformer(
                 RowSerde.getHeaderForField(Column.VIEW_QUALIFIED_NAME, Column::class.java) to if (details.viewPQN.isNotBlank()) "$connectionQN/${details.viewPQN}" else "",
                 RowSerde.getHeaderForField(Column.VIEW, Column::class.java) to if (details.parentTypeName == View.TYPE_NAME) "${details.parentTypeName}@$parentQN" else "",
                 RowSerde.getHeaderForField(Column.MATERIALIZED_VIEW, Column::class.java) to if (details.parentTypeName == MaterializedView.TYPE_NAME) "${details.parentTypeName}@$parentQN" else "",
+                RowSerde.getHeaderForField(Column.DATA_TYPE, Column::class.java) to displayDataType,
                 RowSerde.getHeaderForField(Column.ORDER, Column::class.java) to inputRow.getOrElse(Column.ORDER.atlanFieldName) { "" },
                 RowSerde.getHeaderForField(Column.RAW_DATA_TYPE_DEFINITION, Column::class.java) to rawDataType,
                 RowSerde.getHeaderForField(Column.PRECISION, Column::class.java) to (precision?.toString() ?: ""),
@@ -104,6 +112,116 @@ class ColumnXformer(
         } else {
             mapOf()
         }
+    }
+
+    /** Returns the base type name, stripping any angle-bracket type parameters.
+     *  E.g. "STRUCT<a:INT,b:DOUBLE>" → "STRUCT", "INT" → "INT". */
+    private fun baseTypeName(rawType: String): String = if (rawType.contains("<")) rawType.substringBefore("<").trim().uppercase() else rawType
+
+    /** {@inheritDoc}
+     *
+     * Overridden to emit additional child column rows when the column's data type is a complex type
+     * (STRUCT, ARRAY<STRUCT>, or MAP<K, STRUCT>). Child columns are generated recursively for
+     * deeply nested types.
+     */
+    override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
+        val rows = super.mapRow(inputRow).toMutableList()
+        val rawType = trimWhitespace(inputRow.getOrElse(Column.DATA_TYPE.atlanFieldName) { "" })
+        val parseResult = ComplexTypeParser.extractStructFields(rawType)
+        if (parseResult != null) {
+            val connectionQN = getConnectionQN(inputRow)
+            val details = getSQLHierarchyDetails(inputRow, typeNameFilter, preprocessedDetails.entityQualifiedNameToType)
+            val parentColumnQN = "$connectionQN/${details.partialQN}"
+            val parentAssetMap = mapAsset(inputRow)
+            rows.addAll(buildSubColumnRows(parentAssetMap, parentColumnQN, parseResult))
+        }
+        return rows
+    }
+
+    /**
+     * Recursively build child column rows for all fields in the given [parseResult].
+     *
+     * @param baseAssetMap field map of the immediate parent column (used to inherit context fields)
+     * @param parentColumnQN qualified name of the parent column asset (used for [PARENT_COLUMN_QN_HEADER])
+     * @param parseResult parsed complex type fields and optional synthetic QN node (e.g. "items" for ARRAY)
+     * @param depth nesting depth of the child columns (1 for direct children of a top-level column, 2 for grandchildren, etc.)
+     */
+    private fun buildSubColumnRows(
+        baseAssetMap: Map<String, String>,
+        parentColumnQN: String,
+        parseResult: ComplexTypeParser.ParseResult,
+        depth: Int = 1,
+    ): List<List<String>> {
+        val rows = mutableListOf<List<String>>()
+        // For ARRAY / MAP, insert the synthetic node into the QN path but NOT into parentColumnQN
+        val qnBase = if (parseResult.syntheticNode != null) "$parentColumnQN/${parseResult.syntheticNode}" else parentColumnQN
+        parseResult.fields.forEachIndexed { idx, field ->
+            val childQN = "$qnBase/${field.name}"
+            val childAssetMap = buildChildAssetMap(baseAssetMap, parentColumnQN, childQN, field, idx + 1, depth)
+            rows.add(assetMapToValueList(childAssetMap))
+            // Recurse for nested complex types (e.g. STRUCT within STRUCT, ARRAY within STRUCT)
+            val nestedResult = ComplexTypeParser.extractStructFields(field.rawType)
+            if (nestedResult != null) {
+                rows.addAll(buildSubColumnRows(childAssetMap, childQN, nestedResult, depth + 1))
+            }
+        }
+        return rows
+    }
+
+    /**
+     * Build the asset map for a single child column, inheriting all context fields from
+     * [parentAssetMap] and overriding the column-specific fields.
+     *
+     * @param parentAssetMap asset map of the immediate parent column
+     * @param parentColumnQN qualified name of the parent column (for [PARENT_COLUMN_QN_HEADER])
+     * @param childQN qualified name for the child column
+     * @param field field definition (name and raw type) for the child column
+     * @param order ordinal position of the child column within its parent
+     * @param depth nesting depth of this child column (1 for direct children of a top-level column, 2 for grandchildren, etc.)
+     */
+    private fun buildChildAssetMap(
+        parentAssetMap: Map<String, String>,
+        parentColumnQN: String,
+        childQN: String,
+        field: ComplexTypeParser.FieldDefinition,
+        order: Int,
+        depth: Int,
+    ): Map<String, String> {
+        val childMap = parentAssetMap.toMutableMap()
+        childMap[RowSerde.getHeaderForField(Asset.QUALIFIED_NAME)] = childQN
+        childMap[RowSerde.getHeaderForField(Asset.NAME)] = field.name
+        childMap[RowSerde.getHeaderForField(Column.DATA_TYPE, Column::class.java)] = baseTypeName(field.rawType)
+        childMap[RowSerde.getHeaderForField(Column.RAW_DATA_TYPE_DEFINITION, Column::class.java)] = field.rawType
+        childMap[RowSerde.getHeaderForField(Column.ORDER, Column::class.java)] = order.toString()
+        // Clear numeric type-specific fields — they're not meaningful for the child's raw type
+        childMap[RowSerde.getHeaderForField(Column.PRECISION, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.NUMERIC_SCALE, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java)] = ""
+        // Clear table/view references on sub-columns so they do not appear in the table's flat
+        // column list (table_columns relationship). Navigation is via parentColumn chain instead.
+        childMap[RowSerde.getHeaderForField(Column.TABLE_QUALIFIED_NAME, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.TABLE_NAME, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.TABLE, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.VIEW_QUALIFIED_NAME, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.VIEW_NAME, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.VIEW, Column::class.java)] = ""
+        childMap[RowSerde.getHeaderForField(Column.MATERIALIZED_VIEW, Column::class.java)] = ""
+        childMap[PARENT_COLUMN_QN_HEADER] = parentColumnQN
+        childMap[PARENT_COLUMN_HEADER] = "${Column.TYPE_NAME}@$parentColumnQN"
+        childMap[PARENT_COLUMN_NAME_HEADER] = parentColumnQN.substringAfterLast('/')
+        childMap[NESTED_COLUMN_ORDER_HEADER] = order.toString()
+        // columnDepthLevel tells Atlan this is a nested sub-column (not a top-level table column).
+        childMap[COLUMN_DEPTH_LEVEL_HEADER] = depth.toString()
+        // columnHierarchy lists all ancestor columns from depth-1 up to the immediate parent.
+        // Each entry is a JSON object: {"depth":"<n>","qualifiedName":"<qn>","name":"<name>"}.
+        // Multiple entries are newline-delimited (CellXformer.LIST_DELIMITER).
+        // Matches the format used in AIM nested_columns.csv reference and Databricks connector.
+        val parentHierarchyStr = parentAssetMap.getOrElse(COLUMN_HIERARCHY_HEADER) { "" }
+        val parentName = parentColumnQN.substringAfterLast('/')
+        val newEntry = """{"depth": "$depth","qualifiedName": "$parentColumnQN","name": "$parentName"}"""
+        childMap[COLUMN_HIERARCHY_HEADER] = if (parentHierarchyStr.isBlank()) newEntry else "$parentHierarchyStr\n$newEntry"
+        childMap[RowSerde.getHeaderForField(Asset.SUB_TYPE)] = "nested"
+        return childMap
     }
 
     class Preprocessor(

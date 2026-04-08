@@ -31,17 +31,24 @@ abstract class AssetXformer(
         fieldSeparator = ctx.config.assetsFieldSeparator[0],
     ) {
     /** {@inheritDoc} */
-    override fun mapRow(inputRow: Map<String, String>): List<List<String>> {
-        val assetMap = mapAsset(inputRow)
+    override fun mapRow(inputRow: Map<String, String>): List<List<String>> = listOf(assetMapToValueList(mapAsset(inputRow), inputRow))
+
+    /**
+     * Convert an asset field map to a CSV value list aligned with [targetHeader].
+     * Values absent from [assetMap] fall back to [fallback], then to empty string.
+     */
+    protected fun assetMapToValueList(
+        assetMap: Map<String, String>,
+        fallback: Map<String, String> = emptyMap(),
+    ): List<String> {
         val valueList = mutableListOf<String>()
         targetHeader!!.forEach { header ->
             if (header != null) {
                 // Look for the transformed value first, then fallback to passing through what came in the input
-                val transformed = assetMap.getOrElse(header) { inputRow.getOrElse(header) { "" } }
-                valueList.add(transformed)
+                valueList.add(assetMap.getOrElse(header) { fallback.getOrElse(header) { "" } })
             }
         }
-        return listOf(valueList)
+        return valueList
     }
 
     /** {@inheritDoc} */
@@ -87,6 +94,13 @@ abstract class AssetXformer(
                 RowSerde.getHeaderForField(Column.PRECISION, Column::class.java),
                 RowSerde.getHeaderForField(Column.NUMERIC_SCALE, Column::class.java),
                 RowSerde.getHeaderForField(Column.MAX_LENGTH, Column::class.java),
+                RowSerde.getHeaderForField(Column.PARENT_COLUMN_QUALIFIED_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.PARENT_COLUMN, Column::class.java),
+                RowSerde.getHeaderForField(Column.PARENT_COLUMN_NAME, Column::class.java),
+                RowSerde.getHeaderForField(Column.NESTED_COLUMN_ORDER, Column::class.java),
+                RowSerde.getHeaderForField(Column.COLUMN_DEPTH_LEVEL, Column::class.java),
+                RowSerde.getHeaderForField(Column.COLUMN_HIERARCHY, Column::class.java),
+                RowSerde.getHeaderForField(Asset.SUB_TYPE),
             )
 
         fun getConnectorType(inputRow: Map<String, String>): String =

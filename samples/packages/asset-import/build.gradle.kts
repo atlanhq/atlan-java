@@ -20,6 +20,9 @@ tasks {
     getByName("sourcesJar") {
         dependsOn("genCustomPkg")
     }
+    compileJava {
+        dependsOn("genCustomPkg")
+    }
 }
 
 publishing {

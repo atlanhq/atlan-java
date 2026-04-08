@@ -20,14 +20,14 @@ java {
 }
 
 tasks {
+    compileJava {
+        dependsOn("genCustomPkg")
+    }
     shadowJar {
         isZip64 = true
         archiveClassifier.set("")
         archiveBaseName.set(jarName)
         destinationDirectory.set(file(jarPath))
-        dependencies {
-            include(project(":samples:packages:asset-import"))
-        }
         mergeServiceFiles()
         dependsOn(":package-toolkit:runtime:genPklConnectors")
     }

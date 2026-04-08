@@ -1,0 +1,10 @@
+typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,dataType,displayName,description
+Connection,{{CONNECTION1}},iceberg,,,,,,,
+Database,{{CONNECTION1}},iceberg,TEST_DB,,,,,,
+Schema,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,,,,,
+Table,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,,,,
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,PLAIN_COL,VARCHAR(128),Plain column,A regular column
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,STRUCT_COL,"STRUCT<city:STRING, zip:INT>",Struct column,A STRUCT typed column
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,ARRAY_COL,"ARRAY<STRUCT<id:INT, name:STRING>>",Array column,An ARRAY of STRUCT typed column
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,MAP_COL,"MAP<STRING, STRUCT<key:STRING, value:DOUBLE>>",Map column,A MAP with STRUCT value typed column
+Column,{{CONNECTION1}},iceberg,TEST_DB,TEST_SCHEMA,TEST_TBL,NESTED_STRUCT_COL,"STRUCT<outer:STRUCT<inner:STRING, count:INT>, label:STRING>",Nested struct column,A STRUCT containing another STRUCT
