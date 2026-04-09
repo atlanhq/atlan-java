@@ -235,9 +235,17 @@ public class APIMethod extends Asset implements IAPIMethod, IAPI, ICatalog, IAss
     @Singular("apiMethodResponseSchema")
     SortedSet<IAPIObject> apiMethodResponseSchemas;
 
+    /** Unique name of the API method in which this asset exists. */
+    @Attribute
+    String apiMethodQualifiedName;
+
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     @Attribute
     String apiObjectQualifiedName;
+
+    /** Unique name of the API path in which this asset exists. */
+    @Attribute
+    String apiPathQualifiedName;
 
     /** API path on which this method operates. */
     @Attribute

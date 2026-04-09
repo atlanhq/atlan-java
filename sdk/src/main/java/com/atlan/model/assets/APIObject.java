@@ -48,6 +48,10 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Type of API body this object belongs to (e.g. "request", "response/200"). */
+    @Attribute
+    String apiBodyType;
+
     /** External documentation of the API. */
     @Attribute
     @Singular
@@ -71,6 +75,10 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     @Singular("apiMethodRequestingThis")
     SortedSet<IAPIMethod> apiMethodsRequestingThis;
 
+    /** Qualified name of the API method this object belongs to. */
+    @Attribute
+    String apiMethodQualifiedName;
+
     /** API methods that use this object as one of their response schemas. */
     @Attribute
     @Singular("apiMethodRespondingWithThis")
@@ -83,6 +91,10 @@ public class APIObject extends Asset implements IAPIObject, IAPI, ICatalog, IAss
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     @Attribute
     String apiObjectQualifiedName;
+
+    /** Qualified name of the API path this object belongs to. */
+    @Attribute
+    String apiPathQualifiedName;
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     @Attribute

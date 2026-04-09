@@ -42,6 +42,9 @@ public interface IAPIField {
 
     public static final String TYPE_NAME = "APIField";
 
+    /** Type of API body this field belongs to (e.g. "request", "response/200"). */
+    KeywordField API_BODY_TYPE = new KeywordField("apiBodyType", "apiBodyType");
+
     /** Type of APIField, as free text (e.g. STRING, NUMBER etc). */
     KeywordField API_FIELD_TYPE = new KeywordField("apiFieldType", "apiFieldType");
 
@@ -50,6 +53,12 @@ public interface IAPIField {
 
     /** APIObject asset containing this APIField. */
     RelationField API_OBJECT = new RelationField("apiObject");
+
+    /** Qualified name of the API method this field belongs to. */
+    KeywordField API_METHOD_QUALIFIED_NAME = new KeywordField("apiMethodQualifiedName", "apiMethodQualifiedName");
+
+    /** Qualified name of the API path this field belongs to. */
+    KeywordField API_PATH_QUALIFIED_NAME = new KeywordField("apiPathQualifiedName", "apiPathQualifiedName");
 
     /** APIQuery asset containing this APIField. */
     RelationField API_QUERY = new RelationField("apiQuery");
@@ -86,6 +95,9 @@ public interface IAPIField {
         return null;
     }
 
+    /** Type of API body this field belongs to (e.g. "request", "response/200"). */
+    String getApiBodyType();
+
     /** External documentation of the API. */
     Map<String, String> getApiExternalDocs();
 
@@ -101,6 +113,9 @@ public interface IAPIField {
     /** If this asset refers to an APIObject */
     Boolean getApiIsObjectReference();
 
+    /** Qualified name of the API method this field belongs to. */
+    String getApiMethodQualifiedName();
+
     /** APIObject asset containing this APIField. */
     default IAPIObject getApiObject() {
         return null;
@@ -108,6 +123,9 @@ public interface IAPIField {
 
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     String getApiObjectQualifiedName();
+
+    /** Qualified name of the API path this field belongs to. */
+    String getApiPathQualifiedName();
 
     /** APIQuery asset containing this APIField. */
     default IAPIQuery getApiQuery() {

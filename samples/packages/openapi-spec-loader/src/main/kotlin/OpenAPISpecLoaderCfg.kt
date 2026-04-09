@@ -28,4 +28,5 @@ data class OpenAPISpecLoaderCfg(
     @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
     @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
     @JsonProperty("connection_qualified_name") val connectionQualifiedName: List<String>? = null,
+    @JsonProperty("object_creation_mode") val objectCreationMode: String = "PHYSICAL",
 ) : CustomConfig<OpenAPISpecLoaderCfg>()
