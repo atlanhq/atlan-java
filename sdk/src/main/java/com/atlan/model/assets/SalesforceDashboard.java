@@ -54,6 +54,10 @@ public class SalesforceDashboard extends Asset
     @Attribute
     String apiName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Type of dashboard in Salesforce. */
     @Attribute
     String dashboardType;

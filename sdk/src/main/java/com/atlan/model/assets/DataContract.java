@@ -48,6 +48,10 @@ public class DataContract extends Asset implements IDataContract, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Asset this contract controls. */
     @Attribute
     IAsset dataContractAssetCertified;

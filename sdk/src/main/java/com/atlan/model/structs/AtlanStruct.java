@@ -32,6 +32,11 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = AssetExternalDQTestDetails.class, name = AssetExternalDQTestDetails.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestMetric.class, name = AssetExternalDQTestMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestRunHistory.class, name = AssetExternalDQTestRunHistory.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetExternalDQTestStats.class, name = AssetExternalDQTestStats.TYPE_NAME),
+    @JsonSubTypes.Type(
+            value = AssetExternalDQTestStatsByCategory.class,
+            name = AssetExternalDQTestStatsByCategory.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetExternalDQTestsByStatus.class, name = AssetExternalDQTestsByStatus.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetGCPDataplexAspectMetadata.class, name = AssetGCPDataplexAspectMetadata.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetGCPDataplexMetadata.class, name = AssetGCPDataplexMetadata.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
@@ -67,6 +72,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SourceTagAttachment.class, name = SourceTagAttachment.TYPE_NAME),
     @JsonSubTypes.Type(value = SourceTagAttachmentValue.class, name = SourceTagAttachmentValue.TYPE_NAME),
     @JsonSubTypes.Type(value = SourceTagAttribute.class, name = SourceTagAttribute.TYPE_NAME),
+    @JsonSubTypes.Type(value = SqlInsightJoinColumnPair.class, name = SqlInsightJoinColumnPair.TYPE_NAME),
     @JsonSubTypes.Type(value = StarredDetails.class, name = StarredDetails.TYPE_NAME),
 })
 @Slf4j

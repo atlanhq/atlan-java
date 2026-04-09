@@ -48,6 +48,10 @@ public class CustomEntity extends Asset implements ICustomEntity, ICustom, ICata
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Custom entities contained within the parent entity. */
     @Attribute
     @Singular
