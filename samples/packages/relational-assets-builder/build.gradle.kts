@@ -28,6 +28,9 @@ tasks {
         archiveClassifier.set("")
         archiveBaseName.set(jarName)
         destinationDirectory.set(file(jarPath))
+        dependencies {
+            include(project(":samples:packages:asset-import"))
+        }
         mergeServiceFiles()
         dependsOn(":package-toolkit:runtime:genPklConnectors")
     }
