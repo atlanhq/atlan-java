@@ -67,7 +67,7 @@ object OpenAPISpecLoader {
                 exitProcess(4)
             }
 
-            val objectMode = ctx.config.objectCreationMode.ifBlank { MODE_PHYSICAL }
+            val objectMode = ctx.config.objectCreationMode?.ifBlank { MODE_PHYSICAL } ?: MODE_PHYSICAL
             logger.info { "Object creation mode: $objectMode" }
 
             val sourceFiles =
