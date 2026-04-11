@@ -48,6 +48,10 @@ public class CognosFile extends Asset implements ICognosFile, ICognos, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Columns contained in the file. */
     @Attribute
     @Singular

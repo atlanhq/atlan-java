@@ -50,6 +50,10 @@ public class CubeField extends Asset implements ICubeField, IMultiDimensionalDat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Simple name of the cube dimension in which this asset exists, or empty if it is itself a dimension. */
     @Attribute
     String cubeDimensionName;

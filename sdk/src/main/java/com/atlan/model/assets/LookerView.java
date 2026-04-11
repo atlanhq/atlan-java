@@ -48,6 +48,10 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Fields that exist within this view. */
     @Attribute
     @Singular

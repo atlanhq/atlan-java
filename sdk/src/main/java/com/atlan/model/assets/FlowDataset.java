@@ -48,6 +48,10 @@ public class FlowDataset extends Asset implements IFlowDataset, ICatalog, IFlow,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Reusable unit that details the sub-processing to produce the ephemeral dataset. */
     @Attribute
     IFlowReusableUnit flowDetailedBy;

@@ -56,6 +56,10 @@ public class DbtMetric extends Asset
     @Singular
     SortedSet<IAsset> assets;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Name of the account in which this asset exists in dbt. */
     @Attribute
     String dbtAccountName;

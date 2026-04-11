@@ -78,6 +78,10 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Code that ran within the process. */
     @Attribute
     String code;
@@ -208,6 +212,10 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Attribute
     @Singular
     SortedSet<ICatalog> inputs;
+
+    /** Whether this process represents a pass-through data flow where data is moved without transformation, as opposed to a flow where data is actively modified. */
+    @Attribute
+    Boolean isPassThrough;
 
     /** Matillion component that contains the logic for this lineage process. */
     @Attribute
