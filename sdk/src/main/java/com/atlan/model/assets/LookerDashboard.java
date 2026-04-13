@@ -48,6 +48,10 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Fields that are used in this dashboard. */
     @Attribute
     @Singular

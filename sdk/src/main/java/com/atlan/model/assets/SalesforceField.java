@@ -53,6 +53,10 @@ public class SalesforceField extends Asset
     @Attribute
     String apiName;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Data type of values in this field. */
     @Attribute
     String dataType;

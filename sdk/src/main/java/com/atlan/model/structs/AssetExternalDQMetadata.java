@@ -72,6 +72,9 @@ public class AssetExternalDQMetadata extends AtlanStruct {
     @JsonSetter(nulls = Nulls.AS_EMPTY)
     List<AssetExternalDQTestDetails> assetExternalDQTests;
 
+    /** Detailed statistics for the external DQ tests. */
+    AssetExternalDQTestStats assetExternalDQTestStats;
+
     /**
      * Quickly create a new AssetExternalDQMetadata.
      * @param assetExternalDQSystemName Name of the external DQ tool.
@@ -86,6 +89,7 @@ public class AssetExternalDQMetadata extends AtlanStruct {
      * @param assetExternalDQOverallScoreType DQ score type for the DQ Test for this asset on the external DQ tool.
      * @param assetExternalDQScoreDimensions Detailed breakdown of the score by dimension for the DQ Test for this asset on the external DQ tool.
      * @param assetExternalDQTests Detail of the DQ Test entities for this asset on the external DQ tool.
+     * @param assetExternalDQTestStats Detailed statistics for the external DQ tests.
      * @return a AssetExternalDQMetadata with the provided information
      */
     public static AssetExternalDQMetadata of(
@@ -100,7 +104,8 @@ public class AssetExternalDQMetadata extends AtlanStruct {
             String assetExternalDQOverallScoreValue,
             String assetExternalDQOverallScoreType,
             List<AssetExternalDQScoreBreakdownByDimension> assetExternalDQScoreDimensions,
-            List<AssetExternalDQTestDetails> assetExternalDQTests) {
+            List<AssetExternalDQTestDetails> assetExternalDQTests,
+            AssetExternalDQTestStats assetExternalDQTestStats) {
         return AssetExternalDQMetadata.builder()
                 .assetExternalDQSystemName(assetExternalDQSystemName)
                 .assetExternalDQSourceLogo(assetExternalDQSourceLogo)
@@ -114,6 +119,7 @@ public class AssetExternalDQMetadata extends AtlanStruct {
                 .assetExternalDQOverallScoreType(assetExternalDQOverallScoreType)
                 .assetExternalDQScoreDimensions(assetExternalDQScoreDimensions)
                 .assetExternalDQTests(assetExternalDQTests)
+                .assetExternalDQTestStats(assetExternalDQTestStats)
                 .build();
     }
 

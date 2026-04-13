@@ -48,6 +48,10 @@ public class CognosFolder extends Asset implements ICognosFolder, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboards contained in the folder. */
     @Attribute
     @Singular
