@@ -25,7 +25,7 @@ jobs:
       - name: Compile
         run: ./gradlew assemble shadowJar testClasses
       - name: Upload build artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: build-artifacts
           path: |
@@ -81,7 +81,7 @@ jobs:
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PintegrationTests integration-tests:test --tests "com.atlan.java.sdk.${{ matrix.tests }}" -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: ${{ matrix.tests }}
           path: integration-tests/${{ matrix.tests }}.log
@@ -151,7 +151,7 @@ jobs:
           test_args=$(echo '${{ toJson(matrix.tests) }}' | jq -r '.[] | "--tests " + .')
           ./gradlew -PpackageTests :samples:packages:asset-import:test $test_args -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: asset-import-chunk-${{ matrix.chunk }}
           path: samples/packages/asset-import/**/debug.log
@@ -194,7 +194,7 @@ jobs:
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses -x buildSrc:jar
       - if: success() || failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f  # v7.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
         with:
           name: ${{ matrix.tests }}
           path: samples/packages/${{ matrix.tests }}/**/debug.log
