@@ -49,6 +49,10 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** TBC */
     @Attribute
     IAsset fileAssets;

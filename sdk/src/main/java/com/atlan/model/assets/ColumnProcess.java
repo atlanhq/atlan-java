@@ -103,6 +103,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     @Singular
     SortedSet<ICatalog> inputs;
 
+    /** Whether this process represents a pass-through data flow where data is moved without transformation, as opposed to a flow where data is actively modified. */
+    @Attribute
+    Boolean isPassThrough;
+
     /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
