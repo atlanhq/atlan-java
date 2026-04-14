@@ -50,6 +50,10 @@ public class FivetranConnector extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Total credits used by this destination */
     @Attribute
     Double fivetranConnectorCreditsUsed;

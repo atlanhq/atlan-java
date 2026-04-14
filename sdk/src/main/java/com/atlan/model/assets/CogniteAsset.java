@@ -48,6 +48,10 @@ public class CogniteAsset extends Asset implements ICogniteAsset, ICognite, ISaa
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** 3D models that exist within this asset. */
     @Attribute
     @Singular

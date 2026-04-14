@@ -48,6 +48,10 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Child SAP ERP Component associated with this SAP ERP Components. */
     @Attribute
     @Singular

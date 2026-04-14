@@ -49,6 +49,10 @@ public class MCIncident extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Whether this data quality is part of contract (true) or not (false). */
     @Attribute
     Boolean dqIsPartOfContract;

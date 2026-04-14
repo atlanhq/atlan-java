@@ -73,6 +73,10 @@ public class AIModelVersion extends Asset implements IAIModelVersion, IAI, ICata
     @Attribute
     AIModelVersionStage aiModelVersionStage;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Accountability configuration for ensuring the ethical use of an AI asset */
     @Attribute
     EthicalAIAccountabilityConfig ethicalAIAccountabilityConfig;

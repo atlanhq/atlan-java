@@ -50,6 +50,10 @@ public class QuickSightFolder extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular
@@ -120,7 +124,7 @@ public class QuickSightFolder extends Asset
     @Singular("addQuickSightFolderHierarchy")
     List<Map<String, String>> quickSightFolderHierarchy;
 
-    /** Type of this folder, for example: SHARED. */
+    /** Type of this folder, for example: SHARED or RESTRICTED. */
     @Attribute
     QuickSightFolderType quickSightFolderType;
 

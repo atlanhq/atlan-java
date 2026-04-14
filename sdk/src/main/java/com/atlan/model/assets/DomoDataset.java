@@ -48,6 +48,10 @@ public class DomoDataset extends Asset implements IDomoDataset, IDomo, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Domo Cards that are contained by this Domo Dataset. */
     @Attribute
     @Singular
