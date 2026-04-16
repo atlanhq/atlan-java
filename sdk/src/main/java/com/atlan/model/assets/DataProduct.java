@@ -59,6 +59,10 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Criticality of this data product. */
     @Attribute
     DataProductCriticality daapCriticality;
@@ -102,6 +106,11 @@ public class DataProduct extends Asset implements IDataProduct, IDataMesh, ICata
     /** Data domain in which this data product exists. */
     @Attribute
     IDataDomain dataDomain;
+
+    /** Datasets associated with this data product. */
+    @Attribute
+    @Singular
+    SortedSet<IDataMeshDataset> dataMeshDatasets;
 
     /** Search DSL used to define which assets are part of this data product. */
     @Attribute

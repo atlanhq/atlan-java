@@ -49,6 +49,10 @@ public class CosmosMongoDBAccount extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** The consistency policy configured for the Cosmos MongoDB account. */
     @Attribute
     String cosmosMongoDBAccountConsistencyPolicy;

@@ -48,6 +48,10 @@ public class CognosReport extends Asset implements ICognosReport, ICognos, IBI, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tooltip text present for the Cognos asset. */
     @Attribute
     String cognosDefaultScreenTip;

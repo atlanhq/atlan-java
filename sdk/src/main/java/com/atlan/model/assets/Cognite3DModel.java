@@ -49,6 +49,10 @@ public class Cognite3DModel extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Asset in which this 3D model exists. */
     @Attribute
     ICogniteAsset cogniteAsset;

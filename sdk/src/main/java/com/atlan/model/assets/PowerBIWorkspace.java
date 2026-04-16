@@ -50,6 +50,10 @@ public class PowerBIWorkspace extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of dashboards in this workspace. */
     @Attribute
     Long dashboardCount;

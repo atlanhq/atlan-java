@@ -49,6 +49,10 @@ public class CognosExploration extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Columns contained in the exploration. */
     @Attribute
     @Singular

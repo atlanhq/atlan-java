@@ -9,6 +9,7 @@ import lombok.Getter;
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum QuickSightFolderType implements AtlanEnum {
     SHARED("SHARED"),
+    RESTRICTED("RESTRICTED"),
     ;
 
     @JsonValue
