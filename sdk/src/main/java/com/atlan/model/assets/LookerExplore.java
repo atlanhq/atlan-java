@@ -48,6 +48,10 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Fields that exist within this Explore. */
     @Attribute
     @Singular

@@ -49,6 +49,10 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Unique name of the dataset in which this column exists. */
     @Attribute
     String datasetQualifiedName;

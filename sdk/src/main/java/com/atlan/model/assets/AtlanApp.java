@@ -74,6 +74,10 @@ public class AtlanApp extends Asset implements IAtlanApp, IApp, ICatalog, IAsset
     @Singular
     SortedSet<IAtlanAppWorkflow> atlanAppWorkflows;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

@@ -48,6 +48,10 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** List of fields that are inputs to this flow. */
     @Attribute
     @Singular

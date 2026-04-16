@@ -20,6 +20,9 @@ public enum FileType implements AtlanEnum {
     YXDB("yxdb"),
     XLSM("xlsm"),
     HYPER("hyper"),
+    YAML("yaml"),
+    SQL("sql"),
+    MD("md"),
     ;
 
     @JsonValue

@@ -49,6 +49,10 @@ public class DomoCard extends Asset implements IDomoCard, IDomo, IBI, ICatalog, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Number of dashboards linked to this card. */
     @Attribute
     Long domoCardDashboardCount;

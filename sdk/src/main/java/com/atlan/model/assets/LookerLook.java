@@ -48,6 +48,10 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboard in which this Look is used. */
     @Attribute
     ILookerDashboard dashboard;
