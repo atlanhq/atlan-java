@@ -20,9 +20,6 @@ java {
 }
 
 tasks {
-    compileJava {
-        dependsOn("genCustomPkg")
-    }
     shadowJar {
         isZip64 = true
         archiveClassifier.set("")
