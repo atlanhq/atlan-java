@@ -49,6 +49,10 @@ public class TableauWorkbook extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Dashboards that exist within this workbook. */
     @Attribute
     @Singular

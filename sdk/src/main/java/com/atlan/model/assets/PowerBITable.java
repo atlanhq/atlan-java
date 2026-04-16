@@ -49,6 +49,10 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Columns that exist within this table. */
     @Attribute
     @Singular

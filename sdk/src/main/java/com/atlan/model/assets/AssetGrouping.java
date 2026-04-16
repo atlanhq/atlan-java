@@ -48,6 +48,10 @@ public class AssetGrouping extends Asset implements IAssetGrouping, ICatalog, IA
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

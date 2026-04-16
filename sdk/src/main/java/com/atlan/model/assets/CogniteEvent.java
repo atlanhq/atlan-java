@@ -48,6 +48,10 @@ public class CogniteEvent extends Asset implements ICogniteEvent, ICognite, ISaa
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Asset in which this event exists. */
     @Attribute
     ICogniteAsset cogniteAsset;
