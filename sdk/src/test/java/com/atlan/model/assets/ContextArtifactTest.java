@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class ObjectStoreTest {
+public class ContextArtifactTest {
 
-    private final ObjectStore full = ObjectStore._internal()
+    private final ContextArtifact full = ContextArtifact._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,6 +60,8 @@ public class ObjectStoreTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .contextRepositoryQualifiedName("String0")
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -471,6 +473,18 @@ public class ObjectStoreTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -571,6 +585,18 @@ public class ObjectStoreTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -628,6 +654,8 @@ public class ObjectStoreTest {
             .assetDQRowScopeFilterColumnQualifiedName("String0")
             .assetSpaceQualifiedName("String0")
             .assetSpaceName("String0")
+            .assetImmutaRequestUrl("String0")
+            .assetImmutaRequestType("String0")
             .assetGCPDataplexMetadataDetails(AssetGCPDataplexMetadata.builder()
                     .assetGCPDataplexLastSyncRunAt(123456789L)
                     .assetGCPDataplexAspectDetails(Map.of(
@@ -668,27 +696,18 @@ public class ObjectStoreTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
-            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .modelImplementedAttribute(
-                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .partialChildField(PartialField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partialChildField(PartialField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .partialChildObject(PartialObject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partialChildObject(PartialObject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .addAssetAiAlias("String0")
+            .addAssetAiAlias("String1")
+            .assetHasAiReadme(true)
+            .artifactVersion("String0")
+            .fileType(FileType.PDF)
+            .filePath("String0")
+            .link("String0")
+            .isGlobal(true)
+            .reference("String0")
+            .putResourceMetadata("String0", "String0")
+            .putResourceMetadata("String1", "String1")
+            .contextRepository(ContextRepository.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -736,21 +755,21 @@ public class ObjectStoreTest {
     }
 
     @Test
-    void serdeCycleObjectStore() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of ObjectStore,");
+    void serdeCycleContextArtifact() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of ContextArtifact,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
                 full.toBuilder().build(),
                 full,
-                "Unable to converting ObjectStore via builder back to its original state,");
+                "Unable to converting ContextArtifact via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of ObjectStore,");
+        assertNotNull(serialized, "Unable to serialize sample instance of ContextArtifact,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final ObjectStore frodo = MockAtlanTenant.client.readValue(serialized, ObjectStore.class);
-        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ObjectStore,");
+        final ContextArtifact frodo = MockAtlanTenant.client.readValue(serialized, ContextArtifact.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of ContextArtifact,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");

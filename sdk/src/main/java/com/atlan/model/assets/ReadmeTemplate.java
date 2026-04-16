@@ -46,6 +46,10 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Icon to use for the README template. */
     @Attribute
     String icon;

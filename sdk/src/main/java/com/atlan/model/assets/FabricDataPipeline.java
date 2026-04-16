@@ -49,6 +49,10 @@ public class FabricDataPipeline extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Individual activities contained in the data pipeline. */
     @Attribute
     @Singular

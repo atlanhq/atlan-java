@@ -105,6 +105,7 @@ public class DbtColumnProcessTest {
                     .dbtCompiledSQL("String1")
                     .dbtCompiledCode("String1")
                     .build())
+            .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -516,6 +517,18 @@ public class DbtColumnProcessTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(123456789L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String0",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String0",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(123)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .assetExternalDQMetadataDetail(
                     "String1",
@@ -616,6 +629,18 @@ public class DbtColumnProcessTest {
                                                                             .build())
                                                             .build()))
                                             .build()))
+                            .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
+                                    .assetExternalDQTestLastAssessedAt(987654321L)
+                                    .assetExternalDQTestStatsByCategory(Map.of(
+                                            "String1",
+                                            AssetExternalDQTestStatsByCategory.builder()
+                                                    .assetExternalDQTestsByStatus(Map.of(
+                                                            "String1",
+                                                            AssetExternalDQTestsByStatus.builder()
+                                                                    .assetExternalDQTestCountForStatus(456)
+                                                                    .build()))
+                                                    .build()))
+                                    .build())
                             .build())
             .isPartial(true)
             .isAIGenerated(true)
@@ -715,6 +740,9 @@ public class DbtColumnProcessTest {
                     .assetMetadataFormRevision("String1")
                     .assetMetadataFormFields(List.of(Map.of("key1", "value1"), Map.of("key2", "value2")))
                     .build())
+            .addAssetAiAlias("String0")
+            .addAssetAiAlias("String1")
+            .assetHasAiReadme(true)
             .code("String0")
             .sql("String0")
             .parentConnectionProcessQualifiedName("String0")
@@ -722,6 +750,7 @@ public class DbtColumnProcessTest {
             .ast("String0")
             .additionalEtlContext("String0")
             .aiDatasetType(AIDatasetType.TRAINING)
+            .isPassThrough(true)
             .dbtColumnProcessJobStatus("String0")
             .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

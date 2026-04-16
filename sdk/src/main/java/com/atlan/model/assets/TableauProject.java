@@ -48,6 +48,10 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique identifier of the dataset this asset belongs to. */
+    @Attribute
+    String catalogDatasetGuid;
+
     /** Sub-projects that exist within this project. */
     @Attribute
     @Singular
