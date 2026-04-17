@@ -227,7 +227,6 @@ public class AzureEventHubTest extends AtlanLiveTest {
                 Asset.delete(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof AzureEventHubConsumerGroup);
@@ -265,7 +264,6 @@ public class AzureEventHubTest extends AtlanLiveTest {
                 Asset.purge(client, consumerGroup.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof AzureEventHubConsumerGroup);

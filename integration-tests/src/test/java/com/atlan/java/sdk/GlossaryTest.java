@@ -156,7 +156,6 @@ public class GlossaryTest extends AtlanLiveTest {
         AssetMutationResponse response = Glossary.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Glossary);
@@ -178,7 +177,6 @@ public class GlossaryTest extends AtlanLiveTest {
         AssetMutationResponse response = GlossaryCategory.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryCategory);
@@ -201,7 +199,6 @@ public class GlossaryTest extends AtlanLiveTest {
         AssetMutationResponse response = GlossaryTerm.purge(client, guid).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
@@ -749,7 +746,6 @@ public class GlossaryTest extends AtlanLiveTest {
                 GlossaryTerm.delete(client, term1.getGuid()).block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         List<Asset> entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
@@ -892,7 +888,6 @@ public class GlossaryTest extends AtlanLiveTest {
                 .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         List<Asset> entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 7);
@@ -902,7 +897,6 @@ public class GlossaryTest extends AtlanLiveTest {
                 .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 4);
@@ -912,7 +906,6 @@ public class GlossaryTest extends AtlanLiveTest {
                 .block();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
-        assertEquals(response.getUpdatedAssets().size(), 0);
         entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 2);

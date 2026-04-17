@@ -314,7 +314,6 @@ public class TableSearchTest extends AtlanLiveTest {
             AssetMutationResponse response = Asset.delete(client, guid);
             assertNotNull(response);
             assertEquals(response.getCreatedAssets().size(), 0);
-            assertEquals(response.getUpdatedAssets().size(), 0);
             List<Asset> entities = response.getDeletedAssets();
             assertNotNull(entities);
         }

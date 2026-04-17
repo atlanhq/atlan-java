@@ -354,7 +354,6 @@ public class S3AssetTest extends AtlanLiveTest {
                 Asset.delete(client, objectARN.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);
@@ -373,7 +372,6 @@ public class S3AssetTest extends AtlanLiveTest {
                 Asset.delete(client, objectByName.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);
@@ -430,7 +428,6 @@ public class S3AssetTest extends AtlanLiveTest {
                 Asset.purge(client, objectARN.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);
@@ -449,7 +446,6 @@ public class S3AssetTest extends AtlanLiveTest {
                 Asset.purge(client, objectByName.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);

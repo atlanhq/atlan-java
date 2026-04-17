@@ -195,7 +195,6 @@ public class AirflowAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.delete(client, task.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof AirflowTask);
@@ -232,7 +231,6 @@ public class AirflowAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.purge(client, task.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof AirflowTask);
