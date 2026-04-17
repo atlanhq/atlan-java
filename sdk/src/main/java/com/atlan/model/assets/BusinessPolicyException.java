@@ -120,6 +120,11 @@ public class BusinessPolicyException extends Asset
     @Singular("exceptionForBusinessPolicy")
     SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** BusinessPolicy that have the same (or relatable) compliance */
     @Attribute
     @Singular

@@ -398,6 +398,15 @@ public class TablePartitionTest {
             .assetSodaCheckStatuses("String0")
             .assetSodaSourceURL("String0")
             .assetIcon(AtlanIcon.ATLAN_TAG)
+            .assetExternalDQScoreValue(123.456)
+            .assetExternalDQTestEntity("String0")
+            .assetExternalDQTestEntity("String1")
+            .assetExternalDQTestLatestScore(123.456)
+            .assetExternalDQTestLatestScore(654.321)
+            .assetExternalDQTestAvgScore(123.456)
+            .assetExternalDQTestAvgScore(654.321)
+            .assetExternalDQTestMinScore(123.456)
+            .assetExternalDQTestMinScore(654.321)
             .assetExternalDQMetadataDetail(
                     "String0",
                     AssetExternalDQMetadata.builder()
@@ -405,10 +414,14 @@ public class TablePartitionTest {
                             .assetExternalDQSourceLogo("String0")
                             .assetExternalDQSourceURL("String0")
                             .assetExternalDQLastSyncRunAt(123456789L)
+                            .assetExternalDQTestEntityTypeName("String0")
                             .assetExternalDQTestEntityName("String0")
                             .assetExternalDQTestTotalCount(123)
                             .assetExternalDQTestLastRunSuccessCount(123)
                             .assetExternalDQTestLastRunFailureCount(123)
+                            .assetExternalDQTestLastRunTotalRulesCount(123456789L)
+                            .assetExternalDQTestLastRunSuccessRulesCount(123456789L)
+                            .assetExternalDQTestLastRunFailureRulesCount(123456789L)
                             .assetExternalDQOverallScoreValue("String0")
                             .assetExternalDQOverallScoreType("String0")
                             .assetExternalDQScoreDimensions(List.of(
@@ -433,9 +446,15 @@ public class TablePartitionTest {
                                             .assetExternalDQTestLastRunStatus("String0")
                                             .assetExternalDQTestRuns(List.of(
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String0")
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestRunScoreValue("String0")
+                                                            .assetExternalDQTestScoreType("String0")
+                                                            .assetExternalDQTestTotalRulesCount(123456789L)
+                                                            .assetExternalDQTestPassedRulesCount(123456789L)
+                                                            .assetExternalDQTestFailedRulesCount(123456789L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -445,11 +464,63 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String0")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String1")
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestRunScoreValue("String1")
+                                                            .assetExternalDQTestScoreType("String1")
+                                                            .assetExternalDQTestTotalRulesCount(987654321L)
+                                                            .assetExternalDQTestPassedRulesCount(987654321L)
+                                                            .assetExternalDQTestFailedRulesCount(987654321L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -459,6 +530,52 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String1")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -469,9 +586,15 @@ public class TablePartitionTest {
                                             .assetExternalDQTestLastRunStatus("String1")
                                             .assetExternalDQTestRuns(List.of(
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String0")
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestRunScoreValue("String0")
+                                                            .assetExternalDQTestScoreType("String0")
+                                                            .assetExternalDQTestTotalRulesCount(123456789L)
+                                                            .assetExternalDQTestPassedRulesCount(123456789L)
+                                                            .assetExternalDQTestFailedRulesCount(123456789L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -481,11 +604,63 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String0")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String1")
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestRunScoreValue("String1")
+                                                            .assetExternalDQTestScoreType("String1")
+                                                            .assetExternalDQTestTotalRulesCount(987654321L)
+                                                            .assetExternalDQTestPassedRulesCount(987654321L)
+                                                            .assetExternalDQTestFailedRulesCount(987654321L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -495,6 +670,52 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String1")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build()))
                                             .build()))
                             .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
@@ -517,10 +738,14 @@ public class TablePartitionTest {
                             .assetExternalDQSourceLogo("String1")
                             .assetExternalDQSourceURL("String1")
                             .assetExternalDQLastSyncRunAt(987654321L)
+                            .assetExternalDQTestEntityTypeName("String1")
                             .assetExternalDQTestEntityName("String1")
                             .assetExternalDQTestTotalCount(456)
                             .assetExternalDQTestLastRunSuccessCount(456)
                             .assetExternalDQTestLastRunFailureCount(456)
+                            .assetExternalDQTestLastRunTotalRulesCount(987654321L)
+                            .assetExternalDQTestLastRunSuccessRulesCount(987654321L)
+                            .assetExternalDQTestLastRunFailureRulesCount(987654321L)
                             .assetExternalDQOverallScoreValue("String1")
                             .assetExternalDQOverallScoreType("String1")
                             .assetExternalDQScoreDimensions(List.of(
@@ -545,9 +770,15 @@ public class TablePartitionTest {
                                             .assetExternalDQTestLastRunStatus("String0")
                                             .assetExternalDQTestRuns(List.of(
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String0")
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestRunScoreValue("String0")
+                                                            .assetExternalDQTestScoreType("String0")
+                                                            .assetExternalDQTestTotalRulesCount(123456789L)
+                                                            .assetExternalDQTestPassedRulesCount(123456789L)
+                                                            .assetExternalDQTestFailedRulesCount(123456789L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -557,11 +788,63 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String0")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String1")
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestRunScoreValue("String1")
+                                                            .assetExternalDQTestScoreType("String1")
+                                                            .assetExternalDQTestTotalRulesCount(987654321L)
+                                                            .assetExternalDQTestPassedRulesCount(987654321L)
+                                                            .assetExternalDQTestFailedRulesCount(987654321L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -571,6 +854,52 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String1")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build()))
                                             .build(),
                                     AssetExternalDQTestDetails.builder()
@@ -581,9 +910,15 @@ public class TablePartitionTest {
                                             .assetExternalDQTestLastRunStatus("String1")
                                             .assetExternalDQTestRuns(List.of(
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String0")
                                                             .assetExternalDQTestRunStartedAt(123456789L)
                                                             .assetExternalDQTestRunEndedAt(123456789L)
                                                             .assetExternalDQTestRunStatus("String0")
+                                                            .assetExternalDQTestRunScoreValue("String0")
+                                                            .assetExternalDQTestScoreType("String0")
+                                                            .assetExternalDQTestTotalRulesCount(123456789L)
+                                                            .assetExternalDQTestPassedRulesCount(123456789L)
+                                                            .assetExternalDQTestFailedRulesCount(123456789L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -593,11 +928,63 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String0")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build(),
                                                     AssetExternalDQTestRunHistory.builder()
+                                                            .assetExternalDQTestRunId("String1")
                                                             .assetExternalDQTestRunStartedAt(987654321L)
                                                             .assetExternalDQTestRunEndedAt(987654321L)
                                                             .assetExternalDQTestRunStatus("String1")
+                                                            .assetExternalDQTestRunScoreValue("String1")
+                                                            .assetExternalDQTestScoreType("String1")
+                                                            .assetExternalDQTestTotalRulesCount(987654321L)
+                                                            .assetExternalDQTestPassedRulesCount(987654321L)
+                                                            .assetExternalDQTestFailedRulesCount(987654321L)
                                                             .assetExternalDQTestMetricInfo(
                                                                     AssetExternalDQTestMetric.builder()
                                                                             .assetExternalDQTestMetricObservedValue(
@@ -607,6 +994,52 @@ public class TablePartitionTest {
                                                                             .assetExternalDQTestMetricLowerBound(
                                                                                     "String1")
                                                                             .build())
+                                                            .assetExternalDQTestScoreDimensions(List.of(
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestScoreDimension.builder()
+                                                                            .assetExternalDQTestScoreDimensionName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionDescription(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreValue(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestScoreDimensionScoreType(
+                                                                                    "String1")
+                                                                            .build()))
+                                                            .assetExternalDQTestRules(List.of(
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String0")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    123456789L)
+                                                                            .assetExternalDQTestRuleImpact("String0")
+                                                                            .assetExternalDQTestRuleType("String0")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String0")
+                                                                            .assetExternalDQTestRuleDimension("String0")
+                                                                            .build(),
+                                                                    AssetExternalDQTestRule.builder()
+                                                                            .assetExternalDQTestRuleName("String1")
+                                                                            .assetExternalDQTestRuleEvaluationStatus(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleEvaluatedAt(
+                                                                                    987654321L)
+                                                                            .assetExternalDQTestRuleImpact("String1")
+                                                                            .assetExternalDQTestRuleType("String1")
+                                                                            .assetExternalDQTestRuleColumnName(
+                                                                                    "String1")
+                                                                            .assetExternalDQTestRuleDimension("String1")
+                                                                            .build()))
                                                             .build()))
                                             .build()))
                             .assetExternalDQTestStats(AssetExternalDQTestStats.builder()
@@ -682,6 +1115,7 @@ public class TablePartitionTest {
             .assetImmutaRequestType("String0")
             .assetGCPDataplexMetadataDetails(AssetGCPDataplexMetadata.builder()
                     .assetGCPDataplexLastSyncRunAt(123456789L)
+                    .assetGCPDataplexEntryName("String0")
                     .assetGCPDataplexAspectDetails(Map.of(
                             "String0",
                             AssetGCPDataplexAspectMetadata.builder()

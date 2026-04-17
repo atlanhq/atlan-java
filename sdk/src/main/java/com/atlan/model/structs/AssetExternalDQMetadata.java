@@ -44,6 +44,9 @@ public class AssetExternalDQMetadata extends AtlanStruct {
     /** Timestamp of the last metadata sync with the external DQ tool. */
     Long assetExternalDQLastSyncRunAt;
 
+    /** Name of the DQ Test entity type in the external DQ tool. */
+    String assetExternalDQTestEntityTypeName;
+
     /** Name of the DQ Test entity in the external DQ tool. */
     String assetExternalDQTestEntityName;
 
@@ -55,6 +58,15 @@ public class AssetExternalDQMetadata extends AtlanStruct {
 
     /** Total number of DQ tests defined on the external DQ tool for this asset that were not successful in their last run. */
     Integer assetExternalDQTestLastRunFailureCount;
+
+    /** Total number of rules evaluated across all DQ tests in their last run for this asset on the external DQ tool. */
+    Long assetExternalDQTestLastRunTotalRulesCount;
+
+    /** Total number of rules that passed across all DQ tests in their last run for this asset on the external DQ tool. */
+    Long assetExternalDQTestLastRunSuccessRulesCount;
+
+    /** Total number of rules that failed across all DQ tests in their last run for this asset on the external DQ tool. */
+    Long assetExternalDQTestLastRunFailureRulesCount;
 
     /** DQ score value for the DQ Test for this asset on the external DQ tool. */
     String assetExternalDQOverallScoreValue;
@@ -81,10 +93,14 @@ public class AssetExternalDQMetadata extends AtlanStruct {
      * @param assetExternalDQSourceLogo Logo URL for the external DQ tool.
      * @param assetExternalDQSourceURL URL on the external DQ tool with reference to this asset.
      * @param assetExternalDQLastSyncRunAt Timestamp of the last metadata sync with the external DQ tool.
+     * @param assetExternalDQTestEntityTypeName Name of the DQ Test entity type in the external DQ tool.
      * @param assetExternalDQTestEntityName Name of the DQ Test entity in the external DQ tool.
      * @param assetExternalDQTestTotalCount Total number of DQ tests defined on the external DQ tool for this asset.
      * @param assetExternalDQTestLastRunSuccessCount Total number of DQ tests defined on the external DQ tool for this asset that were successful in their last run.
      * @param assetExternalDQTestLastRunFailureCount Total number of DQ tests defined on the external DQ tool for this asset that were not successful in their last run.
+     * @param assetExternalDQTestLastRunTotalRulesCount Total number of rules evaluated across all DQ tests in their last run for this asset on the external DQ tool.
+     * @param assetExternalDQTestLastRunSuccessRulesCount Total number of rules that passed across all DQ tests in their last run for this asset on the external DQ tool.
+     * @param assetExternalDQTestLastRunFailureRulesCount Total number of rules that failed across all DQ tests in their last run for this asset on the external DQ tool.
      * @param assetExternalDQOverallScoreValue DQ score value for the DQ Test for this asset on the external DQ tool.
      * @param assetExternalDQOverallScoreType DQ score type for the DQ Test for this asset on the external DQ tool.
      * @param assetExternalDQScoreDimensions Detailed breakdown of the score by dimension for the DQ Test for this asset on the external DQ tool.
@@ -97,10 +113,14 @@ public class AssetExternalDQMetadata extends AtlanStruct {
             String assetExternalDQSourceLogo,
             String assetExternalDQSourceURL,
             Long assetExternalDQLastSyncRunAt,
+            String assetExternalDQTestEntityTypeName,
             String assetExternalDQTestEntityName,
             Integer assetExternalDQTestTotalCount,
             Integer assetExternalDQTestLastRunSuccessCount,
             Integer assetExternalDQTestLastRunFailureCount,
+            Long assetExternalDQTestLastRunTotalRulesCount,
+            Long assetExternalDQTestLastRunSuccessRulesCount,
+            Long assetExternalDQTestLastRunFailureRulesCount,
             String assetExternalDQOverallScoreValue,
             String assetExternalDQOverallScoreType,
             List<AssetExternalDQScoreBreakdownByDimension> assetExternalDQScoreDimensions,
@@ -111,10 +131,14 @@ public class AssetExternalDQMetadata extends AtlanStruct {
                 .assetExternalDQSourceLogo(assetExternalDQSourceLogo)
                 .assetExternalDQSourceURL(assetExternalDQSourceURL)
                 .assetExternalDQLastSyncRunAt(assetExternalDQLastSyncRunAt)
+                .assetExternalDQTestEntityTypeName(assetExternalDQTestEntityTypeName)
                 .assetExternalDQTestEntityName(assetExternalDQTestEntityName)
                 .assetExternalDQTestTotalCount(assetExternalDQTestTotalCount)
                 .assetExternalDQTestLastRunSuccessCount(assetExternalDQTestLastRunSuccessCount)
                 .assetExternalDQTestLastRunFailureCount(assetExternalDQTestLastRunFailureCount)
+                .assetExternalDQTestLastRunTotalRulesCount(assetExternalDQTestLastRunTotalRulesCount)
+                .assetExternalDQTestLastRunSuccessRulesCount(assetExternalDQTestLastRunSuccessRulesCount)
+                .assetExternalDQTestLastRunFailureRulesCount(assetExternalDQTestLastRunFailureRulesCount)
                 .assetExternalDQOverallScoreValue(assetExternalDQOverallScoreValue)
                 .assetExternalDQOverallScoreType(assetExternalDQOverallScoreType)
                 .assetExternalDQScoreDimensions(assetExternalDQScoreDimensions)

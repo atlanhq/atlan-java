@@ -31,7 +31,11 @@ import lombok.extern.slf4j.Slf4j;
             name = AssetExternalDQScoreBreakdownByDimension.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestDetails.class, name = AssetExternalDQTestDetails.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestMetric.class, name = AssetExternalDQTestMetric.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetExternalDQTestRule.class, name = AssetExternalDQTestRule.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestRunHistory.class, name = AssetExternalDQTestRunHistory.TYPE_NAME),
+    @JsonSubTypes.Type(
+            value = AssetExternalDQTestScoreDimension.class,
+            name = AssetExternalDQTestScoreDimension.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetExternalDQTestStats.class, name = AssetExternalDQTestStats.TYPE_NAME),
     @JsonSubTypes.Type(
             value = AssetExternalDQTestStatsByCategory.class,

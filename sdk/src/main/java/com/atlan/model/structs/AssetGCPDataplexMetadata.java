@@ -35,6 +35,9 @@ public class AssetGCPDataplexMetadata extends AtlanStruct {
     /** Time (epoch) at which the last dq rule ran. */
     Long assetGCPDataplexLastSyncRunAt;
 
+    /** Absolute name/path of the Dataplex entry. */
+    String assetGCPDataplexEntryName;
+
     /** Dataplex Aspects-related metadata on the asset in question. */
     @Singular
     @JsonSetter(nulls = Nulls.AS_EMPTY)
@@ -43,14 +46,17 @@ public class AssetGCPDataplexMetadata extends AtlanStruct {
     /**
      * Quickly create a new AssetGCPDataplexMetadata.
      * @param assetGCPDataplexLastSyncRunAt Time (epoch) at which the last dq rule ran.
+     * @param assetGCPDataplexEntryName Absolute name/path of the Dataplex entry.
      * @param assetGCPDataplexAspectDetails Dataplex Aspects-related metadata on the asset in question.
      * @return a AssetGCPDataplexMetadata with the provided information
      */
     public static AssetGCPDataplexMetadata of(
             Long assetGCPDataplexLastSyncRunAt,
+            String assetGCPDataplexEntryName,
             Map<String, AssetGCPDataplexAspectMetadata> assetGCPDataplexAspectDetails) {
         return AssetGCPDataplexMetadata.builder()
                 .assetGCPDataplexLastSyncRunAt(assetGCPDataplexLastSyncRunAt)
+                .assetGCPDataplexEntryName(assetGCPDataplexEntryName)
                 .assetGCPDataplexAspectDetails(assetGCPDataplexAspectDetails)
                 .build();
     }

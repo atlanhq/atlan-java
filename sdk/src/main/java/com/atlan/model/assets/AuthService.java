@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -67,6 +68,11 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     /** TBC */
     @Attribute
     String authServiceType;
+
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
     /** TBC */
     @Attribute

@@ -69,6 +69,11 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Setter(AccessLevel.PACKAGE)
     SortedSet<IGlossaryCategory> childrenCategories;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** Unused. Detailed description of the category. See 'readme' instead. */
     @Attribute
     String longDescription;
