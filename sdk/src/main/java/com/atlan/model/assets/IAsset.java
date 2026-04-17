@@ -386,6 +386,26 @@ public interface IAsset {
     KeywordField ASSET_EXTERNAL_DQ_METADATA_DETAILS =
             new KeywordField("assetExternalDQMetadataDetails", "assetExternalDQMetadataDetails");
 
+    /** Single asset-level DQ score (0–100). Populated natively by tools that provide one. */
+    NumericField ASSET_EXTERNAL_DQ_SCORE_VALUE =
+            new NumericField("assetExternalDQScoreValue", "assetExternalDQScoreValue");
+
+    /** List of mean scores across all runs for each DQ test. */
+    NumericField ASSET_EXTERNAL_DQ_TEST_AVG_SCORES =
+            new NumericField("assetExternalDQTestAvgScores", "assetExternalDQTestAvgScores");
+
+    /** Ordered list of DQ test/scan names on this asset. Positionally aligned with the score metrics. */
+    KeywordField ASSET_EXTERNAL_DQ_TEST_ENTITIES =
+            new KeywordField("assetExternalDQTestEntities", "assetExternalDQTestEntities");
+
+    /** List of scores of the most recent run for each DQ test. */
+    NumericField ASSET_EXTERNAL_DQ_TEST_LATEST_SCORES =
+            new NumericField("assetExternalDQTestLatestScores", "assetExternalDQTestLatestScores");
+
+    /** List of minimum (floor) score across all runs for each DQ test. */
+    NumericField ASSET_EXTERNAL_DQ_TEST_MIN_SCORES =
+            new NumericField("assetExternalDQTestMinScores", "assetExternalDQTestMinScores");
+
     /** List of field key-values associated with all Aspects linked to this asset. */
     KeywordField ASSET_GCP_DATAPLEX_ASPECT_FIELD_LIST =
             new KeywordField("assetGCPDataplexAspectFieldList", "assetGCPDataplexAspectFieldList");
@@ -1067,6 +1087,21 @@ public interface IAsset {
 
     /** DQ metadata captured for asset from external DQ tool(s). */
     Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
+
+    /** Single asset-level DQ score (0–100). Populated natively by tools that provide one. */
+    Double getAssetExternalDQScoreValue();
+
+    /** List of mean scores across all runs for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestAvgScores();
+
+    /** Ordered list of DQ test/scan names on this asset. Positionally aligned with the score metrics. */
+    SortedSet<String> getAssetExternalDQTestEntities();
+
+    /** List of scores of the most recent run for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestLatestScores();
+
+    /** List of minimum (floor) score across all runs for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestMinScores();
 
     /** List of field key-values associated with all Aspects linked to this asset. */
     SortedSet<String> getAssetGCPDataplexAspectFieldList();

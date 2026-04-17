@@ -54,6 +54,11 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     @Attribute
     String catalogDatasetGuid;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** Tasks to which this asset provides input. */
     @Attribute
     @Singular

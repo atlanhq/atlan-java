@@ -476,6 +476,30 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     Map<String, AssetExternalDQMetadata> assetExternalDQMetadataDetails;
 
+    /** Single asset-level DQ score (0–100). Populated natively by tools that provide one. */
+    @Attribute
+    Double assetExternalDQScoreValue;
+
+    /** List of mean scores across all runs for each DQ test. */
+    @Attribute
+    @Singular
+    SortedSet<Double> assetExternalDQTestAvgScores;
+
+    /** Ordered list of DQ test/scan names on this asset. Positionally aligned with the score metrics. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetExternalDQTestEntities;
+
+    /** List of scores of the most recent run for each DQ test. */
+    @Attribute
+    @Singular
+    SortedSet<Double> assetExternalDQTestLatestScores;
+
+    /** List of minimum (floor) score across all runs for each DQ test. */
+    @Attribute
+    @Singular
+    SortedSet<Double> assetExternalDQTestMinScores;
+
     /** List of field key-values associated with all Aspects linked to this asset. */
     @Attribute
     @Singular("addAssetGCPDataplexAspectField")

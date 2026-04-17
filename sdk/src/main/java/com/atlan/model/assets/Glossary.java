@@ -66,6 +66,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Singular
     SortedSet<IGlossaryCategory> categories;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** TBC */
     @Attribute
     AtlasGlossaryType glossaryType;

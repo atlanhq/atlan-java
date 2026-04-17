@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -62,6 +63,11 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
     @Attribute
     @Singular
     Map<String, String> formOptions;
+
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
     /** Options of the response to a form. */
     @Attribute

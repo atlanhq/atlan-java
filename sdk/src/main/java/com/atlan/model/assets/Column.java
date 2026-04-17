@@ -125,6 +125,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Long columnDistinctValuesCountLong;
 
+    /** Percentage of rows in a column that contain distinct values. */
+    @Attribute
+    Double columnDistinctValuesPercentage;
+
     /** Detailed information representing a histogram of values for a column. */
     @Attribute
     AssetHistogram columnDistributionHistogram;
