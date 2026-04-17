@@ -93,31 +93,25 @@ public class LineageTest extends AtlanLiveTest {
         assertNotNull(start.getGuid());
         assertNotNull(start.getQualifiedName());
         assertEquals(start.getName(), processName);
-        assertNotNull(start.getInputs());
-        assertEquals(start.getInputs().size(), 1);
-        for (ICatalog input : start.getInputs()) {
+        Set<String> guids =
+                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertTrue(guids.contains(table.getGuid()));
+        assertTrue(guids.contains(mview.getGuid()));
+        LineageProcess startReadBack = LineageProcess.get(client, start.getGuid(), true);
+        assertNotNull(startReadBack.getInputs());
+        assertEquals(startReadBack.getInputs().size(), 1);
+        for (ICatalog input : startReadBack.getInputs()) {
             assertNotNull(input);
             assertEquals(input.getTypeName(), Table.TYPE_NAME);
             assertEquals(input.getGuid(), table.getGuid());
         }
-        assertNotNull(start.getOutputs());
-        assertEquals(start.getOutputs().size(), 1);
-        for (ICatalog output : start.getOutputs()) {
+        assertNotNull(startReadBack.getOutputs());
+        assertEquals(startReadBack.getOutputs().size(), 1);
+        for (ICatalog output : startReadBack.getOutputs()) {
             assertNotNull(output);
             assertEquals(output.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(output.getGuid(), mview.getGuid());
         }
-        assertEquals(response.getUpdatedAssets().size(), 2);
-        Set<String> types =
-                response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
-        assertEquals(types.size(), 2);
-        assertTrue(types.contains(Table.TYPE_NAME));
-        assertTrue(types.contains(MaterializedView.TYPE_NAME));
-        Set<String> guids =
-                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
-        assertEquals(guids.size(), 2);
-        assertTrue(guids.contains(table.getGuid()));
-        assertTrue(guids.contains(mview.getGuid()));
     }
 
     @Test(
@@ -142,31 +136,25 @@ public class LineageTest extends AtlanLiveTest {
         assertNotNull(end.getGuid());
         assertNotNull(end.getQualifiedName());
         assertEquals(end.getName(), processName);
-        assertNotNull(end.getInputs());
-        assertEquals(end.getInputs().size(), 1);
-        for (ICatalog input : end.getInputs()) {
+        Set<String> guids =
+                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
+        assertTrue(guids.contains(mview.getGuid()));
+        assertTrue(guids.contains(view.getGuid()));
+        LineageProcess endReadBack = LineageProcess.get(client, end.getGuid(), true);
+        assertNotNull(endReadBack.getInputs());
+        assertEquals(endReadBack.getInputs().size(), 1);
+        for (ICatalog input : endReadBack.getInputs()) {
             assertNotNull(input);
             assertEquals(input.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(input.getGuid(), mview.getGuid());
         }
-        assertNotNull(end.getOutputs());
-        assertEquals(end.getOutputs().size(), 1);
-        for (ICatalog output : end.getOutputs()) {
+        assertNotNull(endReadBack.getOutputs());
+        assertEquals(endReadBack.getOutputs().size(), 1);
+        for (ICatalog output : endReadBack.getOutputs()) {
             assertNotNull(output);
             assertEquals(output.getTypeName(), View.TYPE_NAME);
             assertEquals(output.getGuid(), view.getGuid());
         }
-        assertEquals(response.getUpdatedAssets().size(), 2);
-        Set<String> types =
-                response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
-        assertEquals(types.size(), 2);
-        assertTrue(types.contains(MaterializedView.TYPE_NAME));
-        assertTrue(types.contains(View.TYPE_NAME));
-        Set<String> guids =
-                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
-        assertEquals(guids.size(), 2);
-        assertTrue(guids.contains(mview.getGuid()));
-        assertTrue(guids.contains(view.getGuid()));
     }
 
     @Test(

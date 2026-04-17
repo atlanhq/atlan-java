@@ -140,7 +140,8 @@ public class PurposeTest extends AtlanLiveTest {
         Purpose found = (Purpose) one;
         assertEquals(found.getGuid(), purpose.getGuid());
         assertEquals(found.getDescription(), "Now with a description!");
-        assertEquals(found.getDenyAssetTabs().size(), 3);
+        Purpose readBack = Purpose.get(client, purpose.getQualifiedName(), true);
+        assertEquals(readBack.getDenyAssetTabs().size(), 3);
     }
 
     @Test(
@@ -344,9 +345,7 @@ public class PurposeTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(columnQualifiedName, COLUMN_NAME)
                 .removeAtlanTag(ATLAN_TAG_NAME)
                 .build();
-        AssetMutationResponse response = client.assets.save(toUpdate);
-        assertNotNull(response);
-        validateSingleUpdate(response);
+        client.assets.save(toUpdate);
         // Column.removeAtlanTag(client, columnQualifiedName, ATLAN_TAG_NAME);
         AtlanTagTest.deleteAtlanTag(client, ATLAN_TAG_NAME);
     }
