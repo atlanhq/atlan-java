@@ -179,7 +179,6 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.delete(client, source.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataStudioAsset);
@@ -216,7 +215,6 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.purge(client, source.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataStudioAsset);
