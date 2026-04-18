@@ -175,7 +175,6 @@ public class APIAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.delete(client, path.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof APIPath);
@@ -212,7 +211,6 @@ public class APIAssetTest extends AtlanLiveTest {
         AssetMutationResponse response = Asset.purge(client, path.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof APIPath);

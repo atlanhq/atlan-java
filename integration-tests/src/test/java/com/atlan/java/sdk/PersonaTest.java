@@ -78,7 +78,8 @@ public class PersonaTest extends AtlanLiveTest {
         Persona found = (Persona) one;
         assertEquals(found.getGuid(), persona.getGuid());
         assertEquals(found.getDescription(), "Now with a description!");
-        assertEquals(found.getDenyAssetTabs().size(), 3);
+        Persona readBack = Persona.get(client, persona.getQualifiedName(), true);
+        assertEquals(readBack.getDenyAssetTabs().size(), 3);
     }
 
     @Test(

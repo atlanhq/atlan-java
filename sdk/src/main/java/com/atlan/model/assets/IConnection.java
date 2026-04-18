@@ -87,6 +87,10 @@ public interface IConnection {
     /** Whether data quality is enabled for this connection (true) or not (false). */
     BooleanField CONNECTION_IS_DQ_ENABLED = new BooleanField("connectionIsDQEnabled", "connectionIsDQEnabled");
 
+    /** Strategy configuration for reverse-sync operations on this connection, stored as a stringified JSON array. Each element specifies a source entity type and whether reverse-sync is enabled for it, e.g. [{"source_entity": "Aspects", "enabled": true}]. */
+    KeywordField CONNECTION_REVERSE_SYNC_STRATEGY =
+            new KeywordField("connectionReverseSyncStrategy", "connectionReverseSyncStrategy");
+
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
@@ -467,6 +471,21 @@ public interface IConnection {
     /** DQ metadata captured for asset from external DQ tool(s). */
     Map<String, AssetExternalDQMetadata> getAssetExternalDQMetadataDetails();
 
+    /** Single asset-level DQ score (0–100). Populated natively by tools that provide one. */
+    Double getAssetExternalDQScoreValue();
+
+    /** List of mean scores across all runs for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestAvgScores();
+
+    /** Ordered list of DQ test/scan names on this asset. Positionally aligned with the score metrics. */
+    SortedSet<String> getAssetExternalDQTestEntities();
+
+    /** List of scores of the most recent run for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestLatestScores();
+
+    /** List of minimum (floor) score across all runs for each DQ test. */
+    SortedSet<Double> getAssetExternalDQTestMinScores();
+
     /** List of field key-values associated with all Aspects linked to this asset. */
     SortedSet<String> getAssetGCPDataplexAspectFieldList();
 
@@ -642,6 +661,9 @@ public interface IConnection {
 
     /** Unique name of the connection through which this asset is accessible. */
     String getConnectionQualifiedName();
+
+    /** Strategy configuration for reverse-sync operations on this connection, stored as a stringified JSON array. Each element specifies a source entity type and whether reverse-sync is enabled for it, e.g. [{"source_entity": "Aspects", "enabled": true}]. */
+    String getConnectionReverseSyncStrategy();
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     String getConnectionSSOCredentialGuid();

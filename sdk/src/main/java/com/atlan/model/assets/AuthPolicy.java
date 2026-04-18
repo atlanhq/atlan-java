@@ -55,6 +55,11 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     IAccessControl accessControl;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** TBC */
     @Attribute
     Boolean isPolicyEnabled;

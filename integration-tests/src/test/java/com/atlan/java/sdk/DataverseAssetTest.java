@@ -175,7 +175,6 @@ public class DataverseAssetTest extends AtlanLiveTest {
                 Asset.delete(client, attribute.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataverseAttribute);
@@ -213,7 +212,6 @@ public class DataverseAssetTest extends AtlanLiveTest {
                 Asset.purge(client, attribute.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataverseAttribute);

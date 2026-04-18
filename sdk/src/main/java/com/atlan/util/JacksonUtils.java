@@ -60,14 +60,14 @@ public class JacksonUtils {
             } else if (singularClass == Boolean.class) {
                 return primitive.asBoolean();
             } else if (Number.class.isAssignableFrom(singularClass)) {
-                return deserializeNumber(primitive, method);
+                return deserializeNumber(primitive, singularClass);
             } else {
                 return primitive.asText();
             }
         } else if (primitive.isBoolean()) {
             return primitive.asBoolean();
         } else if (primitive.isNumber()) {
-            return deserializeNumber(primitive, method);
+            return deserializeNumber(primitive, singularClass);
         }
         return null;
     }
@@ -82,13 +82,23 @@ public class JacksonUtils {
      */
     public static Object deserializeNumber(JsonNode primitive, Method method) throws IOException {
         Parameter[] parameters = method.getParameters();
-        Class<?> parameterType;
         if (parameters.length == 1) {
-            parameterType = parameters[0].getType();
+            return deserializeNumber(primitive, parameters[0].getType());
         } else {
             throw new IOException(
                     "Unexpected number of parameters (" + parameters.length + ") found for method: " + method);
         }
+    }
+
+    /**
+     * Deserialize a number direct to an object, converting to the correct type.
+     *
+     * @param primitive number to deserialize
+     * @param parameterType target numeric type
+     * @return the deserialized number
+     * @throws IOException if the target type is an unhandled numeric type
+     */
+    public static Object deserializeNumber(JsonNode primitive, Class<?> parameterType) throws IOException {
         if (parameterType == Integer.class) {
             return primitive.asInt();
         } else if (parameterType == Long.class) {
@@ -100,7 +110,7 @@ public class JacksonUtils {
         } else if (parameterType == Short.class) {
             return primitive.shortValue();
         } else {
-            throw new IOException("Unhandled parameter type (" + parameterType + ") found for method: " + method);
+            throw new IOException("Unhandled parameter type (" + parameterType + ") found for method: " + primitive);
         }
     }
 

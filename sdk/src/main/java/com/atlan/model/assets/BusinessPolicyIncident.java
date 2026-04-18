@@ -112,6 +112,11 @@ public class BusinessPolicyIncident extends Asset
     @Singular("exceptionForBusinessPolicy")
     SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** Status of this asset's severity. */
     @Attribute
     IncidentSeverity incidentSeverity;

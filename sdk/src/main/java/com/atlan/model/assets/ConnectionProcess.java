@@ -98,6 +98,11 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     IFlowControlOperation flowOrchestratedBy;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** Assets that are inputs to this process. */
     @Attribute
     @Singular

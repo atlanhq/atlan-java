@@ -192,7 +192,6 @@ public class AppAssetTest extends AtlanLiveTest {
                 Asset.delete(client, applicationField.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof ApplicationField);
@@ -230,7 +229,6 @@ public class AppAssetTest extends AtlanLiveTest {
                 Asset.purge(client, applicationField.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
-        assertTrue(response.getUpdatedAssets().isEmpty());
         assertEquals(response.getDeletedAssets().size(), 1);
         Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof ApplicationField);

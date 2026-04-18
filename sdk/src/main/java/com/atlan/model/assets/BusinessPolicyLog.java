@@ -109,6 +109,11 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     @Singular("exceptionForBusinessPolicy")
     SortedSet<IBusinessPolicyException> exceptionsForBusinessPolicy;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** number of governed assets in the policy */
     @Attribute
     Long governedAssetsCount;

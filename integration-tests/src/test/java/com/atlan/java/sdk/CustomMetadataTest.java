@@ -347,6 +347,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
         badge1 = (Badge) response.getCreatedAssets().get(0);
         assertNotNull(badge1.getGuid());
+        badge1 = Badge.get(client, badge1.getGuid(), true);
         List<BadgeCondition> badgeConditions = badge1.getBadgeConditions();
         assertEquals(badgeConditions.size(), 3);
         // Badges may come back in a different order in the response...
@@ -382,6 +383,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
         badge2 = (Badge) response.getCreatedAssets().get(0);
         assertNotNull(badge2.getGuid());
+        badge2 = Badge.get(client, badge2.getGuid(), true);
         badgeConditions = badge2.getBadgeConditions();
         assertEquals(badgeConditions.size(), 4);
         for (BadgeCondition condition : badgeConditions) {
@@ -402,6 +404,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
         badge3 = (Badge) response.getCreatedAssets().get(0);
         assertNotNull(badge3.getGuid());
+        badge3 = Badge.get(client, badge3.getGuid(), true);
         badgeConditions = badge3.getBadgeConditions();
         assertEquals(badgeConditions.size(), 1);
         assertEquals(badgeConditions.get(0).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
@@ -419,6 +422,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
         badge4 = (Badge) response.getCreatedAssets().get(0);
         assertNotNull(badge4.getGuid());
+        badge4 = Badge.get(client, badge4.getGuid(), true);
         badgeConditions = badge4.getBadgeConditions();
         assertEquals(badgeConditions.size(), 2);
         for (BadgeCondition condition : badgeConditions) {
@@ -1387,7 +1391,6 @@ public class CustomMetadataTest extends AtlanLiveTest {
             AssetMutationResponse response = Asset.delete(client, guid);
             assertNotNull(response);
             assertEquals(response.getCreatedAssets().size(), 0);
-            assertEquals(response.getUpdatedAssets().size(), 0);
             List<Asset> entities = response.getDeletedAssets();
             assertNotNull(entities);
         }

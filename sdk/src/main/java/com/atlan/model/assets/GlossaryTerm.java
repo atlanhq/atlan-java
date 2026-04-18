@@ -88,6 +88,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Singular
     SortedSet<String> examples;
 
+    /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
+    @Attribute
+    @Singular
+    SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
+
     /** More specific term that is a sub-class of another term, for example: 'cat'. */
     @Attribute
     @Singular("isATerm")

@@ -102,6 +102,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Boolean connectionIsDQEnabled;
 
+    /** Strategy configuration for reverse-sync operations on this connection, stored as a stringified JSON array. Each element specifies a source entity type and whether reverse-sync is enabled for it, e.g. [{"source_entity": "Aspects", "enabled": true}]. */
+    @Attribute
+    String connectionReverseSyncStrategy;
+
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     @Attribute
     String connectionSSOCredentialGuid;
