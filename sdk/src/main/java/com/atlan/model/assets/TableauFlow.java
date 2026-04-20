@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.TableauReadCountWindow;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -138,6 +139,11 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     @Attribute
     @Singular
     SortedSet<String> tableauProjectHierarchyQualifiedNames;
+
+    /** Read/view counts on this asset bucketed by time window, as reported by Tableau's Content Exploration API. */
+    @Attribute
+    @Singular
+    List<TableauReadCountWindow> tableauSourceReadCounts;
 
     /** Unique name of the top-level project in which this flow exists. */
     @Attribute

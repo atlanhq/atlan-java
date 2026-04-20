@@ -24,6 +24,7 @@ import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
+import com.atlan.model.structs.TableauReadCountWindow;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -874,6 +875,9 @@ public interface ITableauDashboardField {
 
     /** Unique name of the site in which this dashboard field exists. */
     String getTableauSiteQualifiedName();
+
+    /** Read/view counts on this asset bucketed by time window, as reported by Tableau's Content Exploration API. */
+    List<TableauReadCountWindow> getTableauSourceReadCounts();
 
     /** Unique name of the top-level project in which this dashboard field exists. */
     String getTableauTopLevelProjectQualifiedName();
