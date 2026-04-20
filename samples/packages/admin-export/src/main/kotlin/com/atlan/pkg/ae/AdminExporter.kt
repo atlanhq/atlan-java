@@ -43,6 +43,14 @@ object AdminExporter {
             // so we can resolve them to meaningful names
             val glossaryMap = preloadGlossaryNameMap(ctx)
             val connectionMap = preloadConnectionMap(ctx)
+
+            // Build IAM client for bulk user/group fetches via Redis-backed identity API.
+            // Replaces per-user Keycloak calls that fail at high user volumes (60K+).
+            // Auth: client_credentials grant with client_id=atlan-backend.
+            // CLIENT_SECRET is injected from argo-client-creds secret into the main container.
+            val identityBase = "http://heracles-service.heracles.svc.cluster.local"
+            val bearerToken = ctx.client.impersonate.escalate()
+            val iamClient = IamClient(baseUrl = identityBase, bearerToken = bearerToken, logger = logger)
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
             val outputDirectory = validatePathIsSafe(od)
@@ -81,7 +89,7 @@ object AdminExporter {
                 ExcelWriter(xlsxFileActual.toString()).use { xlsx ->
                     ctx.config.objectsToInclude.forEach { objectName ->
                         when (objectName) {
-                            "users" -> Users(ctx, xlsx.createSheet("Users"), logger).export()
+                            "users" -> Users(ctx, xlsx.createSheet("Users"), logger, iamClient).export()
                             "groups" -> Groups(ctx, xlsx.createSheet("Groups"), logger).export()
                             "personas" -> Personas(ctx, xlsx.createSheet("Personas"), glossaryMap, connectionMap, logger).export()
                             "purposes" -> Purposes(ctx, xlsx.createSheet("Purposes"), logger).export()
@@ -93,7 +101,7 @@ object AdminExporter {
             } else {
                 ctx.config.objectsToInclude.forEach { objectName ->
                     when (objectName) {
-                        "users" -> CSVWriter(usersFileActual.toString()).use { csv -> Users(ctx, csv, logger).export() }
+                        "users" -> CSVWriter(usersFileActual.toString()).use { csv -> Users(ctx, csv, logger, iamClient).export() }
                         "groups" -> CSVWriter(groupsFileActual.toString()).use { csv -> Groups(ctx, csv, logger).export() }
                         "personas" -> CSVWriter(personasFileActual.toString()).use { csv -> Personas(ctx, csv, glossaryMap, connectionMap, logger).export() }
                         "purposes" -> CSVWriter(purposesFileActual.toString()).use { csv -> Purposes(ctx, csv, logger).export() }
