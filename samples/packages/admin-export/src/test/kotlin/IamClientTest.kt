@@ -29,18 +29,24 @@ class IamClientTest {
         // Stub: GET /identity/users?filter=...&columns=groups
         server.createContext("/identity/users") { exchange ->
             val query = exchange.requestURI.query ?: ""
-            val filter = URLDecoder.decode(
-                query.split("&").firstOrNull { it.startsWith("filter=") }?.removePrefix("filter=") ?: "{}",
-                StandardCharsets.UTF_8,
-            )
+            val filter =
+                URLDecoder.decode(
+                    query.split("&").firstOrNull { it.startsWith("filter=") }?.removePrefix("filter=") ?: "{}",
+                    StandardCharsets.UTF_8,
+                )
             // Extract IDs from {"id":{"$in":["id1","id2",...]}}
-            val ids = Regex("\"([^\"]+)\"").findAll(
-                filter.substringAfter("\$in\":[").substringBefore("]"),
-            ).map { it.groupValues[1] }.toList()
+            val ids =
+                Regex("\"([^\"]+)\"")
+                    .findAll(
+                        filter.substringAfter("\$in\":[").substringBefore("]"),
+                    ).map { it.groupValues[1] }
+                    .toList()
 
-            val body = ids.joinToString(",", "[", "]") { id ->
-                """{"id":"$id","groups":[{"id":"grp-$id","name":"group-$id"}]}"""
-            }.toByteArray()
+            val body =
+                ids
+                    .joinToString(",", "[", "]") { id ->
+                        """{"id":"$id","groups":[{"id":"grp-$id","name":"group-$id"}]}"""
+                    }.toByteArray()
 
             exchange.sendResponseHeaders(200, body.size.toLong())
             exchange.responseBody.use { it.write(body) }
@@ -49,20 +55,28 @@ class IamClientTest {
         // Stub: GET /identity/groups?filter=...&columns=attributes
         server.createContext("/identity/groups") { exchange ->
             val query = exchange.requestURI.query ?: ""
-            val filter = URLDecoder.decode(
-                query.split("&").firstOrNull { it.startsWith("filter=") }?.removePrefix("filter=") ?: "{}",
-                StandardCharsets.UTF_8,
-            )
-            val ids = Regex("\"([^\"]+)\"").findAll(
-                filter.substringAfter("\$in\":[").substringBefore("]"),
-            ).map { it.groupValues[1] }.toList()
+            val filter =
+                URLDecoder.decode(
+                    query.split("&").firstOrNull { it.startsWith("filter=") }?.removePrefix("filter=") ?: "{}",
+                    StandardCharsets.UTF_8,
+                )
+            val ids =
+                Regex("\"([^\"]+)\"")
+                    .findAll(
+                        filter.substringAfter("\$in\":[").substringBefore("]"),
+                    ).map { it.groupValues[1] }
+                    .toList()
 
-            val body = ids.joinToString(",", "[", "]") { id ->
-                when {
-                    id.contains("no-alias") -> """{"id":"$id"}"""  // missing attributes entirely
-                    else -> """{"id":"$id","attributes":{"alias":"Alias for $id"}}"""
-                }
-            }.toByteArray()
+            val body =
+                ids
+                    .joinToString(",", "[", "]") { id ->
+                        when {
+                            id.contains("no-alias") -> """{"id":"$id"}"""
+
+                            // missing attributes entirely
+                            else -> """{"id":"$id","attributes":{"alias":"Alias for $id"}}"""
+                        }
+                    }.toByteArray()
 
             exchange.sendResponseHeaders(200, body.size.toLong())
             exchange.responseBody.use { it.write(body) }
@@ -70,11 +84,12 @@ class IamClientTest {
 
         server.start()
         val port = server.address.port
-        client = IamClient(
-            baseUrl = "http://localhost:$port",
-            bearerToken = "test-token",
-            logger = logger,
-        )
+        client =
+            IamClient(
+                baseUrl = "http://localhost:$port",
+                bearerToken = "test-token",
+                logger = logger,
+            )
     }
 
     @AfterClass
@@ -129,14 +144,17 @@ class IamClientTest {
     fun getUserGroupsBatchesLargeInputs() {
         // 550 users should produce 2 batches (500 + 50) with batchSize=500
         val userIds = (1..550).map { "batch-user-$it" }
-        val requestCount = java.util.concurrent.atomic.AtomicInteger(0)
+        val requestCount =
+            java.util.concurrent.atomic
+                .AtomicInteger(0)
 
         // Wrap client with a smaller batchSize to verify chunking without needing 550 ids
-        val smallBatchClient = IamClient(
-            baseUrl = "http://localhost:${server.address.port}",
-            bearerToken = "test-token",
-            logger = logger,
-        )
+        val smallBatchClient =
+            IamClient(
+                baseUrl = "http://localhost:${server.address.port}",
+                bearerToken = "test-token",
+                logger = logger,
+            )
         val result = smallBatchClient.getUserGroups(userIds.take(7), batchSize = 3)
         // 7 users, batchSize=3 → 3 batches: [3, 3, 1]
         assertEquals(result.size, 7, "All 7 users should be present in result")
