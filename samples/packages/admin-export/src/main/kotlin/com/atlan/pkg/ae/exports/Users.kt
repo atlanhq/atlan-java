@@ -4,6 +4,7 @@ package com.atlan.pkg.ae.exports
 
 import AdminExportCfg
 import com.atlan.api.UsersEndpoint
+import com.atlan.model.admin.IamGroupRef
 import com.atlan.model.admin.UserRequest
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
@@ -42,22 +43,41 @@ class Users(
                 .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
                 .column("profileRole")
                 .column("profileRoleOther")
+                .limit(100)
                 .build()
+
+        // Collect all users upfront so we can bulk-fetch group memberships in one shot
+        logger.info { "Fetching all users from Heracles..." }
+        val allUsers =
+            ctx.client.users
+                .list(request)
+                .toList()
+        logger.info { "Fetched ${allUsers.size} users. Resolving group memberships via IAM API..." }
+
+        // Bulk-fetch group memberships — ~120 Redis calls instead of 60K Keycloak calls
+        logger.info { "Resolving group memberships via IdentityEndpoint (bulk IAM API)..." }
+        val userGroupsMap = ctx.client.identity.getUserGroups(allUsers.mapNotNull { it.id })
+
+        // Collect all unique group IDs seen across all users, then resolve aliases in bulk
+        val allGroupIds =
+            userGroupsMap.values
+                .flatten()
+                .map { it.id }
+                .distinct()
+        val groupAliasMap = ctx.client.identity.getGroupAliases(allGroupIds)
+
         val ts = Instant.now().toString()
-        ctx.client.users.list(request).forEach { user ->
+        allUsers.forEach { user ->
             val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
-            val groups =
-                ctx.client.users
-                    .listGroups(user.id)
-                    ?.records
-            val technicalNames = groups?.joinToString("\n") { it.name ?: "" } ?: ""
+            val groups = userGroupsMap[user.id] ?: emptyList<IamGroupRef>()
+            val technicalNames = groups.joinToString("\n") { it.name }
+            val nontechnicalNames = groups.joinToString("\n") { groupAliasMap[it.id] ?: it.name }
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            val nontechnicalNames = groups?.joinToString("\n") { it.alias ?: "" } ?: ""
             /*val loginCount =
                 ctx.client.logs
                     .getEvents(

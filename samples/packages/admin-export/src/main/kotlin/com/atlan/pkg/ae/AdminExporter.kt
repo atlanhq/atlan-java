@@ -43,6 +43,7 @@ object AdminExporter {
             // so we can resolve them to meaningful names
             val glossaryMap = preloadGlossaryNameMap(ctx)
             val connectionMap = preloadConnectionMap(ctx)
+
             val xlsxOutput = ctx.config.fileFormat == "XLSX"
 
             val outputDirectory = validatePathIsSafe(od)

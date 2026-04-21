@@ -189,6 +189,9 @@ public class AtlanClient implements AtlanCloseable {
     /** Endpoint with operations to interact with data contracts. */
     public final ContractsEndpoint contracts;
 
+    /** Endpoint with operations to interact with the Redis-backed IAM identity service. */
+    public final IdentityEndpoint identity;
+
     /** Client-aware asset deserializer. */
     @Getter
     private final AssetDeserializer assetDeserializer;
@@ -336,6 +339,7 @@ public class AtlanClient implements AtlanCloseable {
         sso = new SSOEndpoint(this);
         openLineage = new OpenLineageEndpoint(this);
         contracts = new ContractsEndpoint(this);
+        identity = new IdentityEndpoint(this);
         atlanTagCache = new AtlanTagCache(this);
         customMetadataCache = new CustomMetadataCache(this);
         enumCache = new EnumCache(typeDefs);
