@@ -10,6 +10,9 @@ public enum AtlanIcon implements AtlanEnum {
     ATLAN_SHIELD("atlanShield"),
     ATLAN_METADATA("atlanMetadata"),
     ACORN("PhAcorn"),
+    /** @deprecated PULSE */
+    @Deprecated
+    ACTIVITY("PhActivity"),
     ADDRESS_BOOK("PhAddressBook"),
     ADDRESS_BOOK_TABS("PhAddressBookTabs"),
     AIR_TRAFFIC_CONTROL("PhAirTrafficControl"),
@@ -386,6 +389,18 @@ public enum AtlanIcon implements AtlanEnum {
     CIRCLE_HALF("PhCircleHalf"),
     CIRCLE_HALF_TILT("PhCircleHalfTilt"),
     CIRCLE_NOTCH("PhCircleNotch"),
+    /** @deprecated SEAL */
+    @Deprecated
+    CIRCLE_WAVY("PhCircleWavy"),
+    /** @deprecated SEAL_CHECK */
+    @Deprecated
+    CIRCLE_WAVY_CHECK("PhCircleWavyCheck"),
+    /** @deprecated SEAL_QUESTION */
+    @Deprecated
+    CIRCLE_WAVY_QUESTION("PhCircleWavyQuestion"),
+    /** @deprecated SEAL_WARNING */
+    @Deprecated
+    CIRCLE_WAVY_WARNING("PhCircleWavyWarning"),
     CIRCLES_FOUR("PhCirclesFour"),
     CIRCLES_THREE("PhCirclesThree"),
     CIRCLES_THREE_PLUS("PhCirclesThreePlus"),
@@ -594,6 +609,9 @@ public enum AtlanIcon implements AtlanEnum {
     FILE_CSV("PhFileCsv"),
     FILE_DASHED("PhFileDashed"),
     FILE_DOC("PhFileDoc"),
+    /** @deprecated FILE_DASHED */
+    @Deprecated
+    FILE_DOTTED("PhFileDotted"),
     FILE_HTML("PhFileHtml"),
     FILE_IMAGE("PhFileImage"),
     FILE_INI("PhFileIni"),
@@ -610,6 +628,9 @@ public enum AtlanIcon implements AtlanEnum {
     FILE_PPT("PhFilePpt"),
     FILE_PY("PhFilePy"),
     FILE_RS("PhFileRs"),
+    /** @deprecated FILE_MAGNIFYING_GLASS */
+    @Deprecated
+    FILE_SEARCH("PhFileSearch"),
     FILE_SQL("PhFileSql"),
     FILE_SVG("PhFileSvg"),
     FILE_TEXT("PhFileText"),
@@ -656,6 +677,9 @@ public enum AtlanIcon implements AtlanEnum {
     FLYING_SAUCER("PhFlyingSaucer"),
     FOLDER("PhFolder"),
     FOLDER_DASHED("PhFolderDashed"),
+    /** @deprecated FOLDER_DASHED */
+    @Deprecated
+    FOLDER_DOTTED("PhFolderDotted"),
     FOLDER_LOCK("PhFolderLock"),
     FOLDER_MINUS("PhFolderMinus"),
     /** @deprecated FOLDER */
@@ -674,6 +698,9 @@ public enum AtlanIcon implements AtlanEnum {
     FOLDER_PLUS("PhFolderPlus"),
     FOLDER_SIMPLE("PhFolderSimple"),
     FOLDER_SIMPLE_DASHED("PhFolderSimpleDashed"),
+    /** @deprecated FOLDER_SIMPLE_DASHED */
+    @Deprecated
+    FOLDER_SIMPLE_DOTTED("PhFolderSimpleDotted"),
     FOLDER_SIMPLE_LOCK("PhFolderSimpleLock"),
     FOLDER_SIMPLE_MINUS("PhFolderSimpleMinus"),
     FOLDER_SIMPLE_PLUS("PhFolderSimplePlus"),
@@ -1053,6 +1080,9 @@ public enum AtlanIcon implements AtlanEnum {
     PAW_PRINT("PhPawPrint"),
     PAYPAL_LOGO("PhPaypalLogo"),
     PEACE("PhPeace"),
+    /** @deprecated PERSON */
+    @Deprecated
+    PEDESTRIAN("PhPedestrian"),
     PEN("PhPen"),
     PEN_NIB("PhPenNib"),
     PEN_NIB_STRAIGHT("PhPenNibStraight"),
@@ -1376,6 +1406,9 @@ public enum AtlanIcon implements AtlanEnum {
     TEXT_ALIGN_LEFT("PhTextAlignLeft"),
     TEXT_ALIGN_RIGHT("PhTextAlignRight"),
     TEXT_B("PhTextB"),
+    /** @deprecated TEXT_B */
+    @Deprecated
+    TEXT_BOLDER("PhTextBolder"),
     TEXT_COLUMNS("PhTextColumns"),
     TEXT_H("PhTextH"),
     TEXT_H_FIVE("PhTextHFive"),
