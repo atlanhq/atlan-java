@@ -7,7 +7,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.serde.StringOrListDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -85,6 +87,9 @@ public class AtlanUser extends AtlanObject {
 
     /** Sub-role the user is assigned, if any. */
     SubRole assignedRole;
+
+    /** Groups the user belongs to. Populated when {@code columns=groups} is requested (identity API). */
+    List<AtlanGroup> groups;
 
     /** List of administration-related events for this user. */
     final List<AdminEvent> adminEvents;
@@ -251,33 +256,43 @@ public class AtlanUser extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
         /** (Unused) */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> designation;
 
         /** Skills the user possesses. */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> skills;
 
         /** Unique Slack member identifier. */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> slack;
 
         /** Unique JIRA user identifier. */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> jira;
 
         /** Time at which the user was invited (as a formatted string). */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> invitedAt;
 
         /** User who invited this user. */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> invitedBy;
 
         /** TBC */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> invitedByName;
 
         /** User-provided role during initial registration. */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> profileRole;
 
         /** User-provided role during initial registration when profileRole is "other". */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> profileRoleOther;
 
         /** TBC */
+        @JsonDeserialize(using = StringOrListDeserializer.class)
         List<String> assignedRoleLevel;
     }
 
