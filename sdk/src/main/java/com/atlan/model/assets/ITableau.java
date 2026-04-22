@@ -21,6 +21,7 @@ import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
+import com.atlan.model.structs.TableauReadCountWindow;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -43,6 +44,9 @@ public interface ITableau {
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     KeywordField TABLEAU_PROJECT_HIERARCHY_QUALIFIED_NAMES =
             new KeywordField("tableauProjectHierarchyQualifiedNames", "tableauProjectHierarchyQualifiedNames");
+
+    /** Read/view counts on this asset bucketed by time window, as reported by Tableau's Content Exploration API. */
+    KeywordField TABLEAU_SOURCE_READ_COUNTS = new KeywordField("tableauSourceReadCounts", "tableauSourceReadCounts");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -771,6 +775,9 @@ public interface ITableau {
 
     /** Array of qualified names representing the project hierarchy for this Tableau asset. */
     SortedSet<String> getTableauProjectHierarchyQualifiedNames();
+
+    /** Read/view counts on this asset bucketed by time window, as reported by Tableau's Content Exploration API. */
+    List<TableauReadCountWindow> getTableauSourceReadCounts();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
