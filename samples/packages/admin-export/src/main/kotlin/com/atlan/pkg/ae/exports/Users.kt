@@ -4,6 +4,8 @@ package com.atlan.pkg.ae.exports
 
 import AdminExportCfg
 import com.atlan.api.UsersEndpoint
+import com.atlan.model.admin.AtlanGroup
+import com.atlan.model.admin.AtlanUser
 import com.atlan.model.admin.UserRequest
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.TabularWriter
@@ -42,43 +44,54 @@ class Users(
                 .columns(UsersEndpoint.DEFAULT_PROJECTIONS)
                 .column("profileRole")
                 .column("profileRoleOther")
+                .limit(100)
                 .build()
+
+        // Collect all users upfront so we can bulk-fetch group memberships in one shot
+        logger.info { "Fetching all users from Heracles..." }
+        val allUsers =
+            ctx.client.users
+                .list(request)
+                .toList()
+        logger.info { "Fetched ${allUsers.size} users. Resolving group memberships via IAM API..." }
+
+        // Bulk-fetch user details + group memberships from Redis in a single call per batch
+        logger.info { "Resolving user details and group memberships via IdentityEndpoint (bulk IAM API)..." }
+        val iamUsersMap = ctx.client.identity.getUsers(allUsers.mapNotNull { it.id })
+        logger.info { "Resolved user details from IAM Redis API, resolving group aliases..." }
+
+        // Collect all unique group IDs seen across all users, then resolve aliases in bulk
+        val allGroupIds =
+            iamUsersMap.values
+                .flatMap { it.groups ?: emptyList<AtlanGroup>() }
+                .map { it.id }
+                .distinct()
+        val groupAliasMap = ctx.client.identity.getGroupAliases(allGroupIds)
+
         val ts = Instant.now().toString()
-        ctx.client.users.list(request).forEach { user ->
+        allUsers.forEach { user ->
+            val iamUser: AtlanUser? = iamUsersMap[user.id]
             val personas = user.personas?.joinToString("\n") { it.displayName ?: "" } ?: ""
-            val groups =
-                ctx.client.users
-                    .listGroups(user.id)
-                    ?.records
-            val technicalNames = groups?.joinToString("\n") { it.name ?: "" } ?: ""
+            val groups = iamUser?.groups ?: emptyList<AtlanGroup>()
+            val technicalNames = groups.joinToString("\n") { it.name }
+            val nontechnicalNames = groups.joinToString("\n") { groupAliasMap[it.id] ?: it.name }
             val designation =
                 if (user.attributes?.profileRole?.get(0) == "Other") {
                     user.attributes?.profileRoleOther?.get(0)
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            val nontechnicalNames = groups?.joinToString("\n") { it.alias ?: "" } ?: ""
-            /*val loginCount =
-                ctx.client.logs
-                    .getEvents(
-                        KeycloakEventRequest
-                            .builder()
-                            .type(KeycloakEventType.LOGIN)
-                            .userId(user.id)
-                            .build(),
-                    ).count()*/
             val licenseType = user.assignedRole?.description ?: user.workspaceRole
             writer.writeRecord(
                 listOf(
-                    user.username,
-                    user.firstName,
-                    user.lastName,
-                    user.email,
+                    iamUser?.username ?: user.username,
+                    iamUser?.firstName ?: user.firstName,
+                    iamUser?.lastName ?: user.lastName,
+                    iamUser?.email ?: user.email,
                     technicalNames,
-                    TimestampXformer.encode(user.createdTimestamp),
-                    user.enabled,
+                    TimestampXformer.encode(iamUser?.createdTimestamp ?: user.createdTimestamp),
+                    iamUser?.enabled ?: user.enabled,
                     TimestampXformer.encode(user.lastLoginTime),
-                    // loginCount,
                     personas,
                     licenseType,
                     designation,
