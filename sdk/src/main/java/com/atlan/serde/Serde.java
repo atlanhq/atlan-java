@@ -290,6 +290,7 @@ public class Serde {
         if (paramClass == Collection.class || paramClass == List.class) {
             return list;
         } else if (paramClass == Set.class || paramClass == SortedSet.class) {
+            list.removeIf(Objects::isNull);
             return new TreeSet<>(list);
         } else {
             throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
@@ -358,7 +359,15 @@ public class Serde {
                 }
                 return value;
             }
-            return JacksonUtils.deserializePrimitive(element, method, innerClass);
+            Object value = JacksonUtils.deserializePrimitive(element, method, innerClass);
+            if (value == null && !element.isNull() && innerClass != null && innerClass.isEnum()) {
+                log.warn(
+                        "Unrecognized {} value '{}' in field {} — raise a ticket to get it added.",
+                        innerClass.getSimpleName(),
+                        element.asText(),
+                        fieldName);
+            }
+            return value;
         } else if (element.isArray()) {
             throw new IOException("Directly-nested arrays are not supported.");
         } else if (element.isObject()) {
