@@ -13,17 +13,15 @@ import java.io.File
 import kotlin.test.assertEquals
 
 /**
- * Test export of all administrative information.
- * Disabled: requires internal cluster access for user impersonation via CLIENT_ID/CLIENT_SECRET.
+ * Test export of all administrative information except users (which requires internal cluster access),
+ * in CSV format.
  */
-@Test(enabled = false)
-class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
+class ExportAllAdminInfoCSVNoUsersTest : PackageTest("ancsv") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
         listOf(
             "debug.log",
-            "users.csv",
             "groups.csv",
             "personas.csv",
             "purposes.csv",
@@ -35,7 +33,6 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             AdminExportCfg(
                 objectsToInclude =
                     listOf(
-                        "users",
                         "groups",
                         "personas",
                         "purposes",
@@ -58,29 +55,6 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         assertTrue(File(xlFile).isFile)
         assertEquals(0, File(xlFile).length())
-    }
-
-    @Test
-    fun testUsers() {
-        val file = "$testDirectory${File.separator}users.csv"
-        val header = CSVXformer.getHeader(file)
-        assertFalse(header.isEmpty())
-        CsvReader
-            .builder()
-            .fieldSeparator(',')
-            .quoteCharacter('"')
-            .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
-            .ofCsvRecord(file)
-            .stream()
-            .skip(1)
-            .forEach { r: CsvRecord ->
-                val row = CSVXformer.getRowByHeader(header, r.fields)
-                assertFalse(row["Username"].isNullOrBlank())
-                assertFalse(row["Email address"].isNullOrBlank())
-                assertTrue(row["Email address"]!!.contains('@'))
-            }
     }
 
     @Test

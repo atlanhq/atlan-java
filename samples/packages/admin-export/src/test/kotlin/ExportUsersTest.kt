@@ -11,7 +11,9 @@ import java.io.File
 
 /**
  * Test export of only users.
+ * Disabled: requires internal cluster access for user impersonation via CLIENT_ID/CLIENT_SECRET.
  */
+@Test(enabled = false)
 class ExportUsersTest : PackageTest("u") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
