@@ -11,11 +11,9 @@ import java.io.File
 import kotlin.test.assertEquals
 
 /**
- * Test export of all administrative information.
- * Disabled: requires internal cluster access for user impersonation via CLIENT_ID/CLIENT_SECRET.
+ * Test export of all administrative information except users (which requires internal cluster access).
  */
-@Test(enabled = false)
-class ExportAllAdminInfoTest : PackageTest("aa") {
+class ExportAllAdminInfoNoUsersTest : PackageTest("anu") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val files =
@@ -29,7 +27,6 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
             AdminExportCfg(
                 objectsToInclude =
                     listOf(
-                        "users",
                         "groups",
                         "personas",
                         "purposes",
@@ -51,7 +48,6 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
     fun csvFilesExistButAreEmpty() {
         val csvFiles =
             listOf(
-                "users.csv",
                 "groups.csv",
                 "personas.csv",
                 "purposes.csv",
@@ -68,27 +64,11 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
-            assertTrue(xlsx.hasSheet("Users"))
+            assertFalse(xlsx.hasSheet("Users"))
             assertTrue(xlsx.hasSheet("Groups"))
             assertTrue(xlsx.hasSheet("Personas"))
             assertTrue(xlsx.hasSheet("Purposes"))
             assertTrue(xlsx.hasSheet("Policies"))
-        }
-    }
-
-    @Test
-    fun testUsers() {
-        val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
-        ExcelReader(xlFile).use { xlsx ->
-            val rows = xlsx.getRowsFromSheet("Users")
-            assertTrue(rows.isNotEmpty())
-            rows.forEach { row ->
-                assertFalse(row["Username"].isNullOrBlank())
-                // assertFalse(row["First name"].isNullOrBlank())
-                // assertFalse(row["Last name"].isNullOrBlank())
-                assertFalse(row["Email address"].isNullOrBlank())
-                assertTrue(row["Email address"]!!.contains('@'))
-            }
         }
     }
 
