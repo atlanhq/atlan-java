@@ -145,6 +145,8 @@ jobs:
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: |
@@ -190,6 +192,8 @@ jobs:
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
           JAVA_TOOL_OPTIONS: "-Djava.io.tmpdir=/home/runner"
         run: ./gradlew -PpackageTests :samples:packages:${{ matrix.tests }}:test -x assemble -x testClasses -x buildSrc:jar
