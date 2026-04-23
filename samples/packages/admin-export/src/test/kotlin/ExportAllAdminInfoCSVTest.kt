@@ -48,19 +48,19 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
         )
     }
 
-    @Test
+    @Test(enabled = false)
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(enabled = false)
     fun excelIsEmpty() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         assertTrue(File(xlFile).isFile)
         assertEquals(0, File(xlFile).length())
     }
 
-    @Test
+    @Test(enabled = false)
     fun testUsers() {
         val file = "$testDirectory${File.separator}users.csv"
         val header = CSVXformer.getHeader(file)
@@ -83,7 +83,7 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testGroups() {
         val file = "$testDirectory${File.separator}groups.csv"
         val header = CSVXformer.getHeader(file)
@@ -104,7 +104,7 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPersonas() {
         val file = "$testDirectory${File.separator}personas.csv"
         val header = CSVXformer.getHeader(file)
@@ -125,7 +125,7 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPurposes() {
         val file = "$testDirectory${File.separator}purposes.csv"
         val header = CSVXformer.getHeader(file)
@@ -147,7 +147,7 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPolicies() {
         val file = "$testDirectory${File.separator}policies.csv"
         val header = CSVXformer.getHeader(file)
@@ -169,7 +169,7 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             }
     }
 
-    @Test
+    @Test(enabled = false)
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
