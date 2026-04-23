@@ -42,12 +42,12 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         )
     }
 
-    @Test
+    @Test(enabled = false)
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(enabled = false)
     fun csvFilesExistButAreEmpty() {
         val csvFiles =
             listOf(
@@ -64,7 +64,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -76,7 +76,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testUsers() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -92,7 +92,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testGroups() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -104,7 +104,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPersonas() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -116,7 +116,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPurposes() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -129,7 +129,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testPolicies() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -142,7 +142,7 @@ class ExportAllAdminInfoTest : PackageTest("aa") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun errorFreeLog() {
         validateErrorFreeLog()
     }

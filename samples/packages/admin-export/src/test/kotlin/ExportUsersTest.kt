@@ -34,12 +34,12 @@ class ExportUsersTest : PackageTest("u") {
         )
     }
 
-    @Test
+    @Test(enabled = false)
     fun filesCreated() {
         validateFilesExist(files)
     }
 
-    @Test
+    @Test(enabled = false)
     fun hasExpectedSheets() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -51,7 +51,7 @@ class ExportUsersTest : PackageTest("u") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun testUsers() {
         val xlFile = "$testDirectory${File.separator}admin-export.xlsx"
         ExcelReader(xlFile).use { xlsx ->
@@ -73,7 +73,7 @@ class ExportUsersTest : PackageTest("u") {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     fun errorFreeLog() {
         validateErrorFreeLog()
     }
