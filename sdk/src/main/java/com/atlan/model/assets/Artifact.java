@@ -127,6 +127,10 @@ public class Artifact extends Asset implements IArtifact, IAgentic, IResource, I
     @Attribute
     String reference;
 
+    /** Size of the file in bytes. */
+    @Attribute
+    Long resourceFileSize;
+
     /** Metadata of the resource. */
     @Attribute
     @Singular("putResourceMetadata")
