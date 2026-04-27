@@ -692,6 +692,9 @@ public interface ISkillArtifact {
     /** Reference to the resource. */
     String getReference();
 
+    /** Size of the file in bytes. */
+    Long getResourceFileSize();
+
     /** Metadata of the resource. */
     Map<String, String> getResourceMetadata();
 
