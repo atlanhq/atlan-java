@@ -1136,6 +1136,7 @@ public class ContextArtifactTest {
             .artifactVersion("String0")
             .fileType(FileType.PDF)
             .filePath("String0")
+            .resourceFileSize(123456789L)
             .link("String0")
             .isGlobal(true)
             .reference("String0")

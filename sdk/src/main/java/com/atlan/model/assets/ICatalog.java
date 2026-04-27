@@ -519,6 +519,12 @@ public interface ICatalog {
             case KafkaTopic.TYPE_NAME:
                 ref = KafkaTopic.refByQualifiedName(qualifiedName);
                 break;
+            case KnowledgeFile.TYPE_NAME:
+                ref = KnowledgeFile.refByQualifiedName(qualifiedName);
+                break;
+            case KnowledgeFolder.TYPE_NAME:
+                ref = KnowledgeFolder.refByQualifiedName(qualifiedName);
+                break;
             case Link.TYPE_NAME:
                 ref = Link.refByQualifiedName(qualifiedName);
                 break;

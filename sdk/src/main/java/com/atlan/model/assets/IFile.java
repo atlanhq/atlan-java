@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -51,6 +52,9 @@ public interface IFile {
 
     /** Type (extension) of the file. */
     KeywordField FILE_TYPE = new KeywordField("fileType", "fileType");
+
+    /** Size of the file in bytes. */
+    NumericField RESOURCE_FILE_SIZE = new NumericField("resourceFileSize", "resourceFileSize");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -705,6 +709,9 @@ public interface IFile {
 
     /** Reference to the resource. */
     String getReference();
+
+    /** Size of the file in bytes. */
+    Long getResourceFileSize();
 
     /** Metadata of the resource. */
     Map<String, String> getResourceMetadata();

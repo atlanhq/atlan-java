@@ -127,6 +127,10 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     String reference;
 
+    /** Size of the file in bytes. */
+    @Attribute
+    Long resourceFileSize;
+
     /** Metadata of the resource. */
     @Attribute
     @Singular("putResourceMetadata")

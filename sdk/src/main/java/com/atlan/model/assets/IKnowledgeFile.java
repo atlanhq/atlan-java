@@ -14,6 +14,7 @@ import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -32,17 +33,27 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A context-specific artifact produced by a context repository. Inherits from both Context and Artifact for file type, versioning, and storage path.
+ * User-uploaded unstructured file that feeds Atlan enrichment agents and context pipelines.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IContextArtifact {
+public interface IKnowledgeFile {
 
-    public static final String TYPE_NAME = "ContextArtifact";
+    public static final String TYPE_NAME = "KnowledgeFile";
 
-    /** Context repository that produced this artifact. */
-    RelationField CONTEXT_REPOSITORY = new RelationField("contextRepository");
+    /** SHA-256 hex digest of file content, used for deduplication. */
+    KeywordField KNOWLEDGE_CONTENT_HASH = new KeywordField("knowledgeContentHash", "knowledgeContentHash");
+
+    /** Provider-specific version identifier for the active file content (e.g., S3 VersionId, GCS generation number). Use with filePath to retrieve exact bytes at a point in time. */
+    KeywordField KNOWLEDGE_CONTENT_VERSION_ID =
+            new KeywordField("knowledgeContentVersionId", "knowledgeContentVersionId");
+
+    /** Display names of the knowledge folders containing this file. */
+    KeywordField KNOWLEDGE_FOLDER_NAMES = new KeywordField("knowledgeFolderNames", "knowledgeFolderNames");
+
+    /** Knowledge folders in which this file exists. */
+    RelationField KNOWLEDGE_FOLDERS = new RelationField("knowledgeFolders");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -88,9 +99,6 @@ public interface IContextArtifact {
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
-
-    /** Version identifier for this artifact. */
-    String getArtifactVersion();
 
     /** List of AI-generated aliases for this asset, to aid in search and discovery. */
     SortedSet<String> getAssetAiAlias();
@@ -502,14 +510,6 @@ public interface IContextArtifact {
     /** Type of the connector through which this asset is accessible. */
     String getConnectorName();
 
-    /** Context repository that produced this artifact. */
-    default IContextRepository getContextRepository() {
-        return null;
-    }
-
-    /** Qualified name of the context repository to which this asset belongs. */
-    String getContextRepositoryQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {
         return null;
@@ -593,6 +593,20 @@ public interface IContextArtifact {
 
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
+
+    /** SHA-256 hex digest of file content, used for deduplication. */
+    String getKnowledgeContentHash();
+
+    /** Provider-specific version identifier for the active file content (e.g., S3 VersionId, GCS generation number). Use with filePath to retrieve exact bytes at a point in time. */
+    String getKnowledgeContentVersionId();
+
+    /** Display names of the knowledge folders containing this file. */
+    SortedSet<String> getKnowledgeFolderNames();
+
+    /** Knowledge folders in which this file exists. */
+    default SortedSet<IKnowledgeFolder> getKnowledgeFolders() {
+        return null;
+    }
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();

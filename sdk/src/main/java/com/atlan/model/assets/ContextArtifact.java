@@ -136,6 +136,10 @@ public class ContextArtifact extends Asset
     @Attribute
     String reference;
 
+    /** Size of the file in bytes. */
+    @Attribute
+    Long resourceFileSize;
+
     /** Metadata of the resource. */
     @Attribute
     @Singular("putResourceMetadata")
