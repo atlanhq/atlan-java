@@ -93,7 +93,14 @@ public final class StringUtils {
      * @return decoded README content (HTML)
      */
     public static String decodeContent(String encoded) {
-        return encoded == null ? null : URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
+        if (encoded == null) return null;
+        try {
+            return URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
+        } catch (IllegalArgumentException e) {
+            // README content may contain raw % in CSS (e.g. width:100%;) that was never
+            // URL-encoded — return as-is rather than crashing the entire export
+            return encoded;
+        }
     }
 
     /**
