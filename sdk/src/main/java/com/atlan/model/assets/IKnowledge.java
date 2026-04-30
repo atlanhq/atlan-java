@@ -12,9 +12,7 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
-import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -32,17 +30,14 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * A context-specific artifact produced by a context repository. Inherits from both Context and Artifact for file type, versioning, and storage path.
+ * Base class for Knowledge assets. Unified container for unstructured context files and knowledge artifacts in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IContextArtifact {
+public interface IKnowledge {
 
-    public static final String TYPE_NAME = "ContextArtifact";
-
-    /** Context repository that produced this artifact. */
-    RelationField CONTEXT_REPOSITORY = new RelationField("contextRepository");
+    public static final String TYPE_NAME = "Knowledge";
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -88,9 +83,6 @@ public interface IContextArtifact {
 
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
-
-    /** Version identifier for this artifact. */
-    String getArtifactVersion();
 
     /** List of AI-generated aliases for this asset, to aid in search and discovery. */
     SortedSet<String> getAssetAiAlias();
@@ -502,14 +494,6 @@ public interface IContextArtifact {
     /** Type of the connector through which this asset is accessible. */
     String getConnectorName();
 
-    /** Context repository that produced this artifact. */
-    default IContextRepository getContextRepository() {
-        return null;
-    }
-
-    /** Qualified name of the context repository to which this asset belongs. */
-    String getContextRepositoryQualifiedName();
-
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {
         return null;
@@ -541,12 +525,6 @@ public interface IContextArtifact {
     default SortedSet<IDataQualityRule> getDqReferenceDatasetRules() {
         return null;
     }
-
-    /** URL giving the online location where the file can be accessed. */
-    String getFilePath();
-
-    /** Type (extension) of the file. */
-    FileType getFileType();
 
     /** TBC */
     default SortedSet<IFile> getFiles() {
@@ -588,9 +566,6 @@ public interface IContextArtifact {
     /** Whether this asset can be edited in the UI (true) or not (false). */
     Boolean getIsEditable();
 
-    /** Whether the resource is global (true) or not (false). */
-    Boolean getIsGlobal();
-
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
@@ -608,9 +583,6 @@ public interface IContextArtifact {
 
     /** Custom order for sorting purpose, managed by client */
     String getLexicographicalSortOrder();
-
-    /** URL to the resource. */
-    String getLink();
 
     /** Links that are attached to this asset. */
     default SortedSet<ILink> getLinks() {
@@ -700,15 +672,6 @@ public interface IContextArtifact {
     default IReadme getReadme() {
         return null;
     }
-
-    /** Reference to the resource. */
-    String getReference();
-
-    /** Size of the file in bytes. */
-    Long getResourceFileSize();
-
-    /** Metadata of the resource. */
-    Map<String, String> getResourceMetadata();
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();

@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class FileTest {
+public class KnowledgeFolderTest {
 
-    private final File full = File._internal()
+    private final KnowledgeFolder full = KnowledgeFolder._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,11 +60,6 @@ public class FileTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .link("String0")
-            .isGlobal(true)
-            .reference("String0")
-            .putResourceMetadata("String0", "String0")
-            .putResourceMetadata("String1", "String1")
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
@@ -1137,10 +1132,9 @@ public class FileTest {
             .addAssetAiAlias("String0")
             .addAssetAiAlias("String1")
             .assetHasAiReadme(true)
-            .fileType(FileType.PDF)
-            .filePath("String0")
-            .resourceFileSize(123456789L)
-            .fileAssets(IndistinctAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .knowledgeFolderType(KnowledgeFolderType.UPLOAD)
+            .knowledgeFile(KnowledgeFile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .knowledgeFile(KnowledgeFile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -1188,19 +1182,21 @@ public class FileTest {
     }
 
     @Test
-    void serdeCycleFile() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of File,");
+    void serdeCycleKnowledgeFolder() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of KnowledgeFolder,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
-                full.toBuilder().build(), full, "Unable to converting File via builder back to its original state,");
+                full.toBuilder().build(),
+                full,
+                "Unable to converting KnowledgeFolder via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of File,");
+        assertNotNull(serialized, "Unable to serialize sample instance of KnowledgeFolder,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final File frodo = MockAtlanTenant.client.readValue(serialized, File.class);
-        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of File,");
+        final KnowledgeFolder frodo = MockAtlanTenant.client.readValue(serialized, KnowledgeFolder.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of KnowledgeFolder,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
