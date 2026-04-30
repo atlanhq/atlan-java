@@ -26,6 +26,7 @@ angus-mail = "2.0.5"
 pkl = "0.31.1"
 adls = "12.26.3"
 azure = "1.18.2"
+azure-core-http-okhttp = "1.13.4"
 guava = "33.6.0-jre"
 openlineage = "1.46.0"
 kotlin = "2.3.21"
@@ -57,6 +58,7 @@ gcs = { module = "com.google.cloud:google-cloud-storage" }
 gcs-control = { module = "com.google.cloud:google-cloud-storage-control" }
 adls = { module = "com.azure:azure-storage-file-datalake", version.ref = "adls" }
 azure-identity = { module = "com.azure:azure-identity", version.ref = "azure" }
+azure-core-http-okhttp = { module = "com.azure:azure-core-http-okhttp", version.ref = "azure-core-http-okhttp" }
 system-stubs = { module = "uk.org.webcompere:system-stubs-testng", version.ref = "system-stubs" }
 fastcsv = { module = "de.siegmar:fastcsv", version.ref = "fastcsv" }
 apache-poi = { module = "org.apache.poi:poi", version.ref = "poi" }
