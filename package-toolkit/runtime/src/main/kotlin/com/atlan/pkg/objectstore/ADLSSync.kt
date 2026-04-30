@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.pkg.objectstore
 
+import com.azure.core.http.okhttp.OkHttpAsyncHttpClientBuilder
 import com.azure.identity.ClientSecretCredentialBuilder
 import com.azure.storage.blob.BlobContainerClient
 import com.azure.storage.blob.BlobContainerClientBuilder
@@ -36,6 +37,7 @@ class ADLSSync(
     private val blobContainerClient: BlobContainerClient?
 
     init {
+        val httpClient = OkHttpAsyncHttpClientBuilder().build()
         if (tenantId.isNotBlank() && clientId.isNotBlank()) {
             logger.info { "Authenticating to ADLS using provided tenant and client IDs and secrets." }
             val credential =
@@ -43,11 +45,13 @@ class ADLSSync(
                     .tenantId(tenantId)
                     .clientId(clientId)
                     .clientSecret(clientSecret)
+                    .httpClient(httpClient)
                     .build()
             adlsClient =
                 DataLakeServiceClientBuilder()
                     .endpoint("https://$accountName.dfs.core.windows.net")
                     .credential(credential)
+                    .httpClient(httpClient)
                     .buildClient()
             blobContainerClient = null
         } else {
@@ -61,6 +65,7 @@ class ADLSSync(
                     .endpoint("https://$accountName.blob.core.windows.net")
                     .credential(credential)
                     .containerName(containerName)
+                    .httpClient(httpClient)
                     .buildClient()
             adlsClient = null
         }

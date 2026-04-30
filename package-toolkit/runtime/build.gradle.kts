@@ -25,8 +25,13 @@ dependencies {
     api(libs.awssdk.sts)
     api(platform(libs.gcs.bom))
     api(libs.gcs)
-    api(libs.azure.identity)
-    api(libs.adls)
+    api(libs.azure.identity) {
+        exclude(group = "com.azure", module = "azure-core-http-netty")
+    }
+    api(libs.adls) {
+        exclude(group = "com.azure", module = "azure-core-http-netty")
+    }
+    api(libs.azure.core.http.okhttp)
     implementation(libs.sqlite)
     implementation(libs.simple.java.mail)
     implementation(libs.log4j.core) // This gives us the OOTB-log4j appenders (that we MUST have for pattern-handling)
@@ -189,7 +194,7 @@ tasks {
             include(dependency("com.microsoft.azure:msal4j-persistence-extension:.*"))
             include(dependency("net.java.dev.jna:jna:.*"))
             include(dependency("net.java.dev.jna:jna-platform:.*"))
-            include(dependency("com.azure:azure-core-http-netty:.*"))
+            include(dependency("com.azure:azure-core-http-okhttp:.*"))
             include(dependency("com.azure:azure-core:.*"))
             include(dependency("com.azure:azure-json:.*"))
             include(dependency("com.azure:azure-storage-blob:.*"))
