@@ -9,6 +9,11 @@ on:
         description: 'Release version (e.g., 6.2.6)'
         required: true
         type: string
+      bypass_tests:
+        description: 'Bypass test verification and create release anyway (use only when known failures are acceptable)'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -53,6 +58,13 @@ jobs:
 
           # Get current HEAD of release branch
           branch_head=$(gh api "repos/${{ github.repository }}/branches/${branch}" --jq '.commit.sha')
+
+          # Bypass mode: skip all test checks and proceed directly to release
+          if [ "${{ inputs.bypass_tests }}" = "true" ]; then
+            echo "::warning::Test verification bypassed. Proceeding with release at commit ${branch_head:0:7}."
+            echo "sha=$branch_head" >> $GITHUB_OUTPUT
+            exit 0
+          fi
 
           # Get the most recent test workflow run on this branch
           result=$(gh run list \
@@ -132,6 +144,10 @@ jobs:
           echo "## Release Created" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Created release **v${RELEASE_VERSION}** at commit ${RELEASE_SHA:0:7}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.bypass_tests }}" = "true" ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> ⚠️ **Test verification was bypassed.** This release was created without a passing test run." >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Trigger Release workflow
         env:
