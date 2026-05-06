@@ -46,6 +46,12 @@ public interface IContextRepository {
     /** Context artifacts produced by this repository. */
     RelationField CONTEXT_ARTIFACTS = new RelationField("contextArtifacts");
 
+    /** Assets that serve as input context for this repository. */
+    RelationField CONTEXT_INPUT_ASSETS = new RelationField("contextInputAssets");
+
+    /** Skill produced by this context repository. */
+    RelationField CONTEXT_OUTPUT_SKILL = new RelationField("contextOutputSkill");
+
     /** LLM guidance and constraints for NL2SQL generation using this repository's context. */
     TextField CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS =
             new TextField("contextRepositoryAgentInstructions", "contextRepositoryAgentInstructions");
@@ -515,6 +521,16 @@ public interface IContextRepository {
 
     /** Context artifacts produced by this repository. */
     default SortedSet<IContextArtifact> getContextArtifacts() {
+        return null;
+    }
+
+    /** Assets that serve as input context for this repository. */
+    default SortedSet<IAsset> getContextInputAssets() {
+        return null;
+    }
+
+    /** Skill produced by this context repository. */
+    default ISkill getContextOutputSkill() {
         return null;
     }
 

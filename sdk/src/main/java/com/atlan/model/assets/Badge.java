@@ -60,6 +60,11 @@ public class Badge extends Asset implements IBadge, IResource, ICatalog, IAsset,
     @Attribute
     String catalogDatasetGuid;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
     @Attribute
     @Singular
