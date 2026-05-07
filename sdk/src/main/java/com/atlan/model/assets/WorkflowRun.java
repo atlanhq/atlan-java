@@ -52,6 +52,11 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IWorkflow, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
     @Attribute
     @Singular

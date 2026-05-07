@@ -1171,6 +1171,8 @@ public class AuthPolicyTest {
                     .accessControlPolicyValidityScheduleTimezone("String1")
                     .build())
             .accessControl(Persona.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .contextRepository(ContextRepository.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .contextRepository(ContextRepository.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .gcpDataplexAspectTypeMetadataEntity(
                     GCPDataplexAspectType.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .gcpDataplexAspectTypeMetadataEntity(

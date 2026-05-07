@@ -1138,6 +1138,8 @@ public class AuthServiceTest {
             .authServicePolicyLastSync(123456789L)
             .authServiceType("String0")
             .tagService("String0")
+            .contextRepository(ContextRepository.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .contextRepository(ContextRepository.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .gcpDataplexAspectTypeMetadataEntity(
                     GCPDataplexAspectType.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .gcpDataplexAspectTypeMetadataEntity(
