@@ -12,6 +12,7 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.SkillType;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
@@ -43,6 +44,9 @@ public interface ISkill {
 
     /** Artifacts belonging to this skill. */
     RelationField SKILL_ARTIFACTS = new RelationField("skillArtifacts");
+
+    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    KeywordField SKILL_TYPE = new KeywordField("skillType", "skillType");
 
     /** Version identifier for this skill. */
     KeywordField SKILL_VERSION = new KeywordField("skillVersion", "skillVersion");
@@ -693,6 +697,9 @@ public interface ISkill {
     default SortedSet<ISkillArtifact> getSkillArtifacts() {
         return null;
     }
+
+    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    SkillType getSkillType();
 
     /** Version identifier for this skill. */
     String getSkillVersion();

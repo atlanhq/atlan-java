@@ -66,6 +66,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Singular
     SortedSet<IGlossaryCategory> categories;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
     @Attribute
     @Singular

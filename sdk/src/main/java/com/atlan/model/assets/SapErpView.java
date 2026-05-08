@@ -106,7 +106,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 
@@ -119,7 +119,7 @@ public class SapErpView extends Asset implements ISapErpView, ISAP, ICatalog, IA
     @Attribute
     ISapErpComponent sapErpComponent;
 
-    /** Specifies the definition of the SAP ERP View */
+    /** Specifies the definition of the SAP ERP View. */
     @Attribute
     String sapErpViewDefinition;
 

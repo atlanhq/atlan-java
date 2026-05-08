@@ -47,7 +47,7 @@ public interface ISapErpView {
     /** SAP ERP Views that are associated with this SAP ERP Component. */
     RelationField SAP_ERP_COMPONENT = new RelationField("sapErpComponent");
 
-    /** Specifies the definition of the SAP ERP View */
+    /** Specifies the definition of the SAP ERP View. */
     KeywordField SAP_ERP_VIEW_DEFINITION = new KeywordField("sapErpViewDefinition", "sapErpViewDefinition");
 
     /** Type of the SAP ERP View. */
@@ -693,7 +693,7 @@ public interface ISapErpView {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** SAP ERP Columns that exist within this view. */
@@ -706,7 +706,7 @@ public interface ISapErpView {
         return null;
     }
 
-    /** Specifies the definition of the SAP ERP View */
+    /** Specifies the definition of the SAP ERP View. */
     String getSapErpViewDefinition();
 
     /** Type of the SAP ERP View. */

@@ -83,6 +83,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Singular
     SortedSet<IGlossaryTerm> classifies;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Unused. Exmaples of the term. */
     @Attribute
     @Singular

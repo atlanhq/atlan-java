@@ -69,6 +69,11 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     @Attribute
     String authServiceType;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Dataplex entries (assets) that have aspects of this Aspect Type attached. */
     @Attribute
     @Singular

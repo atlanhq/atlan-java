@@ -50,6 +50,11 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Fields in a form. */
     @Attribute
     @Singular

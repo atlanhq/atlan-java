@@ -104,6 +104,11 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     @Attribute
     Long compliantAssetsCount;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Exception assigned to business polices */
     @Attribute
     @Singular("exceptionForBusinessPolicy")

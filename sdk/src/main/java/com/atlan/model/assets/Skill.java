@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.SkillType;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -51,6 +52,10 @@ public class Skill extends Asset implements ISkill, IAgentic, ICatalog, IAsset, 
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
     String catalogDatasetGuid;
+
+    /** Context repository that produced this skill. */
+    @Attribute
+    IContextRepository contextSourceRepository;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -106,6 +111,10 @@ public class Skill extends Asset implements ISkill, IAgentic, ICatalog, IAsset, 
     @Attribute
     @Singular
     SortedSet<ISkillArtifact> skillArtifacts;
+
+    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    @Attribute
+    SkillType skillType;
 
     /** Version identifier for this skill. */
     @Attribute

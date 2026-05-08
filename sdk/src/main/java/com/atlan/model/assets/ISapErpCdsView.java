@@ -697,7 +697,7 @@ public interface ISapErpCdsView {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** The source name of the SAP ERP CDS View Definition. */

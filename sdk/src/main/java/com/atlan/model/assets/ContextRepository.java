@@ -59,6 +59,15 @@ public class ContextRepository extends Asset
     @Singular
     SortedSet<IContextArtifact> contextArtifacts;
 
+    /** Assets that serve as input context for this repository. */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> contextInputAssets;
+
+    /** Skill produced by this context repository. */
+    @Attribute
+    ISkill contextOutputSkill;
+
     /** LLM guidance and constraints for NL2SQL generation using this repository's context. */
     @Attribute
     String contextRepositoryAgentInstructions;
