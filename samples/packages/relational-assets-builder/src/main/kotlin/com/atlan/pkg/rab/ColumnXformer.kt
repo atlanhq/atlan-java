@@ -77,8 +77,13 @@ class ColumnXformer(
         var scale: Double? = null
         var maxLength: Long? = null
         if (rawDataType.isNotBlank()) {
-            if (!rawDataType.contains("<") && !rawDataType.contains(">")) {
-                // Only attempt to parse things like precision, scale and max-length if this is not a complex type
+            val baseType = displayDataType.substringBefore("(").trim().uppercase()
+            if (!rawDataType.contains("<") && !rawDataType.contains(">") &&
+                baseType !in setOf("ENUM", "SET")
+            ) {
+                // Only attempt to parse precision, scale and max-length for numeric/sized types.
+                // Excludes complex types (angle-bracket params) and MySQL string-enum types
+                // (ENUM/SET) whose parenthetical content contains string values, not numbers.
                 precision = DataTypeXformer.getPrecision(rawDataType)
                 scale = DataTypeXformer.getScale(rawDataType)
                 maxLength = DataTypeXformer.getMaxLength(rawDataType)
