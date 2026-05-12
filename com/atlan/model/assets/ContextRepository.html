@@ -167,7 +167,7 @@ implements <a href="IContextRepository.html" title="interface in com.atlan.model
 <code><a href="IContext.html#CONTEXT_REPOSITORY_QUALIFIED_NAME">CONTEXT_REPOSITORY_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IContextRepository">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IContextRepository.html" title="interface in com.atlan.model.assets">IContextRepository</a></h3>
-<code><a href="IContextRepository.html#CONTEXT_ARTIFACTS">CONTEXT_ARTIFACTS</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS">CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_LIFECYCLE_STATUS">CONTEXT_REPOSITORY_LIFECYCLE_STATUS</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_TARGET_CONNECTION_QUALIFIED_NAME">CONTEXT_REPOSITORY_TARGET_CONNECTION_QUALIFIED_NAME</a></code></div>
+<code><a href="IContextRepository.html#CONTEXT_ARTIFACTS">CONTEXT_ARTIFACTS</a>, <a href="IContextRepository.html#CONTEXT_INPUT_ASSETS">CONTEXT_INPUT_ASSETS</a>, <a href="IContextRepository.html#CONTEXT_OUTPUT_SKILL">CONTEXT_OUTPUT_SKILL</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS">CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_LIFECYCLE_STATUS">CONTEXT_REPOSITORY_LIFECYCLE_STATUS</a>, <a href="IContextRepository.html#CONTEXT_REPOSITORY_TARGET_CONNECTION_QUALIFIED_NAME">CONTEXT_REPOSITORY_TARGET_CONNECTION_QUALIFIED_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.IReferenceable">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="IReferenceable.html" title="interface in com.atlan.model.assets">IReferenceable</a></h3>
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
@@ -275,6 +275,16 @@ implements <a href="IContextRepository.html" title="interface in com.atlan.model
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContextArtifacts()" class="member-name-link">getContextArtifacts</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Context artifacts produced by this repository.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContextInputAssets()" class="member-name-link">getContextInputAssets</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Assets that serve as input context for this repository.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContextOutputSkill()" class="member-name-link">getContextOutputSkill</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Skill produced by this context repository.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContextRepositoryAgentInstructions()" class="member-name-link">getContextRepositoryAgentInstructions</a>()</code></div>
@@ -1162,6 +1172,28 @@ implements <a href="IContextRepository.html" title="interface in com.atlan.model
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IContextRepository.html#getContextArtifacts()">getContextArtifacts</a></code>&nbsp;in interface&nbsp;<code><a href="IContextRepository.html" title="interface in com.atlan.model.assets">IContextRepository</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContextInputAssets()">
+<h3>getContextInputAssets</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</span>&nbsp;<span class="element-name">getContextInputAssets</span>()</div>
+<div class="block">Assets that serve as input context for this repository.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IContextRepository.html#getContextInputAssets()">getContextInputAssets</a></code>&nbsp;in interface&nbsp;<code><a href="IContextRepository.html" title="interface in com.atlan.model.assets">IContextRepository</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContextOutputSkill()">
+<h3>getContextOutputSkill</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></span>&nbsp;<span class="element-name">getContextOutputSkill</span>()</div>
+<div class="block">Skill produced by this context repository.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IContextRepository.html#getContextOutputSkill()">getContextOutputSkill</a></code>&nbsp;in interface&nbsp;<code><a href="IContextRepository.html" title="interface in com.atlan.model.assets">IContextRepository</a></code></dd>
 </dl>
 </section>
 </li>

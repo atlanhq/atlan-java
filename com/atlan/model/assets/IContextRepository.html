@@ -111,6 +111,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Context artifacts produced by this repository.</div>
 </div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#CONTEXT_INPUT_ASSETS" class="member-name-link">CONTEXT_INPUT_ASSETS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Assets that serve as input context for this repository.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CONTEXT_OUTPUT_SKILL" class="member-name-link">CONTEXT_OUTPUT_SKILL</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Skill produced by this context repository.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS" class="member-name-link">CONTEXT_REPOSITORY_AGENT_INSTRUCTIONS</a></code></div>
 <div class="col-last odd-row-color">
@@ -898,6 +908,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Context artifacts produced by this repository.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getContextInputAssets()" class="member-name-link">getContextInputAssets</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Assets that serve as input context for this repository.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getContextOutputSkill()" class="member-name-link">getContextOutputSkill</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Skill produced by this context repository.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContextRepositoryAgentInstructions()" class="member-name-link">getContextRepositoryAgentInstructions</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -1426,6 +1446,20 @@ loadScripts(document, 'script');</script>
 <h3>CONTEXT_ARTIFACTS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">CONTEXT_ARTIFACTS</span></div>
 <div class="block">Context artifacts produced by this repository.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="CONTEXT_INPUT_ASSETS">
+<h3>CONTEXT_INPUT_ASSETS</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">CONTEXT_INPUT_ASSETS</span></div>
+<div class="block">Assets that serve as input context for this repository.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="CONTEXT_OUTPUT_SKILL">
+<h3>CONTEXT_OUTPUT_SKILL</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">CONTEXT_OUTPUT_SKILL</span></div>
+<div class="block">Skill produced by this context repository.</div>
 </section>
 </li>
 <li>
@@ -2505,6 +2539,20 @@ loadScripts(document, 'script');</script>
 <h3>getContextArtifacts</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IContextArtifact.html" title="interface in com.atlan.model.assets">IContextArtifact</a>&gt;</span>&nbsp;<span class="element-name">getContextArtifacts</span>()</div>
 <div class="block">Context artifacts produced by this repository.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getContextInputAssets()">
+<h3>getContextInputAssets</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</span>&nbsp;<span class="element-name">getContextInputAssets</span>()</div>
+<div class="block">Assets that serve as input context for this repository.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getContextOutputSkill()">
+<h3>getContextOutputSkill</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></span>&nbsp;<span class="element-name">getContextOutputSkill</span>()</div>
+<div class="block">Skill produced by this context repository.</div>
 </section>
 </li>
 <li>
