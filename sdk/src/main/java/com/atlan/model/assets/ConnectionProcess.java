@@ -85,6 +85,11 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Individual Fabric activities contained in the process. */
     @Attribute
     @Singular

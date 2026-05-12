@@ -107,6 +107,11 @@ public class BusinessPolicyIncident extends Asset
     @Attribute
     Integer businessPolicyVersion;
 
+    /** Context repositories that use this asset as input. */
+    @Attribute
+    @Singular
+    SortedSet<IContextRepository> contextRepositories;
+
     /** Exception assigned to business polices */
     @Attribute
     @Singular("exceptionForBusinessPolicy")
