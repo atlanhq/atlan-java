@@ -1,0 +1,12 @@
+typeName,connectionName,connectorType,databaseName,schemaName,entityName,columnName,dataType,displayName,description,adminRoles,adminGroups,adminUsers
+Connection,{{CONNECTION1}},iceberg,,,,,,,,$admin,,{{API_TOKEN_USER}}
+Database,{{CONNECTION1}},iceberg,ENUM_DB,,,,,,,,,
+Schema,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,,,,,,,,
+Table,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_EVENT,,,,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_EVENT,STATUS,"enum('scheduled','failed','cancelled','retry','success','deliveryInProgress')",,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_EVENT,CREATED_AT,timestamp,,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_EVENT,RETRY_COUNT,int,,,,,
+Table,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_SESSION,,,,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_SESSION,CALLBACK_METHOD,"enum('PUT','POST')",,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_SESSION,PAYLOAD_TYPE,"enum('application/json','application/xml','text/plain')",,,,,
+Column,{{CONNECTION1}},iceberg,ENUM_DB,ENUM_SCHEMA,WEBHOOK_SESSION,TIMEOUT_MS,bigint,,,,,
