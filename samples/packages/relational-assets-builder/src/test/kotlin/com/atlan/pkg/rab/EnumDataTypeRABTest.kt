@@ -105,8 +105,8 @@ class EnumDataTypeRABTest : PackageTest("enum") {
         val response = retrySearchUntil(request, 1)
         val col = response.assets[0] as Column
         assertEquals("status", col.name)
-        // dataType is the full string — baseTypeName only strips <> angle-bracket params, not ()
-        assertEquals("enum('scheduled','failed','cancelled','retry','success','deliveryInProgress')", col.dataType)
+        // dataType is uppercased by DataTypeXformer.decode() which strips () params before uppercasing
+        assertEquals("ENUM", col.dataType)
         // rawDataTypeDefinition preserves the full original string
         assertEquals("enum('scheduled','failed','cancelled','retry','success','deliveryInProgress')", col.rawDataTypeDefinition)
         // precision and scale must be null — enum values are not numeric
@@ -154,7 +154,7 @@ class EnumDataTypeRABTest : PackageTest("enum") {
                 .toRequest()
         val response = retrySearchUntil(request, 1)
         val col = response.assets[0] as Column
-        assertEquals("int", col.dataType)
+        assertEquals("INT", col.dataType)
     }
 
     @Test(dependsOnGroups = ["rab.enum.create"])
