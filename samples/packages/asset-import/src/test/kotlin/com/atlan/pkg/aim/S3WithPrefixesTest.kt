@@ -162,10 +162,10 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(bucketAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Bucket)?.awsTags?.size == 2 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val b = found[0] as S3Bucket
+        val b = S3Bucket.get(client, found[0].guid, true)
         assertEquals("bucket-1", b.name)
         assertEquals(c1.qualifiedName, b.connectionQualifiedName)
         assertEquals(conn1Type, b.connectorType)
@@ -190,10 +190,10 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(bucketAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Bucket)?.awsTags?.size == 2 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val b = found[0] as S3Bucket
+        val b = S3Bucket.get(client, found[0].guid, true)
         assertEquals("bucket-2", b.name)
         assertEquals(c1.qualifiedName, b.connectionQualifiedName)
         assertEquals(conn1Type, b.connectorType)
@@ -273,10 +273,10 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(prefixAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Prefix)?.awsTags?.size == 2 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val p = found[0] as S3Prefix
+        val p = S3Prefix.get(client, found[0].guid, true)
         assertEquals("prefix-3", p.name)
         assertEquals(c1.qualifiedName, p.connectionQualifiedName)
         assertEquals(conn1Type, p.connectorType)
@@ -488,10 +488,10 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(objectAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Object)?.awsTags?.size == 1 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val o = found[0] as S3Object
+        val o = S3Object.get(client, found[0].guid, true)
         assertEquals("object-4", o.name)
         assertEquals(c1.qualifiedName, o.connectionQualifiedName)
         assertEquals(conn1Type, o.connectorType)
