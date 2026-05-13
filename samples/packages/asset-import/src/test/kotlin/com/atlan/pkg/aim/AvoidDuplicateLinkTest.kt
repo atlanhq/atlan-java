@@ -254,10 +254,10 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
                 .includeOnRelations(Link.LINK)
                 .includeOnRelations(Link.STATUS)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? Database)?.links?.size == 2 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val db = found[0] as Database
+        val db = Database.get(client, found[0].guid, true)
         assertEquals(DB_NAME, db.name)
         assertEquals(c1.qualifiedName, db.connectionQualifiedName)
         assertEquals(conn1Type, db.connectorType)
@@ -282,10 +282,10 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
                 .includeOnRelations(Link.LINK)
                 .includeOnRelations(Link.STATUS)
                 .toRequest()
-        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? Database)?.links?.size == 3 })
+        val response = retrySearchUntil(request, 1)
         val found = response.assets
         assertEquals(1, found.size)
-        val db = found[0] as Database
+        val db = Database.get(client, found[0].guid, true)
         assertEquals(DB_NAME, db.name)
         assertEquals(c1.qualifiedName, db.connectionQualifiedName)
         assertEquals(conn1Type, db.connectorType)
