@@ -229,12 +229,16 @@ abstract class PackageTest(
      *
      * @param request search request to run
      * @param expectedSize expected number of results from the search
-     * @return the response, either with the expected number of results or after exceeding the retry limit
+     * @param isDeleteQuery if true, also retries while any returned assets are still in ACTIVE status
+     * @param condition optional extra predicate on the response — retries continue until this also returns true,
+     *        useful when related attributes (struct collections, relationship counts) lag behind the primary asset
+     * @return the response, either satisfying all conditions or after exceeding the retry limit
      */
     fun retrySearchUntil(
         request: IndexSearchRequest,
         expectedSize: Long,
         isDeleteQuery: Boolean = false,
+        condition: ((IndexSearchResponse) -> Boolean)? = null,
     ): IndexSearchResponse {
         var count = 1
         var response = request.search(client)
@@ -245,7 +249,7 @@ abstract class PackageTest(
                 ?.toList()
                 ?.isNotEmpty() ?: false
         }
-        while ((response.approximateCount < expectedSize || remainingActive) && count < (client.maxNetworkRetries * 2)) {
+        while ((response.approximateCount < expectedSize || remainingActive || (condition != null && !condition(response))) && count < (client.maxNetworkRetries * 2)) {
             Thread.sleep(HttpClient.waitTime(count).toMillis())
             response = request.search(client)
             if (isDeleteQuery) {

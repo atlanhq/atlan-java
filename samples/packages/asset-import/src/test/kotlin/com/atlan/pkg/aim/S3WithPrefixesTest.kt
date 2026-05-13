@@ -162,7 +162,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(bucketAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1)
+        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Bucket)?.awsTags?.size == 2 })
         val found = response.assets
         assertEquals(1, found.size)
         val b = found[0] as S3Bucket
@@ -190,7 +190,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(bucketAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1)
+        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Bucket)?.awsTags?.size == 2 })
         val found = response.assets
         assertEquals(1, found.size)
         val b = found[0] as S3Bucket
@@ -273,7 +273,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(prefixAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1)
+        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Prefix)?.awsTags?.size == 2 })
         val found = response.assets
         assertEquals(1, found.size)
         val p = found[0] as S3Prefix
@@ -488,7 +488,7 @@ class S3WithPrefixesTest : PackageTest("swp") {
                 .includesOnResults(objectAttrs)
                 .includeOnRelations(Asset.NAME)
                 .toRequest()
-        val response = retrySearchUntil(request, 1)
+        val response = retrySearchUntil(request, 1, condition = { r -> (r.assets?.firstOrNull() as? S3Object)?.awsTags?.size == 1 })
         val found = response.assets
         assertEquals(1, found.size)
         val o = found[0] as S3Object
