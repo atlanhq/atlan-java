@@ -694,7 +694,7 @@ public interface ISapErpTable {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** SAP ERP columns that exist within this table. */

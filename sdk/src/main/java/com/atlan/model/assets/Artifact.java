@@ -49,7 +49,11 @@ public class Artifact extends Asset implements IArtifact, IAgentic, IResource, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Version identifier for this artifact. */
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    @Attribute
+    Long agenticVersion;
+
+    /** String version identifier for this artifact. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
     @Attribute
     String artifactVersion;
 

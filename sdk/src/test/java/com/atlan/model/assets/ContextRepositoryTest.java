@@ -61,6 +61,7 @@ public class ContextRepositoryTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .contextRepositoryQualifiedName("String0")
+            .agenticVersion(123456789L)
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")

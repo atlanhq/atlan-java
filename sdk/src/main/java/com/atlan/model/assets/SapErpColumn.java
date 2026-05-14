@@ -169,7 +169,7 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 
@@ -217,7 +217,7 @@ public class SapErpColumn extends Asset implements ISapErpColumn, ISQL, ISAP, IC
     @Attribute
     String sapErpColumnLength;
 
-    /** Specifies the logical data type of values in this SAP ERP column */
+    /** Specifies the logical data type of values in this SAP ERP column. */
     @Attribute
     String sapErpColumnLogicalDataType;
 

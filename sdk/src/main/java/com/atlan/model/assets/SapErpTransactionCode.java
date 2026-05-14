@@ -107,7 +107,7 @@ public class SapErpTransactionCode extends Asset
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

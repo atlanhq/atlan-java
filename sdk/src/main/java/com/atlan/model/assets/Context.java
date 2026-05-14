@@ -48,6 +48,10 @@ public class Context extends Asset implements IContext, IAgentic, ICatalog, IAss
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    @Attribute
+    Long agenticVersion;
+
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
     String catalogDatasetGuid;

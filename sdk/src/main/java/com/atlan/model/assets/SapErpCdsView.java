@@ -106,7 +106,7 @@ public class SapErpCdsView extends Asset implements ISapErpCdsView, ISAP, ICatal
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

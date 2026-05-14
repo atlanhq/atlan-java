@@ -64,6 +64,9 @@ public interface IKnowledgeFile {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    Long getAgenticVersion();
+
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
 

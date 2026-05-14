@@ -106,7 +106,7 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

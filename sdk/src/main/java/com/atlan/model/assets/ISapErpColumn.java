@@ -80,7 +80,7 @@ public interface ISapErpColumn {
     /** Indicates the maximum length of the values that the SAP ERP column can store. */
     KeywordField SAP_ERP_COLUMN_LENGTH = new KeywordField("sapErpColumnLength", "sapErpColumnLength");
 
-    /** Specifies the logical data type of values in this SAP ERP column */
+    /** Specifies the logical data type of values in this SAP ERP column. */
     KeywordField SAP_ERP_COLUMN_LOGICAL_DATA_TYPE =
             new KeywordField("sapErpColumnLogicalDataType", "sapErpColumnLogicalDataType");
 
@@ -796,7 +796,7 @@ public interface ISapErpColumn {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** SAP ERP CDS View in which this column exists. */
@@ -834,7 +834,7 @@ public interface ISapErpColumn {
     /** Indicates the maximum length of the values that the SAP ERP column can store. */
     String getSapErpColumnLength();
 
-    /** Specifies the logical data type of values in this SAP ERP column */
+    /** Specifies the logical data type of values in this SAP ERP column. */
     String getSapErpColumnLogicalDataType();
 
     /** SAP ERP table in which this column exists. */

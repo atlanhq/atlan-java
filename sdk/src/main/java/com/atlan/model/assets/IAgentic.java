@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -30,7 +31,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Base class for agentic assets in Atlan. Extends Catalog to participate in lineage (Process inputs/outputs require Catalog types). Agentic assets include skills, skill artifacts, context repositories, knowledge files, and other building blocks consumed by AI agents.
+ * Base class for agentic assets in Atlan. Extends Catalog to participate in lineage (Process inputs/outputs require Catalog types). Agentic assets include agents, skills, skill artifacts, context repositories, knowledge files, and other building blocks consumed by AI agents.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
@@ -38,6 +39,9 @@ import javax.annotation.processing.Generated;
 public interface IAgentic {
 
     public static final String TYPE_NAME = "Agentic";
+
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    NumericField AGENTIC_VERSION = new NumericField("agenticVersion", "agenticVersion");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -47,6 +51,9 @@ public interface IAgentic {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    Long getAgenticVersion();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();

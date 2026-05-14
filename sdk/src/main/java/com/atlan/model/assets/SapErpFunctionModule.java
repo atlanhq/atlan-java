@@ -107,7 +107,7 @@ public class SapErpFunctionModule extends Asset
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

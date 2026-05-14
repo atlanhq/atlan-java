@@ -106,7 +106,7 @@ public class SapErpAbapProgram extends Asset implements ISapErpAbapProgram, ISAP
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

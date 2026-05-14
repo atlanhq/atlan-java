@@ -115,7 +115,7 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
     @Attribute
     String sapComponentName;
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     @Attribute
     String sapDataType;
 

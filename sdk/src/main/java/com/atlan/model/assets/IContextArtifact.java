@@ -53,6 +53,9 @@ public interface IContextArtifact {
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
 
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    Long getAgenticVersion();
+
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
 
@@ -89,7 +92,7 @@ public interface IContextArtifact {
     /** Qualified name of the Application that contains this asset. */
     String getApplicationQualifiedName();
 
-    /** Version identifier for this artifact. */
+    /** String version identifier for this artifact. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
     String getArtifactVersion();
 
     /** List of AI-generated aliases for this asset, to aid in search and discovery. */

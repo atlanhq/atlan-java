@@ -716,7 +716,7 @@ public interface ISapErpFunctionModule {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** SAP ERP Function Modules that are associated with this SAP ERP ABAP Program. */

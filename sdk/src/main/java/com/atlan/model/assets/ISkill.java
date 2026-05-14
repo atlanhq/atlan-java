@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AgenticLifecycleStatus;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -42,13 +43,26 @@ public interface ISkill {
 
     public static final String TYPE_NAME = "Skill";
 
+    /** Denormalized list of qualifiedNames of the SkillArtifact entities belonging to this skill version. */
+    KeywordField SKILL_ARTIFACT_FILE_QUALIFIED_NAMES =
+            new KeywordField("skillArtifactFileQualifiedNames", "skillArtifactFileQualifiedNames");
+
+    /** Denormalized list of file paths of the SkillArtifact entities belonging to this skill version. */
+    KeywordField SKILL_ARTIFACT_PATHS = new KeywordField("skillArtifactPaths", "skillArtifactPaths");
+
     /** Artifacts belonging to this skill. */
     RelationField SKILL_ARTIFACTS = new RelationField("skillArtifacts");
+
+    /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
+    KeywordField SKILL_SLUG = new KeywordField("skillSlug", "skillSlug");
+
+    /** Lifecycle status of this skill version (draft or published). */
+    KeywordField SKILL_STATUS = new KeywordField("skillStatus", "skillStatus");
 
     /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
     KeywordField SKILL_TYPE = new KeywordField("skillType", "skillType");
 
-    /** Version identifier for this skill. */
+    /** String version identifier for this skill. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
     KeywordField SKILL_VERSION = new KeywordField("skillVersion", "skillVersion");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -59,6 +73,9 @@ public interface ISkill {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    Long getAgenticVersion();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -693,15 +710,27 @@ public interface ISkill {
         return null;
     }
 
+    /** Denormalized list of qualifiedNames of the SkillArtifact entities belonging to this skill version. */
+    SortedSet<String> getSkillArtifactFileQualifiedNames();
+
+    /** Denormalized list of file paths of the SkillArtifact entities belonging to this skill version. */
+    SortedSet<String> getSkillArtifactPaths();
+
     /** Artifacts belonging to this skill. */
     default SortedSet<ISkillArtifact> getSkillArtifacts() {
         return null;
     }
 
+    /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
+    String getSkillSlug();
+
+    /** Lifecycle status of this skill version (draft or published). */
+    AgenticLifecycleStatus getSkillStatus();
+
     /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
     SkillType getSkillType();
 
-    /** Version identifier for this skill. */
+    /** String version identifier for this skill. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
     String getSkillVersion();
 
     /** TBC */
