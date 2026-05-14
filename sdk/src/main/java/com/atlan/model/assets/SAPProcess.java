@@ -71,6 +71,11 @@ public class SAPProcess extends Asset implements ISAPProcess, ILineageProcess, I
     @Attribute
     String ast;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
     String catalogDatasetGuid;
