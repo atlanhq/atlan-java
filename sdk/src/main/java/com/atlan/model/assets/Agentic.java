@@ -29,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Base class for agentic assets in Atlan. Extends Catalog to participate in lineage (Process inputs/outputs require Catalog types). Agentic assets include skills, skill artifacts, context repositories, knowledge files, and other building blocks consumed by AI agents.
+ * Base class for agentic assets in Atlan. Extends Catalog to participate in lineage (Process inputs/outputs require Catalog types). Agentic assets include agents, skills, skill artifacts, context repositories, knowledge files, and other building blocks consumed by AI agents.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -47,6 +47,10 @@ public class Agentic extends Asset implements IAgentic, ICatalog, IAsset, IRefer
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    @Attribute
+    Long agenticVersion;
 
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute

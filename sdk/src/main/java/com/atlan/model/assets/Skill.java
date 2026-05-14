@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AgenticLifecycleStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.SkillType;
@@ -48,6 +49,15 @@ public class Skill extends Asset implements ISkill, IAgentic, ICatalog, IAsset, 
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Agents that use this skill. */
+    @Attribute
+    @Singular
+    SortedSet<IAgent> agentAgents;
+
+    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
+    @Attribute
+    Long agenticVersion;
 
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
@@ -107,16 +117,34 @@ public class Skill extends Asset implements ISkill, IAgentic, ICatalog, IAsset, 
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Denormalized list of qualifiedNames of the SkillArtifact entities belonging to this skill version. */
+    @Attribute
+    @Singular
+    SortedSet<String> skillArtifactFileQualifiedNames;
+
+    /** Denormalized list of file paths of the SkillArtifact entities belonging to this skill version. */
+    @Attribute
+    @Singular
+    SortedSet<String> skillArtifactPaths;
+
     /** Artifacts belonging to this skill. */
     @Attribute
     @Singular
     SortedSet<ISkillArtifact> skillArtifacts;
 
+    /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
+    @Attribute
+    String skillSlug;
+
+    /** Lifecycle status of this skill version (draft or published). */
+    @Attribute
+    AgenticLifecycleStatus skillStatus;
+
     /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
     @Attribute
     SkillType skillType;
 
-    /** Version identifier for this skill. */
+    /** String version identifier for this skill. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
     @Attribute
     String skillVersion;
 

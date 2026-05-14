@@ -693,7 +693,7 @@ public interface ISapErpAbapProgram {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** Specifies the type of ABAP program in SAP ERP (e.g., Report, Module Pool, Function Group). */

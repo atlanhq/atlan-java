@@ -44,7 +44,7 @@ public interface ISAP {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     KeywordField SAP_COMPONENT_NAME = new KeywordField("sapComponentName", "sapComponentName");
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     KeywordField SAP_DATA_TYPE = new KeywordField("sapDataType", "sapDataType");
 
     /** Represents the total number of fields, columns, or child assets present in a given SAP asset. */
@@ -702,7 +702,7 @@ public interface ISAP {
     /** Name of the SAP component, representing a specific functional area in SAP. */
     String getSapComponentName();
 
-    /** SAP-specific data types */
+    /** SAP-specific data types. */
     String getSapDataType();
 
     /** Represents the total number of fields, columns, or child assets present in a given SAP asset. */

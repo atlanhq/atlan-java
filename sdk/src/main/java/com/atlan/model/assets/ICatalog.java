@@ -783,6 +783,54 @@ public interface ICatalog {
             case S3Prefix.TYPE_NAME:
                 ref = S3Prefix.refByQualifiedName(qualifiedName);
                 break;
+            case SAPBWADSO.TYPE_NAME:
+                ref = SAPBWADSO.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWADSOField.TYPE_NAME:
+                ref = SAPBWADSOField.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWCompositeProvider.TYPE_NAME:
+                ref = SAPBWCompositeProvider.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWCompositeProviderField.TYPE_NAME:
+                ref = SAPBWCompositeProviderField.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWDTP.TYPE_NAME:
+                ref = SAPBWDTP.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWDataSource.TYPE_NAME:
+                ref = SAPBWDataSource.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWDataSourceField.TYPE_NAME:
+                ref = SAPBWDataSourceField.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWInfoArea.TYPE_NAME:
+                ref = SAPBWInfoArea.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWInfoObject.TYPE_NAME:
+                ref = SAPBWInfoObject.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWInfoSource.TYPE_NAME:
+                ref = SAPBWInfoSource.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWInfoSourceField.TYPE_NAME:
+                ref = SAPBWInfoSourceField.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWQuery.TYPE_NAME:
+                ref = SAPBWQuery.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWQueryElement.TYPE_NAME:
+                ref = SAPBWQueryElement.refByQualifiedName(qualifiedName);
+                break;
+            case SAPBWTransformation.TYPE_NAME:
+                ref = SAPBWTransformation.refByQualifiedName(qualifiedName);
+                break;
+            case SAPColumnProcess.TYPE_NAME:
+                ref = SAPColumnProcess.refByQualifiedName(qualifiedName);
+                break;
+            case SAPProcess.TYPE_NAME:
+                ref = SAPProcess.refByQualifiedName(qualifiedName);
+                break;
             case SageMakerFeature.TYPE_NAME:
                 ref = SageMakerFeature.refByQualifiedName(qualifiedName);
                 break;
