@@ -72,6 +72,11 @@ public class SAPColumnProcess extends Asset
     @Attribute
     String ast;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
     String catalogDatasetGuid;
