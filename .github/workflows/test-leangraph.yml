@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 8
+      max-parallel: 2  # experiment: was 8 — lower fan-out to isolate parallelism as failure cause
       matrix:
         tests: ${{fromJson(needs.list-integration-tests.outputs.tests)}}
     concurrency:
@@ -123,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 2  # experiment: was 3 — lower fan-out to isolate parallelism as failure cause
       matrix:
         include: ${{fromJson(needs.list-packages.outputs.asset-import-chunks)}}
     name: "asset-import: chunk ${{ matrix.chunk }}"
@@ -165,7 +165,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 2  # experiment: was 5 — lower fan-out to isolate parallelism as failure cause
       matrix:
         tests: ${{fromJson(needs.list-packages.outputs.tests)}}
     concurrency:
