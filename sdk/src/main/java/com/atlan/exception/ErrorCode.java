@@ -303,6 +303,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-054",
             "Local credentials cannot be refreshed programmatically.",
             "You must create a new AtlanClient with the correct credentials."),
+    INVALID_CONNECTION_QN(
+            400,
+            "ATLAN-JAVA-400-055",
+            "Connection qualifiedName ''{0}'' is not valid: must be of the form ''default/connectorType/nnnnnnnnnn'' where connectorType contains only lowercase letters, digits, and hyphens.",
+            "The connectorType segment must match [a-z0-9-]+. Use hyphens instead of underscores or other special characters (for example, use ''dev-cmdr'' rather than ''dev_cmdr'')."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

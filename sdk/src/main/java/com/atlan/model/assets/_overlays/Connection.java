@@ -196,10 +196,14 @@
             List<String> adminUsers)
             throws AtlanException {
         boolean adminFound = false;
+        String qn = generateQualifiedName(connectorName);
+        if (!StringUtils.isValidConnectionQN(qn)) {
+            throw new InvalidRequestException(ErrorCode.INVALID_CONNECTION_QN, qn);
+        }
         ConnectionBuilder<?, ?> builder = Connection._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
-                .qualifiedName(generateQualifiedName(connectorName))
+                .qualifiedName(qn)
                 .category(category)
                 .customConnectorType(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {

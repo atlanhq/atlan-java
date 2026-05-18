@@ -3,6 +3,8 @@
 package com.atlan.pkg.aim
 
 import AssetImportCfg
+import com.atlan.exception.ErrorCode
+import com.atlan.exception.InvalidRequestException
 import com.atlan.model.assets.Asset
 import com.atlan.model.assets.Connection
 import com.atlan.model.enums.AssetCreationHandling
@@ -12,6 +14,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
 import com.atlan.pkg.serde.csv.ImportResults
+import com.atlan.util.StringUtils
 import mu.KLogger
 import java.util.stream.Stream
 
@@ -114,6 +117,9 @@ class ConnectionImporter(
                 }
             // If a qualifiedName was sent explicitly, keep it (i.e., for connection widget passthrough or where multiple connections of the same type and name exist)
             if (deferredIdentity == null && qualifiedName.trim().isNotBlank()) {
+                if (!StringUtils.isValidConnectionQN(qualifiedName, true)) {
+                    throw InvalidRequestException(ErrorCode.INVALID_CONNECTION_QN, qualifiedName)
+                }
                 builder.qualifiedName(qualifiedName)
             }
             builder
