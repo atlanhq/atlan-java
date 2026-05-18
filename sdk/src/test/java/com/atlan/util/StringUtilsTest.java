@@ -135,6 +135,21 @@ public class StringUtilsTest {
     }
 
     @Test
+    void invalidConnectionQN_underscoreInType() {
+        // Underscore in the connectorType segment is rejected — customers should use hyphens instead
+        final String test = "default/dev_cmdr/1234567890";
+        assertFalse(StringUtils.isValidConnectionQN(test));
+        assertFalse(StringUtils.isValidConnectionQN(test, true));
+    }
+
+    @Test
+    void invalidConnectionQN_upperCaseInType() {
+        final String test = "default/SNOWFLAKE/1234567890";
+        assertFalse(StringUtils.isValidConnectionQN(test));
+        assertFalse(StringUtils.isValidConnectionQN(test, true));
+    }
+
+    @Test
     void validRelaxedQN() {
         final String qn = StringUtils.getConnectionQualifiedName(qualifiedNameRelaxed1, true);
         assertNotNull(qn);
