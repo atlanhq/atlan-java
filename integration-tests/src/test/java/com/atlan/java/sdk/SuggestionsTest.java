@@ -405,11 +405,7 @@ public class SuggestionsTest extends AtlanLiveTest {
         // CI matrix load (expected [1] but found [0]).
         IndexSearchRequest peerReady = client.assets
                 .select()
-                .where(Asset.GUID.in(List.of(
-                        table1.getGuid(),
-                        table3.getGuid(),
-                        t1c1.getGuid(),
-                        v1c1.getGuid())))
+                .where(Asset.GUID.in(List.of(table1.getGuid(), table3.getGuid(), t1c1.getGuid(), v1c1.getGuid())))
                 .where(Asset.OWNER_GROUPS.hasAnyValue())
                 .where(Asset.ASSIGNED_TERMS.hasAnyValue())
                 .pageSize(0)
