@@ -264,7 +264,13 @@ public class InsightsTest extends AtlanLiveTest {
                 .includeOnResults(AtlanQuery.PARENT_QUALIFIED_NAME)
                 .toRequest();
 
-        IndexSearchResponse response = retrySearchUntil(index, 3L);
+        // Wait for all 4 assets (1 AtlanCollection + 2 Folder + 1 AtlanQuery) to be indexed
+        // in ES before evaluating the typeName aggregation. Retrying on 3 hits is unsafe:
+        // if the 4th asset (commonly the AtlanQuery) hasn't been indexed yet, the retry
+        // stops at 3 hits but only 2 distinct typeName buckets exist, and the bucket-count
+        // assertion below intermittently fails as "expected [3] but found [2]" on a busy
+        // shared tenant where ES sync lag exceeds the test's wait window.
+        IndexSearchResponse response = retrySearchUntil(index, 4L);
 
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
