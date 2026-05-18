@@ -118,6 +118,33 @@ public interface ISQL {
     NumericField SQL_AI_INSIGHTS_RELATIONSHIP_COUNT =
             new NumericField("sqlAiInsightsRelationshipCount", "sqlAiInsightsRelationshipCount");
 
+    /** Identifier of the Coalesce environment. */
+    KeywordField SQL_COALESCE_ENVIRONMENT_ID = new KeywordField("sqlCoalesceEnvironmentId", "sqlCoalesceEnvironmentId");
+
+    /** Name of the Coalesce environment. */
+    KeywordTextField SQL_COALESCE_ENVIRONMENT_NAME = new KeywordTextField(
+            "sqlCoalesceEnvironmentName", "sqlCoalesceEnvironmentName.keyword", "sqlCoalesceEnvironmentName");
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    NumericField SQL_COALESCE_LAST_RUN_AT = new NumericField("sqlCoalesceLastRunAt", "sqlCoalesceLastRunAt");
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    KeywordField SQL_COALESCE_LAST_RUN_STATUS =
+            new KeywordField("sqlCoalesceLastRunStatus", "sqlCoalesceLastRunStatus");
+
+    /** Status of the Coalesce node for a given run. */
+    KeywordField SQL_COALESCE_NODE_STATUS = new KeywordField("sqlCoalesceNodeStatus", "sqlCoalesceNodeStatus");
+
+    /** Type of the Coalesce node. */
+    KeywordField SQL_COALESCE_NODE_TYPE = new KeywordField("sqlCoalesceNodeType", "sqlCoalesceNodeType");
+
+    /** Identifier of the Coalesce project. */
+    KeywordField SQL_COALESCE_PROJECT_ID = new KeywordField("sqlCoalesceProjectId", "sqlCoalesceProjectId");
+
+    /** Name of the Coalesce project. */
+    KeywordTextField SQL_COALESCE_PROJECT_NAME =
+            new KeywordTextField("sqlCoalesceProjectName", "sqlCoalesceProjectName.keyword", "sqlCoalesceProjectName");
+
     /** Sources related to this asset. */
     RelationField SQL_DBT_SOURCES = new RelationField("sqlDBTSources");
 
@@ -928,6 +955,30 @@ public interface ISQL {
 
     /** Number of relationship insights associated with this asset. */
     Integer getSqlAiInsightsRelationshipCount();
+
+    /** Identifier of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentId();
+
+    /** Name of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentName();
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    Long getSqlCoalesceLastRunAt();
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    String getSqlCoalesceLastRunStatus();
+
+    /** Status of the Coalesce node for a given run. */
+    String getSqlCoalesceNodeStatus();
+
+    /** Type of the Coalesce node. */
+    String getSqlCoalesceNodeType();
+
+    /** Identifier of the Coalesce project. */
+    String getSqlCoalesceProjectId();
+
+    /** Name of the Coalesce project. */
+    String getSqlCoalesceProjectName();
 
     /** Sources related to this asset. */
     default SortedSet<IDbtSource> getSqlDBTSources() {

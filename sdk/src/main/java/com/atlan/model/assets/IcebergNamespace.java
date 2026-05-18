@@ -301,6 +301,39 @@ public class IcebergNamespace extends Asset
     @Attribute
     Integer sqlAiInsightsRelationshipCount;
 
+    /** Identifier of the Coalesce environment. */
+    @Attribute
+    String sqlCoalesceEnvironmentId;
+
+    /** Name of the Coalesce environment. */
+    @Attribute
+    String sqlCoalesceEnvironmentName;
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    @Attribute
+    @Date
+    Long sqlCoalesceLastRunAt;
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    @Attribute
+    String sqlCoalesceLastRunStatus;
+
+    /** Status of the Coalesce node for a given run. */
+    @Attribute
+    String sqlCoalesceNodeStatus;
+
+    /** Type of the Coalesce node. */
+    @Attribute
+    String sqlCoalesceNodeType;
+
+    /** Identifier of the Coalesce project. */
+    @Attribute
+    String sqlCoalesceProjectId;
+
+    /** Name of the Coalesce project. */
+    @Attribute
+    String sqlCoalesceProjectName;
+
     /** Sources related to this asset. */
     @Attribute
     @Singular
