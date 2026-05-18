@@ -16,6 +16,7 @@ import com.atlan.model.structs.*;
 import com.atlan.util.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.*;
 import org.testng.annotations.Test;
 import org.testng.util.*;
@@ -226,14 +227,17 @@ public class TableSearchTest extends AtlanLiveTest {
         Table found = (Table) results.get(0);
         assertNotNull(found.getSourceReadRecentUserRecords());
         assertEquals(found.getSourceReadRecentUserRecords().size(), 2);
-        assertEquals(found.getSourceReadRecentUserRecords().get(0).getRecordUser(), "user1");
-        assertEquals(found.getSourceReadRecentUserRecords().get(0).getRecordQuery(), "query1");
-        assertEquals(
-                found.getSourceReadRecentUserRecords().get(0).getRecordComputeCostUnit(), SourceCostUnitType.CREDITS);
-        assertEquals(found.getSourceReadRecentUserRecords().get(1).getRecordUser(), "user2");
-        assertEquals(found.getSourceReadRecentUserRecords().get(1).getRecordQuery(), "query2");
-        assertEquals(
-                found.getSourceReadRecentUserRecords().get(1).getRecordComputeCostUnit(), SourceCostUnitType.BYTES);
+        // Index by recordUser rather than asserting via list position — ES does not guarantee
+        // ordering of elements inside a struct-array (sourceReadRecentUserRecords) across runs,
+        // so previous indexed access intermittently fails as "expected [user1] but found [user2]"
+        // when the round-trip happens to flip the two entries.
+        Map<String, PopularityInsights> recentByUser = found.getSourceReadRecentUserRecords().stream()
+                .collect(Collectors.toMap(PopularityInsights::getRecordUser, r -> r));
+        assertEquals(recentByUser.keySet(), Set.of("user1", "user2"));
+        assertEquals(recentByUser.get("user1").getRecordQuery(), "query1");
+        assertEquals(recentByUser.get("user1").getRecordComputeCostUnit(), SourceCostUnitType.CREDITS);
+        assertEquals(recentByUser.get("user2").getRecordQuery(), "query2");
+        assertEquals(recentByUser.get("user2").getRecordComputeCostUnit(), SourceCostUnitType.BYTES);
         assertEquals(found.getSourceReadPopularQueryRecords().size(), 1);
     }
 
