@@ -390,6 +390,27 @@ public class SuggestionsTest extends AtlanLiveTest {
             dependsOnGroups = {"suggestions.update.column.*"})
     void awaitConsistency() throws AtlanException, InterruptedException {
         waitForTagsToSync(taggedAssetGuids, log);
+
+        // waitForTagsToSync only covers the classification denorm. The three find* test
+        // methods below also aggregate ownerGroups / descriptions / assignedTerms, none
+        // of which the tag-sync helper waits on. Wait until all four assets that received
+        // those updates show ownerGroups + assignedTerms visible in ES:
+        //   - table1  (peer for findLimitedSuggestions on table2, matched by TABLE_NAME)
+        //   - table3  (peer for findSuggestionsAcrossTypes on view1, matched by VIEW_NAME)
+        //   - t1c1    (peer for findSuggestionsDefault on t2c1,    matched by COLUMN_NAME1)
+        //   - v1c1    (second peer for findSuggestionsDefault,     matched by COLUMN_NAME1)
+        // retrySearchUntil expects the matching count to reach the threshold within the
+        // configured network retries — bounded backoff, no busy-wait. Without this guard
+        // the three findSuggestions* tests intermittently get empty aggregations under
+        // CI matrix load (expected [1] but found [0]).
+        IndexSearchRequest peerReady = client.assets
+                .select()
+                .where(Asset.GUID.in(List.of(table1.getGuid(), table3.getGuid(), t1c1.getGuid(), v1c1.getGuid())))
+                .where(Asset.OWNER_GROUPS.hasAnyValue())
+                .where(Asset.ASSIGNED_TERMS.hasAnyValue())
+                .pageSize(0)
+                .toRequest();
+        retrySearchUntil(peerReady, 4L);
     }
 
     @Test(
