@@ -4,6 +4,7 @@ package com.atlan.pkg.serde.csv
 
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
@@ -44,8 +45,8 @@ abstract class CSVXformer(
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowExtraFields(false)
-                .allowMissingFields(false)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
         header = getHeader(inputFile, fieldSeparator)
         reader = builder.ofCsvRecord(input)
         counter = builder.ofCsvRecord(input)
@@ -70,8 +71,8 @@ abstract class CSVXformer(
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
-                    .allowExtraFields(false)
-                    .allowMissingFields(false)
+                    .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                    .missingFieldStrategy(FieldMismatchStrategy.STRICT)
             builder.ofCsvRecord(input).use { tmp ->
                 val one = tmp.stream().findFirst()
                 return one

@@ -20,6 +20,7 @@ import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
 import de.siegmar.fastcsv.reader.CsvRecordHandler
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import mu.KLogger
 import java.io.Closeable
 import java.io.IOException
@@ -77,8 +78,8 @@ class CSVReader
                     .fieldSeparator(fieldSeparator)
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
-                    .allowExtraFields(false)
-                    .allowMissingFields(false)
+                    .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                    .missingFieldStrategy(FieldMismatchStrategy.STRICT)
             reader = builder.ofCsvRecord(inputFile)
             counter = builder.ofCsvRecord(inputFile)
             preproc = builder.ofCsvRecord(inputFile)
@@ -213,8 +214,8 @@ class CSVReader
                                     .fieldSeparator(',')
                                     .quoteCharacter('"')
                                     .skipEmptyLines(true)
-                                    .allowExtraFields(false)
-                                    .allowMissingFields(false)
+                                    .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                                    .missingFieldStrategy(FieldMismatchStrategy.STRICT)
                                     .build(CsvRecordHandler.of(), f)
                             reader.stream().forEach { r: CsvRecord ->
                                 val assets = rowToAsset.buildFromRow(r.fields, header, typeIdx, qualifiedNameIdx, skipColumns)

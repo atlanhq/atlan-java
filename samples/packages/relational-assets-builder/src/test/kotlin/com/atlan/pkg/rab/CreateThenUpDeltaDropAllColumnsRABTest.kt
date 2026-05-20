@@ -530,7 +530,13 @@ class CreateThenUpDeltaDropAllColumnsRABTest : PackageTest("ctudac") {
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .includesOnResults(columnAttrs)
                     .toRequest()
-            val response = retrySearchUntil(request, 2)
+            val response =
+                retrySearchUntil(request, 2, condition = { r ->
+                    r.assets
+                        ?.filterIsInstance<Column>()
+                        ?.firstOrNull { it.name == "COL4" }
+                        ?.numericScale != null
+                })
             val found = response.assets
             assertEquals(2, found.size)
             val colNames = found.stream().map(Asset::getName).toList()

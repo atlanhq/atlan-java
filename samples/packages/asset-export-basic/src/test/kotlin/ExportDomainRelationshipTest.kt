@@ -10,6 +10,7 @@ import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
 import com.atlan.util.AssetBatch
 import de.siegmar.fastcsv.reader.CsvReader
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import org.testng.annotations.Test
 import java.nio.file.Paths
 import kotlin.test.assertFalse
@@ -128,8 +129,8 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowMissingFields(false)
-                .allowExtraFields(false)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
 
         val originalReader =
             CsvReader
@@ -137,8 +138,8 @@ class ExportDomainRelationshipTest : PackageTest("edr") {
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowMissingFields(false)
-                .allowExtraFields(false)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
 
         val testRecords = testReader.ofCsvRecord(Paths.get(testFile)).stream().toList()
         val originalRecords = originalReader.ofCsvRecord(Paths.get(originalFile)).stream().toList()
