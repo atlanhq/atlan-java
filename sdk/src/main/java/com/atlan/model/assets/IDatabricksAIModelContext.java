@@ -899,6 +899,30 @@ public interface IDatabricksAIModelContext {
     /** Number of relationship insights associated with this asset. */
     Integer getSqlAiInsightsRelationshipCount();
 
+    /** Identifier of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentId();
+
+    /** Name of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentName();
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    Long getSqlCoalesceLastRunAt();
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    String getSqlCoalesceLastRunStatus();
+
+    /** Status of the Coalesce node for a given run. */
+    String getSqlCoalesceNodeStatus();
+
+    /** Type of the Coalesce node. */
+    String getSqlCoalesceNodeType();
+
+    /** Identifier of the Coalesce project. */
+    String getSqlCoalesceProjectId();
+
+    /** Name of the Coalesce project. */
+    String getSqlCoalesceProjectName();
+
     /** Sources related to this asset. */
     default SortedSet<IDbtSource> getSqlDBTSources() {
         return null;
