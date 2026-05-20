@@ -6,6 +6,7 @@ import com.atlan.pkg.ae.AdminExporter
 import com.atlan.pkg.serde.csv.CSVXformer
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import org.testng.Assert.assertFalse
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
@@ -70,8 +71,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
+            .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+            .extraFieldStrategy(FieldMismatchStrategy.STRICT)
             .ofCsvRecord(file)
             .stream()
             .skip(1)
@@ -93,8 +94,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
+            .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+            .extraFieldStrategy(FieldMismatchStrategy.STRICT)
             .ofCsvRecord(file)
             .stream()
             .skip(1)
@@ -114,8 +115,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
+            .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+            .extraFieldStrategy(FieldMismatchStrategy.STRICT)
             .ofCsvRecord(file)
             .stream()
             .skip(1)
@@ -135,8 +136,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
+            .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+            .extraFieldStrategy(FieldMismatchStrategy.STRICT)
             .ofCsvRecord(file)
             .stream()
             .skip(1)
@@ -157,8 +158,8 @@ class ExportAllAdminInfoCSVTest : PackageTest("aacsv") {
             .fieldSeparator(',')
             .quoteCharacter('"')
             .skipEmptyLines(true)
-            .allowMissingFields(false)
-            .allowExtraFields(false)
+            .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+            .extraFieldStrategy(FieldMismatchStrategy.STRICT)
             .ofCsvRecord(file)
             .stream()
             .skip(1)

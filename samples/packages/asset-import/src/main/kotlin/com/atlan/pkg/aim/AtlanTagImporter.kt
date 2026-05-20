@@ -27,6 +27,7 @@ import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.util.ParallelBatch
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import mu.KLogger
 import java.io.IOException
 import java.nio.file.Paths
@@ -75,8 +76,8 @@ class AtlanTagImporter(
                 .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowExtraFields(false)
-                .allowMissingFields(false)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
         reader = builder.ofCsvRecord(inputFile)
         counter = builder.ofCsvRecord(inputFile)
     }

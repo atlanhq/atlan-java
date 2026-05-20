@@ -26,6 +26,7 @@ import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ThreadSafeWriter
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import de.siegmar.fastcsv.writer.CsvWriter
 import de.siegmar.fastcsv.writer.LineDelimiter
 import de.siegmar.fastcsv.writer.QuoteStrategies
@@ -83,8 +84,8 @@ class ImportGlossariesTest : PackageTest("ig") {
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowMissingFields(false)
-                .allowExtraFields(false)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
         val reader = builder.ofCsvRecord(input)
         val header: List<String> = CSVXformer.getHeader(input.toString(), ',')
         val tagsIdx = header.indexOf("atlanTags")

@@ -15,6 +15,7 @@ import com.atlan.util.AssetBatch.AssetIdentity
 import com.google.common.hash.Hashing
 import de.siegmar.fastcsv.reader.CsvReader
 import de.siegmar.fastcsv.reader.CsvRecord
+import de.siegmar.fastcsv.reader.FieldMismatchStrategy
 import mu.KLogger
 import java.io.File.separator
 import java.io.IOException
@@ -173,8 +174,8 @@ class FileBasedDelta(
                 .fieldSeparator(',')
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
-                .allowExtraFields(false)
-                .allowMissingFields(false)
+                .extraFieldStrategy(FieldMismatchStrategy.STRICT)
+                .missingFieldStrategy(FieldMismatchStrategy.STRICT)
         val reader = builder.ofCsvRecord(inputFile)
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
