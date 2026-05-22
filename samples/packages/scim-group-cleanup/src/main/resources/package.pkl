@@ -1,0 +1,73 @@
+/* SPDX-License-Identifier: Apache-2.0
+   Copyright 2024 Atlan Pte. Ltd. */
+amends "modulepath:/Framework.pkl"
+import "pkl:semver"
+
+packageId = "@csa/scim-group-cleanup"
+packageName = "SCIM Group Cleanup"
+version = semver.Version(read("prop:VERSION_NAME"))
+description = "Diagnoses and fixes stale SCIM group mappings that cause Okta Push Groups to fail."
+iconUrl = "https://assets.atlan.com/assets/ph-users-three-light.svg"
+docsUrl = "https://github.com/atlanhq/atlan-java"
+implementationLanguage = "Kotlin"
+containerImage = "ghcr.io/atlanhq/\(name):\(version)"
+containerImagePullPolicy = if (version.toString().endsWith("-SNAPSHOT")) "Always" else "IfNotPresent"
+containerCommand {
+  "/dumb-init"
+  "--"
+  "java"
+  "com.atlan.pkg.sgc.ScimGroupCleanup"
+}
+outputs {
+  files {
+    ["debug-logs"] = "/tmp/debug.log"
+  }
+}
+keywords {
+  "kotlin"
+  "utility"
+  "admin"
+  "scim"
+  "groups"
+  "cleanup"
+}
+preview = true
+
+uiConfig {
+  tasks {
+    ["Configuration"] {
+      description = "Configure cleanup operation"
+      inputs {
+        ["group_name"] = new TextInput {
+          title = "Group name"
+          helpText = "Enter the name of the group that has stale SCIM mappings (e.g., grpAtlanProdWorkflowAdmin)"
+          required = true
+          placeholderText = "grpAtlanProdWorkflowAdmin"
+        }
+        ["operation_mode"] = new Radio {
+          title = "Operation mode"
+          required = true
+          helpText = "DIAGNOSTIC: View group details without making changes. CLEANUP: Delete and optionally recreate the group to clear stale SCIM mappings."
+          possibleValues {
+            ["DIAGNOSTIC"] = "Diagnostic (safe, read-only)"
+            ["CLEANUP"] = "Cleanup (will delete the group)"
+          }
+          default = "DIAGNOSTIC"
+          fallback = default
+        }
+        ["recreate_group"] = new BooleanInput {
+          title = "Recreate group after deletion?"
+          helpText = "After deleting the group, should it be recreated with the same name and members? This is useful to preserve group assignments."
+          required = false
+          fallback = true
+        }
+      }
+    }
+  }
+  rules {
+    new UIRule {
+      whenInputs { ["operation_mode"] = "CLEANUP" }
+      required { "recreate_group" }
+    }
+  }
+}
