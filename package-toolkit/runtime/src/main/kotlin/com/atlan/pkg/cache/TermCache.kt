@@ -65,7 +65,10 @@ class TermCache(
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
         val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
-        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+        if (result != null) {
+            val identity = identityForAssetOrLog(result) ?: return
+            cache(result.guid, identity, result)
+        }
     }
 
     /** {@inheritDoc}  */
@@ -108,6 +111,28 @@ class TermCache(
             "${asset.name}${GlossaryXformer.GLOSSARY_DELIMITER}$glossaryName"
         } ?: throw IllegalStateException("Term found with no anchor: ${asset.toJson(client)})")
 
+    /**
+     * Safe variant of [getIdentityForAsset] for tenant-wide scans. Catches the "term has no
+     * anchor" inconsistency that can result from soft-deleted anchor edges left behind by
+     * test residue or partially-failed move operations, logs it, and returns null so the
+     * caller can skip caching this one term rather than aborting the entire refresh.
+     *
+     * Without this guard a single orphan term causes [refreshCache] to throw, which in turn
+     * fails downstream asset-import tests that depend on the term cache being initialised —
+     * unrelated tests blow up because of unrelated data anomalies elsewhere in the tenant.
+     */
+    private fun identityForAssetOrLog(asset: GlossaryTerm): String? =
+        try {
+            getIdentityForAsset(asset)
+        } catch (e: IllegalStateException) {
+            logger.warn {
+                "Skipping term ${asset.guid} (name='${asset.name}') with no resolvable anchor — likely an orphan " +
+                    "from a soft-deleted anchor edge. The term is still ACTIVE but its anchor relationship has " +
+                    "no ACTIVE edge to a glossary. Cache will continue without this entry."
+            }
+            null
+        }
+
     /** {@inheritDoc} */
     override fun refreshCache() {
         val count = GlossaryTerm.select(client).count()
@@ -119,7 +144,8 @@ class TermCache(
             .stream(true)
             .forEach { term ->
                 term as GlossaryTerm
-                cache(term.guid, getIdentityForAsset(term), term)
+                val identity = identityForAssetOrLog(term) ?: return@forEach
+                cache(term.guid, identity, term)
             }
     }
 }
