@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class SageMakerUnifiedStudioProjectTest {
+public class SapErpFioriAppTest {
 
-    private final SageMakerUnifiedStudioProject full = SageMakerUnifiedStudioProject._internal()
+    private final SapErpFioriApp full = SapErpFioriApp._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,12 +60,13 @@ public class SageMakerUnifiedStudioProjectTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .smusDomainName("String0")
-            .smusDomainId("String0")
-            .smusDomainUnitName("String0")
-            .smusDomainUnitId("String0")
-            .smusProjectId("String0")
-            .smusOwningProjectId("String0")
+            .sapTechnicalName("String0")
+            .sapLogicalName("String0")
+            .sapPackageName("String0")
+            .sapComponentName("String0")
+            .sapDataType("String0")
+            .sapFieldCount(123456789L)
+            .sapFieldOrder(123)
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
@@ -1138,25 +1139,14 @@ public class SageMakerUnifiedStudioProjectTest {
             .addAssetAiAlias("String0")
             .addAssetAiAlias("String1")
             .assetHasAiReadme(true)
-            .smusProjectStatus(SageMakerUnifiedStudioProjectStatus.ACTIVE)
-            .smusProjectProfileName("String0")
-            .smusProjectRoleArn("String0")
-            .smusProjectS3Location("String0")
-            .smusProjectSsoUser(SageMakerUnifiedStudioSsoUser.builder()
-                    .smusSsoUserEmail("String0")
-                    .smusSsoUserRole("String0")
-                    .build())
-            .smusProjectSsoUser(SageMakerUnifiedStudioSsoUser.builder()
-                    .smusSsoUserEmail("String1")
-                    .smusSsoUserRole("String1")
-                    .build())
-            .smusPublishedAsset(SageMakerUnifiedStudioPublishedAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .smusPublishedAsset(SageMakerUnifiedStudioPublishedAsset.refByQualifiedName(
-                    "default/snowflake/1234567890/test/qualifiedName"))
-            .smusSubscribedAsset(
-                    SageMakerUnifiedStudioSubscribedAsset.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .smusSubscribedAsset(SageMakerUnifiedStudioSubscribedAsset.refByQualifiedName(
-                    "default/snowflake/1234567890/test/qualifiedName"))
+            .sapErpFioriAppType("String0")
+            .sapErpFioriAppArcheType("String0")
+            .sapErpFioriAppIsCustom(true)
+            .sapErpFioriAppBspApplication("String0")
+            .sapErpFioriAppOdataServiceName("String0")
+            .sapErpFioriAppOdataServiceUri("String0")
+            .sapErpFioriAppOdataVersion("String0")
+            .sapErpComponent(SapErpComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -1204,24 +1194,21 @@ public class SageMakerUnifiedStudioProjectTest {
     }
 
     @Test
-    void serdeCycleSageMakerUnifiedStudioProject() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of SageMakerUnifiedStudioProject,");
+    void serdeCycleSapErpFioriApp() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SapErpFioriApp,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
                 full.toBuilder().build(),
                 full,
-                "Unable to converting SageMakerUnifiedStudioProject via builder back to its original state,");
+                "Unable to converting SapErpFioriApp via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of SageMakerUnifiedStudioProject,");
+        assertNotNull(serialized, "Unable to serialize sample instance of SapErpFioriApp,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final SageMakerUnifiedStudioProject frodo =
-                MockAtlanTenant.client.readValue(serialized, SageMakerUnifiedStudioProject.class);
-        assertNotNull(
-                frodo,
-                "Unable to reverse-read serialized value back into an instance of SageMakerUnifiedStudioProject,");
+        final SapErpFioriApp frodo = MockAtlanTenant.client.readValue(serialized, SapErpFioriApp.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of SapErpFioriApp,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");

@@ -13,6 +13,8 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -31,41 +33,42 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a SAP Component in Atlan.
+ * Instance of a SAP ERP Fiori App in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ISapErpComponent {
+public interface ISapErpFioriApp {
 
-    public static final String TYPE_NAME = "SapErpComponent";
+    public static final String TYPE_NAME = "SapErpFioriApp";
 
-    /** Child SAP ERP Component associated with this SAP ERP Components. */
-    RelationField CHILD_COMPONENTS = new RelationField("childComponents");
+    /** SAP ERP Component to which this SAP ERP Fiori App belongs. */
+    RelationField SAP_ERP_COMPONENT = new RelationField("sapErpComponent");
 
-    /** Parent SAP ERP Component in which these child SAP ERP Component exist. */
-    RelationField PARENT_COMPONENT = new RelationField("parentComponent");
+    /** Fiori archetype from sap.fiori.archeType in the manifest, such as transactional. */
+    KeywordField SAP_ERP_FIORI_APP_ARCHE_TYPE = new KeywordField("sapErpFioriAppArcheType", "sapErpFioriAppArcheType");
 
-    /** SAP ERP Component associated with this SAP ERP ABAP Programs. */
-    RelationField SAP_ERP_ABAP_PROGRAMS = new RelationField("sapErpAbapPrograms");
+    /** BSP container name for the Fiori App as registered in O2APPL (e.g. ATP_ABOPVARS1). */
+    KeywordField SAP_ERP_FIORI_APP_BSP_APPLICATION =
+            new KeywordField("sapErpFioriAppBspApplication", "sapErpFioriAppBspApplication");
 
-    /** SAP ERP Component associated with this SAP ERP CDS Views. */
-    RelationField SAP_ERP_CDS_VIEWS = new RelationField("sapErpCdsViews");
+    /** When true, the Fiori App has no sap.fiori.registrationIds in its manifest and is treated as a customer (Z-app) build. */
+    BooleanField SAP_ERP_FIORI_APP_IS_CUSTOM = new BooleanField("sapErpFioriAppIsCustom", "sapErpFioriAppIsCustom");
 
-    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
-    RelationField SAP_ERP_FIORI_APPS = new RelationField("sapErpFioriApps");
+    /** Resolved OData service name extracted from the manifest mainService URI (e.g. UI_ABOPVARIANT_CONFIGURE or C_SUPPLIEREVALUATION_CDS). */
+    KeywordField SAP_ERP_FIORI_APP_ODATA_SERVICE_NAME =
+            new KeywordField("sapErpFioriAppOdataServiceName", "sapErpFioriAppOdataServiceName");
 
-    /** SAP ERP Component associated with this SAP ERP Function Modules. */
-    RelationField SAP_ERP_FUNCTION_MODULES = new RelationField("sapErpFunctionModules");
+    /** Full OData service URI from sap.app.dataSources.mainService.uri in the manifest. */
+    KeywordField SAP_ERP_FIORI_APP_ODATA_SERVICE_URI =
+            new KeywordField("sapErpFioriAppOdataServiceUri", "sapErpFioriAppOdataServiceUri");
 
-    /** SAP ERP Component associated with these SAP ERP Tables. */
-    RelationField SAP_ERP_TABLES = new RelationField("sapErpTables");
+    /** OData protocol version of the Fiori App's main data source, such as 2.0 or 4.0. */
+    KeywordField SAP_ERP_FIORI_APP_ODATA_VERSION =
+            new KeywordField("sapErpFioriAppOdataVersion", "sapErpFioriAppOdataVersion");
 
-    /** SAP ERP Component associated with these SAP ERP Transaction Codes. */
-    RelationField SAP_ERP_TRANSACTION_CODES = new RelationField("sapErpTransactionCodes");
-
-    /** SAP ERP Component associated with this SAP ERP Views. */
-    RelationField SAP_ERP_VIEWS = new RelationField("sapErpViews");
+    /** Application type of the Fiori App from sap.app.type in the manifest, such as application, transactional, or factsheet. */
+    KeywordField SAP_ERP_FIORI_APP_TYPE = new KeywordField("sapErpFioriAppType", "sapErpFioriAppType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -513,11 +516,6 @@ public interface ISapErpComponent {
     /** Name of the user who last updated the certification of this asset. */
     String getCertificateUpdatedBy();
 
-    /** Child SAP ERP Component associated with this SAP ERP Components. */
-    default SortedSet<ISapErpComponent> getChildComponents() {
-        return null;
-    }
-
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
@@ -682,11 +680,6 @@ public interface ISapErpComponent {
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
 
-    /** Parent SAP ERP Component in which these child SAP ERP Component exist. */
-    default ISapErpComponent getParentComponent() {
-        return null;
-    }
-
     /** Partial fields contained in the asset. */
     default SortedSet<IPartialField> getPartialChildFields() {
         return null;
@@ -720,40 +713,31 @@ public interface ISapErpComponent {
     /** SAP-specific data types. */
     String getSapDataType();
 
-    /** SAP ERP Component associated with this SAP ERP ABAP Programs. */
-    default SortedSet<ISapErpAbapProgram> getSapErpAbapPrograms() {
+    /** SAP ERP Component to which this SAP ERP Fiori App belongs. */
+    default ISapErpComponent getSapErpComponent() {
         return null;
     }
 
-    /** SAP ERP Component associated with this SAP ERP CDS Views. */
-    default SortedSet<ISapErpCdsView> getSapErpCdsViews() {
-        return null;
-    }
+    /** Fiori archetype from sap.fiori.archeType in the manifest, such as transactional. */
+    String getSapErpFioriAppArcheType();
 
-    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
-    default SortedSet<ISapErpFioriApp> getSapErpFioriApps() {
-        return null;
-    }
+    /** BSP container name for the Fiori App as registered in O2APPL (e.g. ATP_ABOPVARS1). */
+    String getSapErpFioriAppBspApplication();
 
-    /** SAP ERP Component associated with this SAP ERP Function Modules. */
-    default SortedSet<ISapErpFunctionModule> getSapErpFunctionModules() {
-        return null;
-    }
+    /** When true, the Fiori App has no sap.fiori.registrationIds in its manifest and is treated as a customer (Z-app) build. */
+    Boolean getSapErpFioriAppIsCustom();
 
-    /** SAP ERP Component associated with these SAP ERP Tables. */
-    default SortedSet<ISapErpTable> getSapErpTables() {
-        return null;
-    }
+    /** Resolved OData service name extracted from the manifest mainService URI (e.g. UI_ABOPVARIANT_CONFIGURE or C_SUPPLIEREVALUATION_CDS). */
+    String getSapErpFioriAppOdataServiceName();
 
-    /** SAP ERP Component associated with these SAP ERP Transaction Codes. */
-    default SortedSet<ISapErpTransactionCode> getSapErpTransactionCodes() {
-        return null;
-    }
+    /** Full OData service URI from sap.app.dataSources.mainService.uri in the manifest. */
+    String getSapErpFioriAppOdataServiceUri();
 
-    /** SAP ERP Component associated with this SAP ERP Views. */
-    default SortedSet<ISapErpView> getSapErpViews() {
-        return null;
-    }
+    /** OData protocol version of the Fiori App's main data source, such as 2.0 or 4.0. */
+    String getSapErpFioriAppOdataVersion();
+
+    /** Application type of the Fiori App from sap.app.type in the manifest, such as application, transactional, or factsheet. */
+    String getSapErpFioriAppType();
 
     /** Represents the total number of fields, columns, or child assets present in a given SAP asset. */
     Long getSapFieldCount();

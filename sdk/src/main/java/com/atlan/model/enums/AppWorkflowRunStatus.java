@@ -15,6 +15,8 @@ public enum AppWorkflowRunStatus implements AtlanEnum {
     FAILED("Failed"),
     ERROR("Error"),
     STOPPED("Stopped"),
+    PAUSED("Paused"),
+    TERMINATED("Terminated"),
     ;
 
     @JsonValue
