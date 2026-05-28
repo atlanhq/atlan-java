@@ -387,6 +387,11 @@ public class StarburstDataset extends Asset
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Data product that publishes this dataset. */
     @Attribute
     IDataProduct starburstDataProduct;

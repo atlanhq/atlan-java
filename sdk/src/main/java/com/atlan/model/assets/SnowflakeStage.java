@@ -286,6 +286,11 @@ public class SnowflakeStage extends Asset
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Reference to the parent schema that contains this Snowflake stage, establishing the stage's position in the database hierarchy. */
     @Attribute
     ISchema sqlStageSchema;

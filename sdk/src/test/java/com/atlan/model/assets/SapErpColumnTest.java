@@ -1172,6 +1172,8 @@ public class SapErpColumnTest {
             .sqlCoalesceEnvironmentName("String0")
             .sqlCoalesceProjectId("String0")
             .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .sapErpColumnDataElement("String0")
             .sapErpColumnLogicalDataType("String0")
             .sapErpColumnLength("String0")

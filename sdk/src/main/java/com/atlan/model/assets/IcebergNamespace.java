@@ -367,6 +367,11 @@ public class IcebergNamespace extends Asset
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Number of tables in this schema. */
     @Attribute
     Integer tableCount;

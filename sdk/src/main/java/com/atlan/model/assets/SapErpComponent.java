@@ -129,6 +129,11 @@ public class SapErpComponent extends Asset implements ISapErpComponent, ISAP, IC
     @Singular
     SortedSet<ISapErpCdsView> sapErpCdsViews;
 
+    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
+    @Attribute
+    @Singular
+    SortedSet<ISapErpFioriApp> sapErpFioriApps;
+
     /** SAP ERP Component associated with this SAP ERP Function Modules. */
     @Attribute
     @Singular

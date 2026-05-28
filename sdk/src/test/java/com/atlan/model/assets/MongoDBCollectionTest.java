@@ -1195,6 +1195,8 @@ public class MongoDBCollectionTest {
             .sqlCoalesceEnvironmentName("String0")
             .sqlCoalesceProjectId("String0")
             .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .mongoDBCollectionSubtype("String0")
             .mongoDBCollectionIsCapped(true)
             .mongoDBCollectionTimeField("String0")
