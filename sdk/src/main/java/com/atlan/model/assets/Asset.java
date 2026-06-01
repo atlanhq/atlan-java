@@ -30,6 +30,7 @@ import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.net.HttpClient;
@@ -678,6 +679,19 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** Unique name of the space that contains this asset. */
     @Attribute
     String assetSpaceQualifiedName;
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    @Attribute
+    String assetSummary;
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetSummaryFilterTokens;
+
+    /** Metadata about the provider of this asset's summary. */
+    @Attribute
+    AssetSummaryProvider assetSummaryProvider;
 
     /** List of tags attached to this asset. */
     @Attribute

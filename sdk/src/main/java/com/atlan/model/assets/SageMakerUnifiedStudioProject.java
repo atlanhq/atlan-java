@@ -14,6 +14,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.SageMakerUnifiedStudioSsoUser;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -139,6 +140,11 @@ public class SageMakerUnifiedStudioProject extends Asset
     /** Amazon S3 location of the SageMaker Unified Studio project. */
     @Attribute
     String smusProjectS3Location;
+
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    @Attribute
+    @Singular
+    List<SageMakerUnifiedStudioSsoUser> smusProjectSsoUsers;
 
     /** Status of the SageMaker Unified Studio project. */
     @Attribute
