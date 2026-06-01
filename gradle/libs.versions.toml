@@ -1,5 +1,5 @@
 [versions]
-jackson = "2.21.3"
+jackson = "2.22.0"
 slf4j = "2.0.18"
 elasticsearch = "9.4.0"
 classgraph = "4.8.184"
