@@ -21,6 +21,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -473,6 +474,15 @@ public interface ICosmosMongoDBCollection {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -1030,6 +1040,9 @@ public interface ICosmosMongoDBCollection {
 
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

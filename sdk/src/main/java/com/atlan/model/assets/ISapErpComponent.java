@@ -19,6 +19,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -51,6 +52,9 @@ public interface ISapErpComponent {
 
     /** SAP ERP Component associated with this SAP ERP CDS Views. */
     RelationField SAP_ERP_CDS_VIEWS = new RelationField("sapErpCdsViews");
+
+    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
+    RelationField SAP_ERP_FIORI_APPS = new RelationField("sapErpFioriApps");
 
     /** SAP ERP Component associated with this SAP ERP Function Modules. */
     RelationField SAP_ERP_FUNCTION_MODULES = new RelationField("sapErpFunctionModules");
@@ -481,6 +485,15 @@ public interface ISapErpComponent {
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
 
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -724,6 +737,11 @@ public interface ISapErpComponent {
 
     /** SAP ERP Component associated with this SAP ERP CDS Views. */
     default SortedSet<ISapErpCdsView> getSapErpCdsViews() {
+        return null;
+    }
+
+    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
+    default SortedSet<ISapErpFioriApp> getSapErpFioriApps() {
         return null;
     }
 

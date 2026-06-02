@@ -258,6 +258,11 @@ public class DatabricksNotebook extends Asset
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;

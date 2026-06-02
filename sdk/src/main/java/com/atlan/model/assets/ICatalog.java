@@ -20,6 +20,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -888,6 +889,9 @@ public interface ICatalog {
             case SapErpComponent.TYPE_NAME:
                 ref = SapErpComponent.refByQualifiedName(qualifiedName);
                 break;
+            case SapErpFioriApp.TYPE_NAME:
+                ref = SapErpFioriApp.refByQualifiedName(qualifiedName);
+                break;
             case SapErpFunctionModule.TYPE_NAME:
                 ref = SapErpFunctionModule.refByQualifiedName(qualifiedName);
                 break;
@@ -930,6 +934,12 @@ public interface ICatalog {
             case SigmaDataElementField.TYPE_NAME:
                 ref = SigmaDataElementField.refByQualifiedName(qualifiedName);
                 break;
+            case SigmaDataModel.TYPE_NAME:
+                ref = SigmaDataModel.refByQualifiedName(qualifiedName);
+                break;
+            case SigmaDataModelColumn.TYPE_NAME:
+                ref = SigmaDataModelColumn.refByQualifiedName(qualifiedName);
+                break;
             case SigmaDataset.TYPE_NAME:
                 ref = SigmaDataset.refByQualifiedName(qualifiedName);
                 break;
@@ -963,6 +973,9 @@ public interface ICatalog {
             case SnowflakeAIModelVersion.TYPE_NAME:
                 ref = SnowflakeAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
+            case SnowflakeListing.TYPE_NAME:
+                ref = SnowflakeListing.refByQualifiedName(qualifiedName);
+                break;
             case SnowflakeSemanticDimension.TYPE_NAME:
                 ref = SnowflakeSemanticDimension.refByQualifiedName(qualifiedName);
                 break;
@@ -977,6 +990,9 @@ public interface ICatalog {
                 break;
             case SnowflakeSemanticView.TYPE_NAME:
                 ref = SnowflakeSemanticView.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeShare.TYPE_NAME:
+                ref = SnowflakeShare.refByQualifiedName(qualifiedName);
                 break;
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);
@@ -1073,6 +1089,15 @@ public interface ICatalog {
                 break;
             case ThoughtspotWorksheet.TYPE_NAME:
                 ref = ThoughtspotWorksheet.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredContainer.TYPE_NAME:
+                ref = UnstructuredContainer.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredFolder.TYPE_NAME:
+                ref = UnstructuredFolder.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredObject.TYPE_NAME:
+                ref = UnstructuredObject.refByQualifiedName(qualifiedName);
                 break;
             case View.TYPE_NAME:
                 ref = View.refByQualifiedName(qualifiedName);
@@ -1500,6 +1525,15 @@ public interface ICatalog {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

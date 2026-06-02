@@ -120,11 +120,11 @@ public class SigmaDataElement extends Asset
     @Attribute
     String sigmaDataElementQualifiedName;
 
-    /** TBC */
+    /** Query backing this data element. */
     @Attribute
     String sigmaDataElementQuery;
 
-    /** TBC */
+    /** Type of this data element. */
     @Attribute
     String sigmaDataElementType;
 
