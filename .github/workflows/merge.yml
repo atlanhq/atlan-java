@@ -246,6 +246,7 @@ jobs:
       contents: read
       packages: write
     strategy:
+      fail-fast: false
       matrix:
         package_name:
           - api-token-connection-admin
