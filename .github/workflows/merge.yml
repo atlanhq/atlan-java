@@ -6,7 +6,7 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'fix/csa-449-admin-export-license-type']
   workflow_dispatch:
     inputs:
       branch:
@@ -246,6 +246,7 @@ jobs:
       contents: read
       packages: write
     strategy:
+      fail-fast: false
       matrix:
         package_name:
           - api-token-connection-admin
