@@ -321,6 +321,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Time (epoch) from which this materialized view is stale, in milliseconds. */
     @Attribute
     @Date

@@ -13,6 +13,8 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -20,6 +22,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -49,6 +52,13 @@ public interface IDatabase {
 
     /** Schemas that exist within this database. */
     RelationField SCHEMAS = new RelationField("schemas");
+
+    /** Whether this database was imported via a data share (true) or not (false). */
+    BooleanField SQL_IS_IMPORTED_VIA_DATA_SHARE =
+            new BooleanField("sqlIsImportedViaDataShare", "sqlIsImportedViaDataShare");
+
+    /** Source-system identifier of the account that produced this imported database. */
+    KeywordField SQL_ORIGIN_ACCOUNT_GUID = new KeywordField("sqlOriginAccountGuid", "sqlOriginAccountGuid");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -466,6 +476,15 @@ public interface IDatabase {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
@@ -887,8 +906,17 @@ public interface IDatabase {
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
 
+    /** Whether this database was imported via a data share (true) or not (false). */
+    Boolean getSqlIsImportedViaDataShare();
+
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
+
+    /** Source-system identifier of the account that produced this imported database. */
+    String getSqlOriginAccountGuid();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
