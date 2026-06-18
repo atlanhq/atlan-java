@@ -13,6 +13,8 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -49,6 +51,13 @@ public interface IDatabase {
 
     /** Schemas that exist within this database. */
     RelationField SCHEMAS = new RelationField("schemas");
+
+    /** Whether this database was imported via a data share (true) or not (false). */
+    BooleanField SQL_IS_IMPORTED_VIA_DATA_SHARE =
+            new BooleanField("sqlIsImportedViaDataShare", "sqlIsImportedViaDataShare");
+
+    /** Source-system identifier of the account that produced this imported database. */
+    KeywordField SQL_ORIGIN_ACCOUNT_GUID = new KeywordField("sqlOriginAccountGuid", "sqlOriginAccountGuid");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -887,8 +896,17 @@ public interface IDatabase {
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
 
+    /** Whether this database was imported via a data share (true) or not (false). */
+    Boolean getSqlIsImportedViaDataShare();
+
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
+
+    /** Source-system identifier of the account that produced this imported database. */
+    String getSqlOriginAccountGuid();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

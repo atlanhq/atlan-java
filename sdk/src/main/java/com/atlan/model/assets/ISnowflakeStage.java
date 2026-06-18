@@ -903,6 +903,9 @@ public interface ISnowflakeStage {
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
 
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Reference to the parent schema that contains this Snowflake stage, establishing the stage's position in the database hierarchy. */
     default ISchema getSqlStageSchema() {
         return null;

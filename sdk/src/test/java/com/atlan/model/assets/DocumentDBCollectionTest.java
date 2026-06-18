@@ -1195,6 +1195,8 @@ public class DocumentDBCollectionTest {
             .sqlCoalesceEnvironmentName("String0")
             .sqlCoalesceProjectId("String0")
             .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .documentDBCollectionSubtype("String0")
             .documentDBCollectionIsCapped(true)
             .documentDBCollectionTimeField("String0")

@@ -22,6 +22,7 @@ import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.SageMakerUnifiedStudioSsoUser;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -50,6 +51,9 @@ public interface ISageMakerUnifiedStudioProject {
 
     /** Amazon S3 location of the SageMaker Unified Studio project. */
     KeywordField SMUS_PROJECT_S3LOCATION = new KeywordField("smusProjectS3Location", "smusProjectS3Location");
+
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    KeywordField SMUS_PROJECT_SSO_USERS = new KeywordField("smusProjectSsoUsers", "smusProjectSsoUsers");
 
     /** Status of the SageMaker Unified Studio project. */
     KeywordField SMUS_PROJECT_STATUS = new KeywordField("smusProjectStatus", "smusProjectStatus");
@@ -728,6 +732,9 @@ public interface ISageMakerUnifiedStudioProject {
 
     /** Amazon S3 location of the SageMaker Unified Studio project. */
     String getSmusProjectS3Location();
+
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    List<SageMakerUnifiedStudioSsoUser> getSmusProjectSsoUsers();
 
     /** Status of the SageMaker Unified Studio project. */
     SageMakerUnifiedStudioProjectStatus getSmusProjectStatus();

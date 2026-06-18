@@ -157,6 +157,9 @@ public interface ISQL {
     /** Whether this asset is secure (true) or not (false). */
     BooleanField SQL_IS_SECURE = new BooleanField("sqlIsSecure", "sqlIsSecure");
 
+    /** Qualified names of data shares this asset is granted to. */
+    KeywordField SQL_SHARE_QUALIFIED_NAMES = new KeywordField("sqlShareQualifiedNames", "sqlShareQualifiedNames");
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     KeywordTextField TABLE_NAME = new KeywordTextField("tableName", "tableName.keyword", "tableName");
 
@@ -995,6 +998,9 @@ public interface ISQL {
 
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

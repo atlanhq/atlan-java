@@ -979,6 +979,9 @@ public interface IStarburstDataset {
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
 
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Data product that publishes this dataset. */
     default IDataProduct getStarburstDataProduct() {
         return null;
