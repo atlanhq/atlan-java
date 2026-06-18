@@ -170,7 +170,7 @@ implements <a href="ISapErpComponent.html" title="interface in com.atlan.model.a
 <code><a href="ISAP.html#SAP_COMPONENT_NAME">SAP_COMPONENT_NAME</a>, <a href="ISAP.html#SAP_DATA_TYPE">SAP_DATA_TYPE</a>, <a href="ISAP.html#SAP_FIELD_COUNT">SAP_FIELD_COUNT</a>, <a href="ISAP.html#SAP_FIELD_ORDER">SAP_FIELD_ORDER</a>, <a href="ISAP.html#SAP_LOGICAL_NAME">SAP_LOGICAL_NAME</a>, <a href="ISAP.html#SAP_PACKAGE_NAME">SAP_PACKAGE_NAME</a>, <a href="ISAP.html#SAP_TECHNICAL_NAME">SAP_TECHNICAL_NAME</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.ISapErpComponent">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ISapErpComponent.html" title="interface in com.atlan.model.assets">ISapErpComponent</a></h3>
-<code><a href="ISapErpComponent.html#CHILD_COMPONENTS">CHILD_COMPONENTS</a>, <a href="ISapErpComponent.html#PARENT_COMPONENT">PARENT_COMPONENT</a>, <a href="ISapErpComponent.html#SAP_ERP_ABAP_PROGRAMS">SAP_ERP_ABAP_PROGRAMS</a>, <a href="ISapErpComponent.html#SAP_ERP_CDS_VIEWS">SAP_ERP_CDS_VIEWS</a>, <a href="ISapErpComponent.html#SAP_ERP_FUNCTION_MODULES">SAP_ERP_FUNCTION_MODULES</a>, <a href="ISapErpComponent.html#SAP_ERP_TABLES">SAP_ERP_TABLES</a>, <a href="ISapErpComponent.html#SAP_ERP_TRANSACTION_CODES">SAP_ERP_TRANSACTION_CODES</a>, <a href="ISapErpComponent.html#SAP_ERP_VIEWS">SAP_ERP_VIEWS</a></code></div>
+<code><a href="ISapErpComponent.html#CHILD_COMPONENTS">CHILD_COMPONENTS</a>, <a href="ISapErpComponent.html#PARENT_COMPONENT">PARENT_COMPONENT</a>, <a href="ISapErpComponent.html#SAP_ERP_ABAP_PROGRAMS">SAP_ERP_ABAP_PROGRAMS</a>, <a href="ISapErpComponent.html#SAP_ERP_CDS_VIEWS">SAP_ERP_CDS_VIEWS</a>, <a href="ISapErpComponent.html#SAP_ERP_FIORI_APPS">SAP_ERP_FIORI_APPS</a>, <a href="ISapErpComponent.html#SAP_ERP_FUNCTION_MODULES">SAP_ERP_FUNCTION_MODULES</a>, <a href="ISapErpComponent.html#SAP_ERP_TABLES">SAP_ERP_TABLES</a>, <a href="ISapErpComponent.html#SAP_ERP_TRANSACTION_CODES">SAP_ERP_TRANSACTION_CODES</a>, <a href="ISapErpComponent.html#SAP_ERP_VIEWS">SAP_ERP_VIEWS</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -351,198 +351,203 @@ implements <a href="ISapErpComponent.html" title="interface in com.atlan.model.a
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">SAP ERP Component associated with this SAP ERP CDS Views.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpFunctionModule.html" title="interface in com.atlan.model.assets">ISapErpFunctionModule</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpFunctionModules()" class="member-name-link">getSapErpFunctionModules</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpFioriApp.html" title="interface in com.atlan.model.assets">ISapErpFioriApp</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpFioriApps()" class="member-name-link">getSapErpFioriApps</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">SAP ERP Fiori Apps that belong to this SAP ERP Component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpFunctionModule.html" title="interface in com.atlan.model.assets">ISapErpFunctionModule</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpFunctionModules()" class="member-name-link">getSapErpFunctionModules</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">SAP ERP Component associated with this SAP ERP Function Modules.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpTable.html" title="interface in com.atlan.model.assets">ISapErpTable</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpTables()" class="member-name-link">getSapErpTables</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpTable.html" title="interface in com.atlan.model.assets">ISapErpTable</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpTables()" class="member-name-link">getSapErpTables</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">SAP ERP Component associated with these SAP ERP Tables.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpTransactionCode.html" title="interface in com.atlan.model.assets">ISapErpTransactionCode</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpTransactionCodes()" class="member-name-link">getSapErpTransactionCodes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpTransactionCode.html" title="interface in com.atlan.model.assets">ISapErpTransactionCode</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpTransactionCodes()" class="member-name-link">getSapErpTransactionCodes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">SAP ERP Component associated with these SAP ERP Transaction Codes.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpView.html" title="interface in com.atlan.model.assets">ISapErpView</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpViews()" class="member-name-link">getSapErpViews</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISapErpView.html" title="interface in com.atlan.model.assets">ISapErpView</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapErpViews()" class="member-name-link">getSapErpViews</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">SAP ERP Component associated with this SAP ERP Views.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapFieldCount()" class="member-name-link">getSapFieldCount</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapFieldCount()" class="member-name-link">getSapFieldCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Represents the total number of fields, columns, or child assets present in a given SAP asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapFieldOrder()" class="member-name-link">getSapFieldOrder</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapFieldOrder()" class="member-name-link">getSapFieldOrder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates the sequential position of a field, column, or child asset within its parent SAP asset, starting from 1.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapLogicalName()" class="member-name-link">getSapLogicalName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapLogicalName()" class="member-name-link">getSapLogicalName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Logical, business-friendly identifier for SAP data objects, aligned with business terminology and concepts.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapPackageName()" class="member-name-link">getSapPackageName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapPackageName()" class="member-name-link">getSapPackageName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Name of the SAP package, representing a logical grouping of related SAP data objects.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapTechnicalName()" class="member-name-link">getSapTechnicalName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSapTechnicalName()" class="member-name-link">getSapTechnicalName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Technical identifier for SAP data objects, used for integration and internal reference.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Fixed typeName for SapErpComponents.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Reference to a SapErpComponent by GUID.</div>
-</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
- <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Reference to a SapErpComponent by GUID.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByGuid(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByGuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;guid,
+ <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Reference to a SapErpComponent by qualifiedName.</div>
+<div class="block">Reference to a SapErpComponent by GUID.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
- <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Reference to a SapErpComponent by qualifiedName.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refByQualifiedName(java.lang.String,com.atlan.model.relations.Reference.SaveSemantic)" class="member-name-link">refByQualifiedName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+ <a href="../relations/Reference.SaveSemantic.html" title="enum class in com.atlan.model.relations">Reference.SaveSemantic</a>&nbsp;semantic)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Reference to a SapErpComponent by qualifiedName.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeAnnouncement(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the announcement from a SapErpComponent.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAtlanTag</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#removeAtlanTag(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeAtlanTag</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;atlanTagName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">see <a href="Asset.AssetBuilder.html#removeAtlanTag(java.lang.String)"><code>Asset.AssetBuilder.removeAtlanTag(String)</code></a></div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Remove the certificate from a SapErpComponent.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeCertificate(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Remove the system description from a SapErpComponent.</div>
+<div class="block">Remove the certificate from a SapErpComponent.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeOwners</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Remove the system description from a SapErpComponent.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeOwners(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeOwners</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the owners from a SapErpComponent.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)" class="member-name-link">removeTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#removeTerms(com.atlan.AtlanClient,java.lang.String,java.util.List)" class="member-name-link">removeTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">see <a href="Asset.AssetBuilder.html#removeAssignedTerm(com.atlan.model.assets.GlossaryTerm)"><code>Asset.AssetBuilder.removeAssignedTerm(GlossaryTerm)</code></a></div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeUserDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeUserDescription(com.atlan.AtlanClient,java.lang.String,java.lang.String)" class="member-name-link">removeUserDescription</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Remove the user's description from a SapErpComponent.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)" class="member-name-link">replaceTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#replaceTerms(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.util.List)" class="member-name-link">replaceTerms</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;&nbsp;terms)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Replace the terms linked to the SapErpComponent.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#restore(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">restore</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#restore(com.atlan.AtlanClient,java.lang.String)" class="member-name-link">restore</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Restore the archived (soft-deleted) SapErpComponent to active.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Start a fluent search that will return all SapErpComponent assets.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient,boolean)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+ boolean&nbsp;includeArchived)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Start a fluent search that will return all SapErpComponent assets.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../search/FluentSearch.FluentSearchBuilder.html" title="class in com.atlan.model.search">FluentSearch.FluentSearchBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(com.atlan.AtlanClient,boolean)" class="member-name-link">select</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
- boolean&nbsp;includeArchived)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Start a fluent search that will return all SapErpComponent assets.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToReference()" class="member-name-link">trimToReference</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toBuilder()" class="member-name-link">toBuilder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToReference()" class="member-name-link">trimToReference</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to create a relationship to a SapErpComponent, from a potentially
  more-complete SapErpComponent object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToRequired()" class="member-name-link">trimToRequired</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trimToRequired()" class="member-name-link">trimToRequired</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to apply an update to a SapErpComponent,
  from a potentially more-complete SapErpComponent object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)" class="member-name-link">updateAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateAnnouncement(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)" class="member-name-link">updateAnnouncement</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="../enums/AtlanAnnouncementType.html" title="enum class in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Update the announcement on a SapErpComponent.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)" class="member-name-link">updateCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.html" title="class in com.atlan.model.assets">SapErpComponent</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateCertificate(com.atlan.AtlanClient,java.lang.String,com.atlan.model.enums.CertificateStatus,java.lang.String)" class="member-name-link">updateCertificate</a><wbr>(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="../enums/CertificateStatus.html" title="enum class in com.atlan.model.enums">CertificateStatus</a>&nbsp;certificate,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Update the certificate on a SapErpComponent.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SapErpComponent.SapErpComponentBuilder.html" title="class in com.atlan.model.assets">SapErpComponent.SapErpComponentBuilder</a><wbr>&lt;?,<wbr>?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updater(java.lang.String,java.lang.String)" class="member-name-link">updater</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qualifiedName,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Builds the minimal object necessary to update a SapErpComponent.</div>
 </div>
 </div>
@@ -1416,6 +1421,17 @@ implements <a href="ISapErpComponent.html" title="interface in com.atlan.model.a
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ISapErpComponent.html#getSapErpCdsViews()">getSapErpCdsViews</a></code>&nbsp;in interface&nbsp;<code><a href="ISapErpComponent.html" title="interface in com.atlan.model.assets">ISapErpComponent</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSapErpFioriApps()">
+<h3>getSapErpFioriApps</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ISapErpFioriApp.html" title="interface in com.atlan.model.assets">ISapErpFioriApp</a>&gt;</span>&nbsp;<span class="element-name">getSapErpFioriApps</span>()</div>
+<div class="block">SAP ERP Fiori Apps that belong to this SAP ERP Component.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISapErpComponent.html#getSapErpFioriApps()">getSapErpFioriApps</a></code>&nbsp;in interface&nbsp;<code><a href="ISapErpComponent.html" title="interface in com.atlan.model.assets">ISapErpComponent</a></code></dd>
 </dl>
 </section>
 </li>
