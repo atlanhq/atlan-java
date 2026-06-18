@@ -45,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = AssetGCPDataplexMetadata.class, name = AssetGCPDataplexMetadata.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetHistogram.class, name = AssetHistogram.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetSmusMetadataFormDetails.class, name = AssetSmusMetadataFormDetails.TYPE_NAME),
+    @JsonSubTypes.Type(value = AssetSummaryProvider.class, name = AssetSummaryProvider.TYPE_NAME),
     @JsonSubTypes.Type(value = AtlanAppErrorHandling.class, name = AtlanAppErrorHandling.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
     @JsonSubTypes.Type(value = AuthPolicyValiditySchedule.class, name = AuthPolicyValiditySchedule.TYPE_NAME),
