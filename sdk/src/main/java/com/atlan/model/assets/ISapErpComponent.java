@@ -52,6 +52,9 @@ public interface ISapErpComponent {
     /** SAP ERP Component associated with this SAP ERP CDS Views. */
     RelationField SAP_ERP_CDS_VIEWS = new RelationField("sapErpCdsViews");
 
+    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
+    RelationField SAP_ERP_FIORI_APPS = new RelationField("sapErpFioriApps");
+
     /** SAP ERP Component associated with this SAP ERP Function Modules. */
     RelationField SAP_ERP_FUNCTION_MODULES = new RelationField("sapErpFunctionModules");
 
@@ -724,6 +727,11 @@ public interface ISapErpComponent {
 
     /** SAP ERP Component associated with this SAP ERP CDS Views. */
     default SortedSet<ISapErpCdsView> getSapErpCdsViews() {
+        return null;
+    }
+
+    /** SAP ERP Fiori Apps that belong to this SAP ERP Component. */
+    default SortedSet<ISapErpFioriApp> getSapErpFioriApps() {
         return null;
     }
 

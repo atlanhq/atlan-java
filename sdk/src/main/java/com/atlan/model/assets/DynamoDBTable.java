@@ -435,6 +435,11 @@ public class DynamoDBTable extends Asset
     @Attribute
     Boolean sqlIsSecure;
 
+    /** Qualified names of data shares this asset is granted to. */
+    @Attribute
+    @Singular
+    SortedSet<String> sqlShareQualifiedNames;
+
     /** Definition of the table. */
     @Attribute
     String tableDefinition;

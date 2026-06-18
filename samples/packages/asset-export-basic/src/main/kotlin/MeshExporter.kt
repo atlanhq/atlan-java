@@ -47,6 +47,12 @@ class MeshExporter(
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
 
+            // Preload the domain cache up-front so identities resolve in level-order
+            // (parents-before-children). Without this, mid-tier domains lazy-loaded
+            // before their parent are cached with truncated identities, producing
+            // 1-level-short hierarchy paths in the export (CSA-444).
+            ctx.dataDomainCache.preload()
+
             // Retrieve all domains up-front
             val domains =
                 DataDomain
