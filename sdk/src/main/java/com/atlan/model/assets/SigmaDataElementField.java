@@ -107,7 +107,7 @@ public class SigmaDataElementField extends Asset
     @Attribute
     ISigmaDataElement sigmaDataElement;
 
-    /** TBC */
+    /** Formula or expression that defines this field. */
     @Attribute
     String sigmaDataElementFieldFormula;
 
