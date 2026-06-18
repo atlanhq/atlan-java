@@ -1207,6 +1207,8 @@ public class CosmosMongoDBCollectionTest {
             .sqlCoalesceEnvironmentName("String0")
             .sqlCoalesceProjectId("String0")
             .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .cosmosMongoDBDatabaseQualifiedName("String0")
             .cosmosMongoDBDatabase(CosmosMongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

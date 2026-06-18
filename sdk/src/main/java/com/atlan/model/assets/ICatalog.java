@@ -888,6 +888,9 @@ public interface ICatalog {
             case SapErpComponent.TYPE_NAME:
                 ref = SapErpComponent.refByQualifiedName(qualifiedName);
                 break;
+            case SapErpFioriApp.TYPE_NAME:
+                ref = SapErpFioriApp.refByQualifiedName(qualifiedName);
+                break;
             case SapErpFunctionModule.TYPE_NAME:
                 ref = SapErpFunctionModule.refByQualifiedName(qualifiedName);
                 break;
@@ -963,6 +966,9 @@ public interface ICatalog {
             case SnowflakeAIModelVersion.TYPE_NAME:
                 ref = SnowflakeAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
+            case SnowflakeListing.TYPE_NAME:
+                ref = SnowflakeListing.refByQualifiedName(qualifiedName);
+                break;
             case SnowflakeSemanticDimension.TYPE_NAME:
                 ref = SnowflakeSemanticDimension.refByQualifiedName(qualifiedName);
                 break;
@@ -977,6 +983,9 @@ public interface ICatalog {
                 break;
             case SnowflakeSemanticView.TYPE_NAME:
                 ref = SnowflakeSemanticView.refByQualifiedName(qualifiedName);
+                break;
+            case SnowflakeShare.TYPE_NAME:
+                ref = SnowflakeShare.refByQualifiedName(qualifiedName);
                 break;
             case SodaCheck.TYPE_NAME:
                 ref = SodaCheck.refByQualifiedName(qualifiedName);

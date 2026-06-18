@@ -1006,6 +1006,9 @@ public interface ISchema {
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
 
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 

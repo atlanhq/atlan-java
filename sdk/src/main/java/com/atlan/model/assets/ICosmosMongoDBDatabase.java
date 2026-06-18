@@ -914,8 +914,17 @@ public interface ICosmosMongoDBDatabase {
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
 
+    /** Whether this database was imported via a data share (true) or not (false). */
+    Boolean getSqlIsImportedViaDataShare();
+
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
+
+    /** Source-system identifier of the account that produced this imported database. */
+    String getSqlOriginAccountGuid();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();

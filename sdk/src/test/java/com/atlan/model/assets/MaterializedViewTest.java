@@ -93,6 +93,8 @@ public class MaterializedViewTest {
             .sqlCoalesceEnvironmentName("String0")
             .sqlCoalesceProjectId("String0")
             .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
