@@ -953,6 +953,9 @@ public interface IMaterializedView {
     /** Whether this asset is secure (true) or not (false). */
     Boolean getSqlIsSecure();
 
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Time (epoch) from which this materialized view is stale, in milliseconds. */
     Long getStaleSinceDate();
 
