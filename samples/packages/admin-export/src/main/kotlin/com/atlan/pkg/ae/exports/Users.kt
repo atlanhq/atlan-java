@@ -81,7 +81,7 @@ class Users(
                 } else {
                     user.attributes?.profileRole?.get(0)
                 }
-            val licenseType = user.assignedRole?.description ?: user.workspaceRole
+            val licenseType = licenseTypeOf(user)
             writer.writeRecord(
                 listOf(
                     iamUser?.username ?: user.username,
@@ -100,5 +100,30 @@ class Users(
                 ),
             )
         }
+    }
+
+    companion object {
+        /**
+         * Resolve the license type (workspace role) to display for a user, preferring the human-readable
+         * display name and never emitting a raw "$"-prefixed system identifier (CSA-449).
+         *
+         * Resolution order:
+         *  1. assignedRole.description (display name, e.g. "Guest") — populated for most users
+         *  2. humanized assignedRole.name (e.g. "$guest" -> "Guest") — when description is null/blank
+         *  3. humanized workspaceRole — when assignedRole itself is null
+         *  4. empty string — when nothing is available
+         */
+        internal fun licenseTypeOf(user: AtlanUser): String =
+            user.assignedRole?.description?.ifBlank { null }
+                ?: user.assignedRole?.name?.humanizeRole()
+                ?: user.workspaceRole?.humanizeRole()
+                ?: ""
+
+        /**
+         * Convert a system role identifier into a human-readable display name, e.g. "$guest" -> "Guest".
+         * Strips a leading "$" and capitalizes the first character; other values are returned unchanged.
+         * Blank input returns null so callers can fall through to the next option.
+         */
+        private fun String.humanizeRole(): String? = ifBlank { null }?.removePrefix("$")?.replaceFirstChar(Char::uppercaseChar)
     }
 }
