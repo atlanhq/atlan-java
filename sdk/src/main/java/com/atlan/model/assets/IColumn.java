@@ -25,6 +25,7 @@ import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetHistogram;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.ColumnValueFrequencyMap;
 import com.atlan.model.structs.Histogram;
 import com.atlan.model.structs.PopularityInsights;
@@ -768,6 +769,15 @@ public interface IColumn {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

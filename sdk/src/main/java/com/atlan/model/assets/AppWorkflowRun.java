@@ -119,6 +119,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Singular
     List<AppWorkflowRunStep> appWorkflowRunSteps;
 
+    /** Username of the user who stopped the workflow run. */
+    @Attribute
+    String appWorkflowRunStoppedBy;
+
     /** Unique identifier for the temporal run associated with this workflow execution. */
     @Attribute
     String appWorkflowRunTemporalRunId;
