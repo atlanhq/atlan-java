@@ -464,7 +464,7 @@ public interface ICognite3DModel {
     /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
     String getAssetSummary();
 
-    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
     SortedSet<String> getAssetSummaryFilterTokens();
 
     /** Metadata about the provider of this asset's summary. */

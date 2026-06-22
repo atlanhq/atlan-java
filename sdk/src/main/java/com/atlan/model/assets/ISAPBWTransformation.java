@@ -48,7 +48,7 @@ public interface ISAPBWTransformation {
     /** DTPs that execute this Transformation. */
     RelationField SAP_BW_DTPS = new RelationField("sapBwDtps");
 
-    /** Rules defined within this transformation as key-value pairs (rule_id -> rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
+    /** Rules defined within this transformation as key-value pairs (rule_id mapped to rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
     KeywordField SAP_BW_RULES = new KeywordField("sapBwRules", "sapBwRules");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -471,7 +471,7 @@ public interface ISAPBWTransformation {
     /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
     String getAssetSummary();
 
-    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
     SortedSet<String> getAssetSummaryFilterTokens();
 
     /** Metadata about the provider of this asset's summary. */
@@ -725,7 +725,7 @@ public interface ISAPBWTransformation {
     /** Unique name of the SAP BW parent asset in which this asset exists. */
     String getSapBwParentQualifiedName();
 
-    /** Rules defined within this transformation as key-value pairs (rule_id -> rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
+    /** Rules defined within this transformation as key-value pairs (rule_id mapped to rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
     List<Map<String, String>> getSapBwRules();
 
     /** Name of the SAP component, representing a specific functional area in SAP. */

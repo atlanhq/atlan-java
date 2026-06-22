@@ -547,7 +547,7 @@ public interface IAsset {
     /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
     KeywordField ASSET_SUMMARY = new KeywordField("assetSummary", "assetSummary");
 
-    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
     KeywordField ASSET_SUMMARY_FILTER_TOKENS = new KeywordField("assetSummaryFilterTokens", "assetSummaryFilterTokens");
 
     /** Metadata about the provider of this asset's summary. */
@@ -1233,7 +1233,7 @@ public interface IAsset {
     /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
     String getAssetSummary();
 
-    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
     SortedSet<String> getAssetSummaryFilterTokens();
 
     /** Metadata about the provider of this asset's summary. */

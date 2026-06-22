@@ -684,7 +684,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String assetSummary;
 
-    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as '<section>|||<name>|||<count>'. */
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
     @Attribute
     @Singular
     SortedSet<String> assetSummaryFilterTokens;
