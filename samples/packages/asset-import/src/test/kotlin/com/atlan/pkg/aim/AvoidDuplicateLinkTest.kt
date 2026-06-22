@@ -5,6 +5,7 @@ package com.atlan.pkg.aim
 import AssetImportCfg
 import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
+import com.atlan.model.assets.ILink
 import com.atlan.model.assets.Link
 import com.atlan.model.assets.Schema
 import com.atlan.model.enums.AtlanConnectorType
@@ -243,37 +244,32 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
     }
 
     private fun validateTwoLinks() {
-        val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
-        val request =
-            Database
-                .select(client)
-                .where(Database.CONNECTION_QUALIFIED_NAME.eq(c1.qualifiedName))
-                .includesOnResults(databaseAttrs)
-                .includeOnRelations(Schema.NAME)
-                .includeOnRelations(Link.NAME)
-                .includeOnRelations(Link.LINK)
-                .includeOnRelations(Link.STATUS)
-                .toRequest()
-        val response =
-            retrySearchUntil(request, 1, condition = { r ->
-                (r.assets?.firstOrNull() as? Database)?.links?.size == 2
-            })
-        val found = response.assets
-        assertEquals(1, found.size)
-        val db = found[0] as Database
-        assertEquals(DB_NAME, db.name)
-        assertEquals(c1.qualifiedName, db.connectionQualifiedName)
-        assertEquals(conn1Type, db.connectorType)
-        val links = db.links
-        assertEquals(2, links.size)
-        val names = links.map { it.name }.toSet()
-        assertEquals(setOf(LINK_NAME1, LINK_NAME2), names)
-        val urls = links.map { it.link }.toSet()
-        assertEquals(setOf(LINK_URL1, LINK_URL2), urls)
-        links.filter { it.name == LINK_NAME2 }.forEach { linkGuid2 = it.guid }
+        validateLinkCount(2, setOf(LINK_NAME1, LINK_NAME2), setOf(LINK_URL1, LINK_URL2)) { links ->
+            links.filter { it.name == LINK_NAME2 }.forEach { linkGuid2 = it.guid }
+        }
     }
 
     private fun validateThreeLinks() {
+        validateLinkCount(3, setOf(LINK_NAME1, LINK_NAME2, LINK_NAME3), setOf(LINK_URL1, LINK_URL2, LINK_URL3)) { links ->
+            links.filter { it.name == LINK_NAME3 }.forEach { linkGuid3 = it.guid }
+        }
+    }
+
+    /**
+     * Shared validation for the multi-link cases. Waits for the database's link-relationship
+     * count to converge to [expectedCount] before reading. Just retrying on hits >= 1 isn't
+     * enough — the Database row indexes synchronously, but the new Link → Database edge
+     * propagates separately, so 'links.size' can briefly read 1 (or N-1) before settling at
+     * the expected value and the assertions below intermittently fail as
+     * "expected [2] but found [1]" / "expected [3] but found [2]" on the daily
+     * Test (leangraph-test) workflow under matrix concurrency.
+     */
+    private fun validateLinkCount(
+        expectedCount: Int,
+        expectedNames: Set<String>,
+        expectedUrls: Set<String>,
+        captureGuid: (Collection<ILink>) -> Unit,
+    ) {
         val c1 = Connection.findByName(client, conn1, conn1Type, connectionAttrs)[0]!!
         val request =
             Database
@@ -286,9 +282,10 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
                 .includeOnRelations(Link.STATUS)
                 .toRequest()
         val response =
-            retrySearchUntil(request, 1, condition = { r ->
-                (r.assets?.firstOrNull() as? Database)?.links?.size == 3
-            })
+            retrySearchUntil(request, 1) { resp ->
+                val first = resp.assets?.firstOrNull() as? Database
+                first?.links?.size == expectedCount
+            }
         val found = response.assets
         assertEquals(1, found.size)
         val db = found[0] as Database
@@ -296,11 +293,9 @@ class AvoidDuplicateLinkTest : PackageTest("adl") {
         assertEquals(c1.qualifiedName, db.connectionQualifiedName)
         assertEquals(conn1Type, db.connectorType)
         val links = db.links
-        assertEquals(3, links.size)
-        val names = links.map { it.name }.toSet()
-        assertEquals(setOf(LINK_NAME1, LINK_NAME2, LINK_NAME3), names)
-        val urls = links.map { it.link }.toSet()
-        assertEquals(setOf(LINK_URL1, LINK_URL2, LINK_URL3), urls)
-        links.filter { it.name == LINK_NAME3 }.forEach { linkGuid3 = it.guid }
+        assertEquals(expectedCount, links.size)
+        assertEquals(expectedNames, links.map { it.name }.toSet())
+        assertEquals(expectedUrls, links.map { it.link }.toSet())
+        captureGuid(links)
     }
 }
