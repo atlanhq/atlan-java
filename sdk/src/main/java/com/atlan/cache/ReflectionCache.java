@@ -266,11 +266,46 @@ public class ReflectionCache {
             } else if (value == null) {
                 builder.nullField(fieldName);
             } else {
-                setter.invoke(builder, value);
+                setter.invoke(builder, stripNullElements(value));
             }
             return true;
         }
         return false;
+    }
+
+    /**
+     * Remove any null elements from a collection value before it is handed to a builder setter.
+     * Some {@code @Singular SortedSet} fields back onto a {@link TreeSet}, which is materialized at
+     * {@code build()} time; a null element in the incoming payload would otherwise trigger a
+     * {@link NullPointerException} via {@link Comparable#compareTo} with no useful reference chain.
+     * A null element in a set/list attribute is never meaningful, so it is simply dropped.
+     *
+     * @param value the value about to be set on a builder
+     * @return the same value, or (for collections containing nulls) a null-free copy preserving order
+     */
+    private static Object stripNullElements(Object value) {
+        if (!(value instanceof Collection<?> collection)) {
+            return value;
+        }
+        // Detect nulls by iteration rather than contains(null), since the collection may already be
+        // a comparator-backed set (e.g. TreeSet) whose contains(null) would itself throw.
+        boolean hasNull = false;
+        for (Object element : collection) {
+            if (element == null) {
+                hasNull = true;
+                break;
+            }
+        }
+        if (!hasNull) {
+            return value;
+        }
+        List<Object> cleaned = new ArrayList<>(collection.size());
+        for (Object element : collection) {
+            if (element != null) {
+                cleaned.add(element);
+            }
+        }
+        return cleaned;
     }
 
     /**
@@ -295,7 +330,7 @@ public class ReflectionCache {
             } else if (value == null) {
                 builder.nullField(fieldName);
             } else {
-                setter.invoke(builder, value);
+                setter.invoke(builder, stripNullElements(value));
             }
         }
     }

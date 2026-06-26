@@ -136,18 +136,24 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (atlanTags != null) {
             builder.atlanTags(atlanTags);
         }
-        TreeSet<String> meaningNames =
+        // Note: deserialize these sorted-set fields as Lists (not TreeSets) so that a null element
+        // in the payload does not trigger a NullPointerException while Jackson builds the TreeSet;
+        // nulls are stripped here and the builder re-sorts the remaining elements at build() time.
+        List<String> meaningNames =
                 JacksonUtils.deserializeObject(client, root, "meaningNames", new TypeReference<>() {});
         if (meaningNames != null) {
+            meaningNames.removeIf(Objects::isNull);
             builder.meaningNames(meaningNames);
         }
-        TreeSet<Meaning> meanings = JacksonUtils.deserializeObject(client, root, "meanings", new TypeReference<>() {});
+        List<Meaning> meanings = JacksonUtils.deserializeObject(client, root, "meanings", new TypeReference<>() {});
         if (meanings != null) {
+            meanings.removeIf(Objects::isNull);
             builder.meanings(meanings);
         }
-        TreeSet<String> pendingTasks =
+        List<String> pendingTasks =
                 JacksonUtils.deserializeObject(client, root, "pendingTasks", new TypeReference<>() {});
         if (pendingTasks != null) {
+            pendingTasks.removeIf(Objects::isNull);
             builder.pendingTasks(pendingTasks);
         }
         List<LineageRef> immediateUpstream =
