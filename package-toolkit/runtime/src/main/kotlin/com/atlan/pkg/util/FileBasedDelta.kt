@@ -180,10 +180,19 @@ class FileBasedDelta(
         reader.stream().skip(1).forEach { r: CsvRecord ->
             val values = r.fields
             val assetIdentity = resolveAsset(values, header)
-            if (assetIdentity != null) {
+            // Guard against rows that resolve to a blank typeName and/or qualifiedName (e.g. a trailing
+            // ",,,,," line that slipped into a previously-written .processed file). Caching such an identity
+            // serializes its key as "::", which later fails deserialization with
+            // "Invalid asset identity: ::" while iterating the checksum cache. (CSA-467)
+            if (assetIdentity != null &&
+                assetIdentity.typeName.isNotBlank() &&
+                assetIdentity.qualifiedName.isNotBlank()
+            ) {
                 val singleLine = r.fields.joinToString("§")
                 val checksum = Hashing.murmur3_128().hashString(singleLine, Charsets.UTF_8).toString()
                 cache.put(assetIdentity, checksum)
+            } else {
+                logger.warn { "Skipping row with blank typeName/qualifiedName in $filename: $values" }
             }
         }
     }
