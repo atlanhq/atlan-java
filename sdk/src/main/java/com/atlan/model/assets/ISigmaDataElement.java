@@ -22,6 +22,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -50,10 +51,10 @@ public interface ISigmaDataElement {
     /** Data element fields that exist in this data element. */
     RelationField SIGMA_DATA_ELEMENT_FIELDS = new RelationField("sigmaDataElementFields");
 
-    /** TBC */
+    /** Query backing this data element. */
     TextField SIGMA_DATA_ELEMENT_QUERY = new TextField("sigmaDataElementQuery", "sigmaDataElementQuery");
 
-    /** TBC */
+    /** Type of this data element. */
     KeywordField SIGMA_DATA_ELEMENT_TYPE = new KeywordField("sigmaDataElementType", "sigmaDataElementType");
 
     /** Page on which this data element exists. */
@@ -476,6 +477,15 @@ public interface ISigmaDataElement {
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
 
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
+
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();
 
@@ -715,10 +725,10 @@ public interface ISigmaDataElement {
     /** Unique name of the data element in which this asset exists. */
     String getSigmaDataElementQualifiedName();
 
-    /** TBC */
+    /** Query backing this data element. */
     String getSigmaDataElementQuery();
 
-    /** TBC */
+    /** Type of this data element. */
     String getSigmaDataElementType();
 
     /** Page on which this data element exists. */

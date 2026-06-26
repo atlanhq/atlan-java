@@ -24,6 +24,7 @@ import com.atlan.model.structs.AppWorkflowRunStep;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
@@ -100,6 +101,9 @@ public interface IAppWorkflowRun {
 
     /** Collection of individual workflow steps in this run. */
     KeywordField APP_WORKFLOW_RUN_STEPS = new KeywordField("appWorkflowRunSteps", "appWorkflowRunSteps");
+
+    /** Username of the user who stopped the workflow run. */
+    KeywordField APP_WORKFLOW_RUN_STOPPED_BY = new KeywordField("appWorkflowRunStoppedBy", "appWorkflowRunStoppedBy");
 
     /** Unique identifier for the temporal run associated with this workflow execution. */
     KeywordField APP_WORKFLOW_RUN_TEMPORAL_RUN_ID =
@@ -181,6 +185,9 @@ public interface IAppWorkflowRun {
 
     /** Collection of individual workflow steps in this run. */
     List<AppWorkflowRunStep> getAppWorkflowRunSteps();
+
+    /** Username of the user who stopped the workflow run. */
+    String getAppWorkflowRunStoppedBy();
 
     /** Unique identifier for the temporal run associated with this workflow execution. */
     String getAppWorkflowRunTemporalRunId();
@@ -572,6 +579,15 @@ public interface IAppWorkflowRun {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

@@ -20,6 +20,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
+import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -831,6 +832,18 @@ public interface ICatalog {
             case SAPProcess.TYPE_NAME:
                 ref = SAPProcess.refByQualifiedName(qualifiedName);
                 break;
+            case SSRSDataSet.TYPE_NAME:
+                ref = SSRSDataSet.refByQualifiedName(qualifiedName);
+                break;
+            case SSRSField.TYPE_NAME:
+                ref = SSRSField.refByQualifiedName(qualifiedName);
+                break;
+            case SSRSFolder.TYPE_NAME:
+                ref = SSRSFolder.refByQualifiedName(qualifiedName);
+                break;
+            case SSRSReport.TYPE_NAME:
+                ref = SSRSReport.refByQualifiedName(qualifiedName);
+                break;
             case SageMakerFeature.TYPE_NAME:
                 ref = SageMakerFeature.refByQualifiedName(qualifiedName);
                 break;
@@ -932,6 +945,12 @@ public interface ICatalog {
                 break;
             case SigmaDataElementField.TYPE_NAME:
                 ref = SigmaDataElementField.refByQualifiedName(qualifiedName);
+                break;
+            case SigmaDataModel.TYPE_NAME:
+                ref = SigmaDataModel.refByQualifiedName(qualifiedName);
+                break;
+            case SigmaDataModelColumn.TYPE_NAME:
+                ref = SigmaDataModelColumn.refByQualifiedName(qualifiedName);
                 break;
             case SigmaDataset.TYPE_NAME:
                 ref = SigmaDataset.refByQualifiedName(qualifiedName);
@@ -1082,6 +1101,15 @@ public interface ICatalog {
                 break;
             case ThoughtspotWorksheet.TYPE_NAME:
                 ref = ThoughtspotWorksheet.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredContainer.TYPE_NAME:
+                ref = UnstructuredContainer.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredFolder.TYPE_NAME:
+                ref = UnstructuredFolder.refByQualifiedName(qualifiedName);
+                break;
+            case UnstructuredObject.TYPE_NAME:
+                ref = UnstructuredObject.refByQualifiedName(qualifiedName);
                 break;
             case View.TYPE_NAME:
                 ref = View.refByQualifiedName(qualifiedName);
@@ -1509,6 +1537,15 @@ public interface ICatalog {
 
     /** Unique name of the space that contains this asset. */
     String getAssetSpaceQualifiedName();
+
+    /** Provider-defined summary of this asset as a JSON-stringified object. Display-only; the rendered shape is provider-specific. */
+    String getAssetSummary();
+
+    /** Flattened tokens for section-scoped filtering on assetSummary. Each token is shaped as 'section|||name|||count'. */
+    SortedSet<String> getAssetSummaryFilterTokens();
+
+    /** Metadata about the provider of this asset's summary. */
+    AssetSummaryProvider getAssetSummaryProvider();
 
     /** List of tags attached to this asset. */
     SortedSet<String> getAssetTags();

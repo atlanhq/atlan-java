@@ -137,7 +137,7 @@ public class SAPBWTransformation extends Asset
     @Attribute
     String sapBwParentQualifiedName;
 
-    /** Rules defined within this transformation as key-value pairs (rule_id -> rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
+    /** Rules defined within this transformation as key-value pairs (rule_id mapped to rule_type, sourced from RSTRANRULE). Mirrors the SAP ERP sapErpFunctionModuleImportParams shape. */
     @Attribute
     @Singular
     List<Map<String, String>> sapBwRules;
