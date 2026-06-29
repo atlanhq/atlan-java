@@ -73,6 +73,14 @@ public class StringUtilsTest {
     }
 
     @Test
+    void decodeContentWithLiteralPercent() {
+        // Plain text with % not followed by valid hex should be returned as-is
+        assertEquals(StringUtils.decodeContent("50% faster"), "50% faster");
+        assertEquals(StringUtils.decodeContent("usage: 100%; overflow"), "usage: 100%; overflow");
+        assertNull(StringUtils.decodeContent(null));
+    }
+
+    @Test
     void snakeCaseSimple() {
         final String test = "SomeName";
         final String snakeCaseU = StringUtils.getUpperSnakeCase(test);
