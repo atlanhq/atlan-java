@@ -59,7 +59,7 @@ class CSVReader
         private val atlanTagHandling: AtlanTagHandling = AtlanTagHandling.REPLACE,
         private val creationHandling: AssetCreationHandling = AssetCreationHandling.FULL,
         private val tableViewAgnostic: Boolean = false,
-        fieldSeparator: Char = ',',
+        private val fieldSeparator: Char = ',',
         private val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
     ) : Closeable {
         private val reader: CsvReader<CsvRecord>
@@ -187,7 +187,7 @@ class CSVReader
                         val chunkSize = totalRowCount / parallelism
                         val currentRecordCount = AtomicLong(0)
                         var chunkPath = Files.createTempFile("chunk_0_", ".csv")
-                        var writer = CSVWriter(chunkPath.toString(), ',')
+                        var writer = CSVWriter(chunkPath.toString(), fieldSeparator)
                         reader.stream().skip(1).forEach { row: CsvRecord ->
                             // Split the original file up into multiple smaller files for parallel-processing
                             if (rowToAsset.includeRow(row.fields, header, typeIdx, qualifiedNameIdx)) {
@@ -199,7 +199,7 @@ class CSVReader
                                     csvChunkFiles.add(chunkPath)
                                     currentRecordCount.set(0)
                                     chunkPath = Files.createTempFile("chunk_${csvChunkFiles.size}_", ".csv")
-                                    writer = CSVWriter(chunkPath.toString(), ',')
+                                    writer = CSVWriter(chunkPath.toString(), fieldSeparator)
                                 }
                             }
                         }
@@ -216,7 +216,7 @@ class CSVReader
                             val reader =
                                 CsvReader
                                     .builder()
-                                    .fieldSeparator(',')
+                                    .fieldSeparator(fieldSeparator)
                                     .quoteCharacter('"')
                                     .skipEmptyLines(true)
                                     .extraFieldStrategy(FieldMismatchStrategy.STRICT)
