@@ -87,6 +87,21 @@ uiConfig {
         }
       }
     }
+    ["Options"] {
+      description = "Asset creation options"
+      inputs {
+        ["object_creation_mode"] = new Radio {
+          title = "Schema object creation"
+          required = true
+          possibleValues {
+            ["PHYSICAL"] = "Physical instances (per-body, enables field-level lineage)"
+            ["NONE"] = "None (bodies-only, rely on JSON blobs on API Methods)"
+          }
+          default = "PHYSICAL"
+          helpText = "Physical creates separate API Object/Field assets for each request/response body occurrence. None skips object/field creation entirely to reduce asset count."
+        }
+      }
+    }
     ["Connection"] {
       description = "Connection details"
       inputs {
