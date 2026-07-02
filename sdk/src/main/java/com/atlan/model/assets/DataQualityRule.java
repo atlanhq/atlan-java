@@ -135,6 +135,10 @@ public class DataQualityRule extends Asset implements IDataQualityRule, IDataQua
     @Date
     Long dqRuleLatestResultFetchedAt;
 
+    /** Total number of rows that the rule's last run evaluated. */
+    @Attribute
+    Long dqRuleLatestTotalRowsEvaluated;
+
     /** List of unique reference column's qualified names related to this rule. */
     @Attribute
     @Singular
