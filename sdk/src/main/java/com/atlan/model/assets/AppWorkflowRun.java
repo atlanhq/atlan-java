@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AppWorkflowRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanAppWorkflowOwnership;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -126,6 +127,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     /** Unique identifier for the temporal run associated with this workflow execution. */
     @Attribute
     String appWorkflowRunTemporalRunId;
+
+    /** Ownership of the parent workflow at execution time: SYSTEM (managed by Atlan) or USER (user-authored). Denormalized from the workflow so run-history listings can filter without a join. */
+    @Attribute
+    AtlanAppWorkflowOwnership appWorkflowRunWorkflowOwnership;
 
     /** The workflow that contains the workflow run. */
     @Attribute

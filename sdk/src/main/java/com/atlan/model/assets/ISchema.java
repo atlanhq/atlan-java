@@ -92,6 +92,9 @@ public interface ISchema {
     /** Snowflake tags that exist within this schema. */
     RelationField SNOWFLAKE_TAGS = new RelationField("snowflakeTags");
 
+    /** Databases to which this schema belongs. */
+    RelationField SQL_DATABASES = new RelationField("sqlDatabases");
+
     /** Number of tables in this schema. */
     NumericField TABLE_COUNT = new NumericField("tableCount", "tableCount");
 
@@ -1002,6 +1005,11 @@ public interface ISchema {
 
     /** Sources related to this asset. */
     default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Databases to which this schema belongs. */
+    default SortedSet<IDatabase> getSqlDatabases() {
         return null;
     }
 
