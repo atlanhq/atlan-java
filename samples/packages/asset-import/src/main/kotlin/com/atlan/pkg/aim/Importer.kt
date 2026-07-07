@@ -239,6 +239,7 @@ object Importer {
                             null
                         },
                     outputDirectory = outputDirectory,
+                    fieldSeparator = assetsFieldSeparator[0],
                 ).use { delta ->
 
                     delta.calculate()
