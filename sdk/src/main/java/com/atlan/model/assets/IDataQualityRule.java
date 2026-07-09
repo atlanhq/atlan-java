@@ -107,6 +107,10 @@ public interface IDataQualityRule {
     NumericField DQ_RULE_LATEST_RESULT_FETCHED_AT =
             new NumericField("dqRuleLatestResultFetchedAt", "dqRuleLatestResultFetchedAt");
 
+    /** Total number of rows that the rule's last run evaluated. */
+    NumericField DQ_RULE_LATEST_TOTAL_ROWS_EVALUATED =
+            new NumericField("dqRuleLatestTotalRowsEvaluated", "dqRuleLatestTotalRowsEvaluated");
+
     /** List of unique reference column's qualified names related to this rule. */
     KeywordField DQ_RULE_REFERENCE_COLUMN_QUALIFIED_NAMES =
             new KeywordField("dqRuleReferenceColumnQualifiedNames", "dqRuleReferenceColumnQualifiedNames");
@@ -705,6 +709,9 @@ public interface IDataQualityRule {
 
     /** Time (epoch) at which the latest rule result was fetched. */
     Long getDqRuleLatestResultFetchedAt();
+
+    /** Total number of rows that the rule's last run evaluated. */
+    Long getDqRuleLatestTotalRowsEvaluated();
 
     /** List of unique reference column's qualified names related to this rule. */
     SortedSet<String> getDqRuleReferenceColumnQualifiedNames();

@@ -60,6 +60,9 @@ public interface IDatabase {
     /** Source-system identifier of the account that produced this imported database. */
     KeywordField SQL_ORIGIN_ACCOUNT_GUID = new KeywordField("sqlOriginAccountGuid", "sqlOriginAccountGuid");
 
+    /** Schemas grouped under this database. */
+    RelationField SQL_SCHEMAS = new RelationField("sqlSchemas");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -914,6 +917,11 @@ public interface IDatabase {
 
     /** Source-system identifier of the account that produced this imported database. */
     String getSqlOriginAccountGuid();
+
+    /** Schemas grouped under this database. */
+    default SortedSet<ISchema> getSqlSchemas() {
+        return null;
+    }
 
     /** Qualified names of data shares this asset is granted to. */
     SortedSet<String> getSqlShareQualifiedNames();
