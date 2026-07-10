@@ -1155,6 +1155,7 @@ public class DataQualityRuleTest {
             .dqRuleLatestResultComputedAt(123456789L)
             .dqRuleLatestResultFetchedAt(123456789L)
             .dqRuleLatestMetricValue("String0")
+            .dqRuleLatestTotalRowsEvaluated(123456789L)
             .dqRuleLatestMetricValueComputedAt(123456789L)
             .dqRuleDimension(DataQualityDimension.COMPLETENESS)
             .dqRuleTemplateName("String0")

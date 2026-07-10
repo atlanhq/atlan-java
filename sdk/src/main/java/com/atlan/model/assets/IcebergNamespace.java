@@ -339,6 +339,11 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
+    /** Databases to which this schema belongs. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabase> sqlDatabases;
+
     /** Assets related to the model. */
     @Attribute
     @Singular

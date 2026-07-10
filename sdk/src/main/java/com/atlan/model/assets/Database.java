@@ -290,6 +290,11 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     @Attribute
     String sqlOriginAccountGuid;
 
+    /** Schemas grouped under this database. */
+    @Attribute
+    @Singular
+    SortedSet<ISchema> sqlSchemas;
+
     /** Qualified names of data shares this asset is granted to. */
     @Attribute
     @Singular

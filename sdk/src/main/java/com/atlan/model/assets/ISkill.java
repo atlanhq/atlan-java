@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SkillType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -54,13 +55,25 @@ public interface ISkill {
     /** Artifacts belonging to this skill. */
     RelationField SKILL_ARTIFACTS = new RelationField("skillArtifacts");
 
+    /** SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls. */
+    KeywordField SKILL_CHECKSUM = new KeywordField("skillChecksum", "skillChecksum");
+
+    /** Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant. */
+    BooleanField SKILL_IS_DORMANT = new BooleanField("skillIsDormant", "skillIsDormant");
+
+    /** Scope under which the skill was discovered, as a keyword string (for example, user or workspace). */
+    KeywordField SKILL_SCOPE = new KeywordField("skillScope", "skillScope");
+
     /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
     KeywordField SKILL_SLUG = new KeywordField("skillSlug", "skillSlug");
+
+    /** Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path). */
+    KeywordField SKILL_SOURCE_PATH = new KeywordField("skillSourcePath", "skillSourcePath");
 
     /** Lifecycle status of this skill version (draft or published). */
     KeywordField SKILL_STATUS = new KeywordField("skillStatus", "skillStatus");
 
-    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    /** Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system. */
     KeywordField SKILL_TYPE = new KeywordField("skillType", "skillType");
 
     /** String version identifier for this skill. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */
@@ -731,13 +744,25 @@ public interface ISkill {
         return null;
     }
 
+    /** SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls. */
+    String getSkillChecksum();
+
+    /** Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant. */
+    Boolean getSkillIsDormant();
+
+    /** Scope under which the skill was discovered, as a keyword string (for example, user or workspace). */
+    String getSkillScope();
+
     /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
     String getSkillSlug();
+
+    /** Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path). */
+    String getSkillSourcePath();
 
     /** Lifecycle status of this skill version (draft or published). */
     AgenticLifecycleStatus getSkillStatus();
 
-    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    /** Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system. */
     SkillType getSkillType();
 
     /** String version identifier for this skill. Will be superseded by agenticVersion (long, epoch-ms) on the Agentic supertype in a future release; continue using this for now. */

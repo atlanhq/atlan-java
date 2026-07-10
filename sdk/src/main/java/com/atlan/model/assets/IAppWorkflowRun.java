@@ -5,6 +5,8 @@ package com.atlan.model.assets;
 import com.atlan.model.enums.AppWorkflowRunStatus;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
@@ -90,6 +92,9 @@ public interface IAppWorkflowRun {
     /** Final results produced by the workflow run. */
     KeywordField APP_WORKFLOW_RUN_OUTPUTS = new KeywordField("appWorkflowRunOutputs", "appWorkflowRunOutputs");
 
+    /** Product surface of the parent workflow (marketplace, enrichment_studio, context_studio), denormalized onto the run and emitted as a metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    KeywordField APP_WORKFLOW_RUN_SOURCE = new KeywordField("appWorkflowRunSource", "appWorkflowRunSource");
+
     /** Timestamp when the workflow run began execution. */
     NumericField APP_WORKFLOW_RUN_STARTED_AT = new NumericField("appWorkflowRunStartedAt", "appWorkflowRunStartedAt");
 
@@ -108,6 +113,10 @@ public interface IAppWorkflowRun {
     /** Unique identifier for the temporal run associated with this workflow execution. */
     KeywordField APP_WORKFLOW_RUN_TEMPORAL_RUN_ID =
             new KeywordField("appWorkflowRunTemporalRunId", "appWorkflowRunTemporalRunId");
+
+    /** Ownership of the parent workflow at execution time: SYSTEM (managed by Atlan) or USER (user-authored). Denormalized from the workflow so run-history listings can filter without a join. */
+    KeywordField APP_WORKFLOW_RUN_WORKFLOW_OWNERSHIP =
+            new KeywordField("appWorkflowRunWorkflowOwnership", "appWorkflowRunWorkflowOwnership");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -174,6 +183,9 @@ public interface IAppWorkflowRun {
     /** Final results produced by the workflow run. */
     Map<String, String> getAppWorkflowRunOutputs();
 
+    /** Product surface of the parent workflow (marketplace, enrichment_studio, context_studio), denormalized onto the run and emitted as a metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    AtlanAppWorkflowSource getAppWorkflowRunSource();
+
     /** Timestamp when the workflow run began execution. */
     Long getAppWorkflowRunStartedAt();
 
@@ -191,6 +203,9 @@ public interface IAppWorkflowRun {
 
     /** Unique identifier for the temporal run associated with this workflow execution. */
     String getAppWorkflowRunTemporalRunId();
+
+    /** Ownership of the parent workflow at execution time: SYSTEM (managed by Atlan) or USER (user-authored). Denormalized from the workflow so run-history listings can filter without a join. */
+    AtlanAppWorkflowOwnership getAppWorkflowRunWorkflowOwnership();
 
     /** Application owning the Asset. */
     default IApplication getApplication() {
