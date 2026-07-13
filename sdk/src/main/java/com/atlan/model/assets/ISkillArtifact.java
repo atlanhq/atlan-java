@@ -14,6 +14,7 @@ import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.FileType;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -40,6 +41,9 @@ import javax.annotation.processing.Generated;
 public interface ISkillArtifact {
 
     public static final String TYPE_NAME = "SkillArtifact";
+
+    /** Full textual body of this skill artifact file (for example, the markdown of SKILL.md or the source of a script). Stored per-artifact because a skill folder contains many files, each with distinct content. */
+    TextField SKILL_ARTIFACT_CONTENT = new TextField("skillArtifactContent", "skillArtifactContent");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -718,6 +722,9 @@ public interface ISkillArtifact {
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
         return null;
     }
+
+    /** Full textual body of this skill artifact file (for example, the markdown of SKILL.md or the source of a script). Stored per-artifact because a skill folder contains many files, each with distinct content. */
+    String getSkillArtifactContent();
 
     /** TBC */
     default SortedSet<ISodaCheck> getSodaChecks() {

@@ -927,6 +927,11 @@ public interface IIcebergCatalog {
     /** Source-system identifier of the account that produced this imported database. */
     String getSqlOriginAccountGuid();
 
+    /** Schemas grouped under this database. */
+    default SortedSet<ISchema> getSqlSchemas() {
+        return null;
+    }
+
     /** Qualified names of data shares this asset is granted to. */
     SortedSet<String> getSqlShareQualifiedNames();
 

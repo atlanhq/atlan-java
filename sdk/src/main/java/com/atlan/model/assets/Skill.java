@@ -132,15 +132,31 @@ public class Skill extends Asset implements ISkill, IAgentic, ICatalog, IAsset, 
     @Singular
     SortedSet<ISkillArtifact> skillArtifacts;
 
+    /** SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls. */
+    @Attribute
+    String skillChecksum;
+
+    /** Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant. */
+    @Attribute
+    Boolean skillIsDormant;
+
+    /** Scope under which the skill was discovered, as a keyword string (for example, user or workspace). */
+    @Attribute
+    String skillScope;
+
     /** URL-safe unique identifier for this skill (for example, my-sql-skill). */
     @Attribute
     String skillSlug;
+
+    /** Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path). */
+    @Attribute
+    String skillSourcePath;
 
     /** Lifecycle status of this skill version (draft or published). */
     @Attribute
     AgenticLifecycleStatus skillStatus;
 
-    /** Origin type of this skill — system-provided, context repository output, or custom user/agent created. */
+    /** Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system. */
     @Attribute
     SkillType skillType;
 
