@@ -7,23 +7,24 @@ import javax.annotation.processing.Generated;
 import lombok.Getter;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
-public enum SkillType implements AtlanEnum {
-    SYSTEM("SYSTEM"),
-    CONTEXT_REPO("CONTEXT_REPO"),
-    CUSTOM("CUSTOM"),
-    CONNECTOR_SYNC("CONNECTOR_SYNC"),
+public enum AtlanAppWorkflowSource implements AtlanEnum {
+    CONNECTOR("connector"),
+    ENRICHMENT_STUDIO("enrichment_studio"),
+    BACKGROUND_JOB("background_job"),
+    SYSTEM_JOB("system_job"),
+    UNKNOWN("unknown"),
     ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    SkillType(String value) {
+    AtlanAppWorkflowSource(String value) {
         this.value = value;
     }
 
-    public static SkillType fromValue(String value) {
-        for (SkillType b : SkillType.values()) {
+    public static AtlanAppWorkflowSource fromValue(String value) {
+        for (AtlanAppWorkflowSource b : AtlanAppWorkflowSource.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

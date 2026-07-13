@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
@@ -65,6 +66,9 @@ public interface IAtlanAppWorkflow {
 
     /** Slug of the workflow. */
     KeywordField ATLAN_APP_WORKFLOW_SLUG = new KeywordField("atlanAppWorkflowSlug", "atlanAppWorkflowSlug");
+
+    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    KeywordField ATLAN_APP_WORKFLOW_SOURCE = new KeywordField("atlanAppWorkflowSource", "atlanAppWorkflowSource");
 
     /** Status of the workflow. */
     KeywordField ATLAN_APP_WORKFLOW_STATUS = new KeywordField("atlanAppWorkflowStatus", "atlanAppWorkflowStatus");
@@ -553,6 +557,9 @@ public interface IAtlanAppWorkflow {
 
     /** Slug of the workflow. */
     String getAtlanAppWorkflowSlug();
+
+    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    AtlanAppWorkflowSource getAtlanAppWorkflowSource();
 
     /** Status of the workflow. */
     AtlanAppWorkflowStatus getAtlanAppWorkflowStatus();

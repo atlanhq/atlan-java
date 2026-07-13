@@ -325,6 +325,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
+    /** Databases to which this schema belongs. */
+    @Attribute
+    @Singular
+    SortedSet<IDatabase> sqlDatabases;
+
     /** Assets related to the model. */
     @Attribute
     @Singular
