@@ -122,9 +122,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Artifacts belonging to this skill.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#SKILL_SLUG" class="member-name-link">SKILL_SLUG</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SKILL_CHECKSUM" class="member-name-link">SKILL_CHECKSUM</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SKILL_IS_DORMANT" class="member-name-link">SKILL_IS_DORMANT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SKILL_SCOPE" class="member-name-link">SKILL_SCOPE</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SKILL_SLUG" class="member-name-link">SKILL_SLUG</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SKILL_SOURCE_PATH" class="member-name-link">SKILL_SOURCE_PATH</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
 <div class="col-second even-row-color"><code><a href="#SKILL_STATUS" class="member-name-link">SKILL_STATUS</a></code></div>
@@ -134,7 +154,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#SKILL_TYPE" class="member-name-link">SKILL_TYPE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
 <div class="col-second even-row-color"><code><a href="#SKILL_VERSION" class="member-name-link">SKILL_VERSION</a></code></div>
@@ -1224,9 +1244,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Artifacts belonging to this skill.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillSlug()" class="member-name-link">getSkillSlug</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillChecksum()" class="member-name-link">getSkillChecksum</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillIsDormant()" class="member-name-link">getSkillIsDormant</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillScope()" class="member-name-link">getSkillScope</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillSlug()" class="member-name-link">getSkillSlug</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillSourcePath()" class="member-name-link">getSkillSourcePath</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/AgenticLifecycleStatus.html" title="enum class in com.atlan.model.enums">AgenticLifecycleStatus</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillStatus()" class="member-name-link">getSkillStatus</a>()</code></div>
@@ -1236,7 +1276,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillType()" class="member-name-link">getSkillType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSkillVersion()" class="member-name-link">getSkillVersion</a>()</code></div>
@@ -1488,10 +1528,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="SKILL_CHECKSUM">
+<h3>SKILL_CHECKSUM</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SKILL_CHECKSUM</span></div>
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SKILL_IS_DORMANT">
+<h3>SKILL_IS_DORMANT</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/BooleanField.html" title="class in com.atlan.model.fields">BooleanField</a></span>&nbsp;<span class="element-name">SKILL_IS_DORMANT</span></div>
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SKILL_SCOPE">
+<h3>SKILL_SCOPE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SKILL_SCOPE</span></div>
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</section>
+</li>
+<li>
 <section class="detail" id="SKILL_SLUG">
 <h3>SKILL_SLUG</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SKILL_SLUG</span></div>
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SKILL_SOURCE_PATH">
+<h3>SKILL_SOURCE_PATH</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SKILL_SOURCE_PATH</span></div>
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </section>
 </li>
 <li>
@@ -1505,7 +1573,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="SKILL_TYPE">
 <h3>SKILL_TYPE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SKILL_TYPE</span></div>
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </section>
 </li>
 <li>
@@ -2945,10 +3013,38 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getSkillChecksum()">
+<h3>getSkillChecksum</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillChecksum</span>()</div>
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillIsDormant()">
+<h3>getSkillIsDormant</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getSkillIsDormant</span>()</div>
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillScope()">
+<h3>getSkillScope</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillScope</span>()</div>
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getSkillSlug()">
 <h3>getSkillSlug</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillSlug</span>()</div>
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillSourcePath()">
+<h3>getSkillSourcePath</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillSourcePath</span>()</div>
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </section>
 </li>
 <li>
@@ -2962,7 +3058,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getSkillType()">
 <h3>getSkillType</h3>
 <div class="member-signature"><span class="return-type"><a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a></span>&nbsp;<span class="element-name">getSkillType</span>()</div>
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </section>
 </li>
 <li>

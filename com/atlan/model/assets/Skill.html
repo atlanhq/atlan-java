@@ -170,7 +170,7 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 <code><a href="IReferenceable.html#ASSIGNED_TERMS">ASSIGNED_TERMS</a>, <a href="IReferenceable.html#ATLAN_TAGS">ATLAN_TAGS</a>, <a href="IReferenceable.html#CREATE_TIME">CREATE_TIME</a>, <a href="IReferenceable.html#CREATED_BY">CREATED_BY</a>, <a href="IReferenceable.html#CUSTOM_ATTRIBUTES">CUSTOM_ATTRIBUTES</a>, <a href="IReferenceable.html#GUID">GUID</a>, <a href="IReferenceable.html#PROPAGATED_ATLAN_TAGS">PROPAGATED_ATLAN_TAGS</a>, <a href="IReferenceable.html#STATUS">STATUS</a>, <a href="IReferenceable.html#SUPER_TYPE_NAMES">SUPER_TYPE_NAMES</a>, <a href="IReferenceable.html#UPDATE_TIME">UPDATE_TIME</a>, <a href="IReferenceable.html#UPDATED_BY">UPDATED_BY</a></code></div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-com.atlan.model.assets.ISkill">Fields inherited from interface&nbsp;com.atlan.model.assets.<a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></h3>
-<code><a href="ISkill.html#SKILL_ARTIFACT_FILE_QUALIFIED_NAMES">SKILL_ARTIFACT_FILE_QUALIFIED_NAMES</a>, <a href="ISkill.html#SKILL_ARTIFACT_PATHS">SKILL_ARTIFACT_PATHS</a>, <a href="ISkill.html#SKILL_ARTIFACTS">SKILL_ARTIFACTS</a>, <a href="ISkill.html#SKILL_SLUG">SKILL_SLUG</a>, <a href="ISkill.html#SKILL_STATUS">SKILL_STATUS</a>, <a href="ISkill.html#SKILL_TYPE">SKILL_TYPE</a>, <a href="ISkill.html#SKILL_VERSION">SKILL_VERSION</a></code></div>
+<code><a href="ISkill.html#SKILL_ARTIFACT_FILE_QUALIFIED_NAMES">SKILL_ARTIFACT_FILE_QUALIFIED_NAMES</a>, <a href="ISkill.html#SKILL_ARTIFACT_PATHS">SKILL_ARTIFACT_PATHS</a>, <a href="ISkill.html#SKILL_ARTIFACTS">SKILL_ARTIFACTS</a>, <a href="ISkill.html#SKILL_CHECKSUM">SKILL_CHECKSUM</a>, <a href="ISkill.html#SKILL_IS_DORMANT">SKILL_IS_DORMANT</a>, <a href="ISkill.html#SKILL_SCOPE">SKILL_SCOPE</a>, <a href="ISkill.html#SKILL_SLUG">SKILL_SLUG</a>, <a href="ISkill.html#SKILL_SOURCE_PATH">SKILL_SOURCE_PATH</a>, <a href="ISkill.html#SKILL_STATUS">SKILL_STATUS</a>, <a href="ISkill.html#SKILL_TYPE">SKILL_TYPE</a>, <a href="ISkill.html#SKILL_VERSION">SKILL_VERSION</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -352,9 +352,29 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 <div class="block">Artifacts belonging to this skill.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillSlug()" class="member-name-link">getSkillSlug</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillChecksum()" class="member-name-link">getSkillChecksum</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillIsDormant()" class="member-name-link">getSkillIsDormant</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillScope()" class="member-name-link">getSkillScope</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillSlug()" class="member-name-link">getSkillSlug</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillSourcePath()" class="member-name-link">getSkillSourcePath</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/AgenticLifecycleStatus.html" title="enum class in com.atlan.model.enums">AgenticLifecycleStatus</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillStatus()" class="member-name-link">getSkillStatus</a>()</code></div>
@@ -364,7 +384,7 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillType()" class="member-name-link">getSkillType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkillVersion()" class="member-name-link">getSkillVersion</a>()</code></div>
@@ -1385,6 +1405,39 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 </section>
 </li>
 <li>
+<section class="detail" id="getSkillChecksum()">
+<h3>getSkillChecksum</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillChecksum</span>()</div>
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISkill.html#getSkillChecksum()">getSkillChecksum</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillIsDormant()">
+<h3>getSkillIsDormant</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">getSkillIsDormant</span>()</div>
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISkill.html#getSkillIsDormant()">getSkillIsDormant</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillScope()">
+<h3>getSkillScope</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillScope</span>()</div>
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISkill.html#getSkillScope()">getSkillScope</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getSkillSlug()">
 <h3>getSkillSlug</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillSlug</span>()</div>
@@ -1392,6 +1445,17 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ISkill.html#getSkillSlug()">getSkillSlug</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkillSourcePath()">
+<h3>getSkillSourcePath</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSkillSourcePath</span>()</div>
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ISkill.html#getSkillSourcePath()">getSkillSourcePath</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>
 </dl>
 </section>
 </li>
@@ -1410,7 +1474,7 @@ implements <a href="ISkill.html" title="interface in com.atlan.model.assets">ISk
 <section class="detail" id="getSkillType()">
 <h3>getSkillType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a></span>&nbsp;<span class="element-name">getSkillType</span>()</div>
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ISkill.html#getSkillType()">getSkillType</a></code>&nbsp;in interface&nbsp;<code><a href="ISkill.html" title="interface in com.atlan.model.assets">ISkill</a></code></dd>

@@ -280,9 +280,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillArtifacts(java.util.Collection)" class="member-name-link">skillArtifacts</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="ISkillArtifact.html" title="interface in com.atlan.model.assets">ISkillArtifact</a>&gt;&nbsp;skillArtifacts)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillSlug(java.lang.String)" class="member-name-link">skillSlug</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillSlug)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillChecksum(java.lang.String)" class="member-name-link">skillChecksum</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillChecksum)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillIsDormant(java.lang.Boolean)" class="member-name-link">skillIsDormant</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;skillIsDormant)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillScope(java.lang.String)" class="member-name-link">skillScope</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillScope)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillSlug(java.lang.String)" class="member-name-link">skillSlug</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillSlug)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillSourcePath(java.lang.String)" class="member-name-link">skillSourcePath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillSourcePath)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillStatus(com.atlan.model.enums.AgenticLifecycleStatus)" class="member-name-link">skillStatus</a><wbr>(<a href="../enums/AgenticLifecycleStatus.html" title="enum class in com.atlan.model.enums">AgenticLifecycleStatus</a>&nbsp;skillStatus)</code></div>
@@ -292,7 +312,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillType(com.atlan.model.enums.SkillType)" class="member-name-link">skillType</a><wbr>(<a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a>&nbsp;skillType)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skillVersion(java.lang.String)" class="member-name-link">skillVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillVersion)</code></div>
@@ -656,10 +676,54 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="skillChecksum(java.lang.String)">
+<h3>skillChecksum</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillChecksum</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillChecksum)</span></div>
+<div class="block">SHA-256 hex digest of the source SKILL.md content (UTF-8), used for change detection across crawls.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="skillIsDormant(java.lang.Boolean)">
+<h3>skillIsDormant</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillIsDormant</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&nbsp;skillIsDormant)</span></div>
+<div class="block">Health signal — true when the skill was discovered with a missing, empty, or insufficiently descriptive description and is surfaced for governance review. Orthogonal to status: a published skill can also be dormant.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="skillScope(java.lang.String)">
+<h3>skillScope</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillScope</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillScope)</span></div>
+<div class="block">Scope under which the skill was discovered, as a keyword string (for example, user or workspace).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="skillSlug(java.lang.String)">
 <h3>skillSlug</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillSlug</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillSlug)</span></div>
 <div class="block">URL-safe unique identifier for this skill (for example, my-sql-skill).</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>this</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="skillSourcePath(java.lang.String)">
+<h3>skillSourcePath</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillSourcePath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;skillSourcePath)</span></div>
+<div class="block">Source-system path the skill was synced from (for example, the Databricks workspace SKILL.md path).</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>
@@ -681,7 +745,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="skillType(com.atlan.model.enums.SkillType)">
 <h3>skillType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Skill.SkillBuilder.html" title="type parameter in Skill.SkillBuilder">B</a></span>&nbsp;<span class="element-name">skillType</span><wbr><span class="parameters">(<a href="../enums/SkillType.html" title="enum class in com.atlan.model.enums">SkillType</a>&nbsp;skillType)</span></div>
-<div class="block">Origin type of this skill — system-provided, context repository output, or custom user/agent created.</div>
+<div class="block">Origin type of this skill — system-provided, context repository output, custom user/agent created, or connector-synced from an external system.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>this</code>.</dd>
