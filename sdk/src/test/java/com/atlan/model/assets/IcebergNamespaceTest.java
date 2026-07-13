@@ -1214,6 +1214,8 @@ public class IcebergNamespaceTest {
             .table(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .view(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .view(View.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlDatabase(Database.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlDatabase(Database.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeDynamicTable(SnowflakeDynamicTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeDynamicTable(
                     SnowflakeDynamicTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

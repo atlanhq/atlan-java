@@ -919,6 +919,11 @@ public interface IIcebergNamespace {
         return null;
     }
 
+    /** Databases to which this schema belongs. */
+    default SortedSet<IDatabase> getSqlDatabases() {
+        return null;
+    }
+
     /** Assets related to the model. */
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
