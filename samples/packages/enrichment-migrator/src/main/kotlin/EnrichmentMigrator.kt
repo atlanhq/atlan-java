@@ -35,8 +35,8 @@ object EnrichmentMigrator {
 
             val fieldSeparator = ctx.config.getEffectiveValue(EnrichmentMigratorCfg::fieldSeparator, EnrichmentMigratorCfg::configType)
 
-            if (fieldSeparator.length > 1) {
-                logger.error { "Field separator must be only a single character. The provided value is too long: $fieldSeparator" }
+            if (fieldSeparator.length != 1) {
+                logger.error { "Field separator must be exactly one character. The provided value is invalid: '$fieldSeparator'" }
                 exitProcess(2)
             }
             val sourceConnectionQN = ctx.config.sourceConnection[0]
