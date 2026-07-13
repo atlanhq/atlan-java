@@ -36,7 +36,7 @@ jetty = "12.1.10"
 netty = "4.2.15.Final"
 rhino = "1.9.1"
 nimbus = "10.9.1"
-otel = "1.63.0"
+otel = "1.64.0"
 otel-instrumentation = "2.29.0-alpha"
 
 [libraries]
