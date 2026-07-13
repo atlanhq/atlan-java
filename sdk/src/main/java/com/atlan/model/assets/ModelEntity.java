@@ -518,6 +518,7 @@ public class ModelEntity extends Asset implements IModelEntity, IModel, ICatalog
                 .modelQualifiedName(modelQualifiedName)
                 .modelType(modelType)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
+                .qualifiedName(generateQualifiedName(name, modelQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
