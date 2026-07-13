@@ -70,6 +70,7 @@
                 .modelEntityQualifiedName(entityQualifiedName)
                 .modelAttributeEntity(ModelEntity.refByQualifiedName(entityQualifiedName, SaveSemantic.APPEND))
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, entityQualifiedName))
+                .qualifiedName(generateQualifiedName(name, entityQualifiedName))
                 .modelType(modelType)
                 .connectionQualifiedName(connectionQualifiedName);
     }

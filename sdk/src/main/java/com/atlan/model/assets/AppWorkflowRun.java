@@ -9,6 +9,8 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AppWorkflowRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
@@ -101,6 +103,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Singular
     Map<String, String> appWorkflowRunOutputs;
 
+    /** Product surface of the parent workflow (marketplace, enrichment_studio, context_studio), denormalized onto the run and emitted as a metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    @Attribute
+    AtlanAppWorkflowSource appWorkflowRunSource;
+
     /** Timestamp when the workflow run began execution. */
     @Attribute
     @Date
@@ -126,6 +132,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     /** Unique identifier for the temporal run associated with this workflow execution. */
     @Attribute
     String appWorkflowRunTemporalRunId;
+
+    /** Ownership of the parent workflow at execution time: SYSTEM (managed by Atlan) or USER (user-authored). Denormalized from the workflow so run-history listings can filter without a join. */
+    @Attribute
+    AtlanAppWorkflowOwnership appWorkflowRunWorkflowOwnership;
 
     /** The workflow that contains the workflow run. */
     @Attribute

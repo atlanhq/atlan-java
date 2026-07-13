@@ -106,7 +106,12 @@ class CSVReader
                     csv.writeHeader(outputHeaders ?: header)
                     preproc.stream().skip(1).forEach { r: CsvRecord ->
                         val transformed = csvPreprocessor.preprocessRow(r.fields, header, typeIdx, qualifiedNameIdx)
-                        csv.writeRecord(transformed)
+                        // Skip entirely-blank rows (e.g. a trailing ",,,,," line): writing these to the
+                        // preprocessed/.processed output produces an asset with empty typeName and qualifiedName,
+                        // which later fails delta calculation with "Invalid asset identity: ::". (CSA-467)
+                        if (transformed.any { it.isNotBlank() }) {
+                            csv.writeRecord(transformed)
+                        }
                     }
                     preproc.close()
                 }
