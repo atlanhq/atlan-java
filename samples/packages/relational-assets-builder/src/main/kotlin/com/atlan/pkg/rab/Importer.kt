@@ -47,6 +47,10 @@ object Importer {
         val assetsUpload = ctx.config.importType == "DIRECT"
         val assetsFilename = ctx.config.assetsFile
         val assetsKey = ctx.config.assetsKey
+        if (ctx.config.assetsFieldSeparator.length != 1) {
+            logger.error { "Field separator must be exactly one character. The provided value is invalid: '${ctx.config.assetsFieldSeparator}'" }
+            exitProcess(2)
+        }
         val fieldSeparator = ctx.config.assetsFieldSeparator[0]
 
         val assetsFileProvided =
@@ -59,10 +63,6 @@ object Importer {
         if (!assetsFileProvided) {
             logger.error { "No input file was provided for assets." }
             exitProcess(1)
-        }
-        if (ctx.config.assetsFieldSeparator.length > 1) {
-            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.assetsFieldSeparator}" }
-            exitProcess(2)
         }
 
         // Preprocess the CSV file in an initial pass to inject key details,

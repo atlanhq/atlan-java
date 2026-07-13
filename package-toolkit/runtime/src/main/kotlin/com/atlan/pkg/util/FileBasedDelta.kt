@@ -45,6 +45,7 @@ import kotlin.streams.asSequence
  * @param purge if true, any asset that matches will be permanently deleted (otherwise, default: only archived)
  * @param compareChecksums if true, compare the checksums of every asset identity to determine which have changed (otherwise, default: skip checksum comparisons)
  * @param fallback directory to use as a fallback backing store (locally) in the absence of an object store
+ * @param fieldSeparator character used to separate fields in the CSV files being compared (for example ',' or ';')
  */
 class FileBasedDelta(
     private val ctx: PackageContext<*>,
@@ -55,6 +56,7 @@ class FileBasedDelta(
     private val purge: Boolean = false,
     private val compareChecksums: Boolean = false,
     private val fallback: String = Paths.get(separator, "tmp").toString(),
+    private val fieldSeparator: Char = ',',
 ) : AtlanCloseable {
     val assetsToReload = ChecksumCache("changes")
     val assetsToDelete = ChecksumCache("deletes")
@@ -160,7 +162,7 @@ class FileBasedDelta(
         filename: String,
         cache: ChecksumCache,
     ) {
-        val header = CSVXformer.getHeader(filename, ',')
+        val header = CSVXformer.getHeader(filename, fieldSeparator)
         val typeIdx = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         if (typeIdx < 0) {
             throw IOException(
@@ -171,7 +173,7 @@ class FileBasedDelta(
         val builder =
             CsvReader
                 .builder()
-                .fieldSeparator(',')
+                .fieldSeparator(fieldSeparator)
                 .quoteCharacter('"')
                 .skipEmptyLines(true)
                 .extraFieldStrategy(FieldMismatchStrategy.STRICT)

@@ -31,6 +31,7 @@ import java.nio.file.Paths
  * @param previousFilePreprocessor responsible for pre-processing the previous CSV file (if provided directly)
  * @param outputDirectory local directory where files can be written and compared
  * @param previousFileProcessedExtension extension to use in the object store for files that have been processed
+ * @param fieldSeparator character used to separate fields in the CSV files being compared (for example ',' or ';')
  */
 class DeltaProcessor(
     val ctx: PackageContext<*>,
@@ -46,6 +47,7 @@ class DeltaProcessor(
     val previousFilePreprocessor: CSVPreprocessor? = null,
     val outputDirectory: String = Paths.get(separator, "tmp").toString(),
     private val previousFileProcessedExtension: String = ".processed",
+    private val fieldSeparator: Char = ',',
 ) : AtlanCloseable {
     private val objectStore = Utils.getBackingStore(outputDirectory)
     private var initialLoad: Boolean = true
@@ -91,6 +93,7 @@ class DeltaProcessor(
                             purgeAssets,
                             !reloadAll,
                             outputDirectory,
+                            fieldSeparator,
                         )
                     delta!!.calculateDelta(preprocessedDetails.preprocessedFile, previousFile)
                 } else {

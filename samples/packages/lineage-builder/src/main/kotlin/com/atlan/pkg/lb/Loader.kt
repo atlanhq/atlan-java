@@ -42,8 +42,8 @@ object Loader {
             logger.error { "No input file was provided for lineage." }
             exitProcess(1)
         }
-        if (ctx.config.fieldSeparator.length > 1) {
-            logger.error { "Field separator must be only a single character. The provided value is too long: ${ctx.config.fieldSeparator}" }
+        if (ctx.config.fieldSeparator.length != 1) {
+            logger.error { "Field separator must be exactly one character. The provided value is invalid: '${ctx.config.fieldSeparator}'" }
             exitProcess(2)
         }
 

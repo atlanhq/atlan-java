@@ -52,8 +52,8 @@ object Importer {
 
         val assetsInput =
             if (assetsFileProvided) {
-                if (assetsFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: $assetsFieldSeparator" }
+                if (assetsFieldSeparator.length != 1) {
+                    logger.error { "Field separator must be exactly one character. The provided value is invalid: '$assetsFieldSeparator'" }
                     exitProcess(2)
                 }
                 Utils.getInputFile(
@@ -103,8 +103,8 @@ object Importer {
                     ctx.config.tagsKey,
                 )
             FieldSerde.FAIL_ON_ERRORS.set(tagsFailOnErrors)
-            if (tagsFieldSeparator.length > 1) {
-                logger.error { "Field separator must be only a single character. The provided value is too long: $tagsFieldSeparator" }
+            if (tagsFieldSeparator.length != 1) {
+                logger.error { "Field separator must be exactly one character. The provided value is invalid: '$tagsFieldSeparator'" }
                 exitProcess(2)
             }
             logger.info { "=== Importing tag definitions... ===" }
@@ -127,8 +127,8 @@ object Importer {
                         ctx.config.glossariesKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(glossariesFailOnErrors)
-                if (glossariesFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: $glossariesFieldSeparator" }
+                if (glossariesFieldSeparator.length != 1) {
+                    logger.error { "Field separator must be exactly one character. The provided value is invalid: '$glossariesFieldSeparator'" }
                     exitProcess(2)
                 }
                 logger.info { "=== Importing glossaries... ===" }
@@ -166,8 +166,8 @@ object Importer {
                         ctx.config.dataProductsKey,
                     )
                 FieldSerde.FAIL_ON_ERRORS.set(dataProductsFailOnErrors)
-                if (dataProductsFieldSeparator.length > 1) {
-                    logger.error { "Field separator must be only a single character. The provided value is too long: $dataProductsFieldSeparator" }
+                if (dataProductsFieldSeparator.length != 1) {
+                    logger.error { "Field separator must be exactly one character. The provided value is invalid: '$dataProductsFieldSeparator'" }
                     exitProcess(2)
                 }
                 logger.info { "=== Importing domains... ===" }
@@ -239,6 +239,7 @@ object Importer {
                             null
                         },
                     outputDirectory = outputDirectory,
+                    fieldSeparator = assetsFieldSeparator[0],
                 ).use { delta ->
 
                     delta.calculate()
