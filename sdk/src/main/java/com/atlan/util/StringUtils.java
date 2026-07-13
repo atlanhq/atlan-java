@@ -93,7 +93,12 @@ public final class StringUtils {
      * @return decoded README content (HTML)
      */
     public static String decodeContent(String encoded) {
-        return encoded == null ? null : URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
+        if (encoded == null) return null;
+        try {
+            return URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
+        } catch (IllegalArgumentException e) {
+            return encoded;
+        }
     }
 
     /**

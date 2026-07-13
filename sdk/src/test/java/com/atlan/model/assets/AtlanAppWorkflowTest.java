@@ -1155,6 +1155,7 @@ public class AtlanAppWorkflowTest {
                     .atlanAppErrorHandlingNonRetryableErrorTypes(List.of("String0", "String1"))
                     .build())
             .atlanAppWorkflowOwnership(AtlanAppWorkflowOwnership.SYSTEM)
+            .atlanAppWorkflowSource(AtlanAppWorkflowSource.CONNECTOR)
             .atlanAppWorkflowTriggers("String0")
             .atlanAppTool(AtlanAppTool.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .atlanAppTool(AtlanAppTool.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

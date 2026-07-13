@@ -62,6 +62,7 @@
                 .modelQualifiedName(modelQualifiedName)
                 .modelType(modelType)
                 .modelVersionAgnosticQualifiedName(generateQualifiedName(name, modelQualifiedName))
+                .qualifiedName(generateQualifiedName(name, modelQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

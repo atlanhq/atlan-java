@@ -141,6 +141,10 @@ public class SkillArtifact extends Asset
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
 
+    /** Full textual body of this skill artifact file (for example, the markdown of SKILL.md or the source of a script). Stored per-artifact because a skill folder contains many files, each with distinct content. */
+    @Attribute
+    String skillArtifactContent;
+
     /** Skill that owns this artifact. */
     @Attribute
     ISkill skillSource;

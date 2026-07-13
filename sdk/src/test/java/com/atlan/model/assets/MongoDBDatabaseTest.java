@@ -1196,6 +1196,8 @@ public class MongoDBDatabaseTest {
             .mongoDBCollection(MongoDBCollection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .schema(Schema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sqlSchema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sqlSchema(Schema.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .snowflakeSemanticLogicalTable(
                     SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeSemanticLogicalTable(

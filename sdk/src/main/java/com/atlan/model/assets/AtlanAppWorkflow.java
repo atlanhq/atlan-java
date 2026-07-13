@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
@@ -97,6 +98,10 @@ public class AtlanAppWorkflow extends Asset
     /** Slug of the workflow. */
     @Attribute
     String atlanAppWorkflowSlug;
+
+    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
+    @Attribute
+    AtlanAppWorkflowSource atlanAppWorkflowSource;
 
     /** Status of the workflow. */
     @Attribute
