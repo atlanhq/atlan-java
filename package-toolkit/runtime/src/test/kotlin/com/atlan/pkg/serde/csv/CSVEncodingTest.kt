@@ -25,9 +25,7 @@ class CSVEncodingTest {
     private val leftQuote = '‘' // '
     private val windows1252: Charset = Charset.forName("windows-1252")
 
-    private fun tempCsv(
-        bytes: ByteArray,
-    ): File =
+    private fun tempCsv(bytes: ByteArray): File =
         File.createTempFile("aim-encoding", ".csv").apply {
             outputStream().use { it.write(bytes) }
         }

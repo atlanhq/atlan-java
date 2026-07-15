@@ -3,7 +3,6 @@
 package com.atlan.pkg.serde.csv
 
 import java.io.BufferedInputStream
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.Reader
 import java.nio.charset.Charset
@@ -67,9 +66,13 @@ object CSVEncoding {
         return when {
             // UTF-32 BOMs must be checked before UTF-16 LE, since they share the 0xFF 0xFE prefix.
             b(0) == 0xFF && b(1) == 0xFE && b(2) == 0x00 && b(3) == 0x00 -> Charset.forName("UTF-32")
+
             b(0) == 0x00 && b(1) == 0x00 && b(2) == 0xFE && b(3) == 0xFF -> Charset.forName("UTF-32")
+
             b(0) == 0xFF && b(1) == 0xFE -> Charset.forName("UTF-16")
+
             b(0) == 0xFE && b(1) == 0xFF -> Charset.forName("UTF-16")
+
             else -> null
         }
     }
