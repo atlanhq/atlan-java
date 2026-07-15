@@ -78,9 +78,11 @@ class CSVReader
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
                     .ignoreDifferentFieldCount(false)
-            reader = builder.ofCsvRecord(inputFile)
-            counter = builder.ofCsvRecord(inputFile)
-            preproc = builder.ofCsvRecord(inputFile)
+            // Open via CSVEncoding so non-UTF-8 files (e.g. Excel-on-Windows cp1252, or mixed-encoding
+            // files) are decoded losslessly rather than silently corrupted into U+FFFD characters.
+            reader = builder.ofCsvRecord(CSVEncoding.open(inputFile))
+            counter = builder.ofCsvRecord(CSVEncoding.open(inputFile))
+            preproc = builder.ofCsvRecord(CSVEncoding.open(inputFile))
         }
 
         /**

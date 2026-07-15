@@ -37,7 +37,6 @@ abstract class CSVXformer(
     private val header: List<String>
 
     init {
-        val input = Paths.get(inputFile)
         val builder =
             CsvReader
                 .builder()
@@ -46,8 +45,10 @@ abstract class CSVXformer(
                 .skipEmptyLines(true)
                 .ignoreDifferentFieldCount(false)
         header = getHeader(inputFile, fieldSeparator)
-        reader = builder.ofCsvRecord(input)
-        counter = builder.ofCsvRecord(input)
+        // Open via CSVEncoding so non-UTF-8 files (e.g. Excel-on-Windows cp1252, or mixed-encoding
+        // files) are decoded losslessly rather than silently corrupted into U+FFFD characters.
+        reader = builder.ofCsvRecord(CSVEncoding.open(Paths.get(inputFile)))
+        counter = builder.ofCsvRecord(CSVEncoding.open(Paths.get(inputFile)))
     }
 
     companion object {
@@ -62,7 +63,6 @@ abstract class CSVXformer(
             file: String,
             fieldSeparator: Char = ',',
         ): List<String> {
-            val input = Paths.get(file)
             val builder =
                 CsvReader
                     .builder()
@@ -70,7 +70,7 @@ abstract class CSVXformer(
                     .quoteCharacter('"')
                     .skipEmptyLines(true)
                     .ignoreDifferentFieldCount(false)
-            builder.ofCsvRecord(input).use { tmp ->
+            builder.ofCsvRecord(CSVEncoding.open(Paths.get(file))).use { tmp ->
                 val one = tmp.stream().findFirst()
                 return one
                     .map { obj: CsvRecord ->
