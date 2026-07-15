@@ -7,7 +7,7 @@ import com.atlan.model.assets.Glossary
 import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageTest
 import com.atlan.pkg.Utils
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -16,21 +16,18 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * End-to-end proof for CSA-458: importing a CSV that is encoded as Windows-1252 (as Excel's
- * "Save As -> CSV" produces on Windows) must round-trip typographic Unicode characters intact,
- * rather than storing them as the replacement character U+FFFD.
- *
- * This runs the full path against a live tenant: cp1252 CSV -> decode -> asset write -> Atlas
- * storage -> read-back -> assertion.
+ * Regression guard for CSA-458: a clean UTF-8 input file imported on the *default* (strict UTF-8)
+ * encoding must round-trip byte-perfect exactly as before the encoding change -- i.e. the common,
+ * unchanged path continues to work and nothing functionally regressed for well-formed input.
  */
-class Utf8EncodingImportTest : PackageTest("utf8") {
+class Utf8DefaultEncodingImportTest : PackageTest("utf8def") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val glossaryName = makeUnique("g")
-    private val testFile = "cp1252_input.csv"
+    private val testFile = "utf8_input.csv"
 
-    // '…' U+2026, '‘'/'’' U+2018/U+2019, '—' U+2014, 'é' U+00E9 -- all representable in cp1252.
-    private val description = "Ends with an ellipsis … and ‘smart quotes’ — plus café"
+    // Same typographic characters as the cp1252 test, but here written as genuine UTF-8.
+    private val description = "Ends with an ellipsis … and ‘smart quotes’ — plus café and emoji 😀"
 
     private val header =
         "qualifiedName,typeName,name,anchor,parentCategory,categories,displayName,description,userDescription," +
@@ -43,9 +40,8 @@ class Utf8EncodingImportTest : PackageTest("utf8") {
     private fun prepFile() {
         val row = ",AtlasGlossary,$glossaryName,,,,,,\"$description\",,,,,,,,,,,,,,,,,,"
         val content = "$header\n$row\n"
-        // Write the CSV as Windows-1252 bytes, exactly as an Excel-on-Windows "Save As CSV" would.
         val output = Paths.get(testDirectory, testFile).toFile()
-        output.writeBytes(content.toByteArray(Charset.forName("windows-1252")))
+        output.writeBytes(content.toByteArray(StandardCharsets.UTF_8))
     }
 
     override fun setup() {
@@ -55,9 +51,7 @@ class Utf8EncodingImportTest : PackageTest("utf8") {
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = true,
-                // The input is a Windows-1252 (Excel-on-Windows) export, so opt in to the cp1252
-                // fallback; the strict UTF-8 default would (correctly) reject these bytes.
-                inputEncoding = "cp1252",
+                // No inputEncoding override -- exercise the strict UTF-8 default (the common path).
             ),
             Importer::main,
         )
@@ -67,8 +61,8 @@ class Utf8EncodingImportTest : PackageTest("utf8") {
         removeGlossary(glossaryName)
     }
 
-    @Test(groups = ["aim.utf8.create"])
-    fun descriptionRoundTripsWithoutCorruption() {
+    @Test(groups = ["aim.utf8def.create"])
+    fun cleanUtf8RoundTripsOnStrictDefault() {
         val glossary = Glossary.findByName(client, glossaryName, glossaryAttrs)
         assertNotNull(glossary)
         assertEquals(glossaryName, glossary.name)

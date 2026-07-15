@@ -52,6 +52,17 @@ uiConfig {
           helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
           allowTestAuthentication = false
         }
+        ["input_encoding"] = new Radio {
+          title = "Input file encoding"
+          required = false
+          possibleValues {
+            ["utf8"] = "UTF-8"
+            ["cp1252"] = "Windows-1252 (Excel on Windows)"
+          }
+          default = "utf8"
+          helpText = "Character encoding of the input CSV file(s). UTF-8 is the supported default and will fail the import if the file contains bytes that are not valid UTF-8. Choose Windows-1252 only if your files were exported from Excel on Windows (or another legacy tool) and contain non-UTF-8 characters."
+          fallback = default
+        }
       }
     }
     ["Glossaries"] {

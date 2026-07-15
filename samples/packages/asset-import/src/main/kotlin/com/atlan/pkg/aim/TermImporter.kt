@@ -7,6 +7,7 @@ import com.atlan.model.assets.GlossaryTerm
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.GlossaryXformer
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import mu.KLogger
@@ -64,19 +65,21 @@ class TermImporter(
         }
     }
 
-    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
+        decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,
             fieldSeparator = fieldSeparator,
             logger = logger,
             requiredHeaders = REQUIRED_HEADERS,
+            decoding = decoding,
         )
 
     companion object {

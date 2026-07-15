@@ -22,6 +22,8 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.cell.CellXformer
 import com.atlan.pkg.serde.cell.ConnectionXformer
 import com.atlan.pkg.serde.cell.EnumXformer
+import com.atlan.pkg.serde.csv.CSVDecoding
+import com.atlan.pkg.serde.csv.CSVEncoding
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.util.ParallelBatch
@@ -55,7 +57,8 @@ class AtlanTagImporter(
 ) {
     private val reader: CsvReader<CsvRecord>
     private val counter: CsvReader<CsvRecord>
-    private val header: List<String> = CSVXformer.getHeader(filename, fieldSeparator)
+    private val decoding: CSVDecoding = CSVDecoding.fromConfig(ctx.config.inputEncoding)
+    private val header: List<String> = CSVXformer.getHeader(filename, fieldSeparator, decoding)
     private val tagIdx: Int = header.indexOf(TAG_NAME)
     private val extraColumns: List<String> = header.filter { !KNOWN_COLUMNS.contains(it) && it.isNotBlank() }
 
@@ -78,8 +81,10 @@ class AtlanTagImporter(
                 .skipEmptyLines(true)
                 .extraFieldStrategy(FieldMismatchStrategy.STRICT)
                 .missingFieldStrategy(FieldMismatchStrategy.STRICT)
-        reader = builder.ofCsvRecord(inputFile)
-        counter = builder.ofCsvRecord(inputFile)
+        // Open via CSVEncoding (like the other importers) so the input is decoded according to the
+        // configured mode, rather than the JDK default that silently corrupts non-UTF-8 bytes.
+        reader = builder.ofCsvRecord(CSVEncoding.open(inputFile, decoding))
+        counter = builder.ofCsvRecord(CSVEncoding.open(inputFile, decoding))
     }
 
     /** {@inheritDoc} */
