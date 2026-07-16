@@ -25,7 +25,13 @@ class TagExtraAttributesTest : PackageTest("tea") {
     override val logger = Utils.getLogger(this.javaClass.name)
 
     private val c1 = makeUnique("c1")
-    private val c1Type = AtlanConnectorType.BIGID
+
+    // Must be a connector type not used by any other test: connection qualifiedNames are
+    // "default/{connector}/{epoch-seconds}", and Connection.generateQualifiedName() only guarantees
+    // uniqueness within a single JVM. When tests run in parallel across processes (as in CI), two
+    // connections of the same connector type created in the same second collide on qualifiedName,
+    // turning this create into an unauthorized update (403). TagManagementTest already uses BIGID.
+    private val c1Type = AtlanConnectorType.SALESFORCE
     private val t1 = makeUnique("t1")
 
     private lateinit var connection: Connection
