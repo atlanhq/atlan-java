@@ -132,8 +132,8 @@ class GCSSync(
         localFile: String,
     ) {
         logger.info { " ... downloading gcs://$bucketName/$remoteKey to $localFile" }
+        val local = File(localFile)
         try {
-            val local = File(localFile)
             if (local.exists()) {
                 local.delete()
             }
@@ -145,6 +145,12 @@ class GCSSync(
                 blob.downloadTo(fos)
             }
         } catch (e: Exception) {
+            // Opening the FileOutputStream creates a (0-byte) local file before the download runs, so a missing
+            // blob or failed transfer leaves a partial/empty file behind; remove it so callers never operate on
+            // a corrupt file.
+            if (local.exists() && !local.delete()) {
+                logger.warn { " ... unable to remove partial download: $localFile" }
+            }
             throw IOException(e)
         }
     }

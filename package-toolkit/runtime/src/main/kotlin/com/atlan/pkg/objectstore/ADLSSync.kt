@@ -184,8 +184,8 @@ class ADLSSync(
         localFile: String,
     ) {
         logger.info { " ... downloading adls://$containerName/$remoteKey to $localFile" }
+        val local = File(localFile)
         try {
-            val local = File(localFile)
             if (local.exists()) {
                 local.delete()
             }
@@ -203,6 +203,11 @@ class ADLSSync(
                 throw IllegalStateException("No ADLS client configured -- cannot download.")
             }
         } catch (e: Exception) {
+            // A failed download can leave a partial or empty file behind (the Azure SDK creates the local
+            // file before the transfer completes); remove it so callers never operate on a corrupt file.
+            if (local.exists() && !local.delete()) {
+                logger.warn { " ... unable to remove partial download: $localFile" }
+            }
             throw IOException(e)
         }
     }
