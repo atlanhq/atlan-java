@@ -239,6 +239,41 @@ public abstract class AtlanLiveTest {
         return response;
     }
 
+    /** Fetch-and-assert block used by {@link #retryUntilAsserted(RetryableAssertion)}. */
+    @FunctionalInterface
+    protected interface RetryableAssertion<T> {
+        T get() throws AtlanException;
+    }
+
+    /**
+     * Retry an assertion block until it passes, or the retry limit is hit (in which case the last
+     * {@link AssertionError} is rethrown). Use this for state that is confirmed asynchronously --
+     * e.g. audit indexing or owner-group propagation -- where asserting on the immediate/synchronous
+     * response is racy. The block should fetch fresh state and perform its own assertions, throwing
+     * {@link AssertionError} while the expected end-state has not yet materialized; the value from
+     * the first fully-passing invocation is returned.
+     *
+     * @param assertion block that fetches state and asserts on it, returning a value on success
+     * @return the value from the first invocation whose assertions all pass
+     * @throws AtlanException on any API communication issues
+     * @throws InterruptedException if the busy-wait loop for retries is interrupted
+     */
+    protected <T> T retryUntilAsserted(RetryableAssertion<T> assertion) throws AtlanException, InterruptedException {
+        int count = 0;
+        int maxRetries = client.getMaxNetworkRetries();
+        while (true) {
+            try {
+                return assertion.get();
+            } catch (AssertionError e) {
+                if (count >= maxRetries) {
+                    throw e;
+                }
+                Thread.sleep(HttpClient.waitLongTime(count).toMillis());
+                count++;
+            }
+        }
+    }
+
     /**
      * Since search is eventually consistent, retry it until we arrive at the number of results
      * we expect (or hit the retry limit).
