@@ -13,6 +13,7 @@ import com.atlan.pkg.aim.AssetImporter.Companion.GLOSSARY_TYPES
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVXformer
 import mu.KLogger
 import java.util.stream.Stream
@@ -132,7 +133,7 @@ abstract class GTCImporter(
      */
     abstract fun getCacheId(deserializer: RowDeserializer): String
 
-    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,
@@ -140,12 +141,14 @@ abstract class GTCImporter(
         fieldSeparator: Char,
         logger: KLogger,
         override val requiredHeaders: Map<String, Set<String>>,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,
             fieldSeparator = fieldSeparator,
             logger = logger,
             requiredHeaders = requiredHeaders,
+            decoding = decoding,
         ) {
         private val nonGlossaryTypes = mutableSetOf<String>()
 

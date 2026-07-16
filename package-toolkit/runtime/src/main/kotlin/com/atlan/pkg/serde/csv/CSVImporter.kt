@@ -60,6 +60,7 @@ abstract class CSVImporter(
     protected val tableViewAgnostic: Boolean = false,
     protected val fieldSeparator: Char = ',',
     protected val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
+    protected val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) : AssetGenerator {
     /**
      * Actually run the import.
@@ -93,6 +94,7 @@ abstract class CSVImporter(
             tableViewAgnostic,
             fieldSeparator,
             linkIdempotency,
+            decoding,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.streamRows(ctx, this, batchSize, logger, columnsToSkip)

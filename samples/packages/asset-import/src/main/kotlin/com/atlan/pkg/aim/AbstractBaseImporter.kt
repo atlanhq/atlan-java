@@ -12,6 +12,7 @@ import com.atlan.model.fields.AtlanField
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.cache.AssetCache
 import com.atlan.pkg.cache.TypeDefCache
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVImporter
 import com.atlan.pkg.serde.csv.CSVPreprocessor
 import com.atlan.pkg.serde.csv.CSVXformer
@@ -61,6 +62,7 @@ abstract class AbstractBaseImporter(
         fieldSeparator = fieldSeparator,
         linkIdempotency = linkIdempotency,
         typeNameFilter = typeNameFilter,
+        decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding.firstOrNull()),
     ) {
     protected var header = emptyList<String>()
     protected var levelToProcess = 0
@@ -200,7 +202,7 @@ abstract class AbstractBaseImporter(
             )
     }
 
-    open fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    open fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     open class Preprocessor(
         open val ctx: PackageContext<*>,
@@ -208,11 +210,13 @@ abstract class AbstractBaseImporter(
         fieldSeparator: Char,
         logger: KLogger,
         override val requiredHeaders: Map<String, Set<String>> = REQUIRED_HEADERS,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : CSVPreprocessor(
             filename = originalFile,
             logger = logger,
             fieldSeparator = fieldSeparator,
             requiredHeaders = requiredHeaders,
+            decoding = decoding,
         ) {
         protected val typesInFile = mutableSetOf<String>()
         protected val invalidTypes = mutableSetOf<String>()

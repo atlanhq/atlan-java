@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.util.StringUtils
 import mu.KLogger
@@ -136,13 +137,14 @@ class ConnectionImporter(
         }
     }
 
-    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     class Preprocessor(
         override val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,
@@ -154,5 +156,6 @@ class ConnectionImporter(
                     Asset.QUALIFIED_NAME.atlanFieldName to setOf(),
                     Asset.NAME.atlanFieldName to emptySet(),
                 ),
+            decoding = decoding,
         )
 }

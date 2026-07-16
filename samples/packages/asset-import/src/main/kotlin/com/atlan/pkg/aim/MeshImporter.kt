@@ -10,6 +10,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.AssetImporter.Companion.DATA_PRODUCT_TYPES
 import com.atlan.pkg.cache.AssetCache
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVXformer
 import mu.KLogger
 
@@ -87,18 +88,20 @@ abstract class MeshImporter(
                 LinkIdempotencyInvariant.URL,
             ),
     ) {
-    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     open class Preprocessor(
         override val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,
             fieldSeparator = fieldSeparator,
             logger = logger,
+            decoding = decoding,
         ) {
         private val nonProductTypes = mutableSetOf<String>()
 
