@@ -510,7 +510,18 @@ class CreateThenUpsertRABTest : PackageTest("ctu") {
                     .where(Column.VIEW_NAME.eq("TEST_VIEW"))
                     .includesOnResults(columnAttrs)
                     .toRequest()
-            val response = retrySearchUntil(request, 2)
+            // COL4's decimal attributes (numericScale/precision/rawDataTypeDefinition) can lag the
+            // column itself appearing in results, so gate on them being indexed rather than on count
+            // alone -- otherwise the value assertions below can read null.
+            val response =
+                retrySearchUntil(request, 2) { resp ->
+                    val col4 =
+                        resp.assets
+                            .orEmpty()
+                            .filterIsInstance<Column>()
+                            .firstOrNull { it.name == "COL4" }
+                    col4?.numericScale != null && col4.precision != null && col4.rawDataTypeDefinition != null
+                }
             val found = response.assets
             assertEquals(2, found.size)
             val colNames = found.stream().map(Asset::getName).toList()

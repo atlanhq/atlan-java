@@ -38,7 +38,10 @@ public class TableSearchTest extends AtlanLiveTest {
     // owner users/groups on write and silently drops unknown ones, so hard-coded placeholder names
     // would never round-trip. Use the fixed test user and the two groups this test creates below.
     private static final Set<String> ownerUsers = Set.of(FIXED_USER);
-    private static final Set<String> ownerGroups = Set.of(GROUP_NAME1, GROUP_NAME2);
+    // Owner groups are keyed by each group's internal (slugified) name, which AtlanGroup.creator()
+    // derives from the alias (lowercased) -- NOT the alias string passed in. Populated from the
+    // created groups' canonical names in createTable().
+    private static Set<String> ownerGroups;
     private Column column1 = null;
     private Column column2 = null;
     public static final String COLUMN_NAME1 = PREFIX + "_col1";
@@ -60,6 +63,9 @@ public class TableSearchTest extends AtlanLiveTest {
         schema = SQLAssetTest.createSchema(client, SCHEMA_NAME, database);
         group1 = AdminTest.createGroup(client, GROUP_NAME1);
         group2 = AdminTest.createGroup(client, GROUP_NAME2);
+        // Use the groups' canonical (internal) names -- what owner-group storage keys on and what
+        // getOwnerGroups() returns -- not the aliases passed to createGroup.
+        ownerGroups = Set.of(group1.getName(), group2.getName());
         table = Table._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .name(name)
