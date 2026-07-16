@@ -1142,10 +1142,28 @@ object Utils {
         added: OffHeapAssetCache? = null,
         removed: OffHeapAssetCache? = null,
         fallback: String = Paths.get(separator, "tmp").toString(),
+    ) = updateConnectionCache(client, getBackingStore(fallback), added, removed, fallback)
+
+    /**
+     * Update the connection cache for the provided assets, syncing through the provided backing store.
+     * (Visible for testing so a backing store can be injected; production callers use the overload above,
+     * which resolves the tenant's backing store automatically.)
+     *
+     * @param client connectivity to the Atlan tenant
+     * @param sync backing store into/from which the connection caches are synced
+     * @param added assets that were added
+     * @param removed assets that were deleted
+     * @param fallback directory to use for a fallback backing store for the cache
+     */
+    internal fun updateConnectionCache(
+        client: AtlanClient,
+        sync: ObjectStorageSyncer,
+        added: OffHeapAssetCache? = null,
+        removed: OffHeapAssetCache? = null,
+        fallback: String = Paths.get(separator, "tmp").toString(),
     ) {
         val map = CacheUpdates.build(client, added, removed)
         logger.info { "Updating connection caches for ${map.size} connections..." }
-        val sync = getBackingStore(fallback)
         for ((connectionQN, cacheUpdates) in map) {
             cacheUpdates.use { assets ->
                 logger.info { "Updating connection cache for: $connectionQN" }
@@ -1161,6 +1179,14 @@ object Utils {
                 } catch (e: IOException) {
                     logger.info { " ... unable to download pre-existing cache, creating a new one" }
                     logger.debug(e) { "Location attempted from backing store: connection-cache/$connectionQN.sqlite" }
+                    // A failed download can leave a partial or empty file (or an open handle) behind at the
+                    // local path; SQLite would then try to open that instead of creating a clean new database,
+                    // which manifests as a SQLITE_IOERR on the first write. Remove any leftover so the cache is
+                    // created from a clean slate.
+                    val leftover = File(tmpFile)
+                    if (leftover.exists() && !leftover.delete()) {
+                        logger.warn { " ... unable to remove leftover cache file before recreating it: $tmpFile" }
+                    }
                 }
                 val cache = PersistentConnectionCache(tmpFile)
                 cache.addAssets(assets.added.values())
