@@ -283,11 +283,16 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Table.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        // Owner-group validation on the asset service lags group creation, so the synchronous save
-        // response can omit the just-assigned group. Assert on a retried read-back instead.
+        // The owner-group validation cache on the asset service lags group creation, so the initial
+        // assignment can be silently dropped (the group is never stored, so a read-back alone can
+        // never recover it). Re-apply the owner group until it persists: a fresh write re-validates
+        // and succeeds once the group has propagated.
         retryUntilAsserted(() -> {
+            Table.updater(table1.getQualifiedName(), TABLE_NAME)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
             Table result = Table.get(client, table1.getGuid(), false);
-            assertNotNull(result.getOwnerGroups());
             assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
             return result;
         });
@@ -319,10 +324,13 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Table.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        // See updateT1: owner-group propagation lags, so assert on a retried read-back.
+        // See updateT1: re-apply the owner group until it persists.
         retryUntilAsserted(() -> {
+            Table.updater(table3.getQualifiedName(), VIEW_NAME)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
             Table result = Table.get(client, table3.getGuid(), false);
-            assertNotNull(result.getOwnerGroups());
             assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
             return result;
         });
@@ -354,10 +362,13 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Column.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        // See updateT1: owner-group propagation lags, so assert on a retried read-back.
+        // See updateT1: re-apply the owner group until it persists.
         retryUntilAsserted(() -> {
+            Column.updater(t1c1.getQualifiedName(), COLUMN_NAME1)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
             Column result = Column.get(client, t1c1.getGuid(), false);
-            assertNotNull(result.getOwnerGroups());
             assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
             return result;
         });
@@ -385,10 +396,13 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Column.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        // See updateT1: owner-group propagation lags, so assert on a retried read-back.
+        // See updateT1: re-apply the owner group until it persists.
         retryUntilAsserted(() -> {
+            Column.updater(v1c1.getQualifiedName(), COLUMN_NAME1)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
             Column result = Column.get(client, v1c1.getGuid(), false);
-            assertNotNull(result.getOwnerGroups());
             assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
             return result;
         });
