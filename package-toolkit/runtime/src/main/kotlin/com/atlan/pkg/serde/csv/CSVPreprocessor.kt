@@ -28,7 +28,7 @@ abstract class CSVPreprocessor(
     val producesFile: String? = null,
     val usingHeaders: List<String>? = null,
     open val requiredHeaders: Map<String, Set<String>> = emptyMap(),
-    val decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+    val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) {
     val header = CSVXformer.getHeader(filename, fieldSeparator, decoding)
 

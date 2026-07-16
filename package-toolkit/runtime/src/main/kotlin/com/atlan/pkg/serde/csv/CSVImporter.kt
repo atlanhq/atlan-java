@@ -60,7 +60,7 @@ abstract class CSVImporter(
     protected val tableViewAgnostic: Boolean = false,
     protected val fieldSeparator: Char = ',',
     protected val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
-    protected val decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+    protected val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) : AssetGenerator {
     /**
      * Actually run the import.

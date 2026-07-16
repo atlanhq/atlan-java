@@ -61,7 +61,7 @@ class CSVReader
         private val tableViewAgnostic: Boolean = false,
         private val fieldSeparator: Char = ',',
         private val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
-        private val decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+        private val decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : Closeable {
         private val reader: CsvReader<CsvRecord>
         private val counter: CsvReader<CsvRecord>

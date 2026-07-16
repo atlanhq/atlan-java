@@ -141,7 +141,7 @@ abstract class GTCImporter(
         fieldSeparator: Char,
         logger: KLogger,
         override val requiredHeaders: Map<String, Set<String>>,
-        decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,

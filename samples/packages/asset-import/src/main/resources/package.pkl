@@ -52,16 +52,54 @@ uiConfig {
           helpText = "Enter details for the object store from which to retrieve the file(s) containing metadata to be imported."
           allowTestAuthentication = false
         }
-        ["input_encoding"] = new Radio {
+        ["input_encoding"] = new DropDown {
           title = "Input file encoding"
           required = false
           possibleValues {
-            ["utf8"] = "UTF-8"
-            ["cp1252"] = "Windows-1252 (Excel on Windows)"
+            ["UTF-8"] = "UTF-8 — Unicode (recommended)"
+            ["US-ASCII"] = "US-ASCII — American Standard Code for Information Interchange"
+            ["ISO-8859-1"] = "ISO-8859-1 — Latin Alphabet No. 1 (Western European)"
+            ["ISO-8859-2"] = "ISO-8859-2 — Latin Alphabet No. 2 (Central European)"
+            ["ISO-8859-4"] = "ISO-8859-4 — Latin Alphabet No. 4 (North European)"
+            ["ISO-8859-5"] = "ISO-8859-5 — Latin/Cyrillic Alphabet"
+            ["ISO-8859-7"] = "ISO-8859-7 — Latin/Greek Alphabet"
+            ["ISO-8859-9"] = "ISO-8859-9 — Latin Alphabet No. 5 (Turkish)"
+            ["ISO-8859-13"] = "ISO-8859-13 — Latin Alphabet No. 7 (Baltic Rim)"
+            ["ISO-8859-15"] = "ISO-8859-15 — Latin Alphabet No. 9 (Western European, Euro)"
+            ["windows-1250"] = "windows-1250 — Windows Eastern European"
+            ["windows-1251"] = "windows-1251 — Windows Cyrillic"
+            ["windows-1252"] = "windows-1252 — Windows Latin-1 (Excel on Windows)"
+            ["windows-1253"] = "windows-1253 — Windows Greek"
+            ["windows-1254"] = "windows-1254 — Windows Turkish"
+            ["windows-1257"] = "windows-1257 — Windows Baltic"
+            ["KOI8-R"] = "KOI8-R — Russian"
+            ["KOI8-U"] = "KOI8-U — Ukrainian"
+            ["IBM00858"] = "IBM00858 — Variant of Cp850 with Euro"
+            ["IBM437"] = "IBM437 — MS-DOS United States"
+            ["IBM775"] = "IBM775 — PC Baltic"
+            ["IBM850"] = "IBM850 — MS-DOS Latin-1"
+            ["IBM852"] = "IBM852 — MS-DOS Latin-2"
+            ["IBM855"] = "IBM855 — IBM Cyrillic"
+            ["IBM857"] = "IBM857 — IBM Turkish"
+            ["IBM862"] = "IBM862 — PC Hebrew"
+            ["IBM866"] = "IBM866 — MS-DOS Russian"
+            ["x-IBM737"] = "x-IBM737 — PC Greek"
+            ["x-IBM874"] = "x-IBM874 — IBM Thai"
+            ["GB18030"] = "GB18030 — Simplified Chinese (PRC standard)"
+            ["CESU-8"] = "CESU-8 — Unicode CESU-8"
+            ["UTF-16"] = "UTF-16 — Unicode, byte order from BOM"
+            ["UTF-16BE"] = "UTF-16BE — Unicode, big-endian"
+            ["UTF-16LE"] = "UTF-16LE — Unicode, little-endian"
+            ["x-UTF-16LE-BOM"] = "x-UTF-16LE-BOM — Unicode, little-endian, with BOM"
+            ["UTF-32"] = "UTF-32 — Unicode, byte order from BOM"
+            ["UTF-32BE"] = "UTF-32BE — Unicode, big-endian"
+            ["UTF-32LE"] = "UTF-32LE — Unicode, little-endian"
+            ["x-UTF-32BE-BOM"] = "x-UTF-32BE-BOM — Unicode, big-endian, with BOM"
+            ["x-UTF-32LE-BOM"] = "x-UTF-32LE-BOM — Unicode, little-endian, with BOM"
           }
-          default = "utf8"
-          helpText = "Character encoding of the input CSV file(s). UTF-8 is the supported default and will fail the import if the file contains bytes that are not valid UTF-8. Choose Windows-1252 only if your files were exported from Excel on Windows (or another legacy tool) and contain non-UTF-8 characters."
-          fallback = default
+          default = "UTF-8"
+          helpText = "Character encoding of the input CSV file(s). UTF-8 is the supported default and will fail the import if the file contains bytes that are not valid UTF-8. Choose a different encoding only if your files were produced in that legacy encoding (for example windows-1252 for Excel-on-Windows exports); the file is then decoded strictly in the encoding you select."
+          fallback = List("UTF-8")
         }
       }
     }

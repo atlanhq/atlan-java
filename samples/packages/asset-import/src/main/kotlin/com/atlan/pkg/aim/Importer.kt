@@ -52,7 +52,7 @@ object Importer {
         val assetsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::assetsFailOnErrors, AssetImportCfg::assetsConfig)
         // Encoding is a single (global) choice for the whole run, so it is resolved once here and passed
         // to the importers/preprocessors (the same value the importers derive from ctx.config).
-        val decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding)
+        val decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding.firstOrNull())
 
         val assetsInput =
             if (assetsFileProvided) {

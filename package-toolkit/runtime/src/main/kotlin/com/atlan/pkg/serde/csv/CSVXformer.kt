@@ -32,7 +32,7 @@ abstract class CSVXformer(
     val targetHeader: Iterable<String?>?,
     private val logger: KLogger,
     private val fieldSeparator: Char = ',',
-    private val decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+    private val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) : Closeable,
     RowTransformer {
     private val reader: CsvReader<CsvRecord>
@@ -68,7 +68,7 @@ abstract class CSVXformer(
         fun getHeader(
             file: String,
             fieldSeparator: Char = ',',
-            decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+            decoding: CSVDecoding = CSVDecoding.UTF_8,
         ): List<String> {
             val builder =
                 CsvReader

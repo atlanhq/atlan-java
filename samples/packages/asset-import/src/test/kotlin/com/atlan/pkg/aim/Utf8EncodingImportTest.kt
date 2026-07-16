@@ -55,9 +55,9 @@ class Utf8EncodingImportTest : PackageTest("utf8") {
                 glossariesFile = Paths.get(testDirectory, testFile).toString(),
                 glossariesUpsertSemantic = "upsert",
                 glossariesFailOnErrors = true,
-                // The input is a Windows-1252 (Excel-on-Windows) export, so opt in to the cp1252
-                // fallback; the strict UTF-8 default would (correctly) reject these bytes.
-                inputEncoding = "cp1252",
+                // The input is a Windows-1252 (Excel-on-Windows) export, so decode it as windows-1252;
+                // the strict UTF-8 default would (correctly) reject these bytes.
+                inputEncoding = listOf("windows-1252"),
             ),
             Importer::main,
         )

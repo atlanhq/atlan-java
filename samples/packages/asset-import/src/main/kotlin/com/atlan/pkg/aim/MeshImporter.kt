@@ -95,7 +95,7 @@ abstract class MeshImporter(
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
-        decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,

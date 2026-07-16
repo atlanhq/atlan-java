@@ -62,7 +62,7 @@ abstract class AbstractBaseImporter(
         fieldSeparator = fieldSeparator,
         linkIdempotency = linkIdempotency,
         typeNameFilter = typeNameFilter,
-        decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding),
+        decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding.firstOrNull()),
     ) {
     protected var header = emptyList<String>()
     protected var levelToProcess = 0
@@ -210,7 +210,7 @@ abstract class AbstractBaseImporter(
         fieldSeparator: Char,
         logger: KLogger,
         override val requiredHeaders: Map<String, Set<String>> = REQUIRED_HEADERS,
-        decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : CSVPreprocessor(
             filename = originalFile,
             logger = logger,

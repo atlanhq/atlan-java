@@ -57,7 +57,7 @@ class AtlanTagImporter(
 ) {
     private val reader: CsvReader<CsvRecord>
     private val counter: CsvReader<CsvRecord>
-    private val decoding: CSVDecoding = CSVDecoding.fromConfig(ctx.config.inputEncoding)
+    private val decoding: CSVDecoding = CSVDecoding.fromConfig(ctx.config.inputEncoding.firstOrNull())
     private val header: List<String> = CSVXformer.getHeader(filename, fieldSeparator, decoding)
     private val tagIdx: Int = header.indexOf(TAG_NAME)
     private val extraColumns: List<String> = header.filter { !KNOWN_COLUMNS.contains(it) && it.isNotBlank() }

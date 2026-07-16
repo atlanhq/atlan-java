@@ -13,15 +13,15 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 /**
- * Verifies the two decoding modes for input CSVs:
- *  - [CSVDecoding.UTF8_STRICT] (the default): clean UTF-8 is byte-perfect, and any non-UTF-8 byte
- *    fails loudly (rather than being silently corrupted into U+FFFD as the JDK default decoder does).
- *  - [CSVDecoding.CP1252_FALLBACK] (explicit opt-in): decodes UTF-8-first with a per-byte Windows-1252
- *    rescue, for the Excel-on-Windows / mixed-encoding files seen in the wild.
+ * Verifies strict, per-charset decoding of input CSVs (the JDK basic encoding set):
+ *  - the input is decoded strictly in the chosen [CSVDecoding]; clean input is byte-perfect, and
+ *    bytes that are not valid for that charset fail loudly rather than being silently corrupted into
+ *    the Unicode replacement character U+FFFD (the JDK default decoder behaviour);
+ *  - [CSVDecoding.UTF_8] is the default.
  *
  * The canonical failure: Excel's "Save As -> CSV" on Windows writes Windows-1252 (cp1252), where the
- * ellipsis '…' (U+2026) is the single byte 0x85 -- an invalid UTF-8 lead byte. Under the strict
- * default that now surfaces a clear error; under the cp1252 opt-in it is recovered. (CSA-458)
+ * ellipsis '…' (U+2026) is the single byte 0x85 -- an invalid UTF-8 lead byte. Under the strict UTF-8
+ * default that now surfaces a clear error; selecting [CSVDecoding.WINDOWS_1252] decodes it correctly. (CSA-458)
  */
 class CSVEncodingTest {
     private val ellipsis = '…' // …
@@ -42,7 +42,7 @@ class CSVEncodingTest {
     /** Read the last field of the single data row, using the code path production uses. */
     private fun readLastField(
         file: File,
-        decoding: CSVDecoding = CSVDecoding.UTF8_STRICT,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ): String {
         CsvReader.builder().ofCsvRecord(CSVEncoding.open(file.toPath(), decoding)).use { reader ->
             val rows = reader.stream().toList()
@@ -83,78 +83,128 @@ class CSVEncodingTest {
     }
 
     /**
-     * Under the strict default, a cp1252 byte (here the ellipsis 0x85) is NOT silently corrected --
-     * it fails loudly with a message that points at the offending byte/row and how to resolve it.
+     * Under the strict UTF-8 default, a cp1252 byte (here the ellipsis 0x85) is NOT silently corrected
+     * -- it fails loudly with a message that points at the offending row and charset and how to resolve it.
      */
     @Test
     fun strictDefaultRejectsNonUtf8WithActionableError() {
         val file = tempCsv(row("ends with $ellipsis"), windows1252)
         val thrown =
             assertFailsWith<Exception> {
-                readLastField(file, CSVDecoding.UTF8_STRICT)
+                readLastField(file, CSVDecoding.UTF_8)
             }
         val messages =
             generateSequence<Throwable>(thrown) { it.cause }
                 .mapNotNull { it.message }
                 .joinToString(" | ")
         assertTrue(messages.contains("not valid UTF-8"), "Expected an actionable UTF-8 error, got: [$messages]")
-        assertTrue(messages.contains("Windows-1252"), "Error should hint at the Windows-1252 opt-in: [$messages]")
+        assertTrue(messages.contains("input file encoding"), "Error should hint at the encoding option: [$messages]")
         assertTrue(messages.contains("row"), "Error should reference the offending row: [$messages]")
     }
 
-    // --- cp1252 fallback (explicit opt-in) --------------------------------------------------------
+    /** US-ASCII selected but a non-ASCII byte present -> fail loud (unmappable/malformed). */
+    @Test
+    fun usAsciiRejectsHighByte() {
+        val file = tempCsv(row("ends with $ellipsis"), windows1252)
+        assertFailsWith<Exception> { readLastField(file, CSVDecoding.US_ASCII) }
+    }
+
+    // --- explicit legacy charsets -----------------------------------------------------------------
 
     @Test
-    fun windows1252EllipsisIsRecoveredWithCp1252Fallback() {
+    fun windows1252EllipsisIsRecoveredWhenSelected() {
         val file = tempCsv(row("ends with $ellipsis"), windows1252)
-        val value = readLastField(file, CSVDecoding.CP1252_FALLBACK)
+        val value = readLastField(file, CSVDecoding.WINDOWS_1252)
         assertTrue(value.contains(ellipsis), "Expected the ellipsis to be preserved, got: [$value]")
         assertFalse(value.contains('�'), "Value was corrupted with U+FFFD: [$value]")
     }
 
     @Test
-    fun windows1252SmartQuotesAreRecoveredWithCp1252Fallback() {
+    fun windows1252SmartQuotesAreRecoveredWhenSelected() {
         val file = tempCsv(row("a $leftQuote quoted $leftQuote value"), windows1252)
-        val value = readLastField(file, CSVDecoding.CP1252_FALLBACK)
+        val value = readLastField(file, CSVDecoding.WINDOWS_1252)
         assertTrue(value.contains(leftQuote), "Expected smart quote to be preserved, got: [$value]")
         assertFalse(value.contains('�'), "Value was corrupted with U+FFFD: [$value]")
     }
 
-    /** Clean UTF-8 must still decode correctly when the cp1252 fallback is enabled. */
+    /** ISO-8859-1 (Latin-1): the accented 'é' (byte 0xE9) round-trips when that charset is selected. */
     @Test
-    fun cleanUtf8StillCorrectWithCp1252Fallback() {
-        val file = tempCsv(row("ends with $ellipsis"), StandardCharsets.UTF_8)
-        val value = readLastField(file, CSVDecoding.CP1252_FALLBACK)
-        assertTrue(value.contains(ellipsis), "Expected the ellipsis to be preserved, got: [$value]")
+    fun latin1AccentIsRecoveredWhenSelected() {
+        val file = tempCsv(row("café"), Charset.forName("ISO-8859-1"))
+        val value = readLastField(file, CSVDecoding.ISO_8859_1)
+        assertTrue(value.contains("café"), "Expected the accented e to be preserved, got: [$value]")
         assertFalse(value.contains('�'), "Value was corrupted with U+FFFD: [$value]")
+    }
+
+    // --- config mapping & charset validity --------------------------------------------------------
+
+    @Test
+    fun fromConfigMapsCanonicalNamesAndAliases() {
+        assertEquals(CSVDecoding.UTF_8, CSVDecoding.fromConfig("UTF-8"))
+        assertEquals(CSVDecoding.UTF_8, CSVDecoding.fromConfig(null))
+        assertEquals(CSVDecoding.UTF_8, CSVDecoding.fromConfig(""))
+        assertEquals(CSVDecoding.UTF_8, CSVDecoding.fromConfig("totally-unknown-charset"))
+        assertEquals(CSVDecoding.WINDOWS_1252, CSVDecoding.fromConfig("windows-1252"))
+        // alias resolution via Charset.forName
+        assertEquals(CSVDecoding.WINDOWS_1252, CSVDecoding.fromConfig("cp1252"))
+        assertEquals(CSVDecoding.ISO_8859_1, CSVDecoding.fromConfig("latin1"))
+        assertEquals(CSVDecoding.US_ASCII, CSVDecoding.fromConfig("ascii"))
     }
 
     /**
-     * The real VS customer file mixes a genuine UTF-8 ellipsis (E2 80 A6) with a cp1252 ellipsis
-     * (0x85) in the same field. A single whole-file charset choice mangles one or the other; the
-     * hybrid fallback decoder must recover both.
+     * Every declared encoding must resolve to an installed JVM charset (guards typos in canonical
+     * names), and its config value must round-trip back to the same entry via [CSVDecoding.fromConfig].
      */
     @Test
-    fun mixedUtf8AndCp1252InSameFieldAreBothRecovered() {
-        val prefix = "typeName,qualifiedName,description\nTable,default/x/db/sch/t,\"utf8=".toByteArray(StandardCharsets.UTF_8)
-        val mid = " cp1252=".toByteArray(StandardCharsets.US_ASCII)
-        val suffix = "\"\n".toByteArray(StandardCharsets.US_ASCII)
-        val bytes = prefix + byteArrayOf(0xE2.toByte(), 0x80.toByte(), 0xA6.toByte()) + mid + byteArrayOf(0x85.toByte()) + suffix
-        val file = tempCsv(bytes)
-        val value = readLastField(file, CSVDecoding.CP1252_FALLBACK)
-        assertEquals(2, value.count { it == ellipsis }, "Both the UTF-8 and cp1252 ellipses should be recovered: [$value]")
-        assertFalse(value.contains('�'), "Value was corrupted with U+FFFD: [$value]")
-        assertFalse(value.contains("â€¦"), "Genuine UTF-8 ellipsis was mangled by a cp1252 decode: [$value]")
+    fun everyDeclaredEncodingResolvesAndRoundTrips() {
+        CSVDecoding.entries.forEach { d ->
+            val cs = d.charset // must not throw for an unknown/misspelled charset name
+            assertTrue(cs.canEncode() || cs.name().isNotEmpty(), "Charset did not resolve for $d")
+            assertEquals(d, CSVDecoding.fromConfig(d.charsetName), "fromConfig round-trip failed for ${d.charsetName}")
+        }
     }
 
-    // --- config mapping ---------------------------------------------------------------------------
-
+    /**
+     * Behavioural coverage for the whole basic encoding set: for every encoding, take the subset of a
+     * rich sample that the charset can represent, write those bytes in that charset, then decode them
+     * back through the production [CSVEncoding.open] path and assert the value is byte-perfect. This
+     * exercises the actual decode of each charset (single-byte legacy, multi-byte, and the
+     * BOM-consuming UTF-16/UTF-32 families), not merely that the charset resolves.
+     */
     @Test
-    fun fromConfigMapsExpectedValues() {
-        assertEquals(CSVDecoding.UTF8_STRICT, CSVDecoding.fromConfig("utf8"))
-        assertEquals(CSVDecoding.UTF8_STRICT, CSVDecoding.fromConfig(null))
-        assertEquals(CSVDecoding.UTF8_STRICT, CSVDecoding.fromConfig(""))
-        assertEquals(CSVDecoding.CP1252_FALLBACK, CSVDecoding.fromConfig("cp1252"))
-        assertEquals(CSVDecoding.CP1252_FALLBACK, CSVDecoding.fromConfig("windows-1252"))
+    fun everyEncodingRoundTripsRepresentableCharacters() {
+        // A spread of Latin, typographic, Cyrillic, Greek and currency characters (BMP only; no CSV
+        // metacharacters). Each charset is tested against just the characters it can represent.
+        val candidate = "ASCII az09 café über niño Ω Δ б Я … ‘ ’ “ ” — ¥ € £"
+        var covered = 0
+        CSVDecoding.entries.forEach { d ->
+            val cs = d.charset
+            if (!cs.canEncode()) return@forEach // a decode-only charset cannot be written from a String
+            val encoder = cs.newEncoder()
+            val representable = candidate.filter { encoder.canEncode(it) }
+            assertTrue(
+                representable.contains("ASCII az09"),
+                "Sanity: ASCII must always be representable in ${d.charsetName}, got: [$representable]",
+            )
+            val file = tempCsv(row(representable), cs)
+            val value = readLastField(file, d)
+            assertEquals(representable, value, "Round-trip failed for ${d.charsetName}")
+            assertFalse(value.contains('�'), "U+FFFD introduced by ${d.charsetName}: [$value]")
+            covered++
+        }
+        // Guard against the sample or filter silently degrading coverage to just a handful of charsets.
+        assertTrue(covered >= 35, "Expected to round-trip the vast majority of the 40 encodings, only covered $covered")
+    }
+
+    /** UTF-16 is multi-byte and consumes its own byte-order mark; content must survive a BOM'd file. */
+    @Test
+    fun utf16WithBomRoundTrips() {
+        val text = "utf16 café … ‘q’ — Ω"
+        val file = tempCsv(row(text), Charset.forName("UTF-16")) // writes a BOM
+        // header must resolve cleanly (BOM consumed by the UTF-16 decoder, not leaked into field 1)
+        assertEquals(listOf("typeName", "qualifiedName", "description"), CSVXformer.getHeader(file.absolutePath, ',', CSVDecoding.UTF_16))
+        val value = readLastField(file, CSVDecoding.UTF_16)
+        assertEquals(text, value, "UTF-16 (with BOM) did not round-trip: [$value]")
+        assertFalse(value.contains('�'), "U+FFFD in UTF-16 round-trip: [$value]")
     }
 }
