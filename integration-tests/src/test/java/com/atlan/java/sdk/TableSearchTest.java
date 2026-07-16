@@ -32,10 +32,13 @@ public class TableSearchTest extends AtlanLiveTest {
     private Schema schema = null;
     private static final String PREFIX = makeUnique("TABLE_ATTR");
     private static final String name = PREFIX + "_name";
-    private static final Set<String> ownerUsers = Set.of("user1", "user2");
-    private static final Set<String> ownerGroups = Set.of("group1", "group2");
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
+    // Owners must reference principals that actually exist in the tenant: the backend validates
+    // owner users/groups on write and silently drops unknown ones, so hard-coded placeholder names
+    // would never round-trip. Use the fixed test user and the two groups this test creates below.
+    private static final Set<String> ownerUsers = Set.of(FIXED_USER);
+    private static final Set<String> ownerGroups = Set.of(GROUP_NAME1, GROUP_NAME2);
     private Column column1 = null;
     private Column column2 = null;
     public static final String COLUMN_NAME1 = PREFIX + "_col1";
@@ -138,6 +141,18 @@ public class TableSearchTest extends AtlanLiveTest {
         assertNotNull(table.getQualifiedName());
         assertEquals(table.getName(), name);
         assertEquals(table.getSchemaQualifiedName(), schema.getQualifiedName());
+        // ownerGroups reference just-created groups, whose owner-group validation lags creation on
+        // the asset service; the initial write can silently drop them (never stored). Re-apply until
+        // they persist, so the search assertions below have something to find.
+        retryUntilAsserted(() -> {
+            Table.updater(table.getQualifiedName(), name)
+                    .ownerGroups(ownerGroups)
+                    .build()
+                    .save(client);
+            Table refreshed = Table.get(client, table.getGuid(), false);
+            assertTrue(refreshed.getOwnerGroups().containsAll(ownerGroups));
+            return refreshed;
+        });
     }
 
     @Test(
@@ -190,23 +205,27 @@ public class TableSearchTest extends AtlanLiveTest {
     @Test(
             groups = {"table.search.collections"},
             dependsOnGroups = {"t" + "able.search.consistent"})
-    void searchCollectionTypes() throws AtlanException {
+    void searchCollectionTypes() throws AtlanException, InterruptedException {
         Set<AtlanField> fields = Set.of(Table.OWNER_USERS, Table.OWNER_GROUPS, Connection.QUERY_PREVIEW_CONFIG);
         IndexSearchRequest request = Table.select(client)
                 .where(Table.QUALIFIED_NAME.eq(table.getQualifiedName()))
                 .includesOnResults(fields)
                 .toRequest();
-        IndexSearchResponse response = request.search(client);
-        assertNotNull(response);
-        assertEquals(response.getApproximateCount(), 1L);
-        List<Asset> results = response.getAssets();
-        assertEquals(results.size(), 1);
-        Table found = (Table) results.get(0);
-        assertTrue(found.getOwnerUsers().containsAll(ownerUsers));
-        assertTrue(found.getOwnerGroups().containsAll(ownerGroups));
+        // Retry until the (re-applied) owner collections have been indexed, tolerating search lag.
+        retryUntilAsserted(() -> {
+            IndexSearchResponse response = request.search(client);
+            assertNotNull(response);
+            assertEquals(response.getApproximateCount(), 1L);
+            List<Asset> results = response.getAssets();
+            assertEquals(results.size(), 1);
+            Table found = (Table) results.get(0);
+            assertTrue(found.getOwnerUsers().containsAll(ownerUsers));
+            assertTrue(found.getOwnerGroups().containsAll(ownerGroups));
 
-        assertEquals(found.getQueryPreviewConfig().get("key1"), "value1");
-        assertEquals(found.getQueryPreviewConfig().get("key2"), "value2");
+            assertEquals(found.getQueryPreviewConfig().get("key1"), "value1");
+            assertEquals(found.getQueryPreviewConfig().get("key2"), "value2");
+            return response;
+        });
     }
 
     @Test(

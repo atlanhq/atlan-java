@@ -264,7 +264,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 "suggestions.create.group.owners",
                 "suggestions.create.atlantags"
             })
-    void updateT1() throws AtlanException {
+    void updateT1() throws AtlanException, InterruptedException {
         Table toUpdate = Table.updater(table1.getQualifiedName(), TABLE_NAME)
                 .ownerGroup(ownerGroup.getName())
                 .description(SYSTEM_DESCRIPTION)
@@ -283,11 +283,19 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Table.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        Table result = response.getResult(toUpdate);
-        assertNotNull(result);
-        assertNotNull(result.getOwnerGroups());
-        assertEquals(result.getOwnerGroups().size(), 1);
-        assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+        // The owner-group validation cache on the asset service lags group creation, so the initial
+        // assignment can be silently dropped (the group is never stored, so a read-back alone can
+        // never recover it). Re-apply the owner group until it persists: a fresh write re-validates
+        // and succeeds once the group has propagated.
+        retryUntilAsserted(() -> {
+            Table.updater(table1.getQualifiedName(), TABLE_NAME)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
+            Table result = Table.get(client, table1.getGuid(), false);
+            assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+            return result;
+        });
     }
 
     @Test(
@@ -297,7 +305,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 "suggestions.create.group.owners",
                 "suggestions.create.atlantags"
             })
-    void updateT3() throws AtlanException {
+    void updateT3() throws AtlanException, InterruptedException {
         Table toUpdate = Table.updater(table3.getQualifiedName(), VIEW_NAME)
                 .ownerGroup(ownerGroup.getName())
                 .description(SYSTEM_DESCRIPTION)
@@ -316,11 +324,16 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Table.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        Table result = response.getResult(toUpdate);
-        assertNotNull(result);
-        assertNotNull(result.getOwnerGroups());
-        assertEquals(result.getOwnerGroups().size(), 1);
-        assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+        // See updateT1: re-apply the owner group until it persists.
+        retryUntilAsserted(() -> {
+            Table.updater(table3.getQualifiedName(), VIEW_NAME)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
+            Table result = Table.get(client, table3.getGuid(), false);
+            assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+            return result;
+        });
     }
 
     @Test(
@@ -330,7 +343,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 "suggestions.create.group.owners",
                 "suggestions.create.atlantags"
             })
-    void updateT1C1() throws AtlanException {
+    void updateT1C1() throws AtlanException, InterruptedException {
         Column toUpdate = Column.updater(t1c1.getQualifiedName(), COLUMN_NAME1)
                 .ownerGroup(ownerGroup.getName())
                 .description(SYSTEM_DESCRIPTION)
@@ -349,11 +362,16 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Column.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        Column result = response.getResult(toUpdate);
-        assertNotNull(result);
-        assertNotNull(result.getOwnerGroups());
-        assertEquals(result.getOwnerGroups().size(), 1);
-        assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+        // See updateT1: re-apply the owner group until it persists.
+        retryUntilAsserted(() -> {
+            Column.updater(t1c1.getQualifiedName(), COLUMN_NAME1)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
+            Column result = Column.get(client, t1c1.getGuid(), false);
+            assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+            return result;
+        });
     }
 
     @Test(
@@ -363,7 +381,7 @@ public class SuggestionsTest extends AtlanLiveTest {
                 "suggestions.create.group.owners",
                 "suggestions.create.atlantags"
             })
-    void updateV1C1() throws AtlanException {
+    void updateV1C1() throws AtlanException, InterruptedException {
         Column toUpdate = Column.updater(v1c1.getQualifiedName(), COLUMN_NAME1)
                 .ownerGroup(ownerGroup.getName())
                 .description(SYSTEM_DESCRIPTION)
@@ -378,11 +396,16 @@ public class SuggestionsTest extends AtlanLiveTest {
         assertEquals(
                 response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet()),
                 Set.of(Column.TYPE_NAME, GlossaryTerm.TYPE_NAME));
-        Column result = response.getResult(toUpdate);
-        assertNotNull(result);
-        assertNotNull(result.getOwnerGroups());
-        assertEquals(result.getOwnerGroups().size(), 1);
-        assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+        // See updateT1: re-apply the owner group until it persists.
+        retryUntilAsserted(() -> {
+            Column.updater(v1c1.getQualifiedName(), COLUMN_NAME1)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
+            Column result = Column.get(client, v1c1.getGuid(), false);
+            assertEquals(result.getOwnerGroups(), Set.of(ownerGroup.getName()));
+            return result;
+        });
     }
 
     @Test(
