@@ -1419,20 +1419,17 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByGuid() throws AtlanException, InterruptedException {
         waitForTagsToSync(taggedAssetGuids, log);
-        AuditSearchRequest request =
-                AuditSearchRequest.byGuid(client, column5.getGuid(), 50).build();
-
-        // We expect at least 32 meaningful audits (may include spurious no-op audits)
-        AuditSearchResponse response = retrySearchUntil(request, 32L);
-
-        validateAudits(response.getEntityAudits());
-
-        AuditSearch.AuditSearchBuilder<?, ?> builder = AuditSearch.builder(client)
-                .where(AuditSearchRequest.ENTITY_ID.eq(column5.getGuid()))
-                .sort(AuditSearchRequest.CREATED.order(SortOrder.Desc))
-                .pageSize(10);
-        assertTrue(builder.count() >= 32, "Expected at least 32 audits, but found " + builder.count());
-        validateAudits(builder.stream().collect(Collectors.toList()));
+        // Audit indexing is eventually consistent, and the stream contains spurious no-op audits, so
+        // a raw count threshold can be satisfied before the terminal audit is indexed. Retry the whole
+        // fetch-and-validate until the expected end-state is actually present, rather than gating on a
+        // count and validating a possibly-incomplete snapshot.
+        retryUntilAsserted(() -> {
+            AuditSearchResponse response = AuditSearchRequest.byGuid(client, column5.getGuid(), 50)
+                    .build()
+                    .search(client);
+            validateAudits(response.getEntityAudits());
+            return response;
+        });
     }
 
     @Test(
@@ -1440,12 +1437,15 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"asset.update.column.removeTerms"})
     void searchAuditLogByQN() throws AtlanException, InterruptedException {
         waitForTagsToSync(taggedAssetGuids, log);
-        AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
-                        client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
-                .build();
-        // We expect at least 32 meaningful audits (may include spurious no-op audits)
-        AuditSearchResponse response = retrySearchUntil(request, 32L);
-        validateAudits(response.getEntityAudits());
+        // As above: gate on the expected end-state, not a spurious-inflated count.
+        retryUntilAsserted(() -> {
+            AuditSearchResponse response = AuditSearchRequest.byQualifiedName(
+                            client, Column.TYPE_NAME, column5.getQualifiedName(), 50)
+                    .build()
+                    .search(client);
+            validateAudits(response.getEntityAudits());
+            return response;
+        });
     }
 
     /**

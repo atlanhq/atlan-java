@@ -32,10 +32,13 @@ public class TableSearchTest extends AtlanLiveTest {
     private Schema schema = null;
     private static final String PREFIX = makeUnique("TABLE_ATTR");
     private static final String name = PREFIX + "_name";
-    private static final Set<String> ownerUsers = Set.of("user1", "user2");
-    private static final Set<String> ownerGroups = Set.of("group1", "group2");
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
+    // Owners must reference principals that actually exist in the tenant: the backend validates
+    // owner users/groups on write and silently drops unknown ones, so hard-coded placeholder names
+    // would never round-trip. Use the fixed test user and the two groups this test creates below.
+    private static final Set<String> ownerUsers = Set.of(FIXED_USER);
+    private static final Set<String> ownerGroups = Set.of(GROUP_NAME1, GROUP_NAME2);
     private Column column1 = null;
     private Column column2 = null;
     public static final String COLUMN_NAME1 = PREFIX + "_col1";
