@@ -898,19 +898,29 @@ public class SQLAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"asset.update.column.owners"},
             dependsOnGroups = {"asset.read.column.5", "asset.create.group.owners"})
-    void updateColumnOwners() throws AtlanException {
+    void updateColumnOwners() throws AtlanException, InterruptedException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .ownerGroup(ownerGroup.getName())
                 .build();
         AssetMutationResponse response = toUpdate.save(client);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
-        Column updated = (Column) one;
-        validateUpdatedColumn(updated);
-        Set<String> groups = updated.getOwnerGroups();
-        assertNotNull(groups);
-        assertEquals(groups.size(), 1);
-        assertTrue(groups.contains(ownerGroup.getName()));
+        validateUpdatedColumn((Column) one);
+        // Owner-group validation lags group creation (MS-2016), so the assignment can be silently
+        // dropped off the synchronous response; re-apply until a read-back confirms it persisted
+        // (this also ensures the "ownerGroups set" audit exists for the audit-search tests).
+        retryUntilAsserted(() -> {
+            Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
+                    .ownerGroup(ownerGroup.getName())
+                    .build()
+                    .save(client);
+            Column refreshed = Column.get(client, column5.getGuid(), false);
+            Set<String> groups = refreshed.getOwnerGroups();
+            assertNotNull(groups);
+            assertEquals(groups.size(), 1);
+            assertTrue(groups.contains(ownerGroup.getName()));
+            return refreshed;
+        });
     }
 
     @Test(

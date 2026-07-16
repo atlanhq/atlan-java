@@ -918,21 +918,32 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.read.term.audit"},
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByGuid() throws AtlanException, InterruptedException {
-        AuditSearchRequest request =
-                AuditSearchRequest.byGuid(client, term.getGuid(), 100).build();
-        AuditSearchResponse response = retrySearchUntil(request, 14L);
-        validateAudits(response.getEntityAudits());
+        // Audit indexing is eventually consistent and the stream includes spurious no-op audits, so a
+        // raw count gate can pass before the terminal custom-metadata audits land. Retry the whole
+        // fetch-and-validate until the expected sequence is present, rather than gating on a count.
+        // (Same fix as SQLAssetTest.searchAuditLogByGuid.)
+        retryUntilAsserted(() -> {
+            AuditSearchResponse response = AuditSearchRequest.byGuid(client, term.getGuid(), 100)
+                    .build()
+                    .search(client);
+            validateAudits(response.getEntityAudits());
+            return response;
+        });
     }
 
     @Test(
             groups = {"cm.read.term.audit"},
             dependsOnGroups = {"cm.update.term.remove.cm"})
     void readTermAuditByQN() throws AtlanException, InterruptedException {
-        AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
-                        client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 100)
-                .build();
-        AuditSearchResponse response = retrySearchUntil(request, 14L);
-        validateAudits(response.getEntityAudits());
+        // As above: gate on the expected end-state, not a spurious-inflated count.
+        retryUntilAsserted(() -> {
+            AuditSearchResponse response = AuditSearchRequest.byQualifiedName(
+                            client, GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 100)
+                    .build()
+                    .search(client);
+            validateAudits(response.getEntityAudits());
+            return response;
+        });
     }
 
     @Test(
