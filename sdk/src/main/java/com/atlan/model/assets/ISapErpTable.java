@@ -48,6 +48,9 @@ public interface ISapErpTable {
     /** SAP ERP Tables that are associated with this SAP ERP Component. */
     RelationField SAP_ERP_COMPONENT = new RelationField("sapErpComponent");
 
+    /** SAP ERP Tables that are related to this SAP ERP Table. */
+    RelationField SAP_ERP_RELATED_TABLES = new RelationField("sapErpRelatedTables");
+
     /** Defines the delivery class of the SAP ERP table, determining how the table's data is transported and managed during system updates. */
     KeywordField SAP_ERP_TABLE_DELIVERY_CLASS =
             new KeywordField("sapErpTableDeliveryClass", "sapErpTableDeliveryClass");
@@ -714,6 +717,11 @@ public interface ISapErpTable {
 
     /** SAP ERP Tables that are associated with this SAP ERP Component. */
     default ISapErpComponent getSapErpComponent() {
+        return null;
+    }
+
+    /** SAP ERP Tables that are related to this SAP ERP Table. */
+    default SortedSet<ISapErpTable> getSapErpRelatedTables() {
         return null;
     }
 
