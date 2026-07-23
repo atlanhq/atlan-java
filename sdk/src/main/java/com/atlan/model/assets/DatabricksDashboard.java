@@ -9,13 +9,13 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DatabricksDashboardLifecycleState;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of an Iceberg namespace in Atlan. Supports nested namespaces with dot-separated paths.
+ * Instance of a Databricks AI/BI dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
@@ -39,13 +39,13 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class IcebergNamespace extends Asset
-        implements IIcebergNamespace, ISchema, IIceberg, ICatalog, IAsset, IReferenceable, ISQL {
+public class DatabricksDashboard extends Asset
+        implements IDatabricksDashboard, IBI, IDatabricks, ICatalog, IAsset, IReferenceable, ISQL {
     private static final long serialVersionUID = 2L;
 
-    public static final String TYPE_NAME = "IcebergNamespace";
+    public static final String TYPE_NAME = "DatabricksDashboard";
 
-    /** Fixed typeName for IcebergNamespaces. */
+    /** Fixed typeName for DatabricksDashboards. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
@@ -58,18 +58,9 @@ public class IcebergNamespace extends Asset
     @Attribute
     String calculationViewQualifiedName;
 
-    /** Calculation views that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ICalculationView> calculationViews;
-
     /** Unique identifier of the dataset this asset belongs to. */
     @Attribute
     String catalogDatasetGuid;
-
-    /** Database in which this schema exists. */
-    @Attribute
-    IDatabase database;
 
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
@@ -79,15 +70,29 @@ public class IcebergNamespace extends Asset
     @Attribute
     String databaseQualifiedName;
 
-    /** Contexts contained within the schema. */
+    /** Entity tag used as a change token for the dashboard. */
     @Attribute
-    @Singular
-    SortedSet<IDatabricksAIModelContext> databricksAIModelContexts;
+    String databricksDashboardEtag;
 
-    /** Volume contained within the schema. */
+    /** Whether a Genie space is enabled for the dashboard. */
     @Attribute
-    @Singular
-    SortedSet<IDatabricksVolume> databricksVolumes;
+    Boolean databricksDashboardIsGenieSpaceEnabled;
+
+    /** Lifecycle state of the dashboard. */
+    @Attribute
+    DatabricksDashboardLifecycleState databricksDashboardLifecycleState;
+
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    @Attribute
+    String databricksDashboardPath;
+
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    @Attribute
+    String databricksDashboardWarehouseId;
+
+    /** Identifier of the workspace containing the dashboard. */
+    @Attribute
+    String databricksDashboardWorkspaceId;
 
     /** (Deprecated) Model containing the assets. */
     @Attribute
@@ -108,29 +113,6 @@ public class IcebergNamespace extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtTest> dbtTests;
-
-    /** Functions that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<IFunction> functions;
-
-    /** Ordered array of namespace assets with qualified name and name representing the complete namespace hierarchy path for this asset, from immediate parent to root namespace. */
-    @Attribute
-    @Singular("addIcebergNamespaceHierarchy")
-    List<Map<String, String>> icebergNamespaceHierarchy;
-
-    /** Parent Iceberg Namespace containing the sub-namespaces. */
-    @Attribute
-    IIcebergNamespace icebergParentNamespace;
-
-    /** Unique name of the immediate parent namespace in which this asset exists. */
-    @Attribute
-    String icebergParentNamespaceQualifiedName;
-
-    /** Child namespaces nested within the parent Iceberg Namespace. */
-    @Attribute
-    @Singular
-    SortedSet<IIcebergNamespace> icebergSubNamespaces;
 
     /** Tasks to which this asset provides input. */
     @Attribute
@@ -155,16 +137,6 @@ public class IcebergNamespace extends Asset
     @Attribute
     @Date
     Long lastProfiledAt;
-
-    /** Unique name of the Linked Schema on which this Schema is dependent. This concept is mostly applicable for linked datasets/datasource in Google BigQuery via Analytics Hub Listing */
-    @Attribute
-    String linkedSchemaQualifiedName;
-
-    /** Materialized views that exist within this schema. */
-    @Attribute
-    @Singular
-    @JsonProperty("materialisedViews")
-    SortedSet<IMaterializedView> materializedViews;
 
     /** Attributes implemented by this asset. */
     @Attribute
@@ -201,11 +173,6 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** Stored procedures that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<IProcedure> procedures;
-
     /** Number of times this asset has been queried. */
     @Attribute
     Long queryCount;
@@ -224,15 +191,6 @@ public class IcebergNamespace extends Asset
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /** SAP Datasphere replication flows that create tables within this schema (Datasphere space). */
-    @Attribute
-    @Singular
-    SortedSet<ISapDatasphereReplicationFlow> sapDatasphereReplicationFlows;
-
-    /** External location of this schema, for example: an S3 object location. */
-    @Attribute
-    String schemaExternalLocation;
-
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
@@ -240,46 +198,6 @@ public class IcebergNamespace extends Asset
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
-
-    /** Contexts contained within the schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeAIModelContext> snowflakeAIModelContexts;
-
-    /** Snowflake dynamic tables that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeDynamicTable> snowflakeDynamicTables;
-
-    /** Snowflake pipes that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakePipe> snowflakePipes;
-
-    /** Semantic logical tables that reference this physical table or view. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
-
-    /** Snowflake semantic views contained in the schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeSemanticView> snowflakeSemanticViews;
-
-    /** Collection of Snowflake stages that are defined and contained within this schema, representing staging areas for data loading and unloading operations. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeStage> snowflakeStages;
-
-    /** Snowflake streams that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeStream> snowflakeStreams;
-
-    /** Snowflake tags that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ISnowflakeTag> snowflakeTags;
 
     /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
     @Attribute
@@ -344,11 +262,6 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<IDbtSource> sqlDBTSources;
 
-    /** Databases to which this schema belongs. */
-    @Attribute
-    @Singular
-    SortedSet<IDatabase> sqlDatabases;
-
     /** Assets related to the model. */
     @Attribute
     @Singular
@@ -357,21 +270,6 @@ public class IcebergNamespace extends Asset
     /** Whether this asset has any AI insights data available. */
     @Attribute
     Boolean sqlHasAiInsights;
-
-    /** Business question insights for this SQL asset. */
-    @Attribute
-    @Singular
-    SortedSet<ISqlInsightBusinessQuestion> sqlInsightBusinessQuestions;
-
-    /** Join insights where this asset is the joined dataset. */
-    @Attribute
-    @Singular
-    SortedSet<ISqlInsightJoin> sqlInsightIncomingJoins;
-
-    /** Join insights where this asset is the source dataset. */
-    @Attribute
-    @Singular
-    SortedSet<ISqlInsightJoin> sqlInsightOutgoingJoins;
 
     /** Whether this asset is secure (true) or not (false). */
     @Attribute
@@ -382,10 +280,6 @@ public class IcebergNamespace extends Asset
     @Singular
     SortedSet<String> sqlShareQualifiedNames;
 
-    /** Number of tables in this schema. */
-    @Attribute
-    Integer tableCount;
-
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
@@ -393,16 +287,6 @@ public class IcebergNamespace extends Asset
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
-
-    /** Tables that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<ITable> tables;
-
-    /** Number of views in this schema. */
-    @Attribute
-    @JsonProperty("viewsCount")
-    Integer viewCount;
 
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
@@ -412,20 +296,15 @@ public class IcebergNamespace extends Asset
     @Attribute
     String viewQualifiedName;
 
-    /** Views that exist within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<IView> views;
-
     /**
-     * Builds the minimal object necessary to create a relationship to a IcebergNamespace, from a potentially
-     * more-complete IcebergNamespace object.
+     * Builds the minimal object necessary to create a relationship to a DatabricksDashboard, from a potentially
+     * more-complete DatabricksDashboard object.
      *
-     * @return the minimal object necessary to relate to the IcebergNamespace
-     * @throws InvalidRequestException if any of the minimal set of required properties for a IcebergNamespace relationship are not found in the initial object
+     * @return the minimal object necessary to relate to the DatabricksDashboard
+     * @throws InvalidRequestException if any of the minimal set of required properties for a DatabricksDashboard relationship are not found in the initial object
      */
     @Override
-    public IcebergNamespace trimToReference() throws InvalidRequestException {
+    public DatabricksDashboard trimToReference() throws InvalidRequestException {
         if (this.getGuid() != null && !this.getGuid().isEmpty()) {
             return refByGuid(this.getGuid());
         }
@@ -442,27 +321,27 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Start a fluent search that will return all IcebergNamespace assets.
+     * Start a fluent search that will return all DatabricksDashboard assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
-     * optimal retrieval. Only active (non-archived) IcebergNamespace assets will be included.
+     * optimal retrieval. Only active (non-archived) DatabricksDashboard assets will be included.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @return a fluent search that includes all IcebergNamespace assets
+     * @return a fluent search that includes all DatabricksDashboard assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client) {
         return select(client, false);
     }
 
     /**
-     * Start a fluent search that will return all IcebergNamespace assets.
+     * Start a fluent search that will return all DatabricksDashboard assets.
      * Additional conditions can be chained onto the returned search before any
      * asset retrieval is attempted, ensuring all conditions are pushed-down for
      * optimal retrieval.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the assets
-     * @param includeArchived when true, archived (soft-deleted) IcebergNamespaces will be included
-     * @return a fluent search that includes all IcebergNamespace assets
+     * @param includeArchived when true, archived (soft-deleted) DatabricksDashboards will be included
+     * @return a fluent search that includes all DatabricksDashboard assets
      */
     public static FluentSearch.FluentSearchBuilder<?, ?> select(AtlanClient client, boolean includeArchived) {
         FluentSearch.FluentSearchBuilder<?, ?> builder =
@@ -474,51 +353,51 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Reference to a IcebergNamespace by GUID. Use this to create a relationship to this IcebergNamespace,
+     * Reference to a DatabricksDashboard by GUID. Use this to create a relationship to this DatabricksDashboard,
      * where the relationship should be replaced.
      *
-     * @param guid the GUID of the IcebergNamespace to reference
-     * @return reference to a IcebergNamespace that can be used for defining a relationship to a IcebergNamespace
+     * @param guid the GUID of the DatabricksDashboard to reference
+     * @return reference to a DatabricksDashboard that can be used for defining a relationship to a DatabricksDashboard
      */
-    public static IcebergNamespace refByGuid(String guid) {
+    public static DatabricksDashboard refByGuid(String guid) {
         return refByGuid(guid, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a IcebergNamespace by GUID. Use this to create a relationship to this IcebergNamespace,
+     * Reference to a DatabricksDashboard by GUID. Use this to create a relationship to this DatabricksDashboard,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param guid the GUID of the IcebergNamespace to reference
+     * @param guid the GUID of the DatabricksDashboard to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a IcebergNamespace that can be used for defining a relationship to a IcebergNamespace
+     * @return reference to a DatabricksDashboard that can be used for defining a relationship to a DatabricksDashboard
      */
-    public static IcebergNamespace refByGuid(String guid, Reference.SaveSemantic semantic) {
-        return IcebergNamespace._internal().guid(guid).semantic(semantic).build();
+    public static DatabricksDashboard refByGuid(String guid, Reference.SaveSemantic semantic) {
+        return DatabricksDashboard._internal().guid(guid).semantic(semantic).build();
     }
 
     /**
-     * Reference to a IcebergNamespace by qualifiedName. Use this to create a relationship to this IcebergNamespace,
+     * Reference to a DatabricksDashboard by qualifiedName. Use this to create a relationship to this DatabricksDashboard,
      * where the relationship should be replaced.
      *
-     * @param qualifiedName the qualifiedName of the IcebergNamespace to reference
-     * @return reference to a IcebergNamespace that can be used for defining a relationship to a IcebergNamespace
+     * @param qualifiedName the qualifiedName of the DatabricksDashboard to reference
+     * @return reference to a DatabricksDashboard that can be used for defining a relationship to a DatabricksDashboard
      */
-    public static IcebergNamespace refByQualifiedName(String qualifiedName) {
+    public static DatabricksDashboard refByQualifiedName(String qualifiedName) {
         return refByQualifiedName(qualifiedName, Reference.SaveSemantic.REPLACE);
     }
 
     /**
-     * Reference to a IcebergNamespace by qualifiedName. Use this to create a relationship to this IcebergNamespace,
+     * Reference to a DatabricksDashboard by qualifiedName. Use this to create a relationship to this DatabricksDashboard,
      * where you want to further control how that relationship should be updated (i.e. replaced,
      * appended, or removed).
      *
-     * @param qualifiedName the qualifiedName of the IcebergNamespace to reference
+     * @param qualifiedName the qualifiedName of the DatabricksDashboard to reference
      * @param semantic how to save this relationship (replace all with this, append it, or remove it)
-     * @return reference to a IcebergNamespace that can be used for defining a relationship to a IcebergNamespace
+     * @return reference to a DatabricksDashboard that can be used for defining a relationship to a DatabricksDashboard
      */
-    public static IcebergNamespace refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
-        return IcebergNamespace._internal()
+    public static DatabricksDashboard refByQualifiedName(String qualifiedName, Reference.SaveSemantic semantic) {
+        return DatabricksDashboard._internal()
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .semantic(semantic)
@@ -526,29 +405,29 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Retrieves a IcebergNamespace by one of its identifiers, complete with all of its relationships.
+     * Retrieves a DatabricksDashboard by one of its identifiers, complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the IcebergNamespace to retrieve, either its GUID or its full qualifiedName
-     * @return the requested full IcebergNamespace, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergNamespace does not exist or the provided GUID is not a IcebergNamespace
+     * @param id of the DatabricksDashboard to retrieve, either its GUID or its full qualifiedName
+     * @return the requested full DatabricksDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksDashboard does not exist or the provided GUID is not a DatabricksDashboard
      */
     @JsonIgnore
-    public static IcebergNamespace get(AtlanClient client, String id) throws AtlanException {
+    public static DatabricksDashboard get(AtlanClient client, String id) throws AtlanException {
         return get(client, id, false);
     }
 
     /**
-     * Retrieves a IcebergNamespace by one of its identifiers, optionally complete with all of its relationships.
+     * Retrieves a DatabricksDashboard by one of its identifiers, optionally complete with all of its relationships.
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the IcebergNamespace to retrieve, either its GUID or its full qualifiedName
+     * @param id of the DatabricksDashboard to retrieve, either its GUID or its full qualifiedName
      * @param includeAllRelationships if true, all the asset's relationships will also be retrieved; if false, no relationships will be retrieved
-     * @return the requested full IcebergNamespace, optionally complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergNamespace does not exist or the provided GUID is not a IcebergNamespace
+     * @return the requested full DatabricksDashboard, optionally complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksDashboard does not exist or the provided GUID is not a DatabricksDashboard
      */
     @JsonIgnore
-    public static IcebergNamespace get(AtlanClient client, String id, boolean includeAllRelationships)
+    public static DatabricksDashboard get(AtlanClient client, String id, boolean includeAllRelationships)
             throws AtlanException {
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
@@ -556,15 +435,15 @@ public class IcebergNamespace extends Asset
             Asset asset = Asset.get(client, id, includeAllRelationships);
             if (asset == null) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset instanceof IcebergNamespace) {
-                return (IcebergNamespace) asset;
+            } else if (asset instanceof DatabricksDashboard) {
+                return (DatabricksDashboard) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
             Asset asset = Asset.get(client, TYPE_NAME, id, includeAllRelationships);
-            if (asset instanceof IcebergNamespace) {
-                return (IcebergNamespace) asset;
+            if (asset instanceof DatabricksDashboard) {
+                return (DatabricksDashboard) asset;
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
             }
@@ -572,32 +451,32 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Retrieves a IcebergNamespace by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a DatabricksDashboard by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the IcebergNamespace to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the IcebergNamespace, including any relationships
-     * @return the requested IcebergNamespace, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergNamespace does not exist or the provided GUID is not a IcebergNamespace
+     * @param id of the DatabricksDashboard to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the DatabricksDashboard, including any relationships
+     * @return the requested DatabricksDashboard, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksDashboard does not exist or the provided GUID is not a DatabricksDashboard
      */
     @JsonIgnore
-    public static IcebergNamespace get(AtlanClient client, String id, Collection<AtlanField> attributes)
+    public static DatabricksDashboard get(AtlanClient client, String id, Collection<AtlanField> attributes)
             throws AtlanException {
         return get(client, id, attributes, Collections.emptyList());
     }
 
     /**
-     * Retrieves a IcebergNamespace by one of its identifiers, with only the requested attributes (and relationships).
+     * Retrieves a DatabricksDashboard by one of its identifiers, with only the requested attributes (and relationships).
      *
      * @param client connectivity to the Atlan tenant from which to retrieve the asset
-     * @param id of the IcebergNamespace to retrieve, either its GUID or its full qualifiedName
-     * @param attributes to retrieve for the IcebergNamespace, including any relationships
-     * @param attributesOnRelated to retrieve on each relationship retrieved for the IcebergNamespace
-     * @return the requested IcebergNamespace, with only its minimal information and the requested attributes (and relationships)
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the IcebergNamespace does not exist or the provided GUID is not a IcebergNamespace
+     * @param id of the DatabricksDashboard to retrieve, either its GUID or its full qualifiedName
+     * @param attributes to retrieve for the DatabricksDashboard, including any relationships
+     * @param attributesOnRelated to retrieve on each relationship retrieved for the DatabricksDashboard
+     * @return the requested DatabricksDashboard, with only its minimal information and the requested attributes (and relationships)
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the DatabricksDashboard does not exist or the provided GUID is not a DatabricksDashboard
      */
     @JsonIgnore
-    public static IcebergNamespace get(
+    public static DatabricksDashboard get(
             AtlanClient client,
             String id,
             Collection<AtlanField> attributes,
@@ -606,8 +485,8 @@ public class IcebergNamespace extends Asset
         if (id == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, "(null)");
         } else if (StringUtils.isUUID(id)) {
-            Optional<Asset> asset = IcebergNamespace.select(client)
-                    .where(IcebergNamespace.GUID.eq(id))
+            Optional<Asset> asset = DatabricksDashboard.select(client)
+                    .where(DatabricksDashboard.GUID.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -616,14 +495,14 @@ public class IcebergNamespace extends Asset
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, id);
-            } else if (asset.get() instanceof IcebergNamespace) {
-                return (IcebergNamespace) asset.get();
+            } else if (asset.get() instanceof DatabricksDashboard) {
+                return (DatabricksDashboard) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
         } else {
-            Optional<Asset> asset = IcebergNamespace.select(client)
-                    .where(IcebergNamespace.QUALIFIED_NAME.eq(id))
+            Optional<Asset> asset = DatabricksDashboard.select(client)
+                    .where(DatabricksDashboard.QUALIFIED_NAME.eq(id))
                     .includesOnResults(attributes)
                     .includesOnRelations(attributesOnRelated)
                     .includeRelationshipAttributes(true)
@@ -632,8 +511,8 @@ public class IcebergNamespace extends Asset
                     .findFirst();
             if (!asset.isPresent()) {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, id, TYPE_NAME);
-            } else if (asset.get() instanceof IcebergNamespace) {
-                return (IcebergNamespace) asset.get();
+            } else if (asset.get() instanceof DatabricksDashboard) {
+                return (DatabricksDashboard) asset.get();
             } else {
                 throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, id, TYPE_NAME);
             }
@@ -641,11 +520,11 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Restore the archived (soft-deleted) IcebergNamespace to active.
+     * Restore the archived (soft-deleted) DatabricksDashboard to active.
      *
      * @param client connectivity to the Atlan tenant on which to restore the asset
-     * @param qualifiedName for the IcebergNamespace
-     * @return true if the IcebergNamespace is now active, and false otherwise
+     * @param qualifiedName for the DatabricksDashboard
+     * @return true if the DatabricksDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
     public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
@@ -653,28 +532,28 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Builds the minimal object necessary to update a IcebergNamespace.
+     * Builds the minimal object necessary to update a DatabricksDashboard.
      *
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the minimal request necessary to update the IcebergNamespace, as a builder
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the minimal request necessary to update the DatabricksDashboard, as a builder
      */
-    public static IcebergNamespaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return IcebergNamespace._internal()
+    public static DatabricksDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DatabricksDashboard._internal()
                 .guid("-" + ThreadLocalRandom.current().nextLong(0, Long.MAX_VALUE - 1))
                 .qualifiedName(qualifiedName)
                 .name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a IcebergNamespace,
-     * from a potentially more-complete IcebergNamespace object.
+     * Builds the minimal object necessary to apply an update to a DatabricksDashboard,
+     * from a potentially more-complete DatabricksDashboard object.
      *
-     * @return the minimal object necessary to update the IcebergNamespace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required fields for a IcebergNamespace are not present in the initial object
+     * @return the minimal object necessary to update the DatabricksDashboard, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required fields for a DatabricksDashboard are not present in the initial object
      */
     @Override
-    public IcebergNamespaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public DatabricksDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         Map<String, String> map = new HashMap<>();
         map.put("qualifiedName", this.getQualifiedName());
         map.put("name", this.getName());
@@ -682,201 +561,201 @@ public class IcebergNamespace extends Asset
         return updater(this.getQualifiedName(), this.getName());
     }
 
-    public abstract static class IcebergNamespaceBuilder<
-                    C extends IcebergNamespace, B extends IcebergNamespaceBuilder<C, B>>
+    public abstract static class DatabricksDashboardBuilder<
+                    C extends DatabricksDashboard, B extends DatabricksDashboardBuilder<C, B>>
             extends Asset.AssetBuilder<C, B> {}
 
     /**
-     * Remove the system description from a IcebergNamespace.
+     * Remove the system description from a DatabricksDashboard.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the updated IcebergNamespace, or null if the removal failed
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the updated DatabricksDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace removeDescription(AtlanClient client, String qualifiedName, String name)
+    public static DatabricksDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeDescription(client, updater(qualifiedName, name));
+        return (DatabricksDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the user's description from a IcebergNamespace.
+     * Remove the user's description from a DatabricksDashboard.
      *
      * @param client connectivity to the Atlan tenant on which to remove the asset's description
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the updated IcebergNamespace, or null if the removal failed
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the updated DatabricksDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace removeUserDescription(AtlanClient client, String qualifiedName, String name)
+    public static DatabricksDashboard removeUserDescription(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeUserDescription(client, updater(qualifiedName, name));
+        return (DatabricksDashboard) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
-     * Remove the owners from a IcebergNamespace.
+     * Remove the owners from a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the IcebergNamespace's owners
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the updated IcebergNamespace, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the DatabricksDashboard's owners
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the updated DatabricksDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace removeOwners(AtlanClient client, String qualifiedName, String name)
+    public static DatabricksDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeOwners(client, updater(qualifiedName, name));
+        return (DatabricksDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the certificate on a IcebergNamespace.
+     * Update the certificate on a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant on which to update the IcebergNamespace's certificate
-     * @param qualifiedName of the IcebergNamespace
+     * @param client connectivity to the Atlan tenant on which to update the DatabricksDashboard's certificate
+     * @param qualifiedName of the DatabricksDashboard
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated IcebergNamespace, or null if the update failed
+     * @return the updated DatabricksDashboard, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace updateCertificate(
+    public static DatabricksDashboard updateCertificate(
             AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (IcebergNamespace)
+        return (DatabricksDashboard)
                 Asset.updateCertificate(client, _internal(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
-     * Remove the certificate from a IcebergNamespace.
+     * Remove the certificate from a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant from which to remove the IcebergNamespace's certificate
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the updated IcebergNamespace, or null if the removal failed
+     * @param client connectivity to the Atlan tenant from which to remove the DatabricksDashboard's certificate
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the updated DatabricksDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace removeCertificate(AtlanClient client, String qualifiedName, String name)
+    public static DatabricksDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeCertificate(client, updater(qualifiedName, name));
+        return (DatabricksDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
-     * Update the announcement on a IcebergNamespace.
+     * Update the announcement on a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant on which to update the IcebergNamespace's announcement
-     * @param qualifiedName of the IcebergNamespace
+     * @param client connectivity to the Atlan tenant on which to update the DatabricksDashboard's announcement
+     * @param qualifiedName of the DatabricksDashboard
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace updateAnnouncement(
+    public static DatabricksDashboard updateAnnouncement(
             AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        return (IcebergNamespace)
+        return (DatabricksDashboard)
                 Asset.updateAnnouncement(client, _internal(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
-     * Remove the announcement from a IcebergNamespace.
+     * Remove the announcement from a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan client from which to remove the IcebergNamespace's announcement
-     * @param qualifiedName of the IcebergNamespace
-     * @param name of the IcebergNamespace
-     * @return the updated IcebergNamespace, or null if the removal failed
+     * @param client connectivity to the Atlan client from which to remove the DatabricksDashboard's announcement
+     * @param qualifiedName of the DatabricksDashboard
+     * @param name of the DatabricksDashboard
+     * @return the updated DatabricksDashboard, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+    public static DatabricksDashboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeAnnouncement(client, updater(qualifiedName, name));
+        return (DatabricksDashboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
-     * Replace the terms linked to the IcebergNamespace.
+     * Replace the terms linked to the DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant on which to replace the IcebergNamespace's assigned terms
-     * @param qualifiedName for the IcebergNamespace
-     * @param name human-readable name of the IcebergNamespace
-     * @param terms the list of terms to replace on the IcebergNamespace, or null to remove all terms from the IcebergNamespace
-     * @return the IcebergNamespace that was updated (note that it will NOT contain details of the replaced terms)
+     * @param client connectivity to the Atlan tenant on which to replace the DatabricksDashboard's assigned terms
+     * @param qualifiedName for the DatabricksDashboard
+     * @param name human-readable name of the DatabricksDashboard
+     * @param terms the list of terms to replace on the DatabricksDashboard, or null to remove all terms from the DatabricksDashboard
+     * @return the DatabricksDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static IcebergNamespace replaceTerms(
+    public static DatabricksDashboard replaceTerms(
             AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
-        return (IcebergNamespace) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
+        return (DatabricksDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
-     * Link additional terms to the IcebergNamespace, without replacing existing terms linked to the IcebergNamespace.
-     * Note: this operation must make two API calls — one to retrieve the IcebergNamespace's existing terms,
+     * Link additional terms to the DatabricksDashboard, without replacing existing terms linked to the DatabricksDashboard.
+     * Note: this operation must make two API calls — one to retrieve the DatabricksDashboard's existing terms,
      * and a second to append the new terms.
      *
-     * @param client connectivity to the Atlan tenant on which to append terms to the IcebergNamespace
-     * @param qualifiedName for the IcebergNamespace
-     * @param terms the list of terms to append to the IcebergNamespace
-     * @return the IcebergNamespace that was updated  (note that it will NOT contain details of the appended terms)
+     * @param client connectivity to the Atlan tenant on which to append terms to the DatabricksDashboard
+     * @param qualifiedName for the DatabricksDashboard
+     * @param terms the list of terms to append to the DatabricksDashboard
+     * @return the DatabricksDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static IcebergNamespace appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static DatabricksDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (IcebergNamespace) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (DatabricksDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Remove terms from a IcebergNamespace, without replacing all existing terms linked to the IcebergNamespace.
-     * Note: this operation must make two API calls — one to retrieve the IcebergNamespace's existing terms,
+     * Remove terms from a DatabricksDashboard, without replacing all existing terms linked to the DatabricksDashboard.
+     * Note: this operation must make two API calls — one to retrieve the DatabricksDashboard's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param client connectivity to the Atlan tenant from which to remove terms from the IcebergNamespace
-     * @param qualifiedName for the IcebergNamespace
-     * @param terms the list of terms to remove from the IcebergNamespace, which must be referenced by GUID
-     * @return the IcebergNamespace that was updated (note that it will NOT contain details of the resulting terms)
+     * @param client connectivity to the Atlan tenant from which to remove terms from the DatabricksDashboard
+     * @param qualifiedName for the DatabricksDashboard
+     * @param terms the list of terms to remove from the DatabricksDashboard, which must be referenced by GUID
+     * @return the DatabricksDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAssignedTerm(GlossaryTerm)}
      */
     @Deprecated
-    public static IcebergNamespace removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+    public static DatabricksDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (IcebergNamespace) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
+        return (DatabricksDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
-     * Add Atlan tags to a IcebergNamespace, without replacing existing Atlan tags linked to the IcebergNamespace.
-     * Note: this operation must make two API calls — one to retrieve the IcebergNamespace's existing Atlan tags,
+     * Add Atlan tags to a DatabricksDashboard, without replacing existing Atlan tags linked to the DatabricksDashboard.
+     * Note: this operation must make two API calls — one to retrieve the DatabricksDashboard's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the IcebergNamespace
-     * @param qualifiedName of the IcebergNamespace
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DatabricksDashboard
+     * @param qualifiedName of the DatabricksDashboard
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
-     * @return the updated IcebergNamespace
+     * @return the updated DatabricksDashboard
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List)}
      */
     @Deprecated
-    public static IcebergNamespace appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
-            throws AtlanException {
-        return (IcebergNamespace) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
+    public static DatabricksDashboard appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return (DatabricksDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add Atlan tags to a IcebergNamespace, without replacing existing Atlan tags linked to the IcebergNamespace.
-     * Note: this operation must make two API calls — one to retrieve the IcebergNamespace's existing Atlan tags,
+     * Add Atlan tags to a DatabricksDashboard, without replacing existing Atlan tags linked to the DatabricksDashboard.
+     * Note: this operation must make two API calls — one to retrieve the DatabricksDashboard's existing Atlan tags,
      * and a second to append the new Atlan tags.
      *
-     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the IcebergNamespace
-     * @param qualifiedName of the IcebergNamespace
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the DatabricksDashboard
+     * @param qualifiedName of the DatabricksDashboard
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @param propagate whether to propagate the Atlan tag (true) or not (false)
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
-     * @return the updated IcebergNamespace
+     * @return the updated DatabricksDashboard
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#appendAtlanTags(List, boolean, boolean, boolean, boolean)}
      */
     @Deprecated
-    public static IcebergNamespace appendAtlanTags(
+    public static DatabricksDashboard appendAtlanTags(
             AtlanClient client,
             String qualifiedName,
             List<String> atlanTagNames,
@@ -884,7 +763,7 @@ public class IcebergNamespace extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (IcebergNamespace) Asset.appendAtlanTags(
+        return (DatabricksDashboard) Asset.appendAtlanTags(
                 client,
                 TYPE_NAME,
                 qualifiedName,
@@ -895,12 +774,12 @@ public class IcebergNamespace extends Asset
     }
 
     /**
-     * Remove an Atlan tag from a IcebergNamespace.
+     * Remove an Atlan tag from a DatabricksDashboard.
      *
-     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a IcebergNamespace
-     * @param qualifiedName of the IcebergNamespace
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a DatabricksDashboard
+     * @param qualifiedName of the DatabricksDashboard
      * @param atlanTagName human-readable name of the Atlan tag to remove
-     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the IcebergNamespace
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the DatabricksDashboard
      * @deprecated see {@link com.atlan.model.assets.Asset.AssetBuilder#removeAtlanTag(String)}
      */
     @Deprecated
