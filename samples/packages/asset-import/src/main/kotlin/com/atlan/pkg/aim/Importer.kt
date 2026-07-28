@@ -9,6 +9,7 @@ import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.FieldSerde
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.DeltaProcessor
@@ -49,6 +50,9 @@ object Importer {
         ctx.caseSensitive.set(assetsCaseSensitive)
         val assetsFieldSeparator = ctx.config.getEffectiveValue(AssetImportCfg::assetsFieldSeparator, AssetImportCfg::assetsConfig)
         val assetsFailOnErrors = ctx.config.getEffectiveValue(AssetImportCfg::assetsFailOnErrors, AssetImportCfg::assetsConfig)
+        // Encoding is a single (global) choice for the whole run, so it is resolved once here and passed
+        // to the importers/preprocessors (the same value the importers derive from ctx.config).
+        val decoding = CSVDecoding.fromConfig(ctx.config.inputEncoding.firstOrNull())
 
         val assetsInput =
             if (assetsFileProvided) {
@@ -204,7 +208,7 @@ object Importer {
                 val previousFileDirect = ctx.config.assetsPreviousFileDirect
                 val preprocessedDetails =
                     AssetImporter
-                        .Preprocessor(ctx, assetsInput, assetsFieldSeparator[0], logger)
+                        .Preprocessor(ctx, assetsInput, assetsFieldSeparator[0], logger, decoding = decoding)
                         .preprocess<AssetImporter.Results>()
                 DeltaProcessor(
                     ctx = ctx,
@@ -234,6 +238,7 @@ object Importer {
                                 previousFileDirect,
                                 assetsFieldSeparator[0],
                                 logger,
+                                decoding = decoding,
                             )
                         } else {
                             null

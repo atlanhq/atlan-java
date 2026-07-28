@@ -28,8 +28,9 @@ abstract class CSVPreprocessor(
     val producesFile: String? = null,
     val usingHeaders: List<String>? = null,
     open val requiredHeaders: Map<String, Set<String>> = emptyMap(),
+    val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) {
-    val header = CSVXformer.getHeader(filename, fieldSeparator)
+    val header = CSVXformer.getHeader(filename, fieldSeparator, decoding)
 
     /**
      * Preprocess the provided row of CSV.
@@ -69,6 +70,7 @@ abstract class CSVPreprocessor(
             AssetCreationHandling.NONE,
             tableViewAgnostic = false,
             fieldSeparator,
+            decoding = decoding,
         ).use { csv ->
             val start = System.currentTimeMillis()
             val results = csv.preprocess(this, logger, outputFile, outputHeaders) as T

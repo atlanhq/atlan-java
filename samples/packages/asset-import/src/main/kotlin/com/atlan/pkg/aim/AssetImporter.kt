@@ -223,6 +223,7 @@ import com.atlan.pkg.serde.FieldSerde
 import com.atlan.pkg.serde.RowDeserializer
 import com.atlan.pkg.serde.cell.AssetRefXformer.getDeferredIdentity
 import com.atlan.pkg.serde.cell.AssetRefXformer.resolveDeferredQN
+import com.atlan.pkg.serde.csv.CSVDecoding
 import com.atlan.pkg.serde.csv.CSVXformer
 import com.atlan.pkg.serde.csv.ImportResults
 import com.atlan.pkg.util.AssetResolver
@@ -875,13 +876,14 @@ class AssetImporter(
         ): QualifiedNameDetails = throw IllegalStateException("This method should never be called. Please raise an issue if you discover this in any log file.")
     }
 
-    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger).preprocess<Results>()
+    override fun preprocess(): Results = Preprocessor(ctx, filename, fieldSeparator, logger, decoding = decoding).preprocess<Results>()
 
     class Preprocessor(
         override val ctx: PackageContext<*>,
         originalFile: String,
         fieldSeparator: Char,
         logger: KLogger,
+        decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : AbstractBaseImporter.Preprocessor(
             ctx = ctx,
             originalFile = originalFile,
@@ -893,6 +895,7 @@ class AssetImporter(
                     Asset.QUALIFIED_NAME.atlanFieldName to setOf(),
                     Asset.NAME.atlanFieldName to emptySet(),
                 ),
+            decoding = decoding,
         ) {
         private val connectionQNs = mutableSetOf<String>()
         private val aimCtx = ctx as PackageContext<AssetImportCfg>

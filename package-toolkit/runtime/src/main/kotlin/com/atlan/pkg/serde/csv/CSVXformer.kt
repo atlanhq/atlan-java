@@ -25,12 +25,14 @@ import java.util.concurrent.atomic.AtomicLong
  * @param targetHeader column names (in order) to use in the output file
  * @param logger through which to record progress and any errors
  * @param fieldSeparator (optional) separator to use, in case the CSV files are not actually comma-separated
+ * @param decoding (optional) how to decode the input file's bytes (defaults to strict UTF-8)
  */
 abstract class CSVXformer(
     private val inputFile: String,
     val targetHeader: Iterable<String?>?,
     private val logger: KLogger,
     private val fieldSeparator: Char = ',',
+    private val decoding: CSVDecoding = CSVDecoding.UTF_8,
 ) : Closeable,
     RowTransformer {
     private val reader: CsvReader<CsvRecord>
@@ -38,7 +40,6 @@ abstract class CSVXformer(
     private val header: List<String>
 
     init {
-        val input = Paths.get(inputFile)
         val builder =
             CsvReader
                 .builder()
@@ -47,9 +48,12 @@ abstract class CSVXformer(
                 .skipEmptyLines(true)
                 .extraFieldStrategy(FieldMismatchStrategy.STRICT)
                 .missingFieldStrategy(FieldMismatchStrategy.STRICT)
-        header = getHeader(inputFile, fieldSeparator)
-        reader = builder.ofCsvRecord(input)
-        counter = builder.ofCsvRecord(input)
+        header = getHeader(inputFile, fieldSeparator, decoding)
+        // Open via CSVEncoding so the input is decoded according to the requested mode (strict UTF-8
+        // by default, or UTF-8-first with a cp1252 fallback when explicitly opted in) rather than
+        // silently corrupted into U+FFFD characters.
+        reader = builder.ofCsvRecord(CSVEncoding.open(Paths.get(inputFile), decoding))
+        counter = builder.ofCsvRecord(CSVEncoding.open(Paths.get(inputFile), decoding))
     }
 
     companion object {
@@ -58,13 +62,14 @@ abstract class CSVXformer(
          *
          * @param file path to the CSV file for which to extract the header
          * @param fieldSeparator field separator used within the CSV file (defaults to ',' if not specified)
+         * @param decoding how to decode the file's bytes (defaults to strict UTF-8)
          * @return a list of the header names, in order
          */
         fun getHeader(
             file: String,
             fieldSeparator: Char = ',',
+            decoding: CSVDecoding = CSVDecoding.UTF_8,
         ): List<String> {
-            val input = Paths.get(file)
             val builder =
                 CsvReader
                     .builder()
@@ -73,7 +78,7 @@ abstract class CSVXformer(
                     .skipEmptyLines(true)
                     .extraFieldStrategy(FieldMismatchStrategy.STRICT)
                     .missingFieldStrategy(FieldMismatchStrategy.STRICT)
-            builder.ofCsvRecord(input).use { tmp ->
+            builder.ofCsvRecord(CSVEncoding.open(Paths.get(file), decoding)).use { tmp ->
                 val one = tmp.stream().findFirst()
                 return one
                     .map { obj: CsvRecord ->
@@ -86,6 +91,10 @@ abstract class CSVXformer(
 
         /**
          * Trim all whitespace from the provided value, including byte order marks (BOM) or other zero-width space (ZWSP) characters
+         *
+         * Note: CSVEncoding owns stripping the UTF-8 BOM from the raw byte stream; the U+FEFF trim here
+         * is a belt-and-suspenders measure (e.g. a BOM mid-file or a value that already contains one).
+         * Keep both -- do not remove one assuming the other covers it.
          *
          * @param s the original string to trim
          * @return a "clean" string without any of these characters or whitespace around it

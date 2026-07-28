@@ -61,11 +61,12 @@ class CSVReader
         private val tableViewAgnostic: Boolean = false,
         private val fieldSeparator: Char = ',',
         private val linkIdempotency: LinkIdempotencyInvariant = LinkIdempotencyInvariant.URL,
+        private val decoding: CSVDecoding = CSVDecoding.UTF_8,
     ) : Closeable {
         private val reader: CsvReader<CsvRecord>
         private val counter: CsvReader<CsvRecord>
         private val preproc: CsvReader<CsvRecord>
-        private val header: List<String> = CSVXformer.getHeader(path, fieldSeparator)
+        private val header: List<String> = CSVXformer.getHeader(path, fieldSeparator, decoding)
         private val typeIdx: Int = header.indexOf(Asset.TYPE_NAME.atlanFieldName)
         private val qualifiedNameIdx: Int = header.indexOf(Asset.QUALIFIED_NAME.atlanFieldName)
         private val includesTags: Boolean = header.indexOf("atlanTags") != -1
@@ -80,9 +81,11 @@ class CSVReader
                     .skipEmptyLines(true)
                     .extraFieldStrategy(FieldMismatchStrategy.STRICT)
                     .missingFieldStrategy(FieldMismatchStrategy.STRICT)
-            reader = builder.ofCsvRecord(inputFile)
-            counter = builder.ofCsvRecord(inputFile)
-            preproc = builder.ofCsvRecord(inputFile)
+            // Open via CSVEncoding so non-UTF-8 files (e.g. Excel-on-Windows cp1252, or mixed-encoding
+            // files) are decoded losslessly rather than silently corrupted into U+FFFD characters.
+            reader = builder.ofCsvRecord(CSVEncoding.open(inputFile, decoding))
+            counter = builder.ofCsvRecord(CSVEncoding.open(inputFile, decoding))
+            preproc = builder.ofCsvRecord(CSVEncoding.open(inputFile, decoding))
         }
 
         /**

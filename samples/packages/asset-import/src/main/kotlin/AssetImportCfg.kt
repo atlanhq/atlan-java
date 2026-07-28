@@ -16,6 +16,9 @@ import javax.annotation.processing.Generated
 data class AssetImportCfg(
     @JsonProperty("import_type") val importType: String = "DIRECT",
     @JsonProperty("cloud_source") val cloudSource: String? = null,
+    @JsonDeserialize(using = WidgetSerde.MultiSelectDeserializer::class)
+    @JsonSerialize(using = WidgetSerde.MultiSelectSerializer::class)
+    @JsonProperty("input_encoding") val inputEncoding: List<String> = listOf("UTF-8"),
     @JsonProperty("glossaries_file") val glossariesFile: String = "",
     @JsonProperty("glossaries_prefix") val glossariesPrefix: String = "",
     @JsonProperty("glossaries_key") val glossariesKey: String = "",
