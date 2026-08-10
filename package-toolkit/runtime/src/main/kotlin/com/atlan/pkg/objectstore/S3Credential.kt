@@ -26,4 +26,10 @@ data class S3Credential(
 
     /** Role ARN or empty string */
     val roleArn = (from.extra?.get("aws_role_arn") ?: "") as String
+
+    /**
+     * External ID to send when assuming [roleArn], or empty string.
+     * Required only if the role's trust policy sets an `sts:ExternalId` condition.
+     */
+    val externalId = (from.extra?.get("aws_external_id") ?: "") as String
 }
