@@ -121,6 +121,9 @@ public interface IAirflowTask {
     /** End time of the run. */
     Long getAirflowRunEndTime();
 
+    /** Error message of the run in Airflow, populated when the run fails. */
+    String getAirflowRunErrorMessage();
+
     /** Name of the run. */
     String getAirflowRunName();
 
