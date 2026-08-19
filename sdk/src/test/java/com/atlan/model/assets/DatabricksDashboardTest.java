@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AirflowDagTest {
+public class DatabricksDashboardTest {
 
-    private final AirflowDag full = AirflowDag._internal()
+    private final DatabricksDashboard full = DatabricksDashboard._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,16 +60,41 @@ public class AirflowDagTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .airflowTag("String0")
-            .airflowTag("String1")
-            .airflowRunVersion("String0")
-            .airflowRunOpenLineageVersion("String0")
-            .airflowRunName("String0")
-            .airflowRunType("String0")
-            .airflowRunErrorMessage("String0")
-            .airflowRunStartTime(123456789L)
-            .airflowRunEndTime(123456789L)
-            .airflowRunOpenLineageState(OpenLineageRunState.START)
+            .queryCount(123456789L)
+            .queryUserCount(123456789L)
+            .putQueryUserMap("String0", 123456789L)
+            .putQueryUserMap("String1", 987654321L)
+            .queryCountUpdatedAt(123456789L)
+            .databaseName("String0")
+            .databaseQualifiedName("String0")
+            .schemaName("String0")
+            .schemaQualifiedName("String0")
+            .tableName("String0")
+            .tableQualifiedName("String0")
+            .viewName("String0")
+            .viewQualifiedName("String0")
+            .calculationViewName("String0")
+            .calculationViewQualifiedName("String0")
+            .isProfiled(true)
+            .lastProfiledAt(123456789L)
+            .sqlAIModelContextQualifiedName("String0")
+            .sqlIsSecure(true)
+            .sqlHasAiInsights(true)
+            .sqlAiInsightsLastAnalyzedAt(123456789L)
+            .sqlAiInsightsPopularBusinessQuestionCount(123)
+            .sqlAiInsightsPopularJoinCount(123)
+            .sqlAiInsightsPopularFilterCount(123)
+            .sqlAiInsightsRelationshipCount(123)
+            .sqlCoalesceLastRunStatus("String0")
+            .sqlCoalesceNodeStatus("String0")
+            .sqlCoalesceLastRunAt(123456789L)
+            .sqlCoalesceNodeType("String0")
+            .sqlCoalesceEnvironmentId("String0")
+            .sqlCoalesceEnvironmentName("String0")
+            .sqlCoalesceProjectId("String0")
+            .sqlCoalesceProjectName("String0")
+            .sqlShareQualifiedName("String0")
+            .sqlShareQualifiedName("String1")
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
@@ -1149,12 +1174,33 @@ public class AirflowDagTest {
             .addAssetAiAlias("String0")
             .addAssetAiAlias("String1")
             .assetHasAiReadme(true)
-            .airflowDagSchedule("String0")
-            .airflowDagScheduleDelta(123456789L)
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sparkOrchestratedAsset(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkOrchestratedAsset(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .databricksDashboardPath("String0")
+            .databricksDashboardWorkspaceId("String0")
+            .databricksDashboardWarehouseId("String0")
+            .databricksDashboardEtag("String0")
+            .databricksDashboardIsGenieSpaceEnabled(true)
+            .databricksDashboardLifecycleState(DatabricksDashboardLifecycleState.ACTIVE)
+            .inputToAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromAirflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromAirflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedEntity(ModelEntity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedEntity(ModelEntity.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .modelImplementedAttribute(ModelAttribute.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .modelImplementedAttribute(
+                    ModelAttribute.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .partialChildField(PartialField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .partialChildField(PartialField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .partialChildObject(PartialObject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .partialChildObject(PartialObject.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .inputToSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromSparkJob(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromSparkJob(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -1202,21 +1248,21 @@ public class AirflowDagTest {
     }
 
     @Test
-    void serdeCycleAirflowDag() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of AirflowDag,");
+    void serdeCycleDatabricksDashboard() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of DatabricksDashboard,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
                 full.toBuilder().build(),
                 full,
-                "Unable to converting AirflowDag via builder back to its original state,");
+                "Unable to converting DatabricksDashboard via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of AirflowDag,");
+        assertNotNull(serialized, "Unable to serialize sample instance of DatabricksDashboard,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final AirflowDag frodo = MockAtlanTenant.client.readValue(serialized, AirflowDag.class);
-        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AirflowDag,");
+        final DatabricksDashboard frodo = MockAtlanTenant.client.readValue(serialized, DatabricksDashboard.class);
+        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of DatabricksDashboard,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
