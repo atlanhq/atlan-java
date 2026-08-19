@@ -2,9 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.AgentType;
-import com.atlan.model.enums.AgenticLifecycleStatus;
-import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -15,10 +12,10 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.DatabricksDashboardLifecycleState;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -37,41 +34,36 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * An AI agent in Atlan. An agent is a versioned, publishable unit that binds one or more skills and an LLM configuration to serve user requests. One Atlan entity is created per (slug, version) tuple.
+ * Instance of a Databricks AI/BI dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAgent {
+public interface IDatabricksDashboard {
 
-    public static final String TYPE_NAME = "Agent";
+    public static final String TYPE_NAME = "DatabricksDashboard";
 
-    /** JSON-serialized LLMConfig (model, temperature, maxTokens, maxTurns, baseUrl). */
-    KeywordField AGENT_LLM_CONFIG = new KeywordField("agentLlmConfig", "agentLlmConfig");
+    /** Entity tag used as a change token for the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_ETAG = new KeywordField("databricksDashboardEtag", "databricksDashboardEtag");
 
-    /** JSON list of MCPServerConfig entries (name, url, headers, enabled). */
-    KeywordField AGENT_MCP_SERVERS = new KeywordField("agentMcpServers", "agentMcpServers");
+    /** Whether a Genie space is enabled for the dashboard. */
+    BooleanField DATABRICKS_DASHBOARD_IS_GENIE_SPACE_ENABLED =
+            new BooleanField("databricksDashboardIsGenieSpaceEnabled", "databricksDashboardIsGenieSpaceEnabled");
 
-    /** Denormalized list of names of the skills bound to this agent version. */
-    KeywordField AGENT_SKILL_NAMES = new KeywordField("agentSkillNames", "agentSkillNames");
+    /** Lifecycle state of the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_LIFECYCLE_STATE =
+            new KeywordField("databricksDashboardLifecycleState", "databricksDashboardLifecycleState");
 
-    /** Denormalized list of qualifiedNames of the skills bound to this agent version. */
-    KeywordField AGENT_SKILL_QUALIFIED_NAMES = new KeywordField("agentSkillQualifiedNames", "agentSkillQualifiedNames");
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    KeywordField DATABRICKS_DASHBOARD_PATH = new KeywordField("databricksDashboardPath", "databricksDashboardPath");
 
-    /** Skills bound to this agent. */
-    RelationField AGENT_SKILLS = new RelationField("agentSkills");
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WAREHOUSE_ID =
+            new KeywordField("databricksDashboardWarehouseId", "databricksDashboardWarehouseId");
 
-    /** URL-safe unique identifier for this agent (for example, my-data-agent). */
-    KeywordField AGENT_SLUG = new KeywordField("agentSlug", "agentSlug");
-
-    /** Lifecycle status of this agent version (draft or published). */
-    KeywordField AGENT_STATUS = new KeywordField("agentStatus", "agentStatus");
-
-    /** System prompt for this agent version. */
-    TextField AGENT_SYSTEM_PROMPT = new TextField("agentSystemPrompt", "agentSystemPrompt");
-
-    /** Origin type of this agent — system-provided or custom user-created. */
-    KeywordField AGENT_TYPE = new KeywordField("agentType", "agentType");
+    /** Identifier of the workspace containing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WORKSPACE_ID =
+            new KeywordField("databricksDashboardWorkspaceId", "databricksDashboardWorkspaceId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -81,41 +73,6 @@ public interface IAgent {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** JSON-serialized LLMConfig (model, temperature, maxTokens, maxTurns, baseUrl). */
-    String getAgentLlmConfig();
-
-    /** JSON list of MCPServerConfig entries (name, url, headers, enabled). */
-    String getAgentMcpServers();
-
-    /** Denormalized list of names of the skills bound to this agent version. */
-    SortedSet<String> getAgentSkillNames();
-
-    /** Denormalized list of qualifiedNames of the skills bound to this agent version. */
-    SortedSet<String> getAgentSkillQualifiedNames();
-
-    /** Skills bound to this agent. */
-    default SortedSet<ISkill> getAgentSkills() {
-        return null;
-    }
-
-    /** URL-safe unique identifier for this agent (for example, my-data-agent). */
-    String getAgentSlug();
-
-    /** Lifecycle status of this agent version (draft or published). */
-    AgenticLifecycleStatus getAgentStatus();
-
-    /** System prompt for this agent version. */
-    String getAgentSystemPrompt();
-
-    /** Origin type of this agent — system-provided or custom user-created. */
-    AgentType getAgentType();
-
-    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
-    AgenticSource getAgenticSource();
-
-    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
-    Long getAgenticVersion();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -548,6 +505,12 @@ public interface IAgent {
         return null;
     }
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
+
     /** Unique identifier of the dataset this asset belongs to. */
     String getCatalogDatasetGuid();
 
@@ -582,8 +545,52 @@ public interface IAgent {
         return null;
     }
 
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseName();
+
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseQualifiedName();
+
+    /** Entity tag used as a change token for the dashboard. */
+    String getDatabricksDashboardEtag();
+
+    /** Whether a Genie space is enabled for the dashboard. */
+    Boolean getDatabricksDashboardIsGenieSpaceEnabled();
+
+    /** Lifecycle state of the dashboard. */
+    DatabricksDashboardLifecycleState getDatabricksDashboardLifecycleState();
+
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    String getDatabricksDashboardPath();
+
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    String getDatabricksDashboardWarehouseId();
+
+    /** Identifier of the workspace containing the dashboard. */
+    String getDatabricksDashboardWorkspaceId();
+
+    /** (Deprecated) Model containing the assets. */
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** DBT seeds that materialize the SQL asset. */
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
+
+    /** Source containing the assets. */
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
+
+    /** Tests related to this asset. */
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -646,6 +653,12 @@ public interface IAgent {
 
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
+
+    /** Whether this asset has been profiled (true) or not (false). */
+    Boolean getIsProfiled();
+
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
+    Long getLastProfiledAt();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -746,6 +759,18 @@ public interface IAgent {
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
+    /** Number of times this asset has been queried. */
+    Long getQueryCount();
+
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
+    Long getQueryCountUpdatedAt();
+
+    /** Number of unique users who have queried this asset. */
+    Long getQueryUserCount();
+
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
+    Map<String, Long> getQueryUserMap();
+
     /** README that is linked to this asset. */
     default IReadme getReadme() {
         return null;
@@ -753,6 +778,12 @@ public interface IAgent {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaName();
+
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaQualifiedName();
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
@@ -830,6 +861,67 @@ public interface IAgent {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
+
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    Long getSqlAiInsightsLastAnalyzedAt();
+
+    /** Number of popular business questions associated with this asset. */
+    Integer getSqlAiInsightsPopularBusinessQuestionCount();
+
+    /** Number of popular filter patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularFilterCount();
+
+    /** Number of popular join patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularJoinCount();
+
+    /** Number of relationship insights associated with this asset. */
+    Integer getSqlAiInsightsRelationshipCount();
+
+    /** Identifier of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentId();
+
+    /** Name of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentName();
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    Long getSqlCoalesceLastRunAt();
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    String getSqlCoalesceLastRunStatus();
+
+    /** Status of the Coalesce node for a given run. */
+    String getSqlCoalesceNodeStatus();
+
+    /** Type of the Coalesce node. */
+    String getSqlCoalesceNodeType();
+
+    /** Identifier of the Coalesce project. */
+    String getSqlCoalesceProjectId();
+
+    /** Name of the Coalesce project. */
+    String getSqlCoalesceProjectName();
+
+    /** Sources related to this asset. */
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Assets related to the model. */
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
+
+    /** Whether this asset has any AI insights data available. */
+    Boolean getSqlHasAiInsights();
+
+    /** Whether this asset is secure (true) or not (false). */
+    Boolean getSqlIsSecure();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -841,6 +933,12 @@ public interface IAgent {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableName();
+
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableQualifiedName();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
@@ -857,6 +955,12 @@ public interface IAgent {
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
+
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewName();
+
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();

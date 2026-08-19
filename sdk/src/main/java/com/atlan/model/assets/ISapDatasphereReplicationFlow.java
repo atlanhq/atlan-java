@@ -2,9 +2,6 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.AgentType;
-import com.atlan.model.enums.AgenticLifecycleStatus;
-import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -17,8 +14,9 @@ import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -37,41 +35,43 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * An AI agent in Atlan. An agent is a versioned, publishable unit that binds one or more skills and an LLM configuration to serve user requests. One Atlan entity is created per (slug, version) tuple.
+ * Instance of a SAP Datasphere replication flow in Atlan. A replication flow is a trigger that moves data from sources outside Datasphere (such as S/4HANA, SAP ECC, SAP BW, or S3) into tables created within a Datasphere space, which is modelled as a SQL Schema in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAgent {
+public interface ISapDatasphereReplicationFlow {
 
-    public static final String TYPE_NAME = "Agent";
+    public static final String TYPE_NAME = "SapDatasphereReplicationFlow";
 
-    /** JSON-serialized LLMConfig (model, temperature, maxTokens, maxTurns, baseUrl). */
-    KeywordField AGENT_LLM_CONFIG = new KeywordField("agentLlmConfig", "agentLlmConfig");
+    /** Number of datasets moved by this replication flow. */
+    NumericField SAP_DATASPHERE_REPLICATION_FLOW_DATASET_COUNT =
+            new NumericField("sapDatasphereReplicationFlowDatasetCount", "sapDatasphereReplicationFlowDatasetCount");
 
-    /** JSON list of MCPServerConfig entries (name, url, headers, enabled). */
-    KeywordField AGENT_MCP_SERVERS = new KeywordField("agentMcpServers", "agentMcpServers");
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_LOAD_TYPE =
+            new KeywordField("sapDatasphereReplicationFlowLoadType", "sapDatasphereReplicationFlowLoadType");
 
-    /** Denormalized list of names of the skills bound to this agent version. */
-    KeywordField AGENT_SKILL_NAMES = new KeywordField("agentSkillNames", "agentSkillNames");
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SOURCE_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowSourceConnection", "sapDatasphereReplicationFlowSourceConnection");
 
-    /** Denormalized list of qualifiedNames of the skills bound to this agent version. */
-    KeywordField AGENT_SKILL_QUALIFIED_NAMES = new KeywordField("agentSkillQualifiedNames", "agentSkillQualifiedNames");
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordTextField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_NAME = new KeywordTextField(
+            "sapDatasphereReplicationFlowSpaceName",
+            "sapDatasphereReplicationFlowSpaceName.keyword",
+            "sapDatasphereReplicationFlowSpaceName");
 
-    /** Skills bound to this agent. */
-    RelationField AGENT_SKILLS = new RelationField("agentSkills");
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_QUALIFIED_NAME = new KeywordField(
+            "sapDatasphereReplicationFlowSpaceQualifiedName", "sapDatasphereReplicationFlowSpaceQualifiedName");
 
-    /** URL-safe unique identifier for this agent (for example, my-data-agent). */
-    KeywordField AGENT_SLUG = new KeywordField("agentSlug", "agentSlug");
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_TARGET_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowTargetConnection", "sapDatasphereReplicationFlowTargetConnection");
 
-    /** Lifecycle status of this agent version (draft or published). */
-    KeywordField AGENT_STATUS = new KeywordField("agentStatus", "agentStatus");
-
-    /** System prompt for this agent version. */
-    TextField AGENT_SYSTEM_PROMPT = new TextField("agentSystemPrompt", "agentSystemPrompt");
-
-    /** Origin type of this agent — system-provided or custom user-created. */
-    KeywordField AGENT_TYPE = new KeywordField("agentType", "agentType");
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    RelationField SAP_DATASPHERE_SCHEMA = new RelationField("sapDatasphereSchema");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -81,41 +81,6 @@ public interface IAgent {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** JSON-serialized LLMConfig (model, temperature, maxTokens, maxTurns, baseUrl). */
-    String getAgentLlmConfig();
-
-    /** JSON list of MCPServerConfig entries (name, url, headers, enabled). */
-    String getAgentMcpServers();
-
-    /** Denormalized list of names of the skills bound to this agent version. */
-    SortedSet<String> getAgentSkillNames();
-
-    /** Denormalized list of qualifiedNames of the skills bound to this agent version. */
-    SortedSet<String> getAgentSkillQualifiedNames();
-
-    /** Skills bound to this agent. */
-    default SortedSet<ISkill> getAgentSkills() {
-        return null;
-    }
-
-    /** URL-safe unique identifier for this agent (for example, my-data-agent). */
-    String getAgentSlug();
-
-    /** Lifecycle status of this agent version (draft or published). */
-    AgenticLifecycleStatus getAgentStatus();
-
-    /** System prompt for this agent version. */
-    String getAgentSystemPrompt();
-
-    /** Origin type of this agent — system-provided or custom user-created. */
-    AgentType getAgentType();
-
-    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
-    AgenticSource getAgenticSource();
-
-    /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
-    Long getAgenticVersion();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -548,9 +513,6 @@ public interface IAgent {
         return null;
     }
 
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -608,6 +570,48 @@ public interface IAgent {
     default SortedSet<IFile> getFiles() {
         return null;
     }
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowSchedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowStartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -753,6 +757,29 @@ public interface IAgent {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Number of datasets moved by this replication flow. */
+    Long getSapDatasphereReplicationFlowDatasetCount();
+
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    String getSapDatasphereReplicationFlowLoadType();
+
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    String getSapDatasphereReplicationFlowSourceConnection();
+
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceName();
+
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceQualifiedName();
+
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    String getSapDatasphereReplicationFlowTargetConnection();
+
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    default ISchema getSapDatasphereSchema() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
