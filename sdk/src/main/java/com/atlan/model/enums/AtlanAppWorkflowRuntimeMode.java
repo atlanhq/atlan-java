@@ -7,23 +7,21 @@ import javax.annotation.processing.Generated;
 import lombok.Getter;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
-public enum AtlanAppDeploymentOperation implements AtlanEnum {
-    INSTALL("INSTALL"),
-    UPGRADE("UPGRADE"),
-    DOWNGRADE("DOWNGRADE"),
-    UNINSTALL("UNINSTALL"),
+public enum AtlanAppWorkflowRuntimeMode implements AtlanEnum {
+    SDR("SDR"),
+    DIRECT("DIRECT"),
     ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    AtlanAppDeploymentOperation(String value) {
+    AtlanAppWorkflowRuntimeMode(String value) {
         this.value = value;
     }
 
-    public static AtlanAppDeploymentOperation fromValue(String value) {
-        for (AtlanAppDeploymentOperation b : AtlanAppDeploymentOperation.values()) {
+    public static AtlanAppWorkflowRuntimeMode fromValue(String value) {
+        for (AtlanAppWorkflowRuntimeMode b : AtlanAppWorkflowRuntimeMode.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

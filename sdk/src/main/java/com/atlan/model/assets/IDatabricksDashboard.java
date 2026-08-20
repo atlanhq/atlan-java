@@ -4,10 +4,6 @@ package com.atlan.model.assets;
 
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanAppWorkflowOwnership;
-import com.atlan.model.enums.AtlanAppWorkflowRuntimeMode;
-import com.atlan.model.enums.AtlanAppWorkflowSource;
-import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
@@ -16,17 +12,16 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.DatabricksDashboardLifecycleState;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.AssetSummaryProvider;
-import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -39,58 +34,36 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a workflow in an Atlan application.
+ * Instance of a Databricks AI/BI dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAtlanAppWorkflow {
+public interface IDatabricksDashboard {
 
-    public static final String TYPE_NAME = "AtlanAppWorkflow";
+    public static final String TYPE_NAME = "DatabricksDashboard";
 
-    /** Atlan application containing the workflow. */
-    RelationField ATLAN_APP = new RelationField("atlanApp");
+    /** Entity tag used as a change token for the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_ETAG = new KeywordField("databricksDashboardEtag", "databricksDashboardEtag");
 
-    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
-    KeywordField ATLAN_APP_WORKFLOW_AGENT_NAME =
-            new KeywordField("atlanAppWorkflowAgentName", "atlanAppWorkflowAgentName");
+    /** Whether a Genie space is enabled for the dashboard. */
+    BooleanField DATABRICKS_DASHBOARD_IS_GENIE_SPACE_ENABLED =
+            new BooleanField("databricksDashboardIsGenieSpaceEnabled", "databricksDashboardIsGenieSpaceEnabled");
 
-    /** Map of all activity steps for the workflow (escaped JSON string). */
-    TextField ATLAN_APP_WORKFLOW_DAG = new TextField("atlanAppWorkflowDag", "atlanAppWorkflowDag");
+    /** Lifecycle state of the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_LIFECYCLE_STATE =
+            new KeywordField("databricksDashboardLifecycleState", "databricksDashboardLifecycleState");
 
-    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
-    KeywordField ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME =
-            new KeywordField("atlanAppWorkflowDeploymentName", "atlanAppWorkflowDeploymentName");
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    KeywordField DATABRICKS_DASHBOARD_PATH = new KeywordField("databricksDashboardPath", "databricksDashboardPath");
 
-    /** Error handling strategy for the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_ERROR_HANDLING =
-            new KeywordField("atlanAppWorkflowErrorHandling", "atlanAppWorkflowErrorHandling");
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WAREHOUSE_ID =
+            new KeywordField("databricksDashboardWarehouseId", "databricksDashboardWarehouseId");
 
-    /** Ownership type of the workflow, indicating whether it is managed by Atlan or by a user. */
-    KeywordField ATLAN_APP_WORKFLOW_OWNERSHIP =
-            new KeywordField("atlanAppWorkflowOwnership", "atlanAppWorkflowOwnership");
-
-    /** The workflow runs contained within the workflow. */
-    RelationField ATLAN_APP_WORKFLOW_RUNS = new RelationField("atlanAppWorkflowRuns");
-
-    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
-    KeywordField ATLAN_APP_WORKFLOW_RUNTIME_MODE =
-            new KeywordField("atlanAppWorkflowRuntimeMode", "atlanAppWorkflowRuntimeMode");
-
-    /** Slug of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_SLUG = new KeywordField("atlanAppWorkflowSlug", "atlanAppWorkflowSlug");
-
-    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
-    KeywordField ATLAN_APP_WORKFLOW_SOURCE = new KeywordField("atlanAppWorkflowSource", "atlanAppWorkflowSource");
-
-    /** Status of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_STATUS = new KeywordField("atlanAppWorkflowStatus", "atlanAppWorkflowStatus");
-
-    /** Triggers configured for this workflow (escaped JSON string). */
-    TextField ATLAN_APP_WORKFLOW_TRIGGERS = new TextField("atlanAppWorkflowTriggers", "atlanAppWorkflowTriggers");
-
-    /** Version of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_VERSION = new KeywordField("atlanAppWorkflowVersion", "atlanAppWorkflowVersion");
+    /** Identifier of the workspace containing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WORKSPACE_ID =
+            new KeywordField("databricksDashboardWorkspaceId", "databricksDashboardWorkspaceId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -120,9 +93,6 @@ public interface IAtlanAppWorkflow {
     default SortedSet<IAnomaloCheck> getAnomaloChecks() {
         return null;
     }
-
-    /** Unique identifier for the application asset from the source system. */
-    String getAppId();
 
     /** Application owning the Asset. */
     default IApplication getApplication() {
@@ -535,67 +505,11 @@ public interface IAtlanAppWorkflow {
         return null;
     }
 
-    /** Atlan application containing the workflow. */
-    default IAtlanApp getAtlanApp() {
-        return null;
-    }
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
 
-    /** Metadata for the Atlan application (escaped JSON string). */
-    String getAtlanAppMetadata();
-
-    /** Name of the Atlan application this asset belongs to. */
-    String getAtlanAppName();
-
-    /** Qualified name of the Atlan application this asset belongs to. */
-    String getAtlanAppQualifiedName();
-
-    /** Tools that exist within this Atlan application. */
-    default SortedSet<IAtlanAppTool> getAtlanAppTools() {
-        return null;
-    }
-
-    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
-    String getAtlanAppWorkflowAgentName();
-
-    /** Map of all activity steps for the workflow (escaped JSON string). */
-    String getAtlanAppWorkflowDag();
-
-    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
-    String getAtlanAppWorkflowDeploymentName();
-
-    /** Error handling strategy for the workflow. */
-    AtlanAppErrorHandling getAtlanAppWorkflowErrorHandling();
-
-    /** Ownership type of the workflow, indicating whether it is managed by Atlan or by a user. */
-    AtlanAppWorkflowOwnership getAtlanAppWorkflowOwnership();
-
-    /** The workflow runs contained within the workflow. */
-    default SortedSet<IAppWorkflowRun> getAtlanAppWorkflowRuns() {
-        return null;
-    }
-
-    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
-    AtlanAppWorkflowRuntimeMode getAtlanAppWorkflowRuntimeMode();
-
-    /** Slug of the workflow. */
-    String getAtlanAppWorkflowSlug();
-
-    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
-    AtlanAppWorkflowSource getAtlanAppWorkflowSource();
-
-    /** Status of the workflow. */
-    AtlanAppWorkflowStatus getAtlanAppWorkflowStatus();
-
-    /** Triggers configured for this workflow (escaped JSON string). */
-    String getAtlanAppWorkflowTriggers();
-
-    /** Version of the workflow. */
-    String getAtlanAppWorkflowVersion();
-
-    /** Workflows that exist within this Atlan application. */
-    default SortedSet<IAtlanAppWorkflow> getAtlanAppWorkflows() {
-        return null;
-    }
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
 
     /** Unique identifier of the dataset this asset belongs to. */
     String getCatalogDatasetGuid();
@@ -631,8 +545,52 @@ public interface IAtlanAppWorkflow {
         return null;
     }
 
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseName();
+
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseQualifiedName();
+
+    /** Entity tag used as a change token for the dashboard. */
+    String getDatabricksDashboardEtag();
+
+    /** Whether a Genie space is enabled for the dashboard. */
+    Boolean getDatabricksDashboardIsGenieSpaceEnabled();
+
+    /** Lifecycle state of the dashboard. */
+    DatabricksDashboardLifecycleState getDatabricksDashboardLifecycleState();
+
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    String getDatabricksDashboardPath();
+
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    String getDatabricksDashboardWarehouseId();
+
+    /** Identifier of the workspace containing the dashboard. */
+    String getDatabricksDashboardWorkspaceId();
+
+    /** (Deprecated) Model containing the assets. */
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** DBT seeds that materialize the SQL asset. */
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
+
+    /** Source containing the assets. */
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
+
+    /** Tests related to this asset. */
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -695,6 +653,12 @@ public interface IAtlanAppWorkflow {
 
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
+
+    /** Whether this asset has been profiled (true) or not (false). */
+    Boolean getIsProfiled();
+
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
+    Long getLastProfiledAt();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -795,6 +759,18 @@ public interface IAtlanAppWorkflow {
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
+    /** Number of times this asset has been queried. */
+    Long getQueryCount();
+
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
+    Long getQueryCountUpdatedAt();
+
+    /** Number of unique users who have queried this asset. */
+    Long getQueryUserCount();
+
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
+    Map<String, Long> getQueryUserMap();
+
     /** README that is linked to this asset. */
     default IReadme getReadme() {
         return null;
@@ -802,6 +778,12 @@ public interface IAtlanAppWorkflow {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaName();
+
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaQualifiedName();
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
@@ -879,6 +861,67 @@ public interface IAtlanAppWorkflow {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
+
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    Long getSqlAiInsightsLastAnalyzedAt();
+
+    /** Number of popular business questions associated with this asset. */
+    Integer getSqlAiInsightsPopularBusinessQuestionCount();
+
+    /** Number of popular filter patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularFilterCount();
+
+    /** Number of popular join patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularJoinCount();
+
+    /** Number of relationship insights associated with this asset. */
+    Integer getSqlAiInsightsRelationshipCount();
+
+    /** Identifier of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentId();
+
+    /** Name of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentName();
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    Long getSqlCoalesceLastRunAt();
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    String getSqlCoalesceLastRunStatus();
+
+    /** Status of the Coalesce node for a given run. */
+    String getSqlCoalesceNodeStatus();
+
+    /** Type of the Coalesce node. */
+    String getSqlCoalesceNodeType();
+
+    /** Identifier of the Coalesce project. */
+    String getSqlCoalesceProjectId();
+
+    /** Name of the Coalesce project. */
+    String getSqlCoalesceProjectName();
+
+    /** Sources related to this asset. */
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Assets related to the model. */
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
+
+    /** Whether this asset has any AI insights data available. */
+    Boolean getSqlHasAiInsights();
+
+    /** Whether this asset is secure (true) or not (false). */
+    Boolean getSqlIsSecure();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -890,6 +933,12 @@ public interface IAtlanAppWorkflow {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableName();
+
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableQualifiedName();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
@@ -906,6 +955,12 @@ public interface IAtlanAppWorkflow {
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
+
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewName();
+
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();
