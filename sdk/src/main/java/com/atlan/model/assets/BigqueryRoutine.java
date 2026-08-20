@@ -95,6 +95,10 @@ public class BigqueryRoutine extends Asset
     @Attribute
     String catalogDatasetGuid;
 
+    /** Cosmos collection in which this procedure exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;

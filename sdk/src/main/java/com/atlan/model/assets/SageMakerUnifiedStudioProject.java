@@ -141,7 +141,7 @@ public class SageMakerUnifiedStudioProject extends Asset
     @Attribute
     String smusProjectS3Location;
 
-    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email`, `role` and optional `fullName` fields. */
     @Attribute
     @Singular
     List<SageMakerUnifiedStudioSsoUser> smusProjectSsoUsers;
