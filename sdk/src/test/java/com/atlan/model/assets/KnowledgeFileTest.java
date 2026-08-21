@@ -61,6 +61,7 @@ public class KnowledgeFileTest {
                             .attribute("String1", "AnotherString")
                             .build())
             .agenticVersion(123456789L)
+            .agenticSource(AgenticSource.CONTEXT_STUDIO)
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
