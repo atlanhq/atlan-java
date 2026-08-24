@@ -47,6 +47,14 @@ public interface ISqlInsightBusinessQuestion {
     KeywordField SQL_INSIGHT_BUSINESS_QUESTION_CANONICAL_SQL =
             new KeywordField("sqlInsightBusinessQuestionCanonicalSQL", "sqlInsightBusinessQuestionCanonicalSQL");
 
+    /** Qualified name of the dataset this business question relates to. */
+    KeywordField SQL_INSIGHT_BUSINESS_QUESTION_DATASET_QUALIFIED_NAME = new KeywordField(
+            "sqlInsightBusinessQuestionDatasetQualifiedName", "sqlInsightBusinessQuestionDatasetQualifiedName");
+
+    /** Example SQL queries that demonstrate this business question, with usage details. */
+    KeywordField SQL_INSIGHT_BUSINESS_QUESTION_EXAMPLE_QUERIES =
+            new KeywordField("sqlInsightBusinessQuestionExampleQueries", "sqlInsightBusinessQuestionExampleQueries");
+
     /** Time (epoch) at which this question was last observed, in milliseconds. */
     NumericField SQL_INSIGHT_BUSINESS_QUESTION_LAST_SEEN_AT =
             new NumericField("sqlInsightBusinessQuestionLastSeenAt", "sqlInsightBusinessQuestionLastSeenAt");
@@ -790,6 +798,12 @@ public interface ISqlInsightBusinessQuestion {
 
     /** Canonical SQL query that answers this business question. */
     String getSqlInsightBusinessQuestionCanonicalSQL();
+
+    /** Qualified name of the dataset this business question relates to. */
+    String getSqlInsightBusinessQuestionDatasetQualifiedName();
+
+    /** Example SQL queries that demonstrate this business question, with usage details. */
+    List<PopularityInsights> getSqlInsightBusinessQuestionExampleQueries();
 
     /** Time (epoch) at which this question was last observed, in milliseconds. */
     Long getSqlInsightBusinessQuestionLastSeenAt();
