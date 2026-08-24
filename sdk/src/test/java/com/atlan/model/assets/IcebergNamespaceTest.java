@@ -1201,6 +1201,10 @@ public class IcebergNamespaceTest {
             .icebergSubNamespace(IcebergNamespace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .icebergSubNamespace(IcebergNamespace.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .icebergParentNamespace(IcebergNamespace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereReplicationFlow(
+                    SapDatasphereReplicationFlow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereReplicationFlow(
+                    SapDatasphereReplicationFlow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .calculationView(CalculationView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .calculationView(CalculationView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .function(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
