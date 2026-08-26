@@ -10,6 +10,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.ProcessLineageDerivation;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -179,6 +180,10 @@ public class SAPProcess extends Asset implements ISAPProcess, ILineageProcess, I
     /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    @Attribute
+    ProcessLineageDerivation processDerivation;
 
     /** SAP BW DTPs whose data flow this process materialises (typically one, occasionally several for chained loads). */
     @Attribute
