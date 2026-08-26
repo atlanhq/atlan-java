@@ -1192,6 +1192,7 @@ public class DbtColumnProcessTest {
             .additionalEtlContext("String0")
             .aiDatasetType(AIDatasetType.TRAINING)
             .isPassThrough(true)
+            .processDerivation(ProcessLineageDerivation.STATIC)
             .dbtColumnProcessJobStatus("String0")
             .adfActivity(AdfActivity.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
