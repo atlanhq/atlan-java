@@ -64,7 +64,8 @@ public interface IAsset {
     TextField ANNOUNCEMENT_MESSAGE = new TextField("announcementMessage", "announcementMessage");
 
     /** Brief title for the announcement on this asset. Required when announcementType is specified. */
-    TextField ANNOUNCEMENT_TITLE = new TextField("announcementTitle", "announcementTitle");
+    KeywordTextField ANNOUNCEMENT_TITLE =
+            new KeywordTextField("announcementTitle", "announcementTitle.keyword", "announcementTitle");
 
     /** Type of announcement on this asset. */
     KeywordField ANNOUNCEMENT_TYPE = new KeywordField("announcementType", "announcementType");
