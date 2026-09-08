@@ -1,6 +1,6 @@
 [versions]
 jackson = "2.22.1"
-slf4j = "2.0.18"
+slf4j = "2.0.19"
 elasticsearch = "9.4.3"
 classgraph = "4.8.184"
 testng = "7.12.0"
