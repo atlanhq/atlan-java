@@ -103,6 +103,11 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Singular("isATerm")
     SortedSet<IGlossaryTerm> isA;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Unused. Detailed definition of the term. See 'readme' instead. */
     @Attribute
     String longDescription;
