@@ -1192,6 +1192,7 @@ public class DbtProcessTest {
             .additionalEtlContext("String0")
             .aiDatasetType(AIDatasetType.TRAINING)
             .isPassThrough(true)
+            .processDerivation(ProcessLineageDerivation.STATIC)
             .dbtProcessJobStatus("String0")
             .dbtUpstreamContext(DbtInputContext.builder()
                     .dbtInputContextName("String0")
