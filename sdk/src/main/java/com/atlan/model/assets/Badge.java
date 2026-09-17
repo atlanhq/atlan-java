@@ -89,6 +89,11 @@ public class Badge extends Asset implements IBadge, IResource, ICatalog, IAsset,
     @Attribute
     Boolean isGlobal;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** URL to the resource. */
     @Attribute
     String link;
