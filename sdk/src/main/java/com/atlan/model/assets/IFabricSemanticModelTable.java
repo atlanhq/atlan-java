@@ -45,6 +45,9 @@ public interface IFabricSemanticModelTable {
     /** Semantic model containing the table. */
     RelationField FABRIC_SEMANTIC_MODEL = new RelationField("fabricSemanticModel");
 
+    /** Individual semantic model measures contained in the semantic model table. */
+    RelationField FABRIC_SEMANTIC_MODEL_MEASURES = new RelationField("fabricSemanticModelMeasures");
+
     /** Unique name of the Fabric semantic model that contains this asset. */
     KeywordField FABRIC_SEMANTIC_MODEL_QUALIFIED_NAME =
             new KeywordField("fabricSemanticModelQualifiedName", "fabricSemanticModelQualifiedName");
@@ -559,6 +562,11 @@ public interface IFabricSemanticModelTable {
 
     /** Semantic model containing the table. */
     default IFabricSemanticModel getFabricSemanticModel() {
+        return null;
+    }
+
+    /** Individual semantic model measures contained in the semantic model table. */
+    default SortedSet<IFabricSemanticModelMeasure> getFabricSemanticModelMeasures() {
         return null;
     }
 

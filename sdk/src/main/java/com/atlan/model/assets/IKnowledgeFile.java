@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -56,6 +57,9 @@ public interface IKnowledgeFile {
     /** Knowledge folders in which this file exists. */
     RelationField KNOWLEDGE_FOLDERS = new RelationField("knowledgeFolders");
 
+    /** Assets this knowledge file is linked to. */
+    RelationField KNOWLEDGE_LINKED_ASSETS = new RelationField("knowledgeLinkedAssets");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -64,6 +68,9 @@ public interface IKnowledgeFile {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
+    AgenticSource getAgenticSource();
 
     /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
     Long getAgenticVersion();
@@ -618,6 +625,11 @@ public interface IKnowledgeFile {
 
     /** Knowledge folders in which this file exists. */
     default SortedSet<IKnowledgeFolder> getKnowledgeFolders() {
+        return null;
+    }
+
+    /** Assets this knowledge file is linked to. */
+    default SortedSet<IAsset> getKnowledgeLinkedAssets() {
         return null;
     }
 
