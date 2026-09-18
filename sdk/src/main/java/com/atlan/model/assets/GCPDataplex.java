@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.SortedSet;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -40,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
-public class GCPDataplex extends Asset implements IGCPDataplex, ICatalog, IGoogle, IAsset, IReferenceable, ICloud {
+public class GCPDataplex extends Asset implements IGCPDataplex, IGoogle, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCPDataplex";
@@ -49,10 +48,6 @@ public class GCPDataplex extends Asset implements IGCPDataplex, ICatalog, IGoogl
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** Unique identifier of the dataset this asset belongs to. */
-    @Attribute
-    String catalogDatasetGuid;
 
     /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
     @Attribute
@@ -91,56 +86,6 @@ public class GCPDataplex extends Asset implements IGCPDataplex, ICatalog, IGoogl
     @Attribute
     @Singular
     List<GoogleTag> googleTags;
-
-    /** Tasks to which this asset provides input. */
-    @Attribute
-    @Singular
-    SortedSet<IAirflowTask> inputToAirflowTasks;
-
-    /** Processes to which this asset provides input. */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISparkJob> inputToSparkJobs;
-
-    /** Attributes implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelAttribute> modelImplementedAttributes;
-
-    /** Entities implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelEntity> modelImplementedEntities;
-
-    /** Tasks from which this asset is output. */
-    @Attribute
-    @Singular
-    SortedSet<IAirflowTask> outputFromAirflowTasks;
-
-    /** Processes from which this asset is produced as output. */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISparkJob> outputFromSparkJobs;
-
-    /** Partial fields contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialField> partialChildFields;
-
-    /** Partial objects contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialObject> partialChildObjects;
 
     /**
      * Builds the minimal object necessary to create a relationship to a GCPDataplex, from a potentially
