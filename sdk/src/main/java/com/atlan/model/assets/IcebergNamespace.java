@@ -50,6 +50,11 @@ public class IcebergNamespace extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Routines that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<IBigqueryRoutine> bigqueryRoutines;
+
     /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
     @Attribute
     String calculationViewName;
@@ -223,6 +228,11 @@ public class IcebergNamespace extends Asset
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
+
+    /** SAP Datasphere replication flows that create tables within this schema (Datasphere space). */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereReplicationFlow> sapDatasphereReplicationFlows;
 
     /** External location of this schema, for example: an S3 object location. */
     @Attribute
