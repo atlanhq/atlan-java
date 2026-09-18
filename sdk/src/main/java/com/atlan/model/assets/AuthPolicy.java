@@ -69,6 +69,11 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     Boolean isPolicyEnabled;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** TBC */
     @Attribute
     @Singular

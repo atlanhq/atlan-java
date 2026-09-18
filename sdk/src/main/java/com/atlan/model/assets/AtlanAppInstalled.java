@@ -65,7 +65,7 @@ public class AtlanAppInstalled extends Asset
     @Attribute
     String atlanAppDeploymentConfig;
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     @Attribute
     String atlanAppDeploymentName;
 
