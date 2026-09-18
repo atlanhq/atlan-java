@@ -1178,6 +1178,8 @@ public class SchemaTest {
             .schemaExternalLocation("String0")
             .viewCount(123)
             .linkedSchemaQualifiedName("String0")
+            .bigqueryRoutine(BigqueryRoutine.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .bigqueryRoutine(BigqueryRoutine.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .databricksAIModelContext(DatabricksAIModelContext.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .databricksAIModelContext(
                     DatabricksAIModelContext.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
@@ -1195,6 +1197,10 @@ public class SchemaTest {
             .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapDatasphereReplicationFlow(
+                    SapDatasphereReplicationFlow.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereReplicationFlow(
+                    SapDatasphereReplicationFlow.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .calculationView(CalculationView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .calculationView(CalculationView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .function(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
