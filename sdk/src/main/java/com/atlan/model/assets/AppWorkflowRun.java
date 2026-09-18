@@ -86,6 +86,10 @@ public class AppWorkflowRun extends Asset implements IAppWorkflowRun, ICatalog, 
     @Attribute
     String appWorkflowRunDag;
 
+    /** SDR deployment this run executed under, denormalized from the parent workflow so a deployment's run history can be filtered directly. Without it, filtering requires two queries — resolve the deployment's workflow slugs, then match runs by parent slug — because Elasticsearch cannot join across entity types. Null for runs on Atlan-managed infrastructure (DISTR-832). */
+    @Attribute
+    String appWorkflowRunDeploymentName;
+
     /** Error handling strategy for the workflow run. */
     @Attribute
     AtlanAppErrorHandling appWorkflowRunErrorHandling;

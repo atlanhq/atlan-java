@@ -11,6 +11,7 @@ public enum AtlanAppDeploymentOperation implements AtlanEnum {
     INSTALL("INSTALL"),
     UPGRADE("UPGRADE"),
     DOWNGRADE("DOWNGRADE"),
+    UNINSTALL("UNINSTALL"),
     ;
 
     @JsonValue

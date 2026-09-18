@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowRuntimeMode;
 import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.CertificateStatus;
@@ -78,9 +79,17 @@ public class AtlanAppWorkflow extends Asset
     @Singular
     SortedSet<IAtlanAppTool> atlanAppTools;
 
+    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
+    @Attribute
+    String atlanAppWorkflowAgentName;
+
     /** Map of all activity steps for the workflow (escaped JSON string). */
     @Attribute
     String atlanAppWorkflowDag;
+
+    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
+    @Attribute
+    String atlanAppWorkflowDeploymentName;
 
     /** Error handling strategy for the workflow. */
     @Attribute
@@ -94,6 +103,10 @@ public class AtlanAppWorkflow extends Asset
     @Attribute
     @Singular
     SortedSet<IAppWorkflowRun> atlanAppWorkflowRuns;
+
+    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
+    @Attribute
+    AtlanAppWorkflowRuntimeMode atlanAppWorkflowRuntimeMode;
 
     /** Slug of the workflow. */
     @Attribute
