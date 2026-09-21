@@ -45,6 +45,9 @@ public interface IFabricSemanticModelTable {
     /** Semantic model containing the table. */
     RelationField FABRIC_SEMANTIC_MODEL = new RelationField("fabricSemanticModel");
 
+    /** Individual semantic model measures contained in the semantic model table. */
+    RelationField FABRIC_SEMANTIC_MODEL_MEASURES = new RelationField("fabricSemanticModelMeasures");
+
     /** Unique name of the Fabric semantic model that contains this asset. */
     KeywordField FABRIC_SEMANTIC_MODEL_QUALIFIED_NAME =
             new KeywordField("fabricSemanticModelQualifiedName", "fabricSemanticModelQualifiedName");
@@ -376,6 +379,9 @@ public interface IFabricSemanticModelTable {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -559,6 +565,11 @@ public interface IFabricSemanticModelTable {
 
     /** Semantic model containing the table. */
     default IFabricSemanticModel getFabricSemanticModel() {
+        return null;
+    }
+
+    /** Individual semantic model measures contained in the semantic model table. */
+    default SortedSet<IFabricSemanticModelMeasure> getFabricSemanticModelMeasures() {
         return null;
     }
 

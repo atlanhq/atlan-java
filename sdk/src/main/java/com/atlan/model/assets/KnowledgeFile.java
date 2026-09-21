@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.FileType;
@@ -49,6 +50,10 @@ public class KnowledgeFile extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
+    @Attribute
+    AgenticSource agenticSource;
 
     /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
     @Attribute
@@ -106,6 +111,11 @@ public class KnowledgeFile extends Asset
     @Attribute
     @Singular
     SortedSet<IKnowledgeFolder> knowledgeFolders;
+
+    /** Assets this knowledge file is linked to. */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> knowledgeLinkedAssets;
 
     /** URL to the resource. */
     @Attribute
