@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -44,6 +45,9 @@ public interface ISageMakerUnifiedStudioPublishedAsset {
 
     /** Project containing the published asset. */
     RelationField SMUS_PROJECT = new RelationField("smusProject");
+
+    /** Asset filters configured for the published asset in SageMaker Unified Studio, as a JSON-serialized array. Each entry represents a row-level or column-level access restriction (id, name, description, effectiveRowFilter, effectiveColumnNames). */
+    TextField SMUS_PUBLISHED_ASSET_FILTERS = new TextField("smusPublishedAssetFilters", "smusPublishedAssetFilters");
 
     /** Number of subscriptions for the published asset. */
     NumericField SMUS_PUBLISHED_ASSET_SUBSCRIPTIONS_COUNT =
@@ -375,6 +379,9 @@ public interface ISageMakerUnifiedStudioPublishedAsset {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
@@ -745,6 +752,9 @@ public interface ISageMakerUnifiedStudioPublishedAsset {
 
     /** Unique identifier of the SageMaker Unified Studio project. */
     String getSmusProjectId();
+
+    /** Asset filters configured for the published asset in SageMaker Unified Studio, as a JSON-serialized array. Each entry represents a row-level or column-level access restriction (id, name, description, effectiveRowFilter, effectiveColumnNames). */
+    String getSmusPublishedAssetFilters();
 
     /** Number of subscriptions for the published asset. */
     Long getSmusPublishedAssetSubscriptionsCount();

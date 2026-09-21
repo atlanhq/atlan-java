@@ -42,6 +42,9 @@ public interface IFabricSemanticModelTableColumn {
 
     public static final String TYPE_NAME = "FabricSemanticModelTableColumn";
 
+    /** Semantic model measures whose DAX expressions reference this column. */
+    RelationField FABRIC_SEMANTIC_MODEL_MEASURES = new RelationField("fabricSemanticModelMeasures");
+
     /** Semantic model table containing the column. */
     RelationField FABRIC_SEMANTIC_MODEL_TABLE = new RelationField("fabricSemanticModelTable");
 
@@ -377,6 +380,9 @@ public interface IFabricSemanticModelTableColumn {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -557,6 +563,11 @@ public interface IFabricSemanticModelTableColumn {
 
     /** Order/position of this asset within its parent. */
     Integer getFabricOrdinal();
+
+    /** Semantic model measures whose DAX expressions reference this column. */
+    default SortedSet<IFabricSemanticModelMeasure> getFabricSemanticModelMeasures() {
+        return null;
+    }
 
     /** Semantic model table containing the column. */
     default IFabricSemanticModelTable getFabricSemanticModelTable() {
