@@ -38,3 +38,8 @@ generated-packages/**
 
 # Local Claude Code skills
 /.claude/skills/
+
+# Local environment (credentials) - .env.example stays tracked
+.env
+.env.*
+!.env.example
