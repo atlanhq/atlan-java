@@ -12,6 +12,7 @@ import com.atlan.pkg.adoption.exports.AssetViews
 import com.atlan.pkg.adoption.exports.DetailedSearches
 import com.atlan.pkg.adoption.exports.DetailedUserChanges
 import com.atlan.pkg.adoption.exports.DetailedUserViews
+import com.atlan.pkg.serde.TabularWriter
 import com.atlan.pkg.serde.csv.CSVWriter
 import com.atlan.pkg.serde.xls.ExcelWriter
 import java.io.File
@@ -31,6 +32,21 @@ object AdoptionExporter {
     private const val USER_CHANGES_FILE = "user-changes.csv"
     private const val USER_VIEWS_FILE = "user-views.csv"
 
+    /**
+     * A single logical portion of the export: one worksheet when producing XLSX output,
+     * one CSV file otherwise.
+     */
+    internal enum class Section(
+        val csvFileName: String,
+        val sheetName: String,
+    ) {
+        VIEWS(VIEWS_FILE, "Views"),
+        USER_VIEWS(USER_VIEWS_FILE, "User views"),
+        CHANGES(CHANGES_FILE, "Changes"),
+        USER_CHANGES(USER_CHANGES_FILE, "User changes"),
+        USER_SEARCHES(USER_SEARCHES_FILE, "User searches"),
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
         val od = if (args.isEmpty()) "tmp" else args[0]
@@ -44,53 +60,21 @@ object AdoptionExporter {
             // Touch every file, just so they exist, to avoid any workflow failures
             val xlsxFile = validatePathIsSafe(outputDirectory, FILENAME)
             xlsxFile.toFile().createNewFile()
-            val changesFile = validatePathIsSafe(outputDirectory, CHANGES_FILE)
-            changesFile.toFile().createNewFile()
-            val viewsFile = validatePathIsSafe(outputDirectory, VIEWS_FILE)
-            viewsFile.toFile().createNewFile()
-            val userSearchesFile = validatePathIsSafe(outputDirectory, USER_SEARCHES_FILE)
-            userSearchesFile.toFile().createNewFile()
-            val userChangesFile = validatePathIsSafe(outputDirectory, USER_CHANGES_FILE)
-            userChangesFile.toFile().createNewFile()
-            val userViewsFile = validatePathIsSafe(outputDirectory, USER_VIEWS_FILE)
-            userViewsFile.toFile().createNewFile()
+            val csvFiles = Section.entries.associateWith { validatePathIsSafe(outputDirectory, it.csvFileName) }
+            csvFiles.values.forEach { it.toFile().createNewFile() }
 
             val fileOutputs = mutableListOf<String>()
 
             ExcelWriter(xlsxFile.toString()).use { xlsx ->
-                if (ctx.config.includeViews != "NONE") {
+                sectionsToExport(ctx.config).forEach { section ->
                     if (xlsxOutput) {
-                        AssetViews(ctx, xlsx.createSheet("Views"), logger).export()
+                        export(ctx, section, xlsx.createSheet(section.sheetName))
                     } else {
-                        CSVWriter(viewsFile.toString()).use { csv -> AssetViews(ctx, csv, logger).export() }
-                    }
-                    if (ctx.config.viewsDetails == "YES") {
-                        if (xlsxOutput) {
-                            DetailedUserViews(ctx, xlsx.createSheet("User views"), logger).export()
-                        } else {
-                            CSVWriter(userViewsFile.toString()).use { csv -> DetailedUserViews(ctx, csv, logger).export() }
-                        }
-                    }
-                }
-                if (ctx.config.includeChanges == "YES") {
-                    if (xlsxOutput) {
-                        AssetChanges(ctx, xlsx.createSheet("Changes"), logger).export()
-                    } else {
-                        CSVWriter(changesFile.toString()).use { csv -> AssetChanges(ctx, csv, logger).export() }
-                    }
-                    if (ctx.config.changesDetails == "YES") {
-                        if (xlsxOutput) {
-                            DetailedUserChanges(ctx, xlsx.createSheet("User changes"), logger).export()
-                        } else {
-                            CSVWriter(userChangesFile.toString()).use { csv -> DetailedUserChanges(ctx, csv, logger).export() }
-                        }
-                    }
-                }
-                if (ctx.config.includeSearches == "YES") {
-                    if (xlsxOutput) {
-                        DetailedSearches(ctx, xlsx.createSheet("User searches"), logger).export()
-                    } else {
-                        CSVWriter(userSearchesFile.toString()).use { csv -> DetailedSearches(ctx, csv, logger).export() }
+                        val csvFile = csvFiles.getValue(section).toString()
+                        CSVWriter(csvFile).use { csv -> export(ctx, section, csv) }
+                        // Only the CSVs that were actually written are delivered, so that
+                        // empty placeholder files are never emailed or uploaded
+                        fileOutputs.add(csvFile)
                     }
                 }
             }
@@ -101,10 +85,15 @@ object AdoptionExporter {
                 xlsxFile.toFile().createNewFile()
             }
 
+            logger.info { "Files to deliver (${ctx.config.deliveryType}): ${fileOutputs.joinToString()}" }
+
             when (ctx.config.deliveryType) {
                 "EMAIL" -> {
                     val emails = Utils.getAsList(ctx.config.emailAddresses)
                     if (emails.isNotEmpty()) {
+                        if (fileOutputs.isEmpty()) {
+                            logger.warn { "No output files were produced -- the email will be sent without any attachments." }
+                        }
                         Utils.sendEmail(
                             "[Atlan] Adoption Export results",
                             emails,
@@ -133,6 +122,45 @@ object AdoptionExporter {
                 }
             }
         }
+    }
+
+    /**
+     * Determine which portions of the export the provided configuration asks for.
+     * This is the single source of truth for both the contents of the export and the
+     * files that are delivered by email or to object storage.
+     *
+     * @param config the configuration of the package
+     * @return the sections to export, in the order they should appear
+     */
+    internal fun sectionsToExport(config: AdoptionExportCfg): List<Section> =
+        buildList {
+            if (config.includeViews != "NONE") {
+                add(Section.VIEWS)
+                if (config.viewsDetails == "YES") {
+                    add(Section.USER_VIEWS)
+                }
+            }
+            if (config.includeChanges == "YES") {
+                add(Section.CHANGES)
+                if (config.changesDetails == "YES") {
+                    add(Section.USER_CHANGES)
+                }
+            }
+            if (config.includeSearches == "YES") {
+                add(Section.USER_SEARCHES)
+            }
+        }
+
+    private fun export(
+        ctx: PackageContext<AdoptionExportCfg>,
+        section: Section,
+        writer: TabularWriter,
+    ) = when (section) {
+        Section.VIEWS -> AssetViews(ctx, writer, logger).export()
+        Section.USER_VIEWS -> DetailedUserViews(ctx, writer, logger).export()
+        Section.CHANGES -> AssetChanges(ctx, writer, logger).export()
+        Section.USER_CHANGES -> DetailedUserChanges(ctx, writer, logger).export()
+        Section.USER_SEARCHES -> DetailedSearches(ctx, writer, logger).export()
     }
 
     fun getAssetDetails(
