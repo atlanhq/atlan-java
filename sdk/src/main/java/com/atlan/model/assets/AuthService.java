@@ -79,6 +79,11 @@ public class AuthService extends Asset implements IAuthService, IAsset, IReferen
     @Singular
     SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** TBC */
     @Attribute
     String tagService;
