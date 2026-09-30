@@ -44,7 +44,7 @@ public interface IAtlanAppDeployment {
 
     public static final String TYPE_NAME = "AtlanAppDeployment";
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     KeywordField ATLAN_APP_DEPLOYMENT_NAME = new KeywordField("atlanAppDeploymentName", "atlanAppDeploymentName");
 
     /** Detailed error message explaining why the deployment failed. Should only be populated when status = FAILED. */
@@ -505,7 +505,7 @@ public interface IAtlanAppDeployment {
         return null;
     }
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     String getAtlanAppDeploymentName();
 
     /** Detailed error message explaining why the deployment failed. Should only be populated when status = FAILED. */
