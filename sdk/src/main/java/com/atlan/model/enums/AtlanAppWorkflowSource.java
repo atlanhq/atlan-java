@@ -13,6 +13,7 @@ public enum AtlanAppWorkflowSource implements AtlanEnum {
     BACKGROUND_JOB("background_job"),
     SYSTEM_JOB("system_job"),
     UNKNOWN("unknown"),
+    ADHOC("adhoc"),
     ;
 
     @JsonValue
