@@ -17,9 +17,9 @@ import org.testng.annotations.Test;
 
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
-public class AirflowDagTest {
+public class SapDatasphereReplicationFlowTest {
 
-    private final AirflowDag full = AirflowDag._internal()
+    private final SapDatasphereReplicationFlow full = SapDatasphereReplicationFlow._internal()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -60,17 +60,21 @@ public class AirflowDagTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
-            .airflowTag("String0")
-            .airflowTag("String1")
-            .airflowRunVersion("String0")
-            .airflowRunOpenLineageVersion("String0")
-            .airflowRunName("String0")
-            .airflowRunType("String0")
-            .airflowRunErrorMessage("String0")
-            .airflowRunStartTime(123456789L)
-            .airflowRunEndTime(123456789L)
-            .airflowRunOpenLineageState(OpenLineageRunState.START)
-            .catalogDatasetGuid("String0")
+            .flowStartedAt(123456789L)
+            .flowFinishedAt(123456789L)
+            .flowStatus("String0")
+            .flowSchedule("String0")
+            .flowProjectName("String0")
+            .flowProjectQualifiedName("String0")
+            .flowFolderName("String0")
+            .flowFolderQualifiedName("String0")
+            .flowReusableUnitName("String0")
+            .flowReusableUnitQualifiedName("String0")
+            .flowId("String0")
+            .flowRunId("String0")
+            .flowErrorMessage("String0")
+            .flowInputParameter("String0", "String0")
+            .flowInputParameter("String1", "String1")
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -1149,12 +1153,23 @@ public class AirflowDagTest {
             .addAssetAiAlias("String0")
             .addAssetAiAlias("String1")
             .assetHasAiReadme(true)
-            .airflowDagSchedule("String0")
-            .airflowDagScheduleDelta(123456789L)
-            .airflowTask(AirflowTask.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .airflowTask(AirflowTask.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sparkOrchestratedAsset(SparkJob.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sparkOrchestratedAsset(SparkJob.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapDatasphereReplicationFlowSpaceName("String0")
+            .sapDatasphereReplicationFlowSpaceQualifiedName("String0")
+            .sapDatasphereReplicationFlowSourceConnection("String0")
+            .sapDatasphereReplicationFlowTargetConnection("String0")
+            .sapDatasphereReplicationFlowLoadType("String0")
+            .sapDatasphereReplicationFlowDatasetCount(123456789L)
+            .flowDataResult(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowDataResult(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowPredecessor(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowPredecessor(FlowControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowSuccessor(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowSuccessor(FlowControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowControlledOperation(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .flowControlledOperation(
+                    FlowControlOperation.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .flowControlledBy(FlowControlOperation.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereSchema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -1202,21 +1217,24 @@ public class AirflowDagTest {
     }
 
     @Test
-    void serdeCycleAirflowDag() throws IOException {
-        assertNotNull(full, "Unable to build sample instance of AirflowDag,");
+    void serdeCycleSapDatasphereReplicationFlow() throws IOException {
+        assertNotNull(full, "Unable to build sample instance of SapDatasphereReplicationFlow,");
         final int hash = full.hashCode();
         // Builder equivalency
         assertEquals(
                 full.toBuilder().build(),
                 full,
-                "Unable to converting AirflowDag via builder back to its original state,");
+                "Unable to converting SapDatasphereReplicationFlow via builder back to its original state,");
         // Serialization
         final String serialized = full.toJson(MockAtlanTenant.client);
-        assertNotNull(serialized, "Unable to serialize sample instance of AirflowDag,");
+        assertNotNull(serialized, "Unable to serialize sample instance of SapDatasphereReplicationFlow,");
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
         // Deserialization
-        final AirflowDag frodo = MockAtlanTenant.client.readValue(serialized, AirflowDag.class);
-        assertNotNull(frodo, "Unable to reverse-read serialized value back into an instance of AirflowDag,");
+        final SapDatasphereReplicationFlow frodo =
+                MockAtlanTenant.client.readValue(serialized, SapDatasphereReplicationFlow.class);
+        assertNotNull(
+                frodo,
+                "Unable to reverse-read serialized value back into an instance of SapDatasphereReplicationFlow,");
         // Serialized equivalency
         String backAgain = frodo.toJson(MockAtlanTenant.client);
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
