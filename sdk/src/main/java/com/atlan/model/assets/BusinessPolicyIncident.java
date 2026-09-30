@@ -126,6 +126,11 @@ public class BusinessPolicyIncident extends Asset
     @Attribute
     IncidentSeverity incidentSeverity;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** BusinessPolicy that have the same (or relatable) compliance */
     @Attribute
     @Singular

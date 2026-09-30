@@ -55,6 +55,12 @@ public interface ICosmosMongoDBCollection {
             "cosmosMongoDBDatabaseQualifiedName",
             "cosmosMongoDBDatabaseQualifiedName.text");
 
+    /** User-defined functions that exist within this collection. */
+    RelationField COSMOS_MONGO_DB_FUNCTIONS = new RelationField("cosmosMongoDBFunctions");
+
+    /** Stored procedures and triggers that exist within this collection. */
+    RelationField COSMOS_MONGO_DB_STORED_PROCEDURES = new RelationField("cosmosMongoDBStoredProcedures");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -543,6 +549,16 @@ public interface ICosmosMongoDBCollection {
 
     /** Unique name of the database in which this collection exists. */
     String getCosmosMongoDBDatabaseQualifiedName();
+
+    /** User-defined functions that exist within this collection. */
+    default SortedSet<IFunction> getCosmosMongoDBFunctions() {
+        return null;
+    }
+
+    /** Stored procedures and triggers that exist within this collection. */
+    default SortedSet<IProcedure> getCosmosMongoDBStoredProcedures() {
+        return null;
+    }
 
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {
