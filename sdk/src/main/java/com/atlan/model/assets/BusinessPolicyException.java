@@ -130,6 +130,11 @@ public class BusinessPolicyException extends Asset
     @Singular
     SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** BusinessPolicy that have the same (or relatable) compliance */
     @Attribute
     @Singular
