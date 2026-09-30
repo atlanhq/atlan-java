@@ -1220,6 +1220,11 @@ public class CosmosMongoDBCollectionTest {
             .cosmosMongoDBDatabase(CosmosMongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cosmosMongoDBStoredProcedure(Procedure.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cosmosMongoDBStoredProcedure(
+                    Procedure.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .cosmosMongoDBFunction(Function.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .cosmosMongoDBFunction(Function.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
