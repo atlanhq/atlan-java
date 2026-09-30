@@ -4,10 +4,6 @@ package com.atlan.model.assets;
 
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanAppWorkflowOwnership;
-import com.atlan.model.enums.AtlanAppWorkflowRuntimeMode;
-import com.atlan.model.enums.AtlanAppWorkflowSource;
-import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanStatus;
@@ -18,15 +14,15 @@ import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
+import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
 import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.AssetSummaryProvider;
-import com.atlan.model.structs.AtlanAppErrorHandling;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
@@ -39,58 +35,43 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a workflow in an Atlan application.
+ * Instance of a SAP Datasphere replication flow in Atlan. A replication flow is a trigger that moves data from sources outside Datasphere (such as S/4HANA, SAP ECC, SAP BW, or S3) into tables created within a Datasphere space, which is modelled as a SQL Schema in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAtlanAppWorkflow {
+public interface ISapDatasphereReplicationFlow {
 
-    public static final String TYPE_NAME = "AtlanAppWorkflow";
+    public static final String TYPE_NAME = "SapDatasphereReplicationFlow";
 
-    /** Atlan application containing the workflow. */
-    RelationField ATLAN_APP = new RelationField("atlanApp");
+    /** Number of datasets moved by this replication flow. */
+    NumericField SAP_DATASPHERE_REPLICATION_FLOW_DATASET_COUNT =
+            new NumericField("sapDatasphereReplicationFlowDatasetCount", "sapDatasphereReplicationFlowDatasetCount");
 
-    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
-    KeywordField ATLAN_APP_WORKFLOW_AGENT_NAME =
-            new KeywordField("atlanAppWorkflowAgentName", "atlanAppWorkflowAgentName");
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_LOAD_TYPE =
+            new KeywordField("sapDatasphereReplicationFlowLoadType", "sapDatasphereReplicationFlowLoadType");
 
-    /** Map of all activity steps for the workflow (escaped JSON string). */
-    TextField ATLAN_APP_WORKFLOW_DAG = new TextField("atlanAppWorkflowDag", "atlanAppWorkflowDag");
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SOURCE_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowSourceConnection", "sapDatasphereReplicationFlowSourceConnection");
 
-    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
-    KeywordField ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME =
-            new KeywordField("atlanAppWorkflowDeploymentName", "atlanAppWorkflowDeploymentName");
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordTextField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_NAME = new KeywordTextField(
+            "sapDatasphereReplicationFlowSpaceName",
+            "sapDatasphereReplicationFlowSpaceName.keyword",
+            "sapDatasphereReplicationFlowSpaceName");
 
-    /** Error handling strategy for the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_ERROR_HANDLING =
-            new KeywordField("atlanAppWorkflowErrorHandling", "atlanAppWorkflowErrorHandling");
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_QUALIFIED_NAME = new KeywordField(
+            "sapDatasphereReplicationFlowSpaceQualifiedName", "sapDatasphereReplicationFlowSpaceQualifiedName");
 
-    /** Ownership type of the workflow, indicating whether it is managed by Atlan or by a user. */
-    KeywordField ATLAN_APP_WORKFLOW_OWNERSHIP =
-            new KeywordField("atlanAppWorkflowOwnership", "atlanAppWorkflowOwnership");
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_TARGET_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowTargetConnection", "sapDatasphereReplicationFlowTargetConnection");
 
-    /** The workflow runs contained within the workflow. */
-    RelationField ATLAN_APP_WORKFLOW_RUNS = new RelationField("atlanAppWorkflowRuns");
-
-    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
-    KeywordField ATLAN_APP_WORKFLOW_RUNTIME_MODE =
-            new KeywordField("atlanAppWorkflowRuntimeMode", "atlanAppWorkflowRuntimeMode");
-
-    /** Slug of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_SLUG = new KeywordField("atlanAppWorkflowSlug", "atlanAppWorkflowSlug");
-
-    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
-    KeywordField ATLAN_APP_WORKFLOW_SOURCE = new KeywordField("atlanAppWorkflowSource", "atlanAppWorkflowSource");
-
-    /** Status of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_STATUS = new KeywordField("atlanAppWorkflowStatus", "atlanAppWorkflowStatus");
-
-    /** Triggers configured for this workflow (escaped JSON string). */
-    TextField ATLAN_APP_WORKFLOW_TRIGGERS = new TextField("atlanAppWorkflowTriggers", "atlanAppWorkflowTriggers");
-
-    /** Version of the workflow. */
-    KeywordField ATLAN_APP_WORKFLOW_VERSION = new KeywordField("atlanAppWorkflowVersion", "atlanAppWorkflowVersion");
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    RelationField SAP_DATASPHERE_SCHEMA = new RelationField("sapDatasphereSchema");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -120,9 +101,6 @@ public interface IAtlanAppWorkflow {
     default SortedSet<IAnomaloCheck> getAnomaloChecks() {
         return null;
     }
-
-    /** Unique identifier for the application asset from the source system. */
-    String getAppId();
 
     /** Application owning the Asset. */
     default IApplication getApplication() {
@@ -535,71 +513,6 @@ public interface IAtlanAppWorkflow {
         return null;
     }
 
-    /** Atlan application containing the workflow. */
-    default IAtlanApp getAtlanApp() {
-        return null;
-    }
-
-    /** Metadata for the Atlan application (escaped JSON string). */
-    String getAtlanAppMetadata();
-
-    /** Name of the Atlan application this asset belongs to. */
-    String getAtlanAppName();
-
-    /** Qualified name of the Atlan application this asset belongs to. */
-    String getAtlanAppQualifiedName();
-
-    /** Tools that exist within this Atlan application. */
-    default SortedSet<IAtlanAppTool> getAtlanAppTools() {
-        return null;
-    }
-
-    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
-    String getAtlanAppWorkflowAgentName();
-
-    /** Map of all activity steps for the workflow (escaped JSON string). */
-    String getAtlanAppWorkflowDag();
-
-    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
-    String getAtlanAppWorkflowDeploymentName();
-
-    /** Error handling strategy for the workflow. */
-    AtlanAppErrorHandling getAtlanAppWorkflowErrorHandling();
-
-    /** Ownership type of the workflow, indicating whether it is managed by Atlan or by a user. */
-    AtlanAppWorkflowOwnership getAtlanAppWorkflowOwnership();
-
-    /** The workflow runs contained within the workflow. */
-    default SortedSet<IAppWorkflowRun> getAtlanAppWorkflowRuns() {
-        return null;
-    }
-
-    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
-    AtlanAppWorkflowRuntimeMode getAtlanAppWorkflowRuntimeMode();
-
-    /** Slug of the workflow. */
-    String getAtlanAppWorkflowSlug();
-
-    /** Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028). */
-    AtlanAppWorkflowSource getAtlanAppWorkflowSource();
-
-    /** Status of the workflow. */
-    AtlanAppWorkflowStatus getAtlanAppWorkflowStatus();
-
-    /** Triggers configured for this workflow (escaped JSON string). */
-    String getAtlanAppWorkflowTriggers();
-
-    /** Version of the workflow. */
-    String getAtlanAppWorkflowVersion();
-
-    /** Workflows that exist within this Atlan application. */
-    default SortedSet<IAtlanAppWorkflow> getAtlanAppWorkflows() {
-        return null;
-    }
-
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -657,6 +570,48 @@ public interface IAtlanAppWorkflow {
     default SortedSet<IFile> getFiles() {
         return null;
     }
+
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowSchedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowStartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowStatus();
 
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
@@ -802,6 +757,29 @@ public interface IAtlanAppWorkflow {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Number of datasets moved by this replication flow. */
+    Long getSapDatasphereReplicationFlowDatasetCount();
+
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    String getSapDatasphereReplicationFlowLoadType();
+
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    String getSapDatasphereReplicationFlowSourceConnection();
+
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceName();
+
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceQualifiedName();
+
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    String getSapDatasphereReplicationFlowTargetConnection();
+
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    default ISchema getSapDatasphereSchema() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
