@@ -41,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings({"cast", "serial"})
 public class GCPDataplexAspectType extends Asset
-        implements IGCPDataplexAspectType, IGCPDataplex, ICatalog, IGoogle, IAsset, IReferenceable, ICloud {
+        implements IGCPDataplexAspectType, IGCPDataplex, IGoogle, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCPDataplexAspectType";
@@ -50,10 +50,6 @@ public class GCPDataplexAspectType extends Asset
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** Unique identifier of the dataset this asset belongs to. */
-    @Attribute
-    String catalogDatasetGuid;
 
     /** Uniform resource name (URN) for the asset: AWS ARN, Google Cloud URI, Azure resource ID, Oracle OCID, and so on. */
     @Attribute
@@ -81,7 +77,7 @@ public class GCPDataplexAspectType extends Asset
     @Attribute
     String gcpDataplexAspectTypeProject;
 
-    /** Full GCP resource name of this Aspect Type (e.g. projects/{project}/locations/{location}/aspectTypes/{id}). Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
+    /** Full GCP resource name of this Aspect Type, for example: projects/{project}/locations/{location}/aspectTypes/{id}. Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
     @Attribute
     String gcpDataplexAspectTypeResourceName;
 
@@ -118,56 +114,6 @@ public class GCPDataplexAspectType extends Asset
     @Attribute
     @Singular
     List<GoogleTag> googleTags;
-
-    /** Tasks to which this asset provides input. */
-    @Attribute
-    @Singular
-    SortedSet<IAirflowTask> inputToAirflowTasks;
-
-    /** Processes to which this asset provides input. */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISparkJob> inputToSparkJobs;
-
-    /** Attributes implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelAttribute> modelImplementedAttributes;
-
-    /** Entities implemented by this asset. */
-    @Attribute
-    @Singular
-    SortedSet<IModelEntity> modelImplementedEntities;
-
-    /** Tasks from which this asset is output. */
-    @Attribute
-    @Singular
-    SortedSet<IAirflowTask> outputFromAirflowTasks;
-
-    /** Processes from which this asset is produced as output. */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISparkJob> outputFromSparkJobs;
-
-    /** Partial fields contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialField> partialChildFields;
-
-    /** Partial objects contained in the asset. */
-    @Attribute
-    @Singular
-    SortedSet<IPartialObject> partialChildObjects;
 
     /**
      * Builds the minimal object necessary to create a relationship to a GCPDataplexAspectType, from a potentially
