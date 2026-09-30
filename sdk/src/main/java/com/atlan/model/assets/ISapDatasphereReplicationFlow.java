@@ -12,13 +12,11 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
-import com.atlan.model.enums.OpenLineageRunState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -37,66 +35,43 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of an Airflow task in Atlan.
+ * Instance of a SAP Datasphere replication flow in Atlan. A replication flow is a trigger that moves data from sources outside Datasphere (such as S/4HANA, SAP ECC, SAP BW, or S3) into tables created within a Datasphere space, which is modelled as a SQL Schema in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IAirflowTask {
+public interface ISapDatasphereReplicationFlow {
 
-    public static final String TYPE_NAME = "AirflowTask";
+    public static final String TYPE_NAME = "SapDatasphereReplicationFlow";
 
-    /** DAG in which this task exists. */
-    RelationField AIRFLOW_DAG = new RelationField("airflowDag");
+    /** Number of datasets moved by this replication flow. */
+    NumericField SAP_DATASPHERE_REPLICATION_FLOW_DATASET_COUNT =
+            new NumericField("sapDatasphereReplicationFlowDatasetCount", "sapDatasphereReplicationFlowDatasetCount");
 
-    /** Simple name of the DAG this task is contained within. */
-    KeywordTextField AIRFLOW_DAG_NAME =
-            new KeywordTextField("airflowDagName", "airflowDagName.keyword", "airflowDagName");
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_LOAD_TYPE =
+            new KeywordField("sapDatasphereReplicationFlowLoadType", "sapDatasphereReplicationFlowLoadType");
 
-    /** Unique name of the DAG this task is contained within. */
-    KeywordField AIRFLOW_DAG_QUALIFIED_NAME = new KeywordField("airflowDagQualifiedName", "airflowDagQualifiedName");
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SOURCE_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowSourceConnection", "sapDatasphereReplicationFlowSourceConnection");
 
-    /** Identifier for the connection this task accesses. */
-    KeywordTextField AIRFLOW_TASK_CONNECTION_ID = new KeywordTextField(
-            "airflowTaskConnectionId", "airflowTaskConnectionId.keyword", "airflowTaskConnectionId");
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordTextField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_NAME = new KeywordTextField(
+            "sapDatasphereReplicationFlowSpaceName",
+            "sapDatasphereReplicationFlowSpaceName.keyword",
+            "sapDatasphereReplicationFlowSpaceName");
 
-    /** Group name for the task. */
-    KeywordField AIRFLOW_TASK_GROUP_NAME = new KeywordField("airflowTaskGroupName", "airflowTaskGroupName");
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_QUALIFIED_NAME = new KeywordField(
+            "sapDatasphereReplicationFlowSpaceQualifiedName", "sapDatasphereReplicationFlowSpaceQualifiedName");
 
-    /** Class name for the operator this task uses. */
-    KeywordTextField AIRFLOW_TASK_OPERATOR_CLASS = new KeywordTextField(
-            "airflowTaskOperatorClass", "airflowTaskOperatorClass.keyword", "airflowTaskOperatorClass");
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_TARGET_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowTargetConnection", "sapDatasphereReplicationFlowTargetConnection");
 
-    /** Pool on which this run happened. */
-    KeywordField AIRFLOW_TASK_POOL = new KeywordField("airflowTaskPool", "airflowTaskPool");
-
-    /** Pool slots used for the run. */
-    NumericField AIRFLOW_TASK_POOL_SLOTS = new NumericField("airflowTaskPoolSlots", "airflowTaskPoolSlots");
-
-    /** Priority of the run. */
-    NumericField AIRFLOW_TASK_PRIORITY_WEIGHT =
-            new NumericField("airflowTaskPriorityWeight", "airflowTaskPriorityWeight");
-
-    /** Queue on which this run happened. */
-    KeywordField AIRFLOW_TASK_QUEUE = new KeywordField("airflowTaskQueue", "airflowTaskQueue");
-
-    /** Retry count for this task running. */
-    NumericField AIRFLOW_TASK_RETRY_NUMBER = new NumericField("airflowTaskRetryNumber", "airflowTaskRetryNumber");
-
-    /** SQL code that executes through this task. */
-    TextField AIRFLOW_TASK_SQL = new TextField("airflowTaskSql", "airflowTaskSql");
-
-    /** Trigger for the run. */
-    KeywordField AIRFLOW_TASK_TRIGGER_RULE = new KeywordField("airflowTaskTriggerRule", "airflowTaskTriggerRule");
-
-    /** Assets that are inputs to this task. */
-    RelationField INPUTS = new RelationField("inputs");
-
-    /** Assets that are outputs from this task. */
-    RelationField OUTPUTS = new RelationField("outputs");
-
-    /** Process in which this task exists. */
-    RelationField PROCESS = new RelationField("process");
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    RelationField SAP_DATASPHERE_SCHEMA = new RelationField("sapDatasphereSchema");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -106,74 +81,6 @@ public interface IAirflowTask {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
-
-    /** DAG in which this task exists. */
-    default IAirflowDag getAirflowDag() {
-        return null;
-    }
-
-    /** Simple name of the DAG this task is contained within. */
-    String getAirflowDagName();
-
-    /** Unique name of the DAG this task is contained within. */
-    String getAirflowDagQualifiedName();
-
-    /** End time of the run. */
-    Long getAirflowRunEndTime();
-
-    /** Error message of the run in Airflow, populated when the run fails. */
-    String getAirflowRunErrorMessage();
-
-    /** Name of the run. */
-    String getAirflowRunName();
-
-    /** State of the run in OpenLineage. */
-    OpenLineageRunState getAirflowRunOpenLineageState();
-
-    /** Version of the run in OpenLineage. */
-    String getAirflowRunOpenLineageVersion();
-
-    /** Start time of the run. */
-    Long getAirflowRunStartTime();
-
-    /** Type of the run. */
-    String getAirflowRunType();
-
-    /** Version of the run in Airflow. */
-    String getAirflowRunVersion();
-
-    /** Tags assigned to the asset in Airflow. */
-    SortedSet<String> getAirflowTags();
-
-    /** Identifier for the connection this task accesses. */
-    String getAirflowTaskConnectionId();
-
-    /** Group name for the task. */
-    String getAirflowTaskGroupName();
-
-    /** Class name for the operator this task uses. */
-    String getAirflowTaskOperatorClass();
-
-    /** Pool on which this run happened. */
-    String getAirflowTaskPool();
-
-    /** Pool slots used for the run. */
-    Long getAirflowTaskPoolSlots();
-
-    /** Priority of the run. */
-    Long getAirflowTaskPriorityWeight();
-
-    /** Queue on which this run happened. */
-    String getAirflowTaskQueue();
-
-    /** Retry count for this task running. */
-    Long getAirflowTaskRetryNumber();
-
-    /** SQL code that executes through this task. */
-    String getAirflowTaskSql();
-
-    /** Trigger for the run. */
-    String getAirflowTaskTriggerRule();
 
     /** Detailed message to include in the announcement on this asset. */
     String getAnnouncementMessage();
@@ -606,9 +513,6 @@ public interface IAirflowTask {
         return null;
     }
 
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -667,6 +571,48 @@ public interface IAirflowTask {
         return null;
     }
 
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowSchedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowStartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowStatus();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 
@@ -690,11 +636,6 @@ public interface IAirflowTask {
 
     /** TBC */
     default SortedSet<ISparkJob> getInputToSparkJobs() {
-        return null;
-    }
-
-    /** Assets that are inputs to this task. */
-    default SortedSet<ICatalog> getInputs() {
         return null;
     }
 
@@ -784,11 +725,6 @@ public interface IAirflowTask {
     /** Array of product guids which have this asset as outputPort */
     SortedSet<String> getOutputProductGUIDs();
 
-    /** Assets that are outputs from this task. */
-    default SortedSet<ICatalog> getOutputs() {
-        return null;
-    }
-
     /** List of groups who own this asset. */
     SortedSet<String> getOwnerGroups();
 
@@ -808,11 +744,6 @@ public interface IAirflowTask {
     /** Popularity score for this asset. */
     Double getPopularityScore();
 
-    /** Process in which this task exists. */
-    default ILineageProcess getProcess() {
-        return null;
-    }
-
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
 
@@ -826,6 +757,29 @@ public interface IAirflowTask {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Number of datasets moved by this replication flow. */
+    Long getSapDatasphereReplicationFlowDatasetCount();
+
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    String getSapDatasphereReplicationFlowLoadType();
+
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    String getSapDatasphereReplicationFlowSourceConnection();
+
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceName();
+
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceQualifiedName();
+
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    String getSapDatasphereReplicationFlowTargetConnection();
+
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    default ISchema getSapDatasphereSchema() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
@@ -902,11 +856,6 @@ public interface IAirflowTask {
 
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
-
-    /** Spark assets that are executed by this airflow asset. */
-    default SortedSet<ISpark> getSparkOrchestratedAssets() {
-        return null;
-    }
 
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
