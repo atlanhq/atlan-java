@@ -68,6 +68,7 @@ public class ColumnProcessTest {
             .additionalEtlContext("String0")
             .aiDatasetType(AIDatasetType.TRAINING)
             .isPassThrough(true)
+            .processDerivation(ProcessLineageDerivation.STATIC)
             .name("String0")
             .displayName("String0")
             .description("String0")
