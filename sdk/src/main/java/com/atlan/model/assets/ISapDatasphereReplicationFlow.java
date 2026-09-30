@@ -13,12 +13,10 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -37,69 +35,43 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a field within a Kafka topic schema in Atlan, enabling field-level lineage.
+ * Instance of a SAP Datasphere replication flow in Atlan. A replication flow is a trigger that moves data from sources outside Datasphere (such as S/4HANA, SAP ECC, SAP BW, or S3) into tables created within a Datasphere space, which is modelled as a SQL Schema in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IKafkaField {
+public interface ISapDatasphereReplicationFlow {
 
-    public static final String TYPE_NAME = "KafkaField";
+    public static final String TYPE_NAME = "SapDatasphereReplicationFlow";
 
-    /** Data type of this field as defined in the schema, for example: string, int, record. */
-    KeywordTextField KAFKA_FIELD_DATA_TYPE =
-            new KeywordTextField("kafkaFieldDataType", "kafkaFieldDataType.keyword", "kafkaFieldDataType");
+    /** Number of datasets moved by this replication flow. */
+    NumericField SAP_DATASPHERE_REPLICATION_FLOW_DATASET_COUNT =
+            new NumericField("sapDatasphereReplicationFlowDatasetCount", "sapDatasphereReplicationFlowDatasetCount");
 
-    /** Default value for this field if one is defined in the schema. */
-    KeywordField KAFKA_FIELD_DEFAULT_VALUE = new KeywordField("kafkaFieldDefaultValue", "kafkaFieldDefaultValue");
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_LOAD_TYPE =
+            new KeywordField("sapDatasphereReplicationFlowLoadType", "sapDatasphereReplicationFlowLoadType");
 
-    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
-    NumericField KAFKA_FIELD_DEPTH_LEVEL = new NumericField("kafkaFieldDepthLevel", "kafkaFieldDepthLevel");
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SOURCE_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowSourceConnection", "sapDatasphereReplicationFlowSourceConnection");
 
-    /** List of top-level upstream nested fields. */
-    KeywordField KAFKA_FIELD_HIERARCHIES = new KeywordField("kafkaFieldHierarchies", "kafkaFieldHierarchies");
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordTextField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_NAME = new KeywordTextField(
+            "sapDatasphereReplicationFlowSpaceName",
+            "sapDatasphereReplicationFlowSpaceName.keyword",
+            "sapDatasphereReplicationFlowSpaceName");
 
-    /** Whether this field is optional (true) or required (false) in the schema. */
-    BooleanField KAFKA_FIELD_IS_OPTIONAL = new BooleanField("kafkaFieldIsOptional", "kafkaFieldIsOptional");
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_SPACE_QUALIFIED_NAME = new KeywordField(
+            "sapDatasphereReplicationFlowSpaceQualifiedName", "sapDatasphereReplicationFlowSpaceQualifiedName");
 
-    /** Order (position) in which this field appears within its parent nested field, as a dotted ordinal path such as '1.2.10'. Carries the same value as kafkaNestedFieldOrder, which it supersedes; sortable in schema-declaration order via its version sub-field. */
-    KeywordTextField KAFKA_FIELD_NESTED_ORDER =
-            new KeywordTextField("kafkaFieldNestedOrder", "kafkaFieldNestedOrder.keyword", "kafkaFieldNestedOrder");
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    KeywordField SAP_DATASPHERE_REPLICATION_FLOW_TARGET_CONNECTION = new KeywordField(
+            "sapDatasphereReplicationFlowTargetConnection", "sapDatasphereReplicationFlowTargetConnection");
 
-    /** Position (0-based) of this field in the schema definition. */
-    NumericField KAFKA_FIELD_ORDER = new NumericField("kafkaFieldOrder", "kafkaFieldOrder");
-
-    /** Type of schema from which this field is derived, for example: key or value. */
-    KeywordField KAFKA_FIELD_SCHEMA_TYPE = new KeywordField("kafkaFieldSchemaType", "kafkaFieldSchemaType");
-
-    /** Schema version in which this field was first introduced. */
-    KeywordField KAFKA_FIELD_VERSION_INTRODUCED =
-            new KeywordField("kafkaFieldVersionIntroduced", "kafkaFieldVersionIntroduced");
-
-    /** Number of KafkaField assets directly nested within this field. */
-    NumericField KAFKA_NESTED_FIELD_COUNT = new NumericField("kafkaNestedFieldCount", "kafkaNestedFieldCount");
-
-    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
-    TextField KAFKA_NESTED_FIELD_ORDER = new TextField("kafkaNestedFieldOrder", "kafkaNestedFieldOrder");
-
-    /** KafkaField assets nested within this field. */
-    RelationField KAFKA_NESTED_FIELDS = new RelationField("kafkaNestedFields");
-
-    /** Parent KafkaField containing this nested field. */
-    RelationField KAFKA_PARENT_FIELD = new RelationField("kafkaParentField");
-
-    /** Simple name of the parent KafkaField in which this field is nested. */
-    TextField KAFKA_PARENT_FIELD_NAME = new TextField("kafkaParentFieldName", "kafkaParentFieldName");
-
-    /** Unique name of the parent KafkaField in which this field is nested. */
-    TextField KAFKA_PARENT_FIELD_QUALIFIED_NAME =
-            new TextField("kafkaParentFieldQualifiedName", "kafkaParentFieldQualifiedName");
-
-    /** Kafka topic in which this field is defined. */
-    RelationField KAFKA_TOPIC = new RelationField("kafkaTopic");
-
-    /** Unique name of the Kafka topic in which this field exists. */
-    KeywordField KAFKA_TOPIC_QUALIFIED_NAME = new KeywordField("kafkaTopicQualifiedName", "kafkaTopicQualifiedName");
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    RelationField SAP_DATASPHERE_SCHEMA = new RelationField("sapDatasphereSchema");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -541,9 +513,6 @@ public interface IKafkaField {
         return null;
     }
 
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -602,6 +571,48 @@ public interface IKafkaField {
         return null;
     }
 
+    /** Optional error message of the flow run. */
+    String getFlowErrorMessage();
+
+    /** Date and time at which this point in the data processing or orchestration finished. */
+    Long getFlowFinishedAt();
+
+    /** Simple name of the folder in which this asset is contained. */
+    String getFlowFolderName();
+
+    /** Unique name of the folder in which this asset is contained. */
+    String getFlowFolderQualifiedName();
+
+    /** Unique ID for this flow asset, which will remain constant throughout the lifecycle of the asset. */
+    String getFlowId();
+
+    /** Input parameters for the flow run. */
+    Map<String, String> getFlowInputParameters();
+
+    /** Simple name of the project in which this asset is contained. */
+    String getFlowProjectName();
+
+    /** Unique name of the project in which this asset is contained. */
+    String getFlowProjectQualifiedName();
+
+    /** Simple name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitName();
+
+    /** Unique name of the reusable grouping of operations in which this ephemeral data is contained. */
+    String getFlowReusableUnitQualifiedName();
+
+    /** Unique ID of the flow run, which could change on subsequent runs of the same flow. */
+    String getFlowRunId();
+
+    /** Schedule for this point in the data processing or orchestration. */
+    String getFlowSchedule();
+
+    /** Date and time at which this point in the data processing or orchestration started. */
+    Long getFlowStartedAt();
+
+    /** Overall status of this point in the data processing or orchestration. */
+    String getFlowStatus();
+
     /** Whether this asset has contract (true) or not (false). */
     Boolean getHasContract();
 
@@ -639,63 +650,6 @@ public interface IKafkaField {
 
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
-
-    /** Data type of this field as defined in the schema, for example: string, int, record. */
-    String getKafkaFieldDataType();
-
-    /** Default value for this field if one is defined in the schema. */
-    String getKafkaFieldDefaultValue();
-
-    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
-    Integer getKafkaFieldDepthLevel();
-
-    /** List of top-level upstream nested fields. */
-    List<Map<String, String>> getKafkaFieldHierarchies();
-
-    /** Whether this field is optional (true) or required (false) in the schema. */
-    Boolean getKafkaFieldIsOptional();
-
-    /** Order (position) in which this field appears within its parent nested field, as a dotted ordinal path such as '1.2.10'. Carries the same value as kafkaNestedFieldOrder, which it supersedes; sortable in schema-declaration order via its version sub-field. */
-    String getKafkaFieldNestedOrder();
-
-    /** Position (0-based) of this field in the schema definition. */
-    Integer getKafkaFieldOrder();
-
-    /** Type of schema from which this field is derived, for example: key or value. */
-    String getKafkaFieldSchemaType();
-
-    /** Schema version in which this field was first introduced. */
-    String getKafkaFieldVersionIntroduced();
-
-    /** Number of KafkaField assets directly nested within this field. */
-    Integer getKafkaNestedFieldCount();
-
-    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
-    String getKafkaNestedFieldOrder();
-
-    /** KafkaField assets nested within this field. */
-    default SortedSet<IKafkaField> getKafkaNestedFields() {
-        return null;
-    }
-
-    /** Parent KafkaField containing this nested field. */
-    default IKafkaField getKafkaParentField() {
-        return null;
-    }
-
-    /** Simple name of the parent KafkaField in which this field is nested. */
-    String getKafkaParentFieldName();
-
-    /** Unique name of the parent KafkaField in which this field is nested. */
-    String getKafkaParentFieldQualifiedName();
-
-    /** Kafka topic in which this field is defined. */
-    default IKafkaTopic getKafkaTopic() {
-        return null;
-    }
-
-    /** Unique name of the Kafka topic in which this field exists. */
-    String getKafkaTopicQualifiedName();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -803,6 +757,29 @@ public interface IKafkaField {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Number of datasets moved by this replication flow. */
+    Long getSapDatasphereReplicationFlowDatasetCount();
+
+    /** Type of load performed by this replication flow, such as INITIAL or INITIAL_AND_DELTA. */
+    String getSapDatasphereReplicationFlowLoadType();
+
+    /** Name of the source connection from which this replication flow reads data, such as an S/4HANA, SAP ECC, SAP BW, or S3 connection outside Datasphere. */
+    String getSapDatasphereReplicationFlowSourceConnection();
+
+    /** Simple name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceName();
+
+    /** Unique name of the Datasphere space in which this replication flow runs and creates its target tables. */
+    String getSapDatasphereReplicationFlowSpaceQualifiedName();
+
+    /** Name of the target connection into which this replication flow writes data, such as the local Datasphere repository. */
+    String getSapDatasphereReplicationFlowTargetConnection();
+
+    /** Schema (Datasphere space) in which this replication flow creates its target tables. */
+    default ISchema getSapDatasphereSchema() {
+        return null;
+    }
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
