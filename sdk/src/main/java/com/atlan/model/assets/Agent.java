@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AgentType;
 import com.atlan.model.enums.AgenticLifecycleStatus;
+import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.fields.AtlanField;
@@ -58,6 +59,10 @@ public class Agent extends Asset implements IAgent, IAgentic, ICatalog, IAsset, 
     @Attribute
     String agentMcpServers;
 
+    /** JSON-serialized agent schedule configuration, including kickoff message, cron expression, timezone, version policy, status, and Temporal schedule identifier. */
+    @Attribute
+    String agentSchedules;
+
     /** Denormalized list of names of the skills bound to this agent version. */
     @Attribute
     @Singular
@@ -88,6 +93,10 @@ public class Agent extends Asset implements IAgent, IAgentic, ICatalog, IAsset, 
     /** Origin type of this agent — system-provided or custom user-created. */
     @Attribute
     AgentType agentType;
+
+    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
+    @Attribute
+    AgenticSource agenticSource;
 
     /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
     @Attribute

@@ -62,6 +62,10 @@ public class AirflowDag extends Asset implements IAirflowDag, IAirflow, ICatalog
     @Date
     Long airflowRunEndTime;
 
+    /** Error message of the run in Airflow, populated when the run fails. */
+    @Attribute
+    String airflowRunErrorMessage;
+
     /** Name of the run. */
     @Attribute
     String airflowRunName;
