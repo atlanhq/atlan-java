@@ -337,6 +337,9 @@ public interface ICatalog {
             case DatabricksAIModelVersion.TYPE_NAME:
                 ref = DatabricksAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
+            case DatabricksDashboard.TYPE_NAME:
+                ref = DatabricksDashboard.refByQualifiedName(qualifiedName);
+                break;
             case DatabricksExternalLocation.TYPE_NAME:
                 ref = DatabricksExternalLocation.refByQualifiedName(qualifiedName);
                 break;
