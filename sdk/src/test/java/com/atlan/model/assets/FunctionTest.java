@@ -1189,6 +1189,7 @@ public class FunctionTest {
             .functionSecrets("String0")
             .functionPackages("String0")
             .functionInstalledPackages("String0")
+            .cosmosMongoDBCollection(CosmosMongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

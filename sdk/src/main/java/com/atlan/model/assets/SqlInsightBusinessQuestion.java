@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.PopularityInsights;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -106,6 +107,15 @@ public class SqlInsightBusinessQuestion extends Asset
     /** Canonical SQL query that answers this business question. */
     @Attribute
     String sqlInsightBusinessQuestionCanonicalSQL;
+
+    /** Qualified name of the dataset this business question relates to. */
+    @Attribute
+    String sqlInsightBusinessQuestionDatasetQualifiedName;
+
+    /** Example SQL queries that demonstrate this business question, with usage details. */
+    @Attribute
+    @Singular
+    List<PopularityInsights> sqlInsightBusinessQuestionExampleQueries;
 
     /** Time (epoch) at which this question was last observed, in milliseconds. */
     @Attribute
