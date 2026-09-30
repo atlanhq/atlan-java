@@ -1,5 +1,4 @@
 # Full repository
-*											@cmgrote
+*											@cmgrote @jtgatlan
 # Specific packages
-/samples/packages/lake-formation-tag-sync/      @ErnestoLoma
-/samples/packages/relational-assets-builder/    @bladata1990
+/samples/packages/                              @cmgrote @jtgatlan @ashish-atlan @suseriAtlan @bladata1990
