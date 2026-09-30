@@ -48,6 +48,9 @@ public interface IAirflow {
     /** End time of the run. */
     NumericField AIRFLOW_RUN_END_TIME = new NumericField("airflowRunEndTime", "airflowRunEndTime");
 
+    /** Error message of the run in Airflow, populated when the run fails. */
+    KeywordField AIRFLOW_RUN_ERROR_MESSAGE = new KeywordField("airflowRunErrorMessage", "airflowRunErrorMessage");
+
     /** Name of the run. */
     KeywordField AIRFLOW_RUN_NAME = new KeywordField("airflowRunName", "airflowRunName");
 
@@ -85,6 +88,9 @@ public interface IAirflow {
 
     /** End time of the run. */
     Long getAirflowRunEndTime();
+
+    /** Error message of the run in Airflow, populated when the run fails. */
+    String getAirflowRunErrorMessage();
 
     /** Name of the run. */
     String getAirflowRunName();
