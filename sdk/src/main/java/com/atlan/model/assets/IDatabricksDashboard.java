@@ -12,13 +12,10 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.DatabricksDashboardLifecycleState;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
-import com.atlan.model.fields.KeywordTextField;
-import com.atlan.model.fields.NumericField;
-import com.atlan.model.fields.RelationField;
-import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -37,65 +34,36 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 
 /**
- * Instance of a field within a Kafka topic schema in Atlan, enabling field-level lineage.
+ * Instance of a Databricks AI/BI dashboard in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface IKafkaField {
+public interface IDatabricksDashboard {
 
-    public static final String TYPE_NAME = "KafkaField";
+    public static final String TYPE_NAME = "DatabricksDashboard";
 
-    /** Data type of this field as defined in the schema, for example: string, int, record. */
-    KeywordTextField KAFKA_FIELD_DATA_TYPE =
-            new KeywordTextField("kafkaFieldDataType", "kafkaFieldDataType.keyword", "kafkaFieldDataType");
+    /** Entity tag used as a change token for the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_ETAG = new KeywordField("databricksDashboardEtag", "databricksDashboardEtag");
 
-    /** Default value for this field if one is defined in the schema. */
-    KeywordField KAFKA_FIELD_DEFAULT_VALUE = new KeywordField("kafkaFieldDefaultValue", "kafkaFieldDefaultValue");
+    /** Whether a Genie space is enabled for the dashboard. */
+    BooleanField DATABRICKS_DASHBOARD_IS_GENIE_SPACE_ENABLED =
+            new BooleanField("databricksDashboardIsGenieSpaceEnabled", "databricksDashboardIsGenieSpaceEnabled");
 
-    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
-    NumericField KAFKA_FIELD_DEPTH_LEVEL = new NumericField("kafkaFieldDepthLevel", "kafkaFieldDepthLevel");
+    /** Lifecycle state of the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_LIFECYCLE_STATE =
+            new KeywordField("databricksDashboardLifecycleState", "databricksDashboardLifecycleState");
 
-    /** List of top-level upstream nested fields. */
-    KeywordField KAFKA_FIELD_HIERARCHIES = new KeywordField("kafkaFieldHierarchies", "kafkaFieldHierarchies");
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    KeywordField DATABRICKS_DASHBOARD_PATH = new KeywordField("databricksDashboardPath", "databricksDashboardPath");
 
-    /** Whether this field is optional (true) or required (false) in the schema. */
-    BooleanField KAFKA_FIELD_IS_OPTIONAL = new BooleanField("kafkaFieldIsOptional", "kafkaFieldIsOptional");
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WAREHOUSE_ID =
+            new KeywordField("databricksDashboardWarehouseId", "databricksDashboardWarehouseId");
 
-    /** Position (0-based) of this field in the schema definition. */
-    NumericField KAFKA_FIELD_ORDER = new NumericField("kafkaFieldOrder", "kafkaFieldOrder");
-
-    /** Type of schema from which this field is derived, for example: key or value. */
-    KeywordField KAFKA_FIELD_SCHEMA_TYPE = new KeywordField("kafkaFieldSchemaType", "kafkaFieldSchemaType");
-
-    /** Schema version in which this field was first introduced. */
-    KeywordField KAFKA_FIELD_VERSION_INTRODUCED =
-            new KeywordField("kafkaFieldVersionIntroduced", "kafkaFieldVersionIntroduced");
-
-    /** Number of KafkaField assets directly nested within this field. */
-    NumericField KAFKA_NESTED_FIELD_COUNT = new NumericField("kafkaNestedFieldCount", "kafkaNestedFieldCount");
-
-    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
-    TextField KAFKA_NESTED_FIELD_ORDER = new TextField("kafkaNestedFieldOrder", "kafkaNestedFieldOrder");
-
-    /** KafkaField assets nested within this field. */
-    RelationField KAFKA_NESTED_FIELDS = new RelationField("kafkaNestedFields");
-
-    /** Parent KafkaField containing this nested field. */
-    RelationField KAFKA_PARENT_FIELD = new RelationField("kafkaParentField");
-
-    /** Simple name of the parent KafkaField in which this field is nested. */
-    TextField KAFKA_PARENT_FIELD_NAME = new TextField("kafkaParentFieldName", "kafkaParentFieldName");
-
-    /** Unique name of the parent KafkaField in which this field is nested. */
-    TextField KAFKA_PARENT_FIELD_QUALIFIED_NAME =
-            new TextField("kafkaParentFieldQualifiedName", "kafkaParentFieldQualifiedName");
-
-    /** Kafka topic in which this field is defined. */
-    RelationField KAFKA_TOPIC = new RelationField("kafkaTopic");
-
-    /** Unique name of the Kafka topic in which this field exists. */
-    KeywordField KAFKA_TOPIC_QUALIFIED_NAME = new KeywordField("kafkaTopicQualifiedName", "kafkaTopicQualifiedName");
+    /** Identifier of the workspace containing the dashboard. */
+    KeywordField DATABRICKS_DASHBOARD_WORKSPACE_ID =
+            new KeywordField("databricksDashboardWorkspaceId", "databricksDashboardWorkspaceId");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -537,6 +505,12 @@ public interface IKafkaField {
         return null;
     }
 
+    /** Simple name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewName();
+
+    /** Unique name of the calculation view in which this SQL asset exists, or empty if it does not exist within a calculation view. */
+    String getCalculationViewQualifiedName();
+
     /** Unique identifier of the dataset this asset belongs to. */
     String getCatalogDatasetGuid();
 
@@ -571,8 +545,52 @@ public interface IKafkaField {
         return null;
     }
 
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseName();
+
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    String getDatabaseQualifiedName();
+
+    /** Entity tag used as a change token for the dashboard. */
+    String getDatabricksDashboardEtag();
+
+    /** Whether a Genie space is enabled for the dashboard. */
+    Boolean getDatabricksDashboardIsGenieSpaceEnabled();
+
+    /** Lifecycle state of the dashboard. */
+    DatabricksDashboardLifecycleState getDatabricksDashboardLifecycleState();
+
+    /** Workspace path of the dashboard asset, including its file name. The parent folder path can be derived by dropping the last path segment. */
+    String getDatabricksDashboardPath();
+
+    /** Identifier of the SQL warehouse backing the dashboard. */
+    String getDatabricksDashboardWarehouseId();
+
+    /** Identifier of the workspace containing the dashboard. */
+    String getDatabricksDashboardWorkspaceId();
+
+    /** (Deprecated) Model containing the assets. */
+    default SortedSet<IDbtModel> getDbtModels() {
+        return null;
+    }
+
     /** Unique name of this asset in dbt. */
     String getDbtQualifiedName();
+
+    /** DBT seeds that materialize the SQL asset. */
+    default SortedSet<IDbtSeed> getDbtSeedAssets() {
+        return null;
+    }
+
+    /** Source containing the assets. */
+    default SortedSet<IDbtSource> getDbtSources() {
+        return null;
+    }
+
+    /** Tests related to this asset. */
+    default SortedSet<IDbtTest> getDbtTests() {
+        return null;
+    }
 
     /** Description of this asset, for example as crawled from a source. Fallback for display purposes, if userDescription is empty. */
     String getDescription();
@@ -636,59 +654,11 @@ public interface IKafkaField {
     /** Indicates this asset is not fully-known, if true. */
     Boolean getIsPartial();
 
-    /** Data type of this field as defined in the schema, for example: string, int, record. */
-    String getKafkaFieldDataType();
+    /** Whether this asset has been profiled (true) or not (false). */
+    Boolean getIsProfiled();
 
-    /** Default value for this field if one is defined in the schema. */
-    String getKafkaFieldDefaultValue();
-
-    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
-    Integer getKafkaFieldDepthLevel();
-
-    /** List of top-level upstream nested fields. */
-    List<Map<String, String>> getKafkaFieldHierarchies();
-
-    /** Whether this field is optional (true) or required (false) in the schema. */
-    Boolean getKafkaFieldIsOptional();
-
-    /** Position (0-based) of this field in the schema definition. */
-    Integer getKafkaFieldOrder();
-
-    /** Type of schema from which this field is derived, for example: key or value. */
-    String getKafkaFieldSchemaType();
-
-    /** Schema version in which this field was first introduced. */
-    String getKafkaFieldVersionIntroduced();
-
-    /** Number of KafkaField assets directly nested within this field. */
-    Integer getKafkaNestedFieldCount();
-
-    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
-    String getKafkaNestedFieldOrder();
-
-    /** KafkaField assets nested within this field. */
-    default SortedSet<IKafkaField> getKafkaNestedFields() {
-        return null;
-    }
-
-    /** Parent KafkaField containing this nested field. */
-    default IKafkaField getKafkaParentField() {
-        return null;
-    }
-
-    /** Simple name of the parent KafkaField in which this field is nested. */
-    String getKafkaParentFieldName();
-
-    /** Unique name of the parent KafkaField in which this field is nested. */
-    String getKafkaParentFieldQualifiedName();
-
-    /** Kafka topic in which this field is defined. */
-    default IKafkaTopic getKafkaTopic() {
-        return null;
-    }
-
-    /** Unique name of the Kafka topic in which this field exists. */
-    String getKafkaTopicQualifiedName();
+    /** Time (epoch) at which this asset was last profiled, in milliseconds. */
+    Long getLastProfiledAt();
 
     /** Time (epoch) of the last operation that inserted, updated, or deleted rows, in milliseconds. */
     Long getLastRowChangedAt();
@@ -789,6 +759,18 @@ public interface IKafkaField {
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
+    /** Number of times this asset has been queried. */
+    Long getQueryCount();
+
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
+    Long getQueryCountUpdatedAt();
+
+    /** Number of unique users who have queried this asset. */
+    Long getQueryUserCount();
+
+    /** Map of unique users who have queried this asset to the number of times they have queried it. */
+    Map<String, Long> getQueryUserMap();
+
     /** README that is linked to this asset. */
     default IReadme getReadme() {
         return null;
@@ -796,6 +778,12 @@ public interface IKafkaField {
 
     /** URL for sample data for this asset. */
     String getSampleDataUrl();
+
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaName();
+
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
+    String getSchemaQualifiedName();
 
     /** TBC */
     default SortedSet<ISchemaRegistrySubject> getSchemaRegistrySubjects() {
@@ -873,6 +861,67 @@ public interface IKafkaField {
     /** Name of the user who last updated this asset, in the source system. */
     String getSourceUpdatedBy();
 
+    /** Unique name of the context in which the model versions exist, or empty if it does not exist within an AI model context. */
+    String getSqlAIModelContextQualifiedName();
+
+    /** Time (epoch) at which this asset was last analyzed for AI insights, in milliseconds. */
+    Long getSqlAiInsightsLastAnalyzedAt();
+
+    /** Number of popular business questions associated with this asset. */
+    Integer getSqlAiInsightsPopularBusinessQuestionCount();
+
+    /** Number of popular filter patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularFilterCount();
+
+    /** Number of popular join patterns associated with this asset. */
+    Integer getSqlAiInsightsPopularJoinCount();
+
+    /** Number of relationship insights associated with this asset. */
+    Integer getSqlAiInsightsRelationshipCount();
+
+    /** Identifier of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentId();
+
+    /** Name of the Coalesce environment. */
+    String getSqlCoalesceEnvironmentName();
+
+    /** Time (epoch) at which the Coalesce node that materialized this asset last ran, in milliseconds. */
+    Long getSqlCoalesceLastRunAt();
+
+    /** Status of the Coalesce run. One of: success, failure, cancelled, or skipped. */
+    String getSqlCoalesceLastRunStatus();
+
+    /** Status of the Coalesce node for a given run. */
+    String getSqlCoalesceNodeStatus();
+
+    /** Type of the Coalesce node. */
+    String getSqlCoalesceNodeType();
+
+    /** Identifier of the Coalesce project. */
+    String getSqlCoalesceProjectId();
+
+    /** Name of the Coalesce project. */
+    String getSqlCoalesceProjectName();
+
+    /** Sources related to this asset. */
+    default SortedSet<IDbtSource> getSqlDBTSources() {
+        return null;
+    }
+
+    /** Assets related to the model. */
+    default SortedSet<IDbtModel> getSqlDbtModels() {
+        return null;
+    }
+
+    /** Whether this asset has any AI insights data available. */
+    Boolean getSqlHasAiInsights();
+
+    /** Whether this asset is secure (true) or not (false). */
+    Boolean getSqlIsSecure();
+
+    /** Qualified names of data shares this asset is granted to. */
+    SortedSet<String> getSqlShareQualifiedNames();
+
     /** Users who have starred this asset. */
     SortedSet<String> getStarredBy();
 
@@ -884,6 +933,12 @@ public interface IKafkaField {
 
     /** Subtype of this asset. */
     String getSubType();
+
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableName();
+
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
+    String getTableQualifiedName();
 
     /** Name of the Atlan workspace in which this asset exists. */
     String getTenantId();
@@ -900,6 +955,12 @@ public interface IKafkaField {
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
+
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewName();
+
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
+    String getViewQualifiedName();
 
     /** View score for this asset. */
     Double getViewScore();

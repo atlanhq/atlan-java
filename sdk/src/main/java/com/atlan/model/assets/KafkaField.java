@@ -75,6 +75,15 @@ public class KafkaField extends Asset implements IKafkaField, IKafka, IEventStor
     @Attribute
     String kafkaFieldDefaultValue;
 
+    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
+    @Attribute
+    Integer kafkaFieldDepthLevel;
+
+    /** List of top-level upstream nested fields. */
+    @Attribute
+    @Singular
+    List<Map<String, String>> kafkaFieldHierarchies;
+
     /** Whether this field is optional (true) or required (false) in the schema. */
     @Attribute
     Boolean kafkaFieldIsOptional;
@@ -90,6 +99,31 @@ public class KafkaField extends Asset implements IKafkaField, IKafka, IEventStor
     /** Schema version in which this field was first introduced. */
     @Attribute
     String kafkaFieldVersionIntroduced;
+
+    /** Number of KafkaField assets directly nested within this field. */
+    @Attribute
+    Integer kafkaNestedFieldCount;
+
+    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
+    @Attribute
+    String kafkaNestedFieldOrder;
+
+    /** KafkaField assets nested within this field. */
+    @Attribute
+    @Singular
+    SortedSet<IKafkaField> kafkaNestedFields;
+
+    /** Parent KafkaField containing this nested field. */
+    @Attribute
+    IKafkaField kafkaParentField;
+
+    /** Simple name of the parent KafkaField in which this field is nested. */
+    @Attribute
+    String kafkaParentFieldName;
+
+    /** Unique name of the parent KafkaField in which this field is nested. */
+    @Attribute
+    String kafkaParentFieldQualifiedName;
 
     /** Kafka topic in which this field is defined. */
     @Attribute
