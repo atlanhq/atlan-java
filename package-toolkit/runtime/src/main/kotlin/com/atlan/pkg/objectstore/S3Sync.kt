@@ -34,6 +34,8 @@ import kotlin.math.min
  * @param logger through which to record any problems
  * @param accessKey (optional) AWS access key, if using as the form of authentication
  * @param secretKey (optional) AWS secret key, if using as the form of authentication
+ * @param roleArn (optional) ARN of an IAM role to assume, if using as the form of authentication
+ * @param externalId (optional) external ID to send when assuming the role, if the role's trust policy requires one
  */
 class S3Sync(
     private val bucketName: String,
@@ -42,21 +44,45 @@ class S3Sync(
     private val accessKey: String = "",
     private val secretKey: String = "",
     roleArn: String = "",
+    externalId: String = "",
 ) : ObjectStorageSyncer {
+    companion object {
+        /**
+         * Build the request to assume an IAM role, including the external ID only when one is provided.
+         *
+         * @param roleArn ARN of the IAM role to assume
+         * @param externalId external ID required by the role's trust policy, or blank if none is required
+         * @return the request to send to STS
+         */
+        fun buildAssumeRoleRequest(
+            roleArn: String,
+            externalId: String = "",
+        ): AssumeRoleRequest {
+            val builder =
+                AssumeRoleRequest
+                    .builder()
+                    .roleArn(roleArn)
+                    .roleSessionName("AuthRoleSession")
+            if (externalId.isNotBlank()) {
+                builder.externalId(externalId)
+            }
+            return builder.build()
+        }
+    }
+
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
-            logger.info { "Authenticating to S3 using provided IAM role ARN." }
+            if (externalId.isNotBlank()) {
+                logger.info { "Authenticating to S3 using provided IAM role ARN and external ID." }
+            } else {
+                logger.info { "Authenticating to S3 using provided IAM role ARN." }
+            }
             val stsClient =
                 StsClient
                     .builder()
                     .region(Region.of(region))
                     .build()
-            val roleRequest =
-                AssumeRoleRequest
-                    .builder()
-                    .roleArn(roleArn)
-                    .roleSessionName("AuthRoleSession")
-                    .build()
+            val roleRequest = buildAssumeRoleRequest(roleArn, externalId)
             val roleResponse = stsClient.assumeRole(roleRequest)
             val myCreds = roleResponse.credentials()
             AwsSessionCredentials.create(myCreds.accessKeyId(), myCreds.secretAccessKey(), myCreds.sessionToken())
