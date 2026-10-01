@@ -104,17 +104,17 @@ public class QuickSightFolder extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** Analyses contained in this folder. */
     @Attribute
     @Singular
     SortedSet<IQuickSightAnalysis> quickSightAnalyses;
 
-    /** TBC */
+    /** Dashboards contained in this folder. */
     @Attribute
     @Singular
     SortedSet<IQuickSightDashboard> quickSightDashboards;
 
-    /** TBC */
+    /** Datasets contained in this folder. */
     @Attribute
     @Singular
     SortedSet<IQuickSightDataset> quickSightDatasets;
