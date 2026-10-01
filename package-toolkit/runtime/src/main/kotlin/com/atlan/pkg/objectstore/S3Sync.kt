@@ -34,6 +34,11 @@ import kotlin.math.min
  * @param logger through which to record any problems
  * @param accessKey (optional) AWS access key, if using as the form of authentication
  * @param secretKey (optional) AWS secret key, if using as the form of authentication
+ * @param roleArn (optional) ARN of an IAM role to assume for authentication
+ * @param externalId (optional) external ID to pass when assuming [roleArn]. Required when the
+ *   role's trust policy carries an `sts:ExternalId` condition (common for cross-account roles) —
+ *   omitting it does not fail loudly, it fails the assume with a generic AccessDenied that looks
+ *   identical to a missing trust-policy grant.
  */
 class S3Sync(
     private val bucketName: String,
@@ -42,6 +47,7 @@ class S3Sync(
     private val accessKey: String = "",
     private val secretKey: String = "",
     roleArn: String = "",
+    externalId: String = "",
 ) : ObjectStorageSyncer {
     private val credential: AwsCredentials? =
         if (roleArn.isNotBlank()) {
@@ -51,12 +57,15 @@ class S3Sync(
                     .builder()
                     .region(Region.of(region))
                     .build()
-            val roleRequest =
+            val roleRequestBuilder =
                 AssumeRoleRequest
                     .builder()
                     .roleArn(roleArn)
                     .roleSessionName("AuthRoleSession")
-                    .build()
+            if (externalId.isNotBlank()) {
+                roleRequestBuilder.externalId(externalId)
+            }
+            val roleRequest = roleRequestBuilder.build()
             val roleResponse = stsClient.assumeRole(roleRequest)
             val myCreds = roleResponse.credentials()
             AwsSessionCredentials.create(myCreds.accessKeyId(), myCreds.secretAccessKey(), myCreds.sessionToken())
