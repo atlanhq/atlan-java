@@ -48,6 +48,12 @@ public interface IBigqueryRoutine {
     /** Schema in which this routine exists. */
     RelationField BIGQUERY_ATLAN_SCHEMA = new RelationField("bigqueryAtlanSchema");
 
+    /** Schema in which this routine exists. */
+    RelationField BIGQUERY_ATLAN_SCHEMA = new RelationField("bigqueryAtlanSchema");
+
+    /** Processes that utilize this routine. */
+    RelationField BIGQUERY_PROCESSES = new RelationField("bigqueryProcesses");
+
     /** Processes that utilize this routine. */
     RelationField BIGQUERY_PROCESSES = new RelationField("bigqueryProcesses");
 
@@ -391,6 +397,9 @@ public interface IBigqueryRoutine {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();

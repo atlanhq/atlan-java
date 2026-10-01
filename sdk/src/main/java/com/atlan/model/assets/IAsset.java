@@ -64,7 +64,8 @@ public interface IAsset {
     TextField ANNOUNCEMENT_MESSAGE = new TextField("announcementMessage", "announcementMessage");
 
     /** Brief title for the announcement on this asset. Required when announcementType is specified. */
-    TextField ANNOUNCEMENT_TITLE = new TextField("announcementTitle", "announcementTitle");
+    KeywordTextField ANNOUNCEMENT_TITLE =
+            new KeywordTextField("announcementTitle", "announcementTitle.keyword", "announcementTitle");
 
     /** Type of announcement on this asset. */
     KeywordField ANNOUNCEMENT_TYPE = new KeywordField("announcementType", "announcementType");
@@ -436,6 +437,9 @@ public interface IAsset {
             "assetInternalPopularityScore",
             "assetInternalPopularityScore",
             "assetInternalPopularityScore.rank_feature");
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    KeywordField ASSET_MANAGED_BY = new KeywordField("assetManagedBy", "assetManagedBy");
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     KeywordTextField ASSET_MC_ALERT_QUALIFIED_NAMES = new KeywordTextField(
@@ -1136,6 +1140,9 @@ public interface IAsset {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();

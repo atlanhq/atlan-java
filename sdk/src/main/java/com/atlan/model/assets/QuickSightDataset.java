@@ -113,7 +113,7 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<IQuickSightDatasetField> quickSightDatasetFields;
 
-    /** TBC */
+    /** Folders that contain this dataset. */
     @Attribute
     @Singular
     SortedSet<IQuickSightFolder> quickSightDatasetFolders;
