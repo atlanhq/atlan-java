@@ -85,7 +85,7 @@ object LakeTagSynchronizer {
             logger.info { "Processing $tagFileName." }
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
             val lfTagData = createMissingEnums(ctx.client, tagFileName, mapper, metadataMap)
-            csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema)
+            csvProducer.transform(lfTagData, csvFileName, ctx.config.removeSchema, ctx.config.keepDatabasePrefix)
             val importConfig =
                 AssetImportCfg(
                     assetsFile = csvFileName,

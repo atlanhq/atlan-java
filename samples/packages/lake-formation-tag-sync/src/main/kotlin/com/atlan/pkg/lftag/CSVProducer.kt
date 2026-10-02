@@ -28,13 +28,22 @@ class CSVProducer(
         tagData: LFTagData,
         fileName: String,
         removeSchema: Boolean = false,
+        keepDatabasePrefix: Boolean = false,
     ) {
         CSVWriter(fileName).use { csv ->
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
             tagData.tableList.forEach { tableInfo ->
                 val table = tableInfo.table
-                val (connectionKey, schemaName) = table.databaseName.split('_', limit = 2)
+                val parts = table.databaseName.split('_', limit = 2)
+                if (parts.size < 2) {
+                    logger.warn { "Skipping table ${table.name}: database name ${table.databaseName} has no '_' separating a connection key." }
+                    return@forEach
+                }
+                val connectionKey = parts[0]
+                // By default the connection key prefix is stripped from the schema name; keep it when the
+                // crawled schema name is the full database name.
+                val schemaName = if (keepDatabasePrefix) table.databaseName else parts[1]
                 if (removeSchema) {
                     table.name = table.name.replace("$schemaName.", "")
                 }

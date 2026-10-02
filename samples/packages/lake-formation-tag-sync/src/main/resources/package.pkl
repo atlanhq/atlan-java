@@ -56,6 +56,12 @@ uiConfig {
           width = 4
           fallback = false
         }
+        ["keep_database_prefix"] = new BooleanInput {
+          title = "Keep connection key in schema name"
+          helpText = "Use the full Lake Formation database name (including the connection key prefix) as the schema name, for connections whose crawled schema names keep that prefix."
+          width = 4
+          fallback = false
+        }
         ["config_type"] = new Radio {
           title = "Options"
           required = true

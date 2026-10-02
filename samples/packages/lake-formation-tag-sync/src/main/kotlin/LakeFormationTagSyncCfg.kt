@@ -14,6 +14,7 @@ data class LakeFormationTagSyncCfg(
     @JsonProperty("import_type") val importType: String = "CLOUD",
     @JsonProperty("cloud_source") val cloudSource: String? = null,
     @JsonProperty("remove_schema") val removeSchema: Boolean = false,
+    @JsonProperty("keep_database_prefix") val keepDatabasePrefix: Boolean = false,
     @JsonProperty("config_type") val configType: String? = null,
     @JsonProperty("fail_on_errors") val failOnErrors: Boolean = true,
     @JsonProperty("batch_size") val batchSize: Number = 20,
