@@ -52,13 +52,13 @@ uiConfig {
         }
         ["remove_schema"] = new BooleanInput{
           title = "Drop schema name when found as a table prefix"
-          helpText = "Drom the schema name if it is present on the table name."
+          helpText = "Turn on if table names in the Lake Formation file include the schema, e.g. 'sales.orders'. The 'sales.' part is removed so the name matches the table in Atlan ('orders')."
           width = 4
           fallback = false
         }
         ["keep_database_prefix"] = new BooleanInput {
           title = "Keep connection key in schema name"
-          helpText = "Use the full Lake Formation database name (including the connection key prefix) as the schema name, for connections whose crawled schema names keep that prefix."
+          helpText = "By default, the connection_map.json key is removed from the schema name ('prod_sales' becomes 'sales'). Turn on if the schema in Atlan keeps the full name ('prod_sales')."
           width = 4
           fallback = false
         }
