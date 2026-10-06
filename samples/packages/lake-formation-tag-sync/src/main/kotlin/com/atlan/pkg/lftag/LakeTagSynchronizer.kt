@@ -90,6 +90,9 @@ object LakeTagSynchronizer {
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
+                    // Lake Formation reports views as tables, and the tag feed carries no table type,
+                    // so let a Table row match an existing View or MaterializedView of the same name.
+                    assetsTableViewAgnostic = true,
                     assetsConfig = "advanced",
                     assetsFailOnErrors =
                         ctx.config.getEffectiveValue(

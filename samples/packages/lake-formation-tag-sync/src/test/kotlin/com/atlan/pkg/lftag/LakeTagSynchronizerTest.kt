@@ -8,6 +8,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
+import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
 import com.atlan.model.typedefs.AttributeDef
@@ -39,6 +40,8 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     private var schemaGuid = ""
     private var tableGuid = ""
     private var columnGuid = ""
+    private var viewGuid = ""
+    private var viewColumnGuid = ""
     private val cm1 = makeUnique("cm")
 
     private val enum1 = makeUnique("enum")
@@ -71,10 +74,16 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
             batch.add(tbl)
             val column = Column.creator("col1", tbl, 1).build()
             batch.add(column)
+            val vw = View.creator("vw1", sch).build()
+            batch.add(vw)
+            val vwColumn = Column.creator("vcol1", vw, 1).build()
+            batch.add(vwColumn)
             val response = batch.flush()
             schemaGuid = response.getResult(sch).guid
             tableGuid = response.getResult(tbl).guid
             columnGuid = response.getResult(column).guid
+            viewGuid = response.getResult(vw).guid
+            viewColumnGuid = response.getResult(vwColumn).guid
         }
     }
 
@@ -173,6 +182,23 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
     fun validateColumnTagged() {
         val column = Column.get(client, columnGuid)
         assertEquals("col1", column.name)
+        val attribute1 = column.getCustomMetadata(cm1, attr1)
+        assertEquals(PUBLIC, attribute1)
+    }
+
+    @Test
+    fun validateViewTagged() {
+        val view = View.get(client, viewGuid)
+        val attribute1 = view.getCustomMetadata(cm1, attr1)
+        assertEquals(PUBLIC, attribute1)
+        val attribute3 = view.getCustomMetadata(cm1, attr3)
+        assertEquals(FULL_HISTORY, attribute3)
+    }
+
+    @Test
+    fun validateViewColumnTagged() {
+        val column = Column.get(client, viewColumnGuid)
+        assertEquals("vcol1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)
     }
