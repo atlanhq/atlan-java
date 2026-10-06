@@ -62,6 +62,11 @@ public class WorkflowRun extends Asset implements IWorkflowRun, IWorkflow, IAsse
     @Singular
     SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** List of workflow action choices. */
     @Attribute
     @Singular
