@@ -98,6 +98,7 @@ public class QuickSightAnalysisVisualTest {
             .connectorName("String0")
             .connectionName("String0")
             .connectionQualifiedName("String0")
+            .assetManagedBy("String0")
             .hasLineage(true)
             .isDiscoverable(true)
             .isEditable(true)
@@ -1144,6 +1145,9 @@ public class QuickSightAnalysisVisualTest {
             .assetHasAiReadme(true)
             .quickSightAnalysisQualifiedName("String0")
             .quickSightAnalysis(QuickSightAnalysis.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .quickSightAnalysisField(QuickSightAnalysisField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .quickSightAnalysisField(
+                    QuickSightAnalysisField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
