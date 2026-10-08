@@ -107,6 +107,11 @@ public class QuickSightAnalysisVisual extends Asset
     @Attribute
     IQuickSightAnalysis quickSightAnalysis;
 
+    /** Fields used by this analysis visual. */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightAnalysisField> quickSightAnalysisFields;
+
     /** Unique name of the QuickSight analysis in which this visual exists. */
     @Attribute
     String quickSightAnalysisQualifiedName;
