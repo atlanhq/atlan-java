@@ -69,6 +69,11 @@ public class FabricSemanticModelTable extends Asset
     @Attribute
     IFabricSemanticModel fabricSemanticModel;
 
+    /** Individual semantic model measures contained in the semantic model table. */
+    @Attribute
+    @Singular
+    SortedSet<IFabricSemanticModelMeasure> fabricSemanticModelMeasures;
+
     /** Unique name of the Fabric semantic model that contains this asset. */
     @Attribute
     String fabricSemanticModelQualifiedName;

@@ -51,7 +51,7 @@ public interface IQuickSightDataset {
     /** Fields that exist within this dataset. */
     RelationField QUICK_SIGHT_DATASET_FIELDS = new RelationField("quickSightDatasetFields");
 
-    /** TBC */
+    /** Folders that contain this dataset. */
     RelationField QUICK_SIGHT_DATASET_FOLDERS = new RelationField("quickSightDatasetFolders");
 
     /** Import mode for this dataset, for example: SPICE or DIRECT_QUERY. */
@@ -382,6 +382,9 @@ public interface IQuickSightDataset {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -704,7 +707,7 @@ public interface IQuickSightDataset {
         return null;
     }
 
-    /** TBC */
+    /** Folders that contain this dataset. */
     default SortedSet<IQuickSightFolder> getQuickSightDatasetFolders() {
         return null;
     }
