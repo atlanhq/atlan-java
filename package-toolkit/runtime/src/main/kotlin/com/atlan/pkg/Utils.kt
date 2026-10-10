@@ -783,7 +783,7 @@ object Utils {
                 when (cred.authType) {
                     "s3" -> {
                         val s3 = S3Credential(cred)
-                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn, s3.externalId)
                         getInputFile(sync, outputDirectory, preppedPath)
                     }
 
@@ -859,14 +859,14 @@ object Utils {
                 when (cred.authType) {
                     "s3" -> {
                         val s3 = S3Credential(cred)
-                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn, s3.externalId)
                         getInputFiles(sync, outputDirectory, prefix)
                     }
 
                     // Note: these are specific to the csa-connectors-s3 connector credential config
                     "iam", "role" -> {
                         val s3 = S3Credential(cred)
-                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        val sync = S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn, s3.externalId)
                         getInputFiles(sync, outputDirectory, s3.prefix)
                     }
 
@@ -1015,7 +1015,7 @@ object Utils {
                 when (cred.authType) {
                     "s3" -> {
                         val s3 = S3Credential(cred)
-                        S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn)
+                        S3Sync(s3.bucket, s3.region, logger, s3.accessKey, s3.secretKey, s3.roleArn, s3.externalId)
                     }
 
                     "gcs" -> {
