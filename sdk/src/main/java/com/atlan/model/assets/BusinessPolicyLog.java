@@ -123,6 +123,11 @@ public class BusinessPolicyLog extends Asset implements IBusinessPolicyLog, IBus
     @Attribute
     Long governedAssetsCount;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** number of non compliant assets in the policy */
     @Attribute
     Long nonCompliantAssetsCount;
