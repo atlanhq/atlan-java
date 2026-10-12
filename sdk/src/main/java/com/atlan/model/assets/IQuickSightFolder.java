@@ -43,13 +43,13 @@ public interface IQuickSightFolder {
 
     public static final String TYPE_NAME = "QuickSightFolder";
 
-    /** TBC */
+    /** Analyses contained in this folder. */
     RelationField QUICK_SIGHT_ANALYSES = new RelationField("quickSightAnalyses");
 
-    /** TBC */
+    /** Dashboards contained in this folder. */
     RelationField QUICK_SIGHT_DASHBOARDS = new RelationField("quickSightDashboards");
 
-    /** TBC */
+    /** Datasets contained in this folder. */
     RelationField QUICK_SIGHT_DATASETS = new RelationField("quickSightDatasets");
 
     /** Detailed path of this folder. */
@@ -383,6 +383,9 @@ public interface IQuickSightFolder {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -697,17 +700,17 @@ public interface IQuickSightFolder {
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
 
-    /** TBC */
+    /** Analyses contained in this folder. */
     default SortedSet<IQuickSightAnalysis> getQuickSightAnalyses() {
         return null;
     }
 
-    /** TBC */
+    /** Dashboards contained in this folder. */
     default SortedSet<IQuickSightDashboard> getQuickSightDashboards() {
         return null;
     }
 
-    /** TBC */
+    /** Datasets contained in this folder. */
     default SortedSet<IQuickSightDataset> getQuickSightDatasets() {
         return null;
     }
