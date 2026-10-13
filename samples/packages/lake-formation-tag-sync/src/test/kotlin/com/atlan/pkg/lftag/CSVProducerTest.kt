@@ -17,7 +17,7 @@ class CSVProducerTest : PackageTest("csv") {
 
     @Test
     fun transform() {
-        val connectionMap = mapOf("dev" to "default/redshift/1687361820/wide_world_importers")
+        val connectionMap = mapOf("dev" to listOf("default/redshift/1687361820/wide_world_importers"))
         val metadataMap =
             mapOf(
                 "business_domain" to "Data Domain::Business Domain",
