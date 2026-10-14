@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.ProcessLineageDerivation;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
@@ -371,6 +372,9 @@ public interface ISAPProcess {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -690,6 +694,9 @@ public interface ISAPProcess {
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    ProcessLineageDerivation getProcessDerivation();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
