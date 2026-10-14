@@ -80,6 +80,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     @Attribute
     AtlasGlossaryType glossaryType;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Unused. Language of the glossary's contents. */
     @Attribute
     String language;

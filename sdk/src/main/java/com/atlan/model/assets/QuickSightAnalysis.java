@@ -114,7 +114,7 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<String> quickSightAnalysisFilterGroups;
 
-    /** TBC */
+    /** Folders that contain this analysis. */
     @Attribute
     @Singular
     SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
