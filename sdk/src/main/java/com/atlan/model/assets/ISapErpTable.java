@@ -48,6 +48,9 @@ public interface ISapErpTable {
     /** SAP ERP Tables that are associated with this SAP ERP Component. */
     RelationField SAP_ERP_COMPONENT = new RelationField("sapErpComponent");
 
+    /** SAP ERP Tables that are related to this SAP ERP Table. */
+    RelationField SAP_ERP_RELATED_TABLES = new RelationField("sapErpRelatedTables");
+
     /** Defines the delivery class of the SAP ERP table, determining how the table's data is transported and managed during system updates. */
     KeywordField SAP_ERP_TABLE_DELIVERY_CLASS =
             new KeywordField("sapErpTableDeliveryClass", "sapErpTableDeliveryClass");
@@ -378,6 +381,9 @@ public interface ISapErpTable {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
@@ -714,6 +720,11 @@ public interface ISapErpTable {
 
     /** SAP ERP Tables that are associated with this SAP ERP Component. */
     default ISapErpComponent getSapErpComponent() {
+        return null;
+    }
+
+    /** SAP ERP Tables that are related to this SAP ERP Table. */
+    default SortedSet<ISapErpTable> getSapErpRelatedTables() {
         return null;
     }
 

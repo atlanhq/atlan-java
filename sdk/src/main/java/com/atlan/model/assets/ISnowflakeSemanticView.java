@@ -13,8 +13,8 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
-import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -43,7 +43,7 @@ public interface ISnowflakeSemanticView {
     public static final String TYPE_NAME = "SnowflakeSemanticView";
 
     /** DDL definition of the semantic view (via GET_DDL). */
-    KeywordField SNOWFLAKE_DEFINITION = new KeywordField("snowflakeDefinition", "snowflakeDefinition");
+    TextField SNOWFLAKE_DEFINITION = new TextField("snowflakeDefinition", "snowflakeDefinition");
 
     /** Logical tables contained in the semantic view. */
     RelationField SNOWFLAKE_SEMANTIC_LOGICAL_TABLES = new RelationField("snowflakeSemanticLogicalTables");
@@ -374,6 +374,9 @@ public interface ISnowflakeSemanticView {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
