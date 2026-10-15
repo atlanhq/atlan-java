@@ -53,7 +53,7 @@ public interface IAtlanAppInstalled {
     /** Configuration settings used by the atlan application. */
     KeywordField ATLAN_APP_DEPLOYMENT_CONFIG = new KeywordField("atlanAppDeploymentConfig", "atlanAppDeploymentConfig");
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     KeywordField ATLAN_APP_DEPLOYMENT_NAME = new KeywordField("atlanAppDeploymentName", "atlanAppDeploymentName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -508,7 +508,7 @@ public interface IAtlanAppInstalled {
     /** Configuration settings used by the atlan application. */
     String getAtlanAppDeploymentConfig();
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     String getAtlanAppDeploymentName();
 
     /** Metadata for the Atlan application (escaped JSON string). */
