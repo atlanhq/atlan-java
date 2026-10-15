@@ -1184,6 +1184,8 @@ public class AuthPolicyTest {
                     GCPDataplexAspectType.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .gcpDataplexAspectTypeMetadataEntity(
                     GCPDataplexAspectType.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .knowledgeLinkedFile(KnowledgeFile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .knowledgeLinkedFile(KnowledgeFile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

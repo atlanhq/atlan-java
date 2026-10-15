@@ -93,6 +93,16 @@ public class CosmosMongoDBCollection extends Asset
     @Attribute
     String cosmosMongoDBDatabaseQualifiedName;
 
+    /** User-defined functions that exist within this collection. */
+    @Attribute
+    @Singular
+    SortedSet<IFunction> cosmosMongoDBFunctions;
+
+    /** Stored procedures and triggers that exist within this collection. */
+    @Attribute
+    @Singular
+    SortedSet<IProcedure> cosmosMongoDBStoredProcedures;
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
