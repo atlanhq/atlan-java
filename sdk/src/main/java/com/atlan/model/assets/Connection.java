@@ -102,6 +102,11 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     Boolean connectionIsDQEnabled;
 
+    /** Time (epoch) at which popularity insights were last computed for this connection, in milliseconds. Marks the end of the popularity window; the start is this value minus popularityInsightsTimeframe days. */
+    @Attribute
+    @Date
+    Long connectionPopularityInsightsComputedAt;
+
     /** Strategy configuration for reverse-sync operations on this connection, stored as a stringified JSON array. Each element specifies a source entity type and whether reverse-sync is enabled for it, e.g. [{"source_entity": "Aspects", "enabled": true}]. */
     @Attribute
     String connectionReverseSyncStrategy;
@@ -109,6 +114,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     @Attribute
     String connectionSSOCredentialGuid;
+
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    @Attribute
+    String connectionSourceAccountIdentifier;
 
     /** Configuration for a workflow run. */
     @Attribute
