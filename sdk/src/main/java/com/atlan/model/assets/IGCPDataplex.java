@@ -482,9 +482,6 @@ public interface IGCPDataplex {
         return null;
     }
 
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -581,21 +578,6 @@ public interface IGCPDataplex {
         return null;
     }
 
-    /** Tasks to which this asset provides input. */
-    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
-        return null;
-    }
-
-    /** Processes to which this asset provides input. */
-    default SortedSet<ILineageProcess> getInputToProcesses() {
-        return null;
-    }
-
-    /** TBC */
-    default SortedSet<ISparkJob> getInputToSparkJobs() {
-        return null;
-    }
-
     /** TBC */
     Boolean getIsAIGenerated();
 
@@ -643,36 +625,11 @@ public interface IGCPDataplex {
         return null;
     }
 
-    /** Attributes implemented by this asset. */
-    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
-        return null;
-    }
-
-    /** Entities implemented by this asset. */
-    default SortedSet<IModelEntity> getModelImplementedEntities() {
-        return null;
-    }
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
-        return null;
-    }
-
-    /** Processes from which this asset is produced as output. */
-    default SortedSet<ILineageProcess> getOutputFromProcesses() {
-        return null;
-    }
-
-    /** TBC */
-    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
-        return null;
-    }
 
     /** Data products for which this asset is an output port. */
     default SortedSet<IDataProduct> getOutputPortDataProducts() {
@@ -687,16 +644,6 @@ public interface IGCPDataplex {
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
-
-    /** Partial fields contained in the asset. */
-    default SortedSet<IPartialField> getPartialChildFields() {
-        return null;
-    }
-
-    /** Partial objects contained in the asset. */
-    default SortedSet<IPartialObject> getPartialChildObjects() {
-        return null;
-    }
 
     /** Popularity score for this asset. */
     Double getPopularityScore();
