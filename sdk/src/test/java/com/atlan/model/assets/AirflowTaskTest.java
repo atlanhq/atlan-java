@@ -66,6 +66,7 @@ public class AirflowTaskTest {
             .airflowRunOpenLineageVersion("String0")
             .airflowRunName("String0")
             .airflowRunType("String0")
+            .airflowRunErrorMessage("String0")
             .airflowRunStartTime(123456789L)
             .airflowRunEndTime(123456789L)
             .airflowRunOpenLineageState(OpenLineageRunState.START)
