@@ -63,6 +63,10 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     String catalogDatasetGuid;
 
+    /** Cosmos collection in which this procedure exists. */
+    @Attribute
+    ICosmosMongoDBCollection cosmosMongoDBCollection;
+
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
