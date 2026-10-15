@@ -53,7 +53,7 @@ public interface ISageMakerUnifiedStudioProject {
     /** Amazon S3 location of the SageMaker Unified Studio project. */
     KeywordField SMUS_PROJECT_S3LOCATION = new KeywordField("smusProjectS3Location", "smusProjectS3Location");
 
-    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email`, `role` and optional `fullName` fields. */
     KeywordField SMUS_PROJECT_SSO_USERS = new KeywordField("smusProjectSsoUsers", "smusProjectSsoUsers");
 
     /** Status of the SageMaker Unified Studio project. */
@@ -743,7 +743,7 @@ public interface ISageMakerUnifiedStudioProject {
     /** Amazon S3 location of the SageMaker Unified Studio project. */
     String getSmusProjectS3Location();
 
-    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email` and `role` fields. */
+    /** SSO users associated with the SageMaker Unified Studio project, sourced from the source system. Each entry has `email`, `role` and optional `fullName` fields. */
     List<SageMakerUnifiedStudioSsoUser> getSmusProjectSsoUsers();
 
     /** Status of the SageMaker Unified Studio project. */
