@@ -42,6 +42,9 @@ public interface IFabricSemanticModelTableColumn {
 
     public static final String TYPE_NAME = "FabricSemanticModelTableColumn";
 
+    /** Semantic model measures whose DAX expressions reference this column. */
+    RelationField FABRIC_SEMANTIC_MODEL_MEASURES = new RelationField("fabricSemanticModelMeasures");
+
     /** Semantic model table containing the column. */
     RelationField FABRIC_SEMANTIC_MODEL_TABLE = new RelationField("fabricSemanticModelTable");
 
@@ -557,6 +560,11 @@ public interface IFabricSemanticModelTableColumn {
 
     /** Order/position of this asset within its parent. */
     Integer getFabricOrdinal();
+
+    /** Semantic model measures whose DAX expressions reference this column. */
+    default SortedSet<IFabricSemanticModelMeasure> getFabricSemanticModelMeasures() {
+        return null;
+    }
 
     /** Semantic model table containing the column. */
     default IFabricSemanticModelTable getFabricSemanticModelTable() {

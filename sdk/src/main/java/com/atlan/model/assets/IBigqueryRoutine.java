@@ -48,6 +48,12 @@ public interface IBigqueryRoutine {
     /** Schema in which this routine exists. */
     RelationField BIGQUERY_ATLAN_SCHEMA = new RelationField("bigqueryAtlanSchema");
 
+    /** Schema in which this routine exists. */
+    RelationField BIGQUERY_ATLAN_SCHEMA = new RelationField("bigqueryAtlanSchema");
+
+    /** Processes that utilize this routine. */
+    RelationField BIGQUERY_PROCESSES = new RelationField("bigqueryProcesses");
+
     /** Processes that utilize this routine. */
     RelationField BIGQUERY_PROCESSES = new RelationField("bigqueryProcesses");
 

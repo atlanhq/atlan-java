@@ -1155,6 +1155,8 @@ public class GlossaryCategoryTest {
             .childCategory(GlossaryCategory.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .childCategory(GlossaryCategory.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .parentCategory(GlossaryCategory.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .knowledgeLinkedFile(KnowledgeFile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .knowledgeLinkedFile(KnowledgeFile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
