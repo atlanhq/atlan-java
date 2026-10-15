@@ -35,16 +35,22 @@ public class SageMakerUnifiedStudioSsoUser extends AtlanStruct {
     /** Role assigned to the SSO user within the project. */
     String smusSsoUserRole;
 
+    /** Full name of the SSO user, sourced from the identity provider's first and last name. */
+    String smusSsoUserFullName;
+
     /**
      * Quickly create a new SageMakerUnifiedStudioSsoUser.
      * @param smusSsoUserEmail Email address of the SSO user.
      * @param smusSsoUserRole Role assigned to the SSO user within the project.
+     * @param smusSsoUserFullName Full name of the SSO user, sourced from the identity provider's first and last name.
      * @return a SageMakerUnifiedStudioSsoUser with the provided information
      */
-    public static SageMakerUnifiedStudioSsoUser of(String smusSsoUserEmail, String smusSsoUserRole) {
+    public static SageMakerUnifiedStudioSsoUser of(
+            String smusSsoUserEmail, String smusSsoUserRole, String smusSsoUserFullName) {
         return SageMakerUnifiedStudioSsoUser.builder()
                 .smusSsoUserEmail(smusSsoUserEmail)
                 .smusSsoUserRole(smusSsoUserRole)
+                .smusSsoUserFullName(smusSsoUserFullName)
                 .build();
     }
 
