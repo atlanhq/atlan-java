@@ -210,6 +210,16 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
+    /** SAP Datasphere data products that expose objects from this schema (Datasphere space). */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
+    /** SAP Datasphere replication flows that create tables within this schema (Datasphere space). */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereReplicationFlow> sapDatasphereReplicationFlows;
+
     /** External location of this schema, for example: an S3 object location. */
     @Attribute
     String schemaExternalLocation;

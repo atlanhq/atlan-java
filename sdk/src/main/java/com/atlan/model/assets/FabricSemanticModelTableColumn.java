@@ -65,6 +65,11 @@ public class FabricSemanticModelTableColumn extends Asset
     @Attribute
     Integer fabricOrdinal;
 
+    /** Semantic model measures whose DAX expressions reference this column. */
+    @Attribute
+    @Singular
+    SortedSet<IFabricSemanticModelMeasure> fabricSemanticModelMeasures;
+
     /** Semantic model table containing the column. */
     @Attribute
     IFabricSemanticModelTable fabricSemanticModelTable;
