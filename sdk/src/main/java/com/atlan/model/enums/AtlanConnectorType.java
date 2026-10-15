@@ -138,6 +138,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     AWS_ECS("aws-ecs", AtlanConnectionCategory.ELT),
     AWS_BATCH("aws-batch", AtlanConnectionCategory.ELT),
     AWS_SAGEMAKER("aws-sagemaker", AtlanConnectionCategory.ELT),
+    AWS_SMUS("aws-smus", AtlanConnectionCategory.SAAS),
     SHARE_POINT("share-point", AtlanConnectionCategory.SAAS),
     RDS("rds", AtlanConnectionCategory.WAREHOUSE),
     SHARED_DRIVE("shared-drive", AtlanConnectionCategory.OBJECT_STORE),
