@@ -103,7 +103,7 @@ public class QuickSightDashboard extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** TBC */
+    /** Folders that contain this dashboard. */
     @Attribute
     @Singular
     SortedSet<IQuickSightFolder> quickSightDashboardFolders;
