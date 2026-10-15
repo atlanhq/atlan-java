@@ -110,6 +110,10 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
     @Attribute
     String connectionSSOCredentialGuid;
 
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    @Attribute
+    String connectionSourceAccountIdentifier;
+
     /** Configuration for a workflow run. */
     @Attribute
     @Singular("putConnectionWorkflowConfiguration")
