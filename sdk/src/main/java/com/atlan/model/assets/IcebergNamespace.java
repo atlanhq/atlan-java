@@ -224,6 +224,11 @@ public class IcebergNamespace extends Asset
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
+    /** SAP Datasphere replication flows that create tables within this schema (Datasphere space). */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereReplicationFlow> sapDatasphereReplicationFlows;
+
     /** External location of this schema, for example: an S3 object location. */
     @Attribute
     String schemaExternalLocation;
