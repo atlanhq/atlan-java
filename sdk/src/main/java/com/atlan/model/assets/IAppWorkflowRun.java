@@ -79,6 +79,10 @@ public interface IAppWorkflowRun {
     /** Map of all activity steps for the workflow run (escaped JSON string). */
     TextField APP_WORKFLOW_RUN_DAG = new TextField("appWorkflowRunDag", "appWorkflowRunDag");
 
+    /** SDR deployment this run executed under, denormalized from the parent workflow so a deployment's run history can be filtered directly. Without it, filtering requires two queries — resolve the deployment's workflow slugs, then match runs by parent slug — because Elasticsearch cannot join across entity types. Null for runs on Atlan-managed infrastructure (DISTR-832). */
+    KeywordField APP_WORKFLOW_RUN_DEPLOYMENT_NAME =
+            new KeywordField("appWorkflowRunDeploymentName", "appWorkflowRunDeploymentName");
+
     /** Error handling strategy for the workflow run. */
     KeywordField APP_WORKFLOW_RUN_ERROR_HANDLING =
             new KeywordField("appWorkflowRunErrorHandling", "appWorkflowRunErrorHandling");
@@ -170,6 +174,9 @@ public interface IAppWorkflowRun {
 
     /** Map of all activity steps for the workflow run (escaped JSON string). */
     String getAppWorkflowRunDag();
+
+    /** SDR deployment this run executed under, denormalized from the parent workflow so a deployment's run history can be filtered directly. Without it, filtering requires two queries — resolve the deployment's workflow slugs, then match runs by parent slug — because Elasticsearch cannot join across entity types. Null for runs on Atlan-managed infrastructure (DISTR-832). */
+    String getAppWorkflowRunDeploymentName();
 
     /** Error handling strategy for the workflow run. */
     AtlanAppErrorHandling getAppWorkflowRunErrorHandling();
@@ -501,6 +508,9 @@ public interface IAppWorkflowRun {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
