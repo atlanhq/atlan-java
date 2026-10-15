@@ -63,7 +63,7 @@ public interface IGCPDataplexAspectType {
     KeywordField GCP_DATAPLEX_ASPECT_TYPE_PROJECT =
             new KeywordField("gcpDataplexAspectTypeProject", "gcpDataplexAspectTypeProject");
 
-    /** Full GCP resource name of this Aspect Type (e.g. projects/{project}/locations/{location}/aspectTypes/{id}). Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
+    /** Full GCP resource name of this Aspect Type, for example: projects/{project}/locations/{location}/aspectTypes/{id}. Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
     KeywordField GCP_DATAPLEX_ASPECT_TYPE_RESOURCE_NAME =
             new KeywordField("gcpDataplexAspectTypeResourceName", "gcpDataplexAspectTypeResourceName");
 
@@ -507,9 +507,6 @@ public interface IGCPDataplexAspectType {
         return null;
     }
 
-    /** Unique identifier of the dataset this asset belongs to. */
-    String getCatalogDatasetGuid();
-
     /** Status of this asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -588,7 +585,7 @@ public interface IGCPDataplexAspectType {
     /** GCP project in which this Aspect Type is defined. */
     String getGcpDataplexAspectTypeProject();
 
-    /** Full GCP resource name of this Aspect Type (e.g. projects/{project}/locations/{location}/aspectTypes/{id}). Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
+    /** Full GCP resource name of this Aspect Type, for example: projects/{project}/locations/{location}/aspectTypes/{id}. Used to match against assetGCPDataplexAspectType on BigQuery entry assets. */
     String getGcpDataplexAspectTypeResourceName();
 
     /** List of labels that have been applied to the asset in Google. */
@@ -623,21 +620,6 @@ public interface IGCPDataplexAspectType {
 
     /** Data products for which this asset is an input port. */
     default SortedSet<IDataProduct> getInputPortDataProducts() {
-        return null;
-    }
-
-    /** Tasks to which this asset provides input. */
-    default SortedSet<IAirflowTask> getInputToAirflowTasks() {
-        return null;
-    }
-
-    /** Processes to which this asset provides input. */
-    default SortedSet<ILineageProcess> getInputToProcesses() {
-        return null;
-    }
-
-    /** TBC */
-    default SortedSet<ISparkJob> getInputToSparkJobs() {
         return null;
     }
 
@@ -688,36 +670,11 @@ public interface IGCPDataplexAspectType {
         return null;
     }
 
-    /** Attributes implemented by this asset. */
-    default SortedSet<IModelAttribute> getModelImplementedAttributes() {
-        return null;
-    }
-
-    /** Entities implemented by this asset. */
-    default SortedSet<IModelEntity> getModelImplementedEntities() {
-        return null;
-    }
-
     /** Name of this asset. Fallback for display purposes, if displayName is empty. */
     String getName();
 
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
-
-    /** Tasks from which this asset is output. */
-    default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
-        return null;
-    }
-
-    /** Processes from which this asset is produced as output. */
-    default SortedSet<ILineageProcess> getOutputFromProcesses() {
-        return null;
-    }
-
-    /** TBC */
-    default SortedSet<ISparkJob> getOutputFromSparkJobs() {
-        return null;
-    }
 
     /** Data products for which this asset is an output port. */
     default SortedSet<IDataProduct> getOutputPortDataProducts() {
@@ -732,16 +689,6 @@ public interface IGCPDataplexAspectType {
 
     /** List of users who own this asset. */
     SortedSet<String> getOwnerUsers();
-
-    /** Partial fields contained in the asset. */
-    default SortedSet<IPartialField> getPartialChildFields() {
-        return null;
-    }
-
-    /** Partial objects contained in the asset. */
-    default SortedSet<IPartialObject> getPartialChildObjects() {
-        return null;
-    }
 
     /** Popularity score for this asset. */
     Double getPopularityScore();

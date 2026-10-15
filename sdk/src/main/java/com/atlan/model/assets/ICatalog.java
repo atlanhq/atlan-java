@@ -337,11 +337,17 @@ public interface ICatalog {
             case DatabricksAIModelVersion.TYPE_NAME:
                 ref = DatabricksAIModelVersion.refByQualifiedName(qualifiedName);
                 break;
+            case DatabricksDashboard.TYPE_NAME:
+                ref = DatabricksDashboard.refByQualifiedName(qualifiedName);
+                break;
             case DatabricksExternalLocation.TYPE_NAME:
                 ref = DatabricksExternalLocation.refByQualifiedName(qualifiedName);
                 break;
             case DatabricksExternalLocationPath.TYPE_NAME:
                 ref = DatabricksExternalLocationPath.refByQualifiedName(qualifiedName);
+                break;
+            case DatabricksGenieAgent.TYPE_NAME:
+                ref = DatabricksGenieAgent.refByQualifiedName(qualifiedName);
                 break;
             case DatabricksMetricView.TYPE_NAME:
                 ref = DatabricksMetricView.refByQualifiedName(qualifiedName);
@@ -466,6 +472,9 @@ public interface ICatalog {
             case FabricSemanticModel.TYPE_NAME:
                 ref = FabricSemanticModel.refByQualifiedName(qualifiedName);
                 break;
+            case FabricSemanticModelMeasure.TYPE_NAME:
+                ref = FabricSemanticModelMeasure.refByQualifiedName(qualifiedName);
+                break;
             case FabricSemanticModelTable.TYPE_NAME:
                 ref = FabricSemanticModelTable.refByQualifiedName(qualifiedName);
                 break;
@@ -486,9 +495,6 @@ public interface ICatalog {
                 break;
             case Function.TYPE_NAME:
                 ref = Function.refByQualifiedName(qualifiedName);
-                break;
-            case GCPDataplexAspectType.TYPE_NAME:
-                ref = GCPDataplexAspectType.refByQualifiedName(qualifiedName);
                 break;
             case GCSBucket.TYPE_NAME:
                 ref = GCSBucket.refByQualifiedName(qualifiedName);
@@ -888,6 +894,21 @@ public interface ICatalog {
                 break;
             case SalesforceReport.TYPE_NAME:
                 ref = SalesforceReport.refByQualifiedName(qualifiedName);
+                break;
+            case SapAnalyticsCloudColumn.TYPE_NAME:
+                ref = SapAnalyticsCloudColumn.refByQualifiedName(qualifiedName);
+                break;
+            case SapAnalyticsCloudFolder.TYPE_NAME:
+                ref = SapAnalyticsCloudFolder.refByQualifiedName(qualifiedName);
+                break;
+            case SapAnalyticsCloudModel.TYPE_NAME:
+                ref = SapAnalyticsCloudModel.refByQualifiedName(qualifiedName);
+                break;
+            case SapAnalyticsCloudStory.TYPE_NAME:
+                ref = SapAnalyticsCloudStory.refByQualifiedName(qualifiedName);
+                break;
+            case SapDatasphereReplicationFlow.TYPE_NAME:
+                ref = SapDatasphereReplicationFlow.refByQualifiedName(qualifiedName);
                 break;
             case SapErpAbapProgram.TYPE_NAME:
                 ref = SapErpAbapProgram.refByQualifiedName(qualifiedName);

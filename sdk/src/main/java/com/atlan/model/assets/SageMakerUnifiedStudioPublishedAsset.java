@@ -162,6 +162,10 @@ public class SageMakerUnifiedStudioPublishedAsset extends Asset
     @Attribute
     String smusProjectId;
 
+    /** Asset filters configured for the published asset in SageMaker Unified Studio, as a JSON-serialized array. Each entry represents a row-level or column-level access restriction (id, name, description, effectiveRowFilter, effectiveColumnNames). */
+    @Attribute
+    String smusPublishedAssetFilters;
+
     /** Number of subscriptions for the published asset. */
     @Attribute
     Long smusPublishedAssetSubscriptionsCount;

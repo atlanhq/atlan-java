@@ -88,6 +88,10 @@ public interface IConnection {
     /** Whether data quality is enabled for this connection (true) or not (false). */
     BooleanField CONNECTION_IS_DQ_ENABLED = new BooleanField("connectionIsDQEnabled", "connectionIsDQEnabled");
 
+    /** Time (epoch) at which popularity insights were last computed for this connection, in milliseconds. Marks the end of the popularity window; the start is this value minus popularityInsightsTimeframe days. */
+    NumericField CONNECTION_POPULARITY_INSIGHTS_COMPUTED_AT =
+            new NumericField("connectionPopularityInsightsComputedAt", "connectionPopularityInsightsComputedAt");
+
     /** Strategy configuration for reverse-sync operations on this connection, stored as a stringified JSON array. Each element specifies a source entity type and whether reverse-sync is enabled for it, e.g. [{"source_entity": "Aspects", "enabled": true}]. */
     KeywordField CONNECTION_REVERSE_SYNC_STRATEGY =
             new KeywordField("connectionReverseSyncStrategy", "connectionReverseSyncStrategy");
@@ -95,6 +99,10 @@ public interface IConnection {
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
+
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    KeywordField CONNECTION_SOURCE_ACCOUNT_IDENTIFIER =
+            new KeywordField("connectionSourceAccountIdentifier", "connectionSourceAccountIdentifier");
 
     /** Configuration for a workflow run. */
     KeywordField CONNECTION_WORKFLOW_CONFIGURATION =
@@ -669,6 +677,9 @@ public interface IConnection {
     /** Simple name of the connection through which this asset is accessible. */
     String getConnectionName();
 
+    /** Time (epoch) at which popularity insights were last computed for this connection, in milliseconds. Marks the end of the popularity window; the start is this value minus popularityInsightsTimeframe days. */
+    Long getConnectionPopularityInsightsComputedAt();
+
     /** Unique name of the connection through which this asset is accessible. */
     String getConnectionQualifiedName();
 
@@ -677,6 +688,9 @@ public interface IConnection {
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     String getConnectionSSOCredentialGuid();
+
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    String getConnectionSourceAccountIdentifier();
 
     /** Configuration for a workflow run. */
     Map<String, String> getConnectionWorkflowConfiguration();
