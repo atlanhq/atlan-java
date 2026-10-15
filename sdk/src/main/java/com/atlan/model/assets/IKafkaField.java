@@ -18,6 +18,7 @@ import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.KeywordTextField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -52,6 +53,12 @@ public interface IKafkaField {
     /** Default value for this field if one is defined in the schema. */
     KeywordField KAFKA_FIELD_DEFAULT_VALUE = new KeywordField("kafkaFieldDefaultValue", "kafkaFieldDefaultValue");
 
+    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
+    NumericField KAFKA_FIELD_DEPTH_LEVEL = new NumericField("kafkaFieldDepthLevel", "kafkaFieldDepthLevel");
+
+    /** List of top-level upstream nested fields. */
+    KeywordField KAFKA_FIELD_HIERARCHIES = new KeywordField("kafkaFieldHierarchies", "kafkaFieldHierarchies");
+
     /** Whether this field is optional (true) or required (false) in the schema. */
     BooleanField KAFKA_FIELD_IS_OPTIONAL = new BooleanField("kafkaFieldIsOptional", "kafkaFieldIsOptional");
 
@@ -64,6 +71,25 @@ public interface IKafkaField {
     /** Schema version in which this field was first introduced. */
     KeywordField KAFKA_FIELD_VERSION_INTRODUCED =
             new KeywordField("kafkaFieldVersionIntroduced", "kafkaFieldVersionIntroduced");
+
+    /** Number of KafkaField assets directly nested within this field. */
+    NumericField KAFKA_NESTED_FIELD_COUNT = new NumericField("kafkaNestedFieldCount", "kafkaNestedFieldCount");
+
+    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
+    TextField KAFKA_NESTED_FIELD_ORDER = new TextField("kafkaNestedFieldOrder", "kafkaNestedFieldOrder");
+
+    /** KafkaField assets nested within this field. */
+    RelationField KAFKA_NESTED_FIELDS = new RelationField("kafkaNestedFields");
+
+    /** Parent KafkaField containing this nested field. */
+    RelationField KAFKA_PARENT_FIELD = new RelationField("kafkaParentField");
+
+    /** Simple name of the parent KafkaField in which this field is nested. */
+    TextField KAFKA_PARENT_FIELD_NAME = new TextField("kafkaParentFieldName", "kafkaParentFieldName");
+
+    /** Unique name of the parent KafkaField in which this field is nested. */
+    TextField KAFKA_PARENT_FIELD_QUALIFIED_NAME =
+            new TextField("kafkaParentFieldQualifiedName", "kafkaParentFieldQualifiedName");
 
     /** Kafka topic in which this field is defined. */
     RelationField KAFKA_TOPIC = new RelationField("kafkaTopic");
@@ -616,6 +642,12 @@ public interface IKafkaField {
     /** Default value for this field if one is defined in the schema. */
     String getKafkaFieldDefaultValue();
 
+    /** Level of nesting of this field (1 = direct child of topic schema, 2 = nested one level, etc.). */
+    Integer getKafkaFieldDepthLevel();
+
+    /** List of top-level upstream nested fields. */
+    List<Map<String, String>> getKafkaFieldHierarchies();
+
     /** Whether this field is optional (true) or required (false) in the schema. */
     Boolean getKafkaFieldIsOptional();
 
@@ -627,6 +659,28 @@ public interface IKafkaField {
 
     /** Schema version in which this field was first introduced. */
     String getKafkaFieldVersionIntroduced();
+
+    /** Number of KafkaField assets directly nested within this field. */
+    Integer getKafkaNestedFieldCount();
+
+    /** Order (position) in which this field appears within its parent nested field (nest level starts at 1). */
+    String getKafkaNestedFieldOrder();
+
+    /** KafkaField assets nested within this field. */
+    default SortedSet<IKafkaField> getKafkaNestedFields() {
+        return null;
+    }
+
+    /** Parent KafkaField containing this nested field. */
+    default IKafkaField getKafkaParentField() {
+        return null;
+    }
+
+    /** Simple name of the parent KafkaField in which this field is nested. */
+    String getKafkaParentFieldName();
+
+    /** Unique name of the parent KafkaField in which this field is nested. */
+    String getKafkaParentFieldQualifiedName();
 
     /** Kafka topic in which this field is defined. */
     default IKafkaTopic getKafkaTopic() {
