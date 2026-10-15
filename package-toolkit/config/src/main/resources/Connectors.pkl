@@ -517,6 +517,10 @@ hidden const AWS_SAGEMAKER: Type = new {
   value = "aws-sagemaker"
   category = "elt"
 }
+hidden const AWS_SMUS: Type = new {
+  value = "aws-smus"
+  category = "SaaS"
+}
 hidden const SHARE_POINT: Type = new {
   value = "share-point"
   category = "SaaS"
