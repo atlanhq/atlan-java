@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityDimension;
 import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
+import com.atlan.model.enums.ProcessLineageDerivation;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
@@ -96,6 +97,9 @@ public interface ILineageProcess {
 
     /** TBC */
     RelationField POWER_BI_DATAFLOW = new RelationField("powerBIDataflow");
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    KeywordField PROCESS_DERIVATION = new KeywordField("processDerivation", "processDerivation");
 
     /** TBC */
     RelationField SPARK_JOBS = new RelationField("sparkJobs");
@@ -757,6 +761,9 @@ public interface ILineageProcess {
     default IPowerBIDataflow getPowerBIDataflow() {
         return null;
     }
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    ProcessLineageDerivation getProcessDerivation();
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
