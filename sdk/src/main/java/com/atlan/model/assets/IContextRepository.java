@@ -2,6 +2,7 @@
    Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -50,6 +51,9 @@ public interface IContextRepository {
     /** Assets that serve as input context for this repository. */
     RelationField CONTEXT_INPUT_ASSETS = new RelationField("contextInputAssets");
 
+    /** Agents produced by this context repository. */
+    RelationField CONTEXT_OUTPUT_AGENTS = new RelationField("contextOutputAgents");
+
     /** Skill produced by this context repository. */
     RelationField CONTEXT_OUTPUT_SKILL = new RelationField("contextOutputSkill");
 
@@ -73,6 +77,9 @@ public interface IContextRepository {
 
     /** List of users who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminUsers();
+
+    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
+    AgenticSource getAgenticSource();
 
     /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
     Long getAgenticVersion();
@@ -539,6 +546,11 @@ public interface IContextRepository {
 
     /** Assets that serve as input context for this repository. */
     default SortedSet<IAsset> getContextInputAssets() {
+        return null;
+    }
+
+    /** Agents produced by this context repository. */
+    default SortedSet<IAgent> getContextOutputAgents() {
         return null;
     }
 
