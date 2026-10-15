@@ -49,6 +49,10 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Type of API body this field belongs to (e.g. "request", "response/200"). */
+    @Attribute
+    String apiBodyType;
+
     /** External documentation of the API. */
     @Attribute
     @Singular
@@ -70,6 +74,10 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
     @Attribute
     Boolean apiIsObjectReference;
 
+    /** Qualified name of the API method this field belongs to. */
+    @Attribute
+    String apiMethodQualifiedName;
+
     /** APIObject asset containing this APIField. */
     @Attribute
     IAPIObject apiObject;
@@ -77,6 +85,10 @@ public class APIField extends Asset implements IAPIField, IAPI, ICatalog, IAsset
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     @Attribute
     String apiObjectQualifiedName;
+
+    /** Qualified name of the API path this field belongs to. */
+    @Attribute
+    String apiPathQualifiedName;
 
     /** APIQuery asset containing this APIField. */
     @Attribute

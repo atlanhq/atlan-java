@@ -86,6 +86,10 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiSpecContractVersion;
 
+    /** Raw content of the API specification file (JSON or YAML). */
+    @Attribute
+    String apiSpecRawContent;
+
     /** Name of the license under which the API specification is available. */
     @Attribute
     String apiSpecLicenseName;
