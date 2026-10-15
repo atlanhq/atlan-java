@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AgenticSource;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.ContextLifecycleStatus;
@@ -50,6 +51,10 @@ public class ContextRepository extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Product surface this agentic asset was created from, so agents and skills can be attributed to their originating surface without slug pattern matching (AUT-1074). Mirrors AtlanAppWorkflow.source, which does the same for workflows (AUT-1028). */
+    @Attribute
+    AgenticSource agenticSource;
+
     /** Version of this agentic asset as an epoch-millisecond timestamp. One Atlan entity per (slug, version) tuple. */
     @Attribute
     Long agenticVersion;
@@ -67,6 +72,11 @@ public class ContextRepository extends Asset
     @Attribute
     @Singular
     SortedSet<IAsset> contextInputAssets;
+
+    /** Agents produced by this context repository. */
+    @Attribute
+    @Singular
+    SortedSet<IAgent> contextOutputAgents;
 
     /** Skill produced by this context repository. */
     @Attribute
