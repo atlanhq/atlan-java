@@ -79,6 +79,11 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
     @JsonProperty("mappedClassificationName")
