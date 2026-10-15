@@ -10,6 +10,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.ProcessLineageDerivation;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -71,7 +72,7 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     String ast;
 
-    /** TBC */
+    /** Routines used by this process. */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -117,6 +118,11 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     @Attribute
     Boolean isPassThrough;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Matillion component that contains the logic for this lineage process. */
     @Attribute
     IMatillionComponent matillionComponent;
@@ -135,6 +141,10 @@ public class ConnectionProcess extends Asset implements IConnectionProcess, ILin
     /** PowerBI Dataflow that is associated with this lineage process. */
     @Attribute
     IPowerBIDataflow powerBIDataflow;
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    @Attribute
+    ProcessLineageDerivation processDerivation;
 
     /** TBC */
     @Attribute

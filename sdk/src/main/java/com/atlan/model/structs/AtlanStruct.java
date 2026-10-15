@@ -70,6 +70,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = KafkaTopicConsumption.class, name = KafkaTopicConsumption.TYPE_NAME),
     @JsonSubTypes.Type(value = MCRuleComparison.class, name = MCRuleComparison.TYPE_NAME),
     @JsonSubTypes.Type(value = MCRuleSchedule.class, name = MCRuleSchedule.TYPE_NAME),
+    @JsonSubTypes.Type(value = NotificationExternalReference.class, name = NotificationExternalReference.TYPE_NAME),
     @JsonSubTypes.Type(value = PopularityInsights.class, name = PopularityInsights.TYPE_NAME),
     @JsonSubTypes.Type(value = ResponseValue.class, name = ResponseValue.TYPE_NAME),
     @JsonSubTypes.Type(value = SQLProcedureArgument.class, name = SQLProcedureArgument.TYPE_NAME),
