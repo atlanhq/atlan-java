@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import com.atlan.model.enums.AssetDQRunStatus;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanAppWorkflowOwnership;
+import com.atlan.model.enums.AtlanAppWorkflowRuntimeMode;
 import com.atlan.model.enums.AtlanAppWorkflowSource;
 import com.atlan.model.enums.AtlanAppWorkflowStatus;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -50,8 +51,16 @@ public interface IAtlanAppWorkflow {
     /** Atlan application containing the workflow. */
     RelationField ATLAN_APP = new RelationField("atlanApp");
 
+    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
+    KeywordField ATLAN_APP_WORKFLOW_AGENT_NAME =
+            new KeywordField("atlanAppWorkflowAgentName", "atlanAppWorkflowAgentName");
+
     /** Map of all activity steps for the workflow (escaped JSON string). */
     TextField ATLAN_APP_WORKFLOW_DAG = new TextField("atlanAppWorkflowDag", "atlanAppWorkflowDag");
+
+    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
+    KeywordField ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME =
+            new KeywordField("atlanAppWorkflowDeploymentName", "atlanAppWorkflowDeploymentName");
 
     /** Error handling strategy for the workflow. */
     KeywordField ATLAN_APP_WORKFLOW_ERROR_HANDLING =
@@ -63,6 +72,10 @@ public interface IAtlanAppWorkflow {
 
     /** The workflow runs contained within the workflow. */
     RelationField ATLAN_APP_WORKFLOW_RUNS = new RelationField("atlanAppWorkflowRuns");
+
+    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
+    KeywordField ATLAN_APP_WORKFLOW_RUNTIME_MODE =
+            new KeywordField("atlanAppWorkflowRuntimeMode", "atlanAppWorkflowRuntimeMode");
 
     /** Slug of the workflow. */
     KeywordField ATLAN_APP_WORKFLOW_SLUG = new KeywordField("atlanAppWorkflowSlug", "atlanAppWorkflowSlug");
@@ -541,8 +554,14 @@ public interface IAtlanAppWorkflow {
         return null;
     }
 
+    /** Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832). */
+    String getAtlanAppWorkflowAgentName();
+
     /** Map of all activity steps for the workflow (escaped JSON string). */
     String getAtlanAppWorkflowDag();
+
+    /** SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels. */
+    String getAtlanAppWorkflowDeploymentName();
 
     /** Error handling strategy for the workflow. */
     AtlanAppErrorHandling getAtlanAppWorkflowErrorHandling();
@@ -554,6 +573,9 @@ public interface IAtlanAppWorkflow {
     default SortedSet<IAppWorkflowRun> getAtlanAppWorkflowRuns() {
         return null;
     }
+
+    /** Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs. */
+    AtlanAppWorkflowRuntimeMode getAtlanAppWorkflowRuntimeMode();
 
     /** Slug of the workflow. */
     String getAtlanAppWorkflowSlug();

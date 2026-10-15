@@ -96,6 +96,10 @@ public interface IConnection {
     KeywordField CONNECTION_SSO_CREDENTIAL_GUID =
             new KeywordField("connectionSSOCredentialGuid", "connectionSSOCredentialGuid");
 
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    KeywordField CONNECTION_SOURCE_ACCOUNT_IDENTIFIER =
+            new KeywordField("connectionSourceAccountIdentifier", "connectionSourceAccountIdentifier");
+
     /** Configuration for a workflow run. */
     KeywordField CONNECTION_WORKFLOW_CONFIGURATION =
             new KeywordField("connectionWorkflowConfiguration", "connectionWorkflowConfiguration");
@@ -677,6 +681,9 @@ public interface IConnection {
 
     /** Unique identifier (GUID) for the SSO credentials to use for this connection. */
     String getConnectionSSOCredentialGuid();
+
+    /** Identifier of the source account this connection points to, expressed in the source's own namespace (for example 'MYORG.MYACCOUNT' for Snowflake). Distinct from the credential host, which uses a different namespace and does not convert. */
+    String getConnectionSourceAccountIdentifier();
 
     /** Configuration for a workflow run. */
     Map<String, String> getConnectionWorkflowConfiguration();
