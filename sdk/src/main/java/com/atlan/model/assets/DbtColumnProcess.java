@@ -10,6 +10,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AIDatasetType;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.ProcessLineageDerivation;
 import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
@@ -73,7 +74,7 @@ public class DbtColumnProcess extends Asset
     @Attribute
     String ast;
 
-    /** TBC */
+    /** Routines used by this process. */
     @Attribute
     @Singular
     SortedSet<IBigqueryRoutine> bigqueryRoutines;
@@ -269,6 +270,10 @@ public class DbtColumnProcess extends Asset
     /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
+
+    /** How this lineage process was derived — statically from an asset definition, or from an operational data-processing run. */
+    @Attribute
+    ProcessLineageDerivation processDerivation;
 
     /** TBC */
     @Attribute
