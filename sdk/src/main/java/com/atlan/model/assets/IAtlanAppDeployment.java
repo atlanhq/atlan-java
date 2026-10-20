@@ -44,7 +44,7 @@ public interface IAtlanAppDeployment {
 
     public static final String TYPE_NAME = "AtlanAppDeployment";
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     KeywordField ATLAN_APP_DEPLOYMENT_NAME = new KeywordField("atlanAppDeploymentName", "atlanAppDeploymentName");
 
     /** Detailed error message explaining why the deployment failed. Should only be populated when status = FAILED. */
@@ -389,6 +389,9 @@ public interface IAtlanAppDeployment {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -505,7 +508,7 @@ public interface IAtlanAppDeployment {
         return null;
     }
 
-    /** Target deployment environment where the app is installed (e.g. "atlan" for Atlan-managed infra, or a customer SDR deployment name for customer-managed infra). */
+    /** Target deployment environment where the app is installed, for example atlan (Atlan-managed infra) or a customer SDR deployment name (customer-managed infra). */
     String getAtlanAppDeploymentName();
 
     /** Detailed error message explaining why the deployment failed. Should only be populated when status = FAILED. */
