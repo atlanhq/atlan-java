@@ -48,6 +48,9 @@ public interface IAirflow {
     /** End time of the run. */
     NumericField AIRFLOW_RUN_END_TIME = new NumericField("airflowRunEndTime", "airflowRunEndTime");
 
+    /** Error message of the run in Airflow, populated when the run fails. */
+    KeywordField AIRFLOW_RUN_ERROR_MESSAGE = new KeywordField("airflowRunErrorMessage", "airflowRunErrorMessage");
+
     /** Name of the run. */
     KeywordField AIRFLOW_RUN_NAME = new KeywordField("airflowRunName", "airflowRunName");
 
@@ -85,6 +88,9 @@ public interface IAirflow {
 
     /** End time of the run. */
     Long getAirflowRunEndTime();
+
+    /** Error message of the run in Airflow, populated when the run fails. */
+    String getAirflowRunErrorMessage();
 
     /** Name of the run. */
     String getAirflowRunName();
@@ -421,6 +427,9 @@ public interface IAirflow {
 
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
+
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
 
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
