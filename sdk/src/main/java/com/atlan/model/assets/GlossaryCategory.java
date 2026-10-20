@@ -79,6 +79,11 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
     @Singular
     SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Unused. Detailed description of the category. See 'readme' instead. */
     @Attribute
     String longDescription;
