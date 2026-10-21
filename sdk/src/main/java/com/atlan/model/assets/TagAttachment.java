@@ -79,6 +79,11 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     @Singular
     SortedSet<ISparkJob> inputToSparkJobs;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
     @JsonProperty("mappedClassificationName")
@@ -93,6 +98,14 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     @Attribute
     @Singular
     SortedSet<IModelEntity> modelImplementedEntities;
+
+    /** Qualified name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String objectQualifiedName;
+
+    /** Type name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String objectTypeName;
 
     /** Tasks from which this asset is output. */
     @Attribute
@@ -119,6 +132,22 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
+    /** Whether the Atlan tag propagates from the asset. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    Boolean propagate;
+
+    /** Name of the source tag, used as the Atlan tag name. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String sourceTagDisplayName;
+
+    /** Qualified name of the source tag. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String sourceTagQualifiedName;
+
+    /** Type name of the source tag, for example GlueTag. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String sourceTagTypeName;
+
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     @Attribute
     @Singular
@@ -140,6 +169,14 @@ public class TagAttachment extends Asset implements ITagAttachment, ITag, ICatal
     /** Represents associated source tag's qualified name. */
     @Attribute
     String tagQualifiedName;
+
+    /** Value of the source tag on the asset. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String value;
+
+    /** Type of the tag value, for example STRING. Read by publish-app; not an Atlas typedef attribute. */
+    @Attribute
+    String valueType;
 
     /**
      * Builds the minimal object necessary to create a relationship to a TagAttachment, from a potentially
