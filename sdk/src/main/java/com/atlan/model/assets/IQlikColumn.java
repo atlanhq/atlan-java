@@ -15,6 +15,7 @@ import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -44,6 +45,9 @@ public interface IQlikColumn {
 
     /** Parent chart containing the columns. */
     RelationField QLIK_CHART = new RelationField("qlikChart");
+
+    /** Formula that defines this calculated dimension, taken from the Qlik field definition that starts with '='. */
+    TextField QLIK_COLUMN_EXPRESSION = new TextField("qlikColumnExpression", "qlikColumnExpression");
 
     /** Qlik Column name. */
     KeywordField QLIK_COLUMN_NAME = new KeywordField("qlikColumnName", "qlikColumnName");
@@ -387,6 +391,9 @@ public interface IQlikColumn {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -708,6 +715,9 @@ public interface IQlikColumn {
     default IQlikChart getQlikChart() {
         return null;
     }
+
+    /** Formula that defines this calculated dimension, taken from the Qlik field definition that starts with '='. */
+    String getQlikColumnExpression();
 
     /** Qlik Column name. */
     String getQlikColumnName();
