@@ -107,6 +107,7 @@ public class TableauWorkbookTest {
             .connectorName("String0")
             .connectionName("String0")
             .connectionQualifiedName("String0")
+            .assetManagedBy("String0")
             .hasLineage(true)
             .isDiscoverable(true)
             .isEditable(true)
