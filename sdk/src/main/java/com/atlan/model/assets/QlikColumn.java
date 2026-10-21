@@ -114,6 +114,10 @@ public class QlikColumn extends Asset implements IQlikColumn, IQlik, IBI, ICatal
     @Attribute
     IQlikChart qlikChart;
 
+    /** Formula that defines this calculated dimension, taken from the Qlik field definition that starts with '='. */
+    @Attribute
+    String qlikColumnExpression;
+
     /** Qlik Column name. */
     @Attribute
     String qlikColumnName;
