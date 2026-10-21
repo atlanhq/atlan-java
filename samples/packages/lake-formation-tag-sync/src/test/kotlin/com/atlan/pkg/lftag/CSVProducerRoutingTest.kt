@@ -25,17 +25,21 @@ class CSVProducerRoutingTest {
     private val metadataMap = mapOf("security_classification" to "Data Privacy::Security Classification")
     private val tag = listOf(LFTagPair("security_classification", listOf("public"), "123456789012"))
 
-    private fun tagData(vararg tables: String) =
-        LFTagData(
-            tables.map {
-                LFTableInfo(
-                    table = LFTable(databaseName = "dev_sales", name = it),
-                    lfTagOnDatabase = tag,
-                    lfTagsOnTable = tag,
-                    lfTagsOnColumn = listOf(ColumnLFTag("col1", tag)),
-                )
-            },
-        )
+    private fun tagData(vararg tables: String) = tagDataIn("dev_sales", *tables)
+
+    private fun tagDataIn(
+        databaseName: String,
+        vararg tables: String,
+    ) = LFTagData(
+        tables.map {
+            LFTableInfo(
+                table = LFTable(databaseName = databaseName, name = it),
+                lfTagOnDatabase = tag,
+                lfTagsOnTable = tag,
+                lfTagsOnColumn = listOf(ColumnLFTag("col1", tag)),
+            )
+        },
+    )
 
     private fun qualifiedNames(
         connectionMap: Map<String, List<String>>,
@@ -73,6 +77,31 @@ class CSVProducerRoutingTest {
             ),
             qualifiedNames(mapOf("dev" to listOf(conn1, conn2)), tagData("tbl1", "tbl2"), locator),
         )
+    }
+
+    @Test
+    fun databaseNameKeyOverridesPrefixKey() {
+        val data = LFTagData(tagDataIn("dev_sales", "tbl1").tableList + tagDataIn("dev_finance", "tbl2").tableList)
+        assertEquals(
+            listOf(
+                "$conn1/sales",
+                "$conn1/sales/tbl1",
+                "$conn1/sales/tbl1/col1",
+                "$conn2/finance",
+                "$conn2/finance/tbl2",
+                "$conn2/finance/tbl2/col1",
+            ),
+            qualifiedNames(mapOf("dev" to listOf(conn1), "dev_finance" to listOf(conn2)), data, null),
+        )
+    }
+
+    @Test
+    fun databaseNameKeyWorksWithoutPrefixKey() {
+        assertEquals(
+            listOf("$conn2/finance", "$conn2/finance/tbl2", "$conn2/finance/tbl2/col1"),
+            qualifiedNames(mapOf("dev_finance" to listOf(conn2)), tagDataIn("dev_finance", "tbl2"), null),
+        )
+        assertTrue(qualifiedNames(mapOf("dev_finance" to listOf(conn2)), tagDataIn("dev_sales", "tbl1"), null).isEmpty())
     }
 
     @Test

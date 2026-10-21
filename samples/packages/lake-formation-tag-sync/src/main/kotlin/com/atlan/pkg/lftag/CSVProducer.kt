@@ -15,8 +15,9 @@ import com.fasterxml.jackson.databind.JsonNode
 /**
  * Turns Lake Formation tag associations into an asset import CSV.
  *
- * @param connectionMap connection key (the database name prefix up to the first '_') to one or more
- *                      candidate database qualifiedNames. A key with a single candidate is always written
+ * @param connectionMap connection key to one or more candidate database qualifiedNames. The key is the full
+ *                      LF database name when the map has it, otherwise the database name prefix up to the
+ *                      first '_'. A key with a single candidate is always written
  *                      to that candidate. A key with several candidates writes each table to the one candidate
  *                      that holds it, as reported by [tableLocator].
  * @param metadataMap LF tag key to custom metadata attribute
@@ -71,7 +72,9 @@ class CSVProducer(
                     logger.warn { "Skipping table ${table.name}: database name ${table.databaseName} has no '_' separating a connection key." }
                     return@forEach
                 }
-                val connectionKey = parts[0]
+                // A key for the full database name overrides the prefix key, so one LF database can be sent
+                // to a different connection than the rest of its environment.
+                val connectionKey = if (table.databaseName in this.connectionMap) table.databaseName else parts[0]
                 // By default the connection key prefix is stripped from the schema name; keep it when the
                 // crawled schema name is the full database name.
                 val schemaName = if (keepDatabasePrefix) table.databaseName else parts[1]
