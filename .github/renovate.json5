@@ -15,6 +15,9 @@
   internalChecksFilter: "strict",
   prHourlyLimit: 0,
   prConcurrentLimit: 20,
+  // The merge queue tests each PR against the latest main, so only rebase when actually conflicted
+  // (rebasing a queued PR evicts it from the queue)
+  rebaseWhen: "conflicted",
   vulnerabilityAlerts: {
     labels: [
       "dependencies",
@@ -23,6 +26,17 @@
     minimumReleaseAge: null,
   },
   packageRules: [
+    {
+      // Enable GitHub auto-merge on non-major updates, so they enter the merge queue
+      // as soon as checks pass and a code owner approves
+      matchUpdateTypes: [
+        "minor",
+        "patch",
+        "pin",
+        "digest",
+      ],
+      automerge: true,
+    },
     {
       // shadow >= 9.5.0 requires Gradle 9; remove this rule once the Gradle wrapper is on 9.x
       matchPackageNames: [
