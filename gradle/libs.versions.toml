@@ -1,5 +1,7 @@
 [versions]
-jackson = "2.22.3"
+# 2.22.4 (published 2026-10-17) is intentionally inside the 7-day release-age window
+jackson = "2.22.4"
+jackson3 = "3.1.7"
 slf4j = "2.0.20"
 elasticsearch = "9.4.3"
 classgraph = "4.8.199"
@@ -33,7 +35,14 @@ kotlin = "2.4.21"
 kotlin-mu = "3.0.5"
 rocksdb = "10.10.1.1"
 jetty = "12.1.14"
-netty = "4.2.16.Final"
+# wiremock-jetty12 brings in the jetty 12.0.x line for its servlet / security / client modules
+wiremock-jetty = "12.0.39"
+handlebars = "4.5.2"
+httpclient5 = "5.6.4"
+httpcore5 = "5.4.3"
+netty = "4.2.18.Final"
+# AWS SDK's netty-nio-client still requests the 4.1.x line of netty-codec
+netty41 = "4.1.136.Final"
 rhino = "1.9.1"
 nimbus = "10.9.1"
 otel = "1.64.0"
@@ -43,6 +52,8 @@ otel-instrumentation = "2.29.0-alpha"
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 jackson-yaml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson" }
 jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+jackson3-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson3" }
+jackson3-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson3" }
 slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 elasticsearch-java = { module = "co.elastic.clients:elasticsearch-java", version.ref = "elasticsearch" }
 classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
@@ -88,7 +99,18 @@ jetty-server = { module = "org.eclipse.jetty:jetty-server", version.ref = "jetty
 jetty-http2-common = { module = "org.eclipse.jetty.http2:jetty-http2-common", version.ref = "jetty" }
 jetty-http2-hpack = { module = "org.eclipse.jetty.http2:jetty-http2-hpack", version.ref = "jetty" }
 jetty-http2-server = { module = "org.eclipse.jetty.http2:jetty-http2-server", version.ref = "jetty" }
+jetty-security = { module = "org.eclipse.jetty:jetty-security", version.ref = "wiremock-jetty" }
+jetty-client = { module = "org.eclipse.jetty:jetty-client", version.ref = "wiremock-jetty" }
+jetty-ee10-servlet = { module = "org.eclipse.jetty.ee10:jetty-ee10-servlet", version.ref = "wiremock-jetty" }
+handlebars = { module = "com.github.jknack:handlebars", version.ref = "handlebars" }
+handlebars-helpers = { module = "com.github.jknack:handlebars-helpers", version.ref = "handlebars" }
+httpclient5 = { module = "org.apache.httpcomponents.client5:httpclient5", version.ref = "httpclient5" }
+httpcore5 = { module = "org.apache.httpcomponents.core5:httpcore5", version.ref = "httpcore5" }
+httpcore5-h2 = { module = "org.apache.httpcomponents.core5:httpcore5-h2", version.ref = "httpcore5" }
 netty-common = { module = "io.netty:netty-common", version.ref = "netty" }
+netty-handler = { module = "io.netty:netty-handler", version.ref = "netty" }
+netty-codec = { module = "io.netty:netty-codec", version.ref = "netty41" }
+netty-codec-http = { module = "io.netty:netty-codec-http", version.ref = "netty" }
 netty-codec-http2 = { module = "io.netty:netty-codec-http2", version.ref = "netty" }
 rhino = { module = "org.mozilla:rhino", version.ref = "rhino" }
 nimbus = { module = "com.nimbusds:nimbus-jose-jwt", version.ref = "nimbus" }
