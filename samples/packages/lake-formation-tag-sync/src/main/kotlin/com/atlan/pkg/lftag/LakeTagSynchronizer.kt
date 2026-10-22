@@ -5,6 +5,7 @@ package com.atlan.pkg.lftag
 import AssetImportCfg
 import LakeFormationTagSyncCfg
 import com.atlan.AtlanClient
+import com.atlan.model.assets.Asset
 import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.aim.Importer
@@ -13,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
+import java.util.stream.Collectors
 import kotlin.system.exitProcess
 
 /**
@@ -57,15 +59,31 @@ object LakeTagSynchronizer {
                 "",
             )
         val tagFileNames = mutableListOf<String>()
-        val connectionMap = mutableMapOf<String, String>()
+        val connectionMap = mutableMapOf<String, List<String>>()
         val metadataMap = mutableMapOf<String, String>()
         files.forEach { fileName ->
             val nameWithExt = File(fileName).name
             when {
-                nameWithExt == CONNECTION_MAP_JSON -> connectionMap += mapper.readValue<Map<String, String>>(File(fileName))
-                nameWithExt == METADATA_MAP_JSON -> metadataMap += mapper.readValue<Map<String, String>>(File(fileName))
-                nameWithExt.startsWith(TAG_FILE_NAME_PREFIX) -> tagFileNames.add(fileName)
-                else -> logger.warn { "Skipping $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
+                nameWithExt == CONNECTION_MAP_JSON -> {
+                    try {
+                        connectionMap += CSVProducer.parseConnectionMap(mapper.readTree(File(fileName)))
+                    } catch (e: IllegalArgumentException) {
+                        logger.error { e.message }
+                        return false
+                    }
+                }
+
+                nameWithExt == METADATA_MAP_JSON -> {
+                    metadataMap += mapper.readValue<Map<String, String>>(File(fileName))
+                }
+
+                nameWithExt.startsWith(TAG_FILE_NAME_PREFIX) -> {
+                    tagFileNames.add(fileName)
+                }
+
+                else -> {
+                    logger.warn { "Skipping $fileName because it doesn't start with $TAG_FILE_NAME_PREFIX." }
+                }
             }
         }
         if (connectionMap.isEmpty()) {
@@ -80,7 +98,7 @@ object LakeTagSynchronizer {
             logger.error { "You must provide at least one json file containing Lake Tag data (name starting with $TAG_FILE_NAME_PREFIX)." }
             return false
         }
-        val csvProducer = CSVProducer(connectionMap, metadataMap)
+        val csvProducer = CSVProducer(connectionMap, metadataMap) { qualifiedNames -> findExisting(ctx.client, qualifiedNames) }
         tagFileNames.forEach { tagFileName ->
             logger.info { "Processing $tagFileName." }
             val csvFileName = "$outputDirectory${File.separator}${File(tagFileName).nameWithoutExtension}.csv"
@@ -90,6 +108,9 @@ object LakeTagSynchronizer {
                 AssetImportCfg(
                     assetsFile = csvFileName,
                     assetsUpsertSemantic = "update",
+                    // Lake Formation reports views as tables, and the tag feed carries no table type,
+                    // so let a Table row match an existing View or MaterializedView of the same name.
+                    assetsTableViewAgnostic = true,
                     assetsConfig = "advanced",
                     assetsFailOnErrors =
                         ctx.config.getEffectiveValue(
@@ -111,6 +132,18 @@ object LakeTagSynchronizer {
         }
         return !anyFailure
     }
+
+    private fun findExisting(
+        client: AtlanClient,
+        qualifiedNames: Collection<String>,
+    ): Set<String> =
+        client.assets
+            .select()
+            .where(Asset.QUALIFIED_NAME.`in`(qualifiedNames))
+            .pageSize(qualifiedNames.size.coerceAtLeast(1))
+            .stream()
+            .map { it.qualifiedName }
+            .collect(Collectors.toSet())
 
     private fun createMissingEnums(
         client: AtlanClient,
