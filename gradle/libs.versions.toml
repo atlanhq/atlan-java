@@ -34,7 +34,7 @@ guava = "33.7.2-jre"
 openlineage = "1.53.0"
 kotlin = "2.4.21"
 kotlin-mu = "3.0.5"
-rocksdb = "10.10.1.1"
+rocksdb = "11.8.1"
 jetty = "12.1.14"
 # wiremock-jetty12 brings in the jetty 12.0.x line for its servlet / security / client modules
 wiremock-jetty = "12.0.39"
