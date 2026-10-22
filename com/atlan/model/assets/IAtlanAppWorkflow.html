@@ -111,10 +111,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Atlan application containing the workflow.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_DAG" class="member-name-link">ATLAN_APP_WORKFLOW_DAG</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_AGENT_NAME" class="member-name-link">ATLAN_APP_WORKFLOW_AGENT_NAME</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent).</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_DAG" class="member-name-link">ATLAN_APP_WORKFLOW_DAG</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Map of all activity steps for the workflow (escaped JSON string).</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME" class="member-name-link">ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">SDR deployment name this workflow's runs execute under.</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
 <div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_ERROR_HANDLING" class="member-name-link">ATLAN_APP_WORKFLOW_ERROR_HANDLING</a></code></div>
@@ -132,33 +142,38 @@ loadScripts(document, 'script');</script>
 <div class="block">The workflow runs contained within the workflow.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_SLUG" class="member-name-link">ATLAN_APP_WORKFLOW_SLUG</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_RUNTIME_MODE" class="member-name-link">ATLAN_APP_WORKFLOW_RUNTIME_MODE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Slug of the workflow.</div>
+<div class="block">Execution runtime for this workflow's runs (SDR or DIRECT).</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_SOURCE" class="member-name-link">ATLAN_APP_WORKFLOW_SOURCE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_SLUG" class="member-name-link">ATLAN_APP_WORKFLOW_SLUG</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Slug of the workflow.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_SOURCE" class="member-name-link">ATLAN_APP_WORKFLOW_SOURCE</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Product surface the workflow originated from (marketplace, enrichment_studio, context_studio), emitted as an AE workflow-metric label so Marketplace runs are distinguishable without slug pattern matching (AUT-1028).</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_STATUS" class="member-name-link">ATLAN_APP_WORKFLOW_STATUS</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_STATUS" class="member-name-link">ATLAN_APP_WORKFLOW_STATUS</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Status of the workflow.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
-<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_TRIGGERS" class="member-name-link">ATLAN_APP_WORKFLOW_TRIGGERS</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_TRIGGERS" class="member-name-link">ATLAN_APP_WORKFLOW_TRIGGERS</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Triggers configured for this workflow (escaped JSON string).</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#ATLAN_APP_WORKFLOW_VERSION" class="member-name-link">ATLAN_APP_WORKFLOW_VERSION</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ATLAN_APP_WORKFLOW_VERSION" class="member-name-link">ATLAN_APP_WORKFLOW_VERSION</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Version of the workflow.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#TYPE_NAME" class="member-name-link">TYPE_NAME</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#TYPE_NAME" class="member-name-link">TYPE_NAME</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -708,240 +723,260 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Internal Popularity score for this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcAlertQualifiedNames()" class="member-name-link">getAssetMcAlertQualifiedNames</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetManagedBy()" class="member-name-link">getAssetManagedBy</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcAlertQualifiedNames()" class="member-name-link">getAssetMcAlertQualifiedNames</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of unique Monte Carlo alert names attached to this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentNames()" class="member-name-link">getAssetMcIncidentNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentNames()" class="member-name-link">getAssetMcIncidentNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident names attached to this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentPriorities()" class="member-name-link">getAssetMcIncidentPriorities</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentPriorities()" class="member-name-link">getAssetMcIncidentPriorities</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident priorities associated with this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentQualifiedNames()" class="member-name-link">getAssetMcIncidentQualifiedNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentQualifiedNames()" class="member-name-link">getAssetMcIncidentQualifiedNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of unique Monte Carlo incident names attached to this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentSeverities()" class="member-name-link">getAssetMcIncidentSeverities</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentSeverities()" class="member-name-link">getAssetMcIncidentSeverities</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident severities associated with this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentStates()" class="member-name-link">getAssetMcIncidentStates</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentStates()" class="member-name-link">getAssetMcIncidentStates</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident states associated with this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentSubTypes()" class="member-name-link">getAssetMcIncidentSubTypes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentSubTypes()" class="member-name-link">getAssetMcIncidentSubTypes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident sub-types associated with this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentTypes()" class="member-name-link">getAssetMcIncidentTypes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIncidentTypes()" class="member-name-link">getAssetMcIncidentTypes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo incident types associated with this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIsMonitored()" class="member-name-link">getAssetMcIsMonitored</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcIsMonitored()" class="member-name-link">getAssetMcIsMonitored</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Tracks whether this asset is monitored by MC or not</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcLastSyncRunAt()" class="member-name-link">getAssetMcLastSyncRunAt</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcLastSyncRunAt()" class="member-name-link">getAssetMcLastSyncRunAt</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Time (epoch) at which this asset was last synced from Monte Carlo.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorNames()" class="member-name-link">getAssetMcMonitorNames</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorNames()" class="member-name-link">getAssetMcMonitorNames</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of Monte Carlo monitor names attached to this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorQualifiedNames()" class="member-name-link">getAssetMcMonitorQualifiedNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorQualifiedNames()" class="member-name-link">getAssetMcMonitorQualifiedNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of unique Monte Carlo monitor names attached to this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorScheduleTypes()" class="member-name-link">getAssetMcMonitorScheduleTypes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorScheduleTypes()" class="member-name-link">getAssetMcMonitorScheduleTypes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Schedules of all associated Monte Carlo monitors.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorStatuses()" class="member-name-link">getAssetMcMonitorStatuses</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorStatuses()" class="member-name-link">getAssetMcMonitorStatuses</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Statuses of all associated Monte Carlo monitors.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorTypes()" class="member-name-link">getAssetMcMonitorTypes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetMcMonitorTypes()" class="member-name-link">getAssetMcMonitorTypes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Types of all associated Monte Carlo monitors.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetPoliciesCount()" class="member-name-link">getAssetPoliciesCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetPoliciesCount()" class="member-name-link">getAssetPoliciesCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Count of policies inside the asset</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetPolicyGUIDs()" class="member-name-link">getAssetPolicyGUIDs</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetPolicyGUIDs()" class="member-name-link">getAssetPolicyGUIDs</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Array of policy ids governing this asset</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetRedirectGUIDs()" class="member-name-link">getAssetRedirectGUIDs</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetRedirectGUIDs()" class="member-name-link">getAssetRedirectGUIDs</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Array of asset ids that equivalent to this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../structs/AssetSmusMetadataFormDetails.html" title="class in com.atlan.model.structs">AssetSmusMetadataFormDetails</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormDetails()" class="member-name-link">getAssetSmusMetadataFormDetails</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../structs/AssetSmusMetadataFormDetails.html" title="class in com.atlan.model.structs">AssetSmusMetadataFormDetails</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormDetails()" class="member-name-link">getAssetSmusMetadataFormDetails</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">AWS SMUS Asset MetadataForm details</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormKeyValueDetails()" class="member-name-link">getAssetSmusMetadataFormKeyValueDetails</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormKeyValueDetails()" class="member-name-link">getAssetSmusMetadataFormKeyValueDetails</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of AWS SMUS MetadataForm Key:Value Details.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormNames()" class="member-name-link">getAssetSmusMetadataFormNames</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSmusMetadataFormNames()" class="member-name-link">getAssetSmusMetadataFormNames</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of AWS SMUS MetadataForm Names.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaCheckCount()" class="member-name-link">getAssetSodaCheckCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaCheckCount()" class="member-name-link">getAssetSodaCheckCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Number of checks done via Soda.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaCheckStatuses()" class="member-name-link">getAssetSodaCheckStatuses</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaCheckStatuses()" class="member-name-link">getAssetSodaCheckStatuses</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">All associated Soda check statuses.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaDQStatus()" class="member-name-link">getAssetSodaDQStatus</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaDQStatus()" class="member-name-link">getAssetSodaDQStatus</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Status of data quality from Soda.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaLastScanAt()" class="member-name-link">getAssetSodaLastScanAt</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">TBC</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaLastSyncRunAt()" class="member-name-link">getAssetSodaLastSyncRunAt</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaLastScanAt()" class="member-name-link">getAssetSodaLastScanAt</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">TBC</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaSourceURL()" class="member-name-link">getAssetSodaSourceURL</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaLastSyncRunAt()" class="member-name-link">getAssetSodaLastSyncRunAt</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">TBC</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSourceId()" class="member-name-link">getAssetSourceId</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSodaSourceURL()" class="member-name-link">getAssetSodaSourceURL</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">TBC</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSourceId()" class="member-name-link">getAssetSourceId</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Unique identifier for this asset in the system from which it was sourced.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSourceReadme()" class="member-name-link">getAssetSourceReadme</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSourceReadme()" class="member-name-link">getAssetSourceReadme</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Readme of this asset, as extracted from source.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSpaceName()" class="member-name-link">getAssetSpaceName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSpaceName()" class="member-name-link">getAssetSpaceName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Name of the space that contains this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSpaceQualifiedName()" class="member-name-link">getAssetSpaceQualifiedName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSpaceQualifiedName()" class="member-name-link">getAssetSpaceQualifiedName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Unique name of the space that contains this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummary()" class="member-name-link">getAssetSummary</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummary()" class="member-name-link">getAssetSummary</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Provider-defined summary of this asset as a JSON-stringified object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummaryFilterTokens()" class="member-name-link">getAssetSummaryFilterTokens</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummaryFilterTokens()" class="member-name-link">getAssetSummaryFilterTokens</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Flattened tokens for section-scoped filtering on assetSummary.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../structs/AssetSummaryProvider.html" title="class in com.atlan.model.structs">AssetSummaryProvider</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummaryProvider()" class="member-name-link">getAssetSummaryProvider</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../structs/AssetSummaryProvider.html" title="class in com.atlan.model.structs">AssetSummaryProvider</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetSummaryProvider()" class="member-name-link">getAssetSummaryProvider</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Metadata about the provider of this asset's summary.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetTags()" class="member-name-link">getAssetTags</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetTags()" class="member-name-link">getAssetTags</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of tags attached to this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetThemeHex()" class="member-name-link">getAssetThemeHex</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetThemeHex()" class="member-name-link">getAssetThemeHex</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Color (in hexadecimal RGB) to use to represent this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetUserDefinedType()" class="member-name-link">getAssetUserDefinedType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAssetUserDefinedType()" class="member-name-link">getAssetUserDefinedType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Name to use for this type of asset, as a subtype of the actual typeName.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAssignedTerms()" class="member-name-link">getAssignedTerms</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IGlossaryTerm.html" title="interface in com.atlan.model.assets">IGlossaryTerm</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAssignedTerms()" class="member-name-link">getAssignedTerms</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Glossary terms that are linked to this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="IAtlanApp.html" title="interface in com.atlan.model.assets">IAtlanApp</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanApp()" class="member-name-link">getAtlanApp</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="IAtlanApp.html" title="interface in com.atlan.model.assets">IAtlanApp</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanApp()" class="member-name-link">getAtlanApp</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Atlan application containing the workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppMetadata()" class="member-name-link">getAtlanAppMetadata</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppMetadata()" class="member-name-link">getAtlanAppMetadata</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Metadata for the Atlan application (escaped JSON string).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppName()" class="member-name-link">getAtlanAppName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppName()" class="member-name-link">getAtlanAppName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Name of the Atlan application this asset belongs to.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppQualifiedName()" class="member-name-link">getAtlanAppQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppQualifiedName()" class="member-name-link">getAtlanAppQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Qualified name of the Atlan application this asset belongs to.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAtlanAppTool.html" title="interface in com.atlan.model.assets">IAtlanAppTool</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanAppTools()" class="member-name-link">getAtlanAppTools</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAtlanAppTool.html" title="interface in com.atlan.model.assets">IAtlanAppTool</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanAppTools()" class="member-name-link">getAtlanAppTools</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Tools that exist within this Atlan application.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowAgentName()" class="member-name-link">getAtlanAppWorkflowAgentName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowDag()" class="member-name-link">getAtlanAppWorkflowDag</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Map of all activity steps for the workflow (escaped JSON string).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../structs/AtlanAppErrorHandling.html" title="class in com.atlan.model.structs">AtlanAppErrorHandling</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowErrorHandling()" class="member-name-link">getAtlanAppWorkflowErrorHandling</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowDeploymentName()" class="member-name-link">getAtlanAppWorkflowDeploymentName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">SDR deployment name this workflow's runs execute under.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../structs/AtlanAppErrorHandling.html" title="class in com.atlan.model.structs">AtlanAppErrorHandling</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowErrorHandling()" class="member-name-link">getAtlanAppWorkflowErrorHandling</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Error handling strategy for the workflow.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/AtlanAppWorkflowOwnership.html" title="enum class in com.atlan.model.enums">AtlanAppWorkflowOwnership</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowOwnership()" class="member-name-link">getAtlanAppWorkflowOwnership</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/AtlanAppWorkflowOwnership.html" title="enum class in com.atlan.model.enums">AtlanAppWorkflowOwnership</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowOwnership()" class="member-name-link">getAtlanAppWorkflowOwnership</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Ownership type of the workflow, indicating whether it is managed by Atlan or by a user.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAppWorkflowRun.html" title="interface in com.atlan.model.assets">IAppWorkflowRun</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanAppWorkflowRuns()" class="member-name-link">getAtlanAppWorkflowRuns</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAppWorkflowRun.html" title="interface in com.atlan.model.assets">IAppWorkflowRun</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanAppWorkflowRuns()" class="member-name-link">getAtlanAppWorkflowRuns</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">The workflow runs contained within the workflow.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../enums/AtlanAppWorkflowRuntimeMode.html" title="enum class in com.atlan.model.enums">AtlanAppWorkflowRuntimeMode</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAtlanAppWorkflowRuntimeMode()" class="member-name-link">getAtlanAppWorkflowRuntimeMode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Execution runtime for this workflow's runs (SDR or DIRECT).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAtlanAppWorkflow.html" title="interface in com.atlan.model.assets">IAtlanAppWorkflow</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getAtlanAppWorkflows()" class="member-name-link">getAtlanAppWorkflows</a>()</code></div>
@@ -1529,10 +1564,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="ATLAN_APP_WORKFLOW_AGENT_NAME">
+<h3>ATLAN_APP_WORKFLOW_AGENT_NAME</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">ATLAN_APP_WORKFLOW_AGENT_NAME</span></div>
+<div class="block">Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832).</div>
+</section>
+</li>
+<li>
 <section class="detail" id="ATLAN_APP_WORKFLOW_DAG">
 <h3>ATLAN_APP_WORKFLOW_DAG</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></span>&nbsp;<span class="element-name">ATLAN_APP_WORKFLOW_DAG</span></div>
 <div class="block">Map of all activity steps for the workflow (escaped JSON string).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME">
+<h3>ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">ATLAN_APP_WORKFLOW_DEPLOYMENT_NAME</span></div>
+<div class="block">SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels.</div>
 </section>
 </li>
 <li>
@@ -1554,6 +1603,13 @@ loadScripts(document, 'script');</script>
 <h3>ATLAN_APP_WORKFLOW_RUNS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">ATLAN_APP_WORKFLOW_RUNS</span></div>
 <div class="block">The workflow runs contained within the workflow.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ATLAN_APP_WORKFLOW_RUNTIME_MODE">
+<h3>ATLAN_APP_WORKFLOW_RUNTIME_MODE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">ATLAN_APP_WORKFLOW_RUNTIME_MODE</span></div>
+<div class="block">Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs.</div>
 </section>
 </li>
 <li>
@@ -2349,6 +2405,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getAssetManagedBy()">
+<h3>getAssetManagedBy</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAssetManagedBy</span>()</div>
+<div class="block">Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getAssetMcAlertQualifiedNames()">
 <h3>getAssetMcAlertQualifiedNames</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAssetMcAlertQualifiedNames</span>()</div>
@@ -2650,10 +2713,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getAtlanAppWorkflowAgentName()">
+<h3>getAtlanAppWorkflowAgentName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAtlanAppWorkflowAgentName</span>()</div>
+<div class="block">Name of the SDR agent this workflow's runs are routed to (the atlan-prefixed task queue's agent). Indexed so an agent's runs can be filtered server-side by joining runs to their parent workflow (DISTR-832).</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getAtlanAppWorkflowDag()">
 <h3>getAtlanAppWorkflowDag</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAtlanAppWorkflowDag</span>()</div>
 <div class="block">Map of all activity steps for the workflow (escaped JSON string).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAtlanAppWorkflowDeploymentName()">
+<h3>getAtlanAppWorkflowDeploymentName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAtlanAppWorkflowDeploymentName</span>()</div>
+<div class="block">SDR deployment name this workflow's runs execute under. Denormalized from the run-time config for run-history filtering and metric labels.</div>
 </section>
 </li>
 <li>
@@ -2675,6 +2752,13 @@ loadScripts(document, 'script');</script>
 <h3>getAtlanAppWorkflowRuns</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IAppWorkflowRun.html" title="interface in com.atlan.model.assets">IAppWorkflowRun</a>&gt;</span>&nbsp;<span class="element-name">getAtlanAppWorkflowRuns</span>()</div>
 <div class="block">The workflow runs contained within the workflow.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getAtlanAppWorkflowRuntimeMode()">
+<h3>getAtlanAppWorkflowRuntimeMode</h3>
+<div class="member-signature"><span class="return-type"><a href="../enums/AtlanAppWorkflowRuntimeMode.html" title="enum class in com.atlan.model.enums">AtlanAppWorkflowRuntimeMode</a></span>&nbsp;<span class="element-name">getAtlanAppWorkflowRuntimeMode</span>()</div>
+<div class="block">Execution runtime for this workflow's runs (SDR or DIRECT). Set at workflow save and constant across the workflow's runs.</div>
 </section>
 </li>
 <li>
