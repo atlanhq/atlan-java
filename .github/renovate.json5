@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: Apache-2.0
+// Copyright 2026 Atlan Pte. Ltd.
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:recommended",
+  ],
+  // Keep these PRs out of the generated release notes (see .github/release.yml)
+  labels: [
+    "dependencies",
+  ],
+  // Org policy: only adopt versions that have been public for at least 7 days
+  // (security fixes for known vulnerabilities bypass this via vulnerabilityAlerts)
+  minimumReleaseAge: "7 days",
+  internalChecksFilter: "strict",
+  prHourlyLimit: 0,
+  prConcurrentLimit: 20,
+  vulnerabilityAlerts: {
+    labels: [
+      "dependencies",
+      "security",
+    ],
+    minimumReleaseAge: null,
+  },
+  packageRules: [
+    {
+      // shadow >= 9.5.0 requires Gradle 9; remove this rule once the Gradle wrapper is on 9.x
+      matchPackageNames: [
+        "com.gradleup.shadow",
+        "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin",
+      ],
+      allowedVersions: "<9.5.0",
+    },
+  ],
+}
