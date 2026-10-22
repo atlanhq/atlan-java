@@ -45,5 +45,34 @@
       ],
       allowedVersions: "<9.5.0",
     },
+    {
+      // AWS SDK's netty-nio-client still requests the 4.1.x line of netty-codec (netty41 in libs.versions.toml)
+      matchPackageNames: [
+        "io.netty:netty-codec",
+      ],
+      allowedVersions: "<4.2.0",
+    },
+    {
+      // wiremock-jetty12 brings in the jetty 12.0.x line for these modules (wiremock-jetty in libs.versions.toml)
+      matchPackageNames: [
+        "org.eclipse.jetty:jetty-security",
+        "org.eclipse.jetty:jetty-client",
+        "org.eclipse.jetty.ee10:jetty-ee10-servlet",
+      ],
+      allowedVersions: "<12.1.0",
+    },
+    {
+      // Each instrumentation BOM release imports a specific opentelemetry-bom version, so update
+      // both together and have a human confirm they line up before merging
+      matchPackageNames: [
+        "io.opentelemetry:opentelemetry-bom",
+        "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha",
+      ],
+      groupName: "opentelemetry",
+      automerge: false,
+      prBodyNotes: [
+        "⚠️ `otel` must match the `opentelemetry-bom` version imported by the new `opentelemetry-instrumentation-bom-alpha` POM on Maven Central. Adjust `otel` in `gradle/libs.versions.toml` before merging if they differ.",
+      ],
+    },
   ],
 }
