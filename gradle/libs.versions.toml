@@ -1,7 +1,8 @@
 [versions]
 # 2.22.4 (published 2026-10-17) is intentionally inside the 7-day release-age window
 jackson = "2.22.4"
-jackson3 = "3.1.7"
+# 3.1.8 (published 2026-10-18) is intentionally inside the 7-day release-age window
+jackson3 = "3.1.8"
 slf4j = "2.0.20"
 elasticsearch = "9.4.3"
 classgraph = "4.8.199"
@@ -29,8 +30,8 @@ pkl = "0.32.0"
 adls = "12.29.0"
 azure = "1.18.7"
 azure-core-http-okhttp = "1.13.8"
-guava = "33.6.0-jre"
-openlineage = "1.51.0"
+guava = "33.7.2-jre"
+openlineage = "1.53.0"
 kotlin = "2.4.21"
 kotlin-mu = "3.0.5"
 rocksdb = "10.10.1.1"
@@ -45,8 +46,9 @@ netty = "4.2.18.Final"
 netty41 = "4.1.136.Final"
 rhino = "1.9.1"
 nimbus = "10.9.1"
-otel = "1.64.0"
-otel-instrumentation = "2.29.0-alpha"
+# otel must match exactly the core BOM that otel-instrumentation imports (2.32.0-alpha -> 1.66.0)
+otel = "1.66.0"
+otel-instrumentation = "2.32.0-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
