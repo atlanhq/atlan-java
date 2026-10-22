@@ -55,6 +55,12 @@ public interface ICosmosMongoDBCollection {
             "cosmosMongoDBDatabaseQualifiedName",
             "cosmosMongoDBDatabaseQualifiedName.text");
 
+    /** User-defined functions that exist within this collection. */
+    RelationField COSMOS_MONGO_DB_FUNCTIONS = new RelationField("cosmosMongoDBFunctions");
+
+    /** Stored procedures and triggers that exist within this collection. */
+    RelationField COSMOS_MONGO_DB_STORED_PROCEDURES = new RelationField("cosmosMongoDBStoredProcedures");
+
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
 
@@ -382,6 +388,9 @@ public interface ICosmosMongoDBCollection {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -543,6 +552,16 @@ public interface ICosmosMongoDBCollection {
 
     /** Unique name of the database in which this collection exists. */
     String getCosmosMongoDBDatabaseQualifiedName();
+
+    /** User-defined functions that exist within this collection. */
+    default SortedSet<IFunction> getCosmosMongoDBFunctions() {
+        return null;
+    }
+
+    /** Stored procedures and triggers that exist within this collection. */
+    default SortedSet<IProcedure> getCosmosMongoDBStoredProcedures() {
+        return null;
+    }
 
     /** Latest version of the data contract (in any status) for this asset. */
     default IDataContract getDataContractLatest() {

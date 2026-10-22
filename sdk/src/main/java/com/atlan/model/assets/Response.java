@@ -74,6 +74,11 @@ public class Response extends Asset implements IResponse, IForm, IAsset, IRefere
     @Singular
     SortedSet<IGCPDataplexAspectType> gcpDataplexAspectTypeMetadataEntities;
 
+    /** Knowledge files linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<IKnowledgeFile> knowledgeLinkedFiles;
+
     /** Options of the response to a form. */
     @Attribute
     @Singular
