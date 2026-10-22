@@ -6,6 +6,7 @@ changelog:
     authors:
       - octocat
       - dependabot
+      - renovate
   categories:
     - title: 🎉 New features
       labels:
