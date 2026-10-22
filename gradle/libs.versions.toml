@@ -38,7 +38,7 @@ rocksdb = "10.10.1.1"
 jetty = "12.1.14"
 # wiremock-jetty12 brings in the jetty 12.0.x line for its servlet / security / client modules
 wiremock-jetty = "12.0.39"
-handlebars = "4.5.2"
+handlebars = "4.5.5"
 httpclient5 = "5.6.4"
 httpcore5 = "5.4.3"
 netty = "4.2.19.Final"
