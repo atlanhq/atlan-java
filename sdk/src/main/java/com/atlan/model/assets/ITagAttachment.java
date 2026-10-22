@@ -13,7 +13,9 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordTextField;
+import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AssetExternalDQMetadata;
@@ -42,6 +44,24 @@ public interface ITagAttachment {
 
     public static final String TYPE_NAME = "TagAttachment";
 
+    /** Qualified name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    TextField OBJECT_QUALIFIED_NAME = new TextField("objectQualifiedName", "objectQualifiedName");
+
+    /** Type name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    TextField OBJECT_TYPE_NAME = new TextField("objectTypeName", "objectTypeName");
+
+    /** Whether the Atlan tag propagates from the asset. Read by publish-app; not an Atlas typedef attribute. */
+    BooleanField PROPAGATE = new BooleanField("propagate", "propagate");
+
+    /** Name of the source tag, used as the Atlan tag name. Read by publish-app; not an Atlas typedef attribute. */
+    TextField SOURCE_TAG_DISPLAY_NAME = new TextField("sourceTagDisplayName", "sourceTagDisplayName");
+
+    /** Qualified name of the source tag. Read by publish-app; not an Atlas typedef attribute. */
+    TextField SOURCE_TAG_QUALIFIED_NAME = new TextField("sourceTagQualifiedName", "sourceTagQualifiedName");
+
+    /** Type name of the source tag, for example GlueTag. Read by publish-app; not an Atlas typedef attribute. */
+    TextField SOURCE_TAG_TYPE_NAME = new TextField("sourceTagTypeName", "sourceTagTypeName");
+
     /** Represents associated tag value. */
     KeywordTextField TAG_ATTACHMENT_STRING_VALUE = new KeywordTextField(
             "tagAttachmentStringValue", "tagAttachmentStringValue", "tagAttachmentStringValue.text");
@@ -49,6 +69,12 @@ public interface ITagAttachment {
     /** Represents associated source tag's qualified name. */
     KeywordTextField TAG_QUALIFIED_NAME =
             new KeywordTextField("tagQualifiedName", "tagQualifiedName", "tagQualifiedName.text");
+
+    /** Value of the source tag on the asset. Read by publish-app; not an Atlas typedef attribute. */
+    TextField VALUE = new TextField("value", "value");
+
+    /** Type of the tag value, for example STRING. Read by publish-app; not an Atlas typedef attribute. */
+    TextField VALUE_TYPE = new TextField("valueType", "valueType");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -374,6 +400,9 @@ public interface ITagAttachment {
     /** Internal Popularity score for this asset. */
     Double getAssetInternalPopularityScore();
 
+    /** Identity of the agent that creates and maintains this asset — a connection qualified name, an application name, or any other opaque token that agent chooses. Written by that agent on create, never supplied by a source, and stable for the life of the asset. Compared only for equality; never parsed or resolved. */
+    String getAssetManagedBy();
+
     /** List of unique Monte Carlo alert names attached to this asset. */
     SortedSet<String> getAssetMcAlertQualifiedNames();
 
@@ -643,6 +672,12 @@ public interface ITagAttachment {
     /** Array of policy ids non-compliant to this asset */
     SortedSet<String> getNonCompliantAssetPolicyGUIDs();
 
+    /** Qualified name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    String getObjectQualifiedName();
+
+    /** Type name of the asset the source tag is attached to. Read by publish-app; not an Atlas typedef attribute. */
+    String getObjectTypeName();
+
     /** Tasks from which this asset is output. */
     default SortedSet<IAirflowTask> getOutputFromAirflowTasks() {
         return null;
@@ -687,6 +722,9 @@ public interface ITagAttachment {
 
     /** Array of product guids linked to this asset */
     SortedSet<String> getProductGUIDs();
+
+    /** Whether the Atlan tag propagates from the asset. Read by publish-app; not an Atlas typedef attribute. */
+    Boolean getPropagate();
 
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. This must be unique across all assets of the same type. */
     String getQualifiedName();
@@ -763,6 +801,15 @@ public interface ITagAttachment {
     /** Total number of unique users that read data from asset. */
     Long getSourceReadUserCount();
 
+    /** Name of the source tag, used as the Atlan tag name. Read by publish-app; not an Atlas typedef attribute. */
+    String getSourceTagDisplayName();
+
+    /** Qualified name of the source tag. Read by publish-app; not an Atlas typedef attribute. */
+    String getSourceTagQualifiedName();
+
+    /** Type name of the source tag, for example GlueTag. Read by publish-app; not an Atlas typedef attribute. */
+    String getSourceTagTypeName();
+
     /** Total cost of all operations at source. */
     Double getSourceTotalCost();
 
@@ -817,6 +864,12 @@ public interface ITagAttachment {
 
     /** Description of this asset, as provided by a user. If present, this will be used for the description in user interface. */
     String getUserDescription();
+
+    /** Value of the source tag on the asset. Read by publish-app; not an Atlas typedef attribute. */
+    String getValue();
+
+    /** Type of the tag value, for example STRING. Read by publish-app; not an Atlas typedef attribute. */
+    String getValueType();
 
     /** View score for this asset. */
     Double getViewScore();
