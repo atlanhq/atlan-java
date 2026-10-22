@@ -73,6 +73,9 @@ public interface IAPISpec {
     KeywordTextField API_SPEC_SERVICE_ALIAS =
             new KeywordTextField("apiSpecServiceAlias", "apiSpecServiceAlias", "apiSpecServiceAlias.text");
 
+    /** Raw content of the API specification file (JSON or YAML). */
+    KeywordField API_SPEC_RAW_CONTENT = new KeywordField("apiSpecRawContent", "apiSpecRawContent");
+
     /** URL to the terms of service for the API specification. */
     KeywordTextField API_SPEC_TERMS_OF_SERVICE_URL = new KeywordTextField(
             "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL", "apiSpecTermsOfServiceURL.text");

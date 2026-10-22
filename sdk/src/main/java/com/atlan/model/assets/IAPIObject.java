@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -42,11 +43,26 @@ public interface IAPIObject {
 
     public static final String TYPE_NAME = "APIObject";
 
+    /** Type of API body this object belongs to (e.g. "request", "response/200"). */
+    KeywordField API_BODY_TYPE = new KeywordField("apiBodyType", "apiBodyType");
+
     /** Count of the APIField of this object. */
     NumericField API_FIELD_COUNT = new NumericField("apiFieldCount", "apiFieldCount");
 
+    /** API methods that use this object as their request schema. */
+    RelationField API_METHODS_REQUESTING_THIS = new RelationField("apiMethodsRequestingThis");
+
+    /** API methods that use this object as one of their response schemas. */
+    RelationField API_METHODS_RESPONDING_WITH_THIS = new RelationField("apiMethodsRespondingWithThis");
+
     /** APIField assets contained within this APIObject. */
     RelationField API_FIELDS = new RelationField("apiFields");
+
+    /** Qualified name of the API method this object belongs to. */
+    KeywordField API_METHOD_QUALIFIED_NAME = new KeywordField("apiMethodQualifiedName", "apiMethodQualifiedName");
+
+    /** Qualified name of the API path this object belongs to. */
+    KeywordField API_PATH_QUALIFIED_NAME = new KeywordField("apiPathQualifiedName", "apiPathQualifiedName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
     SortedSet<String> getAdminGroups();
@@ -77,6 +93,9 @@ public interface IAPIObject {
         return null;
     }
 
+    /** Type of API body this object belongs to (e.g. "request", "response/200"). */
+    String getApiBodyType();
+
     /** External documentation of the API. */
     Map<String, String> getApiExternalDocs();
 
@@ -91,11 +110,27 @@ public interface IAPIObject {
     /** Whether authentication is optional (true) or required (false). */
     Boolean getApiIsAuthOptional();
 
+    /** API methods that use this object as their request schema. */
+    default SortedSet<IAPIMethod> getApiMethodsRequestingThis() {
+        return null;
+    }
+
+    /** Qualified name of the API method this object belongs to. */
+    String getApiMethodQualifiedName();
+
+    /** API methods that use this object as one of their response schemas. */
+    default SortedSet<IAPIMethod> getApiMethodsRespondingWithThis() {
+        return null;
+    }
+
     /** If this asset refers to an APIObject */
     Boolean getApiIsObjectReference();
 
     /** Qualified name of the APIObject that is referred to by this asset. When apiIsObjectReference is true. */
     String getApiObjectQualifiedName();
+
+    /** Qualified name of the API path this object belongs to. */
+    String getApiPathQualifiedName();
 
     /** Simple name of the API spec, if this asset is contained in an API spec. */
     String getApiSpecName();
