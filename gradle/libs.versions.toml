@@ -2,7 +2,7 @@
 # 2.22.4 (published 2026-10-17) is intentionally inside the 7-day release-age window
 jackson = "2.22.4"
 # 3.1.8 (published 2026-10-18) is intentionally inside the 7-day release-age window
-jackson3 = "3.1.8"
+jackson3 = "3.2.3"
 slf4j = "2.0.20"
 elasticsearch = "9.5.5"
 classgraph = "4.8.199"
