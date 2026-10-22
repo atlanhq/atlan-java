@@ -40,7 +40,7 @@ tasks.delombok {
 }
 
 dependencies {
-    errorprone("com.google.errorprone:error_prone_core:2.38.0")
+    errorprone("com.google.errorprone:error_prone_core:2.50.0")
 }
 
 tasks.withType<JavaCompile> {
