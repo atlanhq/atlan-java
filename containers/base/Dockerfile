@@ -16,6 +16,15 @@ RUN set -eux; \
       wget -O /dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_${DUMB_INIT_ARCH} \
       && chmod +x /dumb-init
 
+# Block the eMudhra intermediates (CVE-2026-91403) until the base image ships a fixed Temurin 17.
+# security/blocked.certs is generated from openjdk/jdk@22bc7357ce ("8395142: CA Enhancements") with
+# that commit's BlockedCertsConverter. Merged with the JDK's own file so its entries are kept.
+COPY security/blocked.certs /tmp/blocked.certs
+RUN set -e; f="$JAVA_HOME/lib/security/blocked.certs"; test -f "$f"; \
+      head -1 "$f" | grep -qx 'Algorithm=SHA-256'; \
+      { echo "Algorithm=SHA-256"; grep -hvx 'Algorithm=SHA-256' "$f" /tmp/blocked.certs | sort -u; } > /tmp/merged; \
+      mv /tmp/merged "$f"; chmod 644 "$f"; rm /tmp/blocked.certs
+
 COPY $TARGETARCH/assembly /opt/jars
 
 ENV CLASSPATH="/opt/jars/*:/opt/app/*"
