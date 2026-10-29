@@ -931,6 +931,12 @@ public interface ICatalog {
             case SapErpComponent.TYPE_NAME:
                 ref = SapErpComponent.refByQualifiedName(qualifiedName);
                 break;
+            case SapErpDataSource.TYPE_NAME:
+                ref = SapErpDataSource.refByQualifiedName(qualifiedName);
+                break;
+            case SapErpDataSourceField.TYPE_NAME:
+                ref = SapErpDataSourceField.refByQualifiedName(qualifiedName);
+                break;
             case SapErpFioriApp.TYPE_NAME:
                 ref = SapErpFioriApp.refByQualifiedName(qualifiedName);
                 break;
