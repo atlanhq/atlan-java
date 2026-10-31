@@ -45,7 +45,7 @@ netty = "4.2.19.Final"
 # AWS SDK's netty-nio-client still requests the 4.1.x line of netty-codec
 netty41 = "4.1.139.Final"
 rhino = "1.9.1"
-nimbus = "10.9.1"
+nimbus = "10.10"
 # otel must match exactly the core BOM that otel-instrumentation imports (2.32.0-alpha -> 1.66.0)
 otel = "1.66.0"
 otel-instrumentation = "2.32.0-alpha"
