@@ -43,14 +43,14 @@ public interface IFivetran {
 
     public static final String TYPE_NAME = "Fivetran";
 
-    /** Number of records updated in the latest sync on Fivetran */
+    /** Number of records updated in the latest sync on Fivetran. */
     NumericField FIVETRAN_LAST_SYNC_RECORDS_UPDATED =
             new NumericField("fivetranLastSyncRecordsUpdated", "fivetranLastSyncRecordsUpdated");
 
     /** Status of the latest sync on Fivetran. */
     KeywordField FIVETRAN_LAST_SYNC_STATUS = new KeywordField("fivetranLastSyncStatus", "fivetranLastSyncStatus");
 
-    /** Name of the atlan fivetran workflow that updated this asset */
+    /** Name of the atlan fivetran workflow that updated this asset. */
     KeywordField FIVETRAN_WORKFLOW_NAME = new KeywordField("fivetranWorkflowName", "fivetranWorkflowName");
 
     /** List of groups who administer this asset. (This is only used for certain asset types.) */
@@ -557,13 +557,13 @@ public interface IFivetran {
         return null;
     }
 
-    /** Number of records updated in the latest sync on Fivetran */
+    /** Number of records updated in the latest sync on Fivetran. */
     Long getFivetranLastSyncRecordsUpdated();
 
     /** Status of the latest sync on Fivetran. */
     FivetranConnectorStatus getFivetranLastSyncStatus();
 
-    /** Name of the atlan fivetran workflow that updated this asset */
+    /** Name of the atlan fivetran workflow that updated this asset. */
     String getFivetranWorkflowName();
 
     /** Whether this asset has contract (true) or not (false). */
