@@ -54,11 +54,11 @@ public class FivetranConnector extends Asset
     @Attribute
     String catalogDatasetGuid;
 
-    /** Total credits used by this destination */
+    /** Total credits used by this destination. */
     @Attribute
     Double fivetranConnectorCreditsUsed;
 
-    /** Destination name added by the user on Fivetran */
+    /** Destination name added by the user on Fivetran. */
     @Attribute
     String fivetranConnectorDestinationName;
 
@@ -66,40 +66,40 @@ public class FivetranConnector extends Asset
     @Attribute
     String fivetranConnectorDestinationType;
 
-    /** URL to open the destination details on Fivetran */
+    /** URL to open the destination details on Fivetran. */
     @Attribute
     String fivetranConnectorDestinationURL;
 
-    /** Extract time in seconds in the latest sync on fivetran */
+    /** Extract time in seconds in the latest sync on fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncExtractTimeSeconds;
 
-    /** Extracted data volume in metabytes in the latest sync on Fivetran */
+    /** Extracted data volume in metabytes in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncExtractVolumeMegabytes;
 
-    /** Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds */
+    /** Timestamp (epoch) when the latest sync finished on Fivetran, in milliseconds. */
     @Attribute
     @Date
     Long fivetranConnectorLastSyncFinishedAt;
 
-    /** ID of the latest sync */
+    /** ID of the latest sync. */
     @Attribute
     String fivetranConnectorLastSyncId;
 
-    /** Load time in seconds in the latest sync on Fivetran */
+    /** Load time in seconds in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncLoadTimeSeconds;
 
-    /** Loaded data volume in metabytes in the latest sync on Fivetran */
+    /** Loaded data volume in metabytes in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncLoadVolumeMegabytes;
 
-    /** Process time in seconds in the latest sync on Fivetran */
+    /** Process time in seconds in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncProcessTimeSeconds;
 
-    /** Process volume in metabytes in the latest sync on Fivetran */
+    /** Process volume in metabytes in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncProcessVolumeMegabytes;
 
@@ -107,17 +107,17 @@ public class FivetranConnector extends Asset
     @Attribute
     String fivetranConnectorLastSyncReason;
 
-    /** Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran */
+    /** Timestamp (epoch) at which the latest sync is rescheduled at on Fivetran. */
     @Attribute
     @Date
     Long fivetranConnectorLastSyncRescheduledAt;
 
-    /** Timestamp (epoch) when the latest sync started on Fivetran, in milliseconds */
+    /** Timestamp (epoch) when the latest sync started on Fivetran, in milliseconds. */
     @Attribute
     @Date
     Long fivetranConnectorLastSyncStartedAt;
 
-    /** Number of tables synced in the latest sync on Fivetran */
+    /** Number of tables synced in the latest sync on Fivetran. */
     @Attribute
     Long fivetranConnectorLastSyncTablesSynced;
 
@@ -125,76 +125,92 @@ public class FivetranConnector extends Asset
     @Attribute
     String fivetranConnectorLastSyncTaskType;
 
-    /** Total sync time in seconds in the latest sync on Fivetran */
+    /** Total sync time in seconds in the latest sync on Fivetran. */
     @Attribute
     Double fivetranConnectorLastSyncTotalTimeSeconds;
 
-    /** Increase in the percentage of free MAR compared to the previous month */
+    /** Increase in the percentage of free MAR compared to the previous month. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsChangePercentageFree;
 
-    /** Increase in the percentage of paid MAR compared to the previous month */
+    /** Increase in the percentage of paid MAR compared to the previous month. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsChangePercentagePaid;
 
-    /** Increase in the percentage of total MAR compared to the previous month */
+    /** Increase in the percentage of total MAR compared to the previous month. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsChangePercentageTotal;
 
-    /** Free Monthly Active Rows used by the connector in the past month */
+    /** Free Monthly Active Rows used by the connector in the past month. */
     @Attribute
     Long fivetranConnectorMonthlyActiveRowsFree;
 
-    /** Percentage of the account's total free MAR used by this connector */
+    /** Percentage of the account's total free MAR used by this connector. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsFreePercentageOfAccount;
 
-    /** Paid Monthly Active Rows used by the connector in the past month */
+    /** Paid Monthly Active Rows used by the connector in the past month. */
     @Attribute
     Long fivetranConnectorMonthlyActiveRowsPaid;
 
-    /** Percentage of the account's total paid MAR used by this connector */
+    /** Percentage of the account's total paid MAR used by this connector. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsPaidPercentageOfAccount;
 
-    /** Total Monthly Active Rows used by the connector in the past month */
+    /** Total Monthly Active Rows used by the connector in the past month. */
     @Attribute
     Long fivetranConnectorMonthlyActiveRowsTotal;
 
-    /** Percentage of the account's total MAR used by this connector */
+    /** Percentage of the account's total MAR used by this connector. */
     @Attribute
     Double fivetranConnectorMonthlyActiveRowsTotalPercentageOfAccount;
 
-    /** Connector name added by the user on Fivetran */
+    /** Connector name added by the user on Fivetran. */
     @Attribute
     String fivetranConnectorName;
 
-    /** Sync frequency for the connector in number of hours. Eg: Every 6 hours */
+    /** Database of the source system this connector reads from. */
+    @Attribute
+    String fivetranConnectorSourceDatabase;
+
+    /** Host of the source system (database or SFTP/FTP server) this connector reads from. */
+    @Attribute
+    String fivetranConnectorSourceHost;
+
+    /** Location of the source data: folder URL, bucket, storage account/container, or instance URL. */
+    @Attribute
+    String fivetranConnectorSourceLocation;
+
+    /** Folder prefix inside the source location. */
+    @Attribute
+    String fivetranConnectorSourcePath;
+
+    /** Sync frequency for the connector in number of hours. Eg: Every 6 hours. */
     @Attribute
     String fivetranConnectorSyncFrequency;
 
-    /** Boolean to indicate whether the sync for this connector is paused or not */
+    /** Boolean to indicate whether the sync for this connector is paused or not. */
     @Attribute
     Boolean fivetranConnectorSyncPaused;
 
-    /** Timestamp (epoch) on which the connector was setup on Fivetran, in milliseconds */
+    /** Timestamp (epoch) on which the connector was setup on Fivetran, in milliseconds. */
     @Attribute
     @Date
     Long fivetranConnectorSyncSetupOn;
 
-    /** Email ID of the user who setpu the connector on Fivetran */
+    /** Email ID of the user who setpu the connector on Fivetran. */
     @Attribute
     String fivetranConnectorSyncSetupUserEmail;
 
-    /** Full name of the user who setup the connector on Fivetran */
+    /** Full name of the user who setup the connector on Fivetran. */
     @Attribute
     String fivetranConnectorSyncSetupUserFullName;
 
-    /** Total five tables sorted by MAR synced by this connector */
+    /** Total five tables sorted by MAR synced by this connector. */
     @Attribute
     String fivetranConnectorTopTablesByMAR;
 
-    /** Total number of tables synced by this connector */
+    /** Total number of tables synced by this connector. */
     @Attribute
     Long fivetranConnectorTotalTablesSynced;
 
@@ -202,15 +218,15 @@ public class FivetranConnector extends Asset
     @Attribute
     String fivetranConnectorType;
 
-    /** URL to open the connector details on Fivetran */
+    /** URL to open the connector details on Fivetran. */
     @Attribute
     String fivetranConnectorURL;
 
-    /** Total usage cost by this destination */
+    /** Total usage cost by this destination. */
     @Attribute
     Double fivetranConnectorUsageCost;
 
-    /** Number of records updated in the latest sync on Fivetran */
+    /** Number of records updated in the latest sync on Fivetran. */
     @Attribute
     Long fivetranLastSyncRecordsUpdated;
 
@@ -218,7 +234,7 @@ public class FivetranConnector extends Asset
     @Attribute
     FivetranConnectorStatus fivetranLastSyncStatus;
 
-    /** Name of the atlan fivetran workflow that updated this asset */
+    /** Name of the atlan fivetran workflow that updated this asset. */
     @Attribute
     String fivetranWorkflowName;
 
@@ -272,7 +288,7 @@ public class FivetranConnector extends Asset
     @Singular
     SortedSet<IPartialObject> partialChildObjects;
 
-    /** Processes related to this Fivetran connector */
+    /** Processes related to this Fivetran connector. */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> processes;
