@@ -1154,6 +1154,9 @@ public class SapErpTableTest {
             .sapErpComponent(SapErpComponent.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sapErpRelatedTable(SapErpTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sapErpRelatedTable(SapErpTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapErpSetupTableDataSource(SapErpDataSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapErpSetupTableDataSource(
+                    SapErpDataSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
