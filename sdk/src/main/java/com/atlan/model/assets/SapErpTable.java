@@ -124,6 +124,11 @@ public class SapErpTable extends Asset implements ISapErpTable, ISAP, ICatalog, 
     @Singular
     SortedSet<ISapErpTable> sapErpRelatedTables;
 
+    /** SAP ERP DataSources that fill this table as their setup table. */
+    @Attribute
+    @Singular
+    SortedSet<ISapErpDataSource> sapErpSetupTableDataSources;
+
     /** Defines the delivery class of the SAP ERP table, determining how the table's data is transported and managed during system updates. */
     @Attribute
     String sapErpTableDeliveryClass;
