@@ -11,7 +11,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
 
-class DataDomainCache(
+open class DataDomainCache(
     val ctx: PackageContext<*>,
 ) : AssetCache<DataDomain>(ctx, "domain") {
     private val logger = Utils.getLogger(this.javaClass.name)
@@ -25,9 +25,17 @@ class DataDomainCache(
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
+        val result = id?.let { fetchById(it) }
         if (result != null) cache(result.guid, getIdentityForAsset(result), result)
     }
+
+    /**
+     * Retrieve a single data domain from Atlan by its GUID.
+     *
+     * @param guid unique identifier (GUID) of the data domain
+     * @return the data domain, or null if it could not be found
+     */
+    protected open fun fetchById(guid: String): DataDomain? = lookupById(guid, 0, ctx.client.maxNetworkRetries)
 
     /** {@inheritDoc}  */
     private fun lookupById(

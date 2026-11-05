@@ -55,6 +55,14 @@ class AssetExporter(
         CSVWriter(filename).use { csv ->
             csv.writeHeader(headerNames)
             val start = System.currentTimeMillis()
+
+            // Preload the domain cache up-front so identities resolve in level-order
+            // (parents-before-children). Assets are streamed in parallel, so without this
+            // a sub-domain can be looked up before its parent is cached and get exported
+            // as just its own name rather than its full path -- which the import side
+            // then cannot resolve.
+            ctx.dataDomainCache.preload()
+
             csv.streamAssets(assets.stream(true), this, assets.count(), batchSize, logger)
             logger.info { "Total time taken: ${System.currentTimeMillis() - start} ms" }
         }
