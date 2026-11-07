@@ -14,6 +14,6 @@ dependencies {
     implementation("io.freefair.gradle:lombok-plugin:9.8.2")
     implementation("net.ltgt.errorprone:net.ltgt.errorprone.gradle.plugin:4.4.0")
     implementation("com.adarshr:gradle-test-logger-plugin:4.0.0")
-    implementation("org.pkl-lang:org.pkl-lang.gradle.plugin:0.32.1")
+    implementation("org.pkl-lang:org.pkl-lang.gradle.plugin:0.32.2")
     implementation("org.wiremock:wiremock-jetty12:3.13.2")
 }
