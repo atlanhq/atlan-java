@@ -1305,6 +1305,9 @@ public class DremioColumnTest {
             .dbtSeedAsset(DbtSeed.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtSeedAsset(DbtSeed.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mongoDBCollection(MongoDBCollection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProduct(SapDatasphereDataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProduct(
+                    SapDatasphereDataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .nestedColumn(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .nestedColumn(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

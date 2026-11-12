@@ -1161,6 +1161,13 @@ public class SapDatasphereDataProductTest {
             .sapDatasphereDataProductContext("String1")
             .sapDatasphereDataProductTermsOfUse("String0")
             .sapDatasphereSchema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProductTable(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProductTable(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapDatasphereDataProductView(View.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProductView(View.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapDatasphereDataProductColumn(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProductColumn(
+                    Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

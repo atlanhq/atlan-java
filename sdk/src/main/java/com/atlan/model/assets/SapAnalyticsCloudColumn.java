@@ -586,6 +586,11 @@ public class SapAnalyticsCloudColumn extends Asset
     @Attribute
     String sapDataType;
 
+    /** SAP Datasphere data products that expose this column. */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
     /** Represents the total number of fields, columns, or child assets present in a given SAP asset. */
     @Attribute
     Long sapFieldCount;

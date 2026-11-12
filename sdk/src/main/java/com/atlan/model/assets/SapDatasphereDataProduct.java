@@ -111,6 +111,11 @@ public class SapDatasphereDataProduct extends Asset
     @Attribute
     String sapDataType;
 
+    /** Columns exposed by this SAP Datasphere data product. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> sapDatasphereDataProductColumns;
+
     /** Names of the Data Marketplace contexts to which this data product is assigned. */
     @Attribute
     @Singular
@@ -156,9 +161,19 @@ public class SapDatasphereDataProduct extends Asset
     @Attribute
     String sapDatasphereDataProductSpaceQualifiedName;
 
+    /** Tables exposed by this SAP Datasphere data product. */
+    @Attribute
+    @Singular
+    SortedSet<ITable> sapDatasphereDataProductTables;
+
     /** Terms of use that consumers accept when they install this data product. */
     @Attribute
     String sapDatasphereDataProductTermsOfUse;
+
+    /** Views exposed by this SAP Datasphere data product. */
+    @Attribute
+    @Singular
+    SortedSet<IView> sapDatasphereDataProductViews;
 
     /** Schema (Datasphere space) whose objects this data product exposes. */
     @Attribute
