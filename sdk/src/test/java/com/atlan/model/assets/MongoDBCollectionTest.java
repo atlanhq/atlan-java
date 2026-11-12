@@ -1232,6 +1232,9 @@ public class MongoDBCollectionTest {
             .mongoDBDatabase(MongoDBDatabase.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mongoDBColumn(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mongoDBColumn(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .sapDatasphereDataProduct(SapDatasphereDataProduct.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .sapDatasphereDataProduct(
+                    SapDatasphereDataProduct.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

@@ -316,6 +316,11 @@ public class DynamoDBGlobalSecondaryIndex extends Asset
     @Attribute
     Long rowCount;
 
+    /** SAP Datasphere data products that expose this table. */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
     /** Schema in which this table exists. */
     @Attribute
     @JsonProperty("atlanSchema")
