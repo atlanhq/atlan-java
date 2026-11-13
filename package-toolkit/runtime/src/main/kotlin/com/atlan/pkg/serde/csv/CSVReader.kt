@@ -29,6 +29,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
 import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.Semaphore
 import java.util.concurrent.atomic.AtomicLong
@@ -437,30 +438,40 @@ class CSVReader
             action: (T) -> Unit,
         ) {
             val semaphore = Semaphore(parallelism)
-            val futures =
-                this
-                    .map { item ->
-                        semaphore.acquire()
-                        try {
-                            CompletableFuture
-                                .runAsync {
-                                    try {
-                                        action(item)
-                                    } finally {
-                                        semaphore.release()
+            // A bounded pool: without one, runAsync starts a new thread per item when the common
+            // pool's parallelism is 1, and ParallelBatch opens a new AssetBatch per thread.
+            val pool = Executors.newFixedThreadPool(parallelism)
+            try {
+                val futures =
+                    this
+                        .map { item ->
+                            semaphore.acquire()
+                            try {
+                                CompletableFuture
+                                    .runAsync(
+                                        {
+                                            try {
+                                                action(item)
+                                            } finally {
+                                                semaphore.release()
+                                            }
+                                        },
+                                        pool,
+                                    ).exceptionally { ex ->
+                                        logger.error { "Error during parallel processing: ${ex.message}" }
+                                        logger.debug(ex) { "Full details: " }
+                                        null
                                     }
-                                }.exceptionally { ex ->
-                                    logger.error { "Error during parallel processing: ${ex.message}" }
-                                    logger.debug(ex) { "Full details: " }
-                                    null
-                                }
-                        } catch (e: Exception) {
-                            semaphore.release()
-                            throw e
-                        }
-                    }.toList() // Collect all futures
+                            } catch (e: Exception) {
+                                semaphore.release()
+                                throw e
+                            }
+                        }.toList() // Collect all futures
 
-            CompletableFuture.allOf(*futures.toTypedArray()).join()
+                CompletableFuture.allOf(*futures.toTypedArray()).join()
+            } finally {
+                pool.shutdown()
+            }
         }
 
         /** {@inheritDoc}  */
