@@ -19,7 +19,7 @@ import kotlin.test.assertTrue
  */
 class CSVProducerSchemaNameTest {
     private val connectionQN = "default/athena/1234567890/example_db"
-    private val connectionMap = mapOf("prod" to connectionQN)
+    private val connectionMap = mapOf("prod" to listOf(connectionQN))
     private val metadataMap = mapOf("security_classification" to "Data Privacy::Security Classification")
     private val tag = listOf(LFTagPair("security_classification", listOf("public"), "123456789012"))
 

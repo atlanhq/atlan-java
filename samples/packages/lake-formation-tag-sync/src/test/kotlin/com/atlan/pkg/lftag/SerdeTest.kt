@@ -172,6 +172,6 @@ class SerdeTest {
     fun whenDeserializableTagDataThenSuccess() {
         val jsonString: String = File("./src/test/resources/lftag_association_1.json").readText(Charsets.UTF_8)
         val tagData = mapper.readValue(jsonString, LFTagData::class.java)
-        assertEquals(3, tagData.tableList.size)
+        assertEquals(6, tagData.tableList.size)
     }
 }
