@@ -25,6 +25,13 @@ import kotlin.system.exitProcess
 object Loader {
     private val logger = Utils.getLogger(Loader.javaClass.name)
 
+    /**
+     * Object store prefix for the files this package saves after each run. It must not be the same as
+     * Asset Import's own prefix, or a Full Replacement import on the same connection compares its file
+     * against the lineage files saved here instead of its own previous file.
+     */
+    const val PREVIOUS_FILES_PREFIX = "csa-lineage-builder"
+
     @JvmStatic
     fun main(args: Array<String>) {
         val outputDirectory = if (args.isEmpty()) "tmp" else args[0]
@@ -93,6 +100,7 @@ object Loader {
                     assetsCmHandling = CustomMetadataHandling.IGNORE.value,
                     assetsTagHandling = AtlanTagHandling.IGNORE.value,
                     relaxedCqn = ctx.config.relaxedCqn,
+                    assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
                 )
             lateinit var qualifiedNameMap: Map<AssetIdentity, String>
             Utils.initializeContext(importConfig, ctx).use { iCtx ->
@@ -144,6 +152,7 @@ object Loader {
                     assetsCmHandling = ctx.config.cmHandling,
                     assetsTagHandling = ctx.config.tagHandling,
                     relaxedCqn = ctx.config.relaxedCqn,
+                    assetsPreviousFilePrefix = PREVIOUS_FILES_PREFIX,
                 )
             Utils.initializeContext(lineageConfig, ctx).use { iCtx ->
                 Importer.import(iCtx, outputDirectory)?.close()
