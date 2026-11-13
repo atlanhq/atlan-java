@@ -29,6 +29,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Executors
 import java.util.concurrent.ForkJoinPool
 import java.util.concurrent.Semaphore
 import java.util.concurrent.atomic.AtomicLong
@@ -431,38 +432,6 @@ class CSVReader
             }
         }
 
-        private fun <T> Stream<T>.forEachParallel(
-            logger: KLogger,
-            parallelism: Int = ForkJoinPool.getCommonPoolParallelism(),
-            action: (T) -> Unit,
-        ) {
-            val semaphore = Semaphore(parallelism)
-            val futures =
-                this
-                    .map { item ->
-                        semaphore.acquire()
-                        try {
-                            CompletableFuture
-                                .runAsync {
-                                    try {
-                                        action(item)
-                                    } finally {
-                                        semaphore.release()
-                                    }
-                                }.exceptionally { ex ->
-                                    logger.error { "Error during parallel processing: ${ex.message}" }
-                                    logger.debug(ex) { "Full details: " }
-                                    null
-                                }
-                        } catch (e: Exception) {
-                            semaphore.release()
-                            throw e
-                        }
-                    }.toList() // Collect all futures
-
-            CompletableFuture.allOf(*futures.toTypedArray()).join()
-        }
-
         /** {@inheritDoc}  */
         @Throws(IOException::class)
         override fun close() {
@@ -471,3 +440,52 @@ class CSVReader
             reader.close()
         }
     }
+
+/**
+ * Run [action] on every item with at most [parallelism] items in flight, on a fixed pool of
+ * [parallelism] threads that is shut down when all items are done.
+ *
+ * The pool is explicit because `CompletableFuture.runAsync` without an executor falls back to a new
+ * thread per task when the common pool's parallelism is 1 (any 2-vCPU host). `ParallelBatch` keeps
+ * one `AssetBatch` (five RocksDB stores) per thread, so that fallback opened one batch per item and
+ * filled the disk on large related-asset passes. (CONNECT-3976)
+ */
+internal fun <T> Stream<T>.forEachParallel(
+    logger: KLogger,
+    parallelism: Int = ForkJoinPool.getCommonPoolParallelism(),
+    action: (T) -> Unit,
+) {
+    val semaphore = Semaphore(parallelism)
+    val pool = Executors.newFixedThreadPool(parallelism)
+    try {
+        val futures =
+            this
+                .map { item ->
+                    semaphore.acquire()
+                    try {
+                        CompletableFuture
+                            .runAsync(
+                                {
+                                    try {
+                                        action(item)
+                                    } finally {
+                                        semaphore.release()
+                                    }
+                                },
+                                pool,
+                            ).exceptionally { ex ->
+                                logger.error { "Error during parallel processing: ${ex.message}" }
+                                logger.debug(ex) { "Full details: " }
+                                null
+                            }
+                    } catch (e: Exception) {
+                        semaphore.release()
+                        throw e
+                    }
+                }.toList() // Collect all futures
+
+        CompletableFuture.allOf(*futures.toTypedArray()).join()
+    } finally {
+        pool.shutdown()
+    }
+}
