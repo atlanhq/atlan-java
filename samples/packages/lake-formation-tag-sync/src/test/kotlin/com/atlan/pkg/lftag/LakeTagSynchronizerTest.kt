@@ -8,6 +8,7 @@ import com.atlan.model.assets.Connection
 import com.atlan.model.assets.Database
 import com.atlan.model.assets.Schema
 import com.atlan.model.assets.Table
+import com.atlan.model.assets.View
 import com.atlan.model.enums.AtlanConnectorType
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType
 import com.atlan.model.typedefs.AttributeDef
@@ -25,6 +26,7 @@ import java.io.File
 import java.nio.file.Paths
 import kotlin.io.path.copyTo
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 private const val PUBLIC = "public"
 
@@ -35,10 +37,19 @@ private const val FULL_HISTORY = "fullhistory"
 class LakeTagSynchronizerTest : PackageTest("lts") {
     override val logger = Utils.getLogger(this.javaClass.name)
     private val c1 = makeUnique("c1")
+    private val c2 = makeUnique("c2")
     private var connectionQualifiedName = ""
+    private var connection2QualifiedName = ""
     private var schemaGuid = ""
     private var tableGuid = ""
     private var columnGuid = ""
+    private var viewGuid = ""
+    private var viewColumnGuid = ""
+    private var schema2Guid = ""
+    private var table2Guid = ""
+    private var column2Guid = ""
+    private var dup1Guid = ""
+    private var dup2Guid = ""
     private val cm1 = makeUnique("cm")
 
     private val enum1 = makeUnique("enum")
@@ -57,6 +68,11 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
             .build()
             .save(client)
             .block()
+        Connection
+            .creator(client, c2, connectorType)
+            .build()
+            .save(client)
+            .block()
     }
 
     private fun createAssets() {
@@ -71,15 +87,54 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
             batch.add(tbl)
             val column = Column.creator("col1", tbl, 1).build()
             batch.add(column)
+            val vw = View.creator("vw1", sch).build()
+            batch.add(vw)
+            val vwColumn = Column.creator("vcol1", vw, 1).build()
+            batch.add(vwColumn)
             val response = batch.flush()
             schemaGuid = response.getResult(sch).guid
             tableGuid = response.getResult(tbl).guid
             columnGuid = response.getResult(column).guid
+            viewGuid = response.getResult(vw).guid
+            viewColumnGuid = response.getResult(vwColumn).guid
+        }
+        // A second connection under the same connection map key: sch2.tbl2 exists only here,
+        // and sch.dup1 exists on both connections, so it cannot be routed.
+        val connection2 = Connection.findByName(client, c2, connectorType)[0]!!
+        connection2QualifiedName = connection2.qualifiedName
+        AssetBatch(client, 20).use { batch ->
+            val db = Database.creator(databaseName, connection2.qualifiedName).build()
+            batch.add(db)
+            val sch2 = Schema.creator("sch2", db).build()
+            batch.add(sch2)
+            val tbl2 = Table.creator("tbl2", sch2).build()
+            batch.add(tbl2)
+            val column2 = Column.creator("col2", tbl2, 1).build()
+            batch.add(column2)
+            val sch = Schema.creator("sch", db).build()
+            batch.add(sch)
+            val dup2 = Table.creator("dup1", sch).build()
+            batch.add(dup2)
+            val dup1 = Table.creator("dup1", "$connectionQualifiedName/$databaseName/sch").build()
+            batch.add(dup1)
+            val response = batch.flush()
+            schema2Guid = response.getResult(sch2).guid
+            table2Guid = response.getResult(tbl2).guid
+            column2Guid = response.getResult(column2).guid
+            dup1Guid = response.getResult(dup1).guid
+            dup2Guid = response.getResult(dup2).guid
         }
     }
 
     private fun createConnectionMap() {
-        val connectionMap = mapOf("dev" to "$connectionQualifiedName/$databaseName")
+        val connectionMap =
+            mapOf(
+                "dev" to
+                    listOf(
+                        "$connectionQualifiedName/$databaseName",
+                        "$connection2QualifiedName/$databaseName",
+                    ),
+            )
         Paths
             .get(testDirectory, directoryPrefix, CONNECTION_MAP_JSON)
             .toFile()
@@ -147,6 +202,7 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
 
     override fun teardown() {
         removeConnection(c1, connectorType)
+        removeConnection(c2, connectorType)
         client.typeDefs.purge(client.customMetadataCache.getSidForName(cm1))
         EnumDef.purge(client, enum1)
     }
@@ -175,6 +231,40 @@ class LakeTagSynchronizerTest : PackageTest("lts") {
         assertEquals("col1", column.name)
         val attribute1 = column.getCustomMetadata(cm1, attr1)
         assertEquals(PUBLIC, attribute1)
+    }
+
+    @Test
+    fun validateViewTagged() {
+        val view = View.get(client, viewGuid)
+        val attribute1 = view.getCustomMetadata(cm1, attr1)
+        assertEquals(PUBLIC, attribute1)
+        val attribute3 = view.getCustomMetadata(cm1, attr3)
+        assertEquals(FULL_HISTORY, attribute3)
+    }
+
+    @Test
+    fun validateViewColumnTagged() {
+        val column = Column.get(client, viewColumnGuid)
+        assertEquals("vcol1", column.name)
+        val attribute1 = column.getCustomMetadata(cm1, attr1)
+        assertEquals(PUBLIC, attribute1)
+    }
+
+    @Test
+    fun validateTableRoutedToSecondConnection() {
+        val schema = Schema.get(client, schema2Guid)
+        assertEquals(PUBLIC, schema.getCustomMetadata(cm1, attr1))
+        val table = Table.get(client, table2Guid)
+        assertEquals(PUBLIC, table.getCustomMetadata(cm1, attr1))
+        assertEquals(FULL_HISTORY, table.getCustomMetadata(cm1, attr3))
+        val column = Column.get(client, column2Guid)
+        assertEquals(PUBLIC, column.getCustomMetadata(cm1, attr1))
+    }
+
+    @Test
+    fun validateAmbiguousTableNotTagged() {
+        assertNull(Table.get(client, dup1Guid).getCustomMetadata(cm1, attr1))
+        assertNull(Table.get(client, dup2Guid).getCustomMetadata(cm1, attr1))
     }
 
     @Test
