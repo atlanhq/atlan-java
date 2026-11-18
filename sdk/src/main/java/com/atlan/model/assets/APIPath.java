@@ -65,6 +65,15 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     @Attribute
     String apiObjectQualifiedName;
 
+    /** Unique name of the API path in which this asset exists. */
+    @Attribute
+    String apiPathQualifiedName;
+
+    /** API methods (operations) available on this path. */
+    @Attribute
+    @Singular
+    SortedSet<IAPIMethod> apiMethods;
+
     /** List of the operations available on the endpoint. */
     @Attribute
     @Singular
