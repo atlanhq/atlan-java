@@ -42,6 +42,9 @@ public interface ISapDatasphereDataProduct {
 
     public static final String TYPE_NAME = "SapDatasphereDataProduct";
 
+    /** Columns exposed by this SAP Datasphere data product. */
+    RelationField SAP_DATASPHERE_DATA_PRODUCT_COLUMNS = new RelationField("sapDatasphereDataProductColumns");
+
     /** Names of the Data Marketplace contexts to which this data product is assigned. */
     KeywordField SAP_DATASPHERE_DATA_PRODUCT_CONTEXTS =
             new KeywordField("sapDatasphereDataProductContexts", "sapDatasphereDataProductContexts");
@@ -86,9 +89,15 @@ public interface ISapDatasphereDataProduct {
     KeywordField SAP_DATASPHERE_DATA_PRODUCT_SPACE_QUALIFIED_NAME = new KeywordField(
             "sapDatasphereDataProductSpaceQualifiedName", "sapDatasphereDataProductSpaceQualifiedName");
 
+    /** Tables exposed by this SAP Datasphere data product. */
+    RelationField SAP_DATASPHERE_DATA_PRODUCT_TABLES = new RelationField("sapDatasphereDataProductTables");
+
     /** Terms of use that consumers accept when they install this data product. */
     KeywordField SAP_DATASPHERE_DATA_PRODUCT_TERMS_OF_USE =
             new KeywordField("sapDatasphereDataProductTermsOfUse", "sapDatasphereDataProductTermsOfUse");
+
+    /** Views exposed by this SAP Datasphere data product. */
+    RelationField SAP_DATASPHERE_DATA_PRODUCT_VIEWS = new RelationField("sapDatasphereDataProductViews");
 
     /** Schema (Datasphere space) whose objects this data product exposes. */
     RelationField SAP_DATASPHERE_SCHEMA = new RelationField("sapDatasphereSchema");
@@ -748,6 +757,11 @@ public interface ISapDatasphereDataProduct {
     /** SAP-specific data types. */
     String getSapDataType();
 
+    /** Columns exposed by this SAP Datasphere data product. */
+    default SortedSet<IColumn> getSapDatasphereDataProductColumns() {
+        return null;
+    }
+
     /** Names of the Data Marketplace contexts to which this data product is assigned. */
     SortedSet<String> getSapDatasphereDataProductContexts();
 
@@ -781,8 +795,18 @@ public interface ISapDatasphereDataProduct {
     /** Unique name of the Datasphere space whose objects this data product exposes. */
     String getSapDatasphereDataProductSpaceQualifiedName();
 
+    /** Tables exposed by this SAP Datasphere data product. */
+    default SortedSet<ITable> getSapDatasphereDataProductTables() {
+        return null;
+    }
+
     /** Terms of use that consumers accept when they install this data product. */
     String getSapDatasphereDataProductTermsOfUse();
+
+    /** Views exposed by this SAP Datasphere data product. */
+    default SortedSet<IView> getSapDatasphereDataProductViews() {
+        return null;
+    }
 
     /** Schema (Datasphere space) whose objects this data product exposes. */
     default ISchema getSapDatasphereSchema() {

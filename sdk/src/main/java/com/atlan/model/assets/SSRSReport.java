@@ -162,6 +162,18 @@ public class SSRSReport extends Asset implements ISSRSReport, ISSRS, IBI, ICatal
     @Attribute
     Long ssrsReportDataSourceCount;
 
+    /** Whether this report is a linked report (an alias of a source report). Missing is treated as false. */
+    @Attribute
+    Boolean ssrsReportIsLinkedReport;
+
+    /** Simple name of the source (parent) report this linked report aliases. */
+    @Attribute
+    String ssrsReportLinkedFromReportName;
+
+    /** Unique name of the source (parent) report this linked report aliases. */
+    @Attribute
+    String ssrsReportLinkedFromReportQualifiedName;
+
     /** Simple name of the Report asset that contains this asset. */
     @Attribute
     String ssrsReportName;

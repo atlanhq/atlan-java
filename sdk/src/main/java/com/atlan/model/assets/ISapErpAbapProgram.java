@@ -48,6 +48,9 @@ public interface ISapErpAbapProgram {
     /** SAP ERP ABAP Program that are associated with this SAP ERP Component. */
     RelationField SAP_ERP_COMPONENT = new RelationField("sapErpComponent");
 
+    /** SAP ERP DataSources that use this ABAP program (class pool) as their extractor. */
+    RelationField SAP_ERP_EXTRACTOR_DATA_SOURCES = new RelationField("sapErpExtractorDataSources");
+
     /** SAP ERP ABAP Program associated with this SAP ERP Function Modules. */
     RelationField SAP_ERP_FUNCTION_MODULES = new RelationField("sapErpFunctionModules");
 
@@ -714,6 +717,11 @@ public interface ISapErpAbapProgram {
 
     /** SAP ERP ABAP Program that are associated with this SAP ERP Component. */
     default ISapErpComponent getSapErpComponent() {
+        return null;
+    }
+
+    /** SAP ERP DataSources that use this ABAP program (class pool) as their extractor. */
+    default SortedSet<ISapErpDataSource> getSapErpExtractorDataSources() {
         return null;
     }
 

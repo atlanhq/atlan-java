@@ -118,6 +118,11 @@ public class SapErpAbapProgram extends Asset implements ISapErpAbapProgram, ISAP
     @Attribute
     ISapErpComponent sapErpComponent;
 
+    /** SAP ERP DataSources that use this ABAP program (class pool) as their extractor. */
+    @Attribute
+    @Singular
+    SortedSet<ISapErpDataSource> sapErpExtractorDataSources;
+
     /** SAP ERP ABAP Program associated with this SAP ERP Function Modules. */
     @Attribute
     @Singular

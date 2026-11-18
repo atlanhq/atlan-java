@@ -989,6 +989,11 @@ public interface ISapAnalyticsCloudColumn {
     /** SAP-specific data types. */
     String getSapDataType();
 
+    /** SAP Datasphere data products that expose this column. */
+    default SortedSet<ISapDatasphereDataProduct> getSapDatasphereDataProducts() {
+        return null;
+    }
+
     /** Represents the total number of fields, columns, or child assets present in a given SAP asset. */
     Long getSapFieldCount();
 

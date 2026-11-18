@@ -273,6 +273,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     Long rowCount;
 
+    /** SAP Datasphere data products that expose this table. */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
     /** Schema in which this table exists. */
     @Attribute
     @JsonProperty("atlanSchema")

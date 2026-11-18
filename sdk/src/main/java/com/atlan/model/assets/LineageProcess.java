@@ -95,7 +95,7 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** Fivetran connector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 

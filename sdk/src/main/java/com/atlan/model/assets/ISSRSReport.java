@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.BooleanField;
 import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.NumericField;
 import com.atlan.model.fields.RelationField;
@@ -61,6 +62,18 @@ public interface ISSRSReport {
     /** Number of data sources in this report. */
     NumericField SSRS_REPORT_DATA_SOURCE_COUNT =
             new NumericField("ssrsReportDataSourceCount", "ssrsReportDataSourceCount");
+
+    /** Whether this report is a linked report (an alias of a source report). Missing is treated as false. */
+    BooleanField SSRS_REPORT_IS_LINKED_REPORT =
+            new BooleanField("ssrsReportIsLinkedReport", "ssrsReportIsLinkedReport");
+
+    /** Simple name of the source (parent) report this linked report aliases. */
+    KeywordField SSRS_REPORT_LINKED_FROM_REPORT_NAME =
+            new KeywordField("ssrsReportLinkedFromReportName", "ssrsReportLinkedFromReportName");
+
+    /** Unique name of the source (parent) report this linked report aliases. */
+    KeywordField SSRS_REPORT_LINKED_FROM_REPORT_QUALIFIED_NAME =
+            new KeywordField("ssrsReportLinkedFromReportQualifiedName", "ssrsReportLinkedFromReportQualifiedName");
 
     /** Parameters for the report. */
     KeywordField SSRS_REPORT_PARAMETERS = new KeywordField("ssrsReportParameters", "ssrsReportParameters");
@@ -842,6 +855,15 @@ public interface ISSRSReport {
 
     /** Number of data sources in this report. */
     Long getSsrsReportDataSourceCount();
+
+    /** Whether this report is a linked report (an alias of a source report). Missing is treated as false. */
+    Boolean getSsrsReportIsLinkedReport();
+
+    /** Simple name of the source (parent) report this linked report aliases. */
+    String getSsrsReportLinkedFromReportName();
+
+    /** Unique name of the source (parent) report this linked report aliases. */
+    String getSsrsReportLinkedFromReportQualifiedName();
 
     /** Simple name of the Report asset that contains this asset. */
     String getSsrsReportName();

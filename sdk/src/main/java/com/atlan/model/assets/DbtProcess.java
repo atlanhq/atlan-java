@@ -186,7 +186,7 @@ public class DbtProcess extends Asset implements IDbtProcess, ILineageProcess, I
     @Singular
     SortedSet<IFabricActivity> fabricActivities;
 
-    /** fivetranConnector in which this process exists. */
+    /** Fivetran connector in which this process exists. */
     @Attribute
     IFivetranConnector fivetranConnector;
 

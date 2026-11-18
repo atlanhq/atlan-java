@@ -248,6 +248,11 @@ public class DremioVirtualDataset extends Asset
     @Attribute
     Long rowCount;
 
+    /** SAP Datasphere data products that expose this view. */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
     /** Schema in which this view exists. */
     @Attribute
     @JsonProperty("atlanSchema")

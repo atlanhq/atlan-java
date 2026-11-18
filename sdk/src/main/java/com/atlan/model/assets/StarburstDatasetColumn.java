@@ -538,6 +538,11 @@ public class StarburstDatasetColumn extends Asset
     @Attribute
     String rawDataTypeDefinition;
 
+    /** SAP Datasphere data products that expose this column. */
+    @Attribute
+    @Singular
+    SortedSet<ISapDatasphereDataProduct> sapDatasphereDataProducts;
+
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
