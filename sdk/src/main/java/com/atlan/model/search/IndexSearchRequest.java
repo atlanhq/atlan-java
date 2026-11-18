@@ -163,9 +163,9 @@ public class IndexSearchRequest extends AtlanObject {
     public static final class Metadata extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
-        /** Whether to log this search (true) or not (false). */
+        /** Whether to log this search: off unless ATLAN_SAVE_SEARCH_LOG is true, as logging ran Metastore OOM. */
         @Builder.Default
-        Boolean saveSearchLog = false;
+        Boolean saveSearchLog = "true".equalsIgnoreCase(String.valueOf(System.getenv("ATLAN_SAVE_SEARCH_LOG")).trim());
 
         /** Tags to associate with the search request. */
         @Singular
@@ -173,6 +173,14 @@ public class IndexSearchRequest extends AtlanObject {
 
         /** Input in the searchbar when the search was run. */
         String searchInput;
+
+        /** Metadata for a later page of a search already run: never logged, so a search logs once. */
+        static Metadata followUp() {
+            return Metadata.builder()
+                    .utmTag(UTMTags.PROJECT_SDK_JAVA.getValue())
+                    .saveSearchLog(false)
+                    .build();
+        }
     }
 
     public abstract static class IndexSearchRequestBuilder<
