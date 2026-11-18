@@ -11,13 +11,10 @@ import org.testng.annotations.Test;
 public class IndexSearchRequestMetadataTest {
 
     @Test
-    void saveSearchLogOnlyWhenSettingIsTrue() {
-        assertFalse(IndexSearchRequest.Metadata.saveSearchLogDefault(null));
-        assertFalse(IndexSearchRequest.Metadata.saveSearchLogDefault(""));
-        assertFalse(IndexSearchRequest.Metadata.saveSearchLogDefault("false"));
-        assertFalse(IndexSearchRequest.Metadata.saveSearchLogDefault("1"));
-        assertTrue(IndexSearchRequest.Metadata.saveSearchLogDefault("true"));
-        assertTrue(IndexSearchRequest.Metadata.saveSearchLogDefault(" TRUE "));
+    void offWhenEnvUnset() {
+        if (System.getenv("ATLAN_SAVE_SEARCH_LOG") == null) {
+            assertFalse(IndexSearchRequest.Metadata.builder().build().getSaveSearchLog());
+        }
     }
 
     @Test

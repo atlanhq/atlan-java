@@ -163,9 +163,9 @@ public class IndexSearchRequest extends AtlanObject {
     public static final class Metadata extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
-        /** Whether to log this search (true) or not (false). Defaults from {@code ATLAN_SAVE_SEARCH_LOG}. */
+        /** Whether to log this search: off unless ATLAN_SAVE_SEARCH_LOG is true, as logging ran Metastore OOM. */
         @Builder.Default
-        Boolean saveSearchLog = saveSearchLogDefault(System.getenv("ATLAN_SAVE_SEARCH_LOG"));
+        Boolean saveSearchLog = "true".equalsIgnoreCase(String.valueOf(System.getenv("ATLAN_SAVE_SEARCH_LOG")).trim());
 
         /** Tags to associate with the search request. */
         @Singular
@@ -174,23 +174,7 @@ public class IndexSearchRequest extends AtlanObject {
         /** Input in the searchbar when the search was run. */
         String searchInput;
 
-        /**
-         * Whether SDK searches are recorded in the tenant's search logs: only when the setting is {@code true}.
-         * Off otherwise, because recording every SDK search ran Metastore out of memory.
-         *
-         * @param setting value of {@code ATLAN_SAVE_SEARCH_LOG}, or null when unset
-         * @return true only if the setting is {@code true}, ignoring case and surrounding whitespace
-         */
-        static boolean saveSearchLogDefault(String setting) {
-            return setting != null && setting.trim().equalsIgnoreCase("true");
-        }
-
-        /**
-         * Metadata for a request that continues a search already run: a later page, a specific page or a
-         * timestamp-ordered re-fetch. These are never logged, so one search produces one log entry.
-         *
-         * @return request metadata that does not log the search
-         */
+        /** Metadata for a later page of a search already run: never logged, so a search logs once. */
         static Metadata followUp() {
             return Metadata.builder()
                     .utmTag(UTMTags.PROJECT_SDK_JAVA.getValue())
