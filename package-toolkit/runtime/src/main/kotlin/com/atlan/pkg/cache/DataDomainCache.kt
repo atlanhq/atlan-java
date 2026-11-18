@@ -11,7 +11,7 @@ import com.atlan.pkg.PackageContext
 import com.atlan.pkg.Utils
 import com.atlan.pkg.serde.cell.DataDomainXformer
 
-class DataDomainCache(
+open class DataDomainCache(
     val ctx: PackageContext<*>,
 ) : AssetCache<DataDomain>(ctx, "domain") {
     private val logger = Utils.getLogger(this.javaClass.name)
@@ -25,9 +25,27 @@ class DataDomainCache(
 
     /** {@inheritDoc} */
     override fun lookupById(id: String?) {
-        val result = lookupById(id, 0, ctx.client.maxNetworkRetries)
-        if (result != null) cache(result.guid, getIdentityForAsset(result), result)
+        val result = id?.let { fetchById(it) }
+        if (result != null) {
+            // getIdentityForAsset reads the parent's identity from the cache only. On a cache
+            // that was not preloaded, a sub-domain fetched before its parent would otherwise be
+            // cached under just its own name instead of its full path, so fetch (and cache) the
+            // missing parent first. This recurses up the hierarchy, one level per ancestor.
+            val parentGuid = result.parentDomain?.guid
+            if (parentGuid != null && getIdentity(parentGuid, true) == null) {
+                getByGuid(parentGuid)
+            }
+            cache(result.guid, getIdentityForAsset(result), result)
+        }
     }
+
+    /**
+     * Retrieve a single data domain from Atlan by its GUID.
+     *
+     * @param guid unique identifier (GUID) of the data domain
+     * @return the data domain, or null if it could not be found
+     */
+    protected open fun fetchById(guid: String): DataDomain? = lookupById(guid, 0, ctx.client.maxNetworkRetries)
 
     /** {@inheritDoc}  */
     private fun lookupById(
