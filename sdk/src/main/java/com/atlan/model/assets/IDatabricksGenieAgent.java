@@ -937,6 +937,15 @@ public interface IDatabricksGenieAgent {
         return null;
     }
 
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
+
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
 
