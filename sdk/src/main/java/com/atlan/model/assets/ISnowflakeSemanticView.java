@@ -13,6 +13,7 @@ import com.atlan.model.enums.DataQualityResult;
 import com.atlan.model.enums.DataQualityScheduleType;
 import com.atlan.model.enums.DataQualitySourceSyncStatus;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.atlan.model.fields.KeywordField;
 import com.atlan.model.fields.RelationField;
 import com.atlan.model.fields.TextField;
 import com.atlan.model.relations.RelationshipAttributes;
@@ -22,6 +23,7 @@ import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.SnowflakeSemanticVerifiedQuery;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -42,11 +44,26 @@ public interface ISnowflakeSemanticView {
 
     public static final String TYPE_NAME = "SnowflakeSemanticView";
 
+    /** Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view. */
+    TextField SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS = new TextField(
+            "snowflakeAiQuestionCategorizationInstructions", "snowflakeAiQuestionCategorizationInstructions");
+
+    /** Custom instructions Cortex Analyst follows when it generates SQL from this semantic view. */
+    TextField SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS =
+            new TextField("snowflakeAiSqlGenerationInstructions", "snowflakeAiSqlGenerationInstructions");
+
+    /** Verified queries defined on this semantic view: questions paired with the SQL that answers them. */
+    KeywordField SNOWFLAKE_AI_VERIFIED_QUERIES =
+            new KeywordField("snowflakeAiVerifiedQueries", "snowflakeAiVerifiedQueries");
+
     /** DDL definition of the semantic view (via GET_DDL). */
     TextField SNOWFLAKE_DEFINITION = new TextField("snowflakeDefinition", "snowflakeDefinition");
 
     /** Logical tables contained in the semantic view. */
     RelationField SNOWFLAKE_SEMANTIC_LOGICAL_TABLES = new RelationField("snowflakeSemanticLogicalTables");
+
+    /** Metrics scoped to the semantic view rather than to a logical table, such as derived metrics. */
+    RelationField SNOWFLAKE_SEMANTIC_METRICS = new RelationField("snowflakeSemanticMetrics");
 
     /** Schema containing the semantic view. */
     RelationField SNOWFLAKE_SEMANTIC_VIEW_SCHEMA = new RelationField("snowflakeSemanticViewSchema");
@@ -761,11 +778,25 @@ public interface ISnowflakeSemanticView {
         return null;
     }
 
+    /** Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view. */
+    String getSnowflakeAiQuestionCategorizationInstructions();
+
+    /** Custom instructions Cortex Analyst follows when it generates SQL from this semantic view. */
+    String getSnowflakeAiSqlGenerationInstructions();
+
+    /** Verified queries defined on this semantic view: questions paired with the SQL that answers them. */
+    List<SnowflakeSemanticVerifiedQuery> getSnowflakeAiVerifiedQueries();
+
     /** DDL definition of the semantic view (via GET_DDL). */
     String getSnowflakeDefinition();
 
     /** Logical tables contained in the semantic view. */
     default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticLogicalTables() {
+        return null;
+    }
+
+    /** Metrics scoped to the semantic view rather than to a logical table, such as derived metrics. */
+    default SortedSet<ISnowflakeSemanticMetric> getSnowflakeSemanticMetrics() {
         return null;
     }
 
@@ -896,6 +927,15 @@ public interface ISnowflakeSemanticView {
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
     }
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
 
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();

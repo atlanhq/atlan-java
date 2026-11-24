@@ -22,6 +22,7 @@ import com.atlan.model.structs.AssetGCPDataplexMetadata;
 import com.atlan.model.structs.AssetSmusMetadataFormDetails;
 import com.atlan.model.structs.AssetSummaryProvider;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.model.structs.SnowflakeSemanticJoin;
 import com.atlan.model.structs.StarredDetails;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -54,9 +55,19 @@ public interface ISnowflakeSemanticLogicalTable {
     /** Metrics contained in the logical table. */
     RelationField SNOWFLAKE_SEMANTIC_METRICS = new RelationField("snowflakeSemanticMetrics");
 
+    /** Logical tables this logical table joins to, as the side holding the foreign keys. */
+    RelationField SNOWFLAKE_SEMANTIC_REFERENCED_TABLES = new RelationField("snowflakeSemanticReferencedTables");
+
+    /** Logical tables that join to this logical table, which is the referenced side. */
+    RelationField SNOWFLAKE_SEMANTIC_REFERENCING_TABLES = new RelationField("snowflakeSemanticReferencingTables");
+
     /** Distinct ranges defined for the logical table. */
     KeywordField SNOWFLAKE_SEMANTIC_TABLE_DISTINCT_RANGES =
             new KeywordField("snowflakeSemanticTableDistinctRanges", "snowflakeSemanticTableDistinctRanges");
+
+    /** Joins declared from this logical table (the side holding the foreign keys) to other logical tables in the same semantic view. */
+    KeywordField SNOWFLAKE_SEMANTIC_TABLE_JOINS =
+            new KeywordField("snowflakeSemanticTableJoins", "snowflakeSemanticTableJoins");
 
     /** Comma separated list of primary key columns for the logical table. */
     KeywordField SNOWFLAKE_SEMANTIC_TABLE_PRIMARY_KEYS =
@@ -828,8 +839,21 @@ public interface ISnowflakeSemanticLogicalTable {
         return null;
     }
 
+    /** Logical tables this logical table joins to, as the side holding the foreign keys. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticReferencedTables() {
+        return null;
+    }
+
+    /** Logical tables that join to this logical table, which is the referenced side. */
+    default SortedSet<ISnowflakeSemanticLogicalTable> getSnowflakeSemanticReferencingTables() {
+        return null;
+    }
+
     /** Distinct ranges defined for the logical table. */
     SortedSet<String> getSnowflakeSemanticTableDistinctRanges();
+
+    /** Joins declared from this logical table (the side holding the foreign keys) to other logical tables in the same semantic view. */
+    List<SnowflakeSemanticJoin> getSnowflakeSemanticTableJoins();
 
     /** Comma separated list of primary key columns for the logical table. */
     SortedSet<String> getSnowflakeSemanticTablePrimaryKeys();
@@ -970,6 +994,15 @@ public interface ISnowflakeSemanticLogicalTable {
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
     }
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
 
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();

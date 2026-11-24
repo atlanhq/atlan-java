@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.SnowflakeSemanticVerifiedQuery;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -196,6 +197,19 @@ public class SnowflakeSemanticView extends Asset
     @Singular
     SortedSet<ISemanticMeasure> semanticMeasures;
 
+    /** Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view. */
+    @Attribute
+    String snowflakeAiQuestionCategorizationInstructions;
+
+    /** Custom instructions Cortex Analyst follows when it generates SQL from this semantic view. */
+    @Attribute
+    String snowflakeAiSqlGenerationInstructions;
+
+    /** Verified queries defined on this semantic view: questions paired with the SQL that answers them. */
+    @Attribute
+    @Singular
+    List<SnowflakeSemanticVerifiedQuery> snowflakeAiVerifiedQueries;
+
     /** DDL definition of the semantic view (via GET_DDL). */
     @Attribute
     String snowflakeDefinition;
@@ -204,6 +218,11 @@ public class SnowflakeSemanticView extends Asset
     @Attribute
     @Singular
     SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticLogicalTables;
+
+    /** Metrics scoped to the semantic view rather than to a logical table, such as derived metrics. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticMetric> snowflakeSemanticMetrics;
 
     /** Schema containing the semantic view. */
     @Attribute
@@ -276,6 +295,18 @@ public class SnowflakeSemanticView extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    @Attribute
+    String sqlFabricMirroringKind;
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    @Attribute
+    String sqlFabricMirroringSourceType;
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    @Attribute
+    String sqlFabricMirroringStatus;
 
     /** Whether this asset has any AI insights data available. */
     @Attribute

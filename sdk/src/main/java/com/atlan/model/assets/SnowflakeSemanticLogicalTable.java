@@ -13,6 +13,7 @@ import com.atlan.model.fields.AtlanField;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.FluentSearch;
+import com.atlan.model.structs.SnowflakeSemanticJoin;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
@@ -235,10 +236,25 @@ public class SnowflakeSemanticLogicalTable extends Asset
     @Singular
     SortedSet<ISnowflakeSemanticMetric> snowflakeSemanticMetrics;
 
+    /** Logical tables this logical table joins to, as the side holding the foreign keys. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticReferencedTables;
+
+    /** Logical tables that join to this logical table, which is the referenced side. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeSemanticLogicalTable> snowflakeSemanticReferencingTables;
+
     /** Distinct ranges defined for the logical table. */
     @Attribute
     @Singular
     SortedSet<String> snowflakeSemanticTableDistinctRanges;
+
+    /** Joins declared from this logical table (the side holding the foreign keys) to other logical tables in the same semantic view. */
+    @Attribute
+    @Singular
+    List<SnowflakeSemanticJoin> snowflakeSemanticTableJoins;
 
     /** Comma separated list of primary key columns for the logical table. */
     @Attribute
@@ -329,6 +345,18 @@ public class SnowflakeSemanticLogicalTable extends Asset
     @Attribute
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    @Attribute
+    String sqlFabricMirroringKind;
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    @Attribute
+    String sqlFabricMirroringSourceType;
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    @Attribute
+    String sqlFabricMirroringStatus;
 
     /** Whether this asset has any AI insights data available. */
     @Attribute
