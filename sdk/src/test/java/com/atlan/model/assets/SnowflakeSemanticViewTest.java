@@ -95,6 +95,9 @@ public class SnowflakeSemanticViewTest {
             .sqlCoalesceProjectName("String0")
             .sqlShareQualifiedName("String0")
             .sqlShareQualifiedName("String1")
+            .sqlFabricMirroringSourceType("String0")
+            .sqlFabricMirroringStatus("String0")
+            .sqlFabricMirroringKind("String0")
             .catalogDatasetGuid("String0")
             .name("String0")
             .displayName("String0")
@@ -1187,6 +1190,9 @@ public class SnowflakeSemanticViewTest {
                     SnowflakeSemanticLogicalTable.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .snowflakeSemanticLogicalTable(
                     SnowflakeSemanticLogicalTable.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeSemanticMetric(SnowflakeSemanticMetric.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeSemanticMetric(
+                    SnowflakeSemanticMetric.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .anomaloCheck(AnomaloCheck.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

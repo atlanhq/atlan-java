@@ -48,6 +48,9 @@ public interface ISnowflakeSemanticView {
     /** Logical tables contained in the semantic view. */
     RelationField SNOWFLAKE_SEMANTIC_LOGICAL_TABLES = new RelationField("snowflakeSemanticLogicalTables");
 
+    /** Metrics scoped to the semantic view rather than to a logical table, such as derived metrics. */
+    RelationField SNOWFLAKE_SEMANTIC_METRICS = new RelationField("snowflakeSemanticMetrics");
+
     /** Schema containing the semantic view. */
     RelationField SNOWFLAKE_SEMANTIC_VIEW_SCHEMA = new RelationField("snowflakeSemanticViewSchema");
 
@@ -769,6 +772,11 @@ public interface ISnowflakeSemanticView {
         return null;
     }
 
+    /** Metrics scoped to the semantic view rather than to a logical table, such as derived metrics. */
+    default SortedSet<ISnowflakeSemanticMetric> getSnowflakeSemanticMetrics() {
+        return null;
+    }
+
     /** Schema containing the semantic view. */
     default ISchema getSnowflakeSemanticViewSchema() {
         return null;
@@ -896,6 +904,15 @@ public interface ISnowflakeSemanticView {
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
     }
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
 
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
