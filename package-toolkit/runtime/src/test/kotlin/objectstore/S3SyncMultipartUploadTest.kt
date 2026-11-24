@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.io.path.createTempDirectory
 import kotlin.random.Random
 import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -18,8 +19,14 @@ import kotlin.test.assertTrue
  * process-level: how much heap the upload needs and whether the process can exit after a failed upload.
  */
 class S3SyncMultipartUploadTest {
-    private val workDir = createTempDirectory("s3sync-multipart-").toFile()
-    private val partDir = File(workDir, "parts").apply { mkdirs() }
+    private lateinit var workDir: File
+    private lateinit var partDir: File
+
+    @BeforeTest
+    fun setup() {
+        workDir = createTempDirectory("s3sync-multipart-").toFile()
+        partDir = File(workDir, "parts").apply { mkdirs() }
+    }
 
     @AfterTest
     fun cleanup() {

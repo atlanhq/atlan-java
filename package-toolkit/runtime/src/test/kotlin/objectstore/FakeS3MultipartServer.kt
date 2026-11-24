@@ -57,15 +57,26 @@ class FakeS3MultipartServer(
         val query = parseQuery(exchange.requestURI.rawQuery)
         val method = exchange.requestMethod
         when {
-            method == "POST" && "uploads" in query ->
+            method == "POST" && "uploads" in query -> {
                 xml(exchange, 200, "<InitiateMultipartUploadResult><Bucket>b</Bucket><Key>k</Key><UploadId>$UPLOAD_ID</UploadId></InitiateMultipartUploadResult>")
-            method == "PUT" && "partNumber" in query -> uploadPart(exchange, query.getValue("partNumber").toInt())
-            method == "POST" && "uploadId" in query -> complete(exchange)
+            }
+
+            method == "PUT" && "partNumber" in query -> {
+                uploadPart(exchange, query.getValue("partNumber").toInt())
+            }
+
+            method == "POST" && "uploadId" in query -> {
+                complete(exchange)
+            }
+
             method == "DELETE" && "uploadId" in query -> {
                 aborts.incrementAndGet()
                 exchange.sendResponseHeaders(204, -1)
             }
-            else -> xml(exchange, 400, "<Error><Code>Unsupported</Code><Message>$method ${exchange.requestURI}</Message></Error>")
+
+            else -> {
+                xml(exchange, 400, "<Error><Code>Unsupported</Code><Message>$method ${exchange.requestURI}</Message></Error>")
+            }
         }
     }
 
