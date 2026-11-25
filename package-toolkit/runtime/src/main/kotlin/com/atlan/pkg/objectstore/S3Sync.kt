@@ -9,6 +9,7 @@ import software.amazon.awssdk.auth.credentials.AwsCredentials
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
+import software.amazon.awssdk.http.ContentStreamProvider
 import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.CompletedPart
@@ -16,10 +17,14 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request
 import software.amazon.awssdk.services.sts.StsClient
 import software.amazon.awssdk.services.sts.model.AssumeRoleRequest
+import java.io.Closeable
 import java.io.File
 import java.io.IOException
-import java.io.RandomAccessFile
+import java.io.InputStream
+import java.nio.channels.Channels
+import java.nio.channels.FileChannel
 import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicLong
@@ -317,44 +322,47 @@ class S3Sync(
             try {
                 // Step 2: Upload parts with retry logic
                 val executor = Executors.newFixedThreadPool(min(totalParts, 8))
-                val futures = mutableListOf<CompletableFuture<CompletedPart>>()
+                try {
+                    val futures = mutableListOf<CompletableFuture<CompletedPart>>()
 
-                for (partNumber in 1..totalParts) {
-                    val startPos = (partNumber - 1) * partSize
-                    val currentPartSize = min(partSize, fileSize - startPos)
+                    for (partNumber in 1..totalParts) {
+                        val startPos = (partNumber - 1) * partSize
+                        val currentPartSize = min(partSize, fileSize - startPos)
 
-                    val future =
-                        CompletableFuture.supplyAsync({
-                            try {
-                                val part =
-                                    uploadPartWithRetry(
-                                        bucketName,
-                                        objectKey,
-                                        uploadId,
-                                        file,
-                                        partNumber,
-                                        startPos,
-                                        currentPartSize,
-                                    )
+                        val future =
+                            CompletableFuture.supplyAsync({
+                                try {
+                                    val part =
+                                        uploadPartWithRetry(
+                                            bucketName,
+                                            objectKey,
+                                            uploadId,
+                                            file,
+                                            partNumber,
+                                            startPos,
+                                            currentPartSize,
+                                        )
 
-                                // Update progress
-                                val uploaded = totalBytesUploaded.addAndGet(currentPartSize)
-                                progressCallback?.invoke(uploaded, fileSize)
+                                    // Update progress
+                                    val uploaded = totalBytesUploaded.addAndGet(currentPartSize)
+                                    progressCallback?.invoke(uploaded, fileSize)
 
-                                logger.info { " ... completed part $partNumber/$totalParts (${(uploaded * 100.0) / fileSize}%)" }
+                                    logger.info { " ... completed part $partNumber/$totalParts (${(uploaded * 100.0) / fileSize}%)" }
 
-                                part
-                            } catch (e: Exception) {
-                                throw RuntimeException("Failed to upload part $partNumber", e)
-                            }
-                        }, executor)
+                                    part
+                                } catch (e: Exception) {
+                                    throw RuntimeException("Failed to upload part $partNumber", e)
+                                }
+                            }, executor)
 
-                    futures.add(future)
+                        futures.add(future)
+                    }
+
+                    // Wait for all parts to complete
+                    futures.forEach { completedParts.add(it.join()) }
+                } finally {
+                    executor.shutdownNow()
                 }
-
-                // Wait for all parts to complete
-                futures.forEach { completedParts.add(it.join()) }
-                executor.shutdown()
 
                 // Step 3: Complete multipart upload
                 val completeResponse =
@@ -398,20 +406,7 @@ class S3Sync(
 
             repeat(maxRetries) { attempt ->
                 try {
-                    // Read part data using RandomAccessFile for reliable positioning
-                    val partData = ByteArray(partSize.toInt())
-                    RandomAccessFile(file, "r").use { raf ->
-                        raf.seek(startPos)
-                        val bytesRead = raf.read(partData, 0, partSize.toInt())
-
-                        // Adjust array size if we read fewer bytes (last part)
-                        val actualPartData =
-                            if (bytesRead == partSize.toInt()) {
-                                partData
-                            } else {
-                                partData.copyOf(bytesRead)
-                            }
-                        // Upload part
+                    FilePartStreamProvider(file, startPos, partSize).use { provider ->
                         val uploadPartResponse =
                             s3Client.uploadPart({
                                 it
@@ -419,7 +414,7 @@ class S3Sync(
                                     .key(objectKey)
                                     .uploadId(uploadId)
                                     .partNumber(partNumber)
-                            }, RequestBody.fromBytes(actualPartData))
+                            }, RequestBody.fromContentProvider(provider, partSize, "application/octet-stream"))
 
                         return CompletedPart
                             .builder()
@@ -445,5 +440,55 @@ class S3Sync(
 
             throw RuntimeException("Failed to upload part $partNumber after $maxRetries attempts.", lastException)
         }
+    }
+
+    /**
+     * Gives the SDK the bytes [startPos, startPos + length) of a file. The SDK may ask for the body more than
+     * once (retries, checksums), so each new stream starts again at [startPos] and the previous one is closed.
+     */
+    private class FilePartStreamProvider(
+        private val file: File,
+        private val startPos: Long,
+        private val length: Long,
+    ) : ContentStreamProvider,
+        Closeable {
+        private var current: InputStream? = null
+
+        override fun newStream(): InputStream {
+            close()
+            val channel = FileChannel.open(file.toPath(), StandardOpenOption.READ).position(startPos)
+            return BoundedInputStream(Channels.newInputStream(channel), length).also { current = it }
+        }
+
+        override fun close() {
+            current?.close()
+            current = null
+        }
+    }
+
+    /** Reads at most [remaining] bytes from [input]. */
+    private class BoundedInputStream(
+        private val input: InputStream,
+        private var remaining: Long,
+    ) : InputStream() {
+        override fun read(): Int {
+            if (remaining <= 0) return -1
+            val b = input.read()
+            if (b >= 0) remaining--
+            return b
+        }
+
+        override fun read(
+            b: ByteArray,
+            off: Int,
+            len: Int,
+        ): Int {
+            if (remaining <= 0) return -1
+            val n = input.read(b, off, min(len.toLong(), remaining).toInt())
+            if (n > 0) remaining -= n
+            return n
+        }
+
+        override fun close() = input.close()
     }
 }
