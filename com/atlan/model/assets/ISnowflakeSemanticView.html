@@ -107,14 +107,34 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
-<div class="col-second even-row-color"><code><a href="#SNOWFLAKE_DEFINITION" class="member-name-link">SNOWFLAKE_DEFINITION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS" class="member-name-link">SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS" class="member-name-link">SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Custom instructions Cortex Analyst follows when it generates SQL from this semantic view.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SNOWFLAKE_AI_VERIFIED_QUERIES" class="member-name-link">SNOWFLAKE_AI_VERIFIED_QUERIES</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Verified queries defined on this semantic view: questions paired with the SQL that answers them.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SNOWFLAKE_DEFINITION" class="member-name-link">SNOWFLAKE_DEFINITION</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">DDL definition of the semantic view (via GET_DDL).</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#SNOWFLAKE_SEMANTIC_LOGICAL_TABLES" class="member-name-link">SNOWFLAKE_SEMANTIC_LOGICAL_TABLES</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SNOWFLAKE_SEMANTIC_LOGICAL_TABLES" class="member-name-link">SNOWFLAKE_SEMANTIC_LOGICAL_TABLES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Logical tables contained in the semantic view.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SNOWFLAKE_SEMANTIC_METRICS" class="member-name-link">SNOWFLAKE_SEMANTIC_METRICS</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Metrics scoped to the semantic view rather than to a logical table, such as derived metrics.</div>
 </div>
 <div class="col-first even-row-color"><code>static final <a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></code></div>
 <div class="col-second even-row-color"><code><a href="#SNOWFLAKE_SEMANTIC_VIEW_SCHEMA" class="member-name-link">SNOWFLAKE_SEMANTIC_VIEW_SCHEMA</a></code></div>
@@ -1269,14 +1289,34 @@ loadScripts(document, 'script');</script>
 <div class="block">TBC</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSnowflakeDefinition()" class="member-name-link">getSnowflakeDefinition</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSnowflakeAiQuestionCategorizationInstructions()" class="member-name-link">getSnowflakeAiQuestionCategorizationInstructions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSnowflakeAiSqlGenerationInstructions()" class="member-name-link">getSnowflakeAiSqlGenerationInstructions</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Custom instructions Cortex Analyst follows when it generates SQL from this semantic view.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../structs/SnowflakeSemanticVerifiedQuery.html" title="class in com.atlan.model.structs">SnowflakeSemanticVerifiedQuery</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSnowflakeAiVerifiedQueries()" class="member-name-link">getSnowflakeAiVerifiedQueries</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Verified queries defined on this semantic view: questions paired with the SQL that answers them.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSnowflakeDefinition()" class="member-name-link">getSnowflakeDefinition</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">DDL definition of the semantic view (via GET_DDL).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISnowflakeSemanticLogicalTable.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticLogicalTable</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getSnowflakeSemanticLogicalTables()" class="member-name-link">getSnowflakeSemanticLogicalTables</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISnowflakeSemanticLogicalTable.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticLogicalTable</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getSnowflakeSemanticLogicalTables()" class="member-name-link">getSnowflakeSemanticLogicalTables</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Logical tables contained in the semantic view.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ISnowflakeSemanticMetric.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticMetric</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getSnowflakeSemanticMetrics()" class="member-name-link">getSnowflakeSemanticMetrics</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Metrics scoped to the semantic view rather than to a logical table, such as derived metrics.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ISchema.html" title="interface in com.atlan.model.assets">ISchema</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getSnowflakeSemanticViewSchema()" class="member-name-link">getSnowflakeSemanticViewSchema</a>()</code></div>
@@ -1478,119 +1518,134 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Sources related to this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlHasAiInsights()" class="member-name-link">getSqlHasAiInsights</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlFabricMirroringKind()" class="member-name-link">getSqlFabricMirroringKind</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Whether this asset has any AI insights data available.</div>
+<div class="block">Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlFabricMirroringSourceType()" class="member-name-link">getSqlFabricMirroringSourceType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlFabricMirroringStatus()" class="member-name-link">getSqlFabricMirroringStatus</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlIsSecure()" class="member-name-link">getSqlIsSecure</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlHasAiInsights()" class="member-name-link">getSqlHasAiInsights</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Whether this asset has any AI insights data available.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlIsSecure()" class="member-name-link">getSqlIsSecure</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Whether this asset is secure (true) or not (false).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlShareQualifiedNames()" class="member-name-link">getSqlShareQualifiedNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSqlShareQualifiedNames()" class="member-name-link">getSqlShareQualifiedNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Qualified names of data shares this asset is granted to.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredBy()" class="member-name-link">getStarredBy</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredBy()" class="member-name-link">getStarredBy</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Users who have starred this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredCount()" class="member-name-link">getStarredCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredCount()" class="member-name-link">getStarredCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Number of users who have starred this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../structs/StarredDetails.html" title="class in com.atlan.model.structs">StarredDetails</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredDetails()" class="member-name-link">getStarredDetails</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../structs/StarredDetails.html" title="class in com.atlan.model.structs">StarredDetails</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStarredDetails()" class="member-name-link">getStarredDetails</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">List of usernames with extra information of the users who have starred an asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSubType()" class="member-name-link">getSubType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSubType()" class="member-name-link">getSubType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Subtype of this asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableName()" class="member-name-link">getTableName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableName()" class="member-name-link">getTableName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableQualifiedName()" class="member-name-link">getTableQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableQualifiedName()" class="member-name-link">getTableQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTenantId()" class="member-name-link">getTenantId</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTenantId()" class="member-name-link">getTenantId</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Name of the Atlan workspace in which this asset exists.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTypeName()" class="member-name-link">getTypeName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Name of the type that defines the asset.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUniqueAttributes()" class="member-name-link">getUniqueAttributes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUniqueAttributes()" class="member-name-link">getUniqueAttributes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Attribute(s) that uniquely identify the asset (when this is a related asset).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getUserDefRelationshipFroms()" class="member-name-link">getUserDefRelationshipFroms</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">TBC</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getUserDefRelationshipTos()" class="member-name-link">getUserDefRelationshipTos</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getUserDefRelationshipFroms()" class="member-name-link">getUserDefRelationshipFroms</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">TBC</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUserDescription()" class="member-name-link">getUserDescription</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Description of this asset, as provided by a user.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewerGroups()" class="member-name-link">getViewerGroups</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">List of groups who can view assets contained in a collection.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewerUsers()" class="member-name-link">getViewerUsers</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">List of users who can view assets contained in a collection.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="IAsset.html" title="interface in com.atlan.model.assets">IAsset</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getUserDefRelationshipTos()" class="member-name-link">getUserDefRelationshipTos</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">TBC</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewName()" class="member-name-link">getViewName</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUserDescription()" class="member-name-link">getUserDescription</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+<div class="block">Description of this asset, as provided by a user.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewerGroups()" class="member-name-link">getViewerGroups</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">List of groups who can view assets contained in a collection.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewerUsers()" class="member-name-link">getViewerUsers</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">List of users who can view assets contained in a collection.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewQualifiedName()" class="member-name-link">getViewQualifiedName</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewName()" class="member-name-link">getViewName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewQualifiedName()" class="member-name-link">getViewQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewScore()" class="member-name-link">getViewScore</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html" title="class or interface in java.lang" class="external-link">Double</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViewScore()" class="member-name-link">getViewScore</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">View score for this asset.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isComplete()" class="member-name-link">isComplete</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isComplete()" class="member-name-link">isComplete</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">When true, indicates that this object represents a complete view of the entity.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValidReferenceByGuid()" class="member-name-link">isValidReferenceByGuid</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValidReferenceByGuid()" class="member-name-link">isValidReferenceByGuid</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Indicates whether this object can be used as a valid reference by GUID.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValidReferenceByQualifiedName()" class="member-name-link">isValidReferenceByQualifiedName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValidReferenceByQualifiedName()" class="member-name-link">isValidReferenceByQualifiedName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Indicates whether this object can be used as a valid reference by qualifiedName.</div>
 </div>
 </div>
@@ -1622,6 +1677,27 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS">
+<h3>SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_AI_QUESTION_CATEGORIZATION_INSTRUCTIONS</span></div>
+<div class="block">Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS">
+<h3>SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_AI_SQL_GENERATION_INSTRUCTIONS</span></div>
+<div class="block">Custom instructions Cortex Analyst follows when it generates SQL from this semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SNOWFLAKE_AI_VERIFIED_QUERIES">
+<h3>SNOWFLAKE_AI_VERIFIED_QUERIES</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/KeywordField.html" title="class in com.atlan.model.fields">KeywordField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_AI_VERIFIED_QUERIES</span></div>
+<div class="block">Verified queries defined on this semantic view: questions paired with the SQL that answers them.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="SNOWFLAKE_DEFINITION">
 <h3>SNOWFLAKE_DEFINITION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/TextField.html" title="class in com.atlan.model.fields">TextField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_DEFINITION</span></div>
@@ -1633,6 +1709,13 @@ loadScripts(document, 'script');</script>
 <h3>SNOWFLAKE_SEMANTIC_LOGICAL_TABLES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_SEMANTIC_LOGICAL_TABLES</span></div>
 <div class="block">Logical tables contained in the semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SNOWFLAKE_SEMANTIC_METRICS">
+<h3>SNOWFLAKE_SEMANTIC_METRICS</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="../fields/RelationField.html" title="class in com.atlan.model.fields">RelationField</a></span>&nbsp;<span class="element-name">SNOWFLAKE_SEMANTIC_METRICS</span></div>
+<div class="block">Metrics scoped to the semantic view rather than to a logical table, such as derived metrics.</div>
 </section>
 </li>
 <li>
@@ -3163,6 +3246,27 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getSnowflakeAiQuestionCategorizationInstructions()">
+<h3>getSnowflakeAiQuestionCategorizationInstructions</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSnowflakeAiQuestionCategorizationInstructions</span>()</div>
+<div class="block">Custom instructions Cortex Analyst follows when it categorizes questions asked of this semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSnowflakeAiSqlGenerationInstructions()">
+<h3>getSnowflakeAiSqlGenerationInstructions</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSnowflakeAiSqlGenerationInstructions</span>()</div>
+<div class="block">Custom instructions Cortex Analyst follows when it generates SQL from this semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSnowflakeAiVerifiedQueries()">
+<h3>getSnowflakeAiVerifiedQueries</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../structs/SnowflakeSemanticVerifiedQuery.html" title="class in com.atlan.model.structs">SnowflakeSemanticVerifiedQuery</a>&gt;</span>&nbsp;<span class="element-name">getSnowflakeAiVerifiedQueries</span>()</div>
+<div class="block">Verified queries defined on this semantic view: questions paired with the SQL that answers them.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getSnowflakeDefinition()">
 <h3>getSnowflakeDefinition</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSnowflakeDefinition</span>()</div>
@@ -3174,6 +3278,13 @@ loadScripts(document, 'script');</script>
 <h3>getSnowflakeSemanticLogicalTables</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ISnowflakeSemanticLogicalTable.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticLogicalTable</a>&gt;</span>&nbsp;<span class="element-name">getSnowflakeSemanticLogicalTables</span>()</div>
 <div class="block">Logical tables contained in the semantic view.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSnowflakeSemanticMetrics()">
+<h3>getSnowflakeSemanticMetrics</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ISnowflakeSemanticMetric.html" title="interface in com.atlan.model.assets">ISnowflakeSemanticMetric</a>&gt;</span>&nbsp;<span class="element-name">getSnowflakeSemanticMetrics</span>()</div>
+<div class="block">Metrics scoped to the semantic view rather than to a logical table, such as derived metrics.</div>
 </section>
 </li>
 <li>
@@ -3454,6 +3565,27 @@ loadScripts(document, 'script');</script>
 <h3>getSqlDbtModels</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="IDbtModel.html" title="interface in com.atlan.model.assets">IDbtModel</a>&gt;</span>&nbsp;<span class="element-name">getSqlDbtModels</span>()</div>
 <div class="block">Assets related to the model.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSqlFabricMirroringKind()">
+<h3>getSqlFabricMirroringKind</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSqlFabricMirroringKind</span>()</div>
+<div class="block">Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSqlFabricMirroringSourceType()">
+<h3>getSqlFabricMirroringSourceType</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSqlFabricMirroringSourceType</span>()</div>
+<div class="block">Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSqlFabricMirroringStatus()">
+<h3>getSqlFabricMirroringStatus</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSqlFabricMirroringStatus</span>()</div>
+<div class="block">Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating).</div>
 </section>
 </li>
 <li>
