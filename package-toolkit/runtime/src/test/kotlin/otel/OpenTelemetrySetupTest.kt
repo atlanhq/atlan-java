@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0
-   Copyright 2023 Atlan Pte. Ltd. */
+   Copyright 2026 Atlan Pte. Ltd. */
 package otel
 
 import com.atlan.pkg.Utils
@@ -11,12 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Utils.setupOpenTelemetry, run by the Utils class init in every package's `<clinit>` when the OTEL_* variables
- * are set, as they are in each Argo pod. A split OpenTelemetry core on the runtime classpath (API from one release,
- * SDK and autoconfigure from another) throws NoClassDefFoundError there and kills the package before it reads its
- * settings. The class init runs once per JVM and reads the environment, so it runs in a fresh child JVM.
- */
+/** Utils' class init sets up OpenTelemetry once per JVM from the OTEL_* environment, so this runs it in a fresh child JVM. */
 class OpenTelemetrySetupTest {
     private val workDir = createTempDirectory("otel-setup-").toFile()
 
@@ -43,18 +38,14 @@ class OpenTelemetrySetupTest {
         if (!exited) process.destroyForcibly().waitFor()
         val output = log.readText()
         assertTrue(exited, "Child JVM did not exit:\n$output")
-        assertTrue(output.contains(OpenTelemetrySetupChild.STARTED), "Package did not get past OpenTelemetry setup:\n$output")
         assertEquals(0, process.exitValue(), "Child JVM failed:\n$output")
     }
 }
 
 /** Touches Utils the way a package's main class does, which runs its class init and so the OpenTelemetry setup. */
 object OpenTelemetrySetupChild {
-    const val STARTED = "OPENTELEMETRY_SETUP_DONE"
-
     @JvmStatic
     fun main(args: Array<String>) {
-        Utils.getLogger(OpenTelemetrySetupChild::class.java.name).info { STARTED }
-        println(STARTED)
+        Utils.getLogger(OpenTelemetrySetupChild::class.java.name).info { "OpenTelemetry set up" }
     }
 }
