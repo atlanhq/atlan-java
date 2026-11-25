@@ -100,6 +100,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
 
         return IndexSearchRequest.builder(dsl)
                 .applySearchParameters(searchParameters)
+                .requestMetadata(IndexSearchRequest.Metadata.followUp())
                 .build()
                 .search(client);
     }
@@ -130,6 +131,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
                 .build();
         return IndexSearchRequest.builder(dsl)
                 .applySearchParameters(searchParameters)
+                .requestMetadata(IndexSearchRequest.Metadata.followUp())
                 .showSearchMetadata(true)
                 .build()
                 .search(client);
@@ -142,6 +144,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         dsl = dsl.toBuilder().from(0).size(page).clearSort().sort(revisedSort).build();
         return IndexSearchRequest.builder(dsl)
                 .applySearchParameters(searchParameters)
+                .requestMetadata(IndexSearchRequest.Metadata.followUp())
                 .showSearchMetadata(true)
                 .build()
                 .search(client);
@@ -160,6 +163,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         IndexSearchDSL dsl = getQuery().toBuilder().from(offset).size(pageSize).build();
         IndexSearchResponse response = IndexSearchRequest.builder(dsl)
                 .applySearchParameters(searchParameters)
+                .requestMetadata(IndexSearchRequest.Metadata.followUp())
                 .build()
                 .search(client);
         if (response != null && response.getAssets() != null) {
