@@ -63,10 +63,12 @@
     },
     {
       // Each instrumentation BOM release imports a specific opentelemetry-bom version, so update
-      // both together and have a human confirm they line up before merging
+      // both together and have a human confirm they line up before merging. elasticsearch-java pins
+      // opentelemetry-api, so it joins the group to keep the OpenTelemetry core on one version
       matchPackageNames: [
         "io.opentelemetry:opentelemetry-bom",
         "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha",
+        "co.elastic.clients:elasticsearch-java",
       ],
       groupName: "opentelemetry",
       automerge: false,
