@@ -253,6 +253,7 @@ tasks {
             include(dependency("io.opentelemetry:opentelemetry-exporter-common:.*"))
             include(dependency("io.opentelemetry:opentelemetry-exporter-sender-okhttp:.*"))
             include(dependency("io.opentelemetry:opentelemetry-context:.*"))
+            include(dependency("io.opentelemetry:opentelemetry-common:.*"))
             include(dependency("com.squareup.okhttp3:okhttp:.*"))
             include(dependency("com.squareup.okhttp3:okhttp-jvm:.*"))
             include(dependency("com.squareup.okio:okio:.*"))
