@@ -16,6 +16,7 @@ containerCommand {
   "/dumb-init"
   "--"
   "java"
+  "-Dotel.sdk.disabled=true"
   "com.atlan.pkg.aim.Importer"
 }
 outputs {
