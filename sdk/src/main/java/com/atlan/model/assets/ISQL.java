@@ -152,6 +152,16 @@ public interface ISQL {
     /** Assets related to the model. */
     RelationField SQL_DBT_MODELS = new RelationField("sqlDbtModels");
 
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    KeywordField SQL_FABRIC_MIRRORING_KIND = new KeywordField("sqlFabricMirroringKind", "sqlFabricMirroringKind");
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    KeywordField SQL_FABRIC_MIRRORING_SOURCE_TYPE =
+            new KeywordField("sqlFabricMirroringSourceType", "sqlFabricMirroringSourceType");
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    KeywordField SQL_FABRIC_MIRRORING_STATUS = new KeywordField("sqlFabricMirroringStatus", "sqlFabricMirroringStatus");
+
     /** Whether this asset has any AI insights data available. */
     BooleanField SQL_HAS_AI_INSIGHTS = new BooleanField("sqlHasAiInsights", "sqlHasAiInsights");
 
@@ -1005,6 +1015,15 @@ public interface ISQL {
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
     }
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
 
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();

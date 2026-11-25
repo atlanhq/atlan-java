@@ -411,6 +411,18 @@ public class DremioPhysicalDataset extends Asset
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    @Attribute
+    String sqlFabricMirroringKind;
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    @Attribute
+    String sqlFabricMirroringSourceType;
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    @Attribute
+    String sqlFabricMirroringStatus;
+
     /** Whether this asset has any AI insights data available. */
     @Attribute
     Boolean sqlHasAiInsights;

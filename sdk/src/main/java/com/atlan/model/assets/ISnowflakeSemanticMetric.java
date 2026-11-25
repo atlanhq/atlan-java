@@ -65,6 +65,9 @@ public interface ISnowflakeSemanticMetric {
     KeywordField SNOWFLAKE_SEMANTIC_TABLE_QUALIFIED_NAME =
             new KeywordField("snowflakeSemanticTableQualifiedName", "snowflakeSemanticTableQualifiedName");
 
+    /** Semantic view containing the metric, for metrics not scoped to a logical table. */
+    RelationField SNOWFLAKE_SEMANTIC_VIEW = new RelationField("snowflakeSemanticView");
+
     /** Simple name of the semantic view in which this metric exists. */
     KeywordField SNOWFLAKE_SEMANTIC_VIEW_NAME =
             new KeywordField("snowflakeSemanticViewName", "snowflakeSemanticViewName");
@@ -818,6 +821,11 @@ public interface ISnowflakeSemanticMetric {
     /** Unique name of the logical table in which this metric exists. */
     String getSnowflakeSemanticTableQualifiedName();
 
+    /** Semantic view containing the metric, for metrics not scoped to a logical table. */
+    default ISnowflakeSemanticView getSnowflakeSemanticView() {
+        return null;
+    }
+
     /** Simple name of the semantic view in which this metric exists. */
     String getSnowflakeSemanticViewName();
 
@@ -946,6 +954,15 @@ public interface ISnowflakeSemanticMetric {
     default SortedSet<IDbtModel> getSqlDbtModels() {
         return null;
     }
+
+    /** Whether a Microsoft Fabric mirror replicates an External source (Mirrored Database, Mirrored Azure Databricks Catalog) or an Internal Fabric item (SQL Database, Cosmos DB, KQL database). */
+    String getSqlFabricMirroringKind();
+
+    /** Source system type of a Microsoft Fabric mirrored database, as reported by Fabric (for example: Snowflake, AzureSqlDatabase, AzureDatabricks, GoogleBigQuery, AzurePostgreSql, CosmosDb, or GenericMirror). */
+    String getSqlFabricMirroringSourceType();
+
+    /** Replication status reported by Microsoft Fabric mirroring (for example: Running, Paused, Failed, or Replicating). */
+    String getSqlFabricMirroringStatus();
 
     /** Whether this asset has any AI insights data available. */
     Boolean getSqlHasAiInsights();
