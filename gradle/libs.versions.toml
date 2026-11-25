@@ -46,9 +46,9 @@ netty = "4.2.20.Final"
 netty41 = "4.1.140.Final"
 rhino = "1.9.2"
 nimbus = "10.10"
-# otel must match exactly the core BOM that otel-instrumentation imports (2.32.0-alpha -> 1.66.0)
-otel = "1.66.0"
-otel-instrumentation = "2.32.0-alpha"
+# otel must match exactly the core BOM that otel-instrumentation imports (2.33.1-alpha -> 1.67.0)
+otel = "1.67.0"
+otel-instrumentation = "2.33.1-alpha"
 
 [libraries]
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
