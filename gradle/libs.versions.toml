@@ -41,9 +41,9 @@ wiremock-jetty = "12.0.41"
 handlebars = "4.5.8"
 httpclient5 = "5.6.5"
 httpcore5 = "5.5"
-netty = "4.2.20.Final"
+netty = "4.2.21.Final"
 # AWS SDK's netty-nio-client still requests the 4.1.x line of netty-codec
-netty41 = "4.1.140.Final"
+netty41 = "4.1.141.Final"
 rhino = "1.9.2"
 nimbus = "10.10"
 # otel must match exactly the core BOM that otel-instrumentation imports (2.33.1-alpha -> 1.67.0)
