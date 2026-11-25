@@ -168,21 +168,43 @@ jobs:
   bump-snapshot:
     needs: [validate, create-release]
     runs-on: ubuntu-latest
+    # GITHUB_TOKEN is not used for any writes in this job (see the App token below)
+    permissions:
+      contents: read
     steps:
+      # Events caused by GITHUB_TOKEN (pushes, PR updates, and the merge_group event
+      # raised when it enqueues a PR) don't trigger other workflows, so the bump PR
+      # would sit in the merge queue with its required checks never reported.
+      # Push and drive the PR as a GitHub App instead, so pr-build runs normally.
+      - name: Mint GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510  # v3.3.0
+        with:
+          app-id: ${{ secrets.FLEET_APP_ID }}
+          private-key: ${{ secrets.FLEET_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
           ref: main
           fetch-depth: 0
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Update snapshot branch and create PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          APP_SLUG: ${{ steps.app-token.outputs.app-slug }}
           RELEASE_VERSION: ${{ inputs.release_version }}
           NEXT_VERSION: ${{ needs.validate.outputs.next_version }}
         run: |
-          # Configure git
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Configure git to commit as the App's bot user
+          bot_name="${APP_SLUG}[bot]"
+          bot_id=$(gh api "/users/${bot_name}" --jq .id)
+          git config user.name "$bot_name"
+          git config user.email "${bot_id}+${bot_name}@users.noreply.github.com"
 
           # Update snapshot branch from main
           git fetch origin snapshot:snapshot 2>/dev/null || git checkout -b snapshot
@@ -225,11 +247,12 @@ jobs:
             pr_action="Created"
           fi
 
-          # Try to enable auto-merge (may fail if token lacks permission on protected branch)
-          if gh pr merge "$pr_url" --auto --squash 2>/dev/null; then
+          # Enable auto-merge (adds the PR to the merge queue once checks pass)
+          if merge_err=$(gh pr merge "$pr_url" --auto --squash 2>&1); then
             auto_merge_status="Auto-merge enabled - PR will merge after checks pass."
           else
-            auto_merge_status="⚠️ Could not enable auto-merge (requires manual merge or admin permissions)."
+            echo "::warning::Could not enable auto-merge on ${pr_url}: ${merge_err}"
+            auto_merge_status="⚠️ Could not enable auto-merge - the PR needs to be merged manually. Error: ${merge_err}"
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
