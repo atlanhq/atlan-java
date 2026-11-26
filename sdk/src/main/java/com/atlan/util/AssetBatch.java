@@ -22,6 +22,7 @@ import com.atlan.model.core.AsyncCreationResponse;
 import com.atlan.model.core.AtlanCloseable;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AssetCreationHandling;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.AtlanTagHandling;
 import com.atlan.model.enums.CustomMetadataHandling;
 import com.atlan.model.relations.Reference;
@@ -94,6 +95,15 @@ public class AssetBatch implements AtlanCloseable {
      */
     @Getter
     private final AtomicLong numRestored = new AtomicLong(0);
+
+    /**
+     * Number of assets that matched an archived (soft-deleted) asset in Atlan and were sent with
+     * an ACTIVE status, so were restored from being archived (no details, just a count).
+     * Note: this is only known when the batch searches for existing assets before saving them
+     * (updateOnly, non-FULL creation handling, or table/view-agnostic matching).
+     */
+    @Getter
+    private final AtomicLong numArchivedRestored = new AtomicLong(0);
 
     /** Number of assets that were skipped during processing (no details, just a count). */
     @Getter
@@ -499,6 +509,7 @@ public class AssetBatch implements AtlanCloseable {
                 typesInBatch.retainAll(TABLE_LEVEL_ASSETS);
                 fuzzyMatch = !typesInBatch.isEmpty();
             }
+            Set<AssetIdentity> archived = new HashSet<>();
             if (updateOnly || creationHandling != AssetCreationHandling.FULL || fuzzyMatch) {
                 Map<AssetIdentity, String> found = new HashMap<>();
                 List<String> qualifiedNames =
@@ -531,6 +542,9 @@ public class AssetBatch implements AtlanCloseable {
                                 AssetIdentity assetId = new AssetIdentity(
                                         asset.getTypeName(), asset.getQualifiedName(), caseInsensitive);
                                 found.put(assetId, asset.getQualifiedName());
+                                if (asset.getStatus() == AtlanStatus.DELETED) {
+                                    archived.add(assetId);
+                                }
                             }
                         });
                 revised = new ArrayList<>();
@@ -595,6 +609,7 @@ public class AssetBatch implements AtlanCloseable {
                     if (response != null) {
                         response.block();
                     }
+                    countArchivedRestored(revised, archived);
                 } catch (AtlanException e) {
                     if (captureFailures) {
                         track(failures, _batch, e);
@@ -607,6 +622,30 @@ public class AssetBatch implements AtlanCloseable {
         }
         trackResponse(response, revised);
         return response;
+    }
+
+    /**
+     * Count the assets that were saved with an ACTIVE status over an archived (soft-deleted)
+     * asset that already existed in Atlan, as these will have been restored by the save.
+     *
+     * @param sent assets that were successfully saved
+     * @param archived identities of the assets found in Atlan with an archived (DELETED) status
+     */
+    private void countArchivedRestored(List<Asset> sent, Set<AssetIdentity> archived) {
+        if (archived.isEmpty()) {
+            return;
+        }
+        long count = 0;
+        for (Asset one : sent) {
+            AssetIdentity id = new AssetIdentity(one.getTypeName(), one.getQualifiedName(), caseInsensitive);
+            if (one.getStatus() == AtlanStatus.ACTIVE && archived.contains(id)) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            numArchivedRestored.getAndAdd(count);
+            log.info("Restored {} archived (soft-deleted) assets that matched assets in this batch.", count);
+        }
     }
 
     private void addFuzzyMatched(Asset asset, String typeName, String actualQN, List<Asset> revised)

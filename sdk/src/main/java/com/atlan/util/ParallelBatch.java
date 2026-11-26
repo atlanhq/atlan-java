@@ -358,6 +358,25 @@ public class ParallelBatch implements AtlanCloseable {
     }
 
     /**
+     * Number of assets that matched an archived (soft-deleted) asset in Atlan and were restored
+     * by being saved with an ACTIVE status (no details, just a count).
+     *
+     * @return a count of the number of archived assets restored, across all parallel batches
+     */
+    public long getNumArchivedRestored() {
+        lock.readLock().lock();
+        try {
+            long count = 0;
+            for (AssetBatch batch : batchMap.values()) {
+                count += batch.getNumArchivedRestored().get();
+            }
+            return count;
+        } finally {
+            lock.readLock().unlock();
+        }
+    }
+
+    /**
      * Number of assets that were skipped during processing (no details, just a count).
      *
      * @return a count of the number of skipped assets, across all parallel batches

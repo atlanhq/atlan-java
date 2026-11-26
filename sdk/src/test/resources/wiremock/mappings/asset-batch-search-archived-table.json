@@ -1,0 +1,35 @@
+{
+  "priority": 5,
+  "request": {
+    "method": "POST",
+    "urlPath": "/api/meta/search/indexsearch",
+    "bodyPatterns": [
+      {
+        "contains": "default/snowflake/1700000000/DB/SCH/ARCHIVED_TBL"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "approximateCount": 1,
+      "entities": [
+        {
+          "typeName": "Table",
+          "guid": "0b5a3a3e-0000-4000-8000-000000000001",
+          "status": "DELETED",
+          "attributes": {
+            "qualifiedName": "default/snowflake/1700000000/DB/SCH/ARCHIVED_TBL",
+            "name": "ARCHIVED_TBL"
+          }
+        }
+      ],
+      "searchParameters": {
+        "query": "{\"from\":0,\"size\":100,\"query\":{\"term\":{\"qualifiedName\":\"default/snowflake/1700000000/DB/SCH/ARCHIVED_TBL\"}}}"
+      }
+    }
+  }
+}

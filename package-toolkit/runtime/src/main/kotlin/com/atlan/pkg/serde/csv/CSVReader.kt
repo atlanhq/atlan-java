@@ -251,6 +251,7 @@ class CSVReader
                         val totalCreates = primaryBatch.numCreated
                         val totalUpdates = primaryBatch.numUpdated
                         val totalRestore = primaryBatch.numRestored
+                        val totalArchivedRestored = primaryBatch.numArchivedRestored
                         val totalSkipped = primaryBatch.numSkipped
                         val totalFailures = AtomicLong(0)
                         someFailure = someFailure || (primaryBatch.failures?.isNotEmpty() == true)
@@ -259,6 +260,11 @@ class CSVReader
                         logger.info { "Total assets created : $totalCreates" }
                         logger.info { "Total assets updated : $totalUpdates" }
                         logger.info { "Total assets restored: $totalRestore" }
+                        if (totalArchivedRestored > 0) {
+                            logger.warn {
+                                "Restored $totalArchivedRestored archived assets: these matched rows in the file but had been archived (soft-deleted) in Atlan, and are now active again."
+                            }
+                        }
                         if (totalSkipped > 0) logger.warn { "Total assets skipped : $totalSkipped" } else logger.info { "Total assets skipped : $totalSkipped" }
                         if (totalFailures.get() > 0) logger.warn { "Total assets failed  : $totalFailures" } else logger.info { "Total assets failed  : $totalFailures" }
 
